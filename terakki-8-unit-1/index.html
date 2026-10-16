@@ -1,0 +1,4440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<title>Unit 1 Exam Power-Up · Grade 8 English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,500;0,700;0,800;1,500&display=swap">
+<style>
+/* Grade 8 exam practice: level map → mastery rounds per level. Multiple choice + typed gaps. */
+:root {
+  --sky-1: #EAF4FF;
+  --sky-2: #FFF6E5;
+  --surface: #FFFFFF;
+  --ink: #1B2340;
+  --muted: #5B6585;
+  --line: #E3E8F4;
+  --soft: #F5F7FC;
+  --right: #1E9E5A;
+  --right-soft: #DDF7E8;
+  --wrong: #E0453A;
+  --wrong-soft: #FFE4E1;
+  --gold: #F5B400;
+  --gold-deep: #B57F00;
+  --gold-soft: #FFF2C7;
+  --navy: #22305E;
+  --accent: #2F80ED;
+  --shadow: 0 2px 0 rgba(27, 35, 64, .08), 0 10px 26px rgba(27, 35, 64, .10);
+  --f-display: "Fredoka", "Avenir Next Rounded", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --f-body: "Nunito", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sky-1: #0F1530; --sky-2: #1A1430; --surface: #1C2444; --ink: #EEF1FA; --muted: #A7B0CE;
+    --line: #2E3963; --soft: #242E55; --right: #4ED68E; --right-soft: #133A2A; --wrong: #FF8379; --wrong-soft: #45201F;
+    --gold-soft: #3D3214; --gold-deep: #FFCF4D; --navy: #DCE3FF;
+    --shadow: 0 2px 0 rgba(0, 0, 0, .25), 0 10px 26px rgba(0, 0, 0, .3);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sky-1: #0F1530; --sky-2: #1A1430; --surface: #1C2444; --ink: #EEF1FA; --muted: #A7B0CE;
+  --line: #2E3963; --soft: #242E55; --right: #4ED68E; --right-soft: #133A2A; --wrong: #FF8379; --wrong-soft: #45201F;
+  --gold-soft: #3D3214; --gold-deep: #FFCF4D; --navy: #DCE3FF;
+  --shadow: 0 2px 0 rgba(0, 0, 0, .25), 0 10px 26px rgba(0, 0, 0, .3);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--sky-1); }
+body {
+  color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--muted) 18%, transparent) 1px, transparent 0) 0 0 / 22px 22px,
+    linear-gradient(170deg, var(--sky-1) 0%, var(--sky-2) 100%) fixed;
+}
+.wrap { max-width: 720px; margin: 0 auto; padding: 14px 16px 56px; display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; line-height: 1.15; text-wrap: balance; font-weight: 700; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Header */
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #fff; border-radius: 12px; padding: 4px 6px; flex: none; box-shadow: var(--shadow); display: grid; place-items: center; }
+.logo img { width: 70px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-display); font-weight: 700; font-size: 1.1rem; line-height: 1.2; }
+.top-sub { color: var(--muted); font-size: .85rem; }
+
+.card { background: var(--surface); border-radius: 22px; box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+
+/* Buttons */
+.btn {
+  appearance: none; border: 0; border-radius: 16px; padding: 14px 20px; font-family: var(--f-display); font-weight: 600; font-size: 1.1rem;
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px;
+  background: var(--accent); color: #fff; box-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 60%, #000);
+  transition: transform .08s, box-shadow .08s;
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--accent) 60%, #000); }
+.btn-ghost { background: var(--soft); color: var(--ink); box-shadow: 0 4px 0 var(--line); }
+.btn-ghost:active { box-shadow: 0 1px 0 var(--line); }
+.btn-gold { background: var(--gold); color: #3A2A00; box-shadow: 0 4px 0 #B57F00; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+.btn-small { min-height: 40px; padding: 8px 14px; font-size: .95rem; border-radius: 12px; }
+
+/* Welcome / name */
+.hero { text-align: center; align-items: center; padding-block: 26px; }
+.hero .big-emoji { font-size: 3.4rem; line-height: 1; }
+.hero h1 { font-size: clamp(2rem, 8vw, 2.8rem); }
+.hero .sub { color: var(--muted); font-size: 1.05rem; max-width: 30em; }
+.field { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 360px; text-align: left; }
+.field label { font-weight: 800; font-size: .95rem; }
+.field input { font: inherit; font-size: 1.1rem; padding: 13px 15px; border-radius: 14px; border: 3px solid var(--line); background: var(--soft); color: var(--ink); }
+.field input:focus { border-color: var(--accent); outline: none; }
+.hero .btn { width: 100%; max-width: 360px; }
+
+/* Player strip */
+.player { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; }
+.avatar { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-display); font-weight: 700; font-size: 1.4rem; color: #fff; background: linear-gradient(135deg, #2F80ED, #9B51E0); }
+.player-name { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; line-height: 1.1; overflow-wrap: anywhere; }
+.rank { display: inline-flex; align-items: center; gap: 4px; font-size: .85rem; font-weight: 800; color: var(--gold-deep); background: var(--gold-soft); padding: 2px 10px; border-radius: 999px; margin-top: 4px; }
+.totals { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-family: var(--f-display); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.totals .stars-total { font-size: 1.2rem; }
+.totals .xp { font-size: .9rem; color: var(--muted); }
+.rank-bar { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 4px; }
+.rank-bar .track { height: 10px; background: var(--soft); border-radius: 999px; overflow: hidden; }
+.rank-bar .fill { height: 100%; background: linear-gradient(90deg, var(--gold), #FF9F43); border-radius: 999px; transition: width .6s; }
+.rank-bar small { color: var(--muted); font-size: .8rem; }
+
+/* Level map */
+.map-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 10px; padding-inline: 4px; }
+.map-title h2 { white-space: nowrap; }
+.map-title h2 { font-size: 1.35rem; }
+.map-title small { color: var(--muted); }
+.levels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 380px) { .levels { grid-template-columns: 1fr; } }
+.lvl {
+  appearance: none; border: 0; text-align: left; cursor: pointer; background: var(--surface); border-radius: 20px; padding: 14px;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--c) 55%, var(--line)), var(--shadow);
+  display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; min-width: 0;
+  transition: transform .1s;
+}
+.lvl::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 6px; background: var(--c); }
+.lvl:active { transform: translateY(3px); }
+@media (hover: hover) { .lvl:hover { transform: translateY(-2px); } }
+.lvl-head { display: flex; align-items: center; gap: 10px; }
+.lvl-icon { width: 46px; height: 46px; flex: none; border-radius: 14px; display: grid; place-items: center; font-size: 1.6rem; background: color-mix(in srgb, var(--c) 18%, transparent); }
+.lvl-num { font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.lvl-name { font-family: var(--f-display); font-weight: 700; font-size: 1.08rem; line-height: 1.15; }
+.lvl-topic { font-size: .85rem; color: var(--muted); line-height: 1.3; }
+.lvl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-top: auto; }
+.stars { font-size: 1.15rem; letter-spacing: 1px; white-space: nowrap; }
+.stars .off { filter: grayscale(1); opacity: .28; }
+.lvl-status { font-size: .78rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+.lvl-status.go { background: color-mix(in srgb, var(--c) 20%, transparent); color: var(--ink); }
+.lvl.boss { grid-column: 1 / -1; background: linear-gradient(135deg, #2B1D6B, #6A2CB8 55%, #E2468F); color: #fff; box-shadow: 0 4px 0 #1A1145, var(--shadow); }
+.lvl.boss::before { display: none; }
+.lvl.boss .lvl-icon { background: rgba(255, 255, 255, .16); }
+.lvl.boss .lvl-num, .lvl.boss .lvl-topic { color: rgba(255, 255, 255, .8); }
+.lvl.boss .lvl-status { background: rgba(255, 255, 255, .18); color: #fff; }
+.lvl.boss .stars .off { filter: none; opacity: .3; }
+
+.tiny-links { display: flex; justify-content: center; gap: 16px; font-size: .85rem; color: var(--muted); }
+.link { appearance: none; background: none; border: 0; padding: 4px; color: var(--muted); text-decoration: underline; cursor: pointer; }
+
+/* Play */
+.play-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.back { appearance: none; border: 0; background: var(--surface); box-shadow: var(--shadow); border-radius: 14px; padding: 8px 14px; font-weight: 800; cursor: pointer; min-height: 44px; }
+.chips { display: flex; gap: 8px; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 4px; background: var(--surface); box-shadow: var(--shadow); border-radius: 999px; padding: 6px 12px; font-family: var(--f-display); font-weight: 600; font-variant-numeric: tabular-nums; }
+.chip.cold { opacity: .55; }
+.chip.hot { animation: wiggle .5s; }
+@keyframes wiggle { 25% { transform: rotate(-8deg) scale(1.1); } 75% { transform: rotate(8deg) scale(1.1); } }
+
+.lvl-banner { display: flex; align-items: center; gap: 12px; }
+.lvl-banner .lvl-icon { width: 50px; height: 50px; }
+.lvl-banner .r { font-size: .85rem; color: var(--muted); font-weight: 700; }
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(18px, 1fr)); gap: 5px; }
+.cell { aspect-ratio: 1; border-radius: 6px; background: var(--line); }
+.cell.first { background: var(--gold); }
+.cell.later { background: var(--c, var(--accent)); }
+.cell.missed { background: var(--wrong-soft); box-shadow: inset 0 0 0 2px var(--wrong); }
+.cell.now { box-shadow: 0 0 0 3px var(--ink); }
+.cell.pop { animation: pop .45s ease-out; }
+@keyframes pop { 0% { transform: scale(.3); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.board-meta { display: flex; justify-content: space-between; gap: 8px; font-size: .85rem; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+.retry-tag { align-self: flex-start; font-size: .82rem; font-weight: 800; padding: 3px 12px; border-radius: 999px; background: var(--wrong-soft); color: var(--wrong); }
+.q-text { font-family: var(--f-display); font-weight: 600; font-size: clamp(1.25rem, 4.8vw, 1.55rem); line-height: 1.35; white-space: pre-line; }
+.q-text .hl { background: var(--gold-soft); color: var(--gold-deep); padding: 0 6px; border-radius: 6px; box-shadow: inset 0 -3px 0 var(--gold); }
+.q-text .gap { display: inline-block; min-width: 3.2em; border-bottom: 3px dashed var(--c, var(--accent)); height: 1em; vertical-align: baseline; }
+
+.opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.opt {
+  appearance: none; text-align: left; border: 3px solid var(--line); background: var(--surface); border-radius: 16px; padding: 12px 14px;
+  display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 60px; min-width: 0;
+  box-shadow: 0 4px 0 var(--line); transition: transform .08s, box-shadow .08s, border-color .15s, background .15s;
+  font-weight: 700; font-size: 1.05rem;
+}
+.opt:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--line); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--c, var(--accent)); } }
+.opt .key { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 700; background: var(--soft); }
+.opt .txt { min-width: 0; overflow-wrap: anywhere; }
+.opt:disabled { cursor: default; }
+.opt.is-right { border-color: var(--right); background: var(--right-soft); box-shadow: 0 4px 0 var(--right); }
+.opt.is-right .key { background: var(--right); color: #fff; }
+.opt.is-wrong { border-color: var(--wrong); background: var(--wrong-soft); box-shadow: 0 4px 0 var(--wrong); }
+.opt.is-wrong .key { background: var(--wrong); color: #fff; }
+.opt.is-dim { opacity: .45; }
+.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+/* Sentence builder */
+.build-line { min-height: 64px; border: 3px dashed var(--line); border-radius: 16px; padding: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background: var(--soft); }
+.build-line.empty::after { content: "Tap the words below in the right order"; color: var(--muted); font-size: .95rem; padding-left: 4px; }
+.build-line.is-right { border-style: solid; border-color: var(--right); background: var(--right-soft); }
+.build-line.is-wrong { border-style: solid; border-color: var(--wrong); background: var(--wrong-soft); }
+.end-mark { font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; }
+.tiles { display: flex; flex-wrap: wrap; gap: 8px; }
+.tile {
+  appearance: none; border: 0; border-radius: 12px; padding: 10px 14px; min-height: 48px; font-weight: 800; font-size: 1.05rem; cursor: pointer;
+  background: var(--surface); box-shadow: 0 3px 0 color-mix(in srgb, var(--c, var(--accent)) 60%, var(--line)), 0 0 0 2px color-mix(in srgb, var(--c, var(--accent)) 45%, var(--line)) inset;
+}
+.tile:active { transform: translateY(2px); }
+.tile.used { visibility: hidden; }
+.tile:disabled { cursor: default; }
+
+.feedback { border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.feedback.good { background: var(--right-soft); }
+.feedback.bad { background: var(--wrong-soft); }
+.feedback.reveal { background: var(--gold-soft); }
+.fb-head { font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; }
+.feedback.good .fb-head { color: var(--right); }
+.feedback.bad .fb-head { color: var(--wrong); }
+.feedback.reveal .fb-head { color: var(--gold-deep); }
+.fb-note { font-size: .9rem; color: var(--muted); }
+.fb-xp { font-family: var(--f-display); font-weight: 600; color: var(--gold-deep); }
+
+/* Between + results */
+.center { text-align: center; align-items: center; }
+.big-num { font-family: var(--f-display); font-weight: 700; font-size: clamp(3rem, 15vw, 4.6rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big-num small { font-size: .38em; color: var(--muted); font-weight: 600; }
+.mega-stars { font-size: clamp(2.6rem, 13vw, 3.6rem); display: flex; gap: 6px; justify-content: center; }
+.mega-stars span { display: inline-block; }
+.mega-stars .on { animation: starpop .6s backwards; }
+.mega-stars .off { filter: grayscale(1); opacity: .25; }
+@keyframes starpop { 0% { transform: scale(0) rotate(-40deg); } 70% { transform: scale(1.35) rotate(10deg); } 100% { transform: scale(1); } }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.stat { background: var(--soft); border-radius: 14px; padding: 10px; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.stat b { font-family: var(--f-display); font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .8rem; color: var(--muted); text-align: center; }
+.tricky { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; text-align: left; width: 100%; }
+.tricky li { border-left: 5px solid var(--wrong); background: var(--soft); border-radius: 0 12px 12px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.tricky .tq { font-weight: 700; white-space: pre-line; }
+.tricky .ta { color: var(--right); font-weight: 800; }
+.tricky .tm { font-size: .8rem; color: var(--muted); }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--muted); border-top: 2px solid var(--line); padding-top: 12px; width: 100%; }
+.who b { color: var(--ink); }
+.rank-up { background: var(--gold-soft); color: var(--gold-deep); font-weight: 800; padding: 8px 14px; border-radius: 14px; }
+
+/* Groups, notes, typed gaps */
+.group-h { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 8px 4px 0; }
+.group-h h3 { font-size: 1.2rem; }
+.group-h small { color: var(--muted); font-weight: 700; }
+.q-note { font-size: .92rem; color: var(--muted); font-weight: 700; margin-bottom: -4px; }
+.q-lead { display: block; font-family: var(--f-body); font-size: 1rem; font-weight: 700; color: var(--muted); background: var(--soft); border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; line-height: 1.45; white-space: normal; }
+.q-text.typed { line-height: 2.15; }
+.tglue { white-space: nowrap; }
+.tgap { display: inline-flex; align-items: baseline; white-space: nowrap; vertical-align: baseline; background: var(--gold-soft);
+  border-bottom: 3px solid var(--c, var(--accent)); border-radius: 8px 8px 0 0; padding-left: 6px; }
+.tgap .first { font-family: var(--f-body); font-weight: 800; color: var(--gold-deep); }
+.tgap input { font: inherit; font-family: var(--f-body); font-weight: 800; color: var(--ink); width: 7em; max-width: 68vw; padding: 0 6px 0 0; line-height: 1.45; border: 0;
+  border-radius: 0; background: transparent; }
+.tgap:not(:has(.first)) input { padding-left: 0; }
+.tgap.wide input { width: 9.5em; }
+.tgap.xwide input { width: 15em; }
+.tgap input:focus { outline: none; }
+.tgap:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--accent)) 45%, transparent); }
+.tgap input:disabled { opacity: 1; -webkit-text-fill-color: currentColor; }
+.tgap.ok { background: var(--right-soft); border-bottom-color: var(--right); }
+.tgap.ok input, .tgap.ok .first { color: var(--right); }
+.tgap.no { background: var(--wrong-soft); border-bottom-color: var(--wrong); }
+.tgap.no input, .tgap.no .first { color: var(--wrong); }
+.check-row { display: flex; }
+.check-row .btn { flex: 1; }
+.fb-answer { font-weight: 800; }
+
+/* Confetti */
+.confetti { position: fixed; pointer-events: none; z-index: 50; width: 9px; height: 13px; border-radius: 2px; animation: fly .95s cubic-bezier(.2, .7, .4, 1) forwards; }
+@keyframes fly {
+  0% { transform: translate(0, 0) rotate(0); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell.pop, .shake, .chip.hot, .mega-stars .on, .tgap.shake { animation: none; }
+  .confetti { display: none; }
+  .btn, .opt, .lvl { transition: none; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCACnAPADASIAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAQFAQMGBwII/8QARBAAAQMDAQUDBwoEBAcBAAAAAQACAwQFEQYSITFBUQcTYRQWIlVxgZMVMjNCUlaRobHRI2LB4SRDU4I0NUZUcnPC8P/EABkBAQADAQEAAAAAAAAAAAAAAAACAwQBBf/EACURAQACAQQBBAMBAQAAAAAAAAABAhEDEiExQQQTIjIzUYFCcf/aAAwDAQACEQMRAD8A9mREQEREBERAREQEREBERAREQEREBERARFrnmipoXzTPbHGwbTnOOAAgxUVEVJTvnmeGRsGSSqmj7+61pqJwWQxH0Y+h6Hx5n3Dqquoqqu91sLmNcyN7v8JC4cBzmeP0C6mmp46WnZDGPRaOJ4k8yVXW26eOk5jbHPbciIrEBERAREQEREBERAREQEREBERAREQEREBERAREQERfL3tjYXvcGtaMkk4ACDEsrIYnSyvDGMGXOccABchcLj8sPNROTFaqf02scMGYj6zh06DnxWa+4P1BPhoLbZGfRadxqXD6x/k6DmtlDSNvFyERGaOieHSnlJLyb7G8T4rJfUnUt7dP60VpFI3WW1ho5GxOr6lmzPUgEMP+Wzk3+p8VbrCytURERiFEzmciIi64IiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIsE4GSgOcGtLnEAAZJPJclcLg7UEphiJFrYd54eVEf/A/P2L7udwdfZXUtO4i3MOJZAf8AiCPqj+Xqea+ZHRU1O6SQtjiibkngGgLD6jX/AMVadLT8y01ckrBFTUjQaupd3cAxub1cfBo3rp7XbobVb4qODJbGN7jxe48XHxJVTpeikmDr1VxlstS3ZgY7jFDy954n3LoldoaWyuZ7V6t904ERFoVCIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgLlrtczeJZLdRSFtKw7NTOw/SdWNP6n3LTqPUXfzG1UM2ztejNM08uYB/qtFHG2mgbDGwBrRgALD6j1GPjVp0tL/UpsUbIo2xxtDWNGA0DcAoTafzhvQtzd9DRkSVjhwe7i2P+pWbpWSUtMyOlb3lZUu7qmj6vPM+A4ldHYbPHZLVHRsd3km980p4yPO9zj71D0+lundPUJat8RhYgADAGAFlEXosgiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiIC47WOrYrdAaSmkBlflu47z1A8Op9ymaw1PTWK2Pe+T0n5axjTh0h6DoOpXhtZdZ7lXSVVS7akcdwHBo5AeCza2pMRtr2v0tPPMuvttSdoyzHIkPpHoc/kuupJO8IGRjkvNqCvGAJM93jBAPNdTaa/Ye2N8hBHzHfaXlzEtvbqrFHB8oy3m5StieAYqSJ+4xszvcR1d+i6L5Ztv/AHkX4rmoazvGDLg4/it4LDxYw+4LXT1O2MRDNbRzOZl0LbrQvOGVLHHwyVvimjnbtRPDgDjIXC0cEup7mYaNxgtVM7FTUR+iZ3f6bD06ld1DDHTwtiiYGMYMNa0bgFt0rWvGZjCi9YrOIlsREVqsREQEREBERAREQEWHOaxpc4gAbyTyVNNrHTcE/cS3yhbJnBaZ27igukWqnqYKuETU00c0buD43BwPvCiS3+zwTPhludJHIw7LmOmaC09CEFgi+I5GTRtkje17HDLXNOQQoD9R2SKV0Ul1o2yNdsuaZmgg9EFkirZNQ2aKR0cl1pGvYcOaZmggqVS11JWwGelqYp4gSC+N4cMjxCCQirYtR2WeZsMV1o3yOOy1rZmkk9F8nU1iBIN4osjd9O1dxJlaKnvdyraRvd0dsqatxbnMQAHszyUinv8AZ6uQR090pJXng1kzSf1U9RmJdiXh+oLDqu+Vz6ystdQX8GtA9Fg5ADoqbzO1G07ZtFTkfyr9ErRW1TKGjlqZA5zYml2GgknwVHsR+18a89YfnqW23C2gOrqKWnGQMvGN6sqOdxe17t5ZxaOYUjU1Tc73c3TvpKswsOfoXYJ5nhw5ewKBbyWyNe1khxyawlefeOeGqs8cuwtk2THKxzi1xI2Sc4UwQVOpK91ooHuipWH/AB1S36g/02n7R/JVFqgrLrUC32zaimd9NI5hAgZ9o559F6VaqS2WKhZb6V7GNi+dl2XOdzLj1Kt9Pobp3W6V62rt4jtLoqKmt1HFSUkLYYIm7LGNG4BSFgOBbtAgg78qO+40cZw6pjGf5l6fTCkotbJ4pCAyRrieQO9fJq6cEjvmZG7ig3IvhkjJRljw4DduKxJPFEQ18jWkjIBKDYi1sqIZHbLJGuPQFfE1ZT0/00zGe0pkb0WqOphlAMcjXZGdxXyKymJwJmH2FBvRazPE1geZGhpOAc7ivkVdOTgTMz7UHjXaFqmu1DrCPStDUPgomTtgl2DgyvJGc+AzwXq1LpmzUlpba47dTmlDNgsdGDtdSep8V4Lc4pLF2sSGry0MuQl2nc2OdkH8Cv0cCC3IOQd4Vt+IjCFe5eDMulT2ado1TQ08rzbO9G1C52QY3bx7xnj4LoO1XTovl3tLbTTw+WVUM0m0G4MwaA4Anmei5TtNa669p09HSDvJXd1AA3fl2P7r1O4Qmm1ppOnccujp5mE+yMBSmcYnyjEdw4fst1661zt05eZCyBztmB8m7uXZ+Yegz+BXYXez22XtUssjqKBxko53vzGMOc3GCepGSue7V+z8y95qW0RfxGjaq4WD5w+2PHr+KhdnWpqvUGrrPBW+nLQUU8QlJ3vacYz4jCTEWjdBzHxlB7aaanp9WUjoYY4zLShz9hoG0dojJ8V7Jp+lp6WwUMVPBHFH5Ow7LGgDJaMleP8AbgCNVUBxuNHx/wB5XslkcHWGgcCCDTR7/wDaFG30hKPtLk6C026Ptar3sooGltujkbiMbnF2C4dD4rzntEp4IO1ERQwxxsc6Aua1oAJJGdy9RoSH9q902TnYtkIdjkS47l5h2mgu7US0OLSe4AcOI8VLT+38cv06jtjstro7HR3GkpoaasFQIw6FoYXtIJOcccYC6XstuFfctEU01we+R7XuZHI/i5g4b+fT3LzXW8NxsWtKQ6immvdtGJIROcBzPrDA3ZH57l7daKihqrTSz20MFI+MGIMGAG9MclG3FIh2Psmqs1HUS0mnq6ogeWSRwlzXA8Ctl5ukNotstXK4DYadkE8Sqerrpavs9nrXnMklK5+SFntaOYWxHl5tTazvrD3r66aSIbnb8jfyKiULZqjuzBkyF+y0B2NrdwUR9f5TbzAfQPeB+A0DgPBdZaNPvobTbLrO7ZfPWNAjx9XfgnxXlRuvOO3oTtrC30ffTQVD6CuaWyOdskvGHAj6p9nJXuoKSmlu9seGDFS8tlLTjvANnAOOKh610u6sabvbmf4qMfxY2/5rRzH8w/NVdlvZudRa4JXHvIJuJHzgcftvWuJnTn27deGfEX+df6tdS3p0dQbdSlrIoAA9oONo4yG+zgrW2abo46Nj66FlVVSNBkfIM4J5AcgFyF3a+HWVVFNkNfM17fFrgMH+i9EkMz6MmlcwSlvoF4JbnxU9L5alpt4Q1PjSsQp6e01Fvv8AH5M0ut7mFwBOe5fwwM78H8lAu4bSXyYQfwhJC17g04Bdl2/HVZotS19dOynY2NkzpCz0gC0EEg8N/JR9Tvey/NBI30zMnhvy5R1bVnSma/tLTraNSNzqLTBHBbKdsbA0OYHHHMkbyVC1M1raSCoAxLHOwNeOIBO8Kxt3/Lab/wBTf0VPqirilshfA9r9iojaSOR2lff8c/8AFVPvD5trwIK+ta3vJoY/QJ3keiTgKLZW0Na5tTXbM7nMBHebxk7ycdVv0zPHDR1s8xwxpaXHHLC1V2l358rss7Gtf6fk8nzN/wBkj5v6LPWL7K2rzjwtnbutErGmtJpruKijkYKFzCTEDua/h6PgeYVRX93T1ddTwtMbNv5rSQBlozhYtN+mgrRRzxubIJRE9jjvDs4x4+1aL098d6rWtcWFzm4OM49ELmpeLaeY45dpWYvif06q408Js08Xdt2GQktbjgQN2FRWYNqq+m74iXYYXDaOcHA34Uur08I6OaUXOtJbG47yzB3f+KrtLzOkucQcd/dE/kFZqfkohT6Wbdbdn1u1jGyV8hpa6IYjqGDOR0cOYWi3U2vrZbmW4m01ndN2I6uSR7XY5Etxvx7VOn1dVwzyRDS94kDHFoeyJuHeI3r488qz7p3r4Tf3W3M4wzcZQ9KdnUFlucl7ulV8o3eVxeZi3DGE8S0dfFfV9sWqK7VlDd6KW3Mht+2IY5NvLw4YO1jh7lK88qz7p3r4Tf3WPPKs+6d6+E390zOcnDp2hzoQJWt2i30gN4zz9y4e0dnTbF2gvvtvkjZQSRPzT79pj3ch4Ky88qz7p3r4Tf3WPPKt+6V6+G391yMw7wxrvQtNrOhiHfeTVlPnuZsZGDxa4dFR2Ww9pNloWWyG6Wt9NGNmOSZrnOY3w3fqr3zyrvujefht/dPPKu+6N5+G3913M4w5x2m6a038hRVE9RVOrbjWv7yqqnjBeeQA5NHILhNQ9mepr/qZ97krbbG8uaWMaH4Abwyuu88q77o3n4bf3Qaxrz/0jefht/dImYnJMRMYY1LpCTWGl4qK6PhhuEXpsmgBLGP4c9+COKh6C01qPScTqCurKOpt2S5uyXB8Z8M8ld2jUFXc6zuJrBcKFuyXd7UNaG+zcVF1xqCGy2aXadhzm7wDvI5D3nd7MqFr7a8pRXdPDhu0XVEFfcora2dzaYH03N34b1x4/phWNLrfT81h+QWx1T6fuTG6RzsO2epOMBeSzTz11bJPIdqSVxc48h/Zer9nehAY4rtc4iI9z4IHj555PcOnQe9Y43zbjy2WrSteW2j0BTz00dXTW6fDhtRsq6rHsJaG59y6Gsst6mordSxsoyylIkftPI2n79w3cN6trjen0FT3LbXW1I2QduCPab7FG85pvUNz+CrdlI4UbrzyuKU1Bp2eVNY2XHpBjshc3No/utVQ3eheyOFz9ueI8j1b7eimecsvqK5/C/us+csvqK5/CH7qc7bdoxFo6fWotNQ32Jj2ymnq4h/DmaM7uhHMKNRDU9BAKeWmpqvZ3CVk2zn2gjct/nLL6iufwR+6z5ySepLn8H+65iuc+XfljCssulbhTXVldVTQMa2Rz+7YC5xyScE7hxKXvT95utyNS1tIGhoY0GR3zQc9PFWnnHJ6lufwf7oNRv8AU1y+Ao+3p7dvhLffOUfudTNpRTRx0TGBmwCJXZAxjoo0lguxsLKBraTvHSd7I4vOAQdwG7grPzhf6nuXwU84Xep7l8BdmtZ7RibQr7bYbrFQVVBVGmZHUscDJG4kg43biFIom6it9OKd9NT1WyMCVkuyD44I3KT8vu9UXH4KyL8fVVw+CkVrEREE2tPaFb9OTuu5u9xdF3wJcyGPeA7GNonmcfgodZp+91l0fWO8jDXOBLdt28AY6K6+XT6quHwU+XXeqrh8FJ06TGHYvaJykVTa6W1ujZHD5Q9uy5pedkZ478Ln7JYr3a64TSikkZjZ3PcC0fhvVx8uu9VV/wAFfUd5fJKxgtla3aONp0eAPFSmtbTEz4Ri1oiYjys0WUViAsLKIMIsogwiyiDCLKINFXVR0VLJUSnDWDPiegC8A1vqCe/3t0Eb9qONx2sHcXc/cBu/Fdv2naudAW2qhdmVxLfR+1zPu4e32KB2fdnzazu7pc480wO0xjh9OfH+Ufms95m9tsNOnEUrvlt7O+z5k7YrtdIswAh0MTx9KeTiPs9Bz4r1gAAYCNaGtDWgADcAFlXVrFYxCi95tOZERFJEREQEREBERAREQEREBERAREQEREBERAREQEREBUuqL5HY7TJMX4leCI+vt/8A3PCuHvaxhe4hrWjJJ5BcGbZNrjUBq59plppXbLeXekch/UqF5nGI7TpEZzPSi0foyXUdzdfLu13k216EZ/zMfV9nU8yvWWMbGwMY0Na0YAAwAFiKKOCJkUTGsjYA1rWjAAX2lKRWMF7zaRERTQEREBERAREQEREBERAREQEREBERAREQEREBERAREQVl2p5riG29jzHDJvnkB37P2R4nqp1PTxUsDIII2xxxjDWtG4BETBltREQEREBERAREQEREBERAREQEREBERAREQf/Z"></div>
+    <div class="top-text">
+      <span class="top-title" id="top-title"></span>
+      <span class="top-sub" id="top-sub"></span>
+    </div>
+  </header>
+
+  <!-- WELCOME -->
+  <section id="screen-welcome" class="card hero" hidden aria-labelledby="welcome-h">
+    <div class="big-emoji" aria-hidden="true">⚡</div>
+    <h1 id="welcome-h"></h1>
+    <p class="sub">Every vocabulary word and grammar point from Unit 1. Choose the word, then write it. Fill in the grammar gaps. Missed questions come back until you get them right.</p>
+    <div class="field">
+      <label for="student-name">What's your name?</label>
+      <input id="student-name" type="text" autocomplete="given-name" maxlength="30" placeholder="Type your name">
+    </div>
+    <button class="btn" id="btn-welcome" type="button">Let's go!</button>
+  </section>
+
+  <!-- MAP -->
+  <section id="screen-map" hidden>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card player" id="player"></div>
+      <div class="map-title"><h2>Choose a level</h2><small id="map-count"></small></div>
+      <div class="levels" id="levels"></div>
+      <div class="card" style="gap:8px">
+        <h3 style="font-size:1.1rem">How it works</h3>
+        <p>⭐ Answer every question. Missed ones come back in the next round until you get them right. Aim for ⭐⭐⭐ on every level before the exam.</p>
+        <p>✍️ In typing questions, check your spelling. Capital letters don't matter, and you can use short forms like <b>haven't</b> or long forms like <b>have not</b>.</p>
+        <p>🏅 Your first-try score gives your stars: 90% or more = ⭐⭐⭐, 70% or more = ⭐⭐, finished = ⭐.</p>
+        <p>🔥 Answer in a row to build a streak. Every correct answer gives you XP.</p>
+      </div>
+      <div class="tiny-links">
+        <button class="link" id="btn-rename" type="button">Change name</button>
+        <button class="link" id="btn-reset" type="button">Reset all progress</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="screen-play" hidden>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="play-top">
+        <button class="back" id="btn-back" type="button">← Map</button>
+        <div class="chips">
+          <span class="chip" id="streak-chip" title="Correct answers in a row">🔥 <span id="streak-n">0</span></span>
+          <span class="chip" title="XP">⚡ <span id="xp-n">0</span></span>
+        </div>
+      </div>
+      <div class="card" id="play-card">
+        <div class="lvl-banner">
+          <div class="lvl-icon" id="play-icon" aria-hidden="true"></div>
+          <div style="min-width:0">
+            <div class="lvl-name" id="play-name"></div>
+            <div class="r" id="play-round"></div>
+          </div>
+        </div>
+        <div class="board" id="board" aria-hidden="true"></div>
+        <div class="board-meta"><span id="progress-line"></span><span id="q-count"></span></div>
+        <span class="retry-tag" id="retry-tag" hidden></span>
+        <p class="q-note" id="q-note"></p>
+        <h2 class="q-text" id="q-text" tabindex="-1"></h2>
+        <div class="check-row" id="check-row" hidden><button class="btn" id="btn-tcheck" type="button">Check my answer</button></div>
+        <div class="opts" id="opts" role="group" aria-labelledby="q-text"></div>
+        <div id="builder" hidden>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="build-line" id="build-line" aria-live="polite"></div>
+            <div class="tiles" id="tiles"></div>
+            <div class="btn-row">
+              <button class="btn btn-ghost" id="btn-clear" type="button">Clear</button>
+              <button class="btn" id="btn-check" type="button">Check</button>
+            </div>
+          </div>
+        </div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+        <button class="btn" id="btn-next" type="button" hidden>Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BETWEEN ROUNDS -->
+  <section id="screen-between" class="card center" hidden aria-labelledby="between-h">
+    <div style="font-size:2.6rem" aria-hidden="true" id="between-emoji">💪</div>
+    <h2 id="between-h"></h2>
+    <div class="big-num" id="between-big"></div>
+    <p id="between-text"></p>
+    <div class="board" id="board-between" aria-hidden="true" style="width:100%"></div>
+    <div class="legend">
+      <span><i style="background:var(--gold)"></i>Right first time</span>
+      <span><i id="legend-later" style="background:var(--accent)"></i>Cleared later</span>
+      <span><i style="background:var(--wrong-soft);box-shadow:inset 0 0 0 2px var(--wrong)"></i>Still to clear</span>
+    </div>
+    <button class="btn" id="btn-next-round" type="button" style="width:100%"></button>
+  </section>
+
+  <!-- LEVEL COMPLETE -->
+  <section id="screen-done" class="card center" hidden aria-labelledby="done-h">
+    <span class="lvl-num" id="done-eyebrow"></span>
+    <h2 id="done-h" style="font-size:1.8rem"></h2>
+    <div class="mega-stars" id="done-stars" aria-hidden="true"></div>
+    <div>
+      <div class="muted" style="color:var(--muted)">First-try score</div>
+      <div class="big-num" id="done-big"></div>
+    </div>
+    <p class="rank-up" id="rank-up" hidden></p>
+    <div class="stats" id="done-stats"></div>
+    <div id="tricky-block" style="width:100%;display:flex;flex-direction:column;gap:10px">
+      <h3 style="font-size:1.2rem;text-align:left">Questions to revise</h3>
+      <ul class="tricky" id="tricky"></ul>
+    </div>
+    <div class="who" id="who"></div>
+    <div class="btn-row" style="width:100%">
+      <button class="btn btn-gold" id="btn-practice" type="button">Practice the tricky ones</button>
+      <button class="btn" id="btn-map" type="button">Back to the map</button>
+      <button class="btn btn-ghost" id="btn-replay" type="button">Play this level again</button>
+    </div>
+  </section>
+</div>
+
+<script id="game-data" type="application/json">
+{
+ "id": "terakki8-unit1-exam-v1",
+ "title": "Unit 1 Exam Power-Up",
+ "subtitle": "Grade 8 · Identity and Expression · Vocabulary & Use of English",
+ "bossCount": 30,
+ "bossPer": 1,
+ "levels": [
+  {
+   "key": "w1a-choose",
+   "group": "Vocabulary",
+   "name": "Week 1 Words A · Choose",
+   "icon": "🧊",
+   "color": "#2F80ED",
+   "note": "Choose the word that fits the sentence.",
+   "topic": "Identity & expression: conversation → selfish",
+   "questions": [
+    {
+     "q": "Ayşe and her new classmate had a long ___ about their favorite films.",
+     "answer": "conversation",
+     "wrong": [
+      "judgement",
+      "category",
+      "evolution"
+     ],
+     "hint": "Two people are talking together for a long time.",
+     "why": "A conversation is a talk between two or more people. We say \"have a conversation.\""
+    },
+    {
+     "q": "I don't know the answer, but I'll make a ___: is it Tokyo?",
+     "answer": "guess",
+     "wrong": [
+      "belief",
+      "muscle",
+      "surface"
+     ],
+     "hint": "The speaker isn't sure, but tries an answer anyway.",
+     "why": "A guess is an answer you give when you don't have enough information to be sure. We say \"make a guess.\""
+    },
+    {
+     "q": "Don't judge people by their ___. Someone who looks rich may not be rich at all.",
+     "answer": "appearance",
+     "wrong": [
+      "experience",
+      "conversation",
+      "evolution"
+     ],
+     "hint": "This is about how someone looks from the outside.",
+     "why": "Your appearance is the way you look on the outside: clothes, hair, face. Appearances don't always tell the truth."
+    },
+    {
+     "q": "Her strong ___ in fairness makes her stand up for students who are treated badly.",
+     "answer": "belief",
+     "wrong": [
+      "muscle",
+      "appearance",
+      "category"
+     ],
+     "hint": "It's an idea she holds deep inside and feels is true.",
+     "why": "A belief is something you feel strongly is true or right. We say \"a belief in something.\""
+    },
+    {
+     "q": "He said he was fine, but his ___ told a different story: his arms were crossed and he wouldn't stand up straight.",
+     "answer": "body language",
+     "wrong": [
+      "first impression",
+      "conversation",
+      "evolution"
+     ],
+     "hint": "Look at the clues: arms, standing. Which part of you is \"talking\"?",
+     "why": "Body language is how we show feelings with our body: how we stand, sit and move our arms."
+    },
+    {
+     "q": "Sharing food with guests is ___ in many cultures, so you will see it in lots of countries.",
+     "answer": "common",
+     "wrong": [
+      "remote",
+      "selfish",
+      "strict"
+     ],
+     "hint": "\"In lots of countries\": it happens often and many people share it.",
+     "why": "Common = happening often, or shared by many people."
+    },
+    {
+     "q": "Elif is very ___. She is always drawing, writing stories and inventing new games.",
+     "answer": "creative",
+     "wrong": [
+      "greedy",
+      "selfish",
+      "strict"
+     ],
+     "hint": "Drawing, stories, new games: she is full of new ideas.",
+     "why": "A creative person has lots of original, new ideas and likes making things."
+    },
+    {
+     "q": "When she opened the present, her ___ showed pure surprise: wide eyes and an open mouth.",
+     "answer": "facial expression",
+     "wrong": [
+      "first impression",
+      "belief",
+      "category"
+     ],
+     "hint": "Eyes and mouth: which part of the body is showing the feeling?",
+     "why": "A facial expression is a feeling shown on your face, like a smile or wide, surprised eyes."
+    },
+    {
+     "q": "My little brother is so ___ that he runs around the garden for hours without getting tired.",
+     "answer": "energetic",
+     "wrong": [
+      "loyal",
+      "considerate",
+      "intelligent"
+     ],
+     "hint": "He never gets tired. What does he have a lot of?",
+     "why": "Energetic = full of energy; active and lively."
+    },
+    {
+     "q": "Moving to a new country was a difficult ___, but I learned a lot from it.",
+     "answer": "experience",
+     "wrong": [
+      "muscle",
+      "category",
+      "tribe"
+     ],
+     "hint": "Something that happened to the speaker and taught them something.",
+     "why": "An experience is an event in your life that you remember or that affects you."
+    },
+    {
+     "q": "Some people ___ their feelings through music or art instead of words.",
+     "answer": "express",
+     "wrong": [
+      "introduce",
+      "guess",
+      "empathize"
+     ],
+     "hint": "They show their feelings to others in a different way.",
+     "why": "To express a feeling or idea = to show it or let other people know it, in words, music, art or actions."
+    },
+    {
+     "q": "At 14, Can is quite ___. He cooks his own breakfast and plans his own study time.",
+     "answer": "independent",
+     "wrong": [
+      "greedy",
+      "selfish",
+      "remote"
+     ],
+     "hint": "He does things for himself without help.",
+     "why": "Independent = able to look after yourself and make your own decisions, without help from others."
+    },
+    {
+     "q": "Every ___ in the class has a different story and a different personality.",
+     "answer": "individual",
+     "wrong": [
+      "muscle",
+      "surface",
+      "category"
+     ],
+     "hint": "We are talking about each single person.",
+     "why": "An individual is one single person, separate from the group."
+    },
+    {
+     "q": "She is very ___ and solves difficult math problems quickly.",
+     "answer": "intelligent",
+     "wrong": [
+      "loyal",
+      "energetic",
+      "greedy"
+     ],
+     "hint": "Solving hard problems quickly needs a clever mind.",
+     "why": "Intelligent = smart, clever; able to learn and understand things quickly."
+    },
+    {
+     "q": "Let me ___ you to my friend Mert. Mert, this is Deniz.",
+     "answer": "introduce",
+     "wrong": [
+      "express",
+      "guess",
+      "empathize"
+     ],
+     "hint": "Two people are meeting for the first time and the speaker says their names.",
+     "why": "To introduce someone = to tell people their name when they meet for the first time. \"Let me introduce you to…\""
+    },
+    {
+     "q": "A ___ friend stays with you, even when things are difficult.",
+     "answer": "loyal",
+     "wrong": [
+      "greedy",
+      "selfish",
+      "remote"
+     ],
+     "hint": "This friend never leaves you.",
+     "why": "Loyal = very reliable; a loyal friend sticks with you no matter what."
+    },
+    {
+     "q": "There are many small ___ in our face that help us smile and frown.",
+     "answer": "muscles",
+     "wrong": [
+      "surfaces",
+      "tribes",
+      "categories"
+     ],
+     "hint": "These are parts of the body that make it move.",
+     "why": "Muscles are the parts of the body that help us move. Our face has many of them."
+    },
+    {
+     "q": "He is so ___. He ate the whole pizza and didn't share any with his friends.",
+     "answer": "selfish",
+     "wrong": [
+      "loyal",
+      "considerate",
+      "independent"
+     ],
+     "hint": "He only thought about himself.",
+     "why": "Selfish = thinking only about yourself and not about other people."
+    }
+   ]
+  },
+  {
+   "key": "w1a-write",
+   "group": "Vocabulary",
+   "name": "Week 1 Words A · Write",
+   "icon": "✍️",
+   "color": "#2F80ED",
+   "note": "Write the missing word. The first letter is given.",
+   "topic": "Same words, now spell them",
+   "questions": [
+    {
+     "type": "type",
+     "q": "We sat in the café and had a long {conversation} about our summer holidays.",
+     "hint": "Two friends talking together for a long time.",
+     "why": "Conversation = a talk between two or more people."
+    },
+    {
+     "type": "type",
+     "q": "I'm not sure how old she is, but if I had to {guess}, I'd say about 40.",
+     "hint": "You don't know the answer for sure.",
+     "why": "Guess = give an answer without being sure. \"If I had to guess…\""
+    },
+    {
+     "type": "type",
+     "q": "He changed his {appearance} completely: new glasses, short hair and a beard.",
+     "hint": "Glasses, hair, beard: what changed?",
+     "why": "Appearance = the way someone looks on the outside."
+    },
+    {
+     "type": "type",
+     "q": "It is my {belief} that everyone deserves a second chance.",
+     "hint": "Something the speaker feels is true and right.",
+     "why": "Belief = something you strongly feel is true. Noun form of \"believe.\""
+    },
+    {
+     "type": "type",
+     "q": "Standing up straight and facing people is confident {body language}.",
+     "hint": "Two words. How does your body \"speak\"?",
+     "why": "Body language = showing feelings and attitudes with your body."
+    },
+    {
+     "type": "type",
+     "q": "Long, hot summers are {common} in the south of Turkey; they happen every year.",
+     "hint": "They happen often.",
+     "why": "Common = happening often; usual."
+    },
+    {
+     "type": "type",
+     "q": "Children are often very {creative}: they can make a castle out of an old box.",
+     "hint": "They have lots of new, original ideas.",
+     "why": "Creative = having original ideas and making new things."
+    },
+    {
+     "type": "type",
+     "q": "A smile is a {facial expression} that usually shows happiness.",
+     "hint": "Two words. Where do you see a smile?",
+     "why": "Facial expression = a feeling shown on the face."
+    },
+    {
+     "type": "type",
+     "q": "After a good night's sleep, I feel {energetic} and ready for a busy day.",
+     "hint": "Full of power and ready to move.",
+     "why": "Energetic = full of energy."
+    },
+    {
+     "type": "type",
+     "q": "Living abroad for a year was an amazing {experience}.",
+     "hint": "Something that happened to you and that you will remember.",
+     "why": "Experience = an event in your life that you remember or learn from."
+    },
+    {
+     "type": "type",
+     "q": "Writing in a diary helps me {express} my feelings.",
+     "hint": "To show your feelings to others or let them out.",
+     "why": "Express = show a feeling or idea in words, art, music or actions."
+    },
+    {
+     "type": "type",
+     "q": "My grandmother is 85, but she is still very {independent}; she does her own shopping and cooking.",
+     "hint": "She doesn't need help from anyone.",
+     "why": "Independent = able to take care of yourself without help."
+    },
+    {
+     "type": "type",
+     "q": "Each {individual} in our team brings something different.",
+     "hint": "One single person.",
+     "why": "Individual = one person, separate from the group."
+    },
+    {
+     "type": "type",
+     "q": "Ada is very {intelligent}; she learns new things faster than anyone in our class.",
+     "hint": "Clever, smart.",
+     "why": "Intelligent = smart; able to learn and understand quickly."
+    },
+    {
+     "type": "type",
+     "q": "On the first day, the teacher asked us to stand up and {introduce} ourselves.",
+     "hint": "Say your name to people who don't know you yet.",
+     "why": "Introduce yourself = tell new people your name and a little about you."
+    },
+    {
+     "type": "type",
+     "q": "My dog is very {loyal}; he waits by the door for me every day.",
+     "hint": "He always stays with you and never lets you down.",
+     "why": "Loyal = very reliable and faithful; always on your side."
+    },
+    {
+     "type": "type",
+     "q": "You use many {muscles} in your face when you smile.",
+     "hint": "Parts of the body that help you move. (plural)",
+     "why": "Muscles = parts of the body that make it move. Plural: muscles."
+    },
+    {
+     "type": "type",
+     "q": "Don't be so {selfish}! Think about other people for once.",
+     "hint": "Only thinking about yourself.",
+     "why": "Selfish = thinking only about yourself."
+    }
+   ]
+  },
+  {
+   "key": "w1b-choose",
+   "group": "Vocabulary",
+   "name": "Week 1 Words B · Choose",
+   "icon": "🎭",
+   "color": "#1A9FB0",
+   "note": "Choose the word that fits the sentence.",
+   "topic": "Identity & expression: strict → deceiving",
+   "questions": [
+    {
+     "q": "Our teacher is very ___. If you are even one minute late, you can't come into the class.",
+     "answer": "strict",
+     "wrong": [
+      "loyal",
+      "remote",
+      "universal"
+     ],
+     "hint": "This teacher is serious about rules.",
+     "why": "Strict = serious about rules and making sure people follow them."
+    },
+    {
+     "q": "Honesty and kindness are the most important ___ in our family.",
+     "answer": "values",
+     "wrong": [
+      "muscles",
+      "tribes",
+      "surfaces"
+     ],
+     "hint": "These are ideas the family thinks are important and worthy.",
+     "why": "Values = the things you see as important and worthy, like honesty or kindness."
+    },
+    {
+     "q": "The books in the library are put into ___ such as history, science and fiction.",
+     "answer": "categories",
+     "wrong": [
+      "tribes",
+      "muscles",
+      "values"
+     ],
+     "hint": "History, science, fiction: these are groups.",
+     "why": "A category is a group of things that share similar features. Plural: categories."
+    },
+    {
+     "q": "Curly hair is a family ___: my mother, my grandmother and I all have it.",
+     "answer": "characteristic",
+     "wrong": [
+      "category",
+      "tribe",
+      "surface"
+     ],
+     "hint": "It's a typical feature of the people in the family.",
+     "why": "A characteristic is a typical quality or feature of a person or thing."
+    },
+    {
+     "q": "It was very ___ of you to bring me soup when I was ill.",
+     "answer": "considerate",
+     "wrong": [
+      "greedy",
+      "selfish",
+      "strict"
+     ],
+     "hint": "The person thought carefully about someone else's needs.",
+     "why": "Considerate = thinking carefully about other people and their feelings."
+    },
+    {
+     "q": "Scientists believe that some facial expressions are a result of human ___ over a very long time.",
+     "answer": "evolution",
+     "wrong": [
+      "judgement",
+      "category",
+      "conversation"
+     ],
+     "hint": "This is about humans slowly changing over time.",
+     "why": "Evolution = the slow change of living things over a very long time."
+    },
+    {
+     "q": "You only get one chance to make a good ___, so smile when you meet new people.",
+     "answer": "first impression",
+     "wrong": [
+      "body language",
+      "surface",
+      "evolution"
+     ],
+     "hint": "What people think of you the very first time they meet you.",
+     "why": "A first impression is the opinion people form about you when they first meet you. \"Make a good first impression.\""
+    },
+    {
+     "q": "The ___ businessman wanted more and more money, even though he was already rich.",
+     "answer": "greedy",
+     "wrong": [
+      "considerate",
+      "loyal",
+      "universal"
+     ],
+     "hint": "He always wants more and is never happy with what he has.",
+     "why": "Greedy = wanting more money, food or things than you need."
+    },
+    {
+     "q": "Your name, your language and your culture are all part of your ___.",
+     "answer": "identity",
+     "wrong": [
+      "evolution",
+      "tribe",
+      "surface"
+     ],
+     "hint": "These things make you who you are.",
+     "why": "Identity = the qualities, beliefs and values that make a person who they are."
+    },
+    {
+     "q": "Try not to make a quick ___ about someone before you know them.",
+     "answer": "judgement",
+     "wrong": [
+      "category",
+      "muscle",
+      "evolution"
+     ],
+     "hint": "You decide what someone is like too fast.",
+     "why": "A judgement is a decision or opinion about someone or something. \"Make a judgement.\""
+    },
+    {
+     "q": "Mert has a friendly, funny ___, so everyone likes spending time with him.",
+     "answer": "personality",
+     "wrong": [
+      "surface",
+      "evolution",
+      "tribe"
+     ],
+     "hint": "This is about what kind of person he is.",
+     "why": "Personality = the kind of person you are: friendly, shy, funny and so on."
+    },
+    {
+     "q": "The scientists visited a ___ village high in the mountains, far away from any city.",
+     "answer": "remote",
+     "wrong": [
+      "universal",
+      "common",
+      "strict"
+     ],
+     "hint": "\"Far away from any city.\"",
+     "why": "Remote = far away from towns and cities."
+    },
+    {
+     "q": "When you first meet someone, you only see the ___: their clothes, their hair and their smile.",
+     "answer": "surface",
+     "wrong": [
+      "tribe",
+      "muscle",
+      "category"
+     ],
+     "hint": "Think of the iceberg: the part above the water.",
+     "why": "The surface is the top or outside layer of something. In the Identity Iceberg, it's what you can see right away."
+    },
+    {
+     "q": "Paul Ekman studied people from a remote ___ who had never had contact with Western cultures.",
+     "answer": "tribe",
+     "wrong": [
+      "muscle",
+      "surface",
+      "category"
+     ],
+     "hint": "This is a social group in a traditional society.",
+     "why": "A tribe is a social group of people in a traditional society."
+    },
+    {
+     "q": "Smiling when you are happy is ___: people do it in every culture in the world.",
+     "answer": "universal",
+     "wrong": [
+      "remote",
+      "greedy",
+      "strict"
+     ],
+     "hint": "\"Every culture in the world.\"",
+     "why": "Universal = present everywhere, without exception."
+    },
+    {
+     "q": "It is easier to ___ with people when you have had the same experience.",
+     "answer": "empathize",
+     "wrong": [
+      "introduce",
+      "express",
+      "guess"
+     ],
+     "hint": "You understand and share their feelings.",
+     "why": "Empathize (with) = understand and share another person's feelings."
+    },
+    {
+     "q": "Appearances can be ___: the quiet boy in the corner turned out to be the funniest person in the class.",
+     "answer": "deceiving",
+     "wrong": [
+      "universal",
+      "considerate",
+      "energetic"
+     ],
+     "hint": "What you see first is not the truth.",
+     "why": "Deceiving = giving someone a wrong idea. \"Appearances can be deceiving.\""
+    }
+   ]
+  },
+  {
+   "key": "w1b-write",
+   "group": "Vocabulary",
+   "name": "Week 1 Words B · Write",
+   "icon": "✍️",
+   "color": "#1A9FB0",
+   "note": "Write the missing word. The first letter is given.",
+   "topic": "Same words, now spell them",
+   "questions": [
+    {
+     "type": "type",
+     "q": "My parents are quite {strict}: I have to be home by 8 p.m. every night.",
+     "hint": "They have serious rules.",
+     "why": "Strict = serious about rules."
+    },
+    {
+     "type": "type",
+     "q": "Respect and honesty are two of my most important {values}.",
+     "hint": "Things you see as important and worthy. (plural)",
+     "why": "Values = what you believe is important in life."
+    },
+    {
+     "type": "type",
+     "q": "We sorted the words into three {categories|category}: nouns, verbs and adjectives.",
+     "hint": "Groups of things that are similar. (plural)",
+     "why": "Category = a group of similar things. Plural: categories (y → ies)."
+    },
+    {
+     "type": "type",
+     "q": "Kindness is her best {characteristic}; she is always helping people.",
+     "hint": "A typical quality of a person.",
+     "why": "Characteristic = a typical quality or feature."
+    },
+    {
+     "type": "type",
+     "q": "Please be {considerate} and turn your music down. Your sister is studying.",
+     "hint": "Think about other people's feelings.",
+     "why": "Considerate = thinking carefully about others."
+    },
+    {
+     "type": "type",
+     "q": "The {evolution} of the mobile phone has been very fast: from big, heavy phones to tiny smartphones.",
+     "hint": "Slow change and development over time.",
+     "why": "Evolution = a slow process of change over time."
+    },
+    {
+     "type": "type",
+     "q": "His {first impression} of the new school was good: everyone was friendly on day one.",
+     "hint": "Two words. What you think the very first time.",
+     "why": "First impression = your opinion of someone or something when you first meet or see them."
+    },
+    {
+     "type": "type",
+     "q": "Don't be {greedy}! Leave some cake for the others.",
+     "hint": "Wanting more than you need.",
+     "why": "Greedy = wanting more and more for yourself."
+    },
+    {
+     "type": "type",
+     "q": "Learning about my grandparents' village helped me understand my own {identity}.",
+     "hint": "Who you are.",
+     "why": "Identity = the qualities, beliefs and values that make you who you are."
+    },
+    {
+     "type": "type",
+     "q": "People often make a {judgement|judgment} about others in just a few seconds.",
+     "hint": "A decision or opinion about someone.",
+     "why": "Judgement = an opinion or decision. (Also spelled judgment.)"
+    },
+    {
+     "type": "type",
+     "q": "Twins can look the same, but each one has a different {personality}.",
+     "hint": "The kind of person you are inside.",
+     "why": "Personality = your character: shy, funny, kind and so on."
+    },
+    {
+     "type": "type",
+     "q": "They live on a {remote} island; the nearest town is five hours away by boat.",
+     "hint": "Very far away from towns and cities.",
+     "why": "Remote = far away from other places."
+    },
+    {
+     "type": "type",
+     "q": "On the {surface}, he seems calm, but inside he is very nervous.",
+     "hint": "The outside, what you can see.",
+     "why": "Surface = the top or outside layer. \"On the surface\" = from the outside."
+    },
+    {
+     "type": "type",
+     "q": "The {tribe} has lived in the rainforest for hundreds of years.",
+     "hint": "A social group in a traditional society.",
+     "why": "Tribe = a social group in a traditional society."
+    },
+    {
+     "type": "type",
+     "q": "Music is a {universal} language; people everywhere can enjoy it.",
+     "hint": "Everywhere, for everyone.",
+     "why": "Universal = shared by everyone, everywhere."
+    },
+    {
+     "type": "type",
+     "q": "Because I also changed schools last year, I can really {empathize|empathise} with the new student.",
+     "hint": "Understand and share someone's feelings.",
+     "why": "Empathize with someone = understand how they feel because you can imagine their situation."
+    },
+    {
+     "type": "type",
+     "q": "The weather looked sunny, but appearances can be {deceiving}: it was freezing outside.",
+     "hint": "It gave the wrong idea.",
+     "why": "Deceiving = giving a wrong belief or idea."
+    }
+   ]
+  },
+  {
+   "key": "w2-choose",
+   "group": "Vocabulary",
+   "name": "Week 2 Words · Choose",
+   "icon": "🧠",
+   "color": "#7B4DDB",
+   "note": "Choose the word that fits the sentence.",
+   "topic": "Memories & experiences",
+   "questions": [
+    {
+     "q": "Do you ___ the name of your first teacher?",
+     "answer": "remember",
+     "wrong": [
+      "remind",
+      "swap",
+      "participate"
+     ],
+     "hint": "Can you bring that name back into your mind yourself?",
+     "why": "Remember = keep something in your mind or bring it back to your mind. You remember something yourself."
+    },
+    {
+     "q": "This song always ___ me of my summer holidays in Bodrum.",
+     "answer": "reminds",
+     "wrong": [
+      "remembers",
+      "swaps",
+      "participates"
+     ],
+     "hint": "Something (the song) makes a person think of something else. Look at \"me of.\"",
+     "why": "Remind someone OF something = make them think of it. Remember never takes \"me of.\""
+    },
+    {
+     "q": "One ___ of learning a second language is that you can talk to more people.",
+     "answer": "benefit",
+     "wrong": [
+      "conflict",
+      "suburb",
+      "narrative"
+     ],
+     "hint": "It's a good thing that comes from learning a language.",
+     "why": "A benefit is an advantage, a good result."
+    },
+    {
+     "q": "My grandfather spent his ___ in a small village, and he still talks about the games he played there as a boy.",
+     "answer": "childhood",
+     "wrong": [
+      "heritage",
+      "conflict",
+      "narrative"
+     ],
+     "hint": "\"As a boy\": which time of life?",
+     "why": "Childhood = the time when you are a child."
+    },
+    {
+     "q": "Later in life, Jason Kim felt proud of his Korean ___: its food, language and traditions.",
+     "answer": "heritage",
+     "wrong": [
+      "suburb",
+      "conflict",
+      "participant"
+     ],
+     "hint": "Culture, values and traditions passed down through generations.",
+     "why": "Heritage = cultural traditions, objects and values passed down through generations."
+    },
+    {
+     "q": "One of my earliest ___ is baking cookies with my grandmother.",
+     "answer": "memories",
+     "wrong": [
+      "suburbs",
+      "conflicts",
+      "participants"
+     ],
+     "hint": "Something from the past that you still keep in your mind.",
+     "why": "A memory is something you remember from the past. Plural: memories."
+    },
+    {
+     "q": "I don't want to talk about it. It's a ___ problem.",
+     "answer": "personal",
+     "wrong": [
+      "vivid",
+      "foreign",
+      "traditional"
+     ],
+     "hint": "The problem is private; it's about the speaker's own life.",
+     "why": "Personal = about your own private life."
+    },
+    {
+     "q": "We had a very ___ afternoon in the park: the sun was shining and everyone was relaxed.",
+     "answer": "pleasant",
+     "wrong": [
+      "radical",
+      "foreign",
+      "distant"
+     ],
+     "hint": "Sun, relaxed people: it was nice.",
+     "why": "Pleasant = nice, enjoyable."
+    },
+    {
+     "q": "Have you seen her ___ photos? She posted them only yesterday.",
+     "answer": "recent",
+     "wrong": [
+      "distant",
+      "traditional",
+      "radical"
+     ],
+     "hint": "\"Only yesterday.\"",
+     "why": "Recent = from a time close to now."
+    },
+    {
+     "q": "Can we ___ seats? I can't see the board from here.",
+     "answer": "swap",
+     "wrong": [
+      "remind",
+      "participate",
+      "remember"
+     ],
+     "hint": "You give me yours and I give you mine.",
+     "why": "Swap = trade or exchange something."
+    },
+    {
+     "q": "For Bayram, my family always cooks ___ dishes that my great-grandmother used to make.",
+     "answer": "traditional",
+     "wrong": [
+      "radical",
+      "vivid",
+      "distant"
+     ],
+     "hint": "Dishes made in the same way for a very long time.",
+     "why": "Traditional = done in the same way for a long time, passed down in a culture."
+    },
+    {
+     "q": "The two brothers were often in ___ because they never agreed about anything.",
+     "answer": "conflict",
+     "wrong": [
+      "benefit",
+      "heritage",
+      "suburb"
+     ],
+     "hint": "They argued a lot.",
+     "why": "Conflict = a disagreement or an argument. \"In conflict (with someone).\""
+    },
+    {
+     "q": "My first day at primary school is only a ___ memory now; I can hardly remember it.",
+     "answer": "distant",
+     "wrong": [
+      "vivid",
+      "recent",
+      "radical"
+     ],
+     "hint": "It was a long time ago and is not clear any more.",
+     "why": "Distant = far away in time or space. A distant memory is from long ago."
+    },
+    {
+     "q": "Nurses need a lot of ___ because they must understand how their patients feel.",
+     "answer": "empathy",
+     "wrong": [
+      "conflict",
+      "heritage",
+      "childhood"
+     ],
+     "hint": "Understanding and sharing other people's feelings.",
+     "why": "Empathy = the ability to understand and share the feelings of others. (Verb: empathize.)"
+    },
+    {
+     "q": "On his first day in the USA, Jason was in a classroom full of ___ faces from a country that wasn't his own.",
+     "answer": "foreign",
+     "wrong": [
+      "traditional",
+      "vivid",
+      "radical"
+     ],
+     "hint": "The faces were from a different country.",
+     "why": "Foreign = from a country that is not your own."
+    },
+    {
+     "q": "This week we are writing a personal ___ about an important moment in our lives.",
+     "answer": "narrative",
+     "wrong": [
+      "suburb",
+      "conflict",
+      "heritage"
+     ],
+     "hint": "It's a type of story.",
+     "why": "A narrative is a story about events. A personal narrative is a true story from your own life."
+    },
+    {
+     "q": "Everyone is welcome to ___ in the school talent show.",
+     "answer": "participate",
+     "wrong": [
+      "remind",
+      "swap",
+      "remember"
+     ],
+     "hint": "Look at the word after the gap: \"in.\"",
+     "why": "Participate in something = take part in it."
+    },
+    {
+     "q": "Each ___ in the race gets a free T-shirt.",
+     "answer": "participant",
+     "wrong": [
+      "suburb",
+      "narrative",
+      "benefit"
+     ],
+     "hint": "A person who takes part.",
+     "why": "A participant is a person who takes part in something."
+    },
+    {
+     "q": "We don't live in the city center; we live in a quiet ___ about 30 minutes away.",
+     "answer": "suburb",
+     "wrong": [
+      "heritage",
+      "narrative",
+      "childhood"
+     ],
+     "hint": "An area outside the center where people live.",
+     "why": "A suburb is an area outside the city center where people live."
+    },
+    {
+     "q": "I have a very ___ memory of my first snowfall. I can still see every detail.",
+     "answer": "vivid",
+     "wrong": [
+      "distant",
+      "foreign",
+      "radical"
+     ],
+     "hint": "The memory is very clear.",
+     "why": "Vivid = very clear and bright, full of detail."
+    },
+    {
+     "q": "Changing his name, his clothes and his music all at once was a ___ change for Jason.",
+     "answer": "radical",
+     "wrong": [
+      "traditional",
+      "distant",
+      "foreign"
+     ],
+     "hint": "It was a very big change, very different from before.",
+     "why": "Radical = very different from the usual or traditional way; a big change."
+    }
+   ]
+  },
+  {
+   "key": "w2-write",
+   "group": "Vocabulary",
+   "name": "Week 2 Words · Write",
+   "icon": "✍️",
+   "color": "#7B4DDB",
+   "note": "Write the missing word. The first letter is given.",
+   "topic": "Same words, now spell them",
+   "questions": [
+    {
+     "type": "type",
+     "q": "I can't {remember} where I put my keys.",
+     "hint": "Bring something back into your mind.",
+     "why": "Remember = keep or bring something back into your mind."
+    },
+    {
+     "type": "type",
+     "q": "Please {remind} me to call Grandma tonight; I always forget.",
+     "hint": "Help someone not to forget.",
+     "why": "Remind someone to do something = help them remember."
+    },
+    {
+     "type": "type",
+     "q": "Regular exercise has many {benefits} for your health.",
+     "hint": "Good results. (plural)",
+     "why": "Benefit = an advantage, a good result. Plural: benefits."
+    },
+    {
+     "type": "type",
+     "q": "I had a happy {childhood}; I spent every summer playing by the sea.",
+     "hint": "The time when you were a child.",
+     "why": "Childhood = the period when you are a child."
+    },
+    {
+     "type": "type",
+     "q": "Turkish carpets are an important part of our cultural {heritage}.",
+     "hint": "Culture passed down through generations.",
+     "why": "Heritage = traditions and objects passed down through generations."
+    },
+    {
+     "type": "type",
+     "q": "I have no {memory} of my first birthday; I was too young.",
+     "hint": "Something you remember.",
+     "why": "Memory = something you remember."
+    },
+    {
+     "type": "type",
+     "q": "Can I ask you a {personal} question? How old are you?",
+     "hint": "About your own private life.",
+     "why": "Personal = about your own private life."
+    },
+    {
+     "type": "type",
+     "q": "The hotel staff were very friendly, so our stay was really {pleasant}.",
+     "hint": "Nice and enjoyable.",
+     "why": "Pleasant = nice, enjoyable."
+    },
+    {
+     "type": "type",
+     "q": "Have you heard her most {recent} song? It came out yesterday.",
+     "hint": "Close to now.",
+     "why": "Recent = from a time close to now."
+    },
+    {
+     "type": "type",
+     "q": "Let's {swap}: you take my pencil and I'll take your pen.",
+     "hint": "Exchange.",
+     "why": "Swap = trade or exchange."
+    },
+    {
+     "type": "type",
+     "q": "We wore {traditional} clothes for the folk dance show at school.",
+     "hint": "Clothes from the culture's past.",
+     "why": "Traditional = done or worn in the same way for a long time."
+    },
+    {
+     "type": "type",
+     "q": "The {conflict} between the two friends ended when they finally talked about the problem.",
+     "hint": "An argument or disagreement.",
+     "why": "Conflict = a disagreement or argument."
+    },
+    {
+     "type": "type",
+     "q": "Her old village is only a {distant} memory now; she left it seventy years ago.",
+     "hint": "Far away in time.",
+     "why": "Distant = far away in time or space."
+    },
+    {
+     "type": "type",
+     "q": "Reading other people's stories helps us feel {empathy} for them.",
+     "hint": "Understanding others' feelings. (noun)",
+     "why": "Empathy = the ability to understand and share others' feelings."
+    },
+    {
+     "type": "type",
+     "q": "Learning a {foreign} language opens many doors.",
+     "hint": "From another country.",
+     "why": "Foreign = from a country that is not your own."
+    },
+    {
+     "type": "type",
+     "q": "Her {narrative} was about the day she got lost in a big city.",
+     "hint": "A story.",
+     "why": "Narrative = a story about events."
+    },
+    {
+     "type": "type",
+     "q": "All students must {participate} in the science fair this year.",
+     "hint": "Take part.",
+     "why": "Participate in = take part in."
+    },
+    {
+     "type": "type",
+     "q": "Every {participant} in the storytelling program shared a personal story.",
+     "hint": "A person who takes part.",
+     "why": "Participant = a person who takes part."
+    },
+    {
+     "type": "type",
+     "q": "My cousins live in a green {suburb} outside Istanbul, with a big garden.",
+     "hint": "An area outside the city center.",
+     "why": "Suburb = a living area outside the city center."
+    },
+    {
+     "type": "type",
+     "q": "The colors in the painting were so {vivid} that they almost jumped off the wall.",
+     "hint": "Very bright and clear.",
+     "why": "Vivid = very bright and clear."
+    },
+    {
+     "type": "type",
+     "q": "The new teacher had some {radical} ideas, like having no homework at all.",
+     "hint": "Very new and different from the usual way.",
+     "why": "Radical = very different from traditional ways."
+    }
+   ]
+  },
+  {
+   "key": "w3-choose",
+   "group": "Vocabulary",
+   "name": "Week 3 Essay Words · Choose",
+   "icon": "📝",
+   "color": "#D9467A",
+   "note": "Choose the word that fits the sentence.",
+   "topic": "Opinion essay vocabulary",
+   "questions": [
+    {
+     "q": "\"Have you ever wondered why teenagers love their phones so much?\" This interesting first sentence is a good ___ for an essay.",
+     "answer": "hook",
+     "wrong": [
+      "conclusion",
+      "thesis",
+      "outline"
+     ],
+     "hint": "It's the opening line that catches the reader's interest.",
+     "why": "A hook is the first sentence of an essay. It grabs the reader's attention, often with a question or a surprising fact."
+    },
+    {
+     "q": "The last sentence of my introduction gives my main opinion: \"Schools should start later because students need more sleep.\" This sentence is my ___.",
+     "answer": "thesis",
+     "wrong": [
+      "hook",
+      "transition word",
+      "final thought"
+     ],
+     "hint": "It's the one sentence that tells the reader your main opinion.",
+     "why": "The thesis is the sentence that states your main opinion. It usually comes at the end of the introduction."
+    },
+    {
+     "q": "Read the essay ___ carefully: \"Should students wear school uniforms? Give your opinion.\"",
+     "answer": "prompt",
+     "wrong": [
+      "outline",
+      "detail",
+      "repetition"
+     ],
+     "hint": "This is the question or task the teacher gives you.",
+     "why": "The prompt is the question or instruction that tells you what to write about."
+    },
+    {
+     "q": "Before you start writing, take five minutes to ___ all your ideas on a piece of paper.",
+     "answer": "brainstorm",
+     "wrong": [
+      "revise",
+      "repeat",
+      "introduce"
+     ],
+     "hint": "Before writing: quickly collect lots of ideas.",
+     "why": "Brainstorm = write down as many ideas as you can, quickly, before you plan."
+    },
+    {
+     "q": "My ___ shows the plan of my essay: introduction, two body paragraphs and a conclusion.",
+     "answer": "outline",
+     "wrong": [
+      "hook",
+      "prompt",
+      "transition word"
+     ],
+     "hint": "It's a plan of the essay's parts.",
+     "why": "An outline is a plan that shows the order and main points of your essay."
+    },
+    {
+     "q": "My ___ starts with a hook and ends with my thesis.",
+     "answer": "introduction",
+     "wrong": [
+      "conclusion",
+      "body paragraph",
+      "final thought"
+     ],
+     "hint": "Which paragraph begins with a hook?",
+     "why": "The introduction is the first paragraph. It has the hook and the thesis."
+    },
+    {
+     "q": "Each ___ should give one reason for your opinion, with examples and details.",
+     "answer": "body paragraph",
+     "wrong": [
+      "introduction",
+      "conclusion",
+      "hook"
+     ],
+     "hint": "These paragraphs come in the middle of the essay.",
+     "why": "Body paragraphs are the middle paragraphs. Each one gives one reason and supports it."
+    },
+    {
+     "q": "The first sentence of a body paragraph, \"Firstly, uniforms save families money,\" is its ___.",
+     "answer": "topic sentence",
+     "wrong": [
+      "hook",
+      "final thought",
+      "prompt"
+     ],
+     "hint": "It tells the reader the main idea of that paragraph.",
+     "why": "A topic sentence is the first sentence of a body paragraph. It gives the main idea of the paragraph."
+    },
+    {
+     "q": "Your paragraph is too short. Add more ___ to explain your reason: who? where? how?",
+     "answer": "details",
+     "wrong": [
+      "hooks",
+      "prompts",
+      "outlines"
+     ],
+     "hint": "Small, specific pieces of information.",
+     "why": "Details are small, specific facts or pieces of information that explain an idea."
+    },
+    {
+     "q": "To support your reason, give real ___, like a story from your own life or something you have seen.",
+     "answer": "examples",
+     "wrong": [
+      "prompts",
+      "hooks",
+      "theses"
+     ],
+     "hint": "Things that show your reason is true.",
+     "why": "Examples are specific cases that show or prove your point."
+    },
+    {
+     "q": "\"However,\" \"Firstly\" and \"In addition\" are each a ___ that connects your ideas.",
+     "answer": "transition word",
+     "wrong": [
+      "topic sentence",
+      "hook",
+      "thesis"
+     ],
+     "hint": "Small linking words between ideas.",
+     "why": "A transition word links ideas and sentences: firstly, however, in addition, finally…"
+    },
+    {
+     "q": "In the ___, you repeat your opinion in new words and end the essay.",
+     "answer": "conclusion",
+     "wrong": [
+      "introduction",
+      "outline",
+      "prompt"
+     ],
+     "hint": "Which paragraph ends the essay?",
+     "why": "The conclusion is the last paragraph. It sums up your reasons and restates your opinion."
+    },
+    {
+     "q": "End your essay with a strong ___, such as \"Let's give students the sleep they need.\"",
+     "answer": "final thought",
+     "wrong": [
+      "topic sentence",
+      "prompt",
+      "outline"
+     ],
+     "hint": "The very last idea you leave the reader with.",
+     "why": "A final thought is the last sentence of the conclusion, an idea for the reader to remember."
+    },
+    {
+     "q": "In an ___ essay, you say what you think about a topic and explain why.",
+     "answer": "opinion",
+     "wrong": [
+      "outline",
+      "detail",
+      "prompt"
+     ],
+     "hint": "What you think about something.",
+     "why": "An opinion is what you think or believe about something. An opinion essay explains your view."
+    },
+    {
+     "q": "Your teacher wrote \"too much ___\" because you used the word \"good\" eight times.",
+     "answer": "repetition",
+     "wrong": [
+      "rewording",
+      "editing",
+      "detail"
+     ],
+     "hint": "Saying the same thing again and again.",
+     "why": "Repetition = using the same word or idea again and again."
+    },
+    {
+     "q": "Don't copy the prompt word for word. Use ___: say the same idea in your own words.",
+     "answer": "rewording",
+     "wrong": [
+      "repetition",
+      "brainstorm",
+      "editing"
+     ],
+     "hint": "Same idea, different words.",
+     "why": "Rewording = saying the same idea in different words."
+    },
+    {
+     "q": "After you finish your first draft, ___ it: make your ideas clearer and add better examples.",
+     "answer": "revise",
+     "wrong": [
+      "brainstorm",
+      "repeat",
+      "introduce"
+     ],
+     "hint": "Improve the ideas in your writing.",
+     "why": "Revise = change your writing to improve the ideas, order and examples."
+    },
+    {
+     "q": "During ___, I check my spelling, punctuation and grammar.",
+     "answer": "editing",
+     "wrong": [
+      "brainstorming",
+      "outline",
+      "repetition"
+     ],
+     "hint": "Fixing small mistakes at the end.",
+     "why": "Editing = checking and correcting spelling, punctuation and grammar."
+    }
+   ]
+  },
+  {
+   "key": "w3-write",
+   "group": "Vocabulary",
+   "name": "Week 3 Essay Words · Write",
+   "icon": "✍️",
+   "color": "#D9467A",
+   "note": "Write the missing word. The first letter is given.",
+   "topic": "Same words, now spell them",
+   "questions": [
+    {
+     "type": "type",
+     "q": "Start with a {hook}, like a question or a surprising fact, to catch the reader's interest.",
+     "hint": "The opening sentence that grabs attention.",
+     "why": "Hook = the first sentence that catches the reader's interest."
+    },
+    {
+     "type": "type",
+     "q": "My {thesis} is: \"Every student should learn to cook.\"",
+     "hint": "One sentence with your main opinion.",
+     "why": "Thesis = the main opinion of the whole essay."
+    },
+    {
+     "type": "type",
+     "q": "Read the {prompt} twice so that you answer the right question.",
+     "hint": "The question the teacher gives you.",
+     "why": "Prompt = the question or task you must write about."
+    },
+    {
+     "type": "type",
+     "q": "Let's {brainstorm} ideas together: say anything that comes into your head!",
+     "hint": "Quickly collect lots of ideas.",
+     "why": "Brainstorm = quickly write or say lots of ideas."
+    },
+    {
+     "type": "type",
+     "q": "Make an {outline} before you write so that your essay has a clear plan.",
+     "hint": "A plan of the essay.",
+     "why": "Outline = a plan showing the parts of the essay."
+    },
+    {
+     "type": "type",
+     "q": "My {introduction} begins with a question and ends with my opinion.",
+     "hint": "The first paragraph.",
+     "why": "Introduction = the first paragraph, with a hook and the thesis."
+    },
+    {
+     "type": "type",
+     "q": "Each {body paragraph} gives one reason and supports it with examples.",
+     "hint": "Two words. A middle paragraph.",
+     "why": "Body paragraph = a middle paragraph with one reason."
+    },
+    {
+     "type": "type",
+     "q": "Every body paragraph begins with a {topic sentence} that tells the reader the main idea.",
+     "hint": "Two words. The first sentence of a paragraph.",
+     "why": "Topic sentence = the first sentence of a paragraph, with its main idea."
+    },
+    {
+     "type": "type",
+     "q": "Your paragraph is too short. Add some {details|detail} to explain your reason.",
+     "hint": "Small, specific pieces of information.",
+     "why": "Details = specific facts that explain an idea."
+    },
+    {
+     "type": "type",
+     "q": "Give two {examples} from your own life to support your opinion.",
+     "hint": "Cases that show your point is true.",
+     "why": "Examples = specific cases that support your point."
+    },
+    {
+     "type": "type",
+     "q": "Use a {transition word} such as \"Moreover\" or \"However\" to link your ideas.",
+     "hint": "Two words. A linking word.",
+     "why": "Transition word = a word that links ideas."
+    },
+    {
+     "type": "type",
+     "q": "In the {conclusion}, sum up your reasons and restate your opinion.",
+     "hint": "The last paragraph.",
+     "why": "Conclusion = the last paragraph of the essay."
+    },
+    {
+     "type": "type",
+     "q": "My {final thought} was a question for the reader: \"What will you do?\"",
+     "hint": "Two words. The very last idea.",
+     "why": "Final thought = the last sentence that leaves the reader thinking."
+    },
+    {
+     "type": "type",
+     "q": "In my {opinion}, homework on weekends is a bad idea.",
+     "hint": "What you think.",
+     "why": "Opinion = what you think or believe. \"In my opinion…\""
+    },
+    {
+     "type": "type",
+     "q": "Avoid {repetition}: don't use the same word again and again.",
+     "hint": "Saying the same thing many times.",
+     "why": "Repetition = using the same word or idea again and again."
+    },
+    {
+     "type": "type",
+     "q": "{Rewording} the prompt in your own words is a good way to start your introduction.",
+     "hint": "Saying it in different words.",
+     "why": "Rewording = saying the same idea with different words."
+    },
+    {
+     "type": "type",
+     "q": "Read your first draft again and {revise} it to make your ideas clearer.",
+     "hint": "Improve your writing.",
+     "why": "Revise = improve the ideas, order and examples in your writing."
+    },
+    {
+     "type": "type",
+     "q": "I always leave time for {editing} so I can fix my spelling and punctuation mistakes.",
+     "hint": "Checking for small mistakes.",
+     "why": "Editing = correcting spelling, punctuation and grammar."
+    }
+   ]
+  },
+  {
+   "key": "w4-choose",
+   "group": "Vocabulary",
+   "name": "Week 4 Words · Choose",
+   "icon": "🏔️",
+   "color": "#E07B00",
+   "note": "Choose the word that fits the sentence.",
+   "topic": "Lives & challenges of others",
+   "questions": [
+    {
+     "q": "Louis Braille went blind after an ___ when he was three years old.",
+     "answer": "accident",
+     "wrong": [
+      "effort",
+      "vision",
+      "anxiety"
+     ],
+     "hint": "Something that happened by chance, not on purpose.",
+     "why": "An accident is something bad that happens by chance, not on purpose."
+    },
+    {
+     "q": "I can't ___ which club to join: football or drama?",
+     "answer": "decide",
+     "wrong": [
+      "cope",
+      "adapt",
+      "struggle"
+     ],
+     "hint": "You must choose between two things.",
+     "why": "Decide = make a choice."
+    },
+    {
+     "q": "Beethoven was a ___ composer; people still perform his music today.",
+     "answer": "great",
+     "wrong": [
+      "eager",
+      "frustrated",
+      "blind"
+     ],
+     "hint": "He was very important and very good.",
+     "why": "Great = very good, important, or of high quality."
+    },
+    {
+     "q": "If you work hard, you can ___ your goals.",
+     "answer": "achieve",
+     "wrong": [
+      "cope",
+      "adapt",
+      "struggle"
+     ],
+     "hint": "Reach a goal successfully.",
+     "why": "Achieve = succeed in reaching a goal."
+    },
+    {
+     "q": "Ray Charles and Stevie Wonder were famous ___ musicians who could not see.",
+     "answer": "blind",
+     "wrong": [
+      "eager",
+      "frustrated",
+      "ordinary"
+     ],
+     "hint": "\"Who could not see.\"",
+     "why": "Blind = unable to see."
+    },
+    {
+     "q": "Learning to read Braille was a big ___ for her, but she did it.",
+     "answer": "challenge",
+     "wrong": [
+      "effect",
+      "vision",
+      "depression"
+     ],
+     "hint": "Something difficult that she had to get through.",
+     "why": "A challenge is a difficult situation you must get through."
+    },
+    {
+     "q": "She made a big ___ to be kind to the new student.",
+     "answer": "effort",
+     "wrong": [
+      "vision",
+      "anxiety",
+      "accident"
+     ],
+     "hint": "She tried hard.",
+     "why": "Effort = hard work, trying hard. \"Make an effort.\""
+    },
+    {
+     "q": "If you keep practicing, you will ___ in the end.",
+     "answer": "succeed",
+     "wrong": [
+      "cope",
+      "adapt",
+      "overcome"
+     ],
+     "hint": "You will get the result you want.",
+     "why": "Succeed = achieve the result or aim you want."
+    },
+    {
+     "q": "Frida Kahlo ___ a great deal in her lifetime.",
+     "answer": "accomplished",
+     "wrong": [
+      "coped",
+      "adapted",
+      "decided"
+     ],
+     "hint": "She did and finished many important things.",
+     "why": "Accomplish = succeed in doing something. \"She accomplished a great deal\" = she achieved a lot."
+    },
+    {
+     "q": "When you move to a new country, it takes time to ___ to the new culture.",
+     "answer": "adapt",
+     "wrong": [
+      "cope",
+      "succeed",
+      "decide"
+     ],
+     "hint": "Look at the word after the gap: \"to.\"",
+     "why": "Adapt to something = change your behavior to fit a new situation."
+    },
+    {
+     "q": "Before big exams, many students feel ___: their hearts beat fast and they can't relax.",
+     "answer": "anxiety",
+     "wrong": [
+      "vision",
+      "effort",
+      "impact"
+     ],
+     "hint": "A nervous, tense feeling.",
+     "why": "Anxiety = a feeling of being nervous, worried and tense."
+    },
+    {
+     "q": "Yvonne found ways to ___ with losing her sight.",
+     "answer": "cope",
+     "wrong": [
+      "adapt",
+      "succeed",
+      "achieve"
+     ],
+     "hint": "Look at the word after the gap: \"with.\"",
+     "why": "Cope with something = deal well with something difficult."
+    },
+    {
+     "q": "Frida Kahlo experienced anxiety and ___ throughout her life.",
+     "answer": "depression",
+     "wrong": [
+      "vision",
+      "effort",
+      "accident"
+     ],
+     "hint": "Long-term feelings of deep sadness.",
+     "why": "Depression = long-term feelings of intense sadness. It is a mental illness."
+    },
+    {
+     "q": "A ___ is not always obvious when you first meet someone.",
+     "answer": "disability",
+     "wrong": [
+      "vision",
+      "effort",
+      "effect"
+     ],
+     "hint": "A condition that limits a person's abilities.",
+     "why": "A disability is a physical or mental condition that limits what a person can do easily."
+    },
+    {
+     "q": "Louis Braille was ___ to learn, even though he could not see.",
+     "answer": "eager",
+     "wrong": [
+      "great",
+      "blind",
+      "frustrated"
+     ],
+     "hint": "He really wanted to learn.",
+     "why": "Eager = strongly wanting to do or have something. \"Eager to learn.\""
+    },
+    {
+     "q": "Too much screen time can have a bad ___ on your sleep.",
+     "answer": "effect",
+     "wrong": [
+      "effort",
+      "vision",
+      "accident"
+     ],
+     "hint": "A result or change caused by something.",
+     "why": "An effect is a result or change caused by something. \"Have an effect on…\""
+    },
+    {
+     "q": "Moving to a new school had a big ___ on my life.",
+     "answer": "impact",
+     "wrong": [
+      "effort",
+      "vision",
+      "anxiety"
+     ],
+     "hint": "A strong influence that changed something.",
+     "why": "Impact = a strong effect or influence. \"Have an impact on…\""
+    },
+    {
+     "q": "With hard work and help from her friends, she was able to ___ her fear of speaking in public.",
+     "answer": "overcome",
+     "wrong": [
+      "achieve",
+      "accomplish",
+      "adapt"
+     ],
+     "hint": "She got past her fear.",
+     "why": "Overcome = get past a difficulty or a fear."
+    },
+    {
+     "q": "Many students ___ with math at first, but they get better with practice.",
+     "answer": "struggle",
+     "wrong": [
+      "succeed",
+      "decide",
+      "achieve"
+     ],
+     "hint": "\"At first\" it is very hard for them.",
+     "why": "Struggle (with) = find something very difficult and try hard against it."
+    },
+    {
+     "q": "Frida's paintings show her pain and ___ after the bus accident.",
+     "answer": "suffering",
+     "wrong": [
+      "vision",
+      "effort",
+      "effect"
+     ],
+     "hint": "A state of ongoing pain and distress.",
+     "why": "Suffering = ongoing pain, distress or difficulty."
+    },
+    {
+     "q": "Yvonne slowly lost her ___ and became blind.",
+     "answer": "vision",
+     "wrong": [
+      "effort",
+      "impact",
+      "challenge"
+     ],
+     "hint": "Which sense do blind people lose?",
+     "why": "Vision = your sense of sight."
+    },
+    {
+     "q": "I was ___ because I tried ten times and still couldn't solve the puzzle.",
+     "answer": "frustrated",
+     "wrong": [
+      "eager",
+      "great",
+      "blind"
+     ],
+     "hint": "How do you feel when something doesn't work again and again?",
+     "why": "Frustrated = annoyed and upset because you can't do what you want."
+    },
+    {
+     "q": "Talking openly about ___ helps people get the support they need.",
+     "answer": "mental illness",
+     "wrong": [
+      "vision",
+      "effort",
+      "accident"
+     ],
+     "hint": "A condition that affects a person's thinking or behavior.",
+     "why": "A mental illness is a health condition that affects how a person thinks, feels or behaves, such as depression."
+    }
+   ]
+  },
+  {
+   "key": "w4-write",
+   "group": "Vocabulary",
+   "name": "Week 4 Words · Write",
+   "icon": "✍️",
+   "color": "#E07B00",
+   "note": "Write the missing word. The first letter is given.",
+   "topic": "Same words, now spell them",
+   "questions": [
+    {
+     "type": "type",
+     "q": "I broke my arm in a bicycle {accident} last summer.",
+     "hint": "Something bad that happened by chance.",
+     "why": "Accident = something that happens by chance, not on purpose."
+    },
+    {
+     "type": "type",
+     "q": "It took me an hour to {decide} what to wear to the party.",
+     "hint": "Make a choice.",
+     "why": "Decide = make a choice."
+    },
+    {
+     "type": "type",
+     "q": "Thank you! You did a {great} job on the poster.",
+     "hint": "Very good.",
+     "why": "Great = very good."
+    },
+    {
+     "type": "type",
+     "q": "She worked hard all year to {achieve} her dream of joining the national team.",
+     "hint": "Reach a goal.",
+     "why": "Achieve = succeed in reaching a goal."
+    },
+    {
+     "type": "type",
+     "q": "Braille is a writing system that {blind} people read with their fingers.",
+     "hint": "People who can't see.",
+     "why": "Blind = unable to see."
+    },
+    {
+     "type": "type",
+     "q": "Running a marathon is a real {challenge}, but many people finish one.",
+     "hint": "Something difficult to do.",
+     "why": "Challenge = a difficult task you must get through."
+    },
+    {
+     "type": "type",
+     "q": "Learning a new language takes time and {effort}.",
+     "hint": "Hard work.",
+     "why": "Effort = hard work and trying."
+    },
+    {
+     "type": "type",
+     "q": "Ray Charles worked hard to {succeed} as a musician.",
+     "hint": "Get the result you want.",
+     "why": "Succeed = achieve your aim."
+    },
+    {
+     "type": "type",
+     "q": "By the time Braille died, he had {accomplished} something amazing.",
+     "hint": "Succeeded in doing. (past participle)",
+     "why": "Accomplish → accomplished = succeeded in doing something."
+    },
+    {
+     "type": "type",
+     "q": "Humans are good at finding ways to {adapt} to new situations.",
+     "hint": "Change to fit something new.",
+     "why": "Adapt to = change to fit a new situation."
+    },
+    {
+     "type": "type",
+     "q": "Breathing slowly can help reduce {anxiety} before a test.",
+     "hint": "A nervous, tense feeling.",
+     "why": "Anxiety = a feeling of worry and nervousness."
+    },
+    {
+     "type": "type",
+     "q": "Beethoven {coped} with his deafness by working on several musical projects at once.",
+     "hint": "Dealt with. (past tense)",
+     "why": "Cope with → coped with = dealt with something difficult."
+    },
+    {
+     "type": "type",
+     "q": "Feeling very sad for a long time can be a sign of {depression}.",
+     "hint": "Long-term deep sadness.",
+     "why": "Depression = long-term feelings of intense sadness."
+    },
+    {
+     "type": "type",
+     "q": "The school built ramps so that students with a physical {disability} can move around easily.",
+     "hint": "A condition that limits what someone can do.",
+     "why": "Disability = a condition that limits a person's abilities."
+    },
+    {
+     "type": "type",
+     "q": "The puppy was {eager} to play and ran to the door every time someone came home.",
+     "hint": "Really wanting to do something.",
+     "why": "Eager = strongly wanting to do something."
+    },
+    {
+     "type": "type",
+     "q": "The new rule had a positive {effect} on the class: everyone arrived on time.",
+     "hint": "A result. (noun)",
+     "why": "Effect = a result or change. Careful: effect is the noun; affect is usually the verb."
+    },
+    {
+     "type": "type",
+     "q": "Social media can have a huge {impact} on how teenagers see themselves.",
+     "hint": "A strong influence.",
+     "why": "Impact = a strong effect or influence."
+    },
+    {
+     "type": "type",
+     "q": "With practice, you can {overcome} your fear of making mistakes.",
+     "hint": "Get past a difficulty.",
+     "why": "Overcome = get past a problem or fear."
+    },
+    {
+     "type": "type",
+     "q": "Frida had to {struggle} with pain for most of her life.",
+     "hint": "Fight hard against something difficult.",
+     "why": "Struggle with = fight against something difficult."
+    },
+    {
+     "type": "type",
+     "q": "The war caused terrible {suffering} for many families.",
+     "hint": "Ongoing pain and distress.",
+     "why": "Suffering = ongoing pain or difficulty."
+    },
+    {
+     "type": "type",
+     "q": "The doctor tested my {vision} and said I need glasses.",
+     "hint": "Your sense of sight.",
+     "why": "Vision = sight."
+    },
+    {
+     "type": "type",
+     "q": "He felt {frustrated} when his computer crashed for the third time.",
+     "hint": "Annoyed because something keeps going wrong.",
+     "why": "Frustrated = annoyed and upset because you can't succeed."
+    },
+    {
+     "type": "type",
+     "q": "Doctors can help people with a {mental illness}, such as depression or anxiety.",
+     "hint": "Two words. A condition affecting thinking or feelings.",
+     "why": "Mental illness = a health condition that affects how someone thinks, feels or behaves."
+    }
+   ]
+  },
+  {
+   "key": "w5-choose",
+   "group": "Vocabulary",
+   "name": "Week 5 Words · Choose",
+   "icon": "🎨",
+   "color": "#1E9E5A",
+   "note": "Choose the word that fits the sentence.",
+   "topic": "Art & expression",
+   "questions": [
+    {
+     "q": "The painter used ___ colors like bright red and deep orange that stand out from far away.",
+     "answer": "bold",
+     "wrong": [
+      "ordinary",
+      "constant",
+      "confusing"
+     ],
+     "hint": "Strong colors that stand out.",
+     "why": "Bold = strong and vivid; standing out."
+    },
+    {
+     "q": "What a ___ idea! Let's do it.",
+     "answer": "brilliant",
+     "wrong": [
+      "depressing",
+      "ordinary",
+      "abstract"
+     ],
+     "hint": "An excellent idea.",
+     "why": "Brilliant = excellent; of great quality."
+    },
+    {
+     "q": "This ___ shows green hills, a river and a big sky.",
+     "answer": "landscape",
+     "wrong": [
+      "portrait",
+      "sculpture",
+      "installation"
+     ],
+     "hint": "A picture of nature and countryside.",
+     "why": "A landscape is a picture of natural scenery: hills, rivers, sky."
+    },
+    {
+     "q": "The artist turned an ___ object, a banana, into a famous work of art.",
+     "answer": "ordinary",
+     "wrong": [
+      "abstract",
+      "dynamic",
+      "bold"
+     ],
+     "hint": "A banana is a normal, everyday thing.",
+     "why": "Ordinary = plain, normal, everyday."
+    },
+    {
+     "q": "Her ideas are always fresh and ___; nobody has thought of them before.",
+     "answer": "original",
+     "wrong": [
+      "ordinary",
+      "constant",
+      "realistic"
+     ],
+     "hint": "New, not copied.",
+     "why": "Original = new, fresh, not copied from anyone."
+    },
+    {
+     "q": "The painting is so ___ that it looks like a photograph.",
+     "answer": "realistic",
+     "wrong": [
+      "abstract",
+      "confusing",
+      "ordinary"
+     ],
+     "hint": "It looks just like real life.",
+     "why": "Realistic = showing things as they are in real life."
+    },
+    {
+     "q": "The Thinker is a famous ___ of a man sitting with his chin on his hand.",
+     "answer": "sculpture",
+     "wrong": [
+      "landscape",
+      "installation",
+      "narrative"
+     ],
+     "hint": "It's a 3D work of art made of stone or metal.",
+     "why": "A sculpture is a 3D work of art, made by shaping stone, metal, wood or clay."
+    },
+    {
+     "q": "This ___ painting doesn't show real things, just shapes and colors.",
+     "answer": "abstract",
+     "wrong": [
+      "realistic",
+      "detailed",
+      "ordinary"
+     ],
+     "hint": "No real objects, only shapes and colors.",
+     "why": "Abstract art uses shapes, lines and colors instead of showing real objects."
+    },
+    {
+     "q": "I don't understand this artwork at all. It's really ___.",
+     "answer": "confusing",
+     "wrong": [
+      "brilliant",
+      "realistic",
+      "moving"
+     ],
+     "hint": "The speaker can't understand it.",
+     "why": "Confusing = difficult to understand; unclear."
+    },
+    {
+     "q": "There was a ___ noise from the road outside; it didn't stop all night.",
+     "answer": "constant",
+     "wrong": [
+      "bold",
+      "unique",
+      "abstract"
+     ],
+     "hint": "\"It didn't stop.\"",
+     "why": "Constant = continuing without stopping."
+    },
+    {
+     "q": "The painting is full of dark gray colors and sad faces. I find it quite ___.",
+     "answer": "depressing",
+     "wrong": [
+      "brilliant",
+      "dynamic",
+      "bold"
+     ],
+     "hint": "It makes the speaker feel sad.",
+     "why": "Depressing = making you feel sad or gloomy."
+    },
+    {
+     "q": "The drawing is very ___: you can see every leaf on every tree.",
+     "answer": "detailed",
+     "wrong": [
+      "abstract",
+      "constant",
+      "confusing"
+     ],
+     "hint": "It has lots of small, specific parts.",
+     "why": "Detailed = with many small, specific features."
+    },
+    {
+     "q": "The painting is full of movement and energy. It feels very ___.",
+     "answer": "dynamic",
+     "wrong": [
+      "ordinary",
+      "depressing",
+      "detailed"
+     ],
+     "hint": "Movement and energy.",
+     "why": "Dynamic = full of energy and movement."
+    },
+    {
+     "q": "The film was so ___ that half the audience was crying at the end.",
+     "answer": "moving",
+     "wrong": [
+      "confusing",
+      "abstract",
+      "constant"
+     ],
+     "hint": "It caused strong emotions.",
+     "why": "Moving = causing strong feelings, often sadness or sympathy."
+    },
+    {
+     "q": "Frida Kahlo painted many self-___: pictures of her own face.",
+     "answer": "portraits",
+     "wrong": [
+      "landscapes",
+      "sculptures",
+      "installations"
+     ],
+     "hint": "Pictures of a person's face.",
+     "why": "A portrait is a picture of a person. A self-portrait is a picture an artist makes of themselves."
+    },
+    {
+     "q": "Every person's fingerprints are ___; no two are exactly the same.",
+     "answer": "unique",
+     "wrong": [
+      "ordinary",
+      "constant",
+      "realistic"
+     ],
+     "hint": "There is only one of each.",
+     "why": "Unique = the only one of its kind."
+    },
+    {
+     "q": "Yayoi Kusama's The Obliteration Room is an art ___ that visitors can walk into and change with stickers.",
+     "answer": "installation",
+     "wrong": [
+      "portrait",
+      "landscape",
+      "sculpture"
+     ],
+     "hint": "A whole room or space you can walk into.",
+     "why": "An installation is a work of art that fills a space; visitors can often walk into it or interact with it."
+    }
+   ]
+  },
+  {
+   "key": "w5-write",
+   "group": "Vocabulary",
+   "name": "Week 5 Words · Write",
+   "icon": "✍️",
+   "color": "#1E9E5A",
+   "note": "Write the missing word. The first letter is given.",
+   "topic": "Same words, now spell them",
+   "questions": [
+    {
+     "type": "type",
+     "q": "The poster uses {bold} letters so you can read it from across the room.",
+     "hint": "Strong and easy to see.",
+     "why": "Bold = strong and standing out."
+    },
+    {
+     "type": "type",
+     "q": "Your essay is {brilliant}! It's the best one in the class.",
+     "hint": "Excellent.",
+     "why": "Brilliant = excellent."
+    },
+    {
+     "type": "type",
+     "q": "He painted a {landscape} of the mountains near his village.",
+     "hint": "A painting of nature.",
+     "why": "Landscape = a picture of natural scenery."
+    },
+    {
+     "type": "type",
+     "q": "It was just an {ordinary} day; nothing special happened.",
+     "hint": "Normal, everyday.",
+     "why": "Ordinary = normal, nothing special."
+    },
+    {
+     "type": "type",
+     "q": "This is the {original} painting; the one in the shop is only a copy.",
+     "hint": "The first one, not a copy.",
+     "why": "Original = the first one; not copied."
+    },
+    {
+     "type": "type",
+     "q": "Her drawings of animals are so {realistic} that they look alive.",
+     "hint": "Like real life.",
+     "why": "Realistic = true to real life."
+    },
+    {
+     "type": "type",
+     "q": "There is a huge stone {sculpture} of a horse in the middle of the square.",
+     "hint": "A 3D work of art.",
+     "why": "Sculpture = a 3D work of art in stone, metal, wood or clay."
+    },
+    {
+     "type": "type",
+     "q": "{Abstract} art uses shapes, lines and colors instead of showing real objects.",
+     "hint": "Not showing real things.",
+     "why": "Abstract = not showing real objects; shapes and colors only."
+    },
+    {
+     "type": "type",
+     "q": "The instructions were so {confusing} that nobody knew what to do.",
+     "hint": "Hard to understand.",
+     "why": "Confusing = unclear, hard to understand."
+    },
+    {
+     "type": "type",
+     "q": "The baby needs {constant} attention; you can't leave him alone for a minute.",
+     "hint": "Without stopping.",
+     "why": "Constant = continuing without a pause."
+    },
+    {
+     "type": "type",
+     "q": "Rainy Monday mornings can be a bit {depressing}.",
+     "hint": "Making you feel sad.",
+     "why": "Depressing = making you feel sad or gloomy."
+    },
+    {
+     "type": "type",
+     "q": "The map was very {detailed}, so we could see every small street.",
+     "hint": "With many small parts.",
+     "why": "Detailed = with many small, specific features."
+    },
+    {
+     "type": "type",
+     "q": "The dancers gave a {dynamic} performance, full of energy and fast movements.",
+     "hint": "Full of energy and movement.",
+     "why": "Dynamic = full of energy and movement."
+    },
+    {
+     "type": "type",
+     "q": "Her speech about her grandmother was so {moving} that I cried.",
+     "hint": "Causing strong feelings.",
+     "why": "Moving = causing strong emotions."
+    },
+    {
+     "type": "type",
+     "q": "The museum has a {portrait} of the queen in the main hall.",
+     "hint": "A picture of a person.",
+     "why": "Portrait = a picture of a person."
+    },
+    {
+     "type": "type",
+     "q": "Her painting style is {unique}; nobody else paints like her.",
+     "hint": "One of a kind.",
+     "why": "Unique = the only one of its kind."
+    },
+    {
+     "type": "type",
+     "q": "The museum's new {installation} fills a whole room with lights and mirrors.",
+     "hint": "Art that fills a space.",
+     "why": "Installation = a work of art that fills a space."
+    }
+   ]
+  },
+  {
+   "key": "g-present",
+   "group": "Use of English",
+   "name": "Now or Always?",
+   "icon": "⏱️",
+   "color": "#2F80ED",
+   "note": "Write the correct form of the word(s) in brackets.",
+   "topic": "Present simple vs present continuous (1.1)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "Look! It {=is raining|'s raining} (rain) again.",
+     "hint": "\"Look!\" means it is happening right now.",
+     "why": "Present continuous (am/is/are + -ing) for actions happening now: It is raining."
+    },
+    {
+     "type": "type",
+     "q": "My brother usually {=walks} (walk) to school, but today he {=is taking|'s taking} (take) the bus.",
+     "hint": "\"Usually\" = a habit. \"Today\" = something different, happening around now.",
+     "why": "Present simple for habits (usually walks); present continuous for a temporary action now (today he is taking)."
+    },
+    {
+     "type": "type",
+     "q": "Water {=boils} (boil) at 100°C.",
+     "hint": "This is a fact that is always true.",
+     "why": "Present simple for facts and general truths. He/she/it → add -s: boils."
+    },
+    {
+     "type": "type",
+     "q": "Please be quiet. I {=am studying|'m studying} (study) for my exam.",
+     "hint": "\"Please be quiet\": the action is happening at this moment.",
+     "why": "Present continuous for an action happening at the moment of speaking."
+    },
+    {
+     "type": "type",
+     "q": "My sister {=doesn't like|does not like} (not / like) spicy food.",
+     "hint": "A fact about her. \"Like\" is a state verb.",
+     "why": "Present simple negative with he/she/it: doesn't + base verb. State verbs like \"like\" don't usually take -ing."
+    },
+    {
+     "type": "type",
+     "q": "What {=are you doing} (you / do) right now? Can you help me?",
+     "hint": "\"Right now\" is the clue.",
+     "why": "Present continuous question: What + are + you + doing?"
+    },
+    {
+     "type": "type",
+     "q": "How often {=do you visit} (you / visit) your grandparents?",
+     "hint": "\"How often\" asks about a habit.",
+     "why": "Present simple question for habits: do + you + base verb."
+    },
+    {
+     "type": "type",
+     "q": "These days, my brother {=is learning|'s learning} (learn) to play the guitar.",
+     "hint": "\"These days\" = something happening around now, not forever.",
+     "why": "Present continuous with \"these days / nowadays\" for things happening around now."
+    },
+    {
+     "type": "type",
+     "q": "I {=think} (think) this film is brilliant.",
+     "hint": "Here \"think\" gives an opinion. Opinion verbs are state verbs.",
+     "why": "Think = believe (opinion) → present simple: I think it's brilliant. (\"I'm thinking about…\" = using your mind now.)"
+    },
+    {
+     "type": "type",
+     "q": "You look worried. What {=are you thinking} (you / think) about?",
+     "hint": "Here \"think\" means using your mind right now.",
+     "why": "Think about = using your mind at this moment → present continuous: What are you thinking about?"
+    },
+    {
+     "type": "type",
+     "q": "She {=never eats} (never / eat) breakfast, but today she {=is eating|'s eating} (eat) an omelet because she's very hungry.",
+     "hint": "\"Never\" = a habit. \"Today\" = a change happening now.",
+     "why": "Present simple with frequency adverbs (never eats); present continuous for today's different action (is eating)."
+    },
+    {
+     "type": "type",
+     "q": "I {=know} (know) the answer!",
+     "hint": "\"Know\" is a state verb, not an action.",
+     "why": "State verbs (know, believe, like, want, understand) use present simple, not -ing."
+    },
+    {
+     "type": "type",
+     "q": "My cousin {=is staying|'s staying} (stay) with us this week.",
+     "hint": "\"This week\" = a temporary situation.",
+     "why": "Present continuous for temporary situations around now."
+    },
+    {
+     "type": "type",
+     "q": "The first train {=leaves} (leave) at 6:15 every morning.",
+     "hint": "A timetable that is the same every day.",
+     "why": "Present simple for timetables and schedules."
+    },
+    {
+     "type": "type",
+     "q": "Nobody {=believes} (believe) that our team will win.",
+     "hint": "\"Believe\" is a state verb. \"Nobody\" takes a singular verb.",
+     "why": "State verb → present simple. Nobody is singular: nobody believes."
+    },
+    {
+     "type": "type",
+     "q": "At the moment, I {=am reading|'m reading} (read) a book about first impressions.",
+     "hint": "\"At the moment.\"",
+     "why": "Present continuous with \"at the moment.\""
+    }
+   ]
+  },
+  {
+   "key": "g-perfect",
+   "group": "Use of English",
+   "name": "Then or Up to Now?",
+   "icon": "📅",
+   "color": "#1A9FB0",
+   "note": "Write the correct form of the word(s) in brackets.",
+   "topic": "Past simple vs present perfect (1.5)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "They {=arrived} (arrive) in Kuala Lumpur a week ago.",
+     "hint": "\"A week ago\" is a finished time in the past.",
+     "why": "Past simple (verb 2) with finished past times: ago, yesterday, last week, in 2015."
+    },
+    {
+     "type": "type",
+     "q": "I {=have lived|'ve lived} (live) in Istanbul since 2015.",
+     "hint": "\"Since 2015\": it started in the past and is still true now.",
+     "why": "Present perfect (have/has + verb 3) with since/for for situations that continue until now."
+    },
+    {
+     "type": "type",
+     "q": "{=Have} you ever {=been} (be) to Japan?",
+     "hint": "\"Ever\" asks about your whole life up to now.",
+     "why": "Present perfect for life experiences: Have you ever been…? (verb 3 of be = been)."
+    },
+    {
+     "type": "type",
+     "q": "We {=moved} (move) to a new house last summer.",
+     "hint": "\"Last summer\" is finished.",
+     "why": "Past simple with \"last …\"."
+    },
+    {
+     "type": "type",
+     "q": "The children {=haven't woken up|have not woken up} (not / wake up) yet.",
+     "hint": "\"Yet\" goes with negatives and questions.",
+     "why": "Present perfect with \"yet\": haven't + verb 3 (wake → woke → woken)."
+    },
+    {
+     "type": "type",
+     "q": "She {=has already finished|'s already finished} (already / finish) her homework.",
+     "hint": "\"Already\" goes between has/have and verb 3.",
+     "why": "Present perfect with \"already\": has + already + verb 3."
+    },
+    {
+     "type": "type",
+     "q": "When I was a child, I {=lived} (live) in England for two years.",
+     "hint": "\"When I was a child\" is a finished time.",
+     "why": "Past simple for finished periods in the past, even with \"for.\""
+    },
+    {
+     "type": "type",
+     "q": "My friends from America {=haven't called|have not called} (not / call) me recently.",
+     "hint": "\"Recently\" connects the past to now.",
+     "why": "Present perfect with \"recently, lately, so far.\""
+    },
+    {
+     "type": "type",
+     "q": "I {=have just seen|'ve just seen} (just / see) Mert in the corridor. He's looking for you.",
+     "hint": "\"Just\" = a very short time ago, important now.",
+     "why": "Present perfect with \"just\": have + just + verb 3 (see → saw → seen)."
+    },
+    {
+     "type": "type",
+     "q": "Our team {=won} (win) the match yesterday.",
+     "hint": "\"Yesterday.\"",
+     "why": "Past simple with yesterday. Win → won (irregular)."
+    },
+    {
+     "type": "type",
+     "q": "We {=have known|'ve known} (know) each other for six years.",
+     "hint": "\"For six years\" and they still know each other.",
+     "why": "Present perfect with \"for\" + a period of time up to now. Know is a state verb, so no -ing."
+    },
+    {
+     "type": "type",
+     "q": "How many countries {=have you visited} (you / visit) so far?",
+     "hint": "\"So far\" = up to now.",
+     "why": "Present perfect with \"so far\"; \"how many\" asks about a number of experiences."
+    },
+    {
+     "type": "type",
+     "q": "{=Did} you {=go} (go) to the concert last night?",
+     "hint": "\"Last night\" is finished.",
+     "why": "Past simple question: Did + subject + base verb (go, not went)."
+    },
+    {
+     "type": "type",
+     "q": "Lina {=has learned|has learnt|'s learned|'s learnt} (learn) a lot of English since she arrived.",
+     "hint": "\"Since she arrived\": from then until now.",
+     "why": "Present perfect with \"since\" + a past moment."
+    },
+    {
+     "type": "type",
+     "q": "I {=haven't seen|have not seen} (not / see) my old friends for two months.",
+     "hint": "\"For two months\" up to now.",
+     "why": "Present perfect negative with \"for.\""
+    },
+    {
+     "type": "type",
+     "q": "Shakespeare {=wrote} (write) Romeo and Juliet.",
+     "hint": "Shakespeare's life is finished.",
+     "why": "Past simple for finished events and people from the past. Write → wrote."
+    }
+   ]
+  },
+  {
+   "key": "g-ppc",
+   "group": "Use of English",
+   "name": "How Many or How Long?",
+   "icon": "⏳",
+   "color": "#7B4DDB",
+   "note": "Write the correct form of the word(s) in brackets.",
+   "topic": "Present perfect simple vs continuous (1.6)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "Joseph looks stressed. He {=has been studying|'s been studying} (study) for nearly three hours!",
+     "hint": "\"For nearly three hours\": the activity has continued until now.",
+     "why": "Present perfect continuous (have/has been + -ing) for an activity that has continued until now; focus on how long."
+    },
+    {
+     "type": "type",
+     "q": "I {=have visited|'ve visited} (visit) Paris three times this year.",
+     "hint": "\"Three times\" = how many → a result.",
+     "why": "Present perfect simple for how many / how many times."
+    },
+    {
+     "type": "type",
+     "q": "How long {=have you been learning} (you / learn) English?",
+     "hint": "\"How long\" + an activity that is still going on.",
+     "why": "How long + present perfect continuous: How long have you been learning…?"
+    },
+    {
+     "type": "type",
+     "q": "How many times {=have you taken} (you / take) the entrance exam?",
+     "hint": "\"How many times\" = a number.",
+     "why": "How many times + present perfect simple (take → took → taken)."
+    },
+    {
+     "type": "type",
+     "q": "I {=have known|'ve known} (know) Simon for five years.",
+     "hint": "\"Know\" is a state verb.",
+     "why": "State verbs (know, be, like, believe) use present perfect simple, never continuous: have known, not have been knowing."
+    },
+    {
+     "type": "type",
+     "q": "It {=has been raining|'s been raining} (rain) all morning, and the streets are wet.",
+     "hint": "\"All morning\": an activity that went on and on.",
+     "why": "Present perfect continuous for a long, continuing activity with visible results now."
+    },
+    {
+     "type": "type",
+     "q": "She {=has written|'s written} (write) three emails so far today.",
+     "hint": "\"Three emails\" = a number, a result.",
+     "why": "Present perfect simple for completed results you can count."
+    },
+    {
+     "type": "type",
+     "q": "We {=have been waiting|'ve been waiting} (wait) for the bus for twenty minutes!",
+     "hint": "\"For twenty minutes\" and still waiting.",
+     "why": "Present perfect continuous for how long an activity has been going on."
+    },
+    {
+     "type": "type",
+     "q": "Luke {=has never been|'s never been} (never / be) abroad.",
+     "hint": "\"Be\" is a state verb; \"never\" = in his whole life.",
+     "why": "Present perfect simple: has + never + been."
+    },
+    {
+     "type": "type",
+     "q": "My hands are dirty because I {=have been painting|'ve been painting} (paint) the fence.",
+     "hint": "The activity explains why your hands look like this now.",
+     "why": "Present perfect continuous to explain a present result of a recent activity (dirty hands)."
+    },
+    {
+     "type": "type",
+     "q": "{=Have} you {=seen} (see) my passport? I can't find it.",
+     "hint": "Did you see it at any time up to now? A result, not a long activity.",
+     "why": "Present perfect simple question: Have you seen…? (see → saw → seen)."
+    },
+    {
+     "type": "type",
+     "q": "Rachel {=has been playing|'s been playing|has played|'s played} (play) in a school band for the past year.",
+     "hint": "\"For the past year\": an activity still continuing.",
+     "why": "Present perfect continuous with \"for the past year\" focuses on the continuing activity. (\"Has played\" is also correct.)"
+    },
+    {
+     "type": "type",
+     "q": "Edward {=has lived|'s lived} (live) in four different countries so far.",
+     "hint": "\"Four countries\" = how many.",
+     "why": "Present perfect simple for how many: has lived in four countries."
+    },
+    {
+     "type": "type",
+     "q": "She {=has been struggling|'s been struggling|has struggled|'s struggled} (struggle) since she started at her new school.",
+     "hint": "\"Since she started\": a continuing process up to now.",
+     "why": "Present perfect continuous for a process continuing from a past point until now. (\"Has struggled\" is also correct.)"
+    }
+   ]
+  },
+  {
+   "key": "g-rewrite",
+   "group": "Use of English",
+   "name": "Rewrite It",
+   "icon": "🔁",
+   "color": "#5B6CC4",
+   "note": "Complete the second sentence so it means the same as the first. Use the word given.",
+   "topic": "Key-word transformations with perfect tenses (1.5 E)",
+   "questions": [
+    {
+     "type": "type",
+     "lead": "They arrived in Canada three years ago.  (Use: BEEN)",
+     "q": "They {=have been in Canada|'ve been in Canada|have been living in Canada|'ve been living in Canada} for three years.",
+     "hint": "Arrived three years ago → they are still there now. Use have + been.",
+     "why": "Past simple + ago → present perfect + for: They have been in Canada for three years."
+    },
+    {
+     "type": "type",
+     "lead": "We moved to the UK in 2020, and we still live here.  (Use: HAVE)",
+     "q": "We {=have lived|'ve lived|have been living|'ve been living} in the UK since 2020.",
+     "hint": "Started in 2020, still true now.",
+     "why": "Past + still now → present perfect + since: We have lived in the UK since 2020."
+    },
+    {
+     "type": "type",
+     "lead": "The last time I visited Germany was ten years ago.  (Use: FOR)",
+     "q": "I {=haven't visited Germany|have not visited Germany|haven't been to Germany|have not been to Germany} for ten years.",
+     "hint": "No visit from ten years ago until now: use a negative.",
+     "why": "\"The last time … was X ago\" → haven't + verb 3 + for X: I haven't visited Germany for ten years."
+    },
+    {
+     "type": "type",
+     "lead": "I last saw my cousins two months ago.  (Use: HAVE)",
+     "q": "I {=haven't seen|have not seen} my cousins for two months.",
+     "hint": "No seeing from two months ago until now.",
+     "why": "\"Last … ago\" → haven't + verb 3 + for: I haven't seen my cousins for two months."
+    },
+    {
+     "type": "type",
+     "lead": "Sam started playing chess when he was eight, and he still plays.  (Use: SINCE)",
+     "q": "Sam {=has played chess|has been playing chess|'s played chess|'s been playing chess} since he was eight.",
+     "hint": "Started in the past + still now. Since + a point in time.",
+     "why": "Present perfect (simple or continuous) + since: Sam has been playing chess since he was eight."
+    },
+    {
+     "type": "type",
+     "lead": "This is my first time in Japan.  (Use: NEVER)",
+     "q": "I {=have never been|'ve never been} to Japan before.",
+     "hint": "First time = no time before now.",
+     "why": "\"This is my first time\" → I have never been … before."
+    },
+    {
+     "type": "type",
+     "lead": "I started waiting for you an hour ago, and I'm still waiting.  (Use: BEEN)",
+     "q": "I {=have been waiting|'ve been waiting} for you for an hour.",
+     "hint": "Activity started in the past and is still going on.",
+     "why": "Started … ago + still → present perfect continuous + for: I have been waiting for an hour."
+    },
+    {
+     "type": "type",
+     "lead": "She started at her new school in September. She is still there.  (Use: SINCE)",
+     "q": "She {=has been at her new school|'s been at her new school|has been going to her new school|'s been going to her new school|has been studying at her new school|'s been studying at her new school|has studied at her new school|'s studied at her new school} since September.",
+     "hint": "Started in September + still true. Since + a point in time.",
+     "why": "She has been at her new school since September."
+    },
+    {
+     "type": "type",
+     "lead": "Our last visit to our relatives abroad was last summer.  (Use: HAVEN'T)",
+     "q": "We {=haven't visited|have not visited} our relatives abroad since last summer.",
+     "hint": "No visit from last summer until now.",
+     "why": "Present perfect negative + since + a past point: We haven't visited them since last summer."
+    }
+   ]
+  },
+  {
+   "key": "g-past",
+   "group": "Use of English",
+   "name": "Past Forms",
+   "icon": "🕰️",
+   "color": "#D9467A",
+   "note": "Write the correct form of the word(s) in brackets.",
+   "topic": "Past simple: regular -ed and irregular verbs (2.3)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "My baby cousin {=arrived} (arrive) just the other day.",
+     "hint": "Regular verb ending in -e.",
+     "why": "Regular verbs ending in -e: just add -d → arrived."
+    },
+    {
+     "type": "type",
+     "q": "He {=learned|learnt} (learn) to walk while his father was away.",
+     "hint": "Regular verb: add -ed.",
+     "why": "Learn → learned (American) / learnt (British)."
+    },
+    {
+     "type": "type",
+     "q": "My little brother {=turned} (turn) ten last week.",
+     "hint": "Regular verb.",
+     "why": "Turn → turned."
+    },
+    {
+     "type": "type",
+     "q": "The baby {=cried} (cry) all night.",
+     "hint": "Consonant + y: change the y.",
+     "why": "Consonant + y → -ied: cry → cried, try → tried."
+    },
+    {
+     "type": "type",
+     "q": "I {=tried} (try) sushi for the first time in Japan.",
+     "hint": "Consonant + y.",
+     "why": "Try → tried."
+    },
+    {
+     "type": "type",
+     "q": "We {=stopped} (stop) at a café on the way home.",
+     "hint": "Short verb: one vowel + one consonant at the end.",
+     "why": "Double the last consonant: stop → stopped."
+    },
+    {
+     "type": "type",
+     "q": "She {=came} (come) home from college for the holidays.",
+     "hint": "Irregular verb.",
+     "why": "Come → came → come."
+    },
+    {
+     "type": "type",
+     "q": "We {=had to} (have to) leave early because it was raining.",
+     "hint": "The past of \"have to.\"",
+     "why": "Have to → had to."
+    },
+    {
+     "type": "type",
+     "q": "He {=shook} (shake) his head and said no.",
+     "hint": "Irregular verb.",
+     "why": "Shake → shook → shaken."
+    },
+    {
+     "type": "type",
+     "q": "They {=went} (go) to the beach every summer when they were young.",
+     "hint": "Irregular verb.",
+     "why": "Go → went → gone."
+    },
+    {
+     "type": "type",
+     "q": "Mum {=brought} (bring) a cake to the party.",
+     "hint": "Irregular verb.",
+     "why": "Bring → brought → brought."
+    },
+    {
+     "type": "type",
+     "q": "Jason {=chose} (choose) his new name from a TV show.",
+     "hint": "Irregular verb.",
+     "why": "Choose → chose → chosen."
+    },
+    {
+     "type": "type",
+     "q": "I {=felt} (feel) nervous on my first day.",
+     "hint": "Irregular verb.",
+     "why": "Feel → felt → felt."
+    },
+    {
+     "type": "type",
+     "q": "Frida's mother {=put} (put) a mirror above her bed.",
+     "hint": "This verb doesn't change.",
+     "why": "Put → put → put (all three forms are the same)."
+    },
+    {
+     "type": "type",
+     "q": "I {=thought} (think) the test was easy.",
+     "hint": "Irregular verb.",
+     "why": "Think → thought → thought."
+    },
+    {
+     "type": "type",
+     "q": "Akari {=told} (tell) me what to expect before I went.",
+     "hint": "Irregular verb.",
+     "why": "Tell → told → told."
+    },
+    {
+     "type": "type",
+     "q": "Alex {=began} (begin) climbing early in the morning.",
+     "hint": "Irregular verb.",
+     "why": "Begin → began → begun."
+    },
+    {
+     "type": "type",
+     "q": "My grandmother {=taught} (teach) me how to bake cookies.",
+     "hint": "Irregular verb.",
+     "why": "Teach → taught → taught."
+    }
+   ]
+  },
+  {
+   "key": "g-pastcont",
+   "group": "Use of English",
+   "name": "When or While?",
+   "icon": "🎬",
+   "color": "#E07B00",
+   "note": "Write the correct form of the verb in brackets, or write when / while.",
+   "topic": "Past continuous vs past simple; when / while (2.5)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "While I {=was doing} (do) my homework, my mother {=was making} (make) dinner.",
+     "hint": "Two long actions at the same time.",
+     "why": "Two long actions at the same time in the past → past continuous + past continuous, often with \"while.\""
+    },
+    {
+     "type": "type",
+     "q": "A teacher tapped me on the shoulder while I {=was writing} (write) in my notebook.",
+     "hint": "\"While\" + the long action.",
+     "why": "Long action (past continuous) interrupted by a short action (past simple)."
+    },
+    {
+     "type": "type",
+     "q": "When I {=got} (get) home, I {=called} (call) my best friend.",
+     "hint": "Two short actions, one after the other.",
+     "why": "Two short actions in order → past simple + past simple, with \"when.\""
+    },
+    {
+     "type": "type",
+     "q": "I {=was sitting} (sit) at the dinner table when the phone {=rang} (ring).",
+     "hint": "One long action, one short action that interrupts it.",
+     "why": "Long action = past continuous (was sitting); short interrupting action = past simple (rang)."
+    },
+    {
+     "type": "type",
+     "q": "{=While} the other children were playing, Jason was sitting by himself.  (when / while)",
+     "hint": "Look at the action after the gap: long or short?",
+     "why": "While goes with long actions (past continuous): while the other children were playing."
+    },
+    {
+     "type": "type",
+     "q": "Jason was sitting in class {=when} the teacher started a conversation with him.  (when / while)",
+     "hint": "Look at the action after the gap: long or short?",
+     "why": "When goes with short actions (past simple): when the teacher started…"
+    },
+    {
+     "type": "type",
+     "q": "{=When} Jason started school, he quickly realized that he didn't fit in.  (when / while)",
+     "hint": "\"Started\" is a short, finished action.",
+     "why": "When + short action in the past simple."
+    },
+    {
+     "type": "type",
+     "q": "I {=was walking} (walk) to school when I {=saw} (see) an accident.",
+     "hint": "Long action + short action.",
+     "why": "Past continuous for the background action; past simple for the short event."
+    },
+    {
+     "type": "type",
+     "q": "When I {=saw} (see) the expression on her face, I {=knew} (know) that she was upset.",
+     "hint": "Two short actions, one after the other.",
+     "why": "Past simple + past simple. See → saw, know → knew."
+    },
+    {
+     "type": "type",
+     "q": "She {=got} (get) a look of disgust on her face when she {=found} (find) a hair in her omelet.",
+     "hint": "Two short actions.",
+     "why": "Past simple + past simple. Get → got, find → found."
+    },
+    {
+     "type": "type",
+     "q": "What {=were you doing} (you / do) at 8 o'clock last night?",
+     "hint": "An action in progress at a specific time in the past.",
+     "why": "Past continuous for an action in progress at a specific past time."
+    },
+    {
+     "type": "type",
+     "q": "It {=was raining} (rain) when we {=left} (leave) the cinema.",
+     "hint": "Background weather + a short action.",
+     "why": "Past continuous for the background; past simple for the event. Leave → left."
+    },
+    {
+     "type": "type",
+     "q": "{=When} the bell rang, everyone ran outside.  (when / while)",
+     "hint": "\"Rang\" is a short action.",
+     "why": "When + short action (past simple)."
+    },
+    {
+     "type": "type",
+     "q": "I hurt my knee {=while} I was playing football.  (when / while)",
+     "hint": "\"Was playing\" is a long action.",
+     "why": "While + long action (past continuous)."
+    },
+    {
+     "type": "type",
+     "q": "We {=weren't watching|were not watching} (not / watch) TV when the lights went out; we were reading.",
+     "hint": "Negative of a long action.",
+     "why": "Past continuous negative: weren't + -ing."
+    },
+    {
+     "type": "type",
+     "q": "While Dad {=was cooking} (cook), the kids {=were setting} (set) the table.",
+     "hint": "Two long actions at the same time.",
+     "why": "Past continuous + past continuous with \"while.\" Set → setting (double t)."
+    }
+   ]
+  },
+  {
+   "key": "g-pastperf",
+   "group": "Use of English",
+   "name": "What Happened First?",
+   "icon": "🧗",
+   "color": "#C0392B",
+   "note": "Write the correct form of the word(s) in brackets.",
+   "topic": "Past perfect: before, after, by the time (2.6, 4.2)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "Before Alex climbed Half Dome without a rope, others {=had climbed} (climb) it using one.",
+     "hint": "Which happened first: the others' climbs or Alex's climb?",
+     "why": "Past perfect (had + verb 3) for the earlier of two past events."
+    },
+    {
+     "type": "type",
+     "q": "By the time he got to the top, he {=had overcome} (overcome) his fears.",
+     "hint": "\"By the time\" = before that moment.",
+     "why": "By the time + past simple, past perfect for what happened before: had overcome."
+    },
+    {
+     "type": "type",
+     "q": "When we arrived at the cinema, the film {=had already started} (already / start).",
+     "hint": "The film started before you arrived.",
+     "why": "Past perfect with \"already\": had + already + verb 3."
+    },
+    {
+     "type": "type",
+     "q": "By the time Braille died, he {=had created} (create) a popular system of writing for the blind.",
+     "hint": "\"By the time\" + earlier action.",
+     "why": "Past perfect for an action completed before another past moment."
+    },
+    {
+     "type": "type",
+     "q": "My mother got mad at me because I {=had forgotten} (forget) to walk the dog.",
+     "hint": "The forgetting happened before she got mad.",
+     "why": "Past perfect to give the earlier reason for a past result. Forget → forgot → forgotten."
+    },
+    {
+     "type": "type",
+     "q": "I couldn't call her back because my phone battery {=had died} (die).",
+     "hint": "The battery died first.",
+     "why": "Past perfect for the earlier event."
+    },
+    {
+     "type": "type",
+     "q": "She {=had never seen} (never / see) the sea before she moved to Izmir.",
+     "hint": "\"Never … before\" a past moment.",
+     "why": "Past perfect with never: had + never + verb 3 (see → saw → seen)."
+    },
+    {
+     "type": "type",
+     "q": "I woke up late that morning because I {=hadn't set|had not set} (not / set) my alarm.",
+     "hint": "Not setting the alarm happened first.",
+     "why": "Past perfect negative: hadn't + verb 3 (set → set → set)."
+    },
+    {
+     "type": "type",
+     "q": "Beethoven {=had lost} (lose) 60% of his hearing by the age of 31.",
+     "hint": "\"By the age of 31\" = before that point.",
+     "why": "By + past time → past perfect. Lose → lost → lost."
+    },
+    {
+     "type": "type",
+     "q": "By 1819, Beethoven {=had become} (become) totally deaf.",
+     "hint": "\"By 1819.\"",
+     "why": "Past perfect: become → became → become."
+    },
+    {
+     "type": "type",
+     "q": "We couldn't get in because someone {=had locked} (lock) the door.",
+     "hint": "The locking happened first.",
+     "why": "Past perfect for the earlier action."
+    },
+    {
+     "type": "type",
+     "q": "{=Had} you ever {=used} (use) chopsticks before you went to Japan?",
+     "hint": "Experience before a past moment.",
+     "why": "Past perfect question: Had + subject + ever + verb 3."
+    },
+    {
+     "type": "type",
+     "q": "He failed the test because he {=hadn't studied|had not studied} (not / study).",
+     "hint": "Not studying came first.",
+     "why": "Past perfect negative for the earlier cause."
+    },
+    {
+     "type": "type",
+     "q": "Louis {=had already used} (already / use) other systems of reading before he decided to develop his own.",
+     "hint": "Using the old systems came first.",
+     "why": "Past perfect with \"already.\""
+    },
+    {
+     "type": "type",
+     "q": "By the time I got to the party, everyone {=had gone} (go) home.",
+     "hint": "\"By the time I got there\": they left before.",
+     "why": "Go → went → gone. By the time + past perfect."
+    }
+   ]
+  },
+  {
+   "key": "g-mixed",
+   "group": "Use of English",
+   "name": "Mixed Tenses Blog",
+   "icon": "✈️",
+   "color": "#1E9E5A",
+   "note": "Write the correct form of the word(s) in brackets.",
+   "topic": "All the tenses together (1.7, 1.8)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "Hi everyone! I {=haven't written|have not written} (not / write) a post in a while, so here we go!",
+     "hint": "From some time ago until now.",
+     "why": "Present perfect negative: haven't + written (write → wrote → written)."
+    },
+    {
+     "type": "type",
+     "q": "Right now, I {=am traveling|am travelling|'m traveling|'m travelling} (travel) around Italy.",
+     "hint": "\"Right now.\"",
+     "why": "Present continuous for now. (traveling = American spelling, travelling = British.)"
+    },
+    {
+     "type": "type",
+     "q": "I {=have been|'ve been} (be) here for ten days now.",
+     "hint": "\"For ten days now.\"",
+     "why": "Present perfect with \"for\" for a situation continuing until now."
+    },
+    {
+     "type": "type",
+     "q": "Last week, I {=visited} (visit) the Colosseum in Rome.",
+     "hint": "\"Last week.\"",
+     "why": "Past simple with \"last …\"."
+    },
+    {
+     "type": "type",
+     "q": "My friend Giulia {=invited} (invite) me to dinner with her family yesterday.",
+     "hint": "\"Yesterday.\"",
+     "why": "Past simple. Invite → invited."
+    },
+    {
+     "type": "type",
+     "q": "Before I went, she {=had told} (tell) me what to expect.",
+     "hint": "Telling happened before going.",
+     "why": "Past perfect for the earlier of two past events."
+    },
+    {
+     "type": "type",
+     "q": "While we {=were eating} (eat), her grandfather told funny stories.",
+     "hint": "A long action in the past.",
+     "why": "While + past continuous."
+    },
+    {
+     "type": "type",
+     "q": "In Giulia's family, people usually {=eat} (eat) dinner at nine o'clock.",
+     "hint": "\"Usually\" = a habit.",
+     "why": "Present simple for habits."
+    },
+    {
+     "type": "type",
+     "q": "{=Have} you ever {=tried} (try) real Italian pizza?",
+     "hint": "\"Ever\" = life experience.",
+     "why": "Present perfect question: Have you ever + verb 3."
+    },
+    {
+     "type": "type",
+     "q": "Look at this photo! Giulia {=is waving|'s waving} (wave) at the camera.",
+     "hint": "\"Look!\": we describe a photo as happening now.",
+     "why": "Present continuous to describe a picture: is waving."
+    },
+    {
+     "type": "type",
+     "q": "We {=have already visited|'ve already visited} (already / visit) three museums this week.",
+     "hint": "\"Already\" + \"this week\" (not finished).",
+     "why": "Present perfect with already: have + already + verb 3."
+    },
+    {
+     "type": "type",
+     "q": "When I {=arrived} (arrive) at the station, my train {=had already left} (already / leave)!",
+     "hint": "Which happened first: arriving or the train leaving?",
+     "why": "Past simple for the later action, past perfect for the earlier one."
+    },
+    {
+     "type": "type",
+     "q": "Every morning, I {=buy} (buy) fresh bread from the bakery near my hotel.",
+     "hint": "\"Every morning\" = a habit.",
+     "why": "Present simple with \"every …\"."
+    },
+    {
+     "type": "type",
+     "q": "I {=don't know|do not know} (not / know) where I'm going next!",
+     "hint": "\"Know\" is a state verb.",
+     "why": "State verb → present simple: I don't know."
+    }
+   ]
+  },
+  {
+   "key": "g-suffix",
+   "group": "Use of English",
+   "name": "Suffix Builder",
+   "icon": "🧩",
+   "color": "#8E44AD",
+   "note": "Write the correct form of the word in capitals.",
+   "topic": "-able, -ful, -less, -ness, -ion, -ly, -ive, -ment (4.4)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "Moving abroad was a big {=decision} for our family.  (DECIDE)",
+     "hint": "You need a noun after \"a big.\"",
+     "why": "Decide → decision (noun). -ion makes nouns."
+    },
+    {
+     "type": "type",
+     "q": "The injection was quick and {=painless}. I didn't feel a thing!  (PAIN)",
+     "hint": "\"I didn't feel a thing\": without pain.",
+     "why": "-less = without: pain → painless."
+    },
+    {
+     "type": "type",
+     "q": "He closed the door {=angrily} and left the room.  (ANGRY)",
+     "hint": "This word describes HOW he closed the door.",
+     "why": "Adverb: angry → angrily (y → i + ly)."
+    },
+    {
+     "type": "type",
+     "q": "Her speech was short but very {=meaningful}.  (MEANING)",
+     "hint": "Full of meaning.",
+     "why": "-ful = full of: meaning → meaningful."
+    },
+    {
+     "type": "type",
+     "q": "Thank you for the {=introduction}, Ms. Yılmaz.  (INTRODUCE)",
+     "hint": "A noun after \"the.\"",
+     "why": "Introduce → introduction (drop -e, add -tion)."
+    },
+    {
+     "type": "type",
+     "q": "This old car is not very {=reliable}; it breaks down every month.  (RELY)",
+     "hint": "Something you can rely on.",
+     "why": "-able = can be: rely → reliable (y → i)."
+    },
+    {
+     "type": "type",
+     "q": "She is a {=successful} businesswoman with shops in five cities.  (SUCCESS)",
+     "hint": "An adjective before \"businesswoman.\"",
+     "why": "Success → successful (-ful)."
+    },
+    {
+     "type": "type",
+     "q": "My phone is {=useless} without a charger.  (USE)",
+     "hint": "Without use.",
+     "why": "-less = without: use → useless."
+    },
+    {
+     "type": "type",
+     "q": "His {=illness} kept him in bed for two weeks.  (ILL)",
+     "hint": "A noun after \"his.\"",
+     "why": "-ness makes nouns from adjectives: ill → illness."
+    },
+    {
+     "type": "type",
+     "q": "Polio causes {=weakness} in the muscles.  (WEAK)",
+     "hint": "A noun after \"causes.\"",
+     "why": "Weak → weakness (-ness)."
+    },
+    {
+     "type": "type",
+     "q": "Frida used her {=imagination} to paint herself in different ways.  (IMAGINE)",
+     "hint": "A noun after \"her.\"",
+     "why": "Imagine → imagination (-ation)."
+    },
+    {
+     "type": "type",
+     "q": "Please speak {=clearly} so everyone can hear you.  (CLEAR)",
+     "hint": "How should you speak?",
+     "why": "-ly makes adverbs: clear → clearly."
+    },
+    {
+     "type": "type",
+     "q": "Art can be an {=effective} way to share your struggles.  (EFFECT)",
+     "hint": "An adjective before \"way.\"",
+     "why": "-ive makes adjectives: effect → effective."
+    },
+    {
+     "type": "type",
+     "q": "Losing the final was a big {=disappointment} for the team.  (DISAPPOINT)",
+     "hint": "A noun after \"a big.\"",
+     "why": "-ment makes nouns: disappoint → disappointment."
+    },
+    {
+     "type": "type",
+     "q": "Good {=communication} skills are important at school.  (COMMUNICATE)",
+     "hint": "A noun before \"skills.\"",
+     "why": "Communicate → communication (-ion)."
+    },
+    {
+     "type": "type",
+     "q": "The teacher expects full {=participation} in all activities.  (PARTICIPATE)",
+     "hint": "A noun after \"full.\"",
+     "why": "Participate → participation."
+    },
+    {
+     "type": "type",
+     "q": "Humans are very {=adaptable} when they need to find new ways to communicate.  (ADAPT)",
+     "hint": "An adjective: able to adapt.",
+     "why": "-able: adapt → adaptable. (Not \"adaptful\".)"
+    },
+    {
+     "type": "type",
+     "q": "She made the difficult dance look {=effortless}.  (EFFORT)",
+     "hint": "It looked like it needed no effort.",
+     "why": "-less = without: effort → effortless."
+    },
+    {
+     "type": "type",
+     "q": "You can {=easily} recognize her paintings because of her unique style.  (EASY)",
+     "hint": "How can you recognize them?",
+     "why": "Adverb: easy → easily (y → i + ly)."
+    },
+    {
+     "type": "type",
+     "q": "Winning the competition was her greatest {=achievement}.  (ACHIEVE)",
+     "hint": "A noun after \"her greatest.\"",
+     "why": "Achieve → achievement (-ment)."
+    }
+   ]
+  },
+  {
+   "key": "g-prefix",
+   "group": "Use of English",
+   "name": "Prefix Builder",
+   "icon": "🔧",
+   "color": "#16A085",
+   "note": "Write the correct form of the word in capitals.",
+   "topic": "dis-, mis-, inter-, il-/im-/in-/ir-, pre-, non-, re-, un- (5.2)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "I {=dislike} waking up early.  (LIKE)",
+     "hint": "The opposite of like.",
+     "why": "dis- = not / opposite: like → dislike."
+    },
+    {
+     "type": "type",
+     "q": "The children {=misbehaved} while the teacher was out of the room.  (BEHAVE)",
+     "hint": "They behaved badly. (past)",
+     "why": "mis- = badly or wrongly: behave → misbehaved."
+    },
+    {
+     "type": "type",
+     "q": "Leaving your little brother alone at home was very {=irresponsible}.  (RESPONSIBLE)",
+     "hint": "Not responsible. The word starts with r.",
+     "why": "ir- before r: responsible → irresponsible."
+    },
+    {
+     "type": "type",
+     "q": "Climbing that wall without a rope is almost {=impossible}.  (POSSIBLE)",
+     "hint": "Not possible. The word starts with p.",
+     "why": "im- before p and m: possible → impossible."
+    },
+    {
+     "type": "type",
+     "q": "The view from the top was {=incredible}!  (CREDIBLE)",
+     "hint": "So amazing it's hard to believe.",
+     "why": "in- = not: credible → incredible."
+    },
+    {
+     "type": "type",
+     "q": "We watched a {=preview} of the film before it came out.  (VIEW)",
+     "hint": "A look before.",
+     "why": "pre- = before: view → preview."
+    },
+    {
+     "type": "type",
+     "q": "This museum is for everyone, including {=non-artists|nonartists}.  (ARTISTS)",
+     "hint": "People who are not artists.",
+     "why": "non- = not: artists → non-artists."
+    },
+    {
+     "type": "type",
+     "q": "After the holiday, it took me a few days to {=readjust} to school life.  (ADJUST)",
+     "hint": "Adjust again.",
+     "why": "re- = again: adjust → readjust."
+    },
+    {
+     "type": "type",
+     "q": "I'm still {=undecided} about which club to join.  (DECIDED)",
+     "hint": "Not decided yet.",
+     "why": "un- = not: decided → undecided."
+    },
+    {
+     "type": "type",
+     "q": "In this room, visitors can {=interact} with the art by adding stickers.  (ACT)",
+     "hint": "Act with each other / with something.",
+     "why": "inter- = between, with each other: act → interact."
+    },
+    {
+     "type": "type",
+     "q": "I'm sorry, I {=misunderstood} your question.  (UNDERSTOOD)",
+     "hint": "Understood wrongly.",
+     "why": "mis- = wrongly: understood → misunderstood."
+    },
+    {
+     "type": "type",
+     "q": "Your answer is {=incorrect}. Try again!  (CORRECT)",
+     "hint": "Not correct.",
+     "why": "in- = not: correct → incorrect (not \"uncorrect\")."
+    },
+    {
+     "type": "type",
+     "q": "It's {=illegal} to drive without a license.  (LEGAL)",
+     "hint": "Not legal. The word starts with l.",
+     "why": "il- before l: legal → illegal."
+    },
+    {
+     "type": "type",
+     "q": "The instructions were {=unclear}, so we made mistakes.  (CLEAR)",
+     "hint": "Not clear.",
+     "why": "un- = not: clear → unclear."
+    },
+    {
+     "type": "type",
+     "q": "He's so {=impatient}; he hates waiting.  (PATIENT)",
+     "hint": "Not patient. The word starts with p.",
+     "why": "im- before p: patient → impatient."
+    }
+   ]
+  },
+  {
+   "key": "g-adjadv",
+   "group": "Use of English",
+   "name": "Adjective or Adverb?",
+   "icon": "🐆",
+   "color": "#D35400",
+   "note": "Write the correct form of the word in brackets.",
+   "topic": "good/well, hard/hardly, high/highly, fast (5.1)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "She is a {=good} singer, and she sings very {=well}.  (good)",
+     "hint": "First gap describes a person (noun). Second describes how she sings (verb).",
+     "why": "Adjective good + noun (a good singer); adverb well + verb (sings well)."
+    },
+    {
+     "type": "type",
+     "q": "A cheetah runs very {=fast}.  (fast)",
+     "hint": "This word doesn't change when it's an adverb.",
+     "why": "Fast is both adjective and adverb. \"Fastly\" doesn't exist."
+    },
+    {
+     "type": "type",
+     "q": "I studied {=hard} for the exam, so I passed.  (hard)",
+     "hint": "You worked a lot.",
+     "why": "Hard (adverb) = with a lot of effort."
+    },
+    {
+     "type": "type",
+     "q": "I {=hardly} studied for the exam, so I failed.  (hard)",
+     "hint": "Almost no studying.",
+     "why": "Hardly = almost not. It does NOT mean \"hard.\""
+    },
+    {
+     "type": "type",
+     "q": "Katie jumped {=high} over the bar.  (high)",
+     "hint": "The physical height of the jump.",
+     "why": "High (adverb) = a long way up."
+    },
+    {
+     "type": "type",
+     "q": "I think very {=highly} of my teacher; she's amazing.  (high)",
+     "hint": "\"Think ___ of someone\" = have a very good opinion.",
+     "why": "Highly = very much, with a good opinion: think highly of."
+    },
+    {
+     "type": "type",
+     "q": "It's a very {=strange} work of art.  (strange)",
+     "hint": "It describes the noun \"work of art.\"",
+     "why": "Adjective before a noun: a strange work of art."
+    },
+    {
+     "type": "type",
+     "q": "Did he {=accidentally} mix up an art gallery with a zoo?  (accident)",
+     "hint": "How did he mix them up? By mistake.",
+     "why": "Accident (noun) → accidental (adj.) → accidentally (adverb)."
+    },
+    {
+     "type": "type",
+     "q": "The artist must have made it quite {=quickly}.  (quick)",
+     "hint": "How did the artist make it?",
+     "why": "Adverb: quick → quickly."
+    },
+    {
+     "type": "type",
+     "q": "The five people are relaxing {=calmly} in the sun.  (calm)",
+     "hint": "How are they relaxing?",
+     "why": "Adverb: calm → calmly."
+    },
+    {
+     "type": "type",
+     "q": "She smiled {=happily} at the camera.  (happy)",
+     "hint": "How did she smile?",
+     "why": "Happy → happily (y → i + ly)."
+    },
+    {
+     "type": "type",
+     "q": "The music was {=surprisingly} good.  (surprising)",
+     "hint": "This word describes the adjective \"good.\"",
+     "why": "Adverbs can describe adjectives: surprisingly good."
+    },
+    {
+     "type": "type",
+     "q": "It doesn't seem like it was that {=hard} to make.  (hard)",
+     "hint": "After \"was\" we describe the thing: was it difficult?",
+     "why": "Hard (adjective) = difficult. Not \"hardly.\""
+    }
+   ]
+  },
+  {
+   "key": "g-get",
+   "group": "Use of English",
+   "name": "Get It!",
+   "icon": "🔴",
+   "color": "#E74C3C",
+   "note": "Complete the phrasal verb with get. The meaning is in brackets.",
+   "topic": "Phrasal verbs with get (5.3)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "I really get {=along with|on with} my cousin; we never argue.  (= have a friendly relationship)",
+     "hint": "Two words after \"get.\"",
+     "why": "Get along with someone = have a good, friendly relationship."
+    },
+    {
+     "type": "type",
+     "q": "I don't understand. What are you getting {=at}?  (= suggest without saying directly)",
+     "hint": "One small word.",
+     "why": "Get at something = suggest it without saying it directly."
+    },
+    {
+     "type": "type",
+     "q": "He broke the window and tried to get {=away with} it, but his mum found out.  (= escape the consequences)",
+     "hint": "Two words.",
+     "why": "Get away with something = do something wrong and not be punished."
+    },
+    {
+     "type": "type",
+     "q": "It's time to get {=rid of} these old toys; we never play with them.  (= throw away)",
+     "hint": "Two words.",
+     "why": "Get rid of something = throw it away; dispose of it."
+    },
+    {
+     "type": "type",
+     "q": "Stop chatting and get {=on with} your work!  (= continue, make progress)",
+     "hint": "Two words.",
+     "why": "Get on with something = continue doing it; make progress."
+    },
+    {
+     "type": "type",
+     "q": "She always tries to get {=out of} washing the dishes.  (= avoid a duty)",
+     "hint": "Two words.",
+     "why": "Get out of doing something = avoid a duty or responsibility."
+    },
+    {
+     "type": "type",
+     "q": "I was so nervous, but I managed to get {=through} the presentation.  (= finish something difficult)",
+     "hint": "One word.",
+     "why": "Get through something = get to the end of something difficult."
+    },
+    {
+     "type": "type",
+     "q": "He got {=out of} the car and ran into the house.  (= leave a place)",
+     "hint": "Two words.",
+     "why": "Get out of a place = leave it."
+    },
+    {
+     "type": "type",
+     "lead": "The teacher told us that some colors change our perceptions, but I didn't understand what she was saying.  (Use: GETTING)",
+     "q": "…but I didn't understand what she was {=getting at}.",
+     "hint": "What was she trying to say?",
+     "why": "Get at = mean or suggest: what she was getting at."
+    },
+    {
+     "type": "type",
+     "lead": "One of the reasons I connect with my best friend is our shared love of yellow.  (Use: ALONG)",
+     "q": "One of the reasons I {=get along with|get along well with} my best friend is our shared love of yellow.",
+     "hint": "Have a friendly relationship.",
+     "why": "Get along with = have a good relationship with someone."
+    },
+    {
+     "type": "type",
+     "lead": "We shouldn't let them avoid responsibility for their unhealthy products.  (Use: AWAY)",
+     "q": "We shouldn't let them {=get away with} this.",
+     "hint": "Escape the consequences.",
+     "why": "Get away with = not be punished for something wrong."
+    },
+    {
+     "type": "type",
+     "lead": "I'm nervous about my presentation, but I know I can do well if I wear my favorite red T-shirt.  (Use: THROUGH)",
+     "q": "I'm nervous about my presentation, but I know I can {=get through} it if I wear my favorite red T-shirt.",
+     "hint": "Finish something difficult successfully.",
+     "why": "Get through = pass or finish a difficult test or challenge."
+    }
+   ]
+  },
+  {
+   "key": "g-partners",
+   "group": "Use of English",
+   "name": "Word Partners",
+   "icon": "🤝",
+   "color": "#2C7BB6",
+   "note": "Write the missing word.",
+   "topic": "remember / remind; prepositions after verbs (2.1, 2.2)",
+   "questions": [
+    {
+     "type": "type",
+     "q": "The smell of bread {=reminds} me of Paris.  (remember / remind)",
+     "hint": "Something makes you think of something else: ___ me OF.",
+     "why": "Remind someone of something. Remember doesn't take \"me of.\""
+    },
+    {
+     "type": "type",
+     "q": "I {=remember} going to Paris with my family when I was young.  (remember / remind)",
+     "hint": "You keep the memory in your own mind.",
+     "why": "Remember + -ing = have a memory of doing something."
+    },
+    {
+     "type": "type",
+     "q": "Do you {=remember} the name of my best friend in kindergarten?  (remember / remind)",
+     "hint": "Can you bring it back to your mind?",
+     "why": "Remember something = keep it in your mind."
+    },
+    {
+     "type": "type",
+     "q": "This film {=reminds} me of my friend Ada from primary school.  (remember / remind)",
+     "hint": "The film makes you think of Ada.",
+     "why": "Remind + person + of."
+    },
+    {
+     "type": "type",
+     "q": "Is it easy to empathize {=with} people who have different experiences than you?",
+     "hint": "Empathize ___ someone.",
+     "why": "Empathize with someone."
+    },
+    {
+     "type": "type",
+     "q": "Have you ever participated {=in} a program like Narrative 4?",
+     "hint": "Participate ___ something.",
+     "why": "Participate in something."
+    },
+    {
+     "type": "type",
+     "q": "Have you ever been {=in} conflict with a family member or friend?",
+     "hint": "Be ___ conflict with someone.",
+     "why": "Be in conflict with someone."
+    },
+    {
+     "type": "type",
+     "q": "Can learning to communicate better {=with} others solve conflict?",
+     "hint": "Communicate ___ people.",
+     "why": "Communicate with someone."
+    },
+    {
+     "type": "type",
+     "q": "What might be some other benefits {=of} these types of culture swaps?",
+     "hint": "Benefits ___ something.",
+     "why": "The benefits of something."
+    },
+    {
+     "type": "type",
+     "q": "Do you often struggle {=to} understand the experiences of others?",
+     "hint": "Struggle ___ + verb.",
+     "why": "Struggle to do something (struggle with + noun)."
+    },
+    {
+     "type": "type",
+     "q": "It took me months to adapt {=to} life in a new country.",
+     "hint": "Adapt ___ something.",
+     "why": "Adapt to something."
+    },
+    {
+     "type": "type",
+     "q": "Beethoven coped {=with} his deafness by working on several projects at once.",
+     "hint": "Cope ___ something.",
+     "why": "Cope with something."
+    },
+    {
+     "type": "type",
+     "q": "Louis Braille was eager {=to} learn.",
+     "hint": "Eager ___ + verb.",
+     "why": "Eager to do something."
+    },
+    {
+     "type": "type",
+     "q": "Louis was frustrated {=by|with} the old reading systems.",
+     "hint": "Frustrated ___ something.",
+     "why": "Frustrated by (or with) something."
+    },
+    {
+     "type": "type",
+     "q": "Today, Jason is proud {=of} his Korean heritage.",
+     "hint": "Proud ___ something.",
+     "why": "Proud of something."
+    }
+   ]
+  }
+ ]
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("game-data").textContent);
+  var KEY = "onur-terakki8:" + DATA.id;
+  var LETTERS = ["A", "B", "C", "D"];
+  var CHEERS = ["Awesome!", "Nailed it!", "Brilliant!", "Super!", "Great job!", "Yes! Correct!", "Fantastic!", "You got it!"];
+  var MAXSTARS = (DATA.levels.length + 1) * 3;
+  var RANKS = [
+    [0, "🐣", "Word Rookie"], [Math.round(MAXSTARS * 0.2), "🧭", "Grammar Explorer"], [Math.round(MAXSTARS * 0.45), "🌟", "Sentence Star"],
+    [Math.round(MAXSTARS * 0.7), "🦸", "English Hero"], [Math.round(MAXSTARS * 0.9), "🏆", "Exam Champion"]
+  ];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- typed gaps ---------- */
+  // {word|alt} = gap with first letter shown; {=words|alt} = gap with no letter.
+  function parseGaps(text) {
+    var parts = [], re = /\{(=?)([^}]+)\}/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parts.push({ t: text.slice(last, m.index) });
+      var alts = m[2].split("|");
+      parts.push({ gap: true, letter: m[1] ? "" : alts[0].charAt(0), alts: alts });
+      last = re.lastIndex;
+    }
+    if (last < text.length) parts.push({ t: text.slice(last) });
+    return parts;
+  }
+  function tnorm(v) {
+    var s = " " + String(v || "").toLowerCase().replace(/[\u2018\u2019\u02bc`\u00b4]/g, "'").replace(/[.,!?;:"]+/g, " ").replace(/\s+/g, " ").trim() + " ";
+    s = s.replace(/ won't /g, " will not ").replace(/ can't /g, " cannot ").replace(/ can not /g, " cannot ")
+      .replace(/n't /g, " not ").replace(/'ve /g, " have ").replace(/'re /g, " are ").replace(/'m /g, " am ").replace(/'ll /g, " will ");
+    return s.replace(/\s+/g, " ").trim();
+  }
+  function gapOk(p, v) {
+    var c = [tnorm(v)];
+    if (p.letter) c.push(tnorm(p.letter + v));
+    return p.alts.some(function (a) { return c.indexOf(tnorm(a)) >= 0; });
+  }
+
+  /* ---------- question index ---------- */
+  var Q = {}, LEVELS = [], BOSS = { key: "boss", name: "Boss Level", icon: "👑", topic: "Exam rehearsal: " + DATA.bossCount + " mixed questions from every level", color: "#E2468F", boss: true };
+  DATA.levels.forEach(function (lv, li) {
+    lv.ids = [];
+    lv.num = li + 1;
+    lv.questions.forEach(function (q, qi) {
+      var id = lv.key + ":" + qi;
+      var item = { id: id, level: lv.key, levelName: lv.name, note: lv.note || "", type: q.type || "mcq", q: q.q, answer: q.answer, wrong: q.wrong,
+        tiles: q.tiles, answers: q.answers, end: q.end || "", hint: q.hint, why: q.why, lead: q.lead || "" };
+      if (item.type === "type") {
+        item.parts = parseGaps(q.q);
+        item.blank = item.parts.map(function (p) { return p.gap ? (p.letter ? p.letter + "_____" : "_______") : p.t; }).join("");
+        item.filled = item.parts.map(function (p) { return p.gap ? p.alts[0] : p.t; }).join("");
+      }
+      Q[id] = item;
+      lv.ids.push(id);
+    });
+    LEVELS.push(lv);
+  });
+  var ALL_LEVELS = LEVELS.concat([BOSS]);
+  function levelByKey(k) { for (var i = 0; i < ALL_LEVELS.length; i++) if (ALL_LEVELS[i].key === k) return ALL_LEVELS[i]; return null; }
+
+  /* ---------- state ---------- */
+  var P = null, CUR = null;
+  function blank() { return { name: "", xp: 0, levels: {}, runs: {} }; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY); if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (!p || typeof p !== "object" || !p.levels || !p.runs) return null;
+      for (var k in p.runs) {
+        var r = p.runs[k];
+        if (!r || !Array.isArray(r.ids) || !r.ids.every(function (i) { return Q[i]; })) delete p.runs[k];
+      }
+      return p;
+    } catch (e) { return null; }
+  }
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) {
+    var arr = a.slice();
+    for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    return arr;
+  }
+  function count(obj, val) { var n = 0; for (var k in obj) if (!val || obj[k] === val) n++; return n; }
+  function show(screen) {
+    ["welcome", "map", "play", "between", "done"].forEach(function (n) { $("screen-" + n).hidden = n !== screen; });
+  }
+  function lvState(k) { if (!P.levels[k]) P.levels[k] = { stars: 0, best: 0, plays: 0 }; return P.levels[k]; }
+  function totalStars() { var n = 0; ALL_LEVELS.forEach(function (l) { n += (P.levels[l.key] && P.levels[l.key].stars) || 0; }); return n; }
+  function rankFor(stars) { var r = RANKS[0]; RANKS.forEach(function (x) { if (stars >= x[0]) r = x; }); return r; }
+  function nextRank(stars) { for (var i = 0; i < RANKS.length; i++) if (RANKS[i][0] > stars) return RANKS[i]; return null; }
+  function starsHTML(n, el) {
+    el.textContent = "";
+    for (var i = 0; i < 3; i++) { var s = document.createElement("span"); s.textContent = "⭐"; if (i >= n) s.className = "off"; el.appendChild(s); }
+  }
+  function setColor(el, c) { el.style.setProperty("--c", c); }
+
+  function bossIds() {
+    var picked = [];
+    LEVELS.forEach(function (lv) { picked = picked.concat(shuffle(lv.ids).slice(0, DATA.bossPer || 2)); });
+    var rest = shuffle(Object.keys(Q).filter(function (id) { return picked.indexOf(id) < 0; }));
+    while (picked.length < DATA.bossCount && rest.length) picked.push(rest.shift());
+    return shuffle(picked).slice(0, DATA.bossCount);
+  }
+  function newRun(k, ids, practice) {
+    return { level: k, ids: ids.slice(), practice: !!practice, round: 1, queue: ids.slice(), pos: 0, next: [], wrong: {}, done: {},
+      opts: null, built: [], typed: null, answered: null, streak: 0, best: 0, xp: 0, screen: "play" };
+  }
+
+  /* ---------- WELCOME ---------- */
+  function renderWelcome() {
+    $("welcome-h").textContent = DATA.title;
+    $("student-name").value = P.name || "";
+    show("welcome");
+    setTimeout(function () { try { $("student-name").focus(); } catch (e) {} }, 50);
+  }
+  function submitName() {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); $("student-name").classList.add("shake"); setTimeout(function () { $("student-name").classList.remove("shake"); }, 400); return; }
+    P.name = n; save(); renderMap();
+  }
+  $("btn-welcome").onclick = submitName;
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") submitName(); });
+
+  /* ---------- MAP ---------- */
+  function renderMap() {
+    CUR = null;
+    var stars = totalStars(), max = ALL_LEVELS.length * 3, rank = rankFor(stars), nr = nextRank(stars);
+    var pl = $("player"); pl.textContent = "";
+    var av = document.createElement("div"); av.className = "avatar"; av.textContent = (P.name || "?").charAt(0).toUpperCase();
+    var mid = document.createElement("div"); mid.style.minWidth = "0";
+    var nm = document.createElement("div"); nm.className = "player-name"; nm.textContent = P.name;
+    var rk = document.createElement("span"); rk.className = "rank"; rk.textContent = rank[1] + " " + rank[2];
+    mid.appendChild(nm); mid.appendChild(rk);
+    var tot = document.createElement("div"); tot.className = "totals";
+    var st = document.createElement("span"); st.className = "stars-total"; st.textContent = "⭐ " + stars + " / " + max;
+    var xp = document.createElement("span"); xp.className = "xp"; xp.textContent = "⚡ " + P.xp + " XP";
+    tot.appendChild(st); tot.appendChild(xp);
+    var bar = document.createElement("div"); bar.className = "rank-bar";
+    var track = document.createElement("div"); track.className = "track";
+    var fill = document.createElement("div"); fill.className = "fill";
+    var lo = rank[0], hi = nr ? nr[0] : max;
+    fill.style.width = (nr ? Math.round((stars - lo) / (hi - lo) * 100) : 100) + "%";
+    track.appendChild(fill);
+    var sm = document.createElement("small");
+    sm.textContent = nr ? (hi - stars) + " more " + (hi - stars === 1 ? "star" : "stars") + " to become " + nr[1] + " " + nr[2] : "Top rank reached. You are an Exam Champion! Keep your stars shining before the exam.";
+    bar.appendChild(track); bar.appendChild(sm);
+    pl.appendChild(av); pl.appendChild(mid); pl.appendChild(tot); pl.appendChild(bar);
+
+    var total = 0; LEVELS.forEach(function (l) { total += l.ids.length; });
+    $("map-count").textContent = LEVELS.length + " levels · " + total + " questions + Boss";
+
+    var box = $("levels"), lastGroup = null; box.textContent = "";
+    ALL_LEVELS.forEach(function (lv) {
+      var grp = lv.boss ? "Final challenge" : (lv.group || "");
+      if (grp && grp !== lastGroup) {
+        lastGroup = grp;
+        var gh = document.createElement("div"); gh.className = "group-h";
+        var gt = document.createElement("h3"); gt.textContent = grp;
+        var gs = document.createElement("small");
+        if (!lv.boss) { var gl = LEVELS.filter(function (l) { return l.group === grp; }), gq = 0; gl.forEach(function (l) { gq += l.ids.length; }); gs.textContent = gl.length + " levels · " + gq + " questions"; }
+        gh.appendChild(gt); gh.appendChild(gs); box.appendChild(gh);
+      }
+      var s = lvState(lv.key), run = P.runs[lv.key];
+      var b = document.createElement("button"); b.type = "button"; b.className = "lvl" + (lv.boss ? " boss" : "");
+      setColor(b, lv.color);
+      var head = document.createElement("div"); head.className = "lvl-head";
+      var ic = document.createElement("div"); ic.className = "lvl-icon"; ic.textContent = lv.icon; ic.setAttribute("aria-hidden", "true");
+      var tx = document.createElement("div"); tx.style.minWidth = "0";
+      var num = document.createElement("div"); num.className = "lvl-num"; num.textContent = lv.boss ? "Exam rehearsal" : "Level " + lv.num;
+      var name = document.createElement("div"); name.className = "lvl-name"; name.textContent = lv.name;
+      tx.appendChild(num); tx.appendChild(name);
+      head.appendChild(ic); head.appendChild(tx);
+      var topic = document.createElement("div"); topic.className = "lvl-topic"; topic.textContent = lv.topic;
+      var foot = document.createElement("div"); foot.className = "lvl-foot";
+      var stEl = document.createElement("span"); stEl.className = "stars"; starsHTML(s.stars, stEl);
+      stEl.setAttribute("aria-label", s.stars + " of 3 stars");
+      var status = document.createElement("span"); status.className = "lvl-status";
+      if (run && run.screen !== "done") { status.textContent = "Continue · " + count(run.done) + "/" + run.ids.length; status.classList.add("go"); }
+      else if (s.plays) status.textContent = "Best " + s.best + "%";
+      else { status.textContent = lv.boss ? DATA.bossCount + " questions" : lv.ids.length + " questions"; status.classList.add("go"); }
+      foot.appendChild(stEl); foot.appendChild(status);
+      b.appendChild(head); b.appendChild(topic); b.appendChild(foot);
+      b.onclick = function () { openLevel(lv.key); };
+      box.appendChild(b);
+    });
+    show("map");
+  }
+  $("btn-rename").onclick = function () { renderWelcome(); };
+  $("btn-reset").onclick = function () {
+    if (!window.confirm("Reset all your stars, XP and progress?")) return;
+    var name = P.name; P = blank(); P.name = name; save(); renderMap(); window.scrollTo(0, 0);
+  };
+
+  function openLevel(k) {
+    var run = P.runs[k];
+    if (!run || run.screen === "done") {
+      var lv = levelByKey(k);
+      P.runs[k] = newRun(k, lv.boss ? bossIds() : lv.ids, false);
+      save();
+    }
+    CUR = k; route(); window.scrollTo(0, 0);
+  }
+
+  /* ---------- PLAY ---------- */
+  function R() { return P.runs[CUR]; }
+  function currentQ() { var r = R(); return Q[r.queue[r.pos]]; }
+  function drawBoard(el, opts) {
+    var r = R(); el.textContent = "";
+    r.ids.forEach(function (id) {
+      var c = document.createElement("i"); c.className = "cell";
+      if (r.done[id]) c.className += " " + r.done[id];
+      else if (r.wrong[id]) c.className += " missed";
+      if (opts && opts.current === id) c.className += " now";
+      if (opts && opts.pop === id && !reduceMotion) c.className += " pop";
+      el.appendChild(c);
+    });
+  }
+  function richText(el, text) {
+    el.textContent = "";
+    var parts = String(text).split("**");
+    parts.forEach(function (part, i) {
+      if (i % 2 === 1) { var s = document.createElement("strong"); s.className = "hl"; s.textContent = part; el.appendChild(s); return; }
+      var bits = part.split("___");
+      bits.forEach(function (b, j) {
+        if (j > 0) { var g = document.createElement("span"); g.className = "gap"; g.setAttribute("aria-label", "blank"); el.appendChild(g); }
+        el.appendChild(document.createTextNode(b));
+      });
+    });
+  }
+  function updateChips(hot) {
+    var r = R();
+    $("streak-n").textContent = r.streak;
+    $("streak-chip").classList.toggle("cold", r.streak === 0);
+    $("xp-n").textContent = P.xp;
+    if (hot && !reduceMotion) { var c = $("streak-chip"); c.classList.remove("hot"); void c.offsetWidth; c.classList.add("hot"); }
+  }
+  function renderPlay() {
+    var r = R(), lv = levelByKey(CUR), q = currentQ();
+    setColor($("screen-play"), lv.color);
+    $("play-icon").textContent = lv.icon;
+    $("play-name").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("play-round").textContent = "Round " + r.round + (CUR === "boss" ? " · from " + q.levelName : (r.round === 1 ? " · first try" : " · clear the missed ones"));
+    updateChips(false);
+    drawBoard($("board"), { current: q.id });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    $("q-count").textContent = "Question " + (r.pos + 1) + " of " + r.queue.length;
+    var misses = r.wrong[q.id] || 0;
+    $("retry-tag").hidden = misses === 0;
+    $("retry-tag").textContent = misses === 1 ? "You missed this once. Try again!" : "You missed this " + misses + " times. You can do it!";
+    $("q-note").textContent = q.note;
+    $("q-note").hidden = !q.note;
+    $("q-text").classList.toggle("typed", q.type === "type");
+    $("check-row").hidden = true;
+    if (q.type === "type") renderTyped(q); else richText($("q-text"), q.q);
+    $("feedback").hidden = true; $("btn-next").hidden = true;
+
+    if (q.type === "type") {
+      $("builder").hidden = true; $("opts").hidden = true; $("check-row").hidden = !!r.answered;
+    } else if (q.type === "build") {
+      $("opts").hidden = true; $("builder").hidden = false;
+      if (!r.opts) { r.opts = shuffle(q.tiles.map(function (_, i) { return i; })); r.built = []; save(); }
+      renderBuilder();
+    } else {
+      $("builder").hidden = true; $("opts").hidden = false;
+      if (!r.opts) { r.opts = shuffle([q.answer].concat(q.wrong)); save(); }
+      var box = $("opts"); box.textContent = "";
+      var short = r.opts.every(function (t) { return t.length <= 7; });
+      box.className = "opts" + (short ? " two" : "");
+      r.opts.forEach(function (text, i) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+        var k = document.createElement("span"); k.className = "key"; k.textContent = LETTERS[i];
+        var t = document.createElement("span"); t.className = "txt"; t.textContent = text;
+        b.appendChild(k); b.appendChild(t);
+        b.onclick = function () { pick(i, b); };
+        box.appendChild(b);
+      });
+    }
+    if (r.answered) paintAnswer(false);
+    show("play");
+  }
+
+  /* typed */
+  function renderTyped(q) {
+    var r = R(), h = $("q-text"); h.textContent = "";
+    if (q.lead) { var l = document.createElement("span"); l.className = "q-lead"; l.textContent = q.lead; h.appendChild(l); }
+    var gi = 0, carry = "";
+    q.parts.forEach(function (p, pi) {
+      if (!p.gap) { h.appendChild(document.createTextNode(p.t.slice(carry.length))); carry = ""; return; }
+      var nxt = q.parts[pi + 1], tail = "";
+      if (nxt && !nxt.gap) { var mt = nxt.t.match(/^(\s?\([^)]{1,24}\))?[.,!?;:]*/); tail = mt ? mt[0] : ""; }
+      carry = tail;
+      var longest = 0; p.alts.forEach(function (a) { if (a.length > longest) longest = a.length; });
+      var w = document.createElement("span"); w.className = "tgap" + (longest > 22 ? " xwide" : longest > 11 ? " wide" : "");
+      if (p.letter) { var f = document.createElement("span"); f.className = "first"; f.textContent = p.letter; w.appendChild(f); }
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.spellcheck = false;
+      inp.setAttribute("autocomplete", "off"); inp.setAttribute("autocorrect", "off"); inp.setAttribute("autocapitalize", "off");
+      inp.setAttribute("enterkeyhint", "done");
+      inp.setAttribute("aria-label", p.letter ? "Missing word, starts with " + p.letter : "Missing word " + (gi + 1));
+      if (r.typed && r.typed[gi] != null) inp.value = r.typed[gi];
+      (function (idx) {
+        inp.addEventListener("input", function () { var rr = R(); if (!rr.typed) rr.typed = []; rr.typed[idx] = inp.value; save(); });
+      })(gi);
+      inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); if (!R().answered) checkTyped(); } });
+      w.appendChild(inp);
+      if (tail) { var glue = document.createElement("span"); glue.className = "tglue"; glue.appendChild(w); glue.appendChild(document.createTextNode(tail)); h.appendChild(glue); }
+      else h.appendChild(w);
+      gi++;
+    });
+  }
+  function checkTyped() {
+    var r = R(), q = currentQ(); if (r.answered) return;
+    var inputs = $("q-text").querySelectorAll("input"), vals = [], empty = null;
+    inputs.forEach(function (inp) { vals.push(inp.value); if (!inp.value.trim() && !empty) empty = inp; });
+    if (empty) {
+      empty.focus();
+      var g = empty.parentNode;
+      if (!reduceMotion) { g.classList.remove("shake"); void g.offsetWidth; g.classList.add("shake"); }
+      return;
+    }
+    var gaps = q.parts.filter(function (p) { return p.gap; });
+    var oks = gaps.map(function (p, i) { return gapOk(p, vals[i]); });
+    r.typed = vals; r.oks = oks;
+    grade(oks.every(Boolean), -1, $("q-text"));
+  }
+  $("btn-tcheck").onclick = checkTyped;
+  function paintTyped(fresh) {
+    var r = R();
+    $("check-row").hidden = true;
+    $("q-text").querySelectorAll("input").forEach(function (inp, i) {
+      inp.value = (r.typed && r.typed[i]) || ""; inp.disabled = true;
+      var ok = r.oks ? r.oks[i] : r.answered.correct;
+      inp.parentNode.classList.add(ok ? "ok" : "no");
+      if (fresh && !ok && !reduceMotion) inp.parentNode.classList.add("shake");
+    });
+  }
+  function focusTyped() {
+    var inp = $("q-text").querySelector("input:not([disabled])");
+    if (inp) { try { inp.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  /* builder */
+  function renderBuilder() {
+    var r = R(), q = currentQ();
+    var line = $("build-line"); line.textContent = ""; line.className = "build-line";
+    if (!r.built.length) line.classList.add("empty");
+    r.built.forEach(function (ti, pos) {
+      var t = document.createElement("button"); t.type = "button"; t.className = "tile"; t.textContent = q.tiles[ti];
+      t.disabled = !!r.answered;
+      t.onclick = function () { if (r.answered) return; r.built.splice(pos, 1); save(); renderBuilder(); };
+      line.appendChild(t);
+    });
+    if (r.built.length) { var e = document.createElement("span"); e.className = "end-mark"; e.textContent = q.end; line.appendChild(e); }
+    var tiles = $("tiles"); tiles.textContent = "";
+    r.opts.forEach(function (ti) {
+      var t = document.createElement("button"); t.type = "button"; t.className = "tile"; t.textContent = q.tiles[ti];
+      if (r.built.indexOf(ti) >= 0) { t.classList.add("used"); t.tabIndex = -1; t.setAttribute("aria-hidden", "true"); }
+      t.disabled = !!r.answered;
+      t.onclick = function () { if (r.answered || r.built.indexOf(ti) >= 0) return; r.built.push(ti); save(); renderBuilder(); };
+      tiles.appendChild(t);
+    });
+    var full = r.built.length === q.tiles.length;
+    $("btn-check").disabled = !full || !!r.answered;
+    $("btn-check").style.opacity = full && !r.answered ? "1" : ".5";
+    $("btn-clear").disabled = !!r.answered;
+    $("tiles").parentNode.querySelector(".btn-row").hidden = !!r.answered;
+  }
+  function norm(s) { return s.toLowerCase().replace(/[.?!,]/g, "").replace(/\s+/g, " ").trim(); }
+  $("btn-clear").onclick = function () { var r = R(); if (r.answered) return; r.built = []; save(); renderBuilder(); };
+  $("btn-check").onclick = function () {
+    var r = R(), q = currentQ();
+    if (r.answered || r.built.length !== q.tiles.length) return;
+    var said = norm(r.built.map(function (i) { return q.tiles[i]; }).join(" "));
+    var ok = q.answers.some(function (a) { return norm(a) === said; });
+    grade(ok, -1, $("btn-check"));
+  };
+
+  function pick(i, btn) {
+    var r = R(); if (r.answered) return;
+    grade(r.opts[i] === currentQ().answer, i, btn);
+  }
+  function grade(correct, pickIdx, srcEl) {
+    var r = R(), q = currentQ(), popId = null, gained = 0;
+    r.answered = { pick: pickIdx, correct: correct };
+    if (correct) {
+      r.done[q.id] = r.wrong[q.id] ? "later" : "first";
+      gained = r.wrong[q.id] ? 5 : 10;
+      r.streak += 1; if (r.streak > r.best) r.best = r.streak;
+      r.xp += gained; P.xp += gained;
+      popId = q.id;
+      r.cheer = CHEERS[Math.floor(Math.random() * CHEERS.length)];
+      r.gained = gained;
+    } else {
+      r.wrong[q.id] = (r.wrong[q.id] || 0) + 1;
+      r.streak = 0;
+      r.next.push(q.id);
+    }
+    save();
+    drawBoard($("board"), { current: q.id, pop: popId });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    updateChips(correct);
+    paintAnswer(true);
+    if (correct) confetti(srcEl);
+  }
+
+  function paintAnswer(fresh) {
+    var r = R(), q = currentQ(), a = r.answered;
+    var misses = r.wrong[q.id] || 0;
+    var reveal = !a.correct && misses >= 3;
+    if (q.type === "type") {
+      paintTyped(fresh);
+    } else if (q.type === "build") {
+      renderBuilder();
+      $("build-line").classList.add(a.correct ? "is-right" : "is-wrong");
+      if (fresh && !a.correct && !reduceMotion) { var bl = $("build-line"); bl.classList.add("shake"); setTimeout(function () { bl.classList.remove("shake"); }, 400); }
+    } else {
+      var buttons = $("opts").querySelectorAll(".opt");
+      buttons.forEach(function (b, i) {
+        b.disabled = true;
+        var isAnswer = r.opts[i] === q.answer;
+        if (i === a.pick) b.classList.add(a.correct ? "is-right" : "is-wrong");
+        else if (isAnswer && reveal) b.classList.add("is-right");
+        else b.classList.add("is-dim");
+        if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+      });
+    }
+    var fb = $("feedback"); fb.textContent = ""; fb.className = "feedback";
+    var head = document.createElement("div"); head.className = "fb-head";
+    var body = document.createElement("p");
+    var note = document.createElement("p"); note.className = "fb-note";
+    if (a.correct) {
+      fb.classList.add("good");
+      head.textContent = "🎉 " + (r.cheer || "Correct!");
+      body.textContent = q.why;
+      var xp = document.createElement("p"); xp.className = "fb-xp"; xp.textContent = "+" + (r.gained || 10) + " XP" + (misses ? " · square cleared!" : "");
+      fb.appendChild(head); fb.appendChild(body); fb.appendChild(xp);
+    } else if (reveal) {
+      fb.classList.add("reveal");
+      head.textContent = "💡 Here's the answer";
+      var ans = document.createElement("p"); ans.style.fontWeight = "800";
+      ans.className = "fb-answer";
+      ans.textContent = q.type === "build" ? q.answers[0] + q.end : q.type === "type" ? "Answer: " + q.filled : "Answer: " + q.answer;
+      body.textContent = q.why;
+      note.textContent = "Remember it! This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(head); fb.appendChild(ans); fb.appendChild(body); fb.appendChild(note);
+    } else {
+      fb.classList.add("bad");
+      head.textContent = "Not yet!";
+      body.textContent = "💡 Hint: " + q.hint;
+      note.textContent = "This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(head); fb.appendChild(body); fb.appendChild(note);
+    }
+    fb.hidden = false;
+    var last = r.pos + 1 >= r.queue.length;
+    $("btn-next").textContent = last ? (r.next.length ? "Finish round " + r.round + " →" : "See my stars →") : "Next question →";
+    $("btn-next").hidden = false;
+    if (fresh) {
+      $("btn-next").focus({ preventScroll: true });
+      $("btn-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+    }
+  }
+
+  function next() {
+    var r = R(); if (!r.answered) return;
+    r.pos += 1; r.opts = null; r.built = []; r.typed = null; r.oks = null; r.answered = null; r.cheer = null;
+    if (r.pos >= r.queue.length) {
+      if (r.next.length) r.screen = "between";
+      else finishLevel();
+    }
+    save(); route();
+    if (r.screen === "play") {
+      var top = $("play-card").getBoundingClientRect().top;
+      if (top < 0) $("play-card").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+      if (currentQ().type === "type") focusTyped(); else $("q-text").focus({ preventScroll: true });
+    } else window.scrollTo(0, 0);
+  }
+  $("btn-next").onclick = next;
+  $("btn-back").onclick = function () { save(); renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- BETWEEN ROUNDS ---------- */
+  function renderBetween() {
+    var r = R(), lv = levelByKey(CUR), left = r.next.length;
+    setColor($("screen-between"), lv.color);
+    $("legend-later").style.background = lv.color;
+    if (r.round === 1) {
+      var first = count(r.done, "first");
+      $("between-emoji").textContent = first / r.ids.length >= 0.7 ? "🤩" : "💪";
+      $("between-h").textContent = "Round 1 done! Your first-try score:";
+      var big = $("between-big"); big.textContent = first;
+      var sm = document.createElement("small"); sm.textContent = " / " + r.ids.length; big.appendChild(sm);
+    } else {
+      $("between-emoji").textContent = "🎯";
+      $("between-h").textContent = "Round " + r.round + " done!";
+      $("between-big").textContent = "";
+    }
+    $("between-text").textContent = (left === 1 ? "Just 1 question comes" : left + " questions come") + " back now. Clear " + (left === 1 ? "it" : "them all") + " to fill your board!";
+    drawBoard($("board-between"));
+    $("btn-next-round").textContent = "Start round " + (r.round + 1) + " →";
+    show("between");
+  }
+  $("btn-next-round").onclick = function () {
+    var r = R();
+    r.round += 1; r.queue = shuffle(r.next); r.next = []; r.pos = 0; r.opts = null; r.built = []; r.typed = null; r.oks = null; r.answered = null; r.screen = "play";
+    save(); route(); window.scrollTo(0, 0); $("q-text").focus({ preventScroll: true });
+  };
+
+  /* ---------- LEVEL COMPLETE ---------- */
+  function starsFor(pct) { return pct >= 90 ? 3 : pct >= 70 ? 2 : 1; }
+  function finishLevel() {
+    var r = R(), first = count(r.done, "first"), pct = Math.round(first / r.ids.length * 100);
+    r.screen = "done"; r.pct = pct; r.earned = starsFor(pct);
+    if (!r.practice) {
+      var s = lvState(CUR), before = totalStars();
+      s.plays += 1;
+      if (pct > s.best) s.best = pct;
+      if (r.earned > s.stars) s.stars = r.earned;
+      var after = totalStars();
+      var rb = rankFor(before), ra = rankFor(after);
+      r.rankUp = ra[2] !== rb[2] ? ra[1] + " New rank: " + ra[2] + "!" : "";
+    } else r.rankUp = "";
+  }
+  function renderDone() {
+    var r = R(), lv = levelByKey(CUR), total = r.ids.length, first = count(r.done, "first");
+    setColor($("screen-done"), lv.color);
+    $("done-eyebrow").textContent = lv.icon + " " + lv.name + (r.practice ? " · Tricky ones" : "");
+    $("done-h").textContent = r.practice ? "Tricky ones cleared!" : (r.earned === 3 ? "Superstar!" : r.earned === 2 ? "Great work!" : "Level cleared!");
+    var ms = $("done-stars"); ms.textContent = "";
+    for (var i = 0; i < 3; i++) {
+      var s = document.createElement("span"); s.textContent = "⭐";
+      if (i < r.earned) { s.className = "on"; s.style.animationDelay = (0.15 + i * 0.25) + "s"; } else s.className = "off";
+      ms.appendChild(s);
+    }
+    ms.hidden = !!r.practice;
+    var big = $("done-big"); big.textContent = first;
+    var sm = document.createElement("small"); sm.textContent = " / " + total + "  (" + r.pct + "%)"; big.appendChild(sm);
+    $("rank-up").hidden = !r.rankUp; $("rank-up").textContent = r.rankUp || "";
+    var stats = [[r.round, r.round === 1 ? "round" : "rounds"], ["🔥 " + r.best, "best streak"], ["+" + r.xp, "XP earned"]];
+    var box = $("done-stats"); box.textContent = "";
+    stats.forEach(function (x) {
+      var d = document.createElement("div"); d.className = "stat";
+      var b = document.createElement("b"); b.textContent = x[0];
+      var t = document.createElement("span"); t.textContent = x[1];
+      d.appendChild(b); d.appendChild(t); box.appendChild(d);
+    });
+    var tricky = r.ids.filter(function (id) { return r.wrong[id]; }).sort(function (a, b) { return r.wrong[b] - r.wrong[a]; });
+    var ul = $("tricky"); ul.textContent = "";
+    tricky.forEach(function (id) {
+      var q = Q[id], li = document.createElement("li");
+      var tq = document.createElement("span"); tq.className = "tq";
+      tq.textContent = q.type === "build" ? q.q + " (" + q.tiles.join(" / ") + ")" : q.type === "type" ? (q.lead ? q.lead + "  →  " : "") + q.blank : q.q.replace(/\*\*/g, "");
+      var ta = document.createElement("span"); ta.className = "ta";
+      ta.textContent = "✔ " + (q.type === "build" ? q.answers[0] + q.end : q.type === "type" ? q.filled : q.answer);
+      var tm = document.createElement("span"); tm.className = "tm";
+      tm.textContent = (CUR === "boss" ? q.levelName + " · " : "") + "missed " + (r.wrong[id] === 1 ? "once" : r.wrong[id] + " times");
+      li.appendChild(tq); li.appendChild(ta); li.appendChild(tm); ul.appendChild(li);
+    });
+    $("tricky-block").hidden = tricky.length === 0;
+    $("btn-practice").hidden = tricky.length === 0;
+    var who = $("who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = P.name || "—"; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("done");
+    if (!r.practice && r.earned === 3 && !r.celebrated) { r.celebrated = true; save(); setTimeout(function () { confetti(ms, 60); }, 600); }
+  }
+  $("btn-practice").onclick = function () {
+    var r = R(); var ids = r.ids.filter(function (id) { return r.wrong[id]; });
+    P.runs[CUR] = newRun(CUR, ids, true); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-replay").onclick = function () {
+    var lv = levelByKey(CUR);
+    P.runs[CUR] = newRun(CUR, lv.boss ? bossIds() : lv.ids, false); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-map").onclick = function () { renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- confetti ---------- */
+  function confetti(el, n) {
+    if (reduceMotion || !el) return;
+    var rect = el.getBoundingClientRect();
+    var x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+    var colors = ["#F5B400", "#2F80ED", "#EB5757", "#27AE60", "#9B51E0", "#FF7AA2", "#56CCF2"];
+    n = n || 26;
+    for (var i = 0; i < n; i++) {
+      var c = document.createElement("i"); c.className = "confetti";
+      c.style.left = x + "px"; c.style.top = y + "px";
+      c.style.background = colors[i % colors.length];
+      var ang = Math.random() * Math.PI * 2, dist = 70 + Math.random() * 130;
+      c.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+      c.style.setProperty("--dy", (Math.sin(ang) * dist - 60 + Math.random() * 120) + "px");
+      c.style.setProperty("--rot", (Math.random() * 720 - 360) + "deg");
+      document.body.appendChild(c);
+      (function (node) { setTimeout(function () { node.remove(); }, 1000); })(c);
+    }
+  }
+
+  /* ---------- router + keys ---------- */
+  function route() {
+    if (!P.name) return renderWelcome();
+    if (!CUR || !R()) return renderMap();
+    var r = R();
+    if (r.screen === "play") renderPlay();
+    else if (r.screen === "between") renderBetween();
+    else renderDone();
+  }
+  document.addEventListener("keydown", function (e) {
+    if ($("screen-play").hidden || !CUR) return;
+    if (e.target && e.target.tagName === "INPUT") return;
+    var r = R(), q = currentQ(), k = e.key.toLowerCase();
+    if (q.type === "mcq") {
+      var idx = ["1", "2", "3", "4"].indexOf(k); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(k);
+      if (idx >= 0 && r.opts && idx < r.opts.length && !r.answered) { e.preventDefault(); pick(idx, $("opts").children[idx]); return; }
+    }
+    if ((k === "enter" || k === "arrowright") && r.answered && e.target.tagName !== "BUTTON") { e.preventDefault(); next(); }
+  });
+
+  (function () {
+    var lg = document.querySelector(".logo img");
+    if (!lg) return;
+    function hide() { lg.parentNode.hidden = true; }
+    lg.addEventListener("error", hide);
+    if (lg.complete && lg.naturalWidth === 0) hide();
+  })();
+  $("top-title").textContent = DATA.title;
+  $("top-sub").textContent = DATA.subtitle;
+  P = load() || blank();
+  route();
+})();
+</script>
+
+</body>
+</html>
