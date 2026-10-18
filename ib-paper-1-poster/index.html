@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Paper 1 Poster Case File</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Special+Elite&display=swap">
+<style>
+body{margin:0}[hidden]{display:none!important}img{max-width:100%}
+/* One phone-width column. A case file for IB Paper 1: stage tabs, the poster with numbered clue badges and a clue list, a bottom sheet for each interrogation, a drill card, and a guided writing desk built from Onur English sentence frames. */
+:root {
+  --paper: #EEF0EC;
+  --sheet: #FFFFFF;
+  --ink: #16181D;
+  --muted: #5A606B;
+  --rule: #D6D9D2;
+  --navy: #1F2B4D;
+  --hl: #FFE45C;
+  --hl-deep: #E9C400;
+  --hl-green: #B7EBC5;
+  --hl-blue: #C6DCFF;
+  --hl-pink: #FFC9D6;
+  --stamp: #C2302A;
+  --good: #1D7548;
+  --good-soft: #DCF0E3;
+  --bad-soft: #FBE1DE;
+  --f-type: "Special Elite", "Courier New", monospace;
+  --f-body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  --f-news: "Source Serif 4", "Georgia", "Times New Roman", serif;
+  --r: 12px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--paper); }
+body { color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 680px; margin: 0 auto; padding-inline: 16px; padding-block: 14px 64px; display: flex; flex-direction: column; gap: 16px; }
+.wrap.inner { padding: 0; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #FFFFFF; border-radius: 10px; padding: 4px 6px; flex: none; display: grid; place-items: center; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.logo img { width: 70px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-type); font-size: 1.1rem; letter-spacing: .03em; }
+.top-sub { color: var(--muted); font-size: .88rem; }
+
+.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--r); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.label { font-family: var(--f-type); font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+.gq { border-left: 4px solid var(--navy); background: #F3F5FA; border-radius: 0 10px 10px 0; padding: 12px 14px; font-weight: 700; }
+
+.btn { appearance: none; border: 0; border-radius: 10px; padding: 13px 18px; font-weight: 700; font-size: 1rem; cursor: pointer; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-ink { background: var(--ink); color: #FFFFFF; }
+.btn-ink:hover { background: var(--navy); }
+.btn-ink:disabled { background: #9AA0A8; cursor: not-allowed; }
+.btn-ghost { background: transparent; border: 2px solid var(--rule); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Start */
+.folder { position: relative; background: #F7E9B8; border: 1px solid #D9C27A; border-radius: 4px 14px 14px 14px; padding: 26px 20px 22px; display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+.folder::before { content: ""; position: absolute; top: -14px; left: -1px; width: 130px; height: 15px; background: #F7E9B8; border: 1px solid #D9C27A; border-bottom: 0; border-radius: 8px 8px 0 0; }
+.folder h1 { font-family: var(--f-type); font-weight: 400; font-size: clamp(2rem, 9vw, 2.9rem); line-height: 1.05; }
+.stamp { align-self: flex-start; font-family: var(--f-type); color: var(--stamp); border: 3px solid var(--stamp); border-radius: 6px; padding: 2px 10px; transform: rotate(-4deg); font-size: 1rem; letter-spacing: .08em; }
+.folder .sub { font-size: 1.05rem; max-width: 42ch; }
+.stages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.stages li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+.stages .n { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: #FFFFFF; font-family: var(--f-type); font-size: 1.1rem; }
+.exam { border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; font-size: .92rem; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input, .field textarea, .slot textarea { font: inherit; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); width: 100%; }
+.field input:focus, .field textarea:focus, .slot textarea:focus { border-color: var(--navy); outline: none; }
+.resume { border: 2px dashed var(--ink); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Tabs */
+.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); padding-block: 6px; }
+.tab { appearance: none; border: 2px solid var(--rule); background: var(--sheet); border-radius: 10px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; min-width: 0; }
+.tab b { font-family: var(--f-type); font-weight: 400; font-size: .95rem; }
+.tab span { font-size: .75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tab.on { border-color: var(--ink); background: var(--ink); color: #FFFFFF; }
+.tab.on span { color: #D5D8DE; }
+.tab:disabled { opacity: .5; cursor: not-allowed; }
+.tab.done:not(.on) { border-color: var(--good); }
+
+/* Stage 1: poster */
+.brief { display: flex; flex-direction: column; gap: 8px; }
+.meter { height: 10px; border-radius: 999px; background: var(--rule); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--ink); width: 0; transition: width .4s; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 16px; height: 10px; border-radius: 2px; display: inline-block; }
+.poster-wrap { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 10px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 0 var(--rule); }
+.poster-wrap svg { width: 100%; height: auto; display: block; border-radius: 3px; }
+.poster-foot { font-size: .8rem; color: var(--muted); font-style: italic; }
+.badge { cursor: pointer; }
+.badge .ring { fill: var(--hl); stroke: #16181D; stroke-width: 2; }
+.badge text { font-family: var(--f-body); font-weight: 700; font-size: 12px; fill: #16181D; pointer-events: none; }
+.badge.first .ring { fill: #2FA866; stroke: #FFFFFF; }
+.badge.later .ring { fill: #3C7BE0; stroke: #FFFFFF; }
+.badge.first text, .badge.later text { fill: #FFFFFF; }
+.badge.cold .ring { fill: var(--hl-pink); stroke: var(--stamp); }
+.badge.cold text { fill: var(--stamp); }
+.badge.open .ring { animation: pulse 2.2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { stroke-width: 2; } 50% { stroke-width: 4; } }
+.badge:focus { outline: none; }
+.badge:focus-visible .ring { stroke: #2F6BFF; stroke-width: 4; }
+.cluelist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.cl { appearance: none; text-align: left; border: 2px solid var(--rule); background: var(--sheet); border-radius: 10px; padding: 8px 10px; display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: center; cursor: pointer; min-height: 48px; }
+.cl .k { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: .85rem; background: var(--hl); border: 2px solid var(--ink); }
+.cl .t { font-size: .85rem; line-height: 1.25; min-width: 0; }
+.cl .t small { display: block; color: var(--good); font-size: .75rem; }
+.cl.first .k { background: #2FA866; color: #FFFFFF; border-color: #2FA866; }
+.cl.later .k { background: #3C7BE0; color: #FFFFFF; border-color: #3C7BE0; }
+.cl.cold { cursor: not-allowed; }
+.cl.cold .k { background: var(--hl-pink); color: var(--stamp); border-color: var(--stamp); }
+.cl.cold .t small { color: var(--stamp); }
+.sweep { border: 2px solid var(--stamp); background: #FFF6F5; }
+.sweep .label { color: var(--stamp); }
+
+/* Bottom sheet */
+.sheet-back { position: fixed; inset: 0; background: rgba(22,24,29,.45); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: var(--sheet); width: 100%; max-width: 680px; max-height: 88vh; overflow-y: auto; border-radius: 16px 16px 0 0; padding: 18px 16px calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 14px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.x { appearance: none; border: 2px solid var(--rule); background: transparent; border-radius: 999px; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; line-height: 1; }
+.evidence { font-family: var(--f-news); font-size: 1.12rem; background: linear-gradient(transparent 8%, var(--hl) 8%, var(--hl) 92%, transparent 92%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.evidence.vis { background: #F3F5FA; border-left: 4px solid var(--navy); padding: 8px 12px; border-radius: 0 8px 8px 0; font-size: 1.02rem; }
+.steps2 { display: flex; gap: 6px; flex-wrap: wrap; }
+.st { font-size: .75rem; font-weight: 700; border-radius: 999px; padding: 2px 10px; border: 1px solid var(--rule); color: var(--muted); }
+.st.on { border-color: var(--ink); color: var(--ink); }
+.st.done { border-color: var(--good); color: var(--good); }
+.q { font-size: 1.2rem; font-weight: 700; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; border: 2px solid var(--rule); background: var(--sheet); border-radius: 10px; padding: 12px 14px; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 54px; color: var(--ink); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--ink); } }
+.opt .k { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-weight: 700; background: var(--paper); }
+.opt .t { min-width: 0; }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.right .k { background: var(--good); color: #FFFFFF; }
+.opt.wrong { border-color: var(--stamp); background: var(--bad-soft); }
+.opt.wrong .k { background: var(--stamp); color: #FFFFFF; }
+.opt.dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.fb { border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--good-soft); }
+.fb.bad { background: var(--bad-soft); }
+.fb.reveal { background: #FFF3BF; }
+.fb-h { font-family: var(--f-type); font-size: 1.15rem; }
+.fb.good .fb-h { color: var(--good); }
+.fb.bad .fb-h { color: var(--stamp); }
+.fb-note { font-size: .88rem; color: var(--muted); }
+
+/* Stage 2 */
+.board { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 5px; }
+.sq { aspect-ratio: 1; max-width: 100%; border-radius: 4px; background: var(--rule); }
+.sq.first { background: var(--hl-green); box-shadow: inset 0 0 0 2px var(--good); }
+.sq.later { background: var(--hl-blue); }
+.sq.missed { background: var(--hl-pink); box-shadow: inset 0 0 0 2px var(--stamp); }
+.sq.now { box-shadow: inset 0 0 0 3px var(--ink); }
+.retry { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--bad-soft); color: var(--stamp); }
+
+/* Stage 3 */
+.picker { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { appearance: none; border: 2px solid var(--rule); background: var(--sheet); border-radius: 999px; padding: 6px 12px; cursor: pointer; font-size: .9rem; text-align: left; }
+.chip.sel { border-color: var(--ink); background: var(--ink); color: #FFFFFF; }
+.part { font-family: var(--f-type); font-size: 1rem; letter-spacing: .04em; border-bottom: 2px solid var(--ink); padding-bottom: 4px; margin-top: 6px; }
+.slot { display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--rule); padding-left: 12px; }
+.slot.ok { border-left-color: var(--good); }
+.slot-h { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.slot-h b { font-family: var(--f-type); font-weight: 400; font-size: 1.05rem; }
+.slot-h span { font-size: .85rem; color: var(--muted); }
+.slot-tip { font-size: .85rem; color: var(--muted); }
+.starters { display: flex; flex-direction: column; gap: 6px; }
+.starter-btn { appearance: none; text-align: left; border: 1.5px dashed #9AA3B5; background: #F7F8FB; border-radius: 8px; padding: 6px 10px; font-size: .86rem; font-style: italic; color: #2D3340; cursor: pointer; }
+.starter-btn::before { content: "+ "; font-style: normal; font-weight: 700; color: var(--navy); }
+.starter-btn:hover { border-color: var(--navy); }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; font-size: .85rem; }
+.checks li { display: flex; gap: 6px; align-items: baseline; color: var(--muted); }
+.checks li::before { content: "○"; font-weight: 700; }
+.checks li.ok { color: var(--good); }
+.checks li.ok::before { content: "✓"; }
+.checks li.no { color: var(--stamp); }
+.checks li.no::before { content: "✗"; }
+textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
+.final { font-family: var(--f-news); font-size: 1.04rem; line-height: 1.7; background: var(--paper); border-radius: 10px; padding: 14px; }
+.model { font-family: var(--f-news); line-height: 1.7; display: flex; flex-direction: column; gap: 10px; }
+.model .m-row { display: grid; grid-template-columns: 74px 1fr; gap: 10px; align-items: baseline; }
+.model .m-tag { font-family: var(--f-body); font-size: .72rem; font-weight: 700; color: var(--navy); background: #E6EBF7; border-radius: 6px; padding: 2px 6px; text-align: center; }
+.tick { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.tick label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.tick input { width: 20px; height: 20px; margin-top: 2px; flex: none; }
+.crit { display: inline-block; font-size: .72rem; font-weight: 700; color: #FFFFFF; background: var(--navy); border-radius: 6px; padding: 1px 6px; margin-right: 6px; }
+
+/* Report */
+.big { font-family: var(--f-type); font-size: clamp(2.6rem, 12vw, 3.6rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big small { font-size: .4em; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.stat { border: 2px solid var(--rule); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; min-width: 0; }
+.stat b { font-family: var(--f-type); font-weight: 400; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .8rem; color: var(--muted); }
+.revise { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.revise li { border-left: 4px solid var(--stamp); background: var(--paper); border-radius: 0 8px 8px 0; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; }
+.revise .a { color: var(--good); font-size: .92rem; }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; }
+.who b { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } .badge.open .ring { animation: none; } }
+@media print { .tabs, .btn, .btn-row { display: none !important; } body { background: #FFFFFF; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title">IB PAPER 1 · CASE FILE</span>
+      <span class="top-sub">Grade 11 · Language and Literature · Non-literary text</span>
+    </div>
+  </header>
+
+  <!-- START -->
+  <section id="s-start" hidden>
+    <div class="wrap inner">
+      <div class="folder">
+        <span class="stamp">CASE FILE 01</span>
+        <h1>The Road Safety Poster</h1>
+        <p class="sub">A public awareness poster is trying to change how people drive. Twelve clues are marked on it: some are words, some are parts of the image. Find out what each one does, then write an IB-style analysis paragraph.</p>
+      </div>
+      <div class="card">
+        <span class="label">Guiding question</span>
+        <p class="gq">How does the poster use visual and written features to persuade drivers not to use their phones while driving?</p>
+        <ol class="stages">
+          <li><span class="n">1</span><span><b>Investigate.</b> Tap each numbered clue on the poster. Name the feature, then choose what it does to the viewer.</span></li>
+          <li><span class="n">2</span><span><b>Sharpen.</b> Choose the stronger sentence for each move of a Paper 1 paragraph.</span></li>
+          <li><span class="n">3</span><span><b>Write.</b> Build your own analysis paragraph with the sentence frames. The desk checks your structure as you type, then shows you a model answer.</span></li>
+        </ol>
+        <div class="exam">
+          <b>Why this matters for Paper 1</b>
+          <span>In Paper 1 you analyze an unseen non-literary text, such as a poster, an advertisement or an infographic. SL students choose one of two texts and have 1 hour 15 minutes. HL students write about both texts in 2 hours 15 minutes. The skills you practice here are the same at both levels.</span>
+        </div>
+        <p class="small muted">A wrong answer turns a clue into a cold case. It comes back in the next sweep, with the answers moved around. Your first-try score is your real score.</p>
+        <div class="resume" id="resume" hidden>
+          <p><b>You have a case in progress.</b> <span id="resume-text"></span></p>
+          <div class="btn-row">
+            <button class="btn btn-ink" id="btn-resume" type="button">Continue</button>
+            <button class="btn btn-ghost" id="btn-wipe" type="button">Start over</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="student-name">Your name</label>
+          <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+        </div>
+        <button class="btn btn-ink" id="btn-start" type="button">Open the case file</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <section id="s-main" hidden>
+    <div class="wrap inner">
+      <nav class="tabs" aria-label="Stages">
+        <button class="tab" id="tab-1" type="button"><b>1 Investigate</b><span id="tab-1-s"></span></button>
+        <button class="tab" id="tab-2" type="button"><b>2 Sharpen</b><span id="tab-2-s"></span></button>
+        <button class="tab" id="tab-3" type="button"><b>3 Write</b><span id="tab-3-s"></span></button>
+      </nav>
+
+      <!-- STAGE 1 -->
+      <div id="st-1" hidden>
+        <div class="wrap inner">
+          <div class="card brief">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+              <span class="label" id="sweep-label">Sweep 1</span>
+              <span class="small" id="clue-count"></span>
+            </div>
+            <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+            <div class="legend">
+              <span><i style="background:var(--hl)"></i>Clue to crack</span>
+              <span><i style="background:#2FA866"></i>Cracked first try</span>
+              <span><i style="background:#3C7BE0"></i>Cracked later</span>
+              <span><i style="background:var(--hl-pink)"></i>Cold case</span>
+            </div>
+          </div>
+          <div class="card sweep" id="sweep-card" hidden>
+            <span class="label">Sweep complete</span>
+            <p id="sweep-text"></p>
+            <button class="btn btn-ink" id="btn-sweep" type="button"></button>
+          </div>
+          <div class="card" id="closed-card" hidden>
+            <span class="label" style="color:var(--good)">Case cracked</span>
+            <p>Every clue is solved. Stage 2 is open.</p>
+            <button class="btn btn-ink" id="btn-to-2" type="button">Go to Stage 2: Sharpen</button>
+          </div>
+          <figure class="poster-wrap" style="margin:0">
+<svg id="poster" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 680" role="img" aria-label="Public awareness poster. Headline: ONE MESSAGE. ONE SECOND. ONE LIFE. The image shows the view from a driver's seat at night: a hand holds a glowing phone with a half-typed reply, almost home, with a smiling emoji, while a small child in a red coat holding a red ball stands on a pedestrian crossing ahead. Subheading: Your reply can wait. They can't. Body text: Looking at a screen means your eyes are not on the road. Put your phone on silent and out of reach before you start the engine. Hashtag: EyesUpPhoneDown. Logo: Northbridge Road Safety Council.">
+  <defs>
+    <linearGradient id="pg-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#121B3A"/>
+      <stop offset="1" stop-color="#2C3B66"/>
+    </linearGradient>
+    <linearGradient id="pg-road" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2A3045"/>
+      <stop offset="1" stop-color="#151926"/>
+    </linearGradient>
+    <radialGradient id="pg-lamp" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFD58A" stop-opacity=".75"/>
+      <stop offset="1" stop-color="#FFD58A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pg-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#EAF2FF" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#EAF2FF" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="pg-shield"><path d="M16 196 Q200 178 384 196 L384 505 L16 505 Z"/></clipPath>
+  </defs>
+
+  <!-- background -->
+  <rect width="400" height="680" fill="#0B1226"/>
+
+  <!-- headline -->
+  <g font-family="Anton, Impact, 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif" font-weight="700" text-anchor="middle">
+    <text x="200" y="68" font-size="50" fill="#FFFFFF" textLength="330" lengthAdjust="spacingAndGlyphs">ONE MESSAGE.</text>
+    <text x="200" y="122" font-size="50" fill="#FFFFFF" textLength="300" lengthAdjust="spacingAndGlyphs">ONE SECOND.</text>
+    <text x="200" y="176" font-size="50" fill="#E5322B" textLength="240" lengthAdjust="spacingAndGlyphs">ONE LIFE.</text>
+  </g>
+
+  <!-- car interior frame -->
+  <rect x="0" y="186" width="400" height="320" fill="#04060D"/>
+
+  <!-- the view through the windshield -->
+  <g clip-path="url(#pg-shield)">
+    <rect x="0" y="180" width="400" height="330" fill="url(#pg-sky)"/>
+    <!-- distant buildings -->
+    <g fill="#141C38">
+      <rect x="20" y="248" width="40" height="46"/><rect x="62" y="262" width="30" height="32"/>
+      <rect x="96" y="240" width="34" height="54"/><rect x="262" y="252" width="36" height="42"/>
+      <rect x="300" y="236" width="44" height="58"/><rect x="346" y="258" width="38" height="36"/>
+    </g>
+    <g fill="#F2C46B" opacity=".7">
+      <rect x="28" y="256" width="5" height="5"/><rect x="44" y="270" width="5" height="5"/>
+      <rect x="104" y="250" width="5" height="5"/><rect x="116" y="266" width="5" height="5"/>
+      <rect x="270" y="262" width="5" height="5"/><rect x="310" y="246" width="5" height="5"/>
+      <rect x="326" y="262" width="5" height="5"/><rect x="356" y="268" width="5" height="5"/>
+    </g>
+    <!-- sidewalks and road -->
+    <polygon points="0,294 400,294 400,510 0,510" fill="#1C2236"/>
+    <polygon points="175,294 225,294 400,505 0,505" fill="url(#pg-road)"/>
+    <!-- headlight beams -->
+    <polygon points="70,505 165,352 240,352 335,505" fill="#FFFFFF" opacity=".07"/>
+    <!-- center line -->
+    <g fill="#E8E2C8" opacity=".75">
+      <polygon points="199,300 201,300 201.6,312 198.4,312"/>
+      <polygon points="198,322 202,322 203,338 197,338"/>
+      <polygon points="196,372 204,372 206,398 194,398"/>
+      <polygon points="193,420 207,420 210,458 190,458"/>
+    </g>
+    <!-- pedestrian crossing -->
+    <g fill="#ECEFF5" opacity=".9">
+      <polygon points="131,346 145,346 140,360 124,360"/>
+      <polygon points="153,346 167,346 164,360 148,360"/>
+      <polygon points="175,346 189,346 188,360 172,360"/>
+      <polygon points="197,346 211,346 212,360 196,360"/>
+      <polygon points="219,346 233,346 236,360 220,360"/>
+      <polygon points="241,346 255,346 260,360 244,360"/>
+      <polygon points="263,346 270,346 276,360 268,360"/>
+    </g>
+    <!-- streetlamp -->
+    <circle cx="318" cy="246" r="70" fill="url(#pg-lamp)"/>
+    <rect x="329" y="244" width="3" height="96" fill="#0D1224"/>
+    <rect x="312" y="240" width="20" height="4" rx="2" fill="#0D1224"/>
+    <polygon points="306,246 330,246 290,358 214,358" fill="#FFD58A" opacity=".10"/>
+    <!-- the child -->
+    <g>
+      <rect x="244.5" y="345" width="2.6" height="12" fill="#1A1A22"/>
+      <rect x="249.2" y="345" width="2.6" height="12" fill="#1A1A22"/>
+      <rect x="242" y="327" width="12" height="20" rx="3" fill="#E5322B"/>
+      <circle cx="248" cy="321" r="5.6" fill="#E3B48F"/>
+      <path d="M242.6 320 Q248 312 253.4 320 Q251 316.5 248 316.4 Q245 316.5 242.6 320 Z" fill="#3A2416"/>
+      <rect x="253" y="330" width="3" height="10" rx="1.5" fill="#E5322B" transform="rotate(-18 254 330)"/>
+      <circle cx="259.5" cy="341" r="4.6" fill="#E5322B"/>
+      <path d="M256.3 339.5 Q259.5 337.6 262.7 339.5" stroke="#FFFFFF" stroke-width=".8" fill="none" opacity=".7"/>
+    </g>
+    <!-- glow from the phone -->
+    <circle cx="138" cy="400" r="150" fill="url(#pg-glow)"/>
+    <!-- rear-view mirror -->
+    <rect x="168" y="196" width="64" height="20" rx="6" fill="#0A0E1C" stroke="#2A3352" stroke-width="1.5"/>
+    <rect x="198" y="186" width="4" height="12" fill="#0A0E1C"/>
+    <!-- dashboard -->
+    <path d="M0 462 Q200 446 400 462 L400 510 L0 510 Z" fill="#070A14"/>
+    <!-- steering wheel -->
+    <circle cx="300" cy="575" r="122" fill="none" stroke="#141925" stroke-width="20"/>
+    <circle cx="300" cy="575" r="122" fill="none" stroke="#2A3245" stroke-width="2" transform="translate(0 -9)"/>
+  </g>
+
+  <!-- the phone, held in the driver's hand -->
+  <g transform="rotate(-5 138 400)">
+    <ellipse cx="60" cy="408" rx="9" ry="13" fill="#C68B67"/>
+    <ellipse cx="58" cy="436" rx="9" ry="13" fill="#B97E5C"/>
+    <rect x="62" y="290" width="152" height="250" rx="22" fill="#0D0F14"/>
+    <rect x="70" y="302" width="136" height="228" rx="16" fill="#F7F8FB"/>
+    <rect x="114" y="307" width="48" height="8" rx="4" fill="#0D0F14"/>
+    <g font-family="'Atkinson Hyperlegible', 'Helvetica Neue', Arial, sans-serif">
+      <text x="80" y="336" font-size="13" fill="#2F6BFF">&#8249;</text>
+      <circle cx="104" cy="331" r="8" fill="#C9CFDA"/>
+      <text x="117" y="335" font-size="12" font-weight="700" fill="#16181D">Mom</text>
+      <line x1="72" y1="346" x2="204" y2="346" stroke="#E2E5EC" stroke-width="1"/>
+      <rect x="78" y="356" width="92" height="24" rx="12" fill="#E5E7EB"/>
+      <text x="87" y="372" font-size="11" fill="#16181D">where are you?</text>
+      <rect x="76" y="412" width="124" height="28" rx="14" fill="#FFFFFF" stroke="#C9CDD6" stroke-width="1.2"/>
+      <text x="85" y="430.5" font-size="11.5" fill="#16181D">almost home!! &#128522;</text>
+      <circle cx="191" cy="426" r="7" fill="#2F6BFF"/>
+      <path d="M188 426 L191 423 L194 426 M191 423 L191 429.5" stroke="#FFFFFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </g>
+    <rect x="70" y="448" width="136" height="82" fill="#D3D6DD"/>
+    <g fill="#FFFFFF">
+      <rect x="74" y="454" width="10" height="13" rx="2"/><rect x="87" y="454" width="10" height="13" rx="2"/><rect x="100" y="454" width="10" height="13" rx="2"/><rect x="113" y="454" width="10" height="13" rx="2"/><rect x="126" y="454" width="10" height="13" rx="2"/><rect x="139" y="454" width="10" height="13" rx="2"/><rect x="152" y="454" width="10" height="13" rx="2"/><rect x="165" y="454" width="10" height="13" rx="2"/><rect x="178" y="454" width="10" height="13" rx="2"/><rect x="191" y="454" width="10" height="13" rx="2"/>
+      <rect x="80" y="472" width="10" height="13" rx="2"/><rect x="93" y="472" width="10" height="13" rx="2"/><rect x="106" y="472" width="10" height="13" rx="2"/><rect x="119" y="472" width="10" height="13" rx="2"/><rect x="132" y="472" width="10" height="13" rx="2"/><rect x="145" y="472" width="10" height="13" rx="2"/><rect x="158" y="472" width="10" height="13" rx="2"/><rect x="171" y="472" width="10" height="13" rx="2"/><rect x="184" y="472" width="10" height="13" rx="2"/>
+      <rect x="93" y="490" width="10" height="13" rx="2"/><rect x="106" y="490" width="10" height="13" rx="2"/><rect x="119" y="490" width="10" height="13" rx="2"/><rect x="132" y="490" width="10" height="13" rx="2"/><rect x="145" y="490" width="10" height="13" rx="2"/><rect x="158" y="490" width="10" height="13" rx="2"/><rect x="171" y="490" width="10" height="13" rx="2"/>
+    </g>
+    <path d="M232 520 C226 498 210 482 192 476 C180 472 172 480 178 489 C188 503 198 512 204 522 Z" fill="#C68B67"/>
+  </g>
+
+  <!-- lower band -->
+  <rect x="0" y="505" width="400" height="175" fill="#0B1226"/>
+  <rect x="0" y="505" width="400" height="3" fill="#E5322B"/>
+  <g font-family="'Atkinson Hyperlegible', 'Helvetica Neue', Arial, sans-serif" text-anchor="middle">
+    <text x="200" y="545" font-size="26" font-weight="700" fill="#FFFFFF">Your reply can wait.</text>
+    <text x="200" y="577" font-size="26" font-weight="700" fill="#FFFFFF">They can&#8217;t.</text>
+    <text x="200" y="605" font-size="11.5" fill="#C9D0E0">Looking at a screen means your eyes are not on the road.</text>
+    <text x="200" y="621" font-size="11.5" fill="#C9D0E0">Put your phone on silent and out of reach</text>
+    <text x="200" y="637" font-size="11.5" fill="#C9D0E0">before you start the engine.</text>
+  </g>
+  <text x="40" y="666" font-family="'Atkinson Hyperlegible', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="#FFD447">#EyesUpPhoneDown</text>
+  <g>
+    <path d="M280 648 L296 648 L296 659 Q296 667 288 671 Q280 667 280 659 Z" fill="#2F6BFF"/>
+    <path d="M284 657 L287.5 661 L293 653" stroke="#FFFFFF" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <g font-family="'Atkinson Hyperlegible', 'Helvetica Neue', Arial, sans-serif" fill="#FFFFFF">
+      <text x="301" y="658" font-size="8.6" font-weight="700" letter-spacing=".4">NORTHBRIDGE</text>
+      <text x="301" y="668" font-size="6.6" letter-spacing=".3">ROAD SAFETY COUNCIL</text>
+    </g>
+  </g>
+  <g id="badges"></g>
+</svg>
+
+            <figcaption class="poster-foot">This poster was made for classroom practice. The Northbridge Road Safety Council and its campaign are fictional.</figcaption>
+          </figure>
+          <div class="card">
+            <span class="label">Clue list</span>
+            <p class="small muted">Tap a number on the poster, or tap a clue here.</p>
+            <div class="cluelist" id="cluelist"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 2 -->
+      <div id="st-2" hidden>
+        <div class="card" id="drill-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span class="label" id="drill-round"></span>
+            <span class="small" id="drill-count"></span>
+          </div>
+          <div class="board" id="drill-board" aria-hidden="true"></div>
+          <span class="label" id="drill-part"></span>
+          <span class="retry" id="drill-retry" hidden></span>
+          <h3 class="q" id="drill-q" tabindex="-1"></h3>
+          <div class="opts" id="drill-opts" role="group" aria-labelledby="drill-q"></div>
+          <div class="fb" id="drill-fb" role="status" aria-live="polite" hidden></div>
+          <button class="btn btn-ink" id="drill-next" type="button" hidden></button>
+        </div>
+        <div class="card" id="drill-between" hidden>
+          <span class="label" style="color:var(--stamp)">Round complete</span>
+          <h3 id="drill-between-h" style="font-size:1.3rem"></h3>
+          <p id="drill-between-t"></p>
+          <button class="btn btn-ink" id="drill-go" type="button"></button>
+        </div>
+        <div class="card" id="drill-done" hidden>
+          <span class="label" style="color:var(--good)">Sharpened</span>
+          <p>Every sentence is fixed. Stage 3 is open: time to write your analysis.</p>
+          <button class="btn btn-ink" id="btn-to-3" type="button">Go to Stage 3: Write</button>
+        </div>
+      </div>
+
+      <!-- STAGE 3 -->
+      <div id="st-3" hidden>
+        <div class="wrap inner">
+          <div class="card">
+            <span class="label">Guiding question</span>
+            <p class="gq">How does the poster use visual and written features to persuade drivers not to use their phones while driving?</p>
+            <p class="small muted">Pick your TWO strongest clues. They must be two different features. Strong paragraphs often use one written feature and one visual feature.</p>
+            <div class="picker" id="picker"></div>
+          </div>
+          <div class="card" id="desk" hidden>
+            <span class="label">Your analysis paragraph</span>
+            <p class="small muted">Tap a gray sentence frame to add it to the box, then replace every “…” with your own words. Each box turns green when its structure is right. The checks look at structure, not quality, so compare with the model answer at the end.</p>
+            <div id="slots" style="display:flex;flex-direction:column;gap:18px"></div>
+            <button class="btn btn-ink" id="btn-file" type="button" disabled>Submit my paragraph</button>
+            <p class="small muted" id="file-note"></p>
+          </div>
+          <div class="card" id="filed" hidden>
+            <span class="label" style="color:var(--good)">Paragraph submitted</span>
+            <div class="final" id="final"></div>
+            <div class="btn-row">
+              <button class="btn btn-ghost" id="btn-copy" type="button">Copy my paragraph</button>
+              <button class="btn btn-ghost" id="btn-edit" type="button">Edit my paragraph</button>
+            </div>
+            <p class="small muted" id="copy-note" role="status"></p>
+            <span class="label">Model answer (irony + symbolism)</span>
+            <p class="small muted">Read it move by move. Each tag shows which sentence frame the sentence uses. Learn the moves; do not copy the sentences.</p>
+            <div class="model" id="model"></div>
+            <span class="label">Check your paragraph against the IB criteria</span>
+            <ul class="tick" id="tick"></ul>
+            <div class="field">
+              <label for="improve">One thing I will improve next time</label>
+              <textarea id="improve" maxlength="300"></textarea>
+            </div>
+            <button class="btn btn-ink" id="btn-report" type="button">Close the case</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="s-report" hidden>
+    <div class="card">
+      <span class="stamp">CASE CLOSED</span>
+      <h2 style="font-size:1.6rem">Case report</h2>
+      <div>
+        <div class="muted">Clues cracked first try</div>
+        <div class="big" id="r-big"></div>
+      </div>
+      <div class="stats" id="r-stats"></div>
+      <div id="r-revise-block">
+        <h3 style="font-size:1.15rem;margin-bottom:8px">Clues and sentences to revise</h3>
+        <ul class="revise" id="r-revise"></ul>
+      </div>
+      <span class="label">My paragraph</span>
+      <div class="final" id="r-para"></div>
+      <div id="r-improve-block"><span class="label">I will improve</span><p id="r-improve"></p></div>
+      <div class="who" id="r-who"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="btn-back" type="button">Back to the case file</button>
+        <button class="btn btn-ghost" id="btn-again" type="button">Start a new case</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="sheet-back" id="sheet-back" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
+    <div class="sheet-head">
+      <span class="label" id="sheet-label"></span>
+      <button class="x" id="sheet-x" type="button" aria-label="Close">×</button>
+    </div>
+    <p class="evidence" id="sheet-ev"></p>
+    <div class="steps2" id="sheet-steps"></div>
+    <span class="retry" id="sheet-retry" hidden></span>
+    <h3 class="q" id="sheet-q" tabindex="-1"></h3>
+    <div class="opts" id="sheet-opts" role="group" aria-labelledby="sheet-q"></div>
+    <div class="fb" id="sheet-fb" role="status" aria-live="polite" hidden></div>
+    <button class="btn btn-ink" id="sheet-next" type="button" hidden></button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- POSTER TEXT (fictional poster written for classroom practice) ---------- */
+  var POSTER_TEXT = "ONE MESSAGE. ONE SECOND. ONE LIFE. Mom where are you? almost home!! 😊 Your reply can wait. They can’t. Looking at a screen means your eyes are not on the road. Put your phone on silent and out of reach before you start the engine. #EyesUpPhoneDown Northbridge Road Safety Council";
+  var TITLE = "ONE MESSAGE. ONE SECOND. ONE LIFE.";
+
+  /* kind: "text" = words on the poster, "visual" = part of the image. at = badge position on the poster. */
+  var CLUES = [
+    { id: "c1", n: 1, area: "Headline", kind: "text", at: [382, 48],
+      text: "ONE MESSAGE. ONE SECOND. ONE LIFE.", device: "Rule of three",
+      dWrong: ["Rhetorical question", "Statistics", "Direct address"],
+      dHint: "Count the sentences. What pattern do they share?",
+      dWhy: "Three short sentences follow the same pattern, “ONE …,” and each one is bigger than the last. That is the rule of three (also called a tricolon).",
+      effect: "The three short sentences grow from something small (a message) to something huge (a life), so the viewer suddenly sees how fast one small choice can become a tragedy.",
+      eWrong: ["c10", "c11"], eHint: "Is a message big or small? Is a life big or small?",
+      mean: ["The word “one” means …", "It is also commonly associated with …"], mkey: ["one"] },
+    { id: "c2", n: 2, area: "Color", kind: "visual", at: [342, 158],
+      text: "The words “ONE LIFE.” are red. The only other red things are the child’s coat and ball.", device: "Color symbolism",
+      dWrong: ["Layout", "Rule of three", "Irony"],
+      dHint: "Which color appears only a few times? Where?",
+      dWhy: "Red is used in only a few places, and it carries meaning: danger, warning and “stop.” That is color symbolism.",
+      effect: "Red links the words “ONE LIFE.” to the child’s coat and ball, so the viewer understands exactly whose life is in danger and reads red as a warning.",
+      eWrong: ["c11", "c9"], eHint: "Where else do you see red besides the words “ONE LIFE.”?",
+      mean: ["The color red is commonly associated with …", "It is also the color of …"], mkey: ["red"], nouns: ["red"] },
+    { id: "c3", n: 3, area: "Image: the view", kind: "visual", at: [372, 478],
+      text: "The scene is seen from the driver’s seat: the windshield, the steering wheel and a hand holding the phone.", device: "Point of view",
+      dWrong: ["Color symbolism", "Slogan", "Antithesis"],
+      dHint: "Whose eyes are we looking through? Find the steering wheel.",
+      dWhy: "We see the road through the driver’s own eyes. The image uses the driver’s point of view.",
+      effect: "The viewer is placed in the driver’s seat, so they feel that they are the person about to cause the accident.",
+      eWrong: ["c10", "c11"], eHint: "If you are sitting in the driver’s seat, who is driving?",
+      mean: ["A steering wheel is commonly associated with …", "Sitting behind the wheel also means …"], mkey: ["wheel", "driver"], nouns: ["steering wheel", "driver", "windshield", "wheel"] },
+    { id: "c4", n: 4, area: "Image: the phone", kind: "visual", at: [44, 296],
+      text: "The bright phone screen is the biggest object in the image, right at the front.", device: "Focal point",
+      dWrong: ["Irony", "Slogan", "Rule of three"],
+      dHint: "Which object is the biggest and brightest? Where does your eye go first?",
+      dWhy: "The phone is the largest, brightest object, so the eye goes to it first. That makes it the focal point.",
+      effect: "The bright phone grabs the viewer’s eye first, just as it grabs the driver’s attention, so the viewer notices the child late, like a distracted driver would.",
+      eWrong: ["c7", "c11"], eHint: "What do you look at first, the phone or the child?",
+      mean: ["A phone is commonly associated with …", "Its bright screen also means …"], mkey: ["phone", "screen"], nouns: ["phone", "screen"] },
+    { id: "c5", n: 5, area: "Image: the child", kind: "visual", at: [276, 316],
+      text: "A small child in a red coat, holding a red ball, stands on the crossing ahead.", device: "Symbolism",
+      dWrong: ["Point of view", "Statistics", "Imperative"],
+      dHint: "What could a child holding a ball stand for?",
+      dWhy: "The child and the ball stand for something bigger than one person: innocence and childhood. That is symbolism.",
+      effect: "The child stands for innocence and helplessness, so the viewer feels protective and guilty about putting such a young life in danger.",
+      eWrong: ["c9", "c10"], eHint: "How do we feel about children who could get hurt?",
+      mean: ["A ball is commonly associated with …", "A child is also commonly associated with …"], mkey: ["ball", "child"], nouns: ["child", "ball"] },
+    { id: "c6", n: 6, area: "Phone screen", kind: "text", at: [229, 410],
+      text: "almost home!! 😊", device: "Irony",
+      dWrong: ["Statistics", "Logo (authority)", "Rule of three"],
+      dHint: "Is the message happy? Is the picture happy? Do they match?",
+      dWhy: "The message is cheerful and says the driver is nearly safe, but the picture shows danger ahead. When the result is the opposite of what we expect, that is irony.",
+      effect: "The happy message clashes with the danger on the road, so the viewer feels uneasy and realizes the driver may never get home.",
+      eWrong: ["c11", "c12"], eHint: "Will the driver really get home safely?",
+      mean: ["The word “home” means …", "It also means …", "It is also commonly associated with …"], mkey: ["home"] },
+    { id: "c7", n: 7, area: "Subheading", kind: "text", at: [352, 536],
+      text: "Your reply can wait. They can’t.", device: "Antithesis",
+      dWrong: ["Rule of three", "Rhetorical question", "Logo (authority)"],
+      dHint: "Find two opposite ideas next to each other.",
+      dWhy: "Two opposite ideas sit side by side: “can wait” and “can’t.” That is antithesis.",
+      effect: "Setting “can wait” against “can’t” shows that the message is unimportant but the life is precious, so the viewer sees texting as a selfish choice.",
+      eWrong: ["c3", "c10"], eHint: "Which one can wait, and which one cannot?",
+      mean: ["The word “wait” means …", "The word “can’t” means …"], mkey: ["wait", "can't", "cannot"] },
+    { id: "c8", n: 8, area: "Body text, line 1", kind: "text", at: [28, 601],
+      text: "your eyes are not on the road", device: "Direct address",
+      dWrong: ["Imperative", "Hyperbole", "Symbolism"],
+      dHint: "Who is “your”? Who is the poster talking to?",
+      dWhy: "“Your” speaks straight to the person looking at the poster. That is direct address.",
+      effect: "“Your” speaks straight to the viewer, so they cannot pretend the warning is only about other drivers.",
+      eWrong: ["c4", "c11"], eHint: "Can the viewer say “this is about other people”?",
+      mean: ["The word “your” means …", "It is also commonly associated with …"], mkey: ["your"] },
+    { id: "c9", n: 9, area: "Body text, line 2", kind: "text", at: [72, 617],
+      text: "Put your phone on silent and out of reach", device: "Imperative",
+      dWrong: ["Antithesis", "Statistics", "Irony"],
+      dHint: "Look at the first word. What kind of sentence starts with a verb?",
+      dWhy: "The sentence begins with a verb, “Put,” and gives an order. That is an imperative.",
+      effect: "The clear command gives one simple action, so the viewer knows exactly what to do and feels able to prevent harm.",
+      eWrong: ["c5", "c2"], eHint: "Does the viewer know exactly what to do?",
+      mean: ["The phrase “out of reach” means …", "It is also commonly associated with …"], mkey: ["reach", "silent", "put"] },
+    { id: "c10", n: 10, area: "Hashtag", kind: "text", at: [24, 661],
+      text: "#EyesUpPhoneDown", device: "Slogan",
+      dWrong: ["Statistics", "Logo (authority)", "Rhetorical question"],
+      dHint: "What is short, catchy and has a # in front of it?",
+      dWhy: "A short, catchy phrase with a hashtag, made to be remembered and shared. That is a slogan.",
+      effect: "The short, catchy hashtag is easy to remember and share online, so the viewer keeps the rule in mind and spreads it to others.",
+      eWrong: ["c5", "c7"], eHint: "Why use a short phrase with a #?",
+      mean: ["The phrase “eyes up” means …", "It is also commonly associated with …"], mkey: ["eyes up", "up", "down"] },
+    { id: "c11", n: 11, area: "Logo", kind: "text", at: [264, 659],
+      text: "Northbridge Road Safety Council", device: "Logo (authority)",
+      dWrong: ["Statistics", "Irony", "Point of view"],
+      dHint: "Look at the bottom corner. Who stands behind this poster?",
+      dWhy: "The logo shows that an official organization stands behind the poster. That gives the message authority.",
+      effect: "An official council makes the message sound trustworthy, so the viewer takes the warning seriously.",
+      eWrong: ["c1", "c6"], eHint: "Who do we trust more: a stranger or an official council?",
+      mean: ["The word “council” means …", "It is also commonly associated with …"], mkey: ["council"] },
+    { id: "c12", n: 12, area: "Whole page", kind: "visual", at: [20, 20],
+      text: "Top: the warning. Middle: the danger. Bottom: what to do.", device: "Layout",
+      dWrong: ["Symbolism", "Hyperbole", "Direct address"],
+      dHint: "Read the poster from top to bottom. What comes first, in the middle and last?",
+      dWhy: "The parts are arranged in an order that the eye follows from top to bottom. That is layout.",
+      effect: "The eye moves from the warning, to the danger, to the solution, so the viewer finishes the poster knowing what to do.",
+      eWrong: ["c8", "c5"], eHint: "What does the viewer know by the time their eye reaches the bottom?",
+      mean: ["A top-to-bottom order is commonly associated with …", "Ending with an instruction also means …"], mkey: ["top", "bottom", "order", "instruction"], nouns: ["top", "bottom", "middle"] }
+  ];
+  var CBY = {}; CLUES.forEach(function (c) { CBY[c.id] = c; });
+
+  /* ---------- STAGE 2 DRILLS (sentences written for practice) ---------- */
+  var DRILLS = [
+    { part: "Point: topic sentence", q: "Which topic sentence is complete?",
+      answer: "In the public awareness poster “ONE MESSAGE. ONE SECOND. ONE LIFE.”, published by the Northbridge Road Safety Council, the creator persuades drivers to put their phones away through the use of antithesis and color symbolism.",
+      wrong: ["This poster is about phones and driving, and it is very effective.",
+              "In the poster, the creator uses antithesis and color symbolism.",
+              "Texting while driving is dangerous, so people should not do it."],
+      hint: "A full topic sentence names the text type, the title, the publisher, the audience, the purpose and TWO features.",
+      why: "It gives the text type, the headline as the title, the publisher, the audience (drivers), the purpose and both features." },
+    { part: "Text type", q: "Which sentence uses the right words for THIS text type?",
+      answer: "The creator places a small child in the middle of the crossing.",
+      wrong: ["The writer tells a story about a child on a crossing.",
+              "The poet describes a child on a crossing.",
+              "The novelist places a child on a crossing."],
+      hint: "A poster is not a story, a poem or a novel. Who makes a poster?",
+      why: "For a poster, write about “the creator,” “the designer” or “the council,” and about “the viewer.”" },
+    { part: "Evidence from the image", q: "Which sentence gives the best evidence from the IMAGE?",
+      answer: "First, the poster shows a small child in a red coat, holding a red ball, on the crossing ahead.",
+      wrong: ["First, there is a picture.",
+              "First, the image is very sad and powerful.",
+              "First, the poster has a lot of colors and things in it."],
+      hint: "Evidence from an image must be exact: what, where, which color, how big.",
+      why: "It describes exactly what is in the image, where it is and what color it is." },
+    { part: "Evidence from the words", q: "Which sentence gives the quotation most naturally?",
+      answer: "The poster warns drivers that their “reply can wait.”",
+      wrong: ["The quote is “Your reply can wait. They can’t.”",
+              "“Your reply can wait. They can’t. Looking at a screen means your eyes are not on the road.” This shows the message.",
+              "The poster says something about replies."],
+      hint: "Good evidence is short, exact and built into your own sentence. Never write “the quote is.”",
+      why: "The quotation is short and sits smoothly inside the sentence." },
+    { part: "Meaning", q: "Which sentence explains the MEANING of the word best?",
+      answer: "The word “home” means the place where a person lives, and it is commonly associated with safety and family.",
+      wrong: ["The word “home” is a noun.",
+              "The word “home” is important in the poster.",
+              "The word “home” is used on the phone."],
+      hint: "Give the dictionary meaning first, then what the word is commonly associated with.",
+      why: "It gives the meaning AND the associations (safety and family), which the analysis can then use." },
+    { part: "So? Analyze", q: "Which sentence answers “So?” best?",
+      answer: "The creator suggests that the driver feels safe and relaxed, even though a child is in danger just ahead.",
+      wrong: ["The creator uses the word “home.”",
+              "The phone says “almost home.”",
+              "This is an example of irony."],
+      hint: "“So?” means: what is the creator telling us? Do not just repeat what the poster shows.",
+      why: "It explains what the detail suggests, instead of repeating it or only naming the device." },
+    { part: "The viewer", q: "Which sentence explains the VIEWER’S response best?",
+      answer: "The viewer feels guilty, because the driver’s-seat view makes them realize that they could be the driver who hurts this child.",
+      wrong: ["The viewer feels emotional.",
+              "The viewer wants to look at the poster again.",
+              "This makes the reader read on."],
+      hint: "Name a clear feeling, then explain WHY with “because.”",
+      why: "It names a precise feeling (guilty) and explains how the image creates it." },
+    { part: "Device and aim", q: "Which sentence links the DEVICE to the creator’s AIM?",
+      answer: "Through the use of antithesis, the creator shows that a message can always wait but a life cannot be replaced.",
+      wrong: ["There is antithesis in the poster.",
+              "Through the use of antithesis, the poster is good.",
+              "Antithesis is when two opposite ideas are placed together."],
+      hint: "Use the frame “Through the use of (device), the creator (aim).” The aim is what the creator wants the viewer to understand.",
+      why: "It names the device and says what the creator wants the viewer to understand." },
+    { part: "Image and words together", q: "Which sentence shows how the IMAGE and the WORDS work together?",
+      answer: "The red of the child’s ball matches the red words “ONE LIFE.”, so the headline tells the viewer exactly whose life is at risk.",
+      wrong: ["The poster has an image and some words.",
+              "The words are at the top and the image is in the middle.",
+              "The colors are red, white and blue."],
+      hint: "Strong Paper 1 answers connect a visual feature to a written feature.",
+      why: "It links a visual detail (the red ball) to the words (“ONE LIFE.”) and explains the result." },
+    { part: "Evaluate", q: "Which sentence EVALUATES the poster best?",
+      answer: "This is particularly effective because the viewer sees the child only after looking at the phone, just as a distracted driver would.",
+      wrong: ["This is a very good and effective poster.",
+              "I like this poster because it is colorful.",
+              "To conclude, the poster uses many techniques."],
+      hint: "Evaluation says WHY a feature works, with a reason from the text.",
+      why: "It judges the effect and gives a precise reason from the poster." },
+    { part: "Second feature", q: "Which word should begin your SECOND feature?",
+      answer: "Furthermore,",
+      wrong: ["To conclude,", "All in all,", "To sum up,"],
+      hint: "You are adding another feature, not finishing the paragraph.",
+      why: "“Furthermore” adds a second feature. The others are endings." }
+  ];
+
+  /* ---------- MODEL ANSWER (written for practice; clues 6 and 5) ---------- */
+  var MODEL = [
+    ["Point", "In the public awareness poster “ONE MESSAGE. ONE SECOND. ONE LIFE.”, published by the Northbridge Road Safety Council, the creator persuades drivers to put their phones away before they drive through the use of irony and symbolism."],
+    ["Evidence", "First, the phone screen in the driver’s hand shows a cheerful reply that is still being typed: “almost home!! 😊”."],
+    ["Meaning", "The word “home” means the place where a person lives. It is also commonly associated with safety, family and the end of a journey."],
+    ["So?", "The creator suggests that the driver feels safe and relaxed, and also highlights how ordinary and harmless the message seems."],
+    ["Viewer", "The viewer feels uneasy, because the smiling emoji does not match the danger on the road, and the viewer realizes that the driver may never reach home at all."],
+    ["Device + aim", "Through the use of irony, the creator turns a happy, everyday message into a warning, showing that the moment a driver feels safest can be the most dangerous."],
+    ["Evidence", "Furthermore, the poster shows a small child in a red coat, holding a red ball, on the crossing ahead, to the right of the bright phone screen."],
+    ["Meaning", "A ball is commonly associated with play, childhood and innocence, and the child’s coat and ball are the same red as the words “ONE LIFE.”"],
+    ["So?", "The creator demonstrates that the life in the headline belongs to this child, and compares the child’s small, distant figure with the large, glowing phone."],
+    ["Viewer", "The viewer notices the child only after looking at the phone, just as a distracted driver would, and believes that a child’s life matters far more than any message."],
+    ["Device + aim", "Through the use of symbolism, the creator turns the danger of texting into a real, innocent person rather than an idea."],
+    ["Evaluate", "Together, the irony of the cheerful message and the symbol of the child are particularly effective because they place the viewer in the driver’s seat one second before a tragedy, persuading drivers that no reply is worth a life."]
+  ];
+  var TICKS = [
+    ["A", "Understanding and interpretation", "My topic sentence answers the guiding question: it names the audience (drivers) and the purpose (to persuade them not to use their phones)."],
+    ["A", "Understanding and interpretation", "My evidence is precise: short words in quotation marks, or an exact description of the image."],
+    ["B", "Analysis and evaluation", "I explained the meaning and the associations of a key word, color or image."],
+    ["B", "Analysis and evaluation", "I explained what the creator suggests AND how the viewer responds, not only what the poster shows."],
+    ["B", "Analysis and evaluation", "I evaluated: I said why the features work, and how the image and the words work together."],
+    ["C", "Focus and organization", "Every sentence stays on the guiding question, and my paragraph moves in order: point, evidence, meaning, so?, viewer, device and aim, then Furthermore."],
+    ["D", "Language", "I used formal language and the right terms for a poster (the creator, the viewer), and I avoided “quote” and “To sum up.”"]
+  ];
+
+  /* ---------- WRITING DESK ---------- */
+  var KEYS = {
+    "Rule of three": ["rule of three", "tricolon", "triad"],
+    "Color symbolism": ["color", "colour"],
+    "Point of view": ["point of view", "perspective", "viewpoint", "camera angle"],
+    "Focal point": ["focal point", "salien"],
+    "Symbolism": ["symbol"],
+    "Irony": ["irony", "ironic"],
+    "Antithesis": ["antithes"],
+    "Direct address": ["direct address", "second person", "second-person"],
+    "Imperative": ["imperative", "command"],
+    "Slogan": ["slogan", "hashtag"],
+    "Logo (authority)": ["logo", "authority"],
+    "Layout": ["layout", "composition"]
+  };
+  var CREATOR = /\b(creator|council|poster|designer|author)\b/;
+
+  function evStarters(c, second) {
+    var lead = second ? "Furthermore, " : "First, ";
+    if (c.kind === "visual") return [lead + "the poster shows …", lead + "at the center of the image, …"];
+    if (c.id === "c6") return [lead + "the phone screen shows the message “…”."];
+    return [lead + "the poster tells the viewer that “…”.", lead + "the creator places the words “…” …"];
+  }
+  /* one block per clue, built from the Onur English sentence frames */
+  function slotsFor(c, tag, second) {
+    return [
+      { k: tag + "ev", sec: tag, label: "Evidence", tip: c.kind === "visual" ? "Describe the image exactly: what, where, which color, how big." : "Give the words naturally: short, exact and inside your own sentence.", starters: evStarters(c, second), clue: c, second: second },
+      { k: tag + "mean", sec: tag, label: "Meaning", tip: "Write the dictionary meaning, then what the word, color or image is commonly associated with.", starters: c.mean, clue: c },
+      { k: tag + "so", sec: tag, label: "So? Analyze", tip: "What is the creator telling us? Use one or more of these.", starters: ["The creator suggests …", "The creator also highlights …", "The creator compares … with …", "The creator demonstrates …"], clue: c },
+      { k: tag + "aud", sec: tag, label: "The viewer", tip: "What does the viewer feel, realize, notice or believe, and why?", starters: ["The viewer feels …, because …", "The viewer also realizes …", "The viewer notices …", "The viewer believes …"], clue: c },
+      { k: tag + "aim", sec: tag, label: "Device and aim", tip: "Name the device and the creator’s aim.", starters: ["Through the use of …, the creator …"], clue: c }
+    ];
+  }
+  function allSlots() {
+    var c = chosen();
+    var list = [{ k: "intro", sec: "p", label: "Point: topic sentence", tip: "Text type, title, publisher, audience, purpose and your TWO features.",
+      starters: ["In the public awareness poster “…”, published by …, the creator persuades … to … through the use of … and …."] }];
+    list = list.concat(slotsFor(c[0], "a", false), slotsFor(c[1], "b", true));
+    list.push({ k: "eval", sec: "e", label: "Evaluate and link", tip: "Say why the two features work together and link back to the guiding question.",
+      starters: ["Together, the … and the … are particularly effective because …", "This is particularly effective because …", "Therefore, the poster persuades drivers that …"] });
+    return list;
+  }
+
+  var KEY = "onur-case:ib-p1-poster-v1";
+  var LETTERS = ["A", "B", "C", "D"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var S = null;
+  var SVGNS = "http://www.w3.org/2000/svg";
+
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) { var r = a.slice(); for (var i = r.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = r[i]; r[i] = r[j]; r[j] = t; } return r; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() { try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); return s && s.clues && s.drill ? s : null; } catch (e) { return null; } }
+  function fresh(name) {
+    var clues = {}; CLUES.forEach(function (c) { clues[c.id] = { status: "open", misses: 0 }; });
+    return { name: name || "", stage: 1, screen: "main", sweep: 1, clues: clues, streak: 0, best: 0,
+      cur: null, phase: null, opts: null, answered: null,
+      drill: { round: 1, queue: DRILLS.map(function (_, i) { return i; }), pos: 0, next: [], misses: {}, done: {}, opts: null, answered: null, between: false },
+      pick: [], text: {}, filed: false, ticks: {}, improve: "" };
+  }
+  function show(id) { ["s-start", "s-main", "s-report"].forEach(function (s) { $(s).hidden = s !== id; }); }
+  function norm(s) { return String(s).toLowerCase().replace(/[“”"]/g, '"').replace(/[‘’']/g, "'").replace(/[–—]/g, "-").replace(/\s+/g, " ").trim(); }
+  var POSTER_NORM = norm(POSTER_TEXT);
+
+  function cracked() { return CLUES.filter(function (c) { var s = S.clues[c.id].status; return s === "first" || s === "later"; }).length; }
+  function stage1Done() { return cracked() === CLUES.length; }
+  function stage2Done() { return Object.keys(S.drill.done).length === DRILLS.length; }
+
+  /* ---------- START ---------- */
+  function renderStart() {
+    var saved = load();
+    if (saved && saved.screen !== "report") {
+      $("resume").hidden = false;
+      var n = CLUES.filter(function (c) { var s = saved.clues[c.id].status; return s === "first" || s === "later"; }).length;
+      $("resume-text").textContent = n + " of " + CLUES.length + " clues cracked.";
+      $("btn-resume").onclick = function () { S = saved; route(); };
+      $("btn-wipe").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} $("resume").hidden = true; };
+      if (saved.name) $("student-name").value = saved.name;
+    } else { $("resume").hidden = true; }
+    show("s-start");
+  }
+  $("btn-start").onclick = function () { S = fresh($("student-name").value.trim()); save(); route(); window.scrollTo(0, 0); };
+
+  /* ---------- MAIN / TABS ---------- */
+  function renderTabs() {
+    var n = cracked();
+    $("tab-1-s").textContent = n + "/" + CLUES.length + " clues";
+    $("tab-2-s").textContent = stage1Done() ? Object.keys(S.drill.done).length + "/" + DRILLS.length + " fixed" : "locked";
+    $("tab-3-s").textContent = !stage2Done() ? "locked" : (S.filed ? "submitted" : "to write");
+    $("tab-2").disabled = !stage1Done(); $("tab-3").disabled = !stage2Done();
+    [1, 2, 3].forEach(function (i) {
+      $("tab-" + i).classList.toggle("on", S.stage === i);
+      $("tab-" + i).classList.toggle("done", (i === 1 && stage1Done()) || (i === 2 && stage2Done()) || (i === 3 && S.filed));
+      $("st-" + i).hidden = S.stage !== i;
+    });
+  }
+  [1, 2, 3].forEach(function (i) {
+    $("tab-" + i).onclick = function () { S.stage = i; save(); renderMain(); window.scrollTo(0, 0); };
+  });
+  function renderMain() {
+    renderTabs();
+    if (S.stage === 1) renderStage1();
+    else if (S.stage === 2) renderStage2();
+    else renderStage3();
+    show("s-main");
+  }
+
+  /* ---------- STAGE 1 ---------- */
+  function tapClue(c) {
+    var st = S.clues[c.id].status;
+    if (st === "open") openClue(c.id);
+    else if (st === "cold") nudge();
+    else openSolved(c.id);
+  }
+  function statusLabel(c) {
+    var st = S.clues[c.id].status;
+    return st === "open" ? "Tap to investigate." : st === "cold" ? "Cold case. It reopens next sweep." : "Cracked: " + c.device + ".";
+  }
+  function renderBadges() {
+    var g = $("badges"); while (g.firstChild) g.removeChild(g.firstChild);
+    CLUES.forEach(function (c) {
+      var st = S.clues[c.id].status;
+      var b = document.createElementNS(SVGNS, "g");
+      b.setAttribute("class", "badge " + st);
+      b.setAttribute("tabindex", "0"); b.setAttribute("role", "button");
+      b.setAttribute("aria-label", "Clue " + c.n + ": " + c.area + ". " + statusLabel(c));
+      var hit = document.createElementNS(SVGNS, "circle");
+      hit.setAttribute("cx", c.at[0]); hit.setAttribute("cy", c.at[1]); hit.setAttribute("r", 18); hit.setAttribute("fill", "transparent");
+      var ring = document.createElementNS(SVGNS, "circle");
+      ring.setAttribute("class", "ring"); ring.setAttribute("cx", c.at[0]); ring.setAttribute("cy", c.at[1]); ring.setAttribute("r", 11);
+      var t = document.createElementNS(SVGNS, "text");
+      t.setAttribute("x", c.at[0]); t.setAttribute("y", c.at[1] + 4.2); t.setAttribute("text-anchor", "middle");
+      t.textContent = st === "first" || st === "later" ? "✓" : String(c.n);
+      b.appendChild(hit); b.appendChild(ring); b.appendChild(t);
+      b.addEventListener("click", function () { tapClue(c); });
+      b.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tapClue(c); } });
+      g.appendChild(b);
+    });
+  }
+  function renderClueList() {
+    var box = $("cluelist"); box.textContent = "";
+    CLUES.forEach(function (c) {
+      var st = S.clues[c.id].status;
+      var b = document.createElement("button"); b.type = "button"; b.className = "cl " + st;
+      var k = document.createElement("span"); k.className = "k"; k.textContent = c.n;
+      var t = document.createElement("span"); t.className = "t"; t.textContent = c.area;
+      if (st !== "open") {
+        var sm = document.createElement("small");
+        sm.textContent = st === "cold" ? "Cold case" : c.device;
+        t.appendChild(sm);
+      }
+      b.appendChild(k); b.appendChild(t);
+      b.setAttribute("aria-label", "Clue " + c.n + ": " + c.area + ". " + statusLabel(c));
+      b.onclick = function () { tapClue(c); };
+      box.appendChild(b);
+    });
+  }
+  function renderStage1() {
+    renderBadges(); renderClueList();
+    var n = cracked();
+    $("clue-count").textContent = n + " of " + CLUES.length + " clues cracked";
+    $("meter").style.width = (n / CLUES.length * 100) + "%";
+    $("sweep-label").textContent = "Sweep " + S.sweep;
+    var open = CLUES.filter(function (c) { return S.clues[c.id].status === "open"; }).length;
+    var cold = CLUES.filter(function (c) { return S.clues[c.id].status === "cold"; }).length;
+    $("sweep-card").hidden = !(open === 0 && cold > 0);
+    if (open === 0 && cold > 0) {
+      $("sweep-text").textContent = (cold === 1 ? "1 cold case reopens" : cold + " cold cases reopen") + " in sweep " + (S.sweep + 1) + ", with the answers in a new order.";
+      $("btn-sweep").textContent = "Start sweep " + (S.sweep + 1);
+    }
+    $("closed-card").hidden = !stage1Done();
+  }
+  $("btn-sweep").onclick = function () {
+    CLUES.forEach(function (c) { if (S.clues[c.id].status === "cold") S.clues[c.id].status = "open"; });
+    S.sweep += 1; save(); renderMain();
+    var first = document.querySelector(".cl.open"); if (first) first.focus();
+  };
+  $("btn-to-2").onclick = function () { S.stage = 2; save(); renderMain(); window.scrollTo(0, 0); };
+  function nudge() {
+    $("sweep-label").textContent = "Cold case: crack the other clues first";
+    setTimeout(function () { if (S) $("sweep-label").textContent = "Sweep " + S.sweep; }, 1800);
+  }
+
+  /* Interrogation sheet */
+  var lastFocus = null;
+  function openClue(id) {
+    lastFocus = document.activeElement;
+    S.cur = id; S.phase = "device"; S.answered = null;
+    var c = CBY[id]; S.opts = shuffle([c.device].concat(c.dWrong));
+    save(); renderSheet(); $("sheet-back").hidden = false; $("sheet-q").focus();
+  }
+  function openSolved(id) {
+    lastFocus = document.activeElement;
+    S.cur = id; S.phase = "solved"; S.opts = null; S.answered = null;
+    renderSheet(); $("sheet-back").hidden = false; $("sheet-x").focus();
+  }
+  function closeSheet() {
+    if (S.answered && S.phase !== "device") finishClue();
+    else if (S.answered && S.phase === "device" && !S.answered.correct) finishClue();
+    S.cur = null; S.phase = null; S.opts = null; S.answered = null;
+    $("sheet-back").hidden = true; save(); renderMain();
+    if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  $("sheet-x").onclick = closeSheet;
+  $("sheet-back").addEventListener("click", function (e) { if (e.target === $("sheet-back")) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if ($("sheet-back").hidden) return;
+    if (e.key === "Escape") { closeSheet(); return; }
+    var idx = ["1", "2", "3", "4"].indexOf(e.key); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(e.key.toLowerCase());
+    if (idx >= 0 && S.opts && idx < S.opts.length && !S.answered && e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") { e.preventDefault(); pickClue(idx); }
+  });
+
+  function renderSheet() {
+    var c = CBY[S.cur], st = S.clues[S.cur];
+    $("sheet-label").textContent = "Clue " + c.n + " · " + c.area;
+    var ev = $("sheet-ev");
+    if (c.kind === "visual") { ev.className = "evidence vis"; ev.textContent = c.text; }
+    else { ev.className = "evidence"; ev.textContent = "“" + c.text + "”"; }
+    var steps = $("sheet-steps"); steps.textContent = "";
+    [["device", "1 Name the feature"], ["effect", "2 What it does"]].forEach(function (p) {
+      var s = document.createElement("span"); s.className = "st";
+      if (S.phase === p[0]) s.className += " on";
+      if ((p[0] === "device" && (S.phase === "effect" || S.phase === "solved")) || (p[0] === "effect" && S.phase === "solved")) s.className += " done";
+      s.textContent = p[1]; steps.appendChild(s);
+    });
+    $("sheet-retry").hidden = !st.misses;
+    $("sheet-retry").textContent = st.misses === 1 ? "Cold case: missed once" : "Cold case: missed " + st.misses + " times";
+    var box = $("sheet-opts"); box.textContent = "";
+    $("sheet-fb").hidden = true; $("sheet-next").hidden = true;
+    if (S.phase === "solved") {
+      $("sheet-q").textContent = c.device;
+      var fb = $("sheet-fb"); fb.className = "fb good"; fb.textContent = "";
+      var p1 = document.createElement("p"); p1.textContent = c.dWhy;
+      var p2 = document.createElement("p"); p2.textContent = c.effect;
+      fb.appendChild(p1); fb.appendChild(p2); fb.hidden = false;
+      return;
+    }
+    $("sheet-q").textContent = S.phase === "device" ? "Which feature is this?" : "It is " + (c.device === "Logo (authority)" ? "a logo that gives authority" : c.device.toLowerCase()) + ". What does it do to the viewer?";
+    S.opts.forEach(function (text, i) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[i];
+      var t = document.createElement("span"); t.className = "t"; t.textContent = text;
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pickClue(i); };
+      box.appendChild(b);
+    });
+    if (S.answered) paintClue(false);
+  }
+  function correctClue(c) { return S.phase === "device" ? c.device : c.effect; }
+  function pickClue(i) {
+    if (S.answered) return;
+    var c = CBY[S.cur], st = S.clues[S.cur];
+    var ok = S.opts[i] === correctClue(c);
+    S.answered = { pick: i, correct: ok };
+    if (!ok) { st.misses += 1; S.streak = 0; }
+    else if (S.phase === "effect") { S.streak += 1; if (S.streak > S.best) S.best = S.streak; }
+    save(); paintClue(true);
+  }
+  function paintClue(isFresh) {
+    var c = CBY[S.cur], st = S.clues[S.cur], a = S.answered;
+    var reveal = !a.correct && st.misses >= 3;
+    var ans = correctClue(c);
+    $("sheet-opts").querySelectorAll(".opt").forEach(function (b, i) {
+      b.disabled = true;
+      if (i === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && S.opts[i] === ans) b.classList.add("right");
+      else b.classList.add("dim");
+      if (isFresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("sheet-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h";
+    var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    var btn = $("sheet-next");
+    if (a.correct && S.phase === "device") {
+      fb.classList.add("good"); h.textContent = "Correct. Now the effect."; p.textContent = c.dWhy; btn.textContent = "Next: what it does";
+    } else if (a.correct) {
+      fb.classList.add("good"); h.textContent = st.misses ? "Cracked. Cold case closed." : "Clue cracked!";
+      p.textContent = "Remember it like this: " + c.device + ". " + c.effect; btn.textContent = "Back to the poster";
+    } else {
+      if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = "Answer: " + ans + (S.phase === "device" ? ". " + c.dWhy : ""); }
+      else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + (S.phase === "device" ? c.dHint : c.eHint); }
+      n.textContent = "This clue becomes a cold case. It reopens in sweep " + (S.sweep + 1) + ".";
+      btn.textContent = "Back to the poster";
+    }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n);
+    fb.hidden = false; btn.hidden = false;
+    if (isFresh) { btn.focus({ preventScroll: true }); btn.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  function finishClue() {
+    var st = S.clues[S.cur];
+    if (!S.answered) return;
+    if (S.answered.correct && S.phase === "effect") st.status = st.misses ? "later" : "first";
+    else if (!S.answered.correct) st.status = "cold";
+  }
+  $("sheet-next").onclick = function () {
+    if (S.answered && S.answered.correct && S.phase === "device") {
+      var c = CBY[S.cur];
+      S.phase = "effect"; S.answered = null; S.opts = shuffle([c.effect].concat(c.eWrong.map(function (x) { return CBY[x].effect; })));
+      save(); renderSheet(); $("sheet-q").focus(); return;
+    }
+    closeSheet();
+  };
+
+  /* ---------- STAGE 2 ---------- */
+  function drillOpts(i) { var d = DRILLS[i]; return shuffle([d.answer].concat(d.wrong)); }
+  function renderStage2() {
+    var D = S.drill;
+    $("drill-card").hidden = true; $("drill-between").hidden = true; $("drill-done").hidden = true;
+    if (stage2Done()) { $("drill-done").hidden = false; return; }
+    if (D.between) {
+      var n = D.next.length;
+      $("drill-between-h").textContent = n === 1 ? "1 sentence to fix again" : n + " sentences to fix again";
+      $("drill-between-t").textContent = (n === 1 ? "It comes" : "They come") + " back in round " + (D.round + 1) + " with the answers in a new order.";
+      $("drill-go").textContent = "Start round " + (D.round + 1);
+      $("drill-between").hidden = false; return;
+    }
+    var i = D.queue[D.pos], d = DRILLS[i];
+    if (!D.opts) { D.opts = drillOpts(i); save(); }
+    $("drill-card").hidden = false;
+    $("drill-round").textContent = "Round " + D.round;
+    $("drill-count").textContent = "Question " + (D.pos + 1) + " of " + D.queue.length;
+    var board = $("drill-board"); board.textContent = "";
+    DRILLS.forEach(function (_, j) {
+      var s = document.createElement("i"); s.className = "sq";
+      if (D.done[j]) s.className += " " + D.done[j]; else if (D.misses[j]) s.className += " missed";
+      if (j === i) s.className += " now";
+      board.appendChild(s);
+    });
+    $("drill-part").textContent = d.part;
+    var m = D.misses[i] || 0;
+    $("drill-retry").hidden = !m; $("drill-retry").textContent = m === 1 ? "You missed this once" : "You missed this " + m + " times";
+    $("drill-q").textContent = d.q;
+    var box = $("drill-opts"); box.textContent = "";
+    D.opts.forEach(function (text, j) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[j];
+      var t = document.createElement("span"); t.className = "t"; t.textContent = text;
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pickDrill(j); };
+      box.appendChild(b);
+    });
+    $("drill-fb").hidden = true; $("drill-next").hidden = true;
+    if (D.answered) paintDrill(false);
+  }
+  function pickDrill(j) {
+    var D = S.drill; if (D.answered) return;
+    var i = D.queue[D.pos], ok = D.opts[j] === DRILLS[i].answer;
+    D.answered = { pick: j, correct: ok };
+    if (ok) { D.done[i] = D.misses[i] ? "later" : "first"; S.streak += 1; if (S.streak > S.best) S.best = S.streak; }
+    else { D.misses[i] = (D.misses[i] || 0) + 1; D.next.push(i); S.streak = 0; }
+    save(); paintDrill(true); renderTabs();
+  }
+  function paintDrill(isFresh) {
+    var D = S.drill, i = D.queue[D.pos], d = DRILLS[i], a = D.answered;
+    var reveal = !a.correct && (D.misses[i] || 0) >= 3;
+    $("drill-opts").querySelectorAll(".opt").forEach(function (b, j) {
+      b.disabled = true;
+      if (j === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && D.opts[j] === d.answer) b.classList.add("right");
+      else b.classList.add("dim");
+      if (isFresh && j === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("drill-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h"; var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    if (a.correct) { fb.classList.add("good"); h.textContent = "Correct!"; p.textContent = d.why; }
+    else if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = d.why; n.textContent = "It comes back in round " + (D.round + 1) + "."; }
+    else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + d.hint; n.textContent = "It comes back in round " + (D.round + 1) + "."; }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n); fb.hidden = false;
+    var last = D.pos + 1 >= D.queue.length;
+    $("drill-next").textContent = last ? (D.next.length ? "Finish round " + D.round : "Finish Stage 2") : "Next question";
+    $("drill-next").hidden = false;
+    if (isFresh) { $("drill-next").focus({ preventScroll: true }); $("drill-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  $("drill-next").onclick = function () {
+    var D = S.drill; if (!D.answered) return;
+    D.pos += 1; D.opts = null; D.answered = null;
+    if (D.pos >= D.queue.length && D.next.length) D.between = true;
+    save(); renderMain(); $("drill-q").focus({ preventScroll: true });
+  };
+  $("drill-go").onclick = function () {
+    var D = S.drill; D.between = false; D.round += 1; D.queue = shuffle(D.next); D.next = []; D.pos = 0; D.opts = null; D.answered = null;
+    save(); renderMain(); $("drill-q").focus({ preventScroll: true });
+  };
+  $("btn-to-3").onclick = function () { S.stage = 3; save(); renderMain(); window.scrollTo(0, 0); };
+
+  /* ---------- STAGE 3 ---------- */
+  function chosen() { return S.pick.map(function (id) { return CBY[id]; }); }
+  function renderStage3() {
+    var pk = $("picker"); pk.textContent = "";
+    CLUES.forEach(function (c) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "chip" + (S.pick.indexOf(c.id) >= 0 ? " sel" : "");
+      b.textContent = c.n + " · " + c.device.replace(" (authority)", "") + (c.kind === "visual" ? " (image)" : " (words)");
+      b.setAttribute("aria-pressed", S.pick.indexOf(c.id) >= 0 ? "true" : "false");
+      b.onclick = function () {
+        if (S.filed) return;
+        var at = S.pick.indexOf(c.id);
+        if (at >= 0) S.pick.splice(at, 1);
+        else { if (S.pick.length >= 2) S.pick.shift(); S.pick.push(c.id); }
+        save(); renderStage3();
+      };
+      pk.appendChild(b);
+    });
+    $("desk").hidden = S.pick.length < 2 || S.filed;
+    $("filed").hidden = !S.filed;
+    if (S.pick.length === 2 && !S.filed) buildDesk();
+    if (S.filed) renderFiled();
+  }
+  function insertStarter(ta, s) {
+    var v = ta.value;
+    ta.value = v.trim() ? v.replace(/\s+$/, "") + " " + s : s;
+    ta.dispatchEvent(new Event("input"));
+    ta.focus();
+    var at = ta.value.lastIndexOf("…");
+    var first = ta.value.indexOf("…", ta.value.length - s.length);
+    if (first >= 0) { try { ta.setSelectionRange(first, first + 1); } catch (e) {} }
+    else if (at >= 0) { try { ta.setSelectionRange(at, at + 1); } catch (e) {} }
+  }
+  function buildDesk() {
+    var c = chosen(), box = $("slots"); box.textContent = "";
+    var lastSec = null;
+    allSlots().forEach(function (sl) {
+      if (sl.sec !== lastSec) {
+        var hd = document.createElement("div"); hd.className = "part";
+        hd.textContent = sl.sec === "p" ? "Topic sentence" : sl.sec === "a" ? "Feature 1 · Clue " + c[0].n + ": " + c[0].device : sl.sec === "b" ? "Feature 2 · Clue " + c[1].n + ": " + c[1].device : "Evaluation";
+        box.appendChild(hd); lastSec = sl.sec;
+      }
+      var wrap = document.createElement("div"); wrap.className = "slot"; wrap.id = "slot-" + sl.k;
+      var head = document.createElement("div"); head.className = "slot-h";
+      var b = document.createElement("b"); b.textContent = sl.label;
+      head.appendChild(b);
+      var tip = document.createElement("p"); tip.className = "slot-tip"; tip.textContent = sl.tip;
+      var ta = document.createElement("textarea"); ta.id = "w-" + sl.k; ta.rows = sl.k === "intro" || sl.k === "eval" ? 4 : 3;
+      ta.setAttribute("aria-label", sl.label); ta.value = S.text[sl.k] || "";
+      ta.addEventListener("input", function () { S.text[sl.k] = ta.value; grow(ta); save(); runChecks(); });
+      var stw = document.createElement("div"); stw.className = "starters";
+      sl.starters.forEach(function (s) {
+        var sb = document.createElement("button"); sb.type = "button"; sb.className = "starter-btn"; sb.textContent = s;
+        sb.setAttribute("aria-label", "Add sentence frame: " + s);
+        sb.onclick = function () { insertStarter(ta, s); };
+        stw.appendChild(sb);
+      });
+      var ul = document.createElement("ul"); ul.className = "checks"; ul.id = "ck-" + sl.k;
+      wrap.appendChild(head); wrap.appendChild(tip); wrap.appendChild(stw); wrap.appendChild(ta); wrap.appendChild(ul);
+      box.appendChild(wrap);
+      grow(ta);
+    });
+    runChecks();
+  }
+  function grow(ta) { ta.style.height = "auto"; ta.style.height = Math.max(ta.scrollHeight + 4, 84) + "px"; }
+  function quoted(s) { var out = [], re = /[“"]([^”"]+)[”"]/g, m; while ((m = re.exec(s))) out.push(m[1]); return out; }
+  function words(s) { return String(s).trim().split(/\s+/).filter(Boolean).length; }
+  function hasDevice(s, dev) { var t = norm(s); return KEYS[dev].some(function (k) { return t.indexOf(k) >= 0; }); }
+  function hasAny(t, list) { return list.some(function (k) { return t.indexOf(norm(k)) >= 0; }); }
+  function quoteOk(x) { var y = norm(x).replace(/^[\s.,;:!?…]+|[\s.,;:!?…]+$/g, ""); return y.length > 0 && POSTER_NORM.indexOf(y) >= 0; }
+  var BANNED = /\b(to sum up|to conclude|all in all|in conclusion)\b/i;
+  var QUOTEWORD = /\bquot(e|es|ed|ing)\b/i;
+  function checksFor(sl, v) {
+    var c = chosen(), t = norm(v), list = [], k = sl.k, cl = sl.clue;
+    var filled = words(v) >= 5;
+    if (k === "intro") {
+      list.push([/poster/.test(t), "Names the text type (public awareness poster)"]);
+      list.push([t.indexOf("one message") >= 0 && t.indexOf("one life") >= 0, "Gives the headline as the title"]);
+      list.push([/northbridge/.test(t), "Names the publisher (Northbridge Road Safety Council)"]);
+      list.push([/driver/.test(t), "Names the audience (drivers)"]);
+      list.push([/(persuad|warn|urge|convinc|encourag|aware)/.test(t), "States the purpose (persuades / warns / urges)"]);
+      list.push([hasDevice(v, c[0].device) && hasDevice(v, c[1].device), "Names both features (" + c[0].device.toLowerCase() + ", " + c[1].device.toLowerCase() + ")"]);
+    } else if (/ev$/.test(k)) {
+      if (cl.kind === "visual") {
+        list.push([hasAny(t, cl.nouns), "Describes the image exactly (mentions the " + cl.nouns[0] + ")"]);
+      } else {
+        var q = quoted(v);
+        list.push([q.length > 0, "Puts words from the poster in quotation marks"]);
+        list.push([q.length > 0 && q.every(quoteOk), "The quoted words really appear on the poster"]);
+        list.push([q.length > 0 && q.every(function (x) { return words(x) <= 12; }), "Keeps the evidence short (12 words or fewer)"]);
+      }
+      if (sl.second) list.push([/^(furthermore|moreover|in addition|additionally|similarly)/.test(t), "Starts with Furthermore (or another adding word)"]);
+      else list.push([/^(first|firstly|to begin)/.test(t), "Starts with First"]);
+    } else if (/mean$/.test(k)) {
+      list.push([/(means|meaning|associated with|connotation|symboli[sz]e|stands for)/.test(t), "Gives the meaning or association (means / associated with)"]);
+      list.push([hasAny(t, cl.mkey), "Explains your key word, color or image (" + cl.mkey[0] + ")"]);
+    } else if (/so$/.test(k)) {
+      list.push([CREATOR.test(t), "Names the creator (or the council / the poster)"]);
+      list.push([/(suggest|highlight|compar|demonstrat|emphasi[sz]|impl|reveal)/.test(t), "Uses suggests / highlights / compares / demonstrates"]);
+    } else if (/aud$/.test(k)) {
+      list.push([/(viewer|reader|audience|driver)/.test(t), "Names the viewer"]);
+      list.push([/(feel|realiz|realis|notic|believ|understand)/.test(t), "Says what the viewer feels, realizes, notices or believes"]);
+      list.push([/\b(because|so|as|since)\b/.test(t), "Explains why (because / so / as)"]);
+    } else if (/aim$/.test(k)) {
+      list.push([/^through the use of/.test(t), "Starts with “Through the use of”"]);
+      list.push([hasDevice(v, cl.device), "Names the device (" + cl.device.toLowerCase() + ")"]);
+      list.push([CREATOR.test(t), "Names the creator and the aim"]);
+    } else if (k === "eval") {
+      list.push([/(effective|powerful|persuasive|memorable|successful|convincing)/.test(t), "Evaluates (effective / powerful / persuasive)"]);
+      list.push([/\b(because|as|since|so)\b/.test(t), "Gives a reason (because / as)"]);
+      list.push([/(driver|persuad|phone)/.test(t), "Links back to the guiding question"]);
+    }
+    list.push([filled, "Written as a full sentence"]);
+    /* house rules: shown only when broken */
+    [[!/…|\.\.\./.test(v), "Replace every “…” with your own words"],
+     [!QUOTEWORD.test(v), "Do not use the word “quote”"],
+     [!BANNED.test(v), "Do not use “To sum up / To conclude / All in all”"]].forEach(function (r) { r.push(true); list.push(r); });
+    return list;
+  }
+  function runChecks() {
+    var all = true, left = 0;
+    allSlots().forEach(function (sl) {
+      var v = S.text[sl.k] || "", list = checksFor(sl, v), ul = $("ck-" + sl.k); if (!ul) return;
+      ul.textContent = "";
+      var ok = list.every(function (x) { return x[0]; });
+      list.forEach(function (x) {
+        if (x[2] && (x[0] || !v.trim())) return;
+        var li = document.createElement("li");
+        li.className = !v.trim() ? "" : (x[0] ? "ok" : "no");
+        li.textContent = x[1]; ul.appendChild(li);
+      });
+      $("slot-" + sl.k).classList.toggle("ok", ok);
+      if (!ok) { all = false; left += 1; }
+    });
+    $("btn-file").disabled = !all;
+    $("file-note").textContent = all ? "All boxes are green. Submit your paragraph." : left + (left === 1 ? " box still needs work." : " boxes still need work.");
+  }
+  function paragraph() { if (S.pick.length < 2) return ""; return allSlots().map(function (sl) { return (S.text[sl.k] || "").trim(); }).filter(Boolean).join(" "); }
+  $("btn-file").onclick = function () { S.filed = true; save(); renderMain(); $("filed").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-edit").onclick = function () { S.filed = false; save(); renderMain(); };
+  function renderFiled() {
+    $("final").textContent = paragraph();
+    var m = $("model"); m.textContent = "";
+    MODEL.forEach(function (row) {
+      var r = document.createElement("div"); r.className = "m-row";
+      var tg = document.createElement("span"); tg.className = "m-tag"; tg.textContent = row[0];
+      var tx = document.createElement("span"); tx.textContent = row[1];
+      r.appendChild(tg); r.appendChild(tx); m.appendChild(r);
+    });
+    var ul = $("tick"); ul.textContent = "";
+    TICKS.forEach(function (t, i) {
+      var li = document.createElement("li"); var lab = document.createElement("label");
+      var cb = document.createElement("input"); cb.type = "checkbox"; cb.id = "tick-" + i; cb.checked = !!S.ticks[i];
+      cb.onchange = function () { S.ticks[i] = cb.checked; save(); };
+      var sp = document.createElement("span");
+      var cr = document.createElement("span"); cr.className = "crit"; cr.textContent = "Criterion " + t[0]; cr.title = t[1];
+      sp.appendChild(cr); sp.appendChild(document.createTextNode(t[1] + ": " + t[2]));
+      lab.appendChild(cb); lab.appendChild(sp); li.appendChild(lab); ul.appendChild(li);
+    });
+    $("improve").value = S.improve || "";
+  }
+  $("improve").addEventListener("input", function () { S.improve = $("improve").value; save(); });
+  $("btn-copy").onclick = function () {
+    var txt = paragraph();
+    var done = function () { $("copy-note").textContent = "Copied. Paste it into your notes or send it to your teacher."; };
+    try {
+      navigator.clipboard.writeText(txt).then(done, function () { selectFinal(); });
+    } catch (e) { selectFinal(); }
+  };
+  function selectFinal() {
+    var r = document.createRange(); r.selectNodeContents($("final"));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    $("copy-note").textContent = "Your paragraph is selected. Copy it from the menu.";
+  }
+  $("btn-report").onclick = function () { S.screen = "report"; save(); route(); window.scrollTo(0, 0); };
+
+  /* ---------- REPORT ---------- */
+  function renderReport() {
+    var first = CLUES.filter(function (c) { return S.clues[c.id].status === "first"; }).length;
+    var big = $("r-big"); big.textContent = "";
+    big.appendChild(document.createTextNode(first));
+    var sm = document.createElement("small"); sm.textContent = " / " + CLUES.length; big.appendChild(sm);
+    var dFirst = Object.keys(S.drill.done).filter(function (k) { return S.drill.done[k] === "first"; }).length;
+    var stats = [[S.sweep, S.sweep === 1 ? "sweep" : "sweeps"], [dFirst + "/" + DRILLS.length, "sentences first try"], [S.best, "best streak"]];
+    var box = $("r-stats"); box.textContent = "";
+    stats.forEach(function (s) { var d = document.createElement("div"); d.className = "stat"; var b = document.createElement("b"); b.textContent = s[0]; var t = document.createElement("span"); t.textContent = s[1]; d.appendChild(b); d.appendChild(t); box.appendChild(d); });
+    var ul = $("r-revise"); ul.textContent = "";
+    CLUES.filter(function (c) { return S.clues[c.id].misses; }).forEach(function (c) {
+      var li = document.createElement("li"); var q = document.createElement("b"); q.textContent = "Clue " + c.n + " · " + c.area;
+      var a = document.createElement("span"); a.className = "a"; a.textContent = c.device + ": " + c.effect;
+      li.appendChild(q); li.appendChild(a); ul.appendChild(li);
+    });
+    DRILLS.forEach(function (d, i) {
+      if (!S.drill.misses[i]) return;
+      var li = document.createElement("li"); var q = document.createElement("b"); q.textContent = d.q;
+      var a = document.createElement("span"); a.className = "a"; a.textContent = d.answer;
+      li.appendChild(q); li.appendChild(a); ul.appendChild(li);
+    });
+    $("r-revise-block").hidden = ul.children.length === 0;
+    $("r-para").textContent = paragraph() || "Not written yet.";
+    $("r-improve-block").hidden = !(S.improve || "").trim();
+    $("r-improve").textContent = S.improve || "";
+    var who = $("r-who"); who.textContent = "";
+    var n = document.createElement("span"); n.appendChild(document.createTextNode("Student: ")); var nb = document.createElement("b"); nb.textContent = S.name || "—"; n.appendChild(nb);
+    var dt = document.createElement("span"); dt.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(dt);
+    show("s-report");
+  }
+  $("btn-back").onclick = function () { S.screen = "main"; save(); route(); window.scrollTo(0, 0); };
+  $("btn-again").onclick = function () { var name = S.name; try { localStorage.removeItem(KEY); } catch (e) {} S = null; renderStart(); $("student-name").value = name; window.scrollTo(0, 0); };
+
+  function route() {
+    if (!S) return renderStart();
+    if (S.screen === "report") renderReport(); else renderMain();
+    if (S.cur && S.phase && S.screen !== "report") { renderSheet(); $("sheet-back").hidden = false; } else { $("sheet-back").hidden = true; }
+  }
+  renderStart();
+})();
+</script>
+</body>
+</html>
