@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Influencers Case File</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap">
+<style>
+body{margin:0}img{max-width:100%}
+/* Layout: one phone-width column. A detective's case file: stage tabs on top, then the newspaper article with highlighter-marked clues, a bottom sheet for each interrogation, a drill card, and a guided writing desk. Newsprint palette with highlighter colors; stamp red only for alarms and stamps. */
+:root {
+  --paper: #EEF0EC;
+  --sheet: #FFFFFF;
+  --ink: #16181D;
+  --muted: #5A606B;
+  --rule: #D6D9D2;
+  --navy: #1F2B4D;
+  --hl: #FFE45C;
+  --hl-deep: #E9C400;
+  --hl-green: #B7EBC5;
+  --hl-blue: #C6DCFF;
+  --hl-pink: #FFC9D6;
+  --stamp: #C2302A;
+  --good: #1D7548;
+  --good-soft: #DCF0E3;
+  --bad-soft: #FBE1DE;
+  --f-type: "Special Elite", "Courier New", monospace;
+  --f-body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  --f-news: "Source Serif 4", "Georgia", "Times New Roman", serif;
+  --r: 12px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--paper); }
+body { color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 680px; margin: 0 auto; padding-inline: 16px; padding-block: 14px 64px; display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #FFFFFF; border-radius: 10px; padding: 4px 6px; flex: none; display: grid; place-items: center; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.logo img { width: 70px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-type); font-size: 1.1rem; letter-spacing: .03em; }
+.top-sub { color: var(--muted); font-size: .88rem; }
+
+.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--r); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.label { font-family: var(--f-type); font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+
+.btn { appearance: none; border: 0; border-radius: 10px; padding: 13px 18px; font-weight: 700; font-size: 1rem; cursor: pointer; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-ink { background: var(--ink); color: #FFFFFF; }
+.btn-ink:hover { background: var(--navy); }
+.btn-ink:disabled { background: #9AA0A8; cursor: not-allowed; }
+.btn-ghost { background: transparent; border: 2px solid var(--rule); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Start */
+.folder { position: relative; background: #F7E9B8; border: 1px solid #D9C27A; border-radius: 4px 14px 14px 14px; padding: 26px 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+.folder::before { content: ""; position: absolute; top: -14px; left: -1px; width: 130px; height: 15px; background: #F7E9B8; border: 1px solid #D9C27A; border-bottom: 0; border-radius: 8px 8px 0 0; }
+.folder h1 { font-family: var(--f-type); font-weight: 400; font-size: clamp(2rem, 9vw, 2.9rem); line-height: 1.05; }
+.stamp { align-self: flex-start; font-family: var(--f-type); color: var(--stamp); border: 3px solid var(--stamp); border-radius: 6px; padding: 2px 10px; transform: rotate(-4deg); font-size: 1rem; letter-spacing: .08em; }
+.folder .sub { font-size: 1.05rem; max-width: 40ch; }
+.stages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.stages li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+.stages .n { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: #FFFFFF; font-family: var(--f-type); font-size: 1.1rem; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input, .field textarea { font: inherit; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); width: 100%; }
+.field input:focus, .field textarea:focus { border-color: var(--navy); outline: none; }
+.resume { border: 2px dashed var(--ink); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Tabs */
+.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); padding-block: 6px; }
+.tab { appearance: none; border: 2px solid var(--rule); background: var(--sheet); border-radius: 10px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; min-width: 0; }
+.tab b { font-family: var(--f-type); font-weight: 400; font-size: .95rem; }
+.tab span { font-size: .75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tab.on { border-color: var(--ink); background: var(--ink); color: #FFFFFF; }
+.tab.on span { color: #D5D8DE; }
+.tab:disabled { opacity: .5; cursor: not-allowed; }
+.tab.done:not(.on) { border-color: var(--good); }
+
+/* Stage 1: article */
+.brief { display: flex; flex-direction: column; gap: 8px; }
+.meter { height: 10px; border-radius: 999px; background: var(--rule); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--ink); width: 0; transition: width .4s; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 16px; height: 10px; border-radius: 2px; display: inline-block; }
+.news { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 22px 18px; font-family: var(--f-news); display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 0 var(--rule); }
+.news .kicker { font-family: var(--f-body); font-size: .75rem; letter-spacing: .12em; font-weight: 700; color: var(--stamp); }
+.news .hed { font-family: var(--f-news); font-size: clamp(1.6rem, 6.4vw, 2.1rem); font-weight: 700; line-height: 1.15; }
+.news .dek { font-style: italic; font-size: 1.08rem; color: #33363D; }
+.news .byline { font-family: var(--f-body); font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: 6px; }
+.news .para { display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-size: 1.04rem; line-height: 1.7; }
+.news .pn { font-family: var(--f-body); font-size: .75rem; color: var(--muted); padding-top: 5px; text-align: right; font-variant-numeric: tabular-nums; }
+.news .ptxt { min-width: 0; }
+.news .foot { font-family: var(--f-body); font-size: .8rem; color: var(--muted); font-style: italic; border-top: 1px solid var(--rule); padding-top: 8px; }
+.clue { padding: 1px 2px; background: linear-gradient(transparent 8%, var(--hl) 8%, var(--hl) 92%, transparent 92%); border-radius: 2px; cursor: pointer; text-align: left; box-decoration-break: clone; -webkit-box-decoration-break: clone; display: inline; }
+.clue sup { font-family: var(--f-body); font-size: .62em; font-weight: 700; background: var(--ink); color: #FFFFFF; border-radius: 999px; padding: 0 5px; margin-left: 2px; vertical-align: super; }
+.clue:hover { background: linear-gradient(transparent 8%, var(--hl-deep) 8%, var(--hl-deep) 92%, transparent 92%); }
+.clue.first { background: linear-gradient(transparent 8%, var(--hl-green) 8%, var(--hl-green) 92%, transparent 92%); }
+.clue.later { background: linear-gradient(transparent 8%, var(--hl-blue) 8%, var(--hl-blue) 92%, transparent 92%); }
+.clue.cold { background: linear-gradient(transparent 8%, var(--hl-pink) 8%, var(--hl-pink) 92%, transparent 92%); cursor: not-allowed; }
+.clue.first sup, .clue.later sup { background: var(--good); }
+.clue.cold sup { background: var(--stamp); }
+.clue .tag { font-family: var(--f-type); font-size: .72em; color: var(--good); margin-left: 4px; white-space: nowrap; }
+.sweep { border: 2px solid var(--stamp); background: #FFF6F5; }
+.sweep .label { color: var(--stamp); }
+
+/* Bottom sheet */
+.sheet-back { position: fixed; inset: 0; background: rgba(22,24,29,.45); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: var(--sheet); width: 100%; max-width: 680px; max-height: 88vh; overflow-y: auto; border-radius: 16px 16px 0 0; padding: 18px 16px calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 14px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.x { appearance: none; border: 2px solid var(--rule); background: transparent; border-radius: 999px; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; line-height: 1; }
+.evidence { font-family: var(--f-news); font-size: 1.12rem; background: linear-gradient(transparent 8%, var(--hl) 8%, var(--hl) 92%, transparent 92%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.steps2 { display: flex; gap: 6px; flex-wrap: wrap; }
+.st { font-size: .75rem; font-weight: 700; border-radius: 999px; padding: 2px 10px; border: 1px solid var(--rule); color: var(--muted); }
+.st.on { border-color: var(--ink); color: var(--ink); }
+.st.done { border-color: var(--good); color: var(--good); }
+.q { font-size: 1.2rem; font-weight: 700; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; border: 2px solid var(--rule); background: var(--sheet); border-radius: 10px; padding: 12px 14px; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 54px; color: var(--ink); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--ink); } }
+.opt .k { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-weight: 700; background: var(--paper); }
+.opt .t { min-width: 0; }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.right .k { background: var(--good); color: #FFFFFF; }
+.opt.wrong { border-color: var(--stamp); background: var(--bad-soft); }
+.opt.wrong .k { background: var(--stamp); color: #FFFFFF; }
+.opt.dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.fb { border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--good-soft); }
+.fb.bad { background: var(--bad-soft); }
+.fb.reveal { background: #FFF3BF; }
+.fb-h { font-family: var(--f-type); font-size: 1.15rem; }
+.fb.good .fb-h { color: var(--good); }
+.fb.bad .fb-h { color: var(--stamp); }
+.fb-note { font-size: .88rem; color: var(--muted); }
+
+/* Stage 2 */
+.board { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.sq { aspect-ratio: 1; max-width: 100%; border-radius: 4px; background: var(--rule); }
+.sq.first { background: var(--hl-green); box-shadow: inset 0 0 0 2px var(--good); }
+.sq.later { background: var(--hl-blue); }
+.sq.missed { background: var(--hl-pink); box-shadow: inset 0 0 0 2px var(--stamp); }
+.sq.now { box-shadow: inset 0 0 0 3px var(--ink); }
+.retry { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--bad-soft); color: var(--stamp); }
+
+/* Stage 3 */
+.picker { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { appearance: none; border: 2px solid var(--rule); background: var(--sheet); border-radius: 999px; padding: 6px 12px; cursor: pointer; font-size: .9rem; text-align: left; }
+.chip.sel { border-color: var(--ink); background: var(--ink); color: #FFFFFF; }
+.slot { display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--rule); padding-left: 12px; }
+.slot.ok { border-left-color: var(--good); }
+.slot-h { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.slot-h b { font-family: var(--f-type); font-weight: 400; font-size: 1.05rem; }
+.slot-h span { font-size: .85rem; color: var(--muted); }
+.starter { font-size: .85rem; color: var(--muted); font-style: italic; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; font-size: .85rem; }
+.checks li { display: flex; gap: 6px; align-items: baseline; color: var(--muted); }
+.checks li::before { content: "○"; font-weight: 700; }
+.checks li.ok { color: var(--good); }
+.checks li.ok::before { content: "✓"; }
+.checks li.no { color: var(--stamp); }
+.checks li.no::before { content: "✗"; }
+textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
+.final { font-family: var(--f-news); font-size: 1.04rem; line-height: 1.7; background: var(--paper); border-radius: 10px; padding: 14px; }
+.model { font-family: var(--f-news); line-height: 1.7; }
+.tick { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.tick label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.tick input { width: 20px; height: 20px; margin-top: 2px; flex: none; }
+
+/* Report */
+.big { font-family: var(--f-type); font-size: clamp(2.6rem, 12vw, 3.6rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big small { font-size: .4em; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.stat { border: 2px solid var(--rule); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; min-width: 0; }
+.stat b { font-family: var(--f-type); font-weight: 400; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .8rem; color: var(--muted); }
+.revise { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.revise li { border-left: 4px solid var(--stamp); background: var(--paper); border-radius: 0 8px 8px 0; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; }
+.revise .a { color: var(--good); font-size: .92rem; }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; }
+.who b { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+/* ---------- THEME: "The Feed, Exposed" — a glossy social-media look being investigated: lilac-to-peach page, white post cards, a story-ring gradient for actions. ---------- */
+:root {
+  --paper: #F5F1FC;
+  --sheet: #FFFFFF;
+  --ink: #1B1530;
+  --muted: #625A7A;
+  --rule: #E4DDF1;
+  --navy: #5B2BD9;
+  --hl: #FCE3A6;
+  --hl-deep: #F8CF6A;
+  --hl-green: #C8F1DA;
+  --hl-blue: #D9E3FF;
+  --hl-pink: #FFD5DD;
+  --stamp: #DC2559;
+  --good: #0E8A5F;
+  --good-soft: #DDF5EA;
+  --bad-soft: #FFE4EA;
+  --grad: linear-gradient(120deg, #6A2CF5 0%, #C42AA0 55%, #FF8A3D 100%);
+  --f-type: "Bricolage Grotesque", "Arial", sans-serif;
+  --r: 18px;
+}
+html, body { background: var(--paper); }
+body { background: radial-gradient(900px 520px at 0% 0%, #EADFFF 0%, transparent 60%), radial-gradient(900px 600px at 100% 30%, #FFE6D8 0%, transparent 55%), var(--paper); background-attachment: fixed; min-height: 100vh; }
+.top-title { font-weight: 800; font-size: 1.15rem; letter-spacing: .02em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.card { border: 0; box-shadow: 0 1px 2px rgba(27,21,48,.05), 0 12px 32px rgba(91,43,217,.08); }
+.label { font-weight: 700; letter-spacing: .08em; }
+.btn-ink { background: var(--grad); color: #FFFFFF; box-shadow: 0 8px 20px rgba(196,42,160,.25); }
+.btn-ink:hover { background: var(--grad); filter: brightness(1.06); }
+.btn-ink:disabled { background: #C9C3D8; box-shadow: none; }
+.btn-ghost { border-color: var(--rule); background: #FFFFFF; }
+/* Start: a post card under investigation */
+.folder { background: linear-gradient(150deg, #20114A 0%, #4A1670 48%, #A3205F 100%); color: #FFFFFF; border: 0; border-radius: 24px; padding: 30px 20px 26px; box-shadow: 0 18px 40px rgba(74,22,112,.35); overflow: hidden; }
+.folder::before { content: ""; top: auto; bottom: -60px; left: auto; right: -60px; width: 220px; height: 220px; border: 0; border-radius: 50%; background: radial-gradient(circle, rgba(255,138,61,.45), transparent 70%); }
+.folder::after { content: ""; position: absolute; right: 20px; top: 20px; width: 62px; height: 62px; border-radius: 50%; background: conic-gradient(#FF8A3D, #C42AA0, #6A2CF5, #FF8A3D); -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px)); mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px)); }
+.folder > * { position: relative; }
+.folder h1 { font-weight: 800; font-size: clamp(2.2rem, 10vw, 3.1rem); letter-spacing: -.02em; max-width: 12ch; }
+.folder .sub { color: #F1E6FF; }
+.stamp { transform: none; border: 0; background: rgba(255,255,255,.16); color: #FFFFFF; border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: .85rem; letter-spacing: .1em; }
+.card > .stamp, #s-report .stamp { background: var(--grad); }
+.stages .n { background: var(--grad); font-weight: 800; }
+/* Tabs: segmented pill */
+.tabs { background: rgba(245,241,252,.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.tab { border: 0; border-radius: 14px; box-shadow: 0 1px 2px rgba(27,21,48,.06); }
+.tab b { font-weight: 700; }
+.tab.on { background: var(--grad); }
+.tab.on span { color: #FCEFFF; }
+.tab.done:not(.on) { box-shadow: inset 0 0 0 2px var(--good); }
+.meter i { background: var(--grad); }
+/* Article as a feed post */
+.news { border: 0; border-radius: 20px; box-shadow: 0 1px 2px rgba(27,21,48,.05), 0 12px 32px rgba(91,43,217,.08); }
+.news .kicker { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.clue sup { background: var(--navy); }
+.sweep { border: 0; background: #FFF0F4; box-shadow: inset 0 0 0 2px var(--stamp); }
+/* Sheet */
+.sheet { border-radius: 26px 26px 0 0; }
+.sheet-back { background: rgba(27,21,48,.5); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.evidence { padding: 2px 4px; }
+.opt { border-radius: 14px; }
+.opt .k { background: #F1ECFB; color: var(--navy); }
+.opt .olab { color: var(--navy); font-weight: 700; }
+.opt.right .olab, .opt.wrong .olab { color: inherit; }
+.st.on { border-color: var(--navy); color: var(--navy); }
+.fb-h { font-weight: 800; }
+.fb.reveal { background: #FFF4D6; }
+.chip.sel { background: var(--grad); border-color: transparent; }
+.big { font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stat b { font-weight: 800; }
+.stat { border: 0; background: var(--paper); }
+.slot-h b { font-weight: 800; }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title">MEDIA DETECTIVES</span>
+      <span class="top-sub">Koç Grade 9 · Behind the Headline</span>
+    </div>
+  </header>
+
+  <!-- START -->
+  <section id="s-start" hidden>
+    <div class="wrap" style="padding:0">
+      <div class="folder">
+        <span class="stamp">CASE FILE 08</span>
+        <h1>The Influencer Article</h1>
+        <p class="sub">An opinion article is trying to persuade you. Fourteen phrases have been marked with a highlighter. Find out what each one is doing, then write your report.</p>
+      </div>
+      <div class="card">
+        <ol class="stages">
+          <li><span class="n">1</span><span><b>Investigate.</b> Tap each highlighted clue. Name the device, then choose what it does to the reader.</span></li>
+          <li><span class="n">2</span><span><b>Sharpen.</b> Choose the stronger sentence for each part of a PETER paragraph.</span></li>
+          <li><span class="n">3</span><span><b>Report.</b> Write your own PETER–ETER paragraph. The desk checks your structure as you type, then shows you the model answer.</span></li>
+        </ol>
+        <p class="small muted">A wrong answer turns a clue into a cold case. It comes back in the next sweep, with the answers moved around. Your first-try score is your real score.</p>
+        <div class="resume" id="resume" hidden>
+          <p><b>You have a case in progress.</b> <span id="resume-text"></span></p>
+          <div class="btn-row">
+            <button class="btn btn-ink" id="btn-resume" type="button">Continue</button>
+            <button class="btn btn-ghost" id="btn-wipe" type="button">Start over</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="student-name">Detective name</label>
+          <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+        </div>
+        <button class="btn btn-ink" id="btn-start" type="button">Open the case file</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <section id="s-main" hidden>
+    <div class="wrap" style="padding:0">
+      <nav class="tabs" aria-label="Stages">
+        <button class="tab" id="tab-1" type="button"><b>1 Investigate</b><span id="tab-1-s"></span></button>
+        <button class="tab" id="tab-2" type="button"><b>2 Sharpen</b><span id="tab-2-s"></span></button>
+        <button class="tab" id="tab-3" type="button"><b>3 Report</b><span id="tab-3-s"></span></button>
+      </nav>
+
+      <!-- STAGE 1 -->
+      <div id="st-1" hidden>
+        <div class="wrap" style="padding:0">
+          <div class="card brief">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+              <span class="label" id="sweep-label">Sweep 1</span>
+              <span class="small" id="clue-count"></span>
+            </div>
+            <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+            <div class="legend">
+              <span><i style="background:var(--hl)"></i>Clue to crack</span>
+              <span><i style="background:var(--hl-green)"></i>Cracked first try</span>
+              <span><i style="background:var(--hl-blue)"></i>Cracked later</span>
+              <span><i style="background:var(--hl-pink)"></i>Cold case</span>
+            </div>
+          </div>
+          <div class="card sweep" id="sweep-card" hidden>
+            <span class="label">Sweep complete</span>
+            <p id="sweep-text"></p>
+            <button class="btn btn-ink" id="btn-sweep" type="button"></button>
+          </div>
+          <div class="card" id="closed-card" hidden>
+            <span class="label" style="color:var(--good)">Case cracked</span>
+            <p>Every clue is solved. Stage 2 is open.</p>
+            <button class="btn btn-ink" id="btn-to-2" type="button">Go to Stage 2: Sharpen</button>
+          </div>
+          <article class="news" id="news" aria-label="The article"></article>
+        </div>
+      </div>
+
+      <!-- STAGE 2 -->
+      <div id="st-2" hidden>
+        <div class="card" id="drill-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span class="label" id="drill-round"></span>
+            <span class="small" id="drill-count"></span>
+          </div>
+          <div class="board" id="drill-board" aria-hidden="true"></div>
+          <span class="label" id="drill-part"></span>
+          <span class="retry" id="drill-retry" hidden></span>
+          <h3 class="q" id="drill-q" tabindex="-1"></h3>
+          <div class="opts" id="drill-opts" role="group" aria-labelledby="drill-q"></div>
+          <div class="fb" id="drill-fb" role="status" aria-live="polite" hidden></div>
+          <button class="btn btn-ink" id="drill-next" type="button" hidden></button>
+        </div>
+        <div class="card" id="drill-between" hidden>
+          <span class="label" style="color:var(--stamp)">Round complete</span>
+          <h3 id="drill-between-h" style="font-size:1.3rem"></h3>
+          <p id="drill-between-t"></p>
+          <button class="btn btn-ink" id="drill-go" type="button"></button>
+        </div>
+        <div class="card" id="drill-done" hidden>
+          <span class="label" style="color:var(--good)">Sharpened</span>
+          <p>Every sentence is fixed. Stage 3 is open: time to write your report.</p>
+          <button class="btn btn-ink" id="btn-to-3" type="button">Go to Stage 3: Report</button>
+        </div>
+      </div>
+
+      <!-- STAGE 3 -->
+      <div id="st-3" hidden>
+        <div class="wrap" style="padding:0">
+          <div class="card">
+            <span class="label">Writing question</span>
+            <p style="font-weight:700">How does the writer use biased language to persuade the reader that influencers are harmful to young people?</p>
+            <p class="small muted">Pick your TWO strongest clues. They must be two different devices.</p>
+            <div class="picker" id="picker"></div>
+          </div>
+          <div class="card" id="desk" hidden>
+            <span class="label">Your report</span>
+            <p class="small muted">Each box turns green when its structure is right. The checks look at structure, not quality, so compare with the model answer at the end.</p>
+            <div id="slots" style="display:flex;flex-direction:column;gap:18px"></div>
+            <button class="btn btn-ink" id="btn-file" type="button" disabled>File my report</button>
+            <p class="small muted" id="file-note"></p>
+          </div>
+          <div class="card" id="filed" hidden>
+            <span class="label" style="color:var(--good)">Report filed</span>
+            <div class="final" id="final"></div>
+            <div class="btn-row">
+              <button class="btn btn-ghost" id="btn-copy" type="button">Copy my paragraph</button>
+              <button class="btn btn-ghost" id="btn-edit" type="button">Edit my paragraph</button>
+            </div>
+            <p class="small muted" id="copy-note" role="status"></p>
+            <span class="label">Model answer</span>
+            <p class="model" id="model"></p>
+            <span class="label">Now check your paragraph</span>
+            <ul class="tick" id="tick"></ul>
+            <div class="field">
+              <label for="improve">One thing I will improve next time</label>
+              <textarea id="improve" maxlength="300"></textarea>
+            </div>
+            <button class="btn btn-ink" id="btn-report" type="button">Close the case</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="s-report" hidden>
+    <div class="card">
+      <span class="stamp">CASE CLOSED</span>
+      <h2 style="font-size:1.6rem">Detective report</h2>
+      <div>
+        <div class="muted">Clues cracked first try</div>
+        <div class="big" id="r-big"></div>
+      </div>
+      <div class="stats" id="r-stats"></div>
+      <div id="r-revise-block">
+        <h3 style="font-size:1.15rem;margin-bottom:8px">Clues and sentences to revise</h3>
+        <ul class="revise" id="r-revise"></ul>
+      </div>
+      <span class="label">My paragraph</span>
+      <div class="final" id="r-para"></div>
+      <div id="r-improve-block"><span class="label">I will improve</span><p id="r-improve"></p></div>
+      <div class="who" id="r-who"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="btn-back" type="button">Back to the case file</button>
+        <button class="btn btn-ghost" id="btn-again" type="button">Start a new case</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="sheet-back" id="sheet-back" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
+    <div class="sheet-head">
+      <span class="label" id="sheet-label"></span>
+      <button class="x" id="sheet-x" type="button" aria-label="Close">×</button>
+    </div>
+    <p class="evidence" id="sheet-ev"></p>
+    <div class="steps2" id="sheet-steps"></div>
+    <span class="retry" id="sheet-retry" hidden></span>
+    <h3 class="q" id="sheet-q" tabindex="-1"></h3>
+    <div class="opts" id="sheet-opts" role="group" aria-labelledby="sheet-q"></div>
+    <div class="fb" id="sheet-fb" role="status" aria-live="polite" hidden></div>
+    <button class="btn btn-ink" id="sheet-next" type="button" hidden></button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- ARTICLE (Assessment 2 Practice 4; fictional, written for classroom practice) ---------- */
+  var ART = {
+    hed: "Influencers Are Selling Our Children a Fake Life",
+    dek: "Behind every perfect smile and “must-have” product is a business plan — and our teenagers are paying the price.",
+    by: "By Joanna Pell | The Lakeside Gazette | 9 October 2026",
+    paras: [
+      "Open any social media app and you will meet them within seconds: smiling teenagers in perfect bedrooms, holding perfect products, living perfect lives. They are called influencers, and millions of young people follow them every day.",
+      "But let us be honest about what these so-called role models really are. They are walking advertisements. Every video, every “honest review” and every “day in my life” post is carefully designed to do one thing: make our children spend money.",
+      "The numbers are shocking. One recent survey found that seven out of ten teenagers have bought a product simply because an influencer recommended it. Seven out of ten. These are not adults making careful choices; they are children being targeted by an industry worth billions.",
+      "Behind the screen, the reality is very different. While the influencer poses beside a glowing new skincare kit, the teenager watching sits in an ordinary bedroom, comparing her ordinary face to a filtered fantasy. One school counselor told me, “Students come to my office in tears because they cannot look like someone who does not even exist.”",
+      "How did we allow this to happen? We would never let a stranger walk into our homes and sell products to our children. Yet that is exactly what happens every time a teenager picks up a phone.",
+      "Of course, influencers will say that they simply share things they love. Some even claim that they inspire young people. But inspiration that always comes with a discount code is not inspiration. It is marketing.",
+      "Parents everywhere are already demanding change, and lawmakers in several countries have begun to write new rules for online advertising. The rest of us cannot afford to be left behind.",
+      "We cannot sit back while a generation grows up believing that happiness can be bought with one click. It is time to log off, look up and give our children the truth — before the next “must-have” product does even more damage."
+    ],
+    foot: "This opinion piece was written for classroom practice. The writer, the publication, and the statistics and quotations it mentions are fictional."
+  };
+
+  /* where: 0 = headline, 1..8 = paragraph number */
+  var CLUES = [
+    { id: "c1", where: 0, text: "Influencers Are Selling Our Children a Fake Life", device: "Headline",
+      dAns: "Headline: the big title at the top, built around the dramatic verb ‘Selling’.",
+      dWrong: ["Rhetorical question: the title asks the reader if influencers sell a fake life.",
+               "Statistics and facts: the title gives a number to prove how many children are hurt.",
+               "Expert opinion: the title quotes a doctor’s warning about influencers and children."],
+      dHint: "Check each statement against the words. Where does this text sit in the article? What is its job?",
+      dWhy: "This is the big title at the top, built around the dramatic verb “Selling.” That is a headline.",
+      effect: "The verb “Selling” and the words “Fake Life” tell the reader to feel alarmed before they have read any evidence.",
+      eWrong: ["The verb “Selling” and the words “Fake Life” tell the reader to expect a fair, balanced report on influencers.",
+               "The verb “Selling” and the words “Fake Life” make the reader want to buy the products that influencers show.",
+               "The verb “Selling” and the words “Fake Life” show that the article is a funny story written only to entertain its readers."], eHint: "Think about how the reader feels before reading a single paragraph." },
+    { id: "c2", where: 1, text: "perfect bedrooms, holding perfect products, living perfect lives", device: "Repetition",
+      dAns: "Repetition: the word ‘perfect’ appears three times in one sentence.",
+      dWrong: ["Hyperbole: influencers are said to own millions of perfect bedrooms.",
+               "Statistics and facts: a survey shows how many bedrooms are perfect.",
+               "Alliteration: ‘bedrooms’, ‘products’ and ‘lives’ start with the same sound."],
+      dHint: "Check each statement against the words. Count how many times one word appears.",
+      dWhy: "“Perfect” appears three times in one sentence. That is repetition.",
+      effect: "Saying “perfect” three times makes influencer life seem too good to be true, so the reader starts to feel suspicious.",
+      eWrong: ["Saying “perfect” three times makes influencer life seem truly wonderful, so the reader wants to live exactly the same way.",
+               "Saying “perfect” three times shows the writer has run out of adjectives, so the reader thinks the writing is weak.",
+               "Saying “perfect” three times makes influencers seem lazy and messy, so the reader feels sorry for them instead."], eHint: "If something is “perfect” again and again, does it sound real?" },
+    { id: "c3", where: 2, text: "so-called role models", device: "Loaded language",
+      dAns: "Loaded language: ‘so-called’ carries a hidden judgment that they are not real role models.",
+      dWrong: ["Inclusive language: ‘so-called’ puts the writer and the reader together in the same group.",
+               "Expert opinion: ‘role models’ are experts with special knowledge who give advice to the writer.",
+               "Repetition: the phrase ‘role models’ is repeated again and again in every paragraph of the article."],
+      dHint: "Check each statement against the words. Could the writer have chosen a more neutral word than “so-called”?",
+      dWhy: "“So-called” carries a hidden judgment: these are not real role models. That is loaded language.",
+      effect: "“So-called” suggests influencers do not deserve their good name, so the reader feels distrust.",
+      eWrong: ["“So-called” suggests influencers truly deserve their good name, so the reader feels admiration.",
+               "“So-called” suggests influencers are famous scientists, so the reader feels impressed by them.",
+               "“So-called” suggests influencers are new and unknown, so the reader feels curious about them."], eHint: "What does “so-called” suggest about the influencers’ good name?" },
+    { id: "c4", where: 2, text: "They are walking advertisements.", device: "Metaphor",
+      dAns: "Metaphor: influencers are called advertisements without using ‘like’ or ‘as’.",
+      dWrong: ["Simile: influencers are compared to advertisements using the word ‘like’.",
+               "Hyperbole: influencers are said to walk thousands of miles every single day of the year.",
+               "Rhetorical question: the writer asks the reader what influencers really are."],
+      dHint: "Check each statement against the words. Are influencers really advertisements? What is being compared to what?",
+      dWhy: "Influencers are described as advertisements, without “like” or “as.” That is a metaphor.",
+      effect: "Calling influencers “advertisements” makes them seem like products, not people, so the reader sees them as only wanting money.",
+      eWrong: ["Calling influencers “advertisements” makes them seem healthy and active, so the reader sees them as good role models.",
+               "Calling influencers “advertisements” makes them seem honest and useful, so the reader trusts their reviews and discount codes even more.",
+               "Calling influencers “advertisements” makes them seem old-fashioned, so the reader sees them as boring and out of date."], eHint: "What is an advertisement for? What does that say about influencers?" },
+    { id: "c5", where: 3, text: "One recent survey found that seven out of ten teenagers", device: "Statistics and facts",
+      dAns: "Statistics and facts: ‘seven out of ten’ is a number from a survey that is never named.",
+      dWrong: ["Expert opinion: a named university professor explains why teenagers buy these products.",
+               "Hyperbole: the writer claims that every single teenager on Earth has bought a product.",
+               "Juxtaposition: two opposite scenes, a rich teenager and a poor one, are placed side by side."],
+      dHint: "Check each statement against the words. Look for a number and the words “a survey found.”",
+      dWhy: "“Seven out of ten” is a number from a survey. That is a statistic, and the survey is never named.",
+      effect: "The exact number sounds proven and alarming, but the survey is never named, so the reader cannot check it.",
+      eWrong: ["The exact number sounds small and calm, so the reader feels the problem only affects a few teenagers here and there.",
+               "The exact number comes from a named, trusted study, so the reader can easily check for themselves that it is true.",
+               "The exact number is clearly a joke, so the reader laughs and stops taking the rest of the article seriously at all."], eHint: "Which survey is it? Could the reader check it?" },
+    { id: "c6", where: 4, text: "While the influencer poses beside a glowing new skincare kit, the teenager watching sits in an ordinary bedroom", device: "Juxtaposition",
+      dAns: "Juxtaposition: a glowing new kit is placed right next to an ordinary bedroom.",
+      dWrong: ["Simile: the teenager is compared to the influencer using the word ‘like’.",
+               "Statistics and facts: a survey shows how many teenagers have ordinary bedrooms.",
+               "Rhetorical question: the writer asks why the teenager’s bedroom is so ordinary."],
+      dHint: "Check each statement against the words. Look at the word “While.” Which two scenes sit side by side?",
+      dWhy: "A glowing new kit is placed right next to an ordinary bedroom. That is juxtaposition.",
+      effect: "Putting the “glowing” kit next to the “ordinary” bedroom shows an unfair gap, so the reader feels sorry for the teenager.",
+      eWrong: ["Putting the “glowing” kit next to the “ordinary” bedroom shows the two lives are the same, so the reader feels both are equal.",
+               "Putting the “glowing” kit next to the “ordinary” bedroom shows the teenager is lazy, so the reader feels annoyed with her.",
+               "Putting the “glowing” kit next to the “ordinary” bedroom advertises the kit, so the reader wants to buy one of their own."], eHint: "Compare the two places. How does the teenager’s side look?" },
+    { id: "c7", where: 4, text: "One school counselor told me", device: "Expert opinion",
+      dAns: "Expert opinion: a counselor has expert knowledge, but no name is given.",
+      dWrong: ["Statistics and facts: the counselor gives an exact number of crying students.",
+               "Inclusive language: ‘me’ puts the reader inside the writer’s own group.",
+               "Bandwagon: every counselor in the country is said to agree with the writer."],
+      dHint: "Check each statement against the words. Who is speaking here, and what is their job?",
+      dWhy: "A counselor is someone with expert knowledge, but no name is given. That is unverified expert opinion.",
+      effect: "A counselor sounds trustworthy, but the person is never named, so the reader cannot check the claim.",
+      eWrong: ["A counselor sounds trustworthy, and her full name is given, so the reader can easily check the claim for themselves.",
+               "A counselor sounds silly and unreliable, so the reader decides to ignore the whole article and stop reading.",
+               "A counselor sounds like an influencer, so the reader thinks the writer is secretly on the influencers’ side."], eHint: "Do we know who this counselor is?" },
+    { id: "c8", where: 4, text: "come to my office in tears", device: "Evocative language",
+      dAns: "Evocative language: ‘in tears’ makes the reader picture students crying.",
+      dWrong: ["Statistics and facts: ‘in tears’ tells us exactly how many students cried.",
+               "Hyperbole: the students are said to cry an ocean of tears every single day.",
+               "Metaphor: the office is called a sea of tears without using ‘like’ or ‘as’."],
+      dHint: "Check each statement against the words. Which words create a sad picture in your mind?",
+      dWhy: "“In tears” makes the reader picture crying students. That is evocative language.",
+      effect: "The picture of students “in tears” makes the reader feel sadness and pity for young people who are hurting.",
+      eWrong: ["The picture of students “in tears” makes the reader laugh, because crying over a photo seems silly.",
+               "The picture of students “in tears” makes the reader feel calm, because the counselor has fixed everything.",
+               "The picture of students “in tears” makes the reader feel angry at the students for wasting school time."], eHint: "What do you see in your mind when you read “in tears”?" },
+    { id: "c9", where: 5, text: "How did we allow this to happen?", device: "Rhetorical question",
+      dAns: "Rhetorical question: a question nobody is expected to answer out loud.",
+      dWrong: ["Expert opinion: a named expert asks this question in a TV interview.",
+               "Statistics and facts: the question asks for the number of teenagers affected.",
+               "Fear appeal: the writer warns that something terrible will happen tomorrow."],
+      dHint: "Check each statement against the words. Look at the punctuation at the end. Does the writer want a real answer?",
+      dWhy: "The question has only one answer, and nobody is expected to reply. That is a rhetorical question.",
+      effect: "The only answer is that we should not have allowed it, so the reader feels guilty and responsible.",
+      eWrong: ["The writer wants a real answer sent by email, so the reader feels invited to write back with their own ideas.",
+               "The only answer is that we did nothing wrong, so the reader feels relaxed, innocent and free of any blame.",
+               "The question shows that the writer is confused, so the reader feels the article cannot be trusted at all."], eHint: "What answer does the writer want you to give in your head?" },
+    { id: "c10", where: 6, text: "Of course, influencers will say that they simply share things they love.", device: "Selective detail",
+      dAns: "Selective detail: the influencers’ side gets one quick sentence before it is dismissed.",
+      dWrong: ["Balanced argument: both sides are given equal space so that readers can decide for themselves.",
+               "Expert opinion: the influencers are quoted by name as experts on the lives of young people.",
+               "Rhetorical question: the writer asks the influencers what things they love to share online."],
+      dHint: "Check each statement against the words. Whose side is this? How long does the writer let them speak?",
+      dWhy: "The influencers’ side gets one quick sentence before the writer dismisses it. That is selective detail.",
+      effect: "The other side gets one quick sentence and is then dismissed, so the reader only sees one side of the story.",
+      eWrong: ["The other side gets a full, fair paragraph of its own, so the reader can weigh up both sides equally and decide.",
+               "The other side is proven completely right, so the reader changes their mind and starts to support influencers.",
+               "The other side is made to sound kind and generous, so the reader feels the writer really admires influencers."], eHint: "How much space does the other side get before it is pushed away?" },
+    { id: "c11", where: 7, text: "Parents everywhere are already demanding change", device: "Bandwagon",
+      dAns: "Bandwagon: everyone is said to be acting already, so you should join in.",
+      dWrong: ["Statistics and facts: an exact number of parents is given from a survey.",
+               "Expert opinion: a named lawmaker explains the new rules for advertising.",
+               "Rhetorical question: the parents ask the reader what they plan to do next."],
+      dHint: "Check each statement against the words. Look at “everywhere” and “already.” What does the writer want you to join?",
+      dWhy: "The writer says everyone is already acting, so you should join in. That is bandwagon.",
+      effect: "Saying parents “everywhere” are “already” acting makes the reader worry about being left behind.",
+      eWrong: ["Saying parents “everywhere” are “already” acting makes the reader feel that the problem is already solved.",
+               "Saying parents “everywhere” are “already” acting makes the reader feel sorry for tired and busy parents.",
+               "Saying parents “everywhere” are “already” acting makes the reader doubt that anybody really cares at all."], eHint: "How would you feel if everyone else had already started?" },
+    { id: "c12", where: 8, text: "a generation grows up believing that happiness can be bought with one click", device: "Hyperbole",
+      dAns: "Hyperbole: a whole generation buying happiness in one click is a huge exaggeration.",
+      dWrong: ["Statistics and facts: the exact size of the generation is taken from a named survey.",
+               "Expert opinion: a named scientist explains how clicking online affects happiness.",
+               "Juxtaposition: a rich teenager and a poor teenager are placed side by side here."],
+      dHint: "Check each statement against the words. Is this claim exactly true, or much bigger than the truth?",
+      dWhy: "A whole generation, and happiness bought with one click, is a huge exaggeration. That is hyperbole.",
+      effect: "Claiming a whole “generation” is affected makes the problem sound enormous, so the reader feels alarmed.",
+      eWrong: ["Claiming a whole “generation” is affected makes the problem sound tiny, so the reader stops worrying about it.",
+               "Claiming a whole “generation” is affected proves it with exact data, so the reader trusts the numbers given.",
+               "Claiming a whole “generation” is happy online makes the reader feel glad about shopping with one click."], eHint: "How many people does “a generation” include?" },
+    { id: "c13", where: 8, text: "We cannot sit back", device: "Inclusive language",
+      dAns: "Inclusive language: ‘We’ puts the writer and the reader in the same group.",
+      dWrong: ["Loaded language: ‘sit back’ is an insult that is aimed only at influencers.",
+               "Expert opinion: ‘We’ refers to a team of named doctors who studied teenagers.",
+               "Rhetorical question: the writer asks if we can all sit back and relax now."],
+      dHint: "Check each statement against the words. Look at the first word. Who is “we”?",
+      dWhy: "“We” puts the writer and the reader in the same group. That is inclusive language.",
+      effect: "“We” pulls the reader into the writer’s group, so it feels hard to disagree.",
+      eWrong: ["“We” pushes the reader out of the writer’s group, so it feels easy to disagree with her.",
+               "“We” refers only to the writer’s own family, so the reader feels the article is not about them.",
+               "“We” refers to the influencers, so the reader feels that the writer is defending them."], eHint: "Who is included in “we”? Is the reader one of them?" },
+    { id: "c14", where: 8, text: "before the next “must-have” product does even more damage", device: "Fear appeal",
+      dAns: "Fear appeal: the writer warns of ‘even more damage’ if nobody acts.",
+      dWrong: ["Statistics and facts: the writer measures exactly how much damage was done.",
+               "Expert opinion: a named shop owner warns readers about new products.",
+               "Inclusive language: ‘must-have’ puts the writer and the reader together."],
+      dHint: "Check each statement against the words. What does the writer warn will happen if nobody acts?",
+      dWhy: "The writer warns of “even more damage” to come. That is a fear appeal.",
+      effect: "The warning of “even more damage” makes the reader anxious about what will happen if nobody acts.",
+      eWrong: ["The warning of “even more damage” makes the reader excited to buy the next “must-have” product as soon as possible.",
+               "The warning of “even more damage” makes the reader feel the danger is over and that nothing needs to change now.",
+               "The warning of “even more damage” makes the reader laugh at the writer for being far too dramatic about it all."], eHint: "What is the reader afraid of after reading this warning?" }
+  ];
+  var CBY = {}; CLUES.forEach(function (c) { CBY[c.id] = c; });
+
+  /* ---------- STAGE 2 DRILLS (sentences written for practice) ---------- */
+  var DRILLS = [
+    { part: "Point", q: "Which POINT sentence is complete?",
+      answer: "In the opinion article “Influencers Are Selling Our Children a Fake Life,” published in The Lakeside Gazette, Joanna Pell argues that influencers harm young people through the use of a metaphor and unverified expert opinion.",
+      wrong: ["In the opinion article “Influencers Are Selling Our Children a Fake Life,” Joanna Pell argues that influencers harm young people through the use of a metaphor and unverified expert opinion.",
+              "In the opinion article “Influencers Are Selling Our Children a Fake Life,” published in The Lakeside Gazette, Joanna Pell argues that influencers harm young people through the use of a metaphor.",
+              "In the news report “Influencers Are Selling Our Children a Fake Life,” published in The Lakeside Gazette, Joanna Pell argues that influencers harm young people through a metaphor and expert opinion."],
+      hint: "Check every part: genre, title, writer, publication, claim and TWO techniques. Is it a news report or an opinion article?",
+      why: "It names the correct genre (opinion article), the title, the writer, the publication, the writer’s claim and both techniques. The others leave out the publication, give only one technique, or get the genre wrong." },
+    { part: "Evidence", q: "Which EVIDENCE sentence is best?",
+      answer: "First, Pell describes influencers as “walking advertisements.”",
+      wrong: ["First, the quote “walking advertisements” shows what Pell thinks.",
+              "First, Pell describes influencers as walking advertisements.",
+              "First, Pell describes influencers as “walking adverts.”"],
+      hint: "Good evidence is exact, inside quotation marks and built into your sentence. Never write “quote.” Check the wording against the article.",
+      why: "The evidence is exact, in quotation marks, and built into the sentence. The others use the word “quote,” leave out the quotation marks, or change the writer’s words." },
+    { part: "Technique", q: "Which TECHNIQUE sentence is strongest?",
+      answer: "The writer uses a metaphor, comparing influencers to “advertisements,” which are made only to sell.",
+      wrong: ["The writer uses a simile, comparing influencers to “advertisements,” which are made only to sell.",
+              "The writer uses a metaphor in this quote, which shows that it is a very interesting and clever technique.",
+              "The writer uses a metaphor, comparing advertisements to “influencers,” who are made only to sell."],
+      hint: "Name the right device AND zoom in on the key word. What is compared to what? Is ‘like’ or ‘as’ used?",
+      why: "It names the right device and zooms in on the key word “advertisements.” The others name the wrong device, use the word “quote,” or turn the comparison the wrong way round." },
+    { part: "Effect on the reader", q: "Which EFFECT sentence is strongest?",
+      answer: "This makes the reader feel distrustful, because it suggests that influencers care only about money, not about their followers.",
+      wrong: ["This makes the reader feel emotional and interested, because it is a very powerful and effective metaphor in the article.",
+              "This makes the reader feel distrustful, and it also makes the reader want to keep on reading the rest of the article.",
+              "This makes the reader feel admiration, because it suggests that influencers work very hard for all of their followers."],
+      hint: "Say WHAT the reader feels (a precise feeling), then HOW the words create it, with “because.”",
+      why: "It names a precise feeling (distrustful) and explains how the metaphor creates it. The others are vague, give no reason, or name the wrong feeling." },
+    { part: "Relate", q: "Which RELATE sentence is correct?",
+      answer: "Therefore, the metaphor shows the writer’s bias, as influencers are judged to be salespeople, not real role models.",
+      wrong: ["To sum up, the metaphor shows the writer’s bias, as influencers are judged to be salespeople, not role models.",
+              "Therefore, the metaphor is a good technique, and the writer uses it very well in this opinion article.",
+              "In conclusion, the metaphor shows the writer’s bias, as influencers are judged to be only salespeople."],
+      hint: "Link back to your point about bias, and check the opening word: some openings are banned.",
+      why: "It starts with “Therefore” and links the device back to bias. Two others use banned openings, and one never links back to bias." },
+    { part: "Effect on the reader", q: "Which sentence shows the best critical thinking about the counselor?",
+      answer: "The word “counselor” makes the claim sound trustworthy, but the counselor is never named, so the reader cannot check it.",
+      wrong: ["The word “counselor” makes the claim sound trustworthy, so the reader can be completely sure that every word is true.",
+              "The word “counselor” makes the claim sound silly, because counselors do not know anything about teenagers at all.",
+              "The word “counselor” makes the claim sound trustworthy, and her full name proves that she is a real expert."],
+      hint: "A good detective asks: is this expert named? Check paragraph 4.",
+      why: "It explains why the expert sounds trustworthy, then points out that the reader cannot check the claim. The counselor is never named in the article." },
+    { part: "Second example", q: "Which word should begin your SECOND piece of evidence?",
+      answer: "Furthermore,",
+      wrong: ["However,",
+              "Therefore,",
+              "To conclude,"],
+      hint: "You are adding another example, not disagreeing and not finishing the paragraph.",
+      why: "“Furthermore” adds a second example. “However” disagrees, “Therefore” draws a conclusion, and “To conclude” ends the paragraph." }
+  ];
+
+  /* ---------- MODEL ANSWER (from Assessment 2 Practice 4) ---------- */
+  var MODEL = "In the opinion article “Influencers Are Selling Our Children a Fake Life,” published in The Lakeside Gazette, Joanna Pell presents a biased view of influencers as dishonest salespeople who harm young people through the use of loaded language and unverified statistics. First, Pell describes influencers as “so-called role models.” The writer uses loaded language through the word “so-called,” which has negative connotations of something fake or undeserved. This makes the reader feel suspicious and distrustful, because it suggests that influencers do not deserve their good reputation and that young people have been tricked into admiring them. Therefore, the loaded language shows the writer's bias, as influencers are judged to be dishonest before any evidence is given. Furthermore, Pell states that “seven out of ten teenagers” have bought a product because of an influencer, according to “one recent survey.” The writer uses a statistic and repeats it in the short sentence “Seven out of ten.” The precise number makes the problem seem huge and scientifically proven, so the reader feels alarmed that almost every teenager is being manipulated. However, the survey is never named, so the reader cannot check who was asked or whether the number is accurate. Thus, the unverified statistic makes the writer's personal opinion look like a proven fact, which further reveals the one-sided nature of the article.";
+  var TICKS = [
+    "My point sentence includes the genre, title, writer, publication, claim and TWO techniques.",
+    "I used two short pieces of evidence and built them into my sentences.",
+    "I named each technique correctly and zoomed in on a key word.",
+    "Each effect says what the reader feels or thinks AND explains how the words create it.",
+    "Each relate sentence links back to my point (Therefore / Thus).",
+    "I did not use the word “quote,” “To sum up” or “To conclude.”"
+  ];
+
+  /* ---------- WRITING DESK ---------- */
+  var KEYS = {
+    "Headline": ["headline"], "Repetition": ["repetition", "repeat"], "Loaded language": ["loaded"],
+    "Metaphor": ["metaphor"], "Statistics and facts": ["statistic"], "Juxtaposition": ["juxtapos"],
+    "Expert opinion": ["expert"], "Evocative language": ["evocative", "emotive"],
+    "Rhetorical question": ["rhetorical"], "Selective detail": ["selective"], "Bandwagon": ["bandwagon"],
+    "Hyperbole": ["hyperbole", "exaggerat"], "Inclusive language": ["inclusive"], "Fear appeal": ["fear"]
+  };
+  var STARTERS = {
+    "Headline": "The headline “…” immediately creates a sense of …",
+    "Repetition": "The repetition of “…” emphasizes …",
+    "Loaded language": "The writer uses loaded language through the word “…,” which has negative connotations of …",
+    "Metaphor": "The writer uses a metaphor, comparing … to …",
+    "Statistics and facts": "The writer uses the statistic “…” to make the claim seem …",
+    "Juxtaposition": "The writer juxtaposes … with …",
+    "Expert opinion": "The writer uses unverified expert opinion, because …",
+    "Evocative language": "The writer uses evocative language such as “…” to create a feeling of …",
+    "Rhetorical question": "The writer uses a rhetorical question, “…?”, to make the reader consider …",
+    "Selective detail": "The writer uses selective detail by focusing only on …",
+    "Bandwagon": "The writer uses the bandwagon technique by claiming that …",
+    "Hyperbole": "The writer uses hyperbole in the claim that …",
+    "Inclusive language": "The inclusive pronoun “…” makes the reader feel …",
+    "Fear appeal": "The writer uses fear appeal through the warning that …"
+  };
+  var SLOTS = [
+    { k: "p", n: "P", label: "Point", starter: "In the opinion article “…,” published in …, Joanna Pell … through the use of … and …." },
+    { k: "e1", n: "E", label: "Evidence 1", starter: "First, Pell describes … as “…”." },
+    { k: "t1", n: "T", label: "Technique 1", starter: "" },
+    { k: "f1", n: "E", label: "Effect on the reader", starter: "This makes the reader feel …, because …" },
+    { k: "r1", n: "R", label: "Relate", starter: "Therefore, … shows the writer’s bias, as …" },
+    { k: "e2", n: "E", label: "Evidence 2", starter: "Furthermore, Pell states that “…”." },
+    { k: "t2", n: "T", label: "Technique 2", starter: "" },
+    { k: "f2", n: "E", label: "Effect on the reader", starter: "This makes the reader feel …, so …" },
+    { k: "r2", n: "R", label: "Relate", starter: "Thus, … which further reveals the one-sided nature of the article." }
+  ];
+
+  var KEY = "onur-case:influencers-v2";
+  var LETTERS = ["A", "B", "C", "D"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var S = null;
+
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) { var r = a.slice(); for (var i = r.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = r[i]; r[i] = r[j]; r[j] = t; } return r; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() { try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); return s && s.clues && s.drill ? s : null; } catch (e) { return null; } }
+  function fresh(name) {
+    var clues = {}; CLUES.forEach(function (c) { clues[c.id] = { status: "open", misses: 0 }; });
+    return { name: name || "", stage: 1, screen: "main", sweep: 1, clues: clues, streak: 0, best: 0,
+      cur: null, phase: null, opts: null, answered: null,
+      drill: { round: 1, queue: DRILLS.map(function (_, i) { return i; }), pos: 0, next: [], misses: {}, done: {}, opts: null, answered: null, between: false },
+      pick: [], text: {}, filed: false, ticks: {}, improve: "" };
+  }
+  function show(id) { ["s-start", "s-main", "s-report"].forEach(function (s) { $(s).hidden = s !== id; }); }
+  function norm(s) { return String(s).toLowerCase().replace(/[“”"]/g, '"').replace(/[‘’']/g, "'").replace(/[–—]/g, "-").replace(/\s+/g, " ").trim(); }
+  var ART_NORM = norm([ART.hed, ART.dek, ART.by].concat(ART.paras).join(" "));
+
+  function cracked() { return CLUES.filter(function (c) { var s = S.clues[c.id].status; return s === "first" || s === "later"; }).length; }
+  function stage1Done() { return cracked() === CLUES.length; }
+  function stage2Done() { return Object.keys(S.drill.done).length === DRILLS.length; }
+
+  /* ---------- START ---------- */
+  function renderStart() {
+    var saved = load();
+    if (saved && saved.screen !== "report") {
+      $("resume").hidden = false;
+      var n = CLUES.filter(function (c) { var s = saved.clues[c.id].status; return s === "first" || s === "later"; }).length;
+      $("resume-text").textContent = n + " of " + CLUES.length + " clues cracked.";
+      $("btn-resume").onclick = function () { S = saved; route(); };
+      $("btn-wipe").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} $("resume").hidden = true; };
+      if (saved.name) $("student-name").value = saved.name;
+    } else { $("resume").hidden = true; }
+    show("s-start");
+  }
+  $("btn-start").onclick = function () { S = fresh($("student-name").value.trim()); save(); route(); window.scrollTo(0, 0); };
+
+  /* ---------- MAIN / TABS ---------- */
+  function renderTabs() {
+    var n = cracked();
+    $("tab-1-s").textContent = n + "/" + CLUES.length + " clues";
+    $("tab-2-s").textContent = stage1Done() ? Object.keys(S.drill.done).length + "/" + DRILLS.length + " fixed" : "locked";
+    $("tab-3-s").textContent = !stage2Done() ? "locked" : (S.filed ? "filed" : "to write");
+    $("tab-2").disabled = !stage1Done(); $("tab-3").disabled = !stage2Done();
+    [1, 2, 3].forEach(function (i) {
+      $("tab-" + i).classList.toggle("on", S.stage === i);
+      $("tab-" + i).classList.toggle("done", (i === 1 && stage1Done()) || (i === 2 && stage2Done()) || (i === 3 && S.filed));
+      $("st-" + i).hidden = S.stage !== i;
+    });
+  }
+  [1, 2, 3].forEach(function (i) {
+    $("tab-" + i).onclick = function () { S.stage = i; save(); renderMain(); window.scrollTo(0, 0); };
+  });
+  function renderMain() {
+    renderTabs();
+    if (S.stage === 1) renderStage1();
+    else if (S.stage === 2) renderStage2();
+    else renderStage3();
+    show("s-main");
+  }
+
+  /* ---------- STAGE 1 ---------- */
+  function buildText(el, text, where) {
+    var marks = CLUES.filter(function (c) { return c.where === where; })
+      .map(function (c) { return { c: c, at: text.indexOf(c.text) }; })
+      .filter(function (m) { return m.at >= 0; })
+      .sort(function (a, b) { return a.at - b.at; });
+    var pos = 0;
+    marks.forEach(function (m) {
+      el.appendChild(document.createTextNode(text.slice(pos, m.at)));
+      var st = S.clues[m.c.id];
+      var b = document.createElement("span"); b.setAttribute("role", "button"); b.tabIndex = 0;
+      b.className = "clue" + (st.status !== "open" ? " " + st.status : "");
+      b.appendChild(document.createTextNode(m.c.text));
+      var sup = document.createElement("sup"); sup.textContent = m.c.id.slice(1); b.appendChild(sup);
+      if (st.status === "first" || st.status === "later") { var tg = document.createElement("span"); tg.className = "tag"; tg.textContent = "[" + m.c.device + "]"; b.appendChild(tg); }
+      var lab = "Clue " + m.c.id.slice(1) + ": " + m.c.text + ". ";
+      lab += st.status === "open" ? "Tap to investigate." : st.status === "cold" ? "Cold case. It reopens next sweep." : "Cracked: " + m.c.device + ".";
+      b.setAttribute("aria-label", lab);
+      if (st.status === "open") b.onclick = function () { openClue(m.c.id); };
+      else if (st.status === "cold") b.onclick = function () { nudge(); };
+      else b.onclick = function () { openSolved(m.c.id); };
+      b.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); b.click(); } });
+      el.appendChild(b);
+      pos = m.at + m.c.text.length;
+    });
+    el.appendChild(document.createTextNode(text.slice(pos)));
+  }
+  function renderStage1() {
+    var news = $("news"); news.textContent = "";
+    var k = document.createElement("span"); k.className = "kicker"; k.textContent = "OPINION"; news.appendChild(k);
+    var h = document.createElement("h2"); h.className = "hed"; buildText(h, ART.hed, 0); news.appendChild(h);
+    var d = document.createElement("p"); d.className = "dek"; d.textContent = ART.dek; news.appendChild(d);
+    var by = document.createElement("p"); by.className = "byline"; by.textContent = ART.by; news.appendChild(by);
+    ART.paras.forEach(function (t, i) {
+      var row = document.createElement("div"); row.className = "para";
+      var pn = document.createElement("span"); pn.className = "pn"; pn.textContent = "¶" + (i + 1);
+      var p = document.createElement("p"); p.className = "ptxt"; buildText(p, t, i + 1);
+      row.appendChild(pn); row.appendChild(p); news.appendChild(row);
+    });
+    var f = document.createElement("p"); f.className = "foot"; f.textContent = ART.foot; news.appendChild(f);
+
+    var n = cracked();
+    $("clue-count").textContent = n + " of " + CLUES.length + " clues cracked";
+    $("meter").style.width = (n / CLUES.length * 100) + "%";
+    $("sweep-label").textContent = "Sweep " + S.sweep;
+    var open = CLUES.filter(function (c) { return S.clues[c.id].status === "open"; }).length;
+    var cold = CLUES.filter(function (c) { return S.clues[c.id].status === "cold"; }).length;
+    $("sweep-card").hidden = !(open === 0 && cold > 0);
+    if (open === 0 && cold > 0) {
+      $("sweep-text").textContent = (cold === 1 ? "1 cold case reopens" : cold + " cold cases reopen") + " in sweep " + (S.sweep + 1) + ", with the answers in a new order.";
+      $("btn-sweep").textContent = "Start sweep " + (S.sweep + 1);
+    }
+    $("closed-card").hidden = !stage1Done();
+  }
+  $("btn-sweep").onclick = function () {
+    CLUES.forEach(function (c) { if (S.clues[c.id].status === "cold") S.clues[c.id].status = "open"; });
+    S.sweep += 1; save(); renderMain();
+    var first = document.querySelector(".clue:not(.first):not(.later):not(.cold)"); if (first) first.focus();
+  };
+  $("btn-to-2").onclick = function () { S.stage = 2; save(); renderMain(); window.scrollTo(0, 0); };
+  function nudge() {
+    var card = $("sweep-label"); card.textContent = "Cold case: crack the other clues first";
+    setTimeout(function () { if (S) $("sweep-label").textContent = "Sweep " + S.sweep; }, 1800);
+  }
+
+  /* Interrogation sheet */
+  var lastFocus = null;
+  function openClue(id) {
+    lastFocus = document.activeElement;
+    S.cur = id; S.phase = "device"; S.answered = null;
+    var c = CBY[id]; S.opts = shuffle([c.dAns].concat(c.dWrong));
+    save(); renderSheet(); $("sheet-back").hidden = false; $("sheet-q").focus();
+  }
+  function openSolved(id) {
+    lastFocus = document.activeElement;
+    S.cur = id; S.phase = "solved"; S.opts = null; S.answered = null;
+    renderSheet(); $("sheet-back").hidden = false; $("sheet-x").focus();
+  }
+  function closeSheet() {
+    if (S.answered && S.phase !== "device") finishClue();
+    else if (S.answered && S.phase === "device" && !S.answered.correct) finishClue();
+    S.cur = null; S.phase = null; S.opts = null; S.answered = null;
+    $("sheet-back").hidden = true; save(); renderMain();
+    if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  $("sheet-x").onclick = closeSheet;
+  $("sheet-back").addEventListener("click", function (e) { if (e.target === $("sheet-back")) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if ($("sheet-back").hidden) return;
+    if (e.key === "Escape") { closeSheet(); return; }
+    var idx = ["1", "2", "3", "4"].indexOf(e.key); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(e.key.toLowerCase());
+    if (idx >= 0 && S.opts && idx < S.opts.length && !S.answered && e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") { e.preventDefault(); pickClue(idx); }
+  });
+
+  function renderSheet() {
+    var c = CBY[S.cur], st = S.clues[S.cur];
+    $("sheet-label").textContent = "Clue " + c.id.slice(1) + " · " + (c.where === 0 ? "Headline" : "¶" + c.where);
+    $("sheet-ev").textContent = "“" + c.text + "”";
+    var steps = $("sheet-steps"); steps.textContent = "";
+    [["device", "1 Name the device"], ["effect", "2 What it does"]].forEach(function (p) {
+      var s = document.createElement("span"); s.className = "st";
+      if (S.phase === p[0]) s.className += " on";
+      if ((p[0] === "device" && (S.phase === "effect" || S.phase === "solved")) || (p[0] === "effect" && S.phase === "solved")) s.className += " done";
+      s.textContent = p[1]; steps.appendChild(s);
+    });
+    $("sheet-retry").hidden = !st.misses;
+    $("sheet-retry").textContent = st.misses === 1 ? "Cold case: missed once" : "Cold case: missed " + st.misses + " times";
+    var box = $("sheet-opts"); box.textContent = "";
+    $("sheet-fb").hidden = true; $("sheet-next").hidden = true;
+    if (S.phase === "solved") {
+      $("sheet-q").textContent = c.device;
+      var fb = $("sheet-fb"); fb.className = "fb good"; fb.textContent = "";
+      var p1 = document.createElement("p"); p1.textContent = c.dWhy;
+      var p2 = document.createElement("p"); p2.textContent = c.effect;
+      fb.appendChild(p1); fb.appendChild(p2); fb.hidden = false;
+      return;
+    }
+    $("sheet-q").textContent = S.phase === "device" ? "Which device is this? Choose the statement that is true." : "It is " + c.device.toLowerCase() + ". What does it do to the reader?";
+    S.opts.forEach(function (text, i) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[i];
+      var t = document.createElement("span"); t.className = "t"; fillOpt(t, text, S.phase === "device");
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pickClue(i); };
+      box.appendChild(b);
+    });
+    if (S.answered) paintClue(false);
+  }
+  /* "Device: claim" options show the device name in bold. */
+  function fillOpt(el, text, labelled) {
+    el.textContent = "";
+    var m = labelled ? /^([^:]{2,32}): (.+)$/.exec(text) : null;
+    if (m) { var b = document.createElement("b"); b.className = "olab"; b.textContent = m[1] + ":"; el.appendChild(b); el.appendChild(document.createTextNode(" " + m[2])); }
+    else el.textContent = text;
+  }
+  function correctClue(c) { return S.phase === "device" ? c.dAns : c.effect; }
+  function pickClue(i) {
+    if (S.answered) return;
+    var c = CBY[S.cur], st = S.clues[S.cur];
+    var ok = S.opts[i] === correctClue(c);
+    S.answered = { pick: i, correct: ok };
+    if (!ok) { st.misses += 1; S.streak = 0; }
+    else if (S.phase === "effect") { S.streak += 1; if (S.streak > S.best) S.best = S.streak; }
+    save(); paintClue(true);
+  }
+  function paintClue(fresh) {
+    var c = CBY[S.cur], st = S.clues[S.cur], a = S.answered;
+    var reveal = !a.correct && st.misses >= 3;
+    var ans = correctClue(c);
+    $("sheet-opts").querySelectorAll(".opt").forEach(function (b, i) {
+      b.disabled = true;
+      if (i === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && S.opts[i] === ans) b.classList.add("right");
+      else b.classList.add("dim");
+      if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("sheet-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h";
+    var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    var btn = $("sheet-next");
+    if (a.correct && S.phase === "device") {
+      fb.classList.add("good"); h.textContent = "Correct. Now the effect."; p.textContent = c.dWhy; btn.textContent = "Next: what it does";
+    } else if (a.correct) {
+      fb.classList.add("good"); h.textContent = st.misses ? "Cracked. Cold case closed." : "Clue cracked!";
+      p.textContent = "Remember it like this: " + c.device + ". " + c.effect; btn.textContent = "Back to the article";
+    } else {
+      if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = "Answer: " + ans; }
+      else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + (S.phase === "device" ? c.dHint : c.eHint); }
+      n.textContent = "This clue becomes a cold case. It reopens in sweep " + (S.sweep + 1) + ".";
+      btn.textContent = "Back to the article";
+    }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n);
+    fb.hidden = false; btn.hidden = false;
+    if (fresh) { btn.focus({ preventScroll: true }); btn.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  function finishClue() {
+    var st = S.clues[S.cur];
+    if (!S.answered) return;
+    if (S.answered.correct && S.phase === "effect") st.status = st.misses ? "later" : "first";
+    else if (!S.answered.correct) st.status = "cold";
+  }
+  $("sheet-next").onclick = function () {
+    if (S.answered && S.answered.correct && S.phase === "device") {
+      var c = CBY[S.cur];
+      S.phase = "effect"; S.answered = null; S.opts = shuffle([c.effect].concat(c.eWrong));
+      save(); renderSheet(); $("sheet-q").focus(); return;
+    }
+    closeSheet();
+  };
+
+  /* ---------- STAGE 2 ---------- */
+  function drillOpts(i) { var d = DRILLS[i]; return shuffle([d.answer].concat(d.wrong)); }
+  function renderStage2() {
+    var D = S.drill;
+    $("drill-card").hidden = true; $("drill-between").hidden = true; $("drill-done").hidden = true;
+    if (stage2Done()) { $("drill-done").hidden = false; return; }
+    if (D.between) {
+      var n = D.next.length;
+      $("drill-between-h").textContent = n === 1 ? "1 sentence to fix again" : n + " sentences to fix again";
+      $("drill-between-t").textContent = (n === 1 ? "It comes" : "They come") + " back in round " + (D.round + 1) + " with the answers in a new order.";
+      $("drill-go").textContent = "Start round " + (D.round + 1);
+      $("drill-between").hidden = false; return;
+    }
+    var i = D.queue[D.pos], d = DRILLS[i];
+    if (!D.opts) { D.opts = drillOpts(i); save(); }
+    $("drill-card").hidden = false;
+    $("drill-round").textContent = "Round " + D.round;
+    $("drill-count").textContent = "Question " + (D.pos + 1) + " of " + D.queue.length;
+    var board = $("drill-board"); board.textContent = "";
+    DRILLS.forEach(function (_, j) {
+      var s = document.createElement("i"); s.className = "sq";
+      if (D.done[j]) s.className += " " + D.done[j]; else if (D.misses[j]) s.className += " missed";
+      if (j === i) s.className += " now";
+      board.appendChild(s);
+    });
+    $("drill-part").textContent = d.part;
+    var m = D.misses[i] || 0;
+    $("drill-retry").hidden = !m; $("drill-retry").textContent = m === 1 ? "You missed this once" : "You missed this " + m + " times";
+    $("drill-q").textContent = d.q;
+    var box = $("drill-opts"); box.textContent = "";
+    D.opts.forEach(function (text, j) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[j];
+      var t = document.createElement("span"); t.className = "t"; t.textContent = text;
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pickDrill(j); };
+      box.appendChild(b);
+    });
+    $("drill-fb").hidden = true; $("drill-next").hidden = true;
+    if (D.answered) paintDrill(false);
+  }
+  function pickDrill(j) {
+    var D = S.drill; if (D.answered) return;
+    var i = D.queue[D.pos], ok = D.opts[j] === DRILLS[i].answer;
+    D.answered = { pick: j, correct: ok };
+    if (ok) { D.done[i] = D.misses[i] ? "later" : "first"; S.streak += 1; if (S.streak > S.best) S.best = S.streak; }
+    else { D.misses[i] = (D.misses[i] || 0) + 1; D.next.push(i); S.streak = 0; }
+    save(); paintDrill(true); renderTabs();
+  }
+  function paintDrill(fresh) {
+    var D = S.drill, i = D.queue[D.pos], d = DRILLS[i], a = D.answered;
+    var reveal = !a.correct && (D.misses[i] || 0) >= 3;
+    $("drill-opts").querySelectorAll(".opt").forEach(function (b, j) {
+      b.disabled = true;
+      if (j === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && D.opts[j] === d.answer) b.classList.add("right");
+      else b.classList.add("dim");
+      if (fresh && j === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("drill-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h"; var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    if (a.correct) { fb.classList.add("good"); h.textContent = "Correct!"; p.textContent = d.why; }
+    else if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = d.why; n.textContent = "It comes back in round " + (D.round + 1) + "."; }
+    else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + d.hint; n.textContent = "It comes back in round " + (D.round + 1) + "."; }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n); fb.hidden = false;
+    var last = D.pos + 1 >= D.queue.length;
+    $("drill-next").textContent = last ? (D.next.length ? "Finish round " + D.round : "Finish Stage 2") : "Next question";
+    $("drill-next").hidden = false;
+    if (fresh) { $("drill-next").focus({ preventScroll: true }); $("drill-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  $("drill-next").onclick = function () {
+    var D = S.drill; if (!D.answered) return;
+    D.pos += 1; D.opts = null; D.answered = null;
+    if (D.pos >= D.queue.length && D.next.length) D.between = true;
+    save(); renderMain(); $("drill-q").focus({ preventScroll: true });
+  };
+  $("drill-go").onclick = function () {
+    var D = S.drill; D.between = false; D.round += 1; D.queue = shuffle(D.next); D.next = []; D.pos = 0; D.opts = null; D.answered = null;
+    save(); renderMain(); $("drill-q").focus({ preventScroll: true });
+  };
+  $("btn-to-3").onclick = function () { S.stage = 3; save(); renderMain(); window.scrollTo(0, 0); };
+
+  /* ---------- STAGE 3 ---------- */
+  function chosen() { return S.pick.map(function (id) { return CBY[id]; }); }
+  function renderStage3() {
+    var pk = $("picker"); pk.textContent = "";
+    CLUES.forEach(function (c) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "chip" + (S.pick.indexOf(c.id) >= 0 ? " sel" : "");
+      b.textContent = c.id.slice(1) + " · " + c.device + ": “" + (c.text.length > 34 ? c.text.slice(0, 32) + "…" : c.text) + "”";
+      b.setAttribute("aria-pressed", S.pick.indexOf(c.id) >= 0 ? "true" : "false");
+      b.onclick = function () {
+        if (S.filed) return;
+        var at = S.pick.indexOf(c.id);
+        if (at >= 0) S.pick.splice(at, 1);
+        else {
+          var same = S.pick.filter(function (x) { return CBY[x].device === c.device; });
+          if (same.length) S.pick.splice(S.pick.indexOf(same[0]), 1);
+          if (S.pick.length >= 2) S.pick.shift();
+          S.pick.push(c.id);
+        }
+        save(); renderStage3();
+      };
+      pk.appendChild(b);
+    });
+    $("desk").hidden = S.pick.length < 2 || S.filed;
+    $("filed").hidden = !S.filed;
+    if (S.pick.length === 2 && !S.filed) buildDesk();
+    if (S.filed) renderFiled();
+  }
+  function buildDesk() {
+    var c = chosen(), box = $("slots"); box.textContent = "";
+    SLOTS.forEach(function (sl) {
+      var wrap = document.createElement("div"); wrap.className = "slot"; wrap.id = "slot-" + sl.k;
+      var head = document.createElement("div"); head.className = "slot-h";
+      var b = document.createElement("b"); b.textContent = sl.n + " — " + sl.label;
+      var sp = document.createElement("span");
+      if (sl.k === "e1" || sl.k === "t1") sp.textContent = "Clue " + c[0].id.slice(1) + ": " + c[0].device;
+      if (sl.k === "e2" || sl.k === "t2") sp.textContent = "Clue " + c[1].id.slice(1) + ": " + c[1].device;
+      head.appendChild(b); head.appendChild(sp);
+      var st = document.createElement("p"); st.className = "starter";
+      var starter = sl.starter;
+      if (sl.k === "t1") starter = STARTERS[c[0].device];
+      if (sl.k === "t2") starter = STARTERS[c[1].device];
+      st.textContent = "Try: " + starter;
+      var ta = document.createElement("textarea"); ta.id = "w-" + sl.k; ta.rows = sl.k === "p" ? 4 : 3;
+      ta.setAttribute("aria-label", sl.label); ta.value = S.text[sl.k] || "";
+      ta.addEventListener("input", function () { S.text[sl.k] = ta.value; save(); runChecks(); });
+      var ul = document.createElement("ul"); ul.className = "checks"; ul.id = "ck-" + sl.k;
+      wrap.appendChild(head); wrap.appendChild(st); wrap.appendChild(ta); wrap.appendChild(ul);
+      box.appendChild(wrap);
+    });
+    runChecks();
+  }
+  function quoted(s) { var out = [], re = /[“"]([^”"]+)[”"]/g, m; while ((m = re.exec(s))) out.push(m[1]); return out; }
+  function words(s) { return String(s).trim().split(/\s+/).filter(Boolean).length; }
+  function hasDevice(s, dev) { var t = norm(s); return KEYS[dev].some(function (k) { return t.indexOf(k) >= 0; }); }
+  var BANNED = /\b(to sum up|to conclude|all in all|in conclusion)\b/i;
+  var QUOTEWORD = /\bquot(e|es|ed|ing)\b/i;
+  function checksFor(k, v) {
+    var c = chosen(), t = norm(v), list = [];
+    var filled = words(v) >= 5;
+    if (k === "p") {
+      list.push([/opinion (article|piece)/.test(t), "Names the genre (opinion article)"]);
+      list.push([t.indexOf(norm(ART.hed)) >= 0, "Gives the full title"]);
+      list.push([/pell/.test(t), "Names the writer (Joanna Pell)"]);
+      list.push([/lakeside gazette/.test(t), "Names the publication"]);
+      list.push([/(harm|danger|damag|bad for|hurt|fake|dishonest|biased)/.test(t), "States the writer's claim"]);
+      list.push([hasDevice(v, c[0].device) && hasDevice(v, c[1].device), "Names both techniques (" + c[0].device.toLowerCase() + ", " + c[1].device.toLowerCase() + ")"]);
+    } else if (k === "e1" || k === "e2") {
+      var q = quoted(v);
+      list.push([q.length > 0, "Puts words from the article in quotation marks"]);
+      list.push([q.length > 0 && q.every(function (x) { var y = norm(x).replace(/^[\s.,;:!?…]+|[\s.,;:!?…]+$/g, ""); return y.length > 0 && ART_NORM.indexOf(y) >= 0; }), "The quoted words really appear in the article"]);
+      list.push([q.length > 0 && q.every(function (x) { return words(x) <= 12; }), "Keeps the evidence short (12 words or fewer)"]);
+      if (k === "e2") list.push([/^(furthermore|moreover|in addition|additionally|also|secondly)/.test(t), "Starts with Furthermore (or another adding word)"]);
+    } else if (k === "t1" || k === "t2") {
+      var dev = k === "t1" ? c[0].device : c[1].device;
+      list.push([hasDevice(v, dev), "Names the device (" + dev.toLowerCase() + ")"]);
+      list.push([quoted(v).length > 0 || /\b(word|phrase|verb|adjective|noun|pronoun|number)\b/.test(t), "Zooms in on a key word or phrase"]);
+    } else if (k === "f1" || k === "f2") {
+      list.push([/reader/.test(t), "Says what the reader feels or thinks"]);
+      list.push([/\b(because|so|as|since)\b/.test(t), "Explains HOW with because / so"]);
+      list.push([filled && !/read on/.test(t), "Goes beyond “makes the reader want to read on”"]);
+    } else {
+      list.push([/^(therefore|thus|through this|the overriding|as a result|consequently)/.test(t), "Starts with Therefore / Thus"]);
+      list.push([/(bias|one-sided|persuad|point|harm)/.test(t), "Links back to your point (bias / persuasion)"]);
+    }
+    list.push([filled, "Written as a full sentence"]);
+    list.push([!QUOTEWORD.test(v), "Does not use the word “quote”"]);
+    list.push([!BANNED.test(v), "No “To sum up / To conclude / All in all”"]);
+    return list;
+  }
+  function runChecks() {
+    var all = true;
+    SLOTS.forEach(function (sl) {
+      var v = S.text[sl.k] || "", list = checksFor(sl.k, v), ul = $("ck-" + sl.k); if (!ul) return;
+      ul.textContent = "";
+      var ok = list.every(function (x) { return x[0]; });
+      list.forEach(function (x) {
+        var li = document.createElement("li");
+        li.className = !v.trim() ? "" : (x[0] ? "ok" : "no");
+        li.textContent = x[1]; ul.appendChild(li);
+      });
+      $("slot-" + sl.k).classList.toggle("ok", ok);
+      if (!ok) all = false;
+    });
+    $("btn-file").disabled = !all;
+    var left = SLOTS.filter(function (sl) { return !checksFor(sl.k, S.text[sl.k] || "").every(function (x) { return x[0]; }); }).length;
+    $("file-note").textContent = all ? "All boxes are green. File your report." : left + (left === 1 ? " box still needs work." : " boxes still need work.");
+  }
+  function paragraph() { return SLOTS.map(function (sl) { return (S.text[sl.k] || "").trim(); }).filter(Boolean).join(" "); }
+  $("btn-file").onclick = function () { S.filed = true; save(); renderMain(); $("filed").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-edit").onclick = function () { S.filed = false; save(); renderMain(); };
+  function renderFiled() {
+    $("final").textContent = paragraph();
+    $("model").textContent = MODEL;
+    var ul = $("tick"); ul.textContent = "";
+    TICKS.forEach(function (t, i) {
+      var li = document.createElement("li"); var lab = document.createElement("label");
+      var cb = document.createElement("input"); cb.type = "checkbox"; cb.id = "tick-" + i; cb.checked = !!S.ticks[i];
+      cb.onchange = function () { S.ticks[i] = cb.checked; save(); };
+      var sp = document.createElement("span"); sp.textContent = t;
+      lab.appendChild(cb); lab.appendChild(sp); li.appendChild(lab); ul.appendChild(li);
+    });
+    $("improve").value = S.improve || "";
+  }
+  $("improve").addEventListener("input", function () { S.improve = $("improve").value; save(); });
+  $("btn-copy").onclick = function () {
+    var txt = paragraph();
+    var done = function () { $("copy-note").textContent = "Copied. Paste it into your notes or send it to your teacher."; };
+    try {
+      navigator.clipboard.writeText(txt).then(done, function () { selectFinal(); });
+    } catch (e) { selectFinal(); }
+  };
+  function selectFinal() {
+    var r = document.createRange(); r.selectNodeContents($("final"));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    $("copy-note").textContent = "Your paragraph is selected. Copy it from the menu.";
+  }
+  $("btn-report").onclick = function () { S.screen = "report"; save(); route(); window.scrollTo(0, 0); };
+
+  /* ---------- REPORT ---------- */
+  function renderReport() {
+    var first = CLUES.filter(function (c) { return S.clues[c.id].status === "first"; }).length;
+    var big = $("r-big"); big.textContent = "";
+    big.appendChild(document.createTextNode(first));
+    var sm = document.createElement("small"); sm.textContent = " / " + CLUES.length; big.appendChild(sm);
+    var dFirst = Object.keys(S.drill.done).filter(function (k) { return S.drill.done[k] === "first"; }).length;
+    var stats = [[S.sweep, S.sweep === 1 ? "sweep" : "sweeps"], [dFirst + "/" + DRILLS.length, "sentences first try"], [S.best, "best streak"]];
+    var box = $("r-stats"); box.textContent = "";
+    stats.forEach(function (s) { var d = document.createElement("div"); d.className = "stat"; var b = document.createElement("b"); b.textContent = s[0]; var t = document.createElement("span"); t.textContent = s[1]; d.appendChild(b); d.appendChild(t); box.appendChild(d); });
+    var ul = $("r-revise"); ul.textContent = "";
+    CLUES.filter(function (c) { return S.clues[c.id].misses; }).forEach(function (c) {
+      var li = document.createElement("li"); var q = document.createElement("b"); q.textContent = "“" + c.text + "”";
+      var a = document.createElement("span"); a.className = "a"; a.textContent = c.device + ": " + c.effect;
+      li.appendChild(q); li.appendChild(a); ul.appendChild(li);
+    });
+    DRILLS.forEach(function (d, i) {
+      if (!S.drill.misses[i]) return;
+      var li = document.createElement("li"); var q = document.createElement("b"); q.textContent = d.q;
+      var a = document.createElement("span"); a.className = "a"; a.textContent = d.answer;
+      li.appendChild(q); li.appendChild(a); ul.appendChild(li);
+    });
+    $("r-revise-block").hidden = ul.children.length === 0;
+    $("r-para").textContent = paragraph() || "Not written yet.";
+    $("r-improve-block").hidden = !(S.improve || "").trim();
+    $("r-improve").textContent = S.improve || "";
+    var who = $("r-who"); who.textContent = "";
+    var n = document.createElement("span"); n.appendChild(document.createTextNode("Detective: ")); var nb = document.createElement("b"); nb.textContent = S.name || "—"; n.appendChild(nb);
+    var dt = document.createElement("span"); dt.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(dt);
+    show("s-report");
+  }
+  $("btn-back").onclick = function () { S.screen = "main"; save(); route(); window.scrollTo(0, 0); };
+  $("btn-again").onclick = function () { var name = S.name; try { localStorage.removeItem(KEY); } catch (e) {} S = null; renderStart(); $("student-name").value = name; window.scrollTo(0, 0); };
+
+  function route() {
+    if (!S) return renderStart();
+    if (S.screen === "report") renderReport(); else renderMain();
+    if (S.cur && S.phase && S.screen !== "report") { renderSheet(); $("sheet-back").hidden = false; } else { $("sheet-back").hidden = true; }
+  }
+  function boot(data) { if (data && data.S && data.S.clues) { S = data.S; route(); } else renderStart(); }
+  try { window.claude && window.claude.hot && window.claude.hot.snapshot && window.claude.hot.snapshot(function () { return { S: S }; }); } catch (e) {}
+  var hot = window.claude && window.claude.hot;
+  if (hot && hot.ready) hot.ready(boot); else boot((hot && hot.data) || {});
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Buck in the Snow · Heist</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Lora:ital,wght@0,400;1,400&display=swap">
+<style>
+body{margin:0}img{max-width:100%}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--night); }
+body { background: var(--page-bg, var(--night)); background-attachment: fixed; min-height: 100vh; }
+body { color: var(--snow); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 640px; margin: 0 auto; padding-inline: 16px; padding-block: 14px 48px; display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--brass); outline-offset: 2px; }
+
+/* Header */
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #FFFFFF; border-radius: 10px; padding: 4px 6px; flex: none; display: grid; place-items: center; }
+.logo img { width: 70px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-stencil); font-size: 1.15rem; letter-spacing: .04em; color: var(--brass); }
+.top-sub { color: var(--frost); font-size: .88rem; }
+
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.eyebrow { font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: var(--brass); }
+.muted { color: var(--frost); }
+
+.btn { appearance: none; border: 0; border-radius: 12px; padding: 14px 20px; font-weight: 700; font-size: 1rem; cursor: pointer; min-height: 52px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-brass { background: var(--brass); color: var(--on-brass); }
+.btn-brass:hover { filter: brightness(1.08); }
+.btn-ghost { background: transparent; border: 2px solid var(--line); color: var(--snow); }
+.btn-ghost:hover { border-color: var(--brass); }
+.btn-small { min-height: 40px; padding: 8px 14px; font-size: .92rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Start */
+.hero { position: relative; overflow: hidden; border-radius: var(--r); border: 1px solid var(--line); background: linear-gradient(180deg, var(--panel-2), var(--panel)); padding: 26px 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero > *:not(canvas):not(.hero-art) { position: relative; }
+.hero h1 { font-family: var(--f-stencil); font-weight: 400; font-size: clamp(2.3rem, 10vw, 3.4rem); letter-spacing: .02em; line-height: 1; }
+.hero h1 span { color: var(--brass); display: block; }
+.hero .sub { color: var(--frost); font-size: 1.05rem; max-width: 34ch; }
+.rules { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.rules li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
+.rules .ic { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--brass-soft); color: var(--brass); }
+.rules .ic svg { width: 18px; height: 18px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input { font: inherit; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--line); background: var(--night); color: var(--snow); }
+.field input:focus { border-color: var(--brass); outline: none; }
+.resume { border: 2px dashed var(--brass); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Score strip */
+.strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.chip { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; display: flex; flex-direction: column; min-width: 0; }
+.chip b { font-family: var(--f-stencil); font-weight: 400; font-size: 1.35rem; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.chip span { font-size: .78rem; color: var(--frost); }
+.chip.alarm b { color: var(--alarm); }
+.chip.gold b { color: var(--brass); }
+
+/* Map */
+.map { display: flex; flex-direction: column; gap: 12px; }
+.door { appearance: none; text-align: left; width: 100%; background: var(--panel); border: 2px solid var(--line); border-radius: var(--r); padding: 14px; display: grid; grid-template-columns: 58px 1fr; grid-template-areas: "num body" "num lights"; column-gap: 14px; row-gap: 8px; align-items: center; cursor: pointer; color: var(--snow); }
+.door .num { grid-area: num; }
+.door .door-body { grid-area: body; }
+.door .lights { grid-area: lights; justify-content: flex-start; max-width: none; }
+.door:hover:not(:disabled) { border-color: var(--brass); }
+.door:disabled { cursor: not-allowed; opacity: .6; }
+.door .num { width: 58px; height: 58px; border-radius: 50%; border: 3px solid var(--brass); display: grid; place-items: center; font-family: var(--f-stencil); font-size: 1.5rem; color: var(--brass); position: relative; }
+.door .num::after { content: ""; position: absolute; inset: 6px; border-radius: 50%; border: 1px dashed var(--brass); opacity: .55; }
+.door.is-open { border-color: var(--open); background: var(--open-soft); }
+.door.is-open .num { border-color: var(--open); color: var(--open); }
+.door.is-open .num::after { border-color: var(--open); }
+.door.has-alarm { border-color: var(--alarm); }
+.door-body { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.door-name { font-weight: 700; font-size: 1.05rem; }
+.door-lines { font-size: .85rem; color: var(--frost); }
+.door-status { font-size: .85rem; font-weight: 700; }
+.door.is-open .door-status { color: var(--open); }
+.door.has-alarm .door-status { color: var(--alarm); }
+.lights { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; max-width: 92px; }
+.light { width: 13px; height: 13px; border-radius: 50%; background: var(--line); display: inline-block; }
+.light.key { border-radius: 3px; transform: rotate(45deg); width: 11px; height: 11px; margin: 1px; }
+.light.first { background: var(--brass); }
+.light.later { background: var(--open); }
+.light.missed { background: var(--alarm-soft); box-shadow: inset 0 0 0 2px var(--alarm); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--frost); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.poem-toggle summary { cursor: pointer; font-weight: 700; color: var(--brass); }
+.poem-toggle[open] summary { margin-bottom: 12px; }
+.source { font-size: .8rem; color: var(--frost); }
+
+/* Poem panel */
+.poem { font-family: var(--f-poem); font-size: 1rem; line-height: 1.55; background: var(--night); border: 1px solid var(--line); border-radius: 12px; padding: 14px 12px; display: flex; flex-direction: column; gap: 2px; overflow-x: auto; }
+.pl { display: grid; grid-template-columns: 26px 1fr; gap: 8px; }
+.pl .n { font-family: var(--f-body); font-size: .75rem; color: var(--frost); text-align: right; padding-top: 4px; font-variant-numeric: tabular-nums; }
+.pl .t { min-width: 0; color: var(--frost); }
+.pl.in .t { color: var(--snow); }
+.gap { height: 12px; }
+mark { background: var(--brass-soft); color: var(--snow); border-bottom: 2px solid var(--brass); padding: 0 2px; border-radius: 3px; }
+mark.struct { background: var(--alarm-soft); border-color: var(--alarm); }
+
+/* Vault room */
+.room-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.room-title { font-family: var(--f-stencil); font-weight: 400; font-size: 1.6rem; letter-spacing: .02em; }
+.pass { font-size: .85rem; font-weight: 700; background: var(--brass-soft); color: var(--brass); border-radius: 999px; padding: 3px 12px; }
+.streak { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; color: var(--brass); font-variant-numeric: tabular-nums; }
+.streak svg { width: 14px; height: 20px; }
+.streak.cold { color: var(--frost); }
+.lock-head { display: flex; align-items: center; gap: 14px; }
+.dial { width: 54px; height: 54px; flex: none; }
+.dial .ring { fill: none; stroke: var(--brass); stroke-width: 3; }
+.dial .tick { stroke: var(--brass); stroke-width: 2; }
+.dial .knob { fill: var(--brass); }
+.dial .rot { transform-origin: 27px 27px; transition: transform .5s ease; }
+.lock-card.is-open .dial .ring, .lock-card.is-open .dial .tick { stroke: var(--open); }
+.lock-card.is-open .dial .knob { fill: var(--open); }
+.lock-card.is-alarm .dial .ring, .lock-card.is-alarm .dial .tick { stroke: var(--alarm); }
+.lock-card.is-alarm .dial .knob { fill: var(--alarm); }
+.lock-card.is-alarm { animation: flash .6s ease-out; }
+@keyframes flash { 0% { box-shadow: 0 0 0 0 var(--alarm); } 40% { box-shadow: 0 0 0 6px var(--alarm-soft); } 100% { box-shadow: 0 0 0 0 transparent; } }
+.lock-meta { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.dial-steps { display: flex; gap: 6px; }
+.dstep { font-size: .75rem; font-weight: 700; border-radius: 999px; padding: 2px 10px; border: 1px solid var(--line); color: var(--frost); }
+.dstep.on { border-color: var(--brass); color: var(--brass); }
+.dstep.done { border-color: var(--open); color: var(--open); }
+.quote { font-family: var(--f-poem); font-style: italic; font-size: 1.1rem; border-left: 3px solid var(--brass); padding-left: 12px; }
+.q-text { font-size: clamp(1.15rem, 4.4vw, 1.35rem); font-weight: 700; }
+.retry-tag { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--alarm-soft); color: var(--alarm); }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; border: 2px solid var(--line); background: var(--panel-2); border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 56px; color: var(--snow); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--brass); } }
+.opt .key { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-weight: 700; background: var(--night); }
+.opt .txt { min-width: 0; }
+.opt:disabled { cursor: default; }
+.opt.is-right { border-color: var(--open); background: var(--open-soft); }
+.opt.is-right .key { background: var(--open); color: var(--on-open); }
+.opt.is-wrong { border-color: var(--alarm); background: var(--alarm-soft); }
+.opt.is-wrong .key { background: var(--alarm); color: var(--on-alarm); }
+.opt.is-dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.feedback { border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.feedback.good { background: var(--open-soft); }
+.feedback.bad { background: var(--alarm-soft); }
+.feedback.reveal { background: var(--brass-soft); }
+.fb-head { font-family: var(--f-stencil); font-size: 1.25rem; letter-spacing: .02em; }
+.feedback.good .fb-head { color: var(--open); }
+.feedback.bad .fb-head { color: var(--alarm); }
+.feedback.reveal .fb-head { color: var(--brass); }
+.fb-note { font-size: .9rem; color: var(--frost); }
+
+/* Loot */
+.loot { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.loot li { background: var(--night); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.big { font-family: var(--f-stencil); font-size: clamp(3rem, 15vw, 4.6rem); line-height: 1; font-variant-numeric: tabular-nums; color: var(--brass); }
+.big small { font-size: .38em; color: var(--frost); }
+.tricky { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.tricky li { border-left: 4px solid var(--alarm); background: var(--night); border-radius: 0 10px 10px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.tricky .ta { color: var(--open); }
+.tricky .tm { font-size: .8rem; color: var(--frost); }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--frost); border-top: 1px solid var(--line); padding-top: 12px; }
+.who b { color: var(--snow); }
+
+@media (prefers-reduced-motion: reduce) {
+  .lock-card.is-alarm, .opt.shake { animation: none; }
+  .dial .rot { transition: none; }
+}
+.kw { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 8px 16px; }
+.kw li { font-size: .95rem; }
+.kw b { color: var(--brass); }
+.pl.nonum { grid-template-columns: 1fr; }
+.pl.nonum .n { display: none; }
+.pl.nonum .t { font-style: italic; }
+.opt .olab { font-weight: 700; color: var(--brass); }
+.opt.is-right .olab, .opt.is-wrong .olab { color: inherit; }
+.hero-art { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* Winter twilight: moonlit hemlock forest, frosted-glass panels, ice-blue accents; red only for the alarm (the blood in line 6). */
+:root {
+  --night: #0B1424;
+  --page-bg: radial-gradient(1100px 620px at 50% -12%, #2A4068 0%, #15223C 46%, #0B1424 100%);
+  --panel: rgba(21, 36, 62, .82);
+  --panel-2: rgba(30, 49, 82, .9);
+  --line: #2D4669;
+  --snow: #EEF4FB;
+  --frost: #A9BCD6;
+  --brass: #A9D6FF;
+  --brass-soft: rgba(169, 214, 255, .15);
+  --on-brass: #0A1730;
+  --open: #8BE0BB;
+  --open-soft: rgba(139, 224, 187, .14);
+  --on-open: #072218;
+  --alarm: #FF6F6F;
+  --alarm-soft: rgba(255, 111, 111, .16);
+  --on-alarm: #2A0B0B;
+  --f-stencil: "Cormorant Garamond", "Georgia", serif;
+  --f-body: "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+  --f-poem: "Lora", "Georgia", serif;
+  --r: 18px;
+  color-scheme: dark;
+}
+.card, .door, .chip { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 12px 30px rgba(2,8,20,.35); }
+.top-title { font-weight: 700; font-size: 1.25rem; letter-spacing: .06em; font-style: italic; }
+.hero { min-height: 360px; padding-top: 30px; background: linear-gradient(180deg, #1F3459 0%, #142644 70%, #0E1B33 100%); border-color: #35517A; }
+.hero h1 { font-weight: 700; font-style: italic; font-size: clamp(2.7rem, 12vw, 3.8rem); letter-spacing: 0; }
+.hero h1 span { color: var(--brass); }
+.hero .sub { color: #D4E1F2; text-shadow: 0 1px 8px rgba(5,12,26,.8); }
+.eyebrow { letter-spacing: .16em; }
+.btn-brass { background: linear-gradient(180deg, #D7ECFF, #92C8F2); box-shadow: 0 6px 18px rgba(146,200,242,.25); }
+.room-title, .fb-head, .big, .chip b { font-weight: 700; }
+.room-title { font-style: italic; font-size: 1.9rem; }
+.door .num { font-weight: 700; font-style: italic; }
+.poem { background: rgba(8, 16, 32, .65); border-color: #29426A; }
+mark.struct { background: rgba(255, 111, 111, .18); }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title">THE BOOKLET HEIST</span>
+      <span class="top-sub">Koç Grade 10 · Poetry</span>
+    </div>
+  </header>
+
+  <!-- START -->
+  <section id="screen-start" hidden>
+    <div class="wrap" style="padding:0">
+      <div class="hero">
+        <svg class="hero-art" viewBox="0 0 400 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+<defs><radialGradient id="moonglow"><stop offset="0" stop-color="#E9F3FF" stop-opacity=".35"/><stop offset="1" stop-color="#E9F3FF" stop-opacity="0"/></radialGradient>
+<linearGradient id="snowg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCE7F5"/><stop offset="1" stop-color="#9FB3CF"/></linearGradient></defs>
+<circle cx="130" cy="23" r="0.9" fill="#fff" opacity="0.34"/><circle cx="214" cy="55" r="0.4" fill="#fff" opacity="0.55"/><circle cx="15" cy="65" r="0.5" fill="#fff" opacity="0.35"/><circle cx="170" cy="124" r="0.5" fill="#fff" opacity="0.41"/><circle cx="251" cy="142" r="0.9" fill="#fff" opacity="0.50"/><circle cx="391" cy="7" r="1.1" fill="#fff" opacity="0.44"/><circle cx="58" cy="18" r="0.6" fill="#fff" opacity="0.71"/><circle cx="72" cy="87" r="0.9" fill="#fff" opacity="0.49"/><circle cx="219" cy="9" r="0.4" fill="#fff" opacity="0.40"/><circle cx="272" cy="64" r="0.7" fill="#fff" opacity="0.59"/><circle cx="181" cy="45" r="1.0" fill="#fff" opacity="0.65"/><circle cx="98" cy="86" r="0.8" fill="#fff" opacity="0.74"/><circle cx="292" cy="43" r="1.2" fill="#fff" opacity="0.36"/><circle cx="167" cy="114" r="0.5" fill="#fff" opacity="0.54"/><circle cx="16" cy="100" r="1.0" fill="#fff" opacity="0.59"/><circle cx="350" cy="47" r="1.0" fill="#fff" opacity="0.60"/><circle cx="232" cy="68" r="1.1" fill="#fff" opacity="0.77"/><circle cx="190" cy="100" r="0.4" fill="#fff" opacity="0.65"/><circle cx="259" cy="149" r="1.1" fill="#fff" opacity="0.44"/><circle cx="154" cy="100" r="0.4" fill="#fff" opacity="0.53"/><circle cx="67" cy="18" r="0.4" fill="#fff" opacity="0.68"/><circle cx="52" cy="37" r="0.7" fill="#fff" opacity="0.74"/><circle cx="32" cy="67" r="0.8" fill="#fff" opacity="0.74"/><circle cx="328" cy="130" r="0.6" fill="#fff" opacity="0.51"/><circle cx="144" cy="133" r="1.2" fill="#fff" opacity="0.38"/><circle cx="70" cy="35" r="0.6" fill="#fff" opacity="0.54"/><circle cx="236" cy="39" r="0.4" fill="#fff" opacity="0.51"/><circle cx="148" cy="85" r="1.2" fill="#fff" opacity="0.65"/><circle cx="206" cy="93" r="0.9" fill="#fff" opacity="0.33"/><circle cx="360" cy="117" r="1.1" fill="#fff" opacity="0.70"/><circle cx="157" cy="60" r="0.5" fill="#fff" opacity="0.62"/><circle cx="25" cy="10" r="0.6" fill="#fff" opacity="0.38"/><circle cx="136" cy="8" r="0.4" fill="#fff" opacity="0.38"/><circle cx="41" cy="55" r="0.4" fill="#fff" opacity="0.74"/><circle cx="246" cy="22" r="0.6" fill="#fff" opacity="0.47"/><circle cx="146" cy="18" r="1.1" fill="#fff" opacity="0.80"/><circle cx="186" cy="73" r="0.5" fill="#fff" opacity="0.35"/><circle cx="137" cy="40" r="1.1" fill="#fff" opacity="0.38"/><circle cx="9" cy="143" r="0.8" fill="#fff" opacity="0.37"/><circle cx="217" cy="4" r="0.8" fill="#fff" opacity="0.79"/>
+<circle cx="330" cy="62" r="70" fill="url(#moonglow)"/><circle cx="330" cy="62" r="22" fill="#F4F8FF" opacity=".95"/>
+<path d="M53.5 180.7 L62.3 206.1 L44.7 206.1Z M53.5 199.0 L65.0 224.4 L42.0 224.4Z M53.5 217.3 L67.8 242.7 L39.2 242.7Z M53.5 235.6 L70.6 261.0 L36.4 261.0Z" fill="#1E3253"/><rect x="52.0" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M78.1 166.1 L88.5 196.1 L67.8 196.1Z M78.1 187.7 L91.7 217.7 L64.5 217.7Z M78.1 209.3 L95.0 239.2 L61.3 239.2Z M78.1 230.8 L98.3 260.8 L58.0 260.8Z" fill="#1E3253"/><rect x="76.6" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M94.9 174.2 L104.3 201.7 L85.4 201.7Z M94.9 194.0 L107.3 221.4 L82.4 221.4Z M94.9 213.7 L110.3 241.2 L79.5 241.2Z M94.9 233.5 L113.3 260.9 L76.5 260.9Z" fill="#1E3253"/><rect x="93.4" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M125.1 190.6 L132.7 212.9 L117.4 212.9Z M125.1 206.6 L135.2 229.0 L114.9 229.0Z M125.1 222.7 L137.6 245.0 L112.5 245.0Z M125.1 238.8 L140.1 261.1 L110.0 261.1Z" fill="#1E3253"/><rect x="123.6" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M141.3 190.6 L149.0 212.9 L133.7 212.9Z M141.3 206.7 L151.5 229.0 L131.2 229.0Z M141.3 222.7 L153.9 245.0 L128.8 245.0Z M141.3 238.8 L156.3 261.1 L126.4 261.1Z" fill="#1E3253"/><rect x="139.8" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M214.3 178.0 L223.4 204.3 L205.3 204.3Z M214.3 196.9 L226.2 223.2 L202.4 223.2Z M214.3 215.8 L229.1 242.1 L199.6 242.1Z M214.3 234.7 L232.0 261.0 L196.7 261.0Z" fill="#1E3253"/><rect x="212.8" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M286.3 179.0 L295.3 205.0 L277.4 205.0Z M286.3 197.7 L298.1 223.6 L274.6 223.6Z M286.3 216.4 L300.9 242.3 L271.7 242.3Z M286.3 235.0 L303.7 261.0 L268.9 261.0Z" fill="#1E3253"/><rect x="284.8" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M305.5 157.4 L316.8 190.1 L294.3 190.1Z M305.5 180.9 L320.4 213.6 L290.7 213.6Z M305.5 204.5 L323.9 237.2 L287.1 237.2Z M305.5 228.0 L327.5 260.7 L283.6 260.7Z" fill="#1E3253"/><rect x="304.0" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M319.7 144.2 L332.3 181.0 L307.0 181.0Z M319.7 170.7 L336.4 207.5 L303.0 207.5Z M319.7 197.2 L340.4 234.0 L298.9 234.0Z M319.7 223.7 L344.4 260.5 L294.9 260.5Z" fill="#1E3253"/><rect x="318.2" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M322.8 169.6 L332.7 198.5 L312.8 198.5Z M322.8 190.4 L335.9 219.3 L309.7 219.3Z M322.8 211.2 L339.0 240.1 L306.5 240.1Z M322.8 232.0 L342.2 260.8 L303.4 260.8Z" fill="#1E3253"/><rect x="321.3" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M334.7 145.1 L347.3 181.7 L322.1 181.7Z M334.7 171.4 L351.2 208.0 L318.1 208.0Z M334.7 197.7 L355.2 234.2 L314.1 234.2Z M334.7 224.0 L359.2 260.5 L310.1 260.5Z" fill="#1E3253"/><rect x="333.2" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M337.1 142.6 L349.9 179.9 L324.2 179.9Z M337.1 169.5 L354.0 206.8 L320.1 206.8Z M337.1 196.3 L358.1 233.6 L316.1 233.6Z M337.1 223.2 L362.1 260.5 L312.0 260.5Z" fill="#1E3253"/><rect x="335.6" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M340.1 144.2 L352.7 181.0 L327.4 181.0Z M340.1 170.7 L356.8 207.5 L323.4 207.5Z M340.1 197.2 L360.8 234.0 L319.4 234.0Z M340.1 223.7 L364.8 260.5 L315.3 260.5Z" fill="#1E3253"/><rect x="338.6" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M355.2 173.8 L364.7 201.3 L345.7 201.3Z M355.2 193.6 L367.7 221.2 L342.6 221.2Z M355.2 213.5 L370.7 241.0 L339.6 241.0Z M355.2 233.3 L373.7 260.9 L336.6 260.9Z" fill="#1E3253"/><rect x="353.7" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M359.9 181.0 L368.6 206.3 L351.1 206.3Z M359.9 199.2 L371.3 224.5 L348.4 224.5Z M359.9 217.4 L374.1 242.8 L345.6 242.8Z M359.9 235.7 L376.9 261.0 L342.8 261.0Z" fill="#1E3253"/><rect x="358.4" y="256.0" width="3" height="8" fill="#1E3253"/><path d="M413.4 180.7 L422.1 206.1 L404.6 206.1Z M413.4 199.0 L424.9 224.4 L401.8 224.4Z M413.4 217.3 L427.7 242.7 L399.1 242.7Z M413.4 235.6 L430.4 261.0 L396.3 261.0Z" fill="#1E3253"/><rect x="411.9" y="256.0" width="3" height="8" fill="#1E3253"/>
+<path d="M17.3 147.0 L31.8 189.2 L2.8 189.2Z M17.3 177.4 L36.4 219.6 L-1.8 219.6Z M17.3 207.7 L41.0 249.9 L-6.4 249.9Z M17.3 238.1 L45.7 280.3 L-11.0 280.3Z" fill="#132440"/><rect x="15.8" y="276.0" width="3" height="8" fill="#132440"/><path d="M66.6 163.3 L79.3 200.4 L53.8 200.4Z M66.6 190.0 L83.4 227.1 L49.7 227.1Z M66.6 216.7 L87.4 253.8 L45.7 253.8Z M66.6 243.4 L91.5 280.5 L41.6 280.5Z" fill="#132440"/><rect x="65.1" y="276.0" width="3" height="8" fill="#132440"/><path d="M69.9 181.3 L80.8 212.8 L59.1 212.8Z M69.9 203.9 L84.2 235.4 L55.6 235.4Z M69.9 226.6 L87.6 258.1 L52.2 258.1Z M69.9 249.3 L91.1 280.7 L48.8 280.7Z" fill="#132440"/><rect x="68.4" y="276.0" width="3" height="8" fill="#132440"/><path d="M191.0 144.7 L205.8 187.6 L176.2 187.6Z M191.0 175.6 L210.4 218.5 L171.5 218.5Z M191.0 206.5 L215.1 249.4 L166.8 249.4Z M191.0 237.4 L219.8 280.3 L162.1 280.3Z" fill="#132440"/><rect x="189.5" y="276.0" width="3" height="8" fill="#132440"/><path d="M254.6 172.0 L266.4 206.4 L242.8 206.4Z M254.6 196.8 L270.2 231.1 L239.0 231.1Z M254.6 221.5 L273.9 255.9 L235.3 255.9Z M254.6 246.3 L277.7 280.6 L231.5 280.6Z" fill="#132440"/><rect x="253.1" y="276.0" width="3" height="8" fill="#132440"/><path d="M267.3 144.0 L282.2 187.1 L252.5 187.1Z M267.3 175.0 L286.9 218.2 L247.7 218.2Z M267.3 206.1 L291.6 249.2 L243.0 249.2Z M267.3 237.1 L296.3 280.3 L238.3 280.3Z" fill="#132440"/><rect x="265.8" y="276.0" width="3" height="8" fill="#132440"/><path d="M270.7 133.7 L286.6 180.0 L254.7 180.0Z M270.7 167.1 L291.7 213.4 L249.6 213.4Z M270.7 200.4 L296.7 246.8 L244.6 246.8Z M270.7 233.8 L301.8 280.1 L239.5 280.1Z" fill="#132440"/><rect x="269.2" y="276.0" width="3" height="8" fill="#132440"/><path d="M324.2 168.2 L336.5 203.8 L312.0 203.8Z M324.2 193.8 L340.3 229.4 L308.1 229.4Z M324.2 219.4 L344.2 255.0 L304.2 255.0Z M324.2 245.0 L348.1 280.6 L300.3 280.6Z" fill="#132440"/><rect x="322.7" y="276.0" width="3" height="8" fill="#132440"/><path d="M331.8 167.9 L344.1 203.6 L319.6 203.6Z M331.8 193.6 L348.0 229.2 L315.7 229.2Z M331.8 219.3 L351.9 254.9 L311.8 254.9Z M331.8 244.9 L355.8 280.6 L307.9 280.6Z" fill="#132440"/><rect x="330.3" y="276.0" width="3" height="8" fill="#132440"/><path d="M349.8 135.2 L365.6 181.1 L334.0 181.1Z M349.8 168.2 L370.6 214.1 L329.0 214.1Z M349.8 201.3 L375.6 247.1 L324.0 247.1Z M349.8 234.3 L380.6 280.2 L319.0 280.2Z" fill="#132440"/><rect x="348.3" y="276.0" width="3" height="8" fill="#132440"/><path d="M376.1 148.5 L390.5 190.2 L361.8 190.2Z M376.1 178.5 L395.1 220.3 L357.2 220.3Z M376.1 208.6 L399.6 250.3 L352.7 250.3Z M376.1 238.6 L404.2 280.3 L348.1 280.3Z" fill="#132440"/><rect x="374.6" y="276.0" width="3" height="8" fill="#132440"/><path d="M380.3 181.8 L391.1 213.1 L369.5 213.1Z M380.3 204.3 L394.5 235.7 L366.1 235.7Z M380.3 226.9 L397.9 258.2 L362.7 258.2Z M380.3 249.4 L401.3 280.7 L359.3 280.7Z" fill="#132440"/><rect x="378.8" y="276.0" width="3" height="8" fill="#132440"/>
+<path d="M0 280 Q100 262 200 276 T400 270 V320 H0Z" fill="url(#snowg)" opacity=".92"/>
+<path d="M-19.7 156.7 L-2.3 207.1 L-37.0 207.1Z M-19.7 193.0 L3.2 243.4 L-42.5 243.4Z M-19.7 229.3 L8.7 279.7 L-48.0 279.7Z M-19.7 265.6 L14.2 316.0 L-53.6 316.0Z" fill="#0A1528"/><rect x="-21.2" y="312.0" width="3" height="8" fill="#0A1528"/><path d="M-16.6 149.0 L1.6 201.8 L-34.8 201.8Z M-16.6 187.0 L7.3 239.8 L-40.6 239.8Z M-16.6 225.0 L13.1 277.9 L-46.3 277.9Z M-16.6 263.1 L18.9 315.9 L-52.1 315.9Z" fill="#0A1528"/><rect x="-18.1" y="312.0" width="3" height="8" fill="#0A1528"/><path d="M-15.8 165.1 L0.6 212.9 L-32.3 212.9Z M-15.8 199.5 L5.9 247.3 L-37.5 247.3Z M-15.8 233.9 L11.1 281.7 L-42.7 281.7Z M-15.8 268.3 L16.3 316.1 L-47.9 316.1Z" fill="#0A1528"/><rect x="-17.3" y="312.0" width="3" height="8" fill="#0A1528"/><path d="M89.0 180.5 L103.8 223.5 L74.2 223.5Z M89.0 211.4 L108.5 254.4 L69.5 254.4Z M89.0 242.4 L113.2 285.3 L64.9 285.3Z M89.0 273.3 L117.9 316.3 L60.2 316.3Z" fill="#0A1528"/><rect x="87.5" y="312.0" width="3" height="8" fill="#0A1528"/><path d="M104.8 170.6 L120.6 216.6 L88.9 216.6Z M104.8 203.7 L125.7 249.8 L83.9 249.8Z M104.8 236.9 L130.7 283.0 L78.8 283.0Z M104.8 270.1 L135.7 316.2 L73.8 316.2Z" fill="#0A1528"/><rect x="103.3" y="312.0" width="3" height="8" fill="#0A1528"/>
+</svg>
+        <canvas id="snow" aria-hidden="true"></canvas>
+        <span class="eyebrow">Target: one poem</span>
+        <h1>The Buck <span>in the Snow</span></h1>
+        <p class="sub">Edna St. Vincent Millay, 1928. Three vaults, eight locks, one exit. Crack them all to escape into the winter woods.</p>
+      </div>
+      <div class="card">
+        <ul class="rules">
+          <li><span class="ic"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 4v6l3 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span><span>Each lock has two dials. <b>Dial 1:</b> name the device by picking the statement that is true. <b>Dial 2:</b> choose why it works. Read every option carefully: they are all about the same words.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2 2 17h16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 8v4M10 14.5v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span>A wrong answer trips the alarm. The guard re-locks that lock and brings it back in the next pass, with the answers moved around.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span>Open every lock, then crack each vault's code. The exit only opens when all three vaults are open.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 16 22" aria-hidden="true"><path d="M10 0 1 13h6l-2 9 10-13H9l1-9z" fill="currentColor"/></svg></span><span>Your <b>first-try score</b> is your real score. Getting out is the goal.</span></li>
+        </ul>
+        <div class="resume" id="resume" hidden>
+          <p><b>You have a heist in progress.</b> <span id="resume-text"></span></p>
+          <div class="btn-row">
+            <button class="btn btn-brass" id="btn-resume" type="button">Continue</button>
+            <button class="btn btn-ghost" id="btn-wipe" type="button">Start over</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="student-name">Your name</label>
+          <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+        </div>
+        <button class="btn btn-brass" id="btn-start" type="button">Start the heist</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section id="screen-map" hidden>
+    <div class="wrap" style="padding:0">
+      <div class="strip" id="strip"></div>
+      <div class="card">
+        <div>
+          <span class="eyebrow">The map</span>
+          <h2 style="font-size:1.35rem;margin-top:4px">Pick a vault. Open all three to reach the exit.</h2>
+        </div>
+        <div class="map" id="map"></div>
+        <div class="legend">
+          <span><i class="light first"></i>Opened first try</span>
+          <span><i class="light later"></i>Opened later</span>
+          <span><i class="light missed"></i>Re-locked</span>
+          <span><i class="light key"></i>Vault code</span>
+        </div>
+      </div>
+      <details class="card poem-toggle" id="poem-full">
+        <summary>Read the whole poem</summary>
+        <div class="poem" id="poem-all"></div>
+        <p class="source">Edna St. Vincent Millay, "The Buck in the Snow" (1928). Text as printed in the Grade 10 Poetry Book, page 14. Line numbers count the lines of the poem.</p>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- VAULT -->
+  <section id="screen-vault" hidden>
+    <div class="wrap" style="padding:0">
+      <div class="room-top">
+        <button class="btn btn-ghost btn-small" id="btn-map" type="button">← Map</button>
+        <div style="display:flex;gap:10px;align-items:center">
+          <span class="pass" id="pass"></span>
+          <span class="streak" id="streak" title="Correct answers in a row"><svg viewBox="0 0 16 22" aria-hidden="true"><path d="M10 0 1 13h6l-2 9 10-13H9l1-9z" fill="currentColor"/></svg><span id="streak-n">0</span></span>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow" id="room-eyebrow"></span>
+        <h2 class="room-title" id="room-title"></h2>
+      </div>
+      <div class="poem" id="poem-room" aria-label="Lines from the poem"></div>
+
+      <div class="card lock-card" id="lock-card">
+        <div class="lock-head">
+          <svg class="dial" viewBox="0 0 54 54" aria-hidden="true">
+            <circle class="ring" cx="27" cy="27" r="24"/>
+            <g class="rot" id="dial-rot">
+              <line class="tick" x1="27" y1="6" x2="27" y2="12"/>
+              <line class="tick" x1="48" y1="27" x2="42" y2="27"/>
+              <line class="tick" x1="27" y1="48" x2="27" y2="42"/>
+              <line class="tick" x1="6" y1="27" x2="12" y2="27"/>
+              <circle class="knob" cx="27" cy="27" r="8"/>
+            </g>
+          </svg>
+          <div class="lock-meta">
+            <span class="eyebrow" id="lock-eyebrow"></span>
+            <div class="dial-steps" id="dial-steps"></div>
+          </div>
+        </div>
+        <span class="retry-tag" id="retry-tag" hidden></span>
+        <p class="quote" id="lock-quote"></p>
+        <h3 class="q-text" id="q-text" tabindex="-1"></h3>
+        <div class="opts" id="opts" role="group" aria-labelledby="q-text"></div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+        <button class="btn btn-brass" id="btn-next" type="button" hidden></button>
+      </div>
+
+      <div class="card" id="between" hidden>
+        <span class="eyebrow" style="color:var(--alarm)">Alarm</span>
+        <h3 style="font-size:1.35rem" id="between-h"></h3>
+        <p id="between-text"></p>
+        <button class="btn btn-brass" id="btn-pass" type="button"></button>
+      </div>
+
+      <div class="card" id="opened" hidden>
+        <span class="eyebrow" style="color:var(--open)">Vault open</span>
+        <h3 style="font-size:1.35rem" id="opened-h"></h3>
+        <p class="muted">Your loot: paragraph notes you can use in the essay.</p>
+        <ul class="loot" id="loot"></ul>
+        <button class="btn btn-brass" id="btn-back" type="button">Back to the map</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="screen-results" hidden>
+    <div class="card">
+      <span class="eyebrow" style="color:var(--open)">You escaped</span>
+      <h2 style="font-size:1.6rem">Every lock is open. You are out.</h2>
+      <div>
+        <div class="muted">First-try score</div>
+        <div class="big" id="res-big"></div>
+      </div>
+      <div class="strip" id="res-strip"></div>
+      <div id="tricky-block">
+        <h3 style="font-size:1.2rem;margin-bottom:10px">Locks to revise</h3>
+        <ul class="tricky" id="tricky"></ul>
+      </div>
+      <div class="who" id="who"></div>
+      <button class="btn btn-brass" id="btn-again" type="button">Play the heist again</button>
+    </div>
+  </section>
+</div>
+
+
+<script>
+(function () {
+  "use strict";
+  var SLUG = "buck-in-the-snow";
+  var FX = {"kind": "snow", "count": 60, "min": 0.6, "max": 2.2, "speed": 0.0011, "colors": ["rgba(240,246,255,.85)", "rgba(200,224,255,.6)"]};
+  /* ---------- POEM (as printed in the Grade 10 Poetry Book, p. 14) ---------- */
+  var POET = "Millay";
+  var SHOW_NUMBERS = true;
+  var POEM = [
+    "White sky, over the hemlocks bowed with snow,",
+    "Saw you not at the beginning of evening the antlered buck and his doe",
+    "Standing in the apple orchard? I saw them. I saw them suddenly go,",
+    "Tails up, with long leaps lovely and slow,",
+    "Over the stone wall into the wood with hemlocks bowed with snow.",
+    "Now lies he here, his wild blood scalding the snow.",
+    "How strange a thing is death, bringing to his knees, bringing to his antlers,",
+    "The buck in the snow.",
+    "How strange a thing, – a mile away by now, it may be,",
+    "Under the heavy hemlocks that as the moments pass",
+    "Shift their loads a little, letting fall a feather of snow –",
+    "Life, looking out attentive from the eyes of the doe."
+  ];
+  var STANZA_ENDS = [5, 6]; /* a blank line follows lines 5 and 6 */
+
+  /* ---------- LOCKS ----------
+     Dial 1 options: every option names a device AND makes a claim about these exact words, so students must read the quotation to choose.
+     Dial 2 options: every option is about this lock's words; the wrong ones misread the meaning or the mood. */
+  var ITEMS = {
+    a1: { kind: "device", hl: [[4, "Tails up, with long leaps lovely and slow"]],
+      device: "Alliteration",
+      dAns: "Alliteration: ‘long’, ‘leaps’ and ‘lovely’ all begin with the same ‘l’ sound.",
+      dWrong: ["Rhyme: ‘up’ and ‘slow’ end with the same sound, linking the two words together.",
+               "Simile: the deer’s jumps are compared to something slow using ‘like’.",
+               "Repetition: the word ‘leaps’ is said twice to show the deer jumping."],
+      dHint: "Check each claim against the line. Read it out loud and listen to the start of the words.",
+      dWhy: "‘Long’, ‘leaps’ and ‘lovely’ all start with the same ‘l’ sound. That is alliteration.",
+      why: "The soft, repeated ‘l’ sounds make the line smooth and gentle, just like the deer’s graceful jumps.",
+      wWrong: ["The hard, repeated ‘l’ sounds make the line rough and jerky, like the deer’s sudden, panicked escape.",
+               "The repeated ‘l’ sounds make the line loud and noisy, as if the deer crash through the trees.",
+               "The repeated ‘l’ sounds slow the line down to show that the deer are old, tired and weak."],
+      wHint: "The line ends with ‘lovely and slow’. Does that sound rough and noisy, or soft and graceful?" },
+    a2: { kind: "device", hl: [[3, "I saw them. I saw them suddenly go"]],
+      device: "Repetition",
+      dAns: "Repetition: the words ‘I saw them’ are said twice, one right after the other.",
+      dWrong: ["Alliteration: ‘saw’, ‘suddenly’ and ‘go’ all begin with the same ‘s’ sound.",
+               "Simile: the deer leaving is compared to something sudden using ‘as’.",
+               "Personification: the deer are given the human power to see and judge the speaker."],
+      dHint: "Check each claim. Look for words the speaker says more than once.",
+      dWhy: "‘I saw them’ is said twice in a row. That is repetition.",
+      why: "Saying ‘I saw them’ twice makes the speaker sound amazed, as if she wants us to believe her.",
+      wWrong: ["Saying ‘I saw them’ twice makes the speaker sound bored, as if she sees deer every evening.",
+               "Saying ‘I saw them’ twice makes the speaker sound angry, as if the deer ran away from her.",
+               "Saying ‘I saw them’ twice makes the speaker sound frightened, as if the deer might turn and attack."],
+      wHint: "These words come before anything bad happens, while the deer leap ‘lovely and slow’. How would a person sound if they said them twice?" },
+    a3: { kind: "device", hl: [[1, "White sky"], [2, "Saw you not"]],
+      device: "Personification",
+      dAns: "Personification: the sky is spoken to as if it could see, like a person.",
+      dWrong: ["Metaphor: the sky is called a white sheet that covers the hemlock trees.",
+               "Simile: the white sky is compared to the snow using the word ‘like’.",
+               "Hyperbole: the sky is said to be far bigger and whiter than it really is."],
+      dHint: "Check each claim. Can a sky really see? Is ‘like’ used? Is the sky called a sheet?",
+      dWhy: "The sky cannot see, but the speaker asks it a question as if it were a person. That is personification.",
+      why: "The sky is treated like a person who could have seen the deer, so all of nature seems to be watching.",
+      wWrong: ["The sky is treated like a person who hates the deer, so nature seems cruel and dangerous.",
+               "The sky is treated like a person who is fast asleep, so nobody in nature notices the deer.",
+               "The sky is treated like a person who is crying, so the opening is full of grief and loss."],
+      wHint: "The speaker asks the sky if it ‘saw’ the deer. What would a sky that can see be doing?" },
+    b1: { kind: "device", hl: [[6, "his wild blood scalding the snow"]],
+      device: "Contrast",
+      dAns: "Contrast: hot red blood and cold white snow are placed side by side.",
+      dWrong: ["Simile: the blood is compared to boiling water using the word ‘as’.",
+               "Repetition: the word ‘snow’ is said three times inside this one line.",
+               "Alliteration: ‘wild’, ‘blood’ and ‘snow’ all begin with the same sound."],
+      dHint: "Check each claim against line 6. Do the blood and the snow match, or are they opposites?",
+      dWhy: "Hot red blood and cold white snow are opposites placed side by side. That is contrast.",
+      why: "Hot red blood on cold white snow is a shocking picture that destroys the calm of the first stanza.",
+      wWrong: ["Hot red blood on cold white snow is a gentle picture that keeps the calm of the first stanza.",
+               "Hot red blood on cold white snow shows the buck is only slightly hurt and will soon get up again.",
+               "Hot red blood on cold white snow shows that winter is ending and spring is about to begin."],
+      wHint: "Line 6 begins ‘Now lies he here’. Is the buck still alive? Is this moment calm?" },
+    b2: { kind: "structure", hl: [[6, "Now lies he here, his wild blood scalding the snow."]], structural: true,
+      q: "Line 6 stands alone as its own stanza. Why?",
+      answer: "Standing alone makes it feel sudden and separate, like the moment of death itself.",
+      wrong: ["Standing alone gives the reader a calm, restful pause after the deer leap away.",
+              "Standing alone shows that the buck is still running, far ahead of the doe.",
+              "Standing alone shows that this line is less important than all the rest of the poem."],
+      hint: "How does one line on its own feel after a long stanza of graceful movement?",
+      why: "Line 6 is cut off from the other stanzas, so the death arrives in one sudden line.",
+      loot: "Line 6 stands alone as its own stanza, so the death arrives in one sudden, separate line." },
+    c1: { kind: "device", hl: [[7, "How strange a thing is death"], [9, "How strange a thing"]],
+      device: "Repetition",
+      dAns: "Repetition: ‘How strange a thing’ appears in line 7 and again in line 9.",
+      dWrong: ["Rhetorical question: the speaker asks the doe where death has taken the buck.",
+               "Simile: death is compared to a strange thing using the word ‘like’.",
+               "Alliteration: ‘strange’, ‘thing’ and ‘death’ all begin with the same sound."],
+      dHint: "Check each claim. Find the same words again in line 9.",
+      dWhy: "‘How strange a thing’ appears in line 7 and again in line 9. That is repetition.",
+      why: "The speaker keeps coming back to the same words because she cannot fully understand death.",
+      wWrong: ["The speaker keeps coming back to the same words because she finds death boring and ordinary.",
+               "The speaker keeps coming back to the same words because she is pleased that the buck died.",
+               "The speaker keeps coming back to the same words because she forgot what she wanted to say."],
+      wHint: "What does ‘strange’ mean? Why might someone repeat that thought after seeing a death?" },
+    c2: { kind: "device", hl: [[11, "letting fall a feather of snow"]],
+      device: "Metaphor",
+      dAns: "Metaphor: the snow is called ‘a feather’ without using ‘like’ or ‘as’.",
+      dWrong: ["Simile: the snow is compared to a feather using the word ‘as’.",
+               "Personification: the feather is given the human feeling of sadness.",
+               "Hyperbole: the snow is said to be heavier than all the hemlock trees together."],
+      dHint: "Check each claim. Snow is not really a feather. Is the word ‘like’ or ‘as’ there?",
+      dWhy: "The snow is called ‘a feather’ with no ‘like’ or ‘as’. That is a metaphor.",
+      why: "The light, soft picture shows the quiet world calmly carrying on after the death.",
+      wWrong: ["The heavy, crashing picture shows that the forest is falling apart after the death.",
+               "The light, soft picture shows that the buck’s death was not real but only a dream.",
+               "The light, soft picture shows that the snow is about to bury the doe as well."],
+      wHint: "How heavy is a feather? The trees shift their loads ‘a little’. What mood does that create?" },
+    c3: { kind: "device", hl: [[12, "Life, looking out attentive from the eyes of the doe."]],
+      device: "Personification",
+      dAns: "Personification: ‘Life’ is given a human action, looking out with attention.",
+      dWrong: ["Simile: life is compared to the doe’s eyes using the word ‘like’.",
+               "Rhyme: ‘Life’ rhymes with ‘doe’ to give the poem a neat, happy ending.",
+               "Hyperbole: the doe is said to have hundreds of eyes watching over the dark woods."],
+      dHint: "Check each claim. Can ‘Life’ really look out of eyes? What kind of thing usually does that?",
+      dWhy: "‘Life’ is given a human action: looking out with attention. That is personification.",
+      why: "Life is shown as someone looking out of the doe’s eyes, so the poem ends with hope, not death.",
+      wWrong: ["Life is shown as someone closing the doe’s eyes, so the poem ends with the doe dying too.",
+               "Life is shown as someone leaving the doe’s eyes, so the poem ends with nature feeling empty.",
+               "Life is shown as someone crying in the doe’s eyes, so the poem ends with endless grief."],
+      wHint: "Life is ‘looking out attentive’. Is the doe alive or dead? Is that hopeful?" },
+
+    k1: { kind: "code", q: "Crack the vault code. What is the job of stanza 1 (lines 1–5)?",
+      answer: "It paints a calm, beautiful scene full of life and movement.",
+      wrong: ["It shows the shock of the buck’s sudden and violent death.",
+              "It wonders how strange death is, then ends with hope.",
+              "It describes a hunter waiting quietly in the cold apple orchard."],
+      hint: "Think about the deer before anything goes wrong.",
+      why: "Stanza 1 sets up beauty and movement, so the death in line 6 feels like a real loss." },
+    k2: { kind: "code", q: "Crack the vault code. What is the job of line 6 in the whole poem?",
+      answer: "It is the turning point: the beauty is suddenly destroyed.",
+      wrong: ["It paints a calm, beautiful scene full of life and movement.",
+              "It ends the poem with a quiet feeling of hope and life.",
+              "It explains who killed the buck and why they did it."],
+      hint: "Compare line 6 with the line just before it.",
+      why: "Line 6 is the turn. One line changes the poem from beauty to death." },
+    k3: { kind: "code", q: "Crack the vault code. What is the job of the last stanza (lines 7–12)?",
+      answer: "It wonders how strange death is, then ends with life going on.",
+      wrong: ["It is the turning point, where the buck suddenly dies in the snow.",
+              "It paints the deer leaping over the stone wall into the wood.",
+              "It blames the doe for leaving the buck alone in the snow."],
+      hint: "Look at the first words and the last line of the stanza.",
+      why: "The stanza starts with the mystery of death and ends on ‘Life’, so the poem closes with hope." },
+
+    e1: { kind: "exit", q: "Exit lock 1. How does the poem change from start to end?",
+      answer: "Beauty → sudden death → life going on",
+      wrong: ["Sudden death → beauty → endless sadness",
+              "Life going on → beauty → sudden death",
+              "Beauty → a long hunt → the hunter’s joy"],
+      hint: "Use the jobs of the three vaults you opened, in order.",
+      why: "Stanza 1 shows beauty, line 6 shows sudden death, and the last stanza ends with life. That order is the poem’s structure." },
+    e2: { kind: "exit", q: "Exit lock 2. What is the big idea of the whole poem?",
+      answer: "Death can come suddenly and is hard to understand, but life still continues around it.",
+      wrong: ["Death is the end of everything, and nothing in nature can ever carry on after it is gone.",
+              "Nature is always calm and beautiful, and nothing can ever disturb its peace.",
+              "Hunting is cruel, and people should never harm the animals of the forest."],
+      hint: "The big idea must fit all three parts: the beauty, the death and the ending.",
+      why: "This idea covers the whole poem: the sudden death in line 6, the speaker’s confusion in lines 7–9, and the hope in the last line." }
+  };
+
+  var VAULTS = [
+    { id: "v1", num: "1", name: "The Orchard", lines: [1, 5], blurb: "Evening. A buck and a doe leap into the wood.", steps: ["a1", "a2", "a3"], code: "k1" },
+    { id: "v2", num: "2", name: "The Snow", lines: [6, 6], blurb: "One line. Everything changes.", steps: ["b1", "b2"], code: "k2" },
+    { id: "v3", num: "3", name: "The Doe", lines: [7, 12], blurb: "Death, wonder, and what is left alive.", steps: ["c1", "c2", "c3"], code: "k3" },
+    { id: "ex", num: "→", name: "The Exit", lines: [1, 12], blurb: "The whole poem. Two final locks.", steps: ["e1", "e2"], code: null }
+  ];
+
+  var VBY = {}; VAULTS.forEach(function (v) { VBY[v.id] = v; });
+  var ALL_IDS = []; VAULTS.forEach(function (v) { ALL_IDS = ALL_IDS.concat(v.steps); if (v.code) ALL_IDS.push(v.code); });
+  var LOCK_ORDER = {}; ALL_IDS.forEach(function (id, i) { LOCK_ORDER[id] = i; });
+
+  var KEY = "onur-heist:" + SLUG + "-v2";
+  var LETTERS = ["A", "B", "C", "D"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var S = null;
+
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) {
+    var arr = a.slice();
+    for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    return arr;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY); if (!raw) return null;
+      var s = JSON.parse(raw);
+      if (!s || !s.vaults || !s.done) return null;
+      return s;
+    } catch (e) { return null; }
+  }
+  function fresh(name) {
+    var vaults = {};
+    VAULTS.forEach(function (v) { vaults[v.id] = { started: false, queue: [], pos: 0, next: [], pass: 1, open: false, between: false }; });
+    return { name: name || "", vaults: vaults, done: {}, misses: {}, alarms: 0, streak: 0, best: 0,
+      screen: "map", cur: null, phase: null, opts: null, answered: null };
+  }
+  function show(screen) {
+    ["start", "map", "vault", "results"].forEach(function (n) { $("screen-" + n).hidden = n !== screen; });
+    snow(screen === "start");
+  }
+  function countDone(val) { var n = 0; for (var k in S.done) if (!val || S.done[k] === val) n++; return n; }
+  function vaultsOpen() { return ["v1", "v2", "v3"].every(function (id) { return S.vaults[id].open; }); }
+
+  function quoteText(item) {
+    return item.hl.map(function (h) { return h[1]; }).join(" … ");
+  }
+  function lineRef(item) {
+    if (!SHOW_NUMBERS) return "";
+    var ls = item.hl.map(function (h) { return h[0]; });
+    if (ls.length === 1) return "line " + ls[0];
+    return "lines " + ls[0] + (ls[ls.length - 1] - ls[0] === 1 ? "–" : " and ") + ls[ls.length - 1];
+  }
+
+  /* ---------- POEM RENDER ---------- */
+  function renderPoem(el, from, to, hl, structural) {
+    el.textContent = "";
+    for (var n = 1; n <= POEM.length; n++) {
+      if (n < from || n > to) continue;
+      var row = document.createElement("div"); row.className = "pl in" + (SHOW_NUMBERS ? "" : " nonum");
+      var num = document.createElement("span"); num.className = "n"; num.textContent = n;
+      var t = document.createElement("span"); t.className = "t";
+      var text = POEM[n - 1];
+      var seg = (hl || []).filter(function (h) { return h[0] === n; })[0];
+      var at = seg ? text.indexOf(seg[1]) : -1;
+      if (seg && at >= 0) {
+        t.appendChild(document.createTextNode(text.slice(0, at)));
+        var m = document.createElement("mark"); if (structural) m.className = "struct"; m.textContent = seg[1];
+        t.appendChild(m);
+        t.appendChild(document.createTextNode(text.slice(at + seg[1].length)));
+      } else {
+        t.textContent = text;
+      }
+      row.appendChild(num); row.appendChild(t); el.appendChild(row);
+      if (STANZA_ENDS.indexOf(n) >= 0 && n < to) { var g = document.createElement("div"); g.className = "gap"; el.appendChild(g); }
+    }
+  }
+
+  /* ---------- LIGHTS ---------- */
+  function lightsFor(v) {
+    var wrap = document.createElement("span"); wrap.className = "lights";
+    var ids = v.steps.concat(v.code ? [v.code] : []);
+    ids.forEach(function (id) {
+      var l = document.createElement("i"); l.className = "light";
+      if (id === v.code) l.className += " key";
+      if (S.done[id]) l.className += " " + S.done[id];
+      else if (S.misses[id]) l.className += " missed";
+      wrap.appendChild(l);
+    });
+    return wrap;
+  }
+
+  /* ---------- START ---------- */
+  function renderStart() {
+    var saved = load();
+    if (saved && saved.screen !== "results") {
+      $("resume").hidden = false;
+      var open = ["v1", "v2", "v3"].filter(function (id) { return saved.vaults[id] && saved.vaults[id].open; }).length;
+      $("resume-text").textContent = open + " of 3 vaults open, " + Object.keys(saved.done).length + " of " + ALL_IDS.length + " locks cleared.";
+      $("btn-resume").onclick = function () { S = saved; route(); };
+      $("btn-wipe").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} $("resume").hidden = true; };
+      if (saved.name) $("student-name").value = saved.name;
+    } else {
+      $("resume").hidden = true;
+    }
+    show("start");
+  }
+  $("btn-start").onclick = function () { S = fresh($("student-name").value.trim()); save(); route(); window.scrollTo(0, 0); };
+
+  /* ---------- MAP ---------- */
+  function strip(el, cells) {
+    el.textContent = "";
+    cells.forEach(function (c) {
+      var d = document.createElement("div"); d.className = "chip" + (c[2] ? " " + c[2] : "");
+      var b = document.createElement("b"); b.textContent = c[0];
+      var s = document.createElement("span"); s.textContent = c[1];
+      d.appendChild(b); d.appendChild(s); el.appendChild(d);
+    });
+  }
+  function renderMap() {
+    strip($("strip"), [
+      [countDone() + "/" + ALL_IDS.length, "locks open"],
+      [countDone("first"), "first try", "gold"],
+      [S.alarms, S.alarms === 1 ? "alarm" : "alarms", S.alarms ? "alarm" : ""]
+    ]);
+    var map = $("map"); map.textContent = "";
+    VAULTS.forEach(function (v) {
+      var st = S.vaults[v.id];
+      var locked = v.id === "ex" && !vaultsOpen();
+      var b = document.createElement("button"); b.type = "button"; b.className = "door"; b.disabled = locked;
+      var pending = v.steps.concat(v.code ? [v.code] : []).filter(function (id) { return S.misses[id] && !S.done[id]; }).length;
+      if (st.open) b.className += " is-open"; else if (pending) b.className += " has-alarm";
+      var num = document.createElement("span"); num.className = "num"; num.textContent = v.num;
+      var body = document.createElement("span"); body.className = "door-body";
+      var nm = document.createElement("span"); nm.className = "door-name"; nm.textContent = (v.id === "ex" ? "" : "Vault " + v.num + ": ") + v.name;
+      var ln = document.createElement("span"); ln.className = "door-lines";
+      ln.textContent = v.id === "ex" ? v.blurb : (v.where || (v.lines[0] === v.lines[1] ? "Line " + v.lines[0] : "Lines " + v.lines[0] + "–" + v.lines[1])) + " · " + v.blurb;
+      var stt = document.createElement("span"); stt.className = "door-status";
+      if (locked) stt.textContent = "Locked. Open all three vaults first.";
+      else if (st.open) stt.textContent = v.id === "ex" ? "Open. You escaped." : "Open";
+      else if (pending) stt.textContent = pending === 1 ? "1 lock re-locked by the guard" : pending + " locks re-locked by the guard";
+      else if (st.started) stt.textContent = "In progress";
+      else stt.textContent = v.steps.length + " locks" + (v.code ? " + a code" : "");
+      body.appendChild(nm); body.appendChild(ln); body.appendChild(stt);
+      b.appendChild(num); b.appendChild(body); b.appendChild(lightsFor(v));
+      b.setAttribute("aria-label", nm.textContent + ". " + stt.textContent);
+      b.onclick = function () { enterVault(v.id); };
+      map.appendChild(b);
+    });
+    renderPoem($("poem-all"), 1, POEM.length, null);
+    show("map");
+  }
+
+  /* ---------- VAULT ---------- */
+  function enterVault(id) {
+    var st = S.vaults[id];
+    if (!st.started) { st.started = true; st.queue = VBY[id].steps.slice(); st.pos = 0; }
+    S.cur = id; S.screen = "vault";
+    if (!st.open && !st.between) startItem();
+    save(); route(); window.scrollTo(0, 0);
+  }
+  function curItemId() { var st = S.vaults[S.cur]; return st.queue[st.pos]; }
+  function startItem() {
+    var it = ITEMS[curItemId()];
+    S.phase = it.kind === "device" ? "device" : "one";
+    S.opts = makeOpts(it, S.phase); S.answered = null;
+  }
+  function makeOpts(it, phase) {
+    if (phase === "device") return shuffle([it.dAns].concat(it.dWrong));
+    if (phase === "why") return shuffle([it.why].concat(it.wWrong));
+    return shuffle([it.answer].concat(it.wrong));
+  }
+  function correctFor(it, phase) { return phase === "device" ? it.dAns : phase === "why" ? it.why : it.answer; }
+
+  function renderVault() {
+    var v = VBY[S.cur], st = S.vaults[S.cur];
+    $("room-eyebrow").textContent = v.id === "ex" ? "Final door" : "Vault " + v.num + (v.where ? " · " + v.where : (v.lines[0] === v.lines[1] ? " · line " + v.lines[0] : " · lines " + v.lines[0] + "–" + v.lines[1]));
+    $("room-title").textContent = v.name;
+    $("pass").textContent = "Pass " + st.pass;
+    $("streak-n").textContent = S.streak;
+    $("streak").classList.toggle("cold", S.streak === 0);
+    $("lock-card").hidden = true; $("between").hidden = true; $("opened").hidden = true;
+
+    if (st.open) {
+      renderPoem($("poem-room"), v.lines[0], v.lines[1], null);
+      renderOpened(v);
+    } else if (st.between) {
+      renderPoem($("poem-room"), v.lines[0], v.lines[1], null);
+      var n = st.next.length;
+      $("between-h").textContent = n === 1 ? "The guard re-locked 1 lock." : "The guard re-locked " + n + " locks.";
+      $("between-text").textContent = (n === 1 ? "It comes" : "They come") + " back now in pass " + (st.pass + 1) + ", with the answers moved around. Open " + (n === 1 ? "it" : "them") + " to keep going.";
+      $("btn-pass").textContent = "Start pass " + (st.pass + 1);
+      $("between").hidden = false;
+    } else {
+      renderLock(v, st);
+    }
+    show("vault");
+  }
+
+  function renderLock(v, st) {
+    var id = curItemId(), it = ITEMS[id];
+    if (!S.opts) startItem();
+    var card = $("lock-card");
+    card.className = "card lock-card"; card.hidden = false;
+    $("dial-rot").style.transform = S.phase === "why" ? "rotate(120deg)" : "rotate(0deg)";
+    if (it.hl) renderPoem($("poem-room"), v.lines[0], v.lines[1], it.hl, it.structural);
+    else renderPoem($("poem-room"), v.lines[0], v.lines[1], null);
+
+    var stepsIn = st.queue.length;
+    var label;
+    if (it.kind === "code") label = "Vault code";
+    else if (it.kind === "exit") label = "Exit lock " + (id === "e1" ? "1" : "2") + " of 2";
+    else label = "Lock " + (st.pos + 1) + " of " + stepsIn;
+    $("lock-eyebrow").textContent = label;
+
+    var ds = $("dial-steps"); ds.textContent = "";
+    if (it.kind === "device") {
+      [["device", "Dial 1: device"], ["why", "Dial 2: why"]].forEach(function (p) {
+        var s = document.createElement("span"); s.className = "dstep";
+        if (S.phase === p[0]) s.className += " on";
+        if (p[0] === "device" && S.phase === "why") s.className += " done";
+        s.textContent = p[1]; ds.appendChild(s);
+      });
+    } else if (it.kind === "structure" || it.kind === "zoom") {
+      var s1 = document.createElement("span"); s1.className = "dstep on"; s1.textContent = it.kind === "zoom" ? "Zoom dial" : "Structure dial"; ds.appendChild(s1);
+    }
+
+    var m = S.misses[id] || 0;
+    $("retry-tag").hidden = m === 0;
+    $("retry-tag").textContent = m === 1 ? "The guard brought this lock back once" : "The guard brought this lock back " + m + " times";
+
+    if (it.hl && (it.kind === "device" || it.kind === "zoom")) {
+      $("lock-quote").hidden = false;
+      $("lock-quote").textContent = "“" + quoteText(it) + "”" + (lineRef(it) ? " (" + lineRef(it) + ")" : "");
+    } else { $("lock-quote").hidden = true; }
+
+    var q;
+    if (S.phase === "device") q = "Which device is this? Choose the statement that is true.";
+    else if (S.phase === "why") q = "It is " + articled(it.device) + ". Why does it work here?";
+    else q = it.q;
+    $("q-text").textContent = q;
+
+    var box = $("opts"); box.textContent = "";
+    S.opts.forEach(function (text, i) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "key"; k.textContent = LETTERS[i];
+      var t = document.createElement("span"); t.className = "txt"; fillOpt(t, text, S.phase === "device");
+      b.appendChild(k); b.appendChild(t);
+      b.onclick = function () { pick(i); };
+      box.appendChild(b);
+    });
+    $("feedback").hidden = true; $("btn-next").hidden = true;
+    if (S.answered) paint(false);
+  }
+  function articled(dev) {
+    var d = dev.toLowerCase();
+    if (["alliteration", "repetition", "personification", "contrast", "imagery", "rhyme"].indexOf(d) >= 0) return d;
+    return (/^[aeiou]/.test(d) ? "an " : "a ") + d;
+  }
+
+  /* "Device: claim" options show the device name in bold. */
+  function fillOpt(el, text, labelled) {
+    el.textContent = "";
+    var m = labelled ? /^([^:]{2,32}): (.+)$/.exec(text) : null;
+    if (m) { var b = document.createElement("b"); b.className = "olab"; b.textContent = m[1] + ":"; el.appendChild(b); el.appendChild(document.createTextNode(" " + m[2])); }
+    else el.textContent = text;
+  }
+
+  function pick(i) {
+    if (S.answered) return;
+    var id = curItemId(), it = ITEMS[id], st = S.vaults[S.cur];
+    var right = S.opts[i] === correctFor(it, S.phase);
+    var finished = right && S.phase !== "device";
+    S.answered = { pick: i, correct: right };
+    if (right) {
+      if (finished) {
+        S.done[id] = S.misses[id] ? "later" : "first";
+        S.streak += 1; if (S.streak > S.best) S.best = S.streak;
+      }
+    } else {
+      S.misses[id] = (S.misses[id] || 0) + 1;
+      S.alarms += 1; S.streak = 0;
+      st.next.push(id);
+    }
+    save();
+    $("streak-n").textContent = S.streak;
+    $("streak").classList.toggle("cold", S.streak === 0);
+    paint(true);
+  }
+
+  function paint(fresh) {
+    var id = curItemId(), it = ITEMS[id], a = S.answered, st = S.vaults[S.cur];
+    var misses = S.misses[id] || 0;
+    var reveal = !a.correct && misses >= 3;
+    var answer = correctFor(it, S.phase);
+    $("opts").querySelectorAll(".opt").forEach(function (b, i) {
+      b.disabled = true;
+      if (i === a.pick) b.classList.add(a.correct ? "is-right" : "is-wrong");
+      else if (reveal && S.opts[i] === answer) b.classList.add("is-right");
+      else b.classList.add("is-dim");
+      if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var card = $("lock-card");
+    var fb = $("feedback"); fb.textContent = ""; fb.className = "feedback";
+    var head = document.createElement("div"); head.className = "fb-head";
+    var body = document.createElement("p");
+    var note = document.createElement("p"); note.className = "fb-note";
+    var btn = $("btn-next");
+    if (a.correct && S.phase === "device") {
+      fb.classList.add("good"); head.textContent = "Click. Dial 1 turns.";
+      body.textContent = it.dWhy;
+      btn.textContent = "Turn dial 2";
+      if (fresh) $("dial-rot").style.transform = "rotate(120deg)";
+    } else if (a.correct) {
+      card.classList.add("is-open");
+      fb.classList.add("good");
+      head.textContent = it.kind === "code" ? "Code accepted." : (misses ? "Lock open. Cleared." : "Lock open!");
+      body.textContent = it.kind === "device" ? "Nice. You matched the effect to these exact words." : it.why;
+      if (fresh) $("dial-rot").style.transform = "rotate(360deg)";
+      btn.textContent = nextLabel();
+    } else {
+      card.classList.add("is-alarm");
+      if (reveal) {
+        fb.classList.add("reveal"); head.textContent = "Alarm. Here is the answer.";
+        body.textContent = "Answer: " + answer;
+      } else {
+        fb.classList.add("bad"); head.textContent = "Alarm!";
+        var hint = S.phase === "device" ? it.dHint : S.phase === "why" ? it.wHint : it.hint;
+        body.textContent = "Hint: " + hint;
+      }
+      note.textContent = "The guard re-locks this lock. It comes back in pass " + (st.pass + 1) + ".";
+      btn.textContent = nextLabel();
+    }
+    fb.appendChild(head); fb.appendChild(body); if (note.textContent) fb.appendChild(note);
+    fb.hidden = false; btn.hidden = false;
+    if (fresh) {
+      btn.focus({ preventScroll: true });
+      btn.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+    }
+  }
+  function nextLabel() {
+    var st = S.vaults[S.cur];
+    if (st.pos + 1 < st.queue.length) return "Next lock";
+    if (st.next.length) return "Finish pass " + st.pass;
+    var v = VBY[S.cur];
+    if (v.code && !S.done[v.code] && curItemId() !== v.code) return "Go to the vault code";
+    return v.id === "ex" ? "Escape" : "Open the vault";
+  }
+
+  function stepForward() {
+    var st = S.vaults[S.cur], v = VBY[S.cur];
+    st.pos += 1; S.phase = null; S.opts = null; S.answered = null;
+    if (st.pos >= st.queue.length) {
+      if (st.next.length) { st.between = true; }
+      else if (v.code && !S.done[v.code]) { st.queue = [v.code]; st.pos = 0; startItem(); }
+      else { st.open = true; if (v.id === "ex") S.screen = "results"; }
+    } else {
+      startItem();
+    }
+  }
+  function advance() {
+    if (!S.answered) return;
+    if (S.answered.correct && S.phase === "device") {
+      S.phase = "why"; S.opts = makeOpts(ITEMS[curItemId()], "why"); S.answered = null;
+      save(); renderVault(); $("q-text").focus({ preventScroll: true });
+      return;
+    }
+    stepForward();
+    save(); route(); scrollToCard();
+  }
+  $("btn-next").onclick = advance;
+  $("btn-pass").onclick = function () {
+    var st = S.vaults[S.cur];
+    st.between = false; st.pass += 1; st.queue = shuffle(st.next); st.next = []; st.pos = 0;
+    startItem(); save(); route(); scrollToCard();
+  };
+  function scrollToCard() {
+    if (S.screen !== "vault") { window.scrollTo(0, 0); return; }
+    var card = $("lock-card");
+    if (!card.hidden) {
+      if (card.getBoundingClientRect().top < 0) card.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+      $("q-text").focus({ preventScroll: true });
+    }
+  }
+  $("btn-map").onclick = function () {
+    var st = S.vaults[S.cur];
+    if (S.answered && !(S.answered.correct && S.phase === "device") && !st.open && !st.between) stepForward();
+    S.phase = null; S.opts = null; S.answered = null;
+    if (S.screen !== "results") S.screen = "map";
+    save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-back").onclick = $("btn-map").onclick;
+
+  function renderOpened(v) {
+    $("opened-h").textContent = v.name + " is open.";
+    var ul = $("loot"); ul.textContent = "";
+    v.steps.forEach(function (id) {
+      var it = ITEMS[id], li = document.createElement("li");
+      if (it.kind === "device") li.textContent = POET + " uses " + it.device.toLowerCase() + " in “" + quoteText(it) + "”" + (lineRef(it) ? " (" + lineRef(it) + ")" : "") + ". " + it.why;
+      else li.textContent = it.loot || it.why;
+      ul.appendChild(li);
+    });
+    if (v.code) { var li = document.createElement("li"); li.textContent = "Big picture: " + ITEMS[v.code].why; ul.appendChild(li); }
+    $("btn-back").textContent = vaultsOpen() ? "Back to the map: the exit is open" : "Back to the map";
+    $("opened").hidden = false;
+  }
+
+  /* ---------- RESULTS ---------- */
+  function renderResults() {
+    var first = countDone("first"), total = ALL_IDS.length;
+    var big = $("res-big"); big.textContent = "";
+    big.appendChild(document.createTextNode(first));
+    var sm = document.createElement("small"); sm.textContent = " / " + total + " (" + Math.round(first / total * 100) + "%)"; big.appendChild(sm);
+    strip($("res-strip"), [[S.alarms, S.alarms === 1 ? "alarm tripped" : "alarms tripped", S.alarms ? "alarm" : ""], [S.best, "best streak", "gold"], [total - first, "needed another try"]]);
+    var tricky = ALL_IDS.filter(function (id) { return S.misses[id]; }).sort(function (a, b) { return (S.misses[b] - S.misses[a]) || (LOCK_ORDER[a] - LOCK_ORDER[b]); });
+    var ul = $("tricky"); ul.textContent = "";
+    tricky.forEach(function (id) {
+      var it = ITEMS[id], li = document.createElement("li");
+      var tq = document.createElement("b");
+      var ta = document.createElement("span"); ta.className = "ta";
+      if (it.kind === "device") { tq.textContent = "“" + quoteText(it) + "”" + (lineRef(it) ? " (" + lineRef(it) + ")" : ""); ta.textContent = it.device + ": " + it.why; }
+      else { tq.textContent = it.q; ta.textContent = "Answer: " + it.answer; }
+      var tm = document.createElement("span"); tm.className = "tm"; tm.textContent = "Alarm tripped " + (S.misses[id] === 1 ? "once" : S.misses[id] + " times");
+      li.appendChild(tq); li.appendChild(ta); li.appendChild(tm); ul.appendChild(li);
+    });
+    $("tricky-block").hidden = tricky.length === 0;
+    var who = $("who"); who.textContent = "";
+    var n = document.createElement("span"); n.appendChild(document.createTextNode("Name: ")); var nb = document.createElement("b"); nb.textContent = S.name || "—"; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("results");
+  }
+  $("btn-again").onclick = function () {
+    var name = S.name; try { localStorage.removeItem(KEY); } catch (e) {}
+    S = null; renderStart(); $("student-name").value = name; window.scrollTo(0, 0);
+  };
+
+  /* ---------- ROUTER + KEYS ---------- */
+  function route() {
+    if (!S) return renderStart();
+    if (S.screen === "vault") renderVault();
+    else if (S.screen === "results") renderResults();
+    else renderMap();
+  }
+  document.addEventListener("keydown", function (e) {
+    if (!S || S.screen !== "vault" || $("lock-card").hidden) return;
+    if (e.target && e.target.tagName === "INPUT") return;
+    var k = e.key.toLowerCase();
+    var idx = ["1", "2", "3", "4"].indexOf(k); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(k);
+    if (idx >= 0 && S.opts && idx < S.opts.length && !S.answered) { e.preventDefault(); pick(idx); }
+  });
+
+  /* ---------- HERO ANIMATION (start screen only; theme picks the kind) ---------- */
+  var fxRaf = null, parts = null;
+  function snow(on) {
+    var c = $("snow"); if (!c || !c.getContext || FX.kind === "none") return;
+    if (!on) { if (fxRaf) cancelAnimationFrame(fxRaf); fxRaf = null; return; }
+    var ctx = c.getContext("2d");
+    var r0 = c.getBoundingClientRect(), k = window.devicePixelRatio || 1;
+    c.width = Math.max(1, r0.width * k); c.height = Math.max(1, r0.height * k);
+    if (!parts) {
+      parts = [];
+      for (var i = 0; i < FX.count; i++) parts.push({ x: Math.random(), y: Math.random(), r: FX.min + Math.random() * (FX.max - FX.min),
+        s: FX.speed * (.5 + Math.random()), d: Math.random() * 6, a: Math.random() * Math.PI * 2, c: FX.colors[i % FX.colors.length] });
+    }
+    function draw(t) {
+      t = t || 0;
+      ctx.clearRect(0, 0, c.width, c.height);
+      parts.forEach(function (p) {
+        if (!reduceMotion) {
+          if (FX.kind === "drift") { p.x += p.s; if (p.x > 1.03) { p.x = -0.03; p.y = Math.random(); } }
+          else if (FX.kind === "rise") { p.y -= p.s; if (p.y < -0.03) { p.y = 1.03; p.x = Math.random(); } }
+          else { p.y += p.s; if (p.y > 1.03) { p.y = -0.03; p.x = Math.random(); } }
+          p.a += .01;
+        }
+        var x = (p.x + Math.sin(t / 2400 + p.d) * (FX.kind === "leaves" ? .03 : .01)) * c.width;
+        var y = (p.y + (FX.kind === "drift" ? Math.sin(t / 1800 + p.d) * .01 : 0)) * c.height;
+        ctx.fillStyle = p.c;
+        ctx.beginPath();
+        if (FX.kind === "leaves") {
+          ctx.save(); ctx.translate(x, y); ctx.rotate(p.a + Math.sin(t / 900 + p.d));
+          ctx.ellipse(0, 0, p.r * k * 2.2, p.r * k, 0, 0, Math.PI * 2); ctx.restore();
+        } else if (FX.kind === "drift") {
+          ctx.ellipse(x, y, p.r * k * 4, p.r * k * .6, 0, 0, Math.PI * 2);
+        } else {
+          ctx.arc(x, y, p.r * k, 0, Math.PI * 2);
+        }
+        ctx.fill();
+      });
+      if (!reduceMotion) fxRaf = requestAnimationFrame(draw);
+    }
+    if (fxRaf) cancelAnimationFrame(fxRaf);
+    draw(0);
+  }
+
+  function boot(data) {
+    if (data && data.S && data.S.vaults) { S = data.S; route(); }
+    else renderStart();
+  }
+  try { window.claude && window.claude.hot && window.claude.hot.snapshot && window.claude.hot.snapshot(function () { return { S: S }; }); } catch (e) {}
+  var hot = window.claude && window.claude.hot;
+  if (hot && hot.ready) hot.ready(boot); else boot((hot && hot.data) || {});
+})();
+
+</script>
+</body>
+</html>

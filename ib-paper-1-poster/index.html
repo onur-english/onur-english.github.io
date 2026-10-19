@@ -6,7 +6,7 @@
 <title>Paper 1 Poster Case File</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Barlow+Condensed:wght@500;700&display=swap">
 <style>
 body{margin:0}[hidden]{display:none!important}img{max-width:100%}
 /* One phone-width column. A case file for IB Paper 1: stage tabs, the poster with numbered clue badges and a clue list, a bottom sheet for each interrogation, a drill card, and a guided writing desk built from Onur English sentence frames. */
@@ -215,6 +215,97 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
 
 @media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } .badge.open .ring { animation: none; } }
 @media print { .tabs, .btn, .btn-row { display: none !important; } body { background: #FFFFFF; } }
+/* ---------- THEME: "Night Drive" — asphalt dark page, road-marking yellow for actions and clue badges, hazard stripes and a lane line on the case file, signage type. Red only for alarms. ---------- */
+:root {
+  --paper: #16181B;
+  --sheet: #22252A;
+  --ink: #F1F2F4;
+  --muted: #A6ACB6;
+  --rule: #3A3F47;
+  --navy: #FFC629;
+  --hl: #FFC629;
+  --hl-deep: #FFD75E;
+  --hl-green: #2C7A52;
+  --hl-blue: #2F5FA8;
+  --hl-pink: #6E2730;
+  --stamp: #FF5E52;
+  --good: #52D493;
+  --good-soft: rgba(82,212,147,.14);
+  --bad-soft: rgba(255,94,82,.15);
+  --f-type: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --r: 14px;
+  color-scheme: dark;
+}
+html, body { background: var(--paper); }
+body { background: radial-gradient(1100px 640px at 50% -12%, #2B2F36 0%, #16181B 62%), var(--paper); background-attachment: fixed; min-height: 100vh; }
+.top-title { font-weight: 700; font-size: 1.25rem; letter-spacing: .06em; color: var(--hl); }
+.card { box-shadow: 0 10px 28px rgba(0,0,0,.28); }
+.label { font-weight: 700; letter-spacing: .12em; font-size: .9rem; }
+.gq { background: #2A2E34; border-left-color: var(--hl); }
+.btn-ink { background: var(--hl); color: #16181B; }
+.btn-ink:hover { background: var(--hl-deep); }
+.btn-ink:disabled { background: #444951; color: #9AA0A8; }
+.btn-ghost { border-color: var(--rule); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--hl); }
+/* Start: a case file on the road */
+.folder { background: #1D2024; border: 1px solid var(--rule); border-radius: 18px; padding: 34px 20px 44px; overflow: hidden; margin-top: 0; }
+.folder::before { top: 0; left: 0; right: 0; width: auto; height: 12px; border: 0; border-radius: 0; background: repeating-linear-gradient(-45deg, #FFC629 0 12px, #16181B 12px 24px); }
+.folder::after { content: ""; position: absolute; left: 20px; right: 20px; bottom: 18px; height: 5px; background: repeating-linear-gradient(90deg, #F1F2F4 0 30px, transparent 30px 54px); opacity: .55; border-radius: 3px; }
+.folder h1 { font-weight: 700; text-transform: uppercase; font-size: clamp(2.4rem, 11vw, 3.4rem); letter-spacing: .01em; line-height: .98; }
+.folder .sub { color: #D6DAE0; }
+.stamp { transform: none; border: 0; background: #C8102E; color: #FFFFFF; border-radius: 6px; padding: 3px 12px; font-weight: 700; letter-spacing: .14em; }
+.stages .n { background: var(--hl); color: #16181B; font-weight: 700; }
+.exam { background: #1D2024; }
+.field input, .field textarea, .slot textarea { background: #1A1C20; color: var(--ink); border-color: var(--rule); }
+.field input:focus, .field textarea:focus, .slot textarea:focus { border-color: var(--hl); }
+.resume { border-color: var(--hl); }
+/* Tabs */
+.tabs { background: rgba(22,24,27,.92); }
+.tab { background: var(--sheet); border-color: var(--rule); color: var(--ink); }
+.tab b { font-weight: 700; font-size: 1.05rem; letter-spacing: .03em; }
+.tab.on { background: var(--hl); border-color: var(--hl); color: #16181B; }
+.tab.on span { color: #3B3420; }
+.meter i { background: var(--hl); }
+/* Poster + clues */
+.poster-wrap { background: #0E1013; border-color: var(--rule); box-shadow: none; }
+.badge .ring { stroke: #16181B; }
+.cl { background: var(--sheet); border-color: var(--rule); color: var(--ink); }
+.cl .k { color: #16181B; border-color: #16181B; }
+.cl.cold .k { color: #FFD7D3; }
+.sweep { background: rgba(255,94,82,.08); }
+/* Sheet */
+.sheet-back { background: rgba(0,0,0,.62); }
+.x { border-color: var(--rule); color: var(--ink); }
+.evidence { color: #16181B; }
+.evidence.vis { background: #2A2E34; color: var(--ink); border-left-color: var(--hl); }
+.opt { background: var(--sheet); border-color: var(--rule); color: var(--ink); }
+.opt .k { background: #16181B; }
+.opt .olab { color: var(--hl); font-weight: 700; }
+.opt.right .olab, .opt.wrong .olab { color: inherit; }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--hl); } }
+.st.on { border-color: var(--hl); color: var(--hl); }
+.fb-h { font-weight: 700; letter-spacing: .04em; font-size: 1.3rem; }
+.fb.reveal { background: rgba(255,198,41,.14); }
+.retry { background: var(--bad-soft); }
+/* Stage 2 / 3 */
+.sq.now { box-shadow: inset 0 0 0 3px var(--hl); }
+.chip { background: var(--sheet); border-color: var(--rule); color: var(--ink); }
+.chip.sel { background: var(--hl); border-color: var(--hl); color: #16181B; }
+.part { border-bottom-color: var(--hl); font-weight: 700; font-size: 1.15rem; }
+.starter-btn { background: #1D2024; border-color: #5A606B; color: #D9DCE1; }
+.starter-btn:hover { border-color: var(--hl); }
+.final { background: #1A1C20; }
+.model .m-tag { color: #16181B; background: var(--hl); }
+.crit { color: #16181B; background: var(--hl); }
+.big { font-weight: 700; color: var(--hl); }
+.stat { border-color: var(--rule); }
+.stat b { font-weight: 700; }
+.revise li { background: #1A1C20; }
+@media print {
+  :root { --paper: #FFFFFF; --sheet: #FFFFFF; --ink: #16181D; --muted: #5A606B; --rule: #D6D9D2; --navy: #1F2B4D; --good: #1D7548; --stamp: #C2302A; }
+  body { background: #FFFFFF !important; }
+  .final, .revise li, .gq, .model .m-tag, .crit { background: #FFFFFF; color: #16181D; }
+}
 </style>
 </head>
 <body>
@@ -581,99 +672,159 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
   var CLUES = [
     { id: "c1", n: 1, area: "Headline", kind: "text", at: [382, 48],
       text: "ONE MESSAGE. ONE SECOND. ONE LIFE.", device: "Rule of three",
-      dWrong: ["Rhetorical question", "Statistics", "Direct address"],
-      dHint: "Count the sentences. What pattern do they share?",
+      dAns: "Rule of three: three short sentences follow the same ‘ONE …’ pattern and build up.",
+      dWrong: ["Rhetorical question: three questions ask the viewer how long a message really takes to send.",
+               "Statistics: three numbers prove how many drivers cause accidents each year.",
+               "Imperative: three commands tell the driver exactly what to do with the phone."],
+      dHint: "Check each statement against the words. Count the sentences. What pattern do they share?",
       dWhy: "Three short sentences follow the same pattern, “ONE …,” and each one is bigger than the last. That is the rule of three (also called a tricolon).",
-      effect: "The three short sentences grow from something small (a message) to something huge (a life), so the viewer suddenly sees how fast one small choice can become a tragedy.",
-      eWrong: ["c10", "c11"], eHint: "Is a message big or small? Is a life big or small?",
+      effect: "The sentences grow from something small (a message) to something huge (a life), so the viewer sees how fast one small choice can become a tragedy.",
+      eWrong: ["The three short sentences shrink from something huge (a life) to something small (a message), so the viewer feels that the message matters most of all.",
+               "The three short sentences sound like a cheerful advertising jingle, so the viewer feels relaxed and wants to send a quick message while driving.",
+               "The three short sentences count down like the start of a race, so the viewer feels excited to drive faster and reach home a little sooner."], eHint: "Is a message big or small? Is a life big or small?",
       mean: ["The word “one” means …", "It is also commonly associated with …"], mkey: ["one"] },
     { id: "c2", n: 2, area: "Color", kind: "visual", at: [342, 158],
       text: "The words “ONE LIFE.” are red. The only other red things are the child’s coat and ball.", device: "Color symbolism",
-      dWrong: ["Layout", "Rule of three", "Irony"],
-      dHint: "Which color appears only a few times? Where?",
+      dAns: "Color symbolism: red appears in only a few places and stands for danger.",
+      dWrong: ["Layout: the red words are placed at the bottom so they are read last.",
+               "Irony: the color red is used to show that the scene is calm and happy.",
+               "Focal point: the red words are the biggest, brightest thing in the image."],
+      dHint: "Check each statement against the words. Which color appears only a few times? Where?",
       dWhy: "Red is used in only a few places, and it carries meaning: danger, warning and “stop.” That is color symbolism.",
       effect: "Red links the words “ONE LIFE.” to the child’s coat and ball, so the viewer understands exactly whose life is in danger and reads red as a warning.",
-      eWrong: ["c11", "c9"], eHint: "Where else do you see red besides the words “ONE LIFE.”?",
+      eWrong: ["Red links the words “ONE LIFE.” to the driver’s phone, so the viewer understands that the phone itself is in danger of breaking into pieces in a crash.",
+               "Red links the words “ONE LIFE.” to a happy holiday, so the viewer reads red as a sign of fun, celebration and time spent with family.",
+               "Red links the words “ONE LIFE.” to the driver’s own hand, so the viewer understands that the driver has already been hurt in an accident."], eHint: "Where else do you see red besides the words “ONE LIFE.”?",
       mean: ["The color red is commonly associated with …", "It is also the color of …"], mkey: ["red"], nouns: ["red"] },
     { id: "c3", n: 3, area: "Image: the view", kind: "visual", at: [372, 478],
       text: "The scene is seen from the driver’s seat: the windshield, the steering wheel and a hand holding the phone.", device: "Point of view",
-      dWrong: ["Color symbolism", "Slogan", "Antithesis"],
-      dHint: "Whose eyes are we looking through? Find the steering wheel.",
+      dAns: "Point of view: we see the road through the driver’s own eyes, from the driver’s seat.",
+      dWrong: ["Focal point: the steering wheel is the biggest, brightest object in the whole image.",
+               "Symbolism: the windshield stands for a mirror that shows the viewer their own worried face.",
+               "Layout: the steering wheel is placed at the very top, so it is the first thing seen."],
+      dHint: "Check each statement against the words. Whose eyes are we looking through? Find the steering wheel.",
       dWhy: "We see the road through the driver’s own eyes. The image uses the driver’s point of view.",
       effect: "The viewer is placed in the driver’s seat, so they feel that they are the person about to cause the accident.",
-      eWrong: ["c10", "c11"], eHint: "If you are sitting in the driver’s seat, who is driving?",
+      eWrong: ["The viewer is placed on the pavement, so they feel like a calm witness watching someone else make a mistake.",
+               "The viewer is placed in the back seat, so they feel like a passenger who cannot control the car at all.",
+               "The viewer is placed on the crossing, so they feel like the child who is about to be hit by a stranger’s car."], eHint: "If you are sitting in the driver’s seat, who is driving?",
       mean: ["A steering wheel is commonly associated with …", "Sitting behind the wheel also means …"], mkey: ["wheel", "driver"], nouns: ["steering wheel", "driver", "windshield", "wheel"] },
     { id: "c4", n: 4, area: "Image: the phone", kind: "visual", at: [44, 296],
       text: "The bright phone screen is the biggest object in the image, right at the front.", device: "Focal point",
-      dWrong: ["Irony", "Slogan", "Rule of three"],
-      dHint: "Which object is the biggest and brightest? Where does your eye go first?",
+      dAns: "Focal point: the phone is the largest, brightest object, so the eye goes to it first.",
+      dWrong: ["Symbolism: the phone stands for a child’s toy, just like the red ball on the crossing.",
+               "Point of view: the scene is seen through the eyes of the child standing on the crossing.",
+               "Layout: the phone is placed in a small top corner, so it is the last thing the eye notices."],
+      dHint: "Check each statement against the words. Which object is the biggest and brightest? Where does your eye go first?",
       dWhy: "The phone is the largest, brightest object, so the eye goes to it first. That makes it the focal point.",
-      effect: "The bright phone grabs the viewer’s eye first, just as it grabs the driver’s attention, so the viewer notices the child late, like a distracted driver would.",
-      eWrong: ["c7", "c11"], eHint: "What do you look at first, the phone or the child?",
+      effect: "The bright phone grabs the viewer’s eye first, just as it grabs the driver’s, so the viewer notices the child late, like a distracted driver.",
+      eWrong: ["The bright phone grabs the viewer’s eye first, so the viewer wants to buy the newest phone that is shown in the poster.",
+               "The small, dark phone is hard to see, so the viewer looks straight at the child and feels that there is no danger at all.",
+               "The bright phone lights up the road ahead, so the viewer understands that the phone helps the driver to see the child."], eHint: "What do you look at first, the phone or the child?",
       mean: ["A phone is commonly associated with …", "Its bright screen also means …"], mkey: ["phone", "screen"], nouns: ["phone", "screen"] },
     { id: "c5", n: 5, area: "Image: the child", kind: "visual", at: [276, 316],
       text: "A small child in a red coat, holding a red ball, stands on the crossing ahead.", device: "Symbolism",
-      dWrong: ["Point of view", "Statistics", "Imperative"],
-      dHint: "What could a child holding a ball stand for?",
+      dAns: "Symbolism: the child and the red ball stand for innocence and childhood.",
+      dWrong: ["Point of view: the whole scene is seen through the child’s own eyes.",
+               "Statistics: the child holds up a sign with the number of road deaths this year.",
+               "Imperative: the child shouts an order at the driver to stop the car."],
+      dHint: "Check each statement against the words. What could a child holding a ball stand for?",
       dWhy: "The child and the ball stand for something bigger than one person: innocence and childhood. That is symbolism.",
       effect: "The child stands for innocence and helplessness, so the viewer feels protective and guilty about putting such a young life in danger.",
-      eWrong: ["c9", "c10"], eHint: "How do we feel about children who could get hurt?",
+      eWrong: ["The child stands for a careless pedestrian, so the viewer blames the child for walking out onto the road at night without looking first.",
+               "The child stands for fun and play, so the viewer feels cheerful and starts to think about games in the park.",
+               "The child stands for the driver’s own son, so the viewer feels that the driver is on the way to collect him."], eHint: "How do we feel about children who could get hurt?",
       mean: ["A ball is commonly associated with …", "A child is also commonly associated with …"], mkey: ["ball", "child"], nouns: ["child", "ball"] },
     { id: "c6", n: 6, area: "Phone screen", kind: "text", at: [229, 410],
       text: "almost home!! 😊", device: "Irony",
-      dWrong: ["Statistics", "Logo (authority)", "Rule of three"],
-      dHint: "Is the message happy? Is the picture happy? Do they match?",
+      dAns: "Irony: the cheerful message says ‘almost home’ while danger lies just ahead.",
+      dWrong: ["Hyperbole: ‘almost home’ hugely exaggerates how far the driver still has to go.",
+               "Rule of three: three short phrases in the message follow the same pattern.",
+               "Slogan: ‘almost home’ is the council’s catchy hashtag for the whole campaign."],
+      dHint: "Check each statement against the words. Is the message happy? Is the picture happy? Do they match?",
       dWhy: "The message is cheerful and says the driver is nearly safe, but the picture shows danger ahead. When the result is the opposite of what we expect, that is irony.",
       effect: "The happy message clashes with the danger on the road, so the viewer feels uneasy and realizes the driver may never get home.",
-      eWrong: ["c11", "c12"], eHint: "Will the driver really get home safely?",
+      eWrong: ["The happy message matches the calm, empty road, so the viewer feels relieved that the driver will soon be safe at home.",
+               "The happy message shows the driver is a careful texter, so the viewer feels that texting while driving is perfectly safe and normal.",
+               "The happy message is an advert for a phone company, so the viewer wants to send cheerful messages to their family too."], eHint: "Will the driver really get home safely?",
       mean: ["The word “home” means …", "It also means …", "It is also commonly associated with …"], mkey: ["home"] },
     { id: "c7", n: 7, area: "Subheading", kind: "text", at: [352, 536],
       text: "Your reply can wait. They can’t.", device: "Antithesis",
-      dWrong: ["Rule of three", "Rhetorical question", "Logo (authority)"],
-      dHint: "Find two opposite ideas next to each other.",
+      dAns: "Antithesis: two opposite ideas, ‘can wait’ and ‘can’t’, sit side by side.",
+      dWrong: ["Rule of three: three ideas follow the same pattern and build up to a life.",
+               "Rhetorical question: the viewer is asked whether their reply can wait.",
+               "Imperative: the sentence orders the viewer to reply to the message now."],
+      dHint: "Check each statement against the words. Find two opposite ideas next to each other.",
       dWhy: "Two opposite ideas sit side by side: “can wait” and “can’t.” That is antithesis.",
       effect: "Setting “can wait” against “can’t” shows that the message is unimportant but the life is precious, so the viewer sees texting as a selfish choice.",
-      eWrong: ["c3", "c10"], eHint: "Which one can wait, and which one cannot?",
+      eWrong: ["Setting “can wait” against “can’t” shows that the message is urgent but the child is not, so the viewer feels they should reply to the message as quickly as possible.",
+               "Setting “can wait” against “can’t” shows that both choices are equally important, so the viewer feels unsure about what they should do.",
+               "Setting “can wait” against “can’t” shows that the child is impatient, so the viewer feels annoyed with children who wait on the road."], eHint: "Which one can wait, and which one cannot?",
       mean: ["The word “wait” means …", "The word “can’t” means …"], mkey: ["wait", "can't", "cannot"] },
     { id: "c8", n: 8, area: "Body text, line 1", kind: "text", at: [28, 601],
       text: "your eyes are not on the road", device: "Direct address",
-      dWrong: ["Imperative", "Hyperbole", "Symbolism"],
-      dHint: "Who is “your”? Who is the poster talking to?",
+      dAns: "Direct address: ‘your’ speaks straight to the person looking at the poster.",
+      dWrong: ["Imperative: the sentence begins with a verb and gives the viewer an order.",
+               "Hyperbole: the viewer is said to have no eyes at all while they are driving.",
+               "Rule of three: three lines of body text all repeat the same ‘ONE …’ pattern."],
+      dHint: "Check each statement against the words. Who is “your”? Who is the poster talking to?",
       dWhy: "“Your” speaks straight to the person looking at the poster. That is direct address.",
       effect: "“Your” speaks straight to the viewer, so they cannot pretend the warning is only about other drivers.",
-      eWrong: ["c4", "c11"], eHint: "Can the viewer say “this is about other people”?",
+      eWrong: ["“Your” speaks to the child on the crossing, so the viewer feels that the child should look more carefully.",
+               "“Your” speaks only to the council’s staff, so the viewer feels the warning is just for road safety officials.",
+               "“Your” speaks to other drivers far away, so the viewer feels safe because the warning is not about them."], eHint: "Can the viewer say “this is about other people”?",
       mean: ["The word “your” means …", "It is also commonly associated with …"], mkey: ["your"] },
     { id: "c9", n: 9, area: "Body text, line 2", kind: "text", at: [72, 617],
       text: "Put your phone on silent and out of reach", device: "Imperative",
-      dWrong: ["Antithesis", "Statistics", "Irony"],
-      dHint: "Look at the first word. What kind of sentence starts with a verb?",
+      dAns: "Imperative: the sentence begins with the verb ‘Put’ and gives an order.",
+      dWrong: ["Rhetorical question: the viewer is asked where they usually put their phone.",
+               "Antithesis: two opposite ideas, ‘silent’ and ‘loud’, sit side by side here.",
+               "Statistics: the sentence gives the number of drivers who use their phones."],
+      dHint: "Check each statement against the words. Look at the first word. What kind of sentence starts with a verb?",
       dWhy: "The sentence begins with a verb, “Put,” and gives an order. That is an imperative.",
       effect: "The clear command gives one simple action, so the viewer knows exactly what to do and feels able to prevent harm.",
-      eWrong: ["c5", "c2"], eHint: "Does the viewer know exactly what to do?",
+      eWrong: ["The clear command tells the viewer to keep the phone close by, so they can answer it quickly while driving.",
+               "The vague suggestion leaves the choice open, so the viewer feels unsure whether they need to change anything.",
+               "The clear command tells the viewer to throw their phone away forever, so they feel angry and refuse to listen to the poster."], eHint: "Does the viewer know exactly what to do?",
       mean: ["The phrase “out of reach” means …", "It is also commonly associated with …"], mkey: ["reach", "silent", "put"] },
     { id: "c10", n: 10, area: "Hashtag", kind: "text", at: [24, 661],
       text: "#EyesUpPhoneDown", device: "Slogan",
-      dWrong: ["Statistics", "Logo (authority)", "Rhetorical question"],
-      dHint: "What is short, catchy and has a # in front of it?",
+      dAns: "Slogan: a short, catchy phrase with a hashtag, made to be remembered and shared.",
+      dWrong: ["Logo (authority): the hashtag is the official symbol of a government office.",
+               "Rhetorical question: the hashtag asks the viewer where their eyes are looking right now.",
+               "Statistics: the hashtag counts how many people have shared the poster online so far."],
+      dHint: "Check each statement against the words. What is short, catchy and has a # in front of it?",
       dWhy: "A short, catchy phrase with a hashtag, made to be remembered and shared. That is a slogan.",
       effect: "The short, catchy hashtag is easy to remember and share online, so the viewer keeps the rule in mind and spreads it to others.",
-      eWrong: ["c5", "c7"], eHint: "Why use a short phrase with a #?",
+      eWrong: ["The long, complicated hashtag is hard to remember, so the viewer forgets the rule as soon as they look away from the poster on the wall.",
+               "The short, catchy hashtag tells the viewer to post photos while driving, so that more people will see the campaign online.",
+               "The short, catchy hashtag advertises a new phone model, so the viewer wants to look down at the latest phone on the market."], eHint: "Why use a short phrase with a #?",
       mean: ["The phrase “eyes up” means …", "It is also commonly associated with …"], mkey: ["eyes up", "up", "down"] },
     { id: "c11", n: 11, area: "Logo", kind: "text", at: [264, 659],
       text: "Northbridge Road Safety Council", device: "Logo (authority)",
-      dWrong: ["Statistics", "Irony", "Point of view"],
-      dHint: "Look at the bottom corner. Who stands behind this poster?",
+      dAns: "Logo (authority): an official council’s name shows who stands behind the poster.",
+      dWrong: ["Slogan: the council’s name is a catchy hashtag made to be shared online.",
+               "Direct address: the council speaks straight to the viewer using ‘your’ in its name.",
+               "Statistics: the council gives the number of accidents caused by phones last year."],
+      dHint: "Check each statement against the words. Look at the bottom corner. Who stands behind this poster?",
       dWhy: "The logo shows that an official organization stands behind the poster. That gives the message authority.",
       effect: "An official council makes the message sound trustworthy, so the viewer takes the warning seriously.",
-      eWrong: ["c1", "c6"], eHint: "Who do we trust more: a stranger or an official council?",
+      eWrong: ["An unknown stranger makes the message sound doubtful, so the viewer does not take the warning seriously.",
+               "An official council makes the message sound like an advert, so the viewer thinks the poster is selling phones.",
+               "An official council makes the message sound like a joke, so the viewer laughs at the warning and moves on."], eHint: "Who do we trust more: a stranger or an official council?",
       mean: ["The word “council” means …", "It is also commonly associated with …"], mkey: ["council"] },
     { id: "c12", n: 12, area: "Whole page", kind: "visual", at: [20, 20],
       text: "Top: the warning. Middle: the danger. Bottom: what to do.", device: "Layout",
-      dWrong: ["Symbolism", "Hyperbole", "Direct address"],
-      dHint: "Read the poster from top to bottom. What comes first, in the middle and last?",
+      dAns: "Layout: the parts are arranged so the eye moves from warning, to danger, to action.",
+      dWrong: ["Focal point: the hashtag is the largest, brightest object on the whole page.",
+               "Point of view: the whole page is seen through the eyes of the child on the crossing.",
+               "Rule of three: the three parts of the page all repeat the same ‘ONE …’ pattern."],
+      dHint: "Check each statement against the words. Read the poster from top to bottom. What comes first, in the middle and last?",
       dWhy: "The parts are arranged in an order that the eye follows from top to bottom. That is layout.",
       effect: "The eye moves from the warning, to the danger, to the solution, so the viewer finishes the poster knowing what to do.",
-      eWrong: ["c8", "c5"], eHint: "What does the viewer know by the time their eye reaches the bottom?",
+      eWrong: ["The eye moves from the solution, to the danger, to the warning, so the viewer finishes the poster feeling confused.",
+               "The eye jumps around the page in no order at all, so the viewer finishes the poster unsure what it wants from them.",
+               "The eye moves from the warning straight to the logo, so the viewer finishes the poster thinking only about the council."], eHint: "What does the viewer know by the time their eye reaches the bottom?",
       mean: ["A top-to-bottom order is commonly associated with …", "Ending with an instruction also means …"], mkey: ["top", "bottom", "order", "instruction"], nouns: ["top", "bottom", "middle"] }
   ];
   var CBY = {}; CLUES.forEach(function (c) { CBY[c.id] = c; });
@@ -682,79 +833,81 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
   var DRILLS = [
     { part: "Point: topic sentence", q: "Which topic sentence is complete?",
       answer: "In the public awareness poster “ONE MESSAGE. ONE SECOND. ONE LIFE.”, published by the Northbridge Road Safety Council, the creator persuades drivers to put their phones away through the use of antithesis and color symbolism.",
-      wrong: ["This poster is about phones and driving, and it is very effective.",
-              "In the poster, the creator uses antithesis and color symbolism.",
-              "Texting while driving is dangerous, so people should not do it."],
-      hint: "A full topic sentence names the text type, the title, the publisher, the audience, the purpose and TWO features.",
-      why: "It gives the text type, the headline as the title, the publisher, the audience (drivers), the purpose and both features." },
+      wrong: ["In the public awareness poster “ONE MESSAGE. ONE SECOND. ONE LIFE.”, the creator persuades drivers to put their phones away through the use of antithesis and color symbolism.",
+              "In the public awareness poster “ONE MESSAGE. ONE SECOND. ONE LIFE.”, published by the Northbridge Road Safety Council, the creator persuades drivers to put their phones away through antithesis.",
+              "In the short story “ONE MESSAGE. ONE SECOND. ONE LIFE.”, published by the Northbridge Road Safety Council, the writer persuades drivers to put their phones away through antithesis and color symbolism."],
+      hint: "A full topic sentence names the text type, the title, the publisher, the audience, the purpose and TWO features. Check each one.",
+      why: "It gives the correct text type, the headline as the title, the publisher, the audience (drivers), the purpose and both features. The others leave out the publisher, give only one feature, or get the text type wrong." },
     { part: "Text type", q: "Which sentence uses the right words for THIS text type?",
       answer: "The creator places a small child in the middle of the crossing.",
-      wrong: ["The writer tells a story about a child on a crossing.",
-              "The poet describes a child on a crossing.",
-              "The novelist places a child on a crossing."],
-      hint: "A poster is not a story, a poem or a novel. Who makes a poster?",
+      wrong: ["The poet places a small child in the middle of the crossing.",
+              "The novelist places a small child in the middle of the crossing.",
+              "The narrator places a small child in the middle of the crossing."],
+      hint: "A poster is not a poem, a novel or a story. Who makes a poster?",
       why: "For a poster, write about “the creator,” “the designer” or “the council,” and about “the viewer.”" },
     { part: "Evidence from the image", q: "Which sentence gives the best evidence from the IMAGE?",
       answer: "First, the poster shows a small child in a red coat, holding a red ball, on the crossing ahead.",
-      wrong: ["First, there is a picture.",
-              "First, the image is very sad and powerful.",
-              "First, the poster has a lot of colors and things in it."],
-      hint: "Evidence from an image must be exact: what, where, which color, how big.",
-      why: "It describes exactly what is in the image, where it is and what color it is." },
+      wrong: ["First, the poster shows a small child in a blue coat, holding a red ball, on the crossing ahead.",
+              "First, the poster shows a sad and powerful picture that makes the whole scene feel very dramatic.",
+              "First, the poster shows a small child in a red coat, holding a red kite, on the pavement behind."],
+      hint: "Evidence from an image must be exact: what, where, which color. Check each detail against the poster.",
+      why: "It describes exactly what is in the image, where it is and what color it is. The others get a detail wrong or say nothing exact." },
     { part: "Evidence from the words", q: "Which sentence gives the quotation most naturally?",
       answer: "The poster warns drivers that their “reply can wait.”",
-      wrong: ["The quote is “Your reply can wait. They can’t.”",
-              "“Your reply can wait. They can’t. Looking at a screen means your eyes are not on the road.” This shows the message.",
-              "The poster says something about replies."],
-      hint: "Good evidence is short, exact and built into your own sentence. Never write “the quote is.”",
-      why: "The quotation is short and sits smoothly inside the sentence." },
+      wrong: ["The quote “reply can wait” is used to warn drivers.",
+              "The poster warns drivers that their reply can wait.",
+              "The poster warns drivers that their “message can wait.”"],
+      hint: "Good evidence is exact, inside quotation marks and built into your own sentence. Never write “quote.” Check the wording against the poster.",
+      why: "The quotation is exact and sits smoothly inside the sentence. The others use the word “quote,” leave out the quotation marks, or change the poster’s words." },
     { part: "Meaning", q: "Which sentence explains the MEANING of the word best?",
       answer: "The word “home” means the place where a person lives, and it is commonly associated with safety and family.",
-      wrong: ["The word “home” is a noun.",
-              "The word “home” is important in the poster.",
-              "The word “home” is used on the phone."],
-      hint: "Give the dictionary meaning first, then what the word is commonly associated with.",
-      why: "It gives the meaning AND the associations (safety and family), which the analysis can then use." },
+      wrong: ["The word “home” is a noun, and it appears on the phone screen in the middle of the poster’s image.",
+              "The word “home” means a place of work, and it is commonly associated with stress and busy offices.",
+              "The word “home” is very important in the poster, and it is commonly used in many other road safety posters too."],
+      hint: "Give the correct dictionary meaning first, then what the word is commonly associated with.",
+      why: "It gives the meaning AND the associations (safety and family), which the analysis can then use. The others give no meaning, a wrong meaning, or no associations." },
     { part: "So? Analyze", q: "Which sentence answers “So?” best?",
       answer: "The creator suggests that the driver feels safe and relaxed, even though a child is in danger just ahead.",
-      wrong: ["The creator uses the word “home.”",
-              "The phone says “almost home.”",
-              "This is an example of irony."],
-      hint: "“So?” means: what is the creator telling us? Do not just repeat what the poster shows.",
-      why: "It explains what the detail suggests, instead of repeating it or only naming the device." },
+      wrong: ["The creator uses the word “home” on the phone screen, which is in the middle of the poster’s image.",
+              "The creator suggests that the driver is angry and stressed, because the child is blocking the road in front of the car.",
+              "This is an example of irony, which is when the opposite of what we expect happens in a text."],
+      hint: "“So?” means: what is the creator telling us? Do not just repeat what the poster shows or define the device.",
+      why: "It explains what the detail suggests, instead of repeating it, misreading it, or only defining the device." },
     { part: "The viewer", q: "Which sentence explains the VIEWER’S response best?",
       answer: "The viewer feels guilty, because the driver’s-seat view makes them realize that they could be the driver who hurts this child.",
-      wrong: ["The viewer feels emotional.",
-              "The viewer wants to look at the poster again.",
-              "This makes the reader read on."],
-      hint: "Name a clear feeling, then explain WHY with “because.”",
-      why: "It names a precise feeling (guilty) and explains how the image creates it." },
+      wrong: ["The viewer feels emotional and interested, because the poster is very powerful and uses many good techniques.",
+              "The viewer feels proud, because the driver’s-seat view makes them realize that they are a very careful driver.",
+              "This makes the reader want to read on, because the poster is exciting and they want to know what happens next."],
+      hint: "Name a precise feeling that fits the poster, then explain WHY with “because.” A poster has a viewer, not a reader.",
+      why: "It names a precise feeling (guilty) and explains how the image creates it. The others are vague, name the wrong feeling, or talk about a “reader.”" },
     { part: "Device and aim", q: "Which sentence links the DEVICE to the creator’s AIM?",
       answer: "Through the use of antithesis, the creator shows that a message can always wait but a life cannot be replaced.",
-      wrong: ["There is antithesis in the poster.",
-              "Through the use of antithesis, the poster is good.",
-              "Antithesis is when two opposite ideas are placed together."],
-      hint: "Use the frame “Through the use of (device), the creator (aim).” The aim is what the creator wants the viewer to understand.",
-      why: "It names the device and says what the creator wants the viewer to understand." },
+      wrong: ["Through the use of antithesis, which is when two opposite ideas are placed together, the poster is very good and effective.",
+              "Through the use of a simile, the creator shows that a message can always wait but a life cannot be replaced.",
+              "There is antithesis in the poster, and antithesis is a very common device in public awareness posters."],
+      hint: "Use the frame “Through the use of (device), the creator (aim).” Name the right device, and say what the creator wants the viewer to understand.",
+      why: "It names the right device and says what the creator wants the viewer to understand. The others define the device, name the wrong one, or give no aim." },
     { part: "Image and words together", q: "Which sentence shows how the IMAGE and the WORDS work together?",
       answer: "The red of the child’s ball matches the red words “ONE LIFE.”, so the headline tells the viewer exactly whose life is at risk.",
-      wrong: ["The poster has an image and some words.",
-              "The words are at the top and the image is in the middle.",
-              "The colors are red, white and blue."],
-      hint: "Strong Paper 1 answers connect a visual feature to a written feature.",
-      why: "It links a visual detail (the red ball) to the words (“ONE LIFE.”) and explains the result." },
+      wrong: ["The poster has an image and some words, and both of them are very important for the message of the poster.",
+              "The words are at the top and the image is in the middle, and the logo is placed at the bottom of the poster.",
+              "The blue of the child’s coat matches the blue sky above, so the image tells the viewer that the night is calm and quiet."],
+      hint: "Strong Paper 1 answers connect a visual feature to a written feature and explain the result. Check the colors.",
+      why: "It links a visual detail (the red ball) to the words (“ONE LIFE.”) and explains the result. The others only describe the poster or get the colors wrong." },
     { part: "Evaluate", q: "Which sentence EVALUATES the poster best?",
       answer: "This is particularly effective because the viewer sees the child only after looking at the phone, just as a distracted driver would.",
-      wrong: ["This is a very good and effective poster.",
-              "I like this poster because it is colorful.",
-              "To conclude, the poster uses many techniques."],
-      hint: "Evaluation says WHY a feature works, with a reason from the text.",
-      why: "It judges the effect and gives a precise reason from the poster." },
+      wrong: ["This is a very good and effective poster because it uses many different techniques and bright, eye-catching colors.",
+              "I like this poster because it is colorful, and the child in the picture looks very cute and friendly to the viewer.",
+              "This is particularly effective because the viewer sees the phone only after looking at the child, so they feel calm."],
+      hint: "Evaluation says WHY a feature works, with a precise reason from the text. Which does the eye see first: the phone or the child?",
+      why: "It judges the effect and gives a precise reason from the poster. The others are vague, personal, or get the order of looking wrong." },
     { part: "Second feature", q: "Which word should begin your SECOND feature?",
       answer: "Furthermore,",
-      wrong: ["To conclude,", "All in all,", "To sum up,"],
-      hint: "You are adding another feature, not finishing the paragraph.",
-      why: "“Furthermore” adds a second feature. The others are endings." }
+      wrong: ["However,",
+              "Therefore,",
+              "To conclude,"],
+      hint: "You are adding another feature, not disagreeing and not finishing the paragraph.",
+      why: "“Furthermore” adds a second feature. “However” disagrees, “Therefore” draws a conclusion, and “To conclude” ends the paragraph." }
   ];
 
   /* ---------- MODEL ANSWER (written for practice; clues 6 and 5) ---------- */
@@ -825,7 +978,7 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
     return list;
   }
 
-  var KEY = "onur-case:ib-p1-poster-v1";
+  var KEY = "onur-case:ib-p1-poster-v2";
   var LETTERS = ["A", "B", "C", "D"];
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var S = null;
@@ -970,7 +1123,7 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
   function openClue(id) {
     lastFocus = document.activeElement;
     S.cur = id; S.phase = "device"; S.answered = null;
-    var c = CBY[id]; S.opts = shuffle([c.device].concat(c.dWrong));
+    var c = CBY[id]; S.opts = shuffle([c.dAns].concat(c.dWrong));
     save(); renderSheet(); $("sheet-back").hidden = false; $("sheet-q").focus();
   }
   function openSolved(id) {
@@ -1019,17 +1172,24 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
       fb.appendChild(p1); fb.appendChild(p2); fb.hidden = false;
       return;
     }
-    $("sheet-q").textContent = S.phase === "device" ? "Which feature is this?" : "It is " + (c.device === "Logo (authority)" ? "a logo that gives authority" : c.device.toLowerCase()) + ". What does it do to the viewer?";
+    $("sheet-q").textContent = S.phase === "device" ? "Which feature is this? Choose the statement that is true." : "It is " + (c.device === "Logo (authority)" ? "a logo that gives authority" : c.device.toLowerCase()) + ". What does it do to the viewer?";
     S.opts.forEach(function (text, i) {
       var b = document.createElement("button"); b.type = "button"; b.className = "opt";
       var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[i];
-      var t = document.createElement("span"); t.className = "t"; t.textContent = text;
+      var t = document.createElement("span"); t.className = "t"; fillOpt(t, text, S.phase === "device");
       b.appendChild(k); b.appendChild(t); b.onclick = function () { pickClue(i); };
       box.appendChild(b);
     });
     if (S.answered) paintClue(false);
   }
-  function correctClue(c) { return S.phase === "device" ? c.device : c.effect; }
+  /* "Device: claim" options show the device name in bold. */
+  function fillOpt(el, text, labelled) {
+    el.textContent = "";
+    var m = labelled ? /^([^:]{2,32}): (.+)$/.exec(text) : null;
+    if (m) { var b = document.createElement("b"); b.className = "olab"; b.textContent = m[1] + ":"; el.appendChild(b); el.appendChild(document.createTextNode(" " + m[2])); }
+    else el.textContent = text;
+  }
+  function correctClue(c) { return S.phase === "device" ? c.dAns : c.effect; }
   function pickClue(i) {
     if (S.answered) return;
     var c = CBY[S.cur], st = S.clues[S.cur];
@@ -1060,7 +1220,7 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
       fb.classList.add("good"); h.textContent = st.misses ? "Cracked. Cold case closed." : "Clue cracked!";
       p.textContent = "Remember it like this: " + c.device + ". " + c.effect; btn.textContent = "Back to the poster";
     } else {
-      if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = "Answer: " + ans + (S.phase === "device" ? ". " + c.dWhy : ""); }
+      if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = "Answer: " + ans; }
       else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + (S.phase === "device" ? c.dHint : c.eHint); }
       n.textContent = "This clue becomes a cold case. It reopens in sweep " + (S.sweep + 1) + ".";
       btn.textContent = "Back to the poster";
@@ -1078,7 +1238,7 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
   $("sheet-next").onclick = function () {
     if (S.answered && S.answered.correct && S.phase === "device") {
       var c = CBY[S.cur];
-      S.phase = "effect"; S.answered = null; S.opts = shuffle([c.effect].concat(c.eWrong.map(function (x) { return CBY[x].effect; })));
+      S.phase = "effect"; S.answered = null; S.opts = shuffle([c.effect].concat(c.eWrong));
       save(); renderSheet(); $("sheet-q").focus(); return;
     }
     closeSheet();
