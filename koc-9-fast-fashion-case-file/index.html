@@ -1,0 +1,1290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Fast Fashion Case File</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&display=swap">
+<style>
+body{margin:0}img{max-width:100%}
+/* Layout: one phone-width column. A detective's case file: stage tabs on top, then the newspaper article with highlighter-marked clues, a bottom sheet for each interrogation, a drill card, and a guided writing desk. Newsprint palette with highlighter colors; stamp red only for alarms and stamps. */
+:root {
+  --paper: #EEF0EC;
+  --sheet: #FFFFFF;
+  --ink: #16181D;
+  --muted: #5A606B;
+  --rule: #D6D9D2;
+  --navy: #1F2B4D;
+  --hl: #FFE45C;
+  --hl-deep: #E9C400;
+  --hl-green: #B7EBC5;
+  --hl-blue: #C6DCFF;
+  --hl-pink: #FFC9D6;
+  --stamp: #C2302A;
+  --good: #1D7548;
+  --good-soft: #DCF0E3;
+  --bad-soft: #FBE1DE;
+  --f-type: "Special Elite", "Courier New", monospace;
+  --f-body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  --f-news: "Source Serif 4", "Georgia", "Times New Roman", serif;
+  --r: 12px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--paper); }
+body { color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 680px; margin: 0 auto; padding-inline: 16px; padding-block: 14px 64px; display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #FFFFFF; border-radius: 10px; padding: 4px 6px; flex: none; display: grid; place-items: center; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.logo img { width: 70px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-type); font-size: 1.1rem; letter-spacing: .03em; }
+.top-sub { color: var(--muted); font-size: .88rem; }
+
+.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--r); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.label { font-family: var(--f-type); font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+
+.btn { appearance: none; border: 0; border-radius: 10px; padding: 13px 18px; font-weight: 700; font-size: 1rem; cursor: pointer; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-ink { background: var(--ink); color: #FFFFFF; }
+.btn-ink:hover { background: var(--navy); }
+.btn-ink:disabled { background: #9AA0A8; cursor: not-allowed; }
+.btn-ghost { background: transparent; border: 2px solid var(--rule); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Start */
+.folder { position: relative; background: #F7E9B8; border: 1px solid #D9C27A; border-radius: 4px 14px 14px 14px; padding: 26px 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+.folder::before { content: ""; position: absolute; top: -14px; left: -1px; width: 130px; height: 15px; background: #F7E9B8; border: 1px solid #D9C27A; border-bottom: 0; border-radius: 8px 8px 0 0; }
+.folder h1 { font-family: var(--f-type); font-weight: 400; font-size: clamp(2rem, 9vw, 2.9rem); line-height: 1.05; }
+.stamp { align-self: flex-start; font-family: var(--f-type); color: var(--stamp); border: 3px solid var(--stamp); border-radius: 6px; padding: 2px 10px; transform: rotate(-4deg); font-size: 1rem; letter-spacing: .08em; }
+.folder .sub { font-size: 1.05rem; max-width: 40ch; }
+.stages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.stages li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+.stages .n { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: #FFFFFF; font-family: var(--f-type); font-size: 1.1rem; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input, .field textarea { font: inherit; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); width: 100%; }
+.field input:focus, .field textarea:focus { border-color: var(--navy); outline: none; }
+.resume { border: 2px dashed var(--ink); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Tabs */
+.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); padding-block: 6px; }
+.tab { appearance: none; border: 2px solid var(--rule); background: var(--sheet); border-radius: 10px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; min-width: 0; }
+.tab b { font-family: var(--f-type); font-weight: 400; font-size: .95rem; }
+.tab span { font-size: .75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tab.on { border-color: var(--ink); background: var(--ink); color: #FFFFFF; }
+.tab.on span { color: #D5D8DE; }
+.tab:disabled { opacity: .5; cursor: not-allowed; }
+.tab.done:not(.on) { border-color: var(--good); }
+
+/* Stage 1: article */
+.brief { display: flex; flex-direction: column; gap: 8px; }
+.meter { height: 10px; border-radius: 999px; background: var(--rule); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--ink); width: 0; transition: width .4s; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 16px; height: 10px; border-radius: 2px; display: inline-block; }
+.news { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 22px 18px; font-family: var(--f-news); display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 0 var(--rule); }
+.news .kicker { font-family: var(--f-body); font-size: .75rem; letter-spacing: .12em; font-weight: 700; color: var(--stamp); }
+.news .hed { font-family: var(--f-news); font-size: clamp(1.6rem, 6.4vw, 2.1rem); font-weight: 700; line-height: 1.15; }
+.news .dek { font-style: italic; font-size: 1.08rem; color: #33363D; }
+.news .byline { font-family: var(--f-body); font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: 6px; }
+.news .para { display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-size: 1.04rem; line-height: 1.7; }
+.news .pn { font-family: var(--f-body); font-size: .75rem; color: var(--muted); padding-top: 5px; text-align: right; font-variant-numeric: tabular-nums; }
+.news .ptxt { min-width: 0; }
+.news .foot { font-family: var(--f-body); font-size: .8rem; color: var(--muted); font-style: italic; border-top: 1px solid var(--rule); padding-top: 8px; }
+.clue { padding: 1px 2px; background: linear-gradient(transparent 8%, var(--hl) 8%, var(--hl) 92%, transparent 92%); border-radius: 2px; cursor: pointer; text-align: left; box-decoration-break: clone; -webkit-box-decoration-break: clone; display: inline; }
+.clue sup { font-family: var(--f-body); font-size: .62em; font-weight: 700; background: var(--ink); color: #FFFFFF; border-radius: 999px; padding: 0 5px; margin-left: 2px; vertical-align: super; }
+.clue:hover { background: linear-gradient(transparent 8%, var(--hl-deep) 8%, var(--hl-deep) 92%, transparent 92%); }
+.clue.first { background: linear-gradient(transparent 8%, var(--hl-green) 8%, var(--hl-green) 92%, transparent 92%); }
+.clue.later { background: linear-gradient(transparent 8%, var(--hl-blue) 8%, var(--hl-blue) 92%, transparent 92%); }
+.clue.cold { background: linear-gradient(transparent 8%, var(--hl-pink) 8%, var(--hl-pink) 92%, transparent 92%); cursor: not-allowed; }
+.clue.first sup, .clue.later sup { background: var(--good); }
+.clue.cold sup { background: var(--stamp); }
+.clue .tag { font-family: var(--f-type); font-size: .72em; color: var(--good); margin-left: 4px; white-space: nowrap; }
+.sweep { border: 2px solid var(--stamp); background: #FFF6F5; }
+.sweep .label { color: var(--stamp); }
+
+/* Bottom sheet */
+.sheet-back { position: fixed; inset: 0; background: rgba(22,24,29,.45); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: var(--sheet); width: 100%; max-width: 680px; max-height: 88vh; overflow-y: auto; border-radius: 16px 16px 0 0; padding: 18px 16px calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 14px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.x { appearance: none; border: 2px solid var(--rule); background: transparent; border-radius: 999px; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; line-height: 1; }
+.evidence { font-family: var(--f-news); font-size: 1.12rem; background: linear-gradient(transparent 8%, var(--hl) 8%, var(--hl) 92%, transparent 92%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.steps2 { display: flex; gap: 6px; flex-wrap: wrap; }
+.st { font-size: .75rem; font-weight: 700; border-radius: 999px; padding: 2px 10px; border: 1px solid var(--rule); color: var(--muted); }
+.st.on { border-color: var(--ink); color: var(--ink); }
+.st.done { border-color: var(--good); color: var(--good); }
+.q { font-size: 1.2rem; font-weight: 700; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; border: 2px solid var(--rule); background: var(--sheet); border-radius: 10px; padding: 12px 14px; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 54px; color: var(--ink); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--ink); } }
+.opt .k { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-weight: 700; background: var(--paper); }
+.opt .t { min-width: 0; }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.right .k { background: var(--good); color: #FFFFFF; }
+.opt.wrong { border-color: var(--stamp); background: var(--bad-soft); }
+.opt.wrong .k { background: var(--stamp); color: #FFFFFF; }
+.opt.dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.fb { border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--good-soft); }
+.fb.bad { background: var(--bad-soft); }
+.fb.reveal { background: #FFF3BF; }
+.fb-h { font-family: var(--f-type); font-size: 1.15rem; }
+.fb.good .fb-h { color: var(--good); }
+.fb.bad .fb-h { color: var(--stamp); }
+.fb-note { font-size: .88rem; color: var(--muted); }
+
+/* Stage 2 */
+.board { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.sq { aspect-ratio: 1; max-width: 100%; border-radius: 4px; background: var(--rule); }
+.sq.first { background: var(--hl-green); box-shadow: inset 0 0 0 2px var(--good); }
+.sq.later { background: var(--hl-blue); }
+.sq.missed { background: var(--hl-pink); box-shadow: inset 0 0 0 2px var(--stamp); }
+.sq.now { box-shadow: inset 0 0 0 3px var(--ink); }
+.retry { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--bad-soft); color: var(--stamp); }
+
+/* Stage 3 */
+.picker { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { appearance: none; border: 2px solid var(--rule); background: var(--sheet); border-radius: 999px; padding: 6px 12px; cursor: pointer; font-size: .9rem; text-align: left; }
+.chip.sel { border-color: var(--ink); background: var(--ink); color: #FFFFFF; }
+.slot { display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--rule); padding-left: 12px; }
+.slot.ok { border-left-color: var(--good); }
+.slot-h { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.slot-h b { font-family: var(--f-type); font-weight: 400; font-size: 1.05rem; }
+.slot-h span { font-size: .85rem; color: var(--muted); }
+.starter { font-size: .85rem; color: var(--muted); font-style: italic; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; font-size: .85rem; }
+.checks li { display: flex; gap: 6px; align-items: baseline; color: var(--muted); }
+.checks li::before { content: "○"; font-weight: 700; }
+.checks li.ok { color: var(--good); }
+.checks li.ok::before { content: "✓"; }
+.checks li.no { color: var(--stamp); }
+.checks li.no::before { content: "✗"; }
+textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
+.final { font-family: var(--f-news); font-size: 1.04rem; line-height: 1.7; background: var(--paper); border-radius: 10px; padding: 14px; }
+.model { font-family: var(--f-news); line-height: 1.7; }
+.tick { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.tick label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.tick input { width: 20px; height: 20px; margin-top: 2px; flex: none; }
+
+/* Report */
+.big { font-family: var(--f-type); font-size: clamp(2.6rem, 12vw, 3.6rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big small { font-size: .4em; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.stat { border: 2px solid var(--rule); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; min-width: 0; }
+.stat b { font-family: var(--f-type); font-weight: 400; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .8rem; color: var(--muted); }
+.revise { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.revise li { border-left: 4px solid var(--stamp); background: var(--paper); border-radius: 0 8px 8px 0; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; }
+.revise .a { color: var(--good); font-size: .92rem; }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; }
+.who b { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+/* ---------- THEME: "Thread & Thrift" — a recycled, hand-made look: kraft-paper page with a woven texture, a hang-tag case file, stitched (dashed) seams, forest green for actions and rust for alarms. ---------- */
+:root {
+  --paper: #EFE6D3;
+  --sheet: #FFFCF4;
+  --ink: #1F2A21;
+  --muted: #5E6355;
+  --rule: #DDD2BA;
+  --navy: #2E5A3A;
+  --hl: #F6DD8A;
+  --hl-deep: #EDC64F;
+  --hl-green: #CBE6C3;
+  --hl-blue: #CFE0EA;
+  --hl-pink: #F5CDBF;
+  --stamp: #B4432A;
+  --good: #2E6B3E;
+  --good-soft: #E1F0DA;
+  --bad-soft: #F9E1D8;
+  --kraft: #C99A5E;
+  --f-type: "Fraunces", "Georgia", serif;
+  --r: 16px;
+}
+html, body { background: var(--paper); }
+body {
+  background:
+    repeating-linear-gradient(0deg, rgba(120,90,40,.035) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(90deg, rgba(120,90,40,.035) 0 2px, transparent 2px 6px),
+    var(--paper);
+  min-height: 100vh;
+}
+.top-title { font-weight: 800; font-size: 1.2rem; letter-spacing: .02em; color: var(--navy); }
+.card { border: 0; box-shadow: 0 1px 0 rgba(31,42,33,.06), 0 10px 26px rgba(80,60,20,.08); position: relative; }
+.card::after { content: ""; position: absolute; inset: 7px; border: 1.5px dashed var(--rule); border-radius: calc(var(--r) - 6px); pointer-events: none; }
+.card > * { position: relative; z-index: 1; }
+.label { font-weight: 700; letter-spacing: .1em; color: var(--navy); }
+.btn-ink { background: var(--navy); color: #FFFFFF; outline: 1.5px dashed rgba(255,255,255,.55); outline-offset: -6px; }
+.btn-ink:hover { background: #24492F; }
+.btn-ink:focus-visible { outline: 3px solid var(--stamp); outline-offset: 2px; }
+.btn-ink:disabled { background: #B7B3A4; outline-color: rgba(255,255,255,.4); }
+.btn-ghost { border: 2px dashed var(--kraft); background: var(--sheet); }
+.btn-ghost:hover { border-color: var(--navy); }
+/* Start: a hang tag */
+.folder { background: linear-gradient(160deg, #D6A96C 0%, #C08B4F 100%); color: #2A1E10; border: 0; border-radius: 22px 22px 22px 60px; padding: 46px 22px 26px; box-shadow: 0 16px 34px rgba(110,72,28,.28); overflow: hidden; }
+.folder::before { content: ""; position: absolute; top: 16px; left: 50%; width: 22px; height: 22px; margin-left: -11px; border-radius: 50%; background: var(--paper); border: 4px solid #9C6B33; }
+.folder::after { content: ""; position: absolute; inset: 9px; border: 2px dashed rgba(60,36,10,.4); border-radius: 16px 16px 16px 52px; pointer-events: none; }
+.folder > * { position: relative; z-index: 1; }
+.folder h1 { font-weight: 800; font-size: clamp(2.2rem, 10vw, 3.1rem); letter-spacing: -.01em; max-width: 13ch; color: #1F2A21; }
+.folder .sub { color: #33240F; }
+.stamp { transform: rotate(-3deg); border: 0; background: var(--sheet); color: var(--stamp); border-radius: 4px; padding: 4px 12px; font-weight: 800; font-size: .85rem; letter-spacing: .12em; box-shadow: 0 2px 0 rgba(0,0,0,.12); }
+.card > .stamp, #s-report .stamp { background: var(--stamp); color: #FFFFFF; }
+.stages .n { background: var(--navy); font-weight: 800; }
+/* Tabs */
+.tabs { background: rgba(239,230,211,.92); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.tab { border: 2px dashed var(--rule); border-radius: 12px; }
+.tab b { font-weight: 700; }
+.tab.on { background: var(--navy); border: 2px solid var(--navy); }
+.tab.on span { color: #DCEBDD; }
+.tab.done:not(.on) { border: 2px solid var(--good); }
+.meter { background: #E2D6BC; }
+.meter i { background: repeating-linear-gradient(45deg, var(--navy) 0 8px, #3F7550 8px 16px); }
+/* Article as a recycled-paper page */
+.news { border: 0; border-radius: 6px; background: var(--sheet); box-shadow: 0 1px 0 rgba(31,42,33,.06), 0 10px 26px rgba(80,60,20,.1); border-top: 6px solid var(--navy); }
+.news .kicker { color: var(--navy); }
+.news .hed { font-family: var(--f-type); font-weight: 800; }
+.clue sup { background: var(--navy); }
+.sweep { border: 0; background: #FCEEE8; box-shadow: inset 0 0 0 2px var(--stamp); }
+/* Sheet */
+.sheet { border-radius: 24px 24px 0 0; background: var(--sheet); border-top: 5px solid var(--kraft); }
+.sheet-back { background: rgba(31,42,33,.5); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.evidence { padding: 2px 4px; }
+.opt { border-radius: 12px; }
+.opt .k { background: #EFE6D3; color: var(--navy); font-family: var(--f-type); }
+.opt .olab { color: var(--navy); font-weight: 700; }
+.opt.right .olab, .opt.wrong .olab { color: inherit; }
+.st.on { border-color: var(--navy); color: var(--navy); }
+.fb-h { font-weight: 800; }
+.fb.reveal { background: #FBF0CC; }
+.chip { border-style: dashed; }
+.chip.sel { background: var(--navy); border: 2px solid var(--navy); }
+.slot.ok { border-left-color: var(--good); }
+.big { font-weight: 800; color: var(--navy); }
+.stat b { font-weight: 800; color: var(--navy); }
+.stat { border: 2px dashed var(--rule); background: var(--sheet); }
+.slot-h b { font-weight: 800; }
+.final { background: #F5EEDD; }
+.revise li { background: #F5EEDD; }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title">MEDIA DETECTIVES</span>
+      <span class="top-sub">Koç Grade 9 · Behind the Headline</span>
+    </div>
+  </header>
+
+  <!-- START -->
+  <section id="s-start" hidden>
+    <div class="wrap" style="padding:0">
+      <div class="folder">
+        <span class="stamp">CASE FILE 09</span>
+        <h1>The Fast Fashion Article</h1>
+        <p class="sub">An opinion article is trying to persuade you. Fifteen phrases have been marked with a highlighter. Find out what each one is doing, then write your report.</p>
+      </div>
+      <div class="card">
+        <ol class="stages">
+          <li><span class="n">1</span><span><b>Investigate.</b> Tap each highlighted clue. Name the device, then choose what it does to the reader.</span></li>
+          <li><span class="n">2</span><span><b>Sharpen.</b> Choose the stronger sentence for each part of a PETER paragraph.</span></li>
+          <li><span class="n">3</span><span><b>Report.</b> Write your own PETER–ETER paragraph. The desk checks your structure as you type, then shows you the model answer.</span></li>
+        </ol>
+        <p class="small muted">A wrong answer turns a clue into a cold case. It comes back in the next sweep, with the answers moved around. Your first-try score is your real score.</p>
+        <div class="resume" id="resume" hidden>
+          <p><b>You have a case in progress.</b> <span id="resume-text"></span></p>
+          <div class="btn-row">
+            <button class="btn btn-ink" id="btn-resume" type="button">Continue</button>
+            <button class="btn btn-ghost" id="btn-wipe" type="button">Start over</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="student-name">Detective name</label>
+          <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+        </div>
+        <button class="btn btn-ink" id="btn-start" type="button">Open the case file</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <section id="s-main" hidden>
+    <div class="wrap" style="padding:0">
+      <nav class="tabs" aria-label="Stages">
+        <button class="tab" id="tab-1" type="button"><b>1 Investigate</b><span id="tab-1-s"></span></button>
+        <button class="tab" id="tab-2" type="button"><b>2 Sharpen</b><span id="tab-2-s"></span></button>
+        <button class="tab" id="tab-3" type="button"><b>3 Report</b><span id="tab-3-s"></span></button>
+      </nav>
+
+      <!-- STAGE 1 -->
+      <div id="st-1" hidden>
+        <div class="wrap" style="padding:0">
+          <div class="card brief">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+              <span class="label" id="sweep-label">Sweep 1</span>
+              <span class="small" id="clue-count"></span>
+            </div>
+            <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+            <div class="legend">
+              <span><i style="background:var(--hl)"></i>Clue to crack</span>
+              <span><i style="background:var(--hl-green)"></i>Cracked first try</span>
+              <span><i style="background:var(--hl-blue)"></i>Cracked later</span>
+              <span><i style="background:var(--hl-pink)"></i>Cold case</span>
+            </div>
+          </div>
+          <div class="card sweep" id="sweep-card" hidden>
+            <span class="label">Sweep complete</span>
+            <p id="sweep-text"></p>
+            <button class="btn btn-ink" id="btn-sweep" type="button"></button>
+          </div>
+          <div class="card" id="closed-card" hidden>
+            <span class="label" style="color:var(--good)">Case cracked</span>
+            <p>Every clue is solved. Stage 2 is open.</p>
+            <button class="btn btn-ink" id="btn-to-2" type="button">Go to Stage 2: Sharpen</button>
+          </div>
+          <article class="news" id="news" aria-label="The article"></article>
+        </div>
+      </div>
+
+      <!-- STAGE 2 -->
+      <div id="st-2" hidden>
+        <div class="card" id="drill-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span class="label" id="drill-round"></span>
+            <span class="small" id="drill-count"></span>
+          </div>
+          <div class="board" id="drill-board" aria-hidden="true"></div>
+          <span class="label" id="drill-part"></span>
+          <span class="retry" id="drill-retry" hidden></span>
+          <h3 class="q" id="drill-q" tabindex="-1"></h3>
+          <div class="opts" id="drill-opts" role="group" aria-labelledby="drill-q"></div>
+          <div class="fb" id="drill-fb" role="status" aria-live="polite" hidden></div>
+          <button class="btn btn-ink" id="drill-next" type="button" hidden></button>
+        </div>
+        <div class="card" id="drill-between" hidden>
+          <span class="label" style="color:var(--stamp)">Round complete</span>
+          <h3 id="drill-between-h" style="font-size:1.3rem"></h3>
+          <p id="drill-between-t"></p>
+          <button class="btn btn-ink" id="drill-go" type="button"></button>
+        </div>
+        <div class="card" id="drill-done" hidden>
+          <span class="label" style="color:var(--good)">Sharpened</span>
+          <p>Every sentence is fixed. Stage 3 is open: time to write your report.</p>
+          <button class="btn btn-ink" id="btn-to-3" type="button">Go to Stage 3: Report</button>
+        </div>
+      </div>
+
+      <!-- STAGE 3 -->
+      <div id="st-3" hidden>
+        <div class="wrap" style="padding:0">
+          <div class="card">
+            <span class="label">Writing question</span>
+            <p style="font-weight:700">How does the writer use biased language to persuade the reader that fast fashion is harmful?</p>
+            <p class="small muted">Pick your TWO strongest clues. They must be two different devices.</p>
+            <div class="picker" id="picker"></div>
+          </div>
+          <div class="card" id="desk" hidden>
+            <span class="label">Your report</span>
+            <p class="small muted">Each box turns green when its structure is right. The checks look at structure, not quality, so compare with the model answer at the end.</p>
+            <div id="slots" style="display:flex;flex-direction:column;gap:18px"></div>
+            <button class="btn btn-ink" id="btn-file" type="button" disabled>File my report</button>
+            <p class="small muted" id="file-note"></p>
+          </div>
+          <div class="card" id="filed" hidden>
+            <span class="label" style="color:var(--good)">Report filed</span>
+            <div class="final" id="final"></div>
+            <div class="btn-row">
+              <button class="btn btn-ghost" id="btn-copy" type="button">Copy my paragraph</button>
+              <button class="btn btn-ghost" id="btn-edit" type="button">Edit my paragraph</button>
+            </div>
+            <p class="small muted" id="copy-note" role="status"></p>
+            <span class="label">Model answer</span>
+            <p class="model" id="model"></p>
+            <span class="label">Now check your paragraph</span>
+            <ul class="tick" id="tick"></ul>
+            <div class="field">
+              <label for="improve">One thing I will improve next time</label>
+              <textarea id="improve" maxlength="300"></textarea>
+            </div>
+            <button class="btn btn-ink" id="btn-report" type="button">Close the case</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="s-report" hidden>
+    <div class="card">
+      <span class="stamp">CASE CLOSED</span>
+      <h2 style="font-size:1.6rem">Detective report</h2>
+      <div>
+        <div class="muted">Clues cracked first try</div>
+        <div class="big" id="r-big"></div>
+      </div>
+      <div class="stats" id="r-stats"></div>
+      <div id="r-revise-block">
+        <h3 style="font-size:1.15rem;margin-bottom:8px">Clues and sentences to revise</h3>
+        <ul class="revise" id="r-revise"></ul>
+      </div>
+      <span class="label">My paragraph</span>
+      <div class="final" id="r-para"></div>
+      <div id="r-improve-block"><span class="label">I will improve</span><p id="r-improve"></p></div>
+      <div class="who" id="r-who"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="btn-back" type="button">Back to the case file</button>
+        <button class="btn btn-ghost" id="btn-again" type="button">Start a new case</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="sheet-back" id="sheet-back" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
+    <div class="sheet-head">
+      <span class="label" id="sheet-label"></span>
+      <button class="x" id="sheet-x" type="button" aria-label="Close">×</button>
+    </div>
+    <p class="evidence" id="sheet-ev"></p>
+    <div class="steps2" id="sheet-steps"></div>
+    <span class="retry" id="sheet-retry" hidden></span>
+    <h3 class="q" id="sheet-q" tabindex="-1"></h3>
+    <div class="opts" id="sheet-opts" role="group" aria-labelledby="sheet-q"></div>
+    <div class="fb" id="sheet-fb" role="status" aria-live="polite" hidden></div>
+    <button class="btn btn-ink" id="sheet-next" type="button" hidden></button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- ARTICLE (Writing Practice 5; fictional, written for classroom practice) ---------- */
+  var ART = {
+    hed: "Fast Fashion Is Turning Our Planet Into a Garbage Dump",
+    dek: "Cheap clothes come with a hidden price tag — and the planet, not the shopper, is the one paying it.",
+    by: "By Leyla Morgan | The Green Ledger | 18 October 2026",
+    paras: [
+      "It arrives in a plastic bag, costs less than a sandwich and will probably be worn twice. Then it disappears into the back of a wardrobe, or straight into the trash. Welcome to the world of fast fashion, where a new T-shirt is as disposable as a paper cup.",
+      "Every week, shopping apps flood our phones with “must-have” trends, flash sales and “only 2 left!” warnings. Teenagers are the main target. One recent report claims that the average young shopper now buys more than sixty new items of clothing a year. Sixty. How many of those do they actually need?",
+      "Behind the bright shop windows lies a dirty secret. Somewhere far away, mountains of unwanted clothes are left to rot in the open air, poisoning rivers and choking the land. The cheap dress that looked so perfect on the screen becomes tomorrow’s toxic waste.",
+      "The greedy giants of the fashion industry know exactly what they are doing. They make their clothes as cheaply as possible, sell them as fast as possible and leave the planet to deal with the mess. One former fashion buyer told me, “We design clothes to fall apart, so that customers come back for more.”",
+      "Of course, the big brands love to talk about their “green collections” and the recycling bins in their stores. But a few recycling bins cannot clean up a mountain of waste. It is like trying to empty the ocean with a teaspoon.",
+      "While we scroll for the next bargain, the planet pays the real price. Is a five-dollar T-shirt really worth a poisoned river?",
+      "Across the world, young people are already fighting back. Thousands of teenagers are swapping clothes with friends, shopping second-hand and refusing to follow every trend. They have realized that being stylish does not have to mean being wasteful.",
+      "We all have a choice. Every time we click “buy now,” we are voting for the kind of world we want to live in. If we do not change our habits today, our children will inherit a planet buried under our old clothes. The question is: which side of history will you be on?"
+    ],
+    foot: "This opinion piece was written for classroom practice. The writer, the publication, and the statistics and quotations it mentions are fictional."
+  };
+
+  /* where: 0 = headline, 1..8 = paragraph number. Every option is written for its own clue. */
+  var CLUES = [
+    { id: "c1", where: 0, text: "Fast Fashion Is Turning Our Planet Into a Garbage Dump", device: "Headline",
+      dAns: "Headline: the big title at the top, built around the shocking words ‘Garbage Dump’.",
+      dWrong: ["Rhetorical question: the title asks the reader whether the planet is a garbage dump.",
+               "Statistics and facts: the title gives the exact weight of clothes thrown away each year.",
+               "Expert opinion: the title quotes a scientist’s warning about clothes and the planet."],
+      dHint: "Check each statement against the words. Where does this text sit in the article? What is its job?",
+      dWhy: "This is the big title at the top, built around the shocking words “Garbage Dump.” That is a headline.",
+      effect: "The words “Garbage Dump” make the reader feel alarmed and disgusted before they have read any evidence.",
+      eWrong: ["The words “Garbage Dump” make the reader expect a calm, balanced report on the clothing industry.",
+               "The words “Garbage Dump” make the reader excited to shop for the newest cheap fashion trends.",
+               "The words “Garbage Dump” show the reader that the article is a joke written only to entertain."], eHint: "Think about how the reader feels before reading a single paragraph." },
+    { id: "c2", where: 1, text: "as disposable as a paper cup", device: "Simile",
+      dAns: "Simile: a new T-shirt is compared to a paper cup using the words ‘as … as’.",
+      dWrong: ["Metaphor: the T-shirt is said to really be a paper cup, with no ‘like’ or ‘as’.",
+               "Statistics and facts: the writer counts how many paper cups are thrown away each day.",
+               "Juxtaposition: a rich shopper and a poor shopper are placed side by side here."],
+      dHint: "Check each statement against the words. Is the T-shirt compared to something? Look for “like” or “as.”",
+      dWhy: "A new T-shirt is compared to a paper cup using “as … as.” That is a simile.",
+      effect: "Comparing a T-shirt to a “paper cup” makes clothes seem like trash used once, so the reader sees fast fashion as wasteful.",
+      eWrong: ["Comparing a T-shirt to a “paper cup” makes clothes seem light and comfy, so the reader wants to buy more of them.",
+               "Comparing a T-shirt to a “paper cup” makes clothes seem strong and long-lasting, so the reader trusts cheap brands.",
+               "Comparing a T-shirt to a “paper cup” makes clothes seem cute and fun, so the reader smiles at the writer’s joke."], eHint: "What do people do with a paper cup after one drink?" },
+    { id: "c3", where: 2, text: "One recent report claims that the average young shopper now buys more than sixty new items of clothing a year", device: "Statistics and facts",
+      dAns: "Statistics and facts: ‘more than sixty’ is a number from a report that is never named.",
+      dWrong: ["Expert opinion: a named fashion professor explains why young people buy so many clothes.",
+               "Hyperbole: the writer claims every teenager on Earth buys a million new clothes a day.",
+               "Juxtaposition: two opposite shoppers, a careful one and a wasteful one, are placed side by side."],
+      dHint: "Check each statement against the words. Look for a number and the words “One recent report.”",
+      dWhy: "“More than sixty” is a number from a report. That is a statistic, and the report is never named.",
+      effect: "The exact number makes shopping sound out of control, but the report is never named, so the reader cannot check it.",
+      eWrong: ["The exact number makes shopping sound small and normal, so the reader feels teenagers only buy what they need.",
+               "The exact number comes from a named, trusted study, so the reader can easily check for themselves that it is true.",
+               "The exact number is clearly a joke, so the reader laughs and stops taking the rest of the article seriously."], eHint: "Which report is it? Could the reader check it?" },
+    { id: "c4", where: 2, text: "Sixty.", device: "Repetition",
+      dAns: "Repetition: the number sixty is said again, alone, in a one-word sentence.",
+      dWrong: ["Rhetorical question: ‘Sixty’ is a question the writer wants the reader to answer.",
+               "Inclusive language: ‘Sixty’ puts the writer and the reader into the same group.",
+               "Statistics and facts: ‘Sixty’ is a brand-new number taken from a second report."],
+      dHint: "Check each statement against the words. Have you already seen this number earlier in the same paragraph?",
+      dWhy: "The number “sixty” is said again in a sentence all by itself. That is repetition.",
+      effect: "Repeating “Sixty.” on its own makes the reader stop and feel shocked at how big the number is.",
+      eWrong: ["Repeating “Sixty.” on its own makes the reader feel the number is small and not worth worrying about.",
+               "Repeating “Sixty.” on its own makes the reader think the writer has simply made a typing mistake.",
+               "Repeating “Sixty.” on its own makes the reader want to count their own clothes just for fun."], eHint: "Why would a writer say the same number twice, in a sentence all by itself?" },
+    { id: "c5", where: 3, text: "left to rot in the open air, poisoning rivers and choking the land", device: "Evocative language",
+      dAns: "Evocative language: ‘rot’, ‘poisoning’ and ‘choking’ create a disgusting picture of harm.",
+      dWrong: ["Statistics and facts: the writer measures exactly how many rivers have been poisoned.",
+               "Simile: the dirty land is compared to a very sick person using the word ‘like’.",
+               "Expert opinion: a named scientist describes the rivers in a research report."],
+      dHint: "Check each statement against the words. Which verbs make a strong picture in your mind?",
+      dWhy: "“Rot,” “poisoning” and “choking” create a vivid, disgusting picture. That is evocative language.",
+      effect: "The verbs “rot,” “poisoning” and “choking” make the reader feel shocked and guilty, as if old clothes were a deadly poison.",
+      eWrong: ["The verbs “rot,” “poisoning” and “choking” make the reader feel calm, as if old clothes were clean and harmless.",
+               "The verbs “rot,” “poisoning” and “choking” make the reader feel proud, as if throwing clothes away helped nature.",
+               "The verbs “rot,” “poisoning” and “choking” make the reader feel bored, as if the writer listed dull science facts."], eHint: "What do you see and feel when the land is “choking”?" },
+    { id: "c6", where: 4, text: "greedy giants", device: "Loaded language",
+      dAns: "Loaded language: ‘greedy’ carries a hidden judgment that the companies only care about money.",
+      dWrong: ["Inclusive language: ‘giants’ puts the writer and the reader together in the same group.",
+               "Statistics and facts: ‘giants’ tells the reader the exact size of each fashion company.",
+               "Rhetorical question: the writer asks the reader who the giants of the industry are."],
+      dHint: "Check each statement against the words. Could the writer have chosen a more neutral word than “greedy”?",
+      dWhy: "“Greedy” carries a hidden judgment: the companies only care about money. That is loaded language.",
+      effect: "Calling the companies “greedy giants” makes them seem selfish and powerful, so the reader feels angry and distrustful.",
+      eWrong: ["Calling the companies “greedy giants” makes them seem kind and generous, so the reader feels grateful to them.",
+               "Calling the companies “greedy giants” makes them seem small and weak, so the reader feels sorry for them.",
+               "Calling the companies “greedy giants” makes them seem funny and harmless, so the reader laughs at them."], eHint: "Is “greedy” a positive or a negative word? How does it make you see the companies?" },
+    { id: "c7", where: 4, text: "One former fashion buyer told me", device: "Expert opinion",
+      dAns: "Expert opinion: a fashion buyer has inside knowledge, but no name is given.",
+      dWrong: ["Statistics and facts: the buyer gives an exact number of clothes that fall apart.",
+               "Bandwagon: every buyer in the industry is said to agree with the writer.",
+               "Inclusive language: ‘me’ puts the reader inside the writer’s own group."],
+      dHint: "Check each statement against the words. Who is speaking here, and what was their job?",
+      dWhy: "A former fashion buyer has inside knowledge, but no name is given. That is unverified expert opinion.",
+      effect: "An insider sounds trustworthy, but the buyer is never named, so the reader cannot check the claim.",
+      eWrong: ["An insider sounds trustworthy, and their full name is given, so the reader can easily check the claim.",
+               "An insider sounds silly and unreliable, so the reader decides to ignore the whole article.",
+               "An insider sounds like a fashion fan, so the reader thinks the writer secretly loves cheap clothes."], eHint: "Do we know who this buyer is?" },
+    { id: "c8", where: 5, text: "Of course, the big brands love to talk about their “green collections”", device: "Selective detail",
+      dAns: "Selective detail: the brands’ side gets one quick mention before it is dismissed.",
+      dWrong: ["Balanced argument: the brands get a full paragraph to explain their side fairly.",
+               "Expert opinion: the brands are quoted by name as experts on saving the planet.",
+               "Hyperbole: the writer claims the brands sell a trillion green collections a day."],
+      dHint: "Check each statement against the words. Whose side is this? How long does the writer let them speak?",
+      dWhy: "The brands’ side gets one quick mention before the writer dismisses it. That is selective detail.",
+      effect: "The brands’ side is mentioned once and then pushed away, so the reader only sees one side of the story.",
+      eWrong: ["The brands’ side gets a full and fair explanation, so the reader can weigh up both sides equally.",
+               "The brands’ side is proven completely right, so the reader starts to support cheap fashion.",
+               "The brands’ side is praised warmly, so the reader feels the writer admires green collections."], eHint: "How much space does the other side get before it is pushed away?" },
+    { id: "c9", where: 6, text: "While we scroll for the next bargain, the planet pays the real price.", device: "Juxtaposition",
+      dAns: "Juxtaposition: our cheap ‘bargain’ is placed right next to the planet’s ‘real price’.",
+      dWrong: ["Simile: shopping online is compared to scrolling using the word ‘like’.",
+               "Statistics and facts: the writer gives the exact price the planet has to pay.",
+               "Expert opinion: a named economist explains the real price of cheap clothes."],
+      dHint: "Check each statement against the words. Look at the word “While.” Which two things sit side by side?",
+      dWhy: "Our cheap “bargain” is placed right next to the planet’s “real price.” That is juxtaposition.",
+      effect: "Putting the “bargain” next to the planet’s “real price” shows an unfair gap, so the reader feels guilty about cheap shopping.",
+      eWrong: ["Putting the “bargain” next to the planet’s “real price” shows both sides win, so the reader feels happy about cheap shopping.",
+               "Putting the “bargain” next to the planet’s “real price” shows the planet earns money, so the reader feels proud of shopping.",
+               "Putting the “bargain” next to the planet’s “real price” advertises a sale, so the reader hurries to find the next deal."], eHint: "Who gets the cheap deal, and who pays the cost?" },
+    { id: "c10", where: 6, text: "Is a five-dollar T-shirt really worth a poisoned river?", device: "Rhetorical question",
+      dAns: "Rhetorical question: a question with only one sensible answer, ‘no’.",
+      dWrong: ["Statistics and facts: the question gives the exact price of a poisoned river.",
+               "Expert opinion: a named shop owner asks this question in a TV interview.",
+               "Fear appeal: the writer warns that a river will be poisoned tomorrow morning."],
+      dHint: "Check each statement against the words. Look at the punctuation at the end. Does the writer want a real answer?",
+      dWhy: "The question has only one sensible answer, “no,” and nobody is expected to reply. That is a rhetorical question.",
+      effect: "The only sensible answer is “no,” so the reader feels responsible and is pushed to agree that cheap clothes are wrong.",
+      eWrong: ["The writer wants a real price, so the reader feels invited to look up online how much a river costs.",
+               "The only sensible answer is “yes,” so the reader feels relaxed and happy to keep buying cheap clothes.",
+               "The question shows that the writer is confused, so the reader feels the article cannot be trusted."], eHint: "What answer does the writer want you to give in your head?" },
+    { id: "c11", where: 7, text: "young people are already fighting back", device: "Bandwagon",
+      dAns: "Bandwagon: other young people are said to be acting already, so you should join in.",
+      dWrong: ["Statistics and facts: an exact number of young people is taken from a named survey.",
+               "Expert opinion: a named teacher explains how her students are fighting back.",
+               "Rhetorical question: the writer asks young people when they will start to fight back."],
+      dHint: "Check each statement against the words. Look at the word “already.” What does the writer want you to join?",
+      dWhy: "The writer says young people are already acting, so you should join in. That is bandwagon.",
+      effect: "Saying young people are “already fighting back” makes the reader worry about being left out if they keep shopping.",
+      eWrong: ["Saying young people are “already fighting back” makes the reader feel the problem is solved and nothing needs to change.",
+               "Saying young people are “already fighting back” makes the reader feel sorry for teenagers who are tired of fighting.",
+               "Saying young people are “already fighting back” makes the reader doubt that anyone really cares about clothes."], eHint: "How would you feel if everyone your age had already started?" },
+    { id: "c12", where: 8, text: "We all have a choice.", device: "Inclusive language",
+      dAns: "Inclusive language: ‘We all’ puts the writer and the reader in the same group.",
+      dWrong: ["Loaded language: ‘choice’ is an insult that is aimed only at fashion companies.",
+               "Expert opinion: ‘We’ refers to a team of named scientists who studied clothes.",
+               "Rhetorical question: the writer asks the reader whether we all have a choice."],
+      dHint: "Check each statement against the words. Look at the first two words. Who is “we”?",
+      dWhy: "“We all” puts the writer and the reader in the same group. That is inclusive language.",
+      effect: "“We all” pulls the reader into the writer’s group, so it feels hard to disagree and easy to share the blame.",
+      eWrong: ["“We all” pushes the reader out of the writer’s group, so it feels easy to disagree with her.",
+               "“We all” refers only to the writer’s own family, so the reader feels the article is not about them.",
+               "“We all” refers to the fashion brands, so the reader feels the writer is defending the companies."], eHint: "Who is included in “we all”? Is the reader one of them?" },
+    { id: "c13", where: 8, text: "we are voting for the kind of world we want to live in", device: "Metaphor",
+      dAns: "Metaphor: clicking ‘buy now’ is described as voting, without ‘like’ or ‘as’.",
+      dWrong: ["Simile: shopping online is compared to voting in an election using the word ‘like’.",
+               "Statistics and facts: the writer gives the number of votes in a real election.",
+               "Hyperbole: the writer says every shopper on Earth votes a million times a day."],
+      dHint: "Check each statement against the words. Are shoppers really voting? What is being compared to what?",
+      dWhy: "Clicking “buy now” is described as voting, with no “like” or “as.” That is a metaphor.",
+      effect: "Calling a purchase a vote makes every click seem important, so the reader feels responsible for the future of the world.",
+      eWrong: ["Calling a purchase a vote makes every click seem meaningless, so the reader feels free to shop without thinking.",
+               "Calling a purchase a vote makes shopping seem like a school election, so the reader feels bored by politics.",
+               "Calling a purchase a vote makes clothes seem like gifts, so the reader feels generous and kind to others."], eHint: "What does a vote decide? What does that say about every purchase?" },
+    { id: "c14", where: 8, text: "If we do not change our habits today", device: "Fear appeal",
+      dAns: "Fear appeal: the writer warns of a terrible future if we do not act ‘today’.",
+      dWrong: ["Statistics and facts: the writer measures exactly how our habits have changed.",
+               "Expert opinion: a named doctor explains the best way to change our habits.",
+               "Rhetorical question: the writer asks the reader which habits they have today."],
+      dHint: "Check each statement against the words. What does the writer warn will happen if nobody acts?",
+      dWhy: "The writer warns of a terrible future if we do not change “today.” That is a fear appeal.",
+      effect: "The warning makes the reader anxious about the future, so they feel they must change their habits now.",
+      eWrong: ["The warning makes the reader relaxed about the future, so they feel there is plenty of time to change.",
+               "The warning makes the reader excited about the future, so they plan a big shopping trip right away.",
+               "The warning makes the reader laugh at the writer, so they decide to ignore the rest of the article."], eHint: "What is the reader afraid of after reading this warning?" },
+    { id: "c15", where: 8, text: "a planet buried under our old clothes", device: "Hyperbole",
+      dAns: "Hyperbole: a whole planet buried under clothes is a huge exaggeration.",
+      dWrong: ["Statistics and facts: the exact weight of old clothes comes from a named report.",
+               "Simile: the planet is compared to a wardrobe using the word ‘like’.",
+               "Expert opinion: a named scientist predicts the planet will soon be buried."],
+      dHint: "Check each statement against the words. Is this claim exactly true, or much bigger than the truth?",
+      dWhy: "A whole planet buried under old clothes is a huge exaggeration. That is hyperbole.",
+      effect: "Picturing a whole planet “buried” under clothes makes the problem sound enormous, so the reader feels alarmed.",
+      eWrong: ["Picturing a whole planet “buried” under clothes makes the problem sound tiny, so the reader stops worrying.",
+               "Picturing a whole planet “buried” under clothes proves the problem with exact data, so the reader trusts it.",
+               "Picturing a whole planet “buried” under clothes makes the reader feel cozy, as if the Earth were wrapped up warm."], eHint: "Could a whole planet really be buried under clothes?" }
+  ];
+  var CBY = {}; CLUES.forEach(function (c) { CBY[c.id] = c; });
+
+  /* ---------- STAGE 2 DRILLS (sentences written for practice) ---------- */
+  var DRILLS = [
+    { part: "Point", q: "Which POINT sentence is complete?",
+      answer: "In the opinion article “Fast Fashion Is Turning Our Planet Into a Garbage Dump,” published in The Green Ledger, Leyla Morgan argues that fast fashion harms the planet through the use of loaded language and unverified expert opinion.",
+      wrong: ["In the opinion article “Fast Fashion Is Turning Our Planet Into a Garbage Dump,” Leyla Morgan argues that fast fashion is seriously harming the planet through the use of loaded language and unverified expert opinion.",
+              "In the opinion article “Fast Fashion Is Turning Our Planet Into a Garbage Dump,” published in The Green Ledger, Leyla Morgan argues that fast fashion is seriously harming the planet through the use of loaded language.",
+              "In the news report “Fast Fashion Is Turning Our Planet Into a Garbage Dump,” published in The Green Ledger, Leyla Morgan argues that fast fashion harms the planet through the use of loaded language and unverified expert opinion."],
+      hint: "Check every part: genre, title, writer, publication, claim and TWO techniques. Is it a news report or an opinion article?",
+      why: "It names the correct genre (opinion article), the title, the writer, the publication, the writer’s claim and both techniques. The others leave out the publication, give only one technique, or get the genre wrong." },
+    { part: "Evidence", q: "Which EVIDENCE sentence is best?",
+      answer: "First, Morgan describes the fashion companies as “greedy giants.”",
+      wrong: ["First, the quote “greedy giants” shows what Morgan thinks of the companies.",
+              "First, Morgan describes the fashion companies as greedy giants.",
+              "First, Morgan describes the fashion companies as “greedy monsters.”"],
+      hint: "Good evidence is exact, inside quotation marks and built into your sentence. Never write “quote.” Check the wording against paragraph 4.",
+      why: "The evidence is exact, in quotation marks, and built into the sentence. The others use the word “quote,” leave out the quotation marks, or change the writer’s words." },
+    { part: "Technique", q: "Which TECHNIQUE sentence is strongest?",
+      answer: "The writer uses loaded language through the word “greedy,” which has negative connotations of selfishness.",
+      wrong: ["The writer uses a simile through the word “greedy,” which has negative connotations of selfishness.",
+              "The writer uses loaded language in this quote, which shows that it is a very clever technique.",
+              "The writer uses loaded language through the word “giants,” which has positive connotations of kindness."],
+      hint: "Name the right device AND zoom in on the key word. Which word carries the judgment? Is “like” or “as” used?",
+      why: "It names the right device and zooms in on the key word “greedy” with its connotation. The others name the wrong device, use the word “quote,” or zoom in on the wrong word with the wrong meaning." },
+    { part: "Effect on the reader", q: "Which EFFECT sentence is strongest?",
+      answer: "This makes the reader feel angry and distrustful, because it suggests that the companies care only about money, not the planet.",
+      wrong: ["This makes the reader feel emotional and interested, because it is a very powerful and effective word in the article.",
+              "This makes the reader feel angry and distrustful, and it also makes the reader want to keep on reading the article.",
+              "This makes the reader feel grateful, because it suggests that the companies work very hard to protect the planet."],
+      hint: "Say WHAT the reader feels (a precise feeling), then HOW the words create it, with “because.”",
+      why: "It names a precise feeling (angry and distrustful) and explains how “greedy” creates it. The others are vague, give no reason, or name the wrong feeling." },
+    { part: "Relate", q: "Which RELATE sentence is correct?",
+      answer: "Therefore, the loaded language shows the writer’s bias, as the companies are judged to be selfish before any evidence is given.",
+      wrong: ["To sum up, the loaded language shows the writer’s bias, as the companies are judged to be selfish before any evidence.",
+              "Therefore, the loaded language is a good technique, and the writer uses it very well in this opinion article.",
+              "In conclusion, the loaded language shows the writer’s bias, as the companies are judged to be selfish and greedy."],
+      hint: "Link back to your point about bias, and check the opening word: some openings are banned.",
+      why: "It starts with “Therefore” and links the device back to bias. Two others use banned openings, and one never links back to bias." },
+    { part: "Effect on the reader", q: "Which sentence shows the best critical thinking about the fashion buyer?",
+      answer: "The words “fashion buyer” make the claim sound like inside knowledge, but the buyer is never named, so the reader cannot check it.",
+      wrong: ["The words “fashion buyer” make the claim sound like inside knowledge, so the reader can be completely sure that it is true.",
+              "The words “fashion buyer” make the claim sound silly, because people who buy clothes know nothing about the industry.",
+              "The words “fashion buyer” make the claim sound like inside knowledge, and the buyer’s full name proves it is a real expert."],
+      hint: "A good detective asks: is this person named? Check paragraph 4.",
+      why: "It explains why the claim sounds trustworthy, then points out that the reader cannot check it. The buyer is never named in the article." },
+    { part: "Second example", q: "Which word should begin your SECOND piece of evidence?",
+      answer: "Furthermore,",
+      wrong: ["However,",
+              "Therefore,",
+              "To conclude,"],
+      hint: "You are adding another example, not disagreeing and not finishing the paragraph.",
+      why: "“Furthermore” adds a second example. “However” disagrees, “Therefore” draws a conclusion, and “To conclude” ends the paragraph." }
+  ];
+
+  /* ---------- MODEL ANSWER (from Writing Practice 5) ---------- */
+  var MODEL = "In the opinion article “Fast Fashion Is Turning Our Planet Into a Garbage Dump,” published in The Green Ledger, Leyla Morgan presents a one-sided view of fast fashion as a serious danger to the planet through the use of evocative language and a rhetorical question. First, Morgan describes unwanted clothes that are “left to rot in the open air, poisoning rivers and choking the land.” The writer uses evocative language through the verbs “rot,” “poisoning” and “choking,” which create a disgusting and violent picture of nature being harmed. This makes the reader feel shocked and guilty, because the verbs make old clothes seem like a deadly poison that is attacking the natural world, not just harmless T-shirts in a pile. Therefore, the evocative language shows the writer's bias, as fast fashion is presented only as a disaster, without any balanced facts. Furthermore, Morgan asks, “Is a five-dollar T-shirt really worth a poisoned river?” The writer uses a rhetorical question that places a cheap “five-dollar T-shirt” next to a “poisoned river.” This makes the reader feel responsible and uncomfortable, because the only sensible answer is “no,” so the reader is pushed to agree that buying cheap clothes is wrong. The question also makes one small purchase seem as serious as destroying a whole river, which is a huge exaggeration. Thus, the rhetorical question pressures the reader to accept the writer's opinion instead of thinking about both sides, which further reveals the one-sided nature of the article.";
+  var TICKS = [
+    "My point sentence includes the genre, title, writer, publication, claim and TWO techniques.",
+    "I used two short pieces of evidence and built them into my sentences.",
+    "I named each technique correctly and zoomed in on a key word.",
+    "Each effect says what the reader feels or thinks AND explains how the words create it.",
+    "Each relate sentence links back to my point (Therefore / Thus).",
+    "I did not use the word “quote,” “To sum up” or “To conclude.”"
+  ];
+
+  /* ---------- WRITING DESK ---------- */
+  var KEYS = {
+    "Headline": ["headline"], "Simile": ["simile"], "Statistics and facts": ["statistic"], "Repetition": ["repetition", "repeat"],
+    "Evocative language": ["evocative", "emotive"], "Loaded language": ["loaded"], "Expert opinion": ["expert"],
+    "Selective detail": ["selective"], "Juxtaposition": ["juxtapos"], "Rhetorical question": ["rhetorical"],
+    "Bandwagon": ["bandwagon"], "Inclusive language": ["inclusive"], "Metaphor": ["metaphor"],
+    "Fear appeal": ["fear"], "Hyperbole": ["hyperbole", "exaggerat"]
+  };
+  var STARTERS = {
+    "Headline": "The headline “…” immediately creates a sense of …",
+    "Simile": "The writer uses a simile, comparing … to “…,” which suggests …",
+    "Statistics and facts": "The writer uses the statistic “…” to make the claim seem …",
+    "Repetition": "The repetition of “…” emphasizes …",
+    "Evocative language": "The writer uses evocative language through the verbs “…,” which create a picture of …",
+    "Loaded language": "The writer uses loaded language through the word “…,” which has negative connotations of …",
+    "Expert opinion": "The writer uses unverified expert opinion, because …",
+    "Selective detail": "The writer uses selective detail by focusing only on …",
+    "Juxtaposition": "The writer juxtaposes … with …",
+    "Rhetorical question": "The writer uses a rhetorical question, “…?”, to make the reader consider …",
+    "Bandwagon": "The writer uses the bandwagon technique by claiming that …",
+    "Inclusive language": "The inclusive pronoun “…” makes the reader feel …",
+    "Metaphor": "The writer uses a metaphor, comparing … to …",
+    "Fear appeal": "The writer uses fear appeal through the warning that …",
+    "Hyperbole": "The writer uses hyperbole in the claim that …"
+  };
+  var SLOTS = [
+    { k: "p", n: "P", label: "Point", starter: "In the opinion article “…,” published in …, Leyla Morgan … through the use of … and …." },
+    { k: "e1", n: "E", label: "Evidence 1", starter: "First, Morgan describes … as “…”." },
+    { k: "t1", n: "T", label: "Technique 1", starter: "" },
+    { k: "f1", n: "E", label: "Effect on the reader", starter: "This makes the reader feel …, because …" },
+    { k: "r1", n: "R", label: "Relate", starter: "Therefore, … shows the writer’s bias, as …" },
+    { k: "e2", n: "E", label: "Evidence 2", starter: "Furthermore, Morgan states that “…”." },
+    { k: "t2", n: "T", label: "Technique 2", starter: "" },
+    { k: "f2", n: "E", label: "Effect on the reader", starter: "This makes the reader feel …, so …" },
+    { k: "r2", n: "R", label: "Relate", starter: "Thus, … which further reveals the one-sided nature of the article." }
+  ];
+
+  var KEY = "onur-case:fast-fashion-v1";
+  var LETTERS = ["A", "B", "C", "D"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var S = null;
+
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) { var r = a.slice(); for (var i = r.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = r[i]; r[i] = r[j]; r[j] = t; } return r; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() { try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); return s && s.clues && s.drill ? s : null; } catch (e) { return null; } }
+  function fresh(name) {
+    var clues = {}; CLUES.forEach(function (c) { clues[c.id] = { status: "open", misses: 0 }; });
+    return { name: name || "", stage: 1, screen: "main", sweep: 1, clues: clues, streak: 0, best: 0,
+      cur: null, phase: null, opts: null, answered: null,
+      drill: { round: 1, queue: DRILLS.map(function (_, i) { return i; }), pos: 0, next: [], misses: {}, done: {}, opts: null, answered: null, between: false },
+      pick: [], text: {}, filed: false, ticks: {}, improve: "" };
+  }
+  function show(id) { ["s-start", "s-main", "s-report"].forEach(function (s) { $(s).hidden = s !== id; }); }
+  function norm(s) { return String(s).toLowerCase().replace(/[“”"]/g, '"').replace(/[‘’']/g, "'").replace(/[–—]/g, "-").replace(/\s+/g, " ").trim(); }
+  var ART_NORM = norm([ART.hed, ART.dek, ART.by].concat(ART.paras).join(" "));
+
+  function cracked() { return CLUES.filter(function (c) { var s = S.clues[c.id].status; return s === "first" || s === "later"; }).length; }
+  function stage1Done() { return cracked() === CLUES.length; }
+  function stage2Done() { return Object.keys(S.drill.done).length === DRILLS.length; }
+
+  /* ---------- START ---------- */
+  function renderStart() {
+    var saved = load();
+    if (saved && saved.screen !== "report") {
+      $("resume").hidden = false;
+      var n = CLUES.filter(function (c) { var s = saved.clues[c.id].status; return s === "first" || s === "later"; }).length;
+      $("resume-text").textContent = n + " of " + CLUES.length + " clues cracked.";
+      $("btn-resume").onclick = function () { S = saved; route(); };
+      $("btn-wipe").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} $("resume").hidden = true; };
+      if (saved.name) $("student-name").value = saved.name;
+    } else { $("resume").hidden = true; }
+    show("s-start");
+  }
+  $("btn-start").onclick = function () { S = fresh($("student-name").value.trim()); save(); route(); window.scrollTo(0, 0); };
+
+  /* ---------- MAIN / TABS ---------- */
+  function renderTabs() {
+    var n = cracked();
+    $("tab-1-s").textContent = n + "/" + CLUES.length + " clues";
+    $("tab-2-s").textContent = stage1Done() ? Object.keys(S.drill.done).length + "/" + DRILLS.length + " fixed" : "locked";
+    $("tab-3-s").textContent = !stage2Done() ? "locked" : (S.filed ? "filed" : "to write");
+    $("tab-2").disabled = !stage1Done(); $("tab-3").disabled = !stage2Done();
+    [1, 2, 3].forEach(function (i) {
+      $("tab-" + i).classList.toggle("on", S.stage === i);
+      $("tab-" + i).classList.toggle("done", (i === 1 && stage1Done()) || (i === 2 && stage2Done()) || (i === 3 && S.filed));
+      $("st-" + i).hidden = S.stage !== i;
+    });
+  }
+  [1, 2, 3].forEach(function (i) {
+    $("tab-" + i).onclick = function () { S.stage = i; save(); renderMain(); window.scrollTo(0, 0); };
+  });
+  function renderMain() {
+    renderTabs();
+    if (S.stage === 1) renderStage1();
+    else if (S.stage === 2) renderStage2();
+    else renderStage3();
+    show("s-main");
+  }
+
+  /* ---------- STAGE 1 ---------- */
+  function buildText(el, text, where) {
+    var marks = CLUES.filter(function (c) { return c.where === where; })
+      .map(function (c) { return { c: c, at: text.indexOf(c.text) }; })
+      .filter(function (m) { return m.at >= 0; })
+      .sort(function (a, b) { return a.at - b.at; });
+    var pos = 0;
+    marks.forEach(function (m) {
+      el.appendChild(document.createTextNode(text.slice(pos, m.at)));
+      var st = S.clues[m.c.id];
+      var b = document.createElement("span"); b.setAttribute("role", "button"); b.tabIndex = 0;
+      b.className = "clue" + (st.status !== "open" ? " " + st.status : "");
+      b.appendChild(document.createTextNode(m.c.text));
+      var sup = document.createElement("sup"); sup.textContent = m.c.id.slice(1); b.appendChild(sup);
+      if (st.status === "first" || st.status === "later") { var tg = document.createElement("span"); tg.className = "tag"; tg.textContent = "[" + m.c.device + "]"; b.appendChild(tg); }
+      var lab = "Clue " + m.c.id.slice(1) + ": " + m.c.text + ". ";
+      lab += st.status === "open" ? "Tap to investigate." : st.status === "cold" ? "Cold case. It reopens next sweep." : "Cracked: " + m.c.device + ".";
+      b.setAttribute("aria-label", lab);
+      if (st.status === "open") b.onclick = function () { openClue(m.c.id); };
+      else if (st.status === "cold") b.onclick = function () { nudge(); };
+      else b.onclick = function () { openSolved(m.c.id); };
+      b.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); b.click(); } });
+      el.appendChild(b);
+      pos = m.at + m.c.text.length;
+    });
+    el.appendChild(document.createTextNode(text.slice(pos)));
+  }
+  function renderStage1() {
+    var news = $("news"); news.textContent = "";
+    var k = document.createElement("span"); k.className = "kicker"; k.textContent = "OPINION"; news.appendChild(k);
+    var h = document.createElement("h2"); h.className = "hed"; buildText(h, ART.hed, 0); news.appendChild(h);
+    var d = document.createElement("p"); d.className = "dek"; d.textContent = ART.dek; news.appendChild(d);
+    var by = document.createElement("p"); by.className = "byline"; by.textContent = ART.by; news.appendChild(by);
+    ART.paras.forEach(function (t, i) {
+      var row = document.createElement("div"); row.className = "para";
+      var pn = document.createElement("span"); pn.className = "pn"; pn.textContent = "¶" + (i + 1);
+      var p = document.createElement("p"); p.className = "ptxt"; buildText(p, t, i + 1);
+      row.appendChild(pn); row.appendChild(p); news.appendChild(row);
+    });
+    var f = document.createElement("p"); f.className = "foot"; f.textContent = ART.foot; news.appendChild(f);
+
+    var n = cracked();
+    $("clue-count").textContent = n + " of " + CLUES.length + " clues cracked";
+    $("meter").style.width = (n / CLUES.length * 100) + "%";
+    $("sweep-label").textContent = "Sweep " + S.sweep;
+    var open = CLUES.filter(function (c) { return S.clues[c.id].status === "open"; }).length;
+    var cold = CLUES.filter(function (c) { return S.clues[c.id].status === "cold"; }).length;
+    $("sweep-card").hidden = !(open === 0 && cold > 0);
+    if (open === 0 && cold > 0) {
+      $("sweep-text").textContent = (cold === 1 ? "1 cold case reopens" : cold + " cold cases reopen") + " in sweep " + (S.sweep + 1) + ", with the answers in a new order.";
+      $("btn-sweep").textContent = "Start sweep " + (S.sweep + 1);
+    }
+    $("closed-card").hidden = !stage1Done();
+  }
+  $("btn-sweep").onclick = function () {
+    CLUES.forEach(function (c) { if (S.clues[c.id].status === "cold") S.clues[c.id].status = "open"; });
+    S.sweep += 1; save(); renderMain();
+    var first = document.querySelector(".clue:not(.first):not(.later):not(.cold)"); if (first) first.focus();
+  };
+  $("btn-to-2").onclick = function () { S.stage = 2; save(); renderMain(); window.scrollTo(0, 0); };
+  function nudge() {
+    var card = $("sweep-label"); card.textContent = "Cold case: crack the other clues first";
+    setTimeout(function () { if (S) $("sweep-label").textContent = "Sweep " + S.sweep; }, 1800);
+  }
+
+  /* Interrogation sheet */
+  var lastFocus = null;
+  function openClue(id) {
+    lastFocus = document.activeElement;
+    S.cur = id; S.phase = "device"; S.answered = null;
+    var c = CBY[id]; S.opts = shuffle([c.dAns].concat(c.dWrong));
+    save(); renderSheet(); $("sheet-back").hidden = false; $("sheet-q").focus();
+  }
+  function openSolved(id) {
+    lastFocus = document.activeElement;
+    S.cur = id; S.phase = "solved"; S.opts = null; S.answered = null;
+    renderSheet(); $("sheet-back").hidden = false; $("sheet-x").focus();
+  }
+  function closeSheet() {
+    if (S.answered && S.phase !== "device") finishClue();
+    else if (S.answered && S.phase === "device" && !S.answered.correct) finishClue();
+    S.cur = null; S.phase = null; S.opts = null; S.answered = null;
+    $("sheet-back").hidden = true; save(); renderMain();
+    if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  $("sheet-x").onclick = closeSheet;
+  $("sheet-back").addEventListener("click", function (e) { if (e.target === $("sheet-back")) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if ($("sheet-back").hidden) return;
+    if (e.key === "Escape") { closeSheet(); return; }
+    var idx = ["1", "2", "3", "4"].indexOf(e.key); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(e.key.toLowerCase());
+    if (idx >= 0 && S.opts && idx < S.opts.length && !S.answered && e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") { e.preventDefault(); pickClue(idx); }
+  });
+
+  function renderSheet() {
+    var c = CBY[S.cur], st = S.clues[S.cur];
+    $("sheet-label").textContent = "Clue " + c.id.slice(1) + " · " + (c.where === 0 ? "Headline" : "¶" + c.where);
+    $("sheet-ev").textContent = "“" + c.text + "”";
+    var steps = $("sheet-steps"); steps.textContent = "";
+    [["device", "1 Name the device"], ["effect", "2 What it does"]].forEach(function (p) {
+      var s = document.createElement("span"); s.className = "st";
+      if (S.phase === p[0]) s.className += " on";
+      if ((p[0] === "device" && (S.phase === "effect" || S.phase === "solved")) || (p[0] === "effect" && S.phase === "solved")) s.className += " done";
+      s.textContent = p[1]; steps.appendChild(s);
+    });
+    $("sheet-retry").hidden = !st.misses;
+    $("sheet-retry").textContent = st.misses === 1 ? "Cold case: missed once" : "Cold case: missed " + st.misses + " times";
+    var box = $("sheet-opts"); box.textContent = "";
+    $("sheet-fb").hidden = true; $("sheet-next").hidden = true;
+    if (S.phase === "solved") {
+      $("sheet-q").textContent = c.device;
+      var fb = $("sheet-fb"); fb.className = "fb good"; fb.textContent = "";
+      var p1 = document.createElement("p"); p1.textContent = c.dWhy;
+      var p2 = document.createElement("p"); p2.textContent = c.effect;
+      fb.appendChild(p1); fb.appendChild(p2); fb.hidden = false;
+      return;
+    }
+    $("sheet-q").textContent = S.phase === "device" ? "Which device is this? Choose the statement that is true." : "It is " + c.device.toLowerCase() + ". What does it do to the reader?";
+    S.opts.forEach(function (text, i) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[i];
+      var t = document.createElement("span"); t.className = "t"; fillOpt(t, text, S.phase === "device");
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pickClue(i); };
+      box.appendChild(b);
+    });
+    if (S.answered) paintClue(false);
+  }
+  /* "Device: claim" options show the device name in bold. */
+  function fillOpt(el, text, labelled) {
+    el.textContent = "";
+    var m = labelled ? /^([^:]{2,32}): (.+)$/.exec(text) : null;
+    if (m) { var b = document.createElement("b"); b.className = "olab"; b.textContent = m[1] + ":"; el.appendChild(b); el.appendChild(document.createTextNode(" " + m[2])); }
+    else el.textContent = text;
+  }
+  function correctClue(c) { return S.phase === "device" ? c.dAns : c.effect; }
+  function pickClue(i) {
+    if (S.answered) return;
+    var c = CBY[S.cur], st = S.clues[S.cur];
+    var ok = S.opts[i] === correctClue(c);
+    S.answered = { pick: i, correct: ok };
+    if (!ok) { st.misses += 1; S.streak = 0; }
+    else if (S.phase === "effect") { S.streak += 1; if (S.streak > S.best) S.best = S.streak; }
+    save(); paintClue(true);
+  }
+  function paintClue(fresh) {
+    var c = CBY[S.cur], st = S.clues[S.cur], a = S.answered;
+    var reveal = !a.correct && st.misses >= 3;
+    var ans = correctClue(c);
+    $("sheet-opts").querySelectorAll(".opt").forEach(function (b, i) {
+      b.disabled = true;
+      if (i === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && S.opts[i] === ans) b.classList.add("right");
+      else b.classList.add("dim");
+      if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("sheet-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h";
+    var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    var btn = $("sheet-next");
+    if (a.correct && S.phase === "device") {
+      fb.classList.add("good"); h.textContent = "Correct. Now the effect."; p.textContent = c.dWhy; btn.textContent = "Next: what it does";
+    } else if (a.correct) {
+      fb.classList.add("good"); h.textContent = st.misses ? "Cracked. Cold case closed." : "Clue cracked!";
+      p.textContent = "Remember it like this: " + c.device + ". " + c.effect; btn.textContent = "Back to the article";
+    } else {
+      if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = "Answer: " + ans; }
+      else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + (S.phase === "device" ? c.dHint : c.eHint); }
+      n.textContent = "This clue becomes a cold case. It reopens in sweep " + (S.sweep + 1) + ".";
+      btn.textContent = "Back to the article";
+    }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n);
+    fb.hidden = false; btn.hidden = false;
+    if (fresh) { btn.focus({ preventScroll: true }); btn.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  function finishClue() {
+    var st = S.clues[S.cur];
+    if (!S.answered) return;
+    if (S.answered.correct && S.phase === "effect") st.status = st.misses ? "later" : "first";
+    else if (!S.answered.correct) st.status = "cold";
+  }
+  $("sheet-next").onclick = function () {
+    if (S.answered && S.answered.correct && S.phase === "device") {
+      var c = CBY[S.cur];
+      S.phase = "effect"; S.answered = null; S.opts = shuffle([c.effect].concat(c.eWrong));
+      save(); renderSheet(); $("sheet-q").focus(); return;
+    }
+    closeSheet();
+  };
+
+  /* ---------- STAGE 2 ---------- */
+  function drillOpts(i) { var d = DRILLS[i]; return shuffle([d.answer].concat(d.wrong)); }
+  function renderStage2() {
+    var D = S.drill;
+    $("drill-card").hidden = true; $("drill-between").hidden = true; $("drill-done").hidden = true;
+    if (stage2Done()) { $("drill-done").hidden = false; return; }
+    if (D.between) {
+      var n = D.next.length;
+      $("drill-between-h").textContent = n === 1 ? "1 sentence to fix again" : n + " sentences to fix again";
+      $("drill-between-t").textContent = (n === 1 ? "It comes" : "They come") + " back in round " + (D.round + 1) + " with the answers in a new order.";
+      $("drill-go").textContent = "Start round " + (D.round + 1);
+      $("drill-between").hidden = false; return;
+    }
+    var i = D.queue[D.pos], d = DRILLS[i];
+    if (!D.opts) { D.opts = drillOpts(i); save(); }
+    $("drill-card").hidden = false;
+    $("drill-round").textContent = "Round " + D.round;
+    $("drill-count").textContent = "Question " + (D.pos + 1) + " of " + D.queue.length;
+    var board = $("drill-board"); board.textContent = "";
+    DRILLS.forEach(function (_, j) {
+      var s = document.createElement("i"); s.className = "sq";
+      if (D.done[j]) s.className += " " + D.done[j]; else if (D.misses[j]) s.className += " missed";
+      if (j === i) s.className += " now";
+      board.appendChild(s);
+    });
+    $("drill-part").textContent = d.part;
+    var m = D.misses[i] || 0;
+    $("drill-retry").hidden = !m; $("drill-retry").textContent = m === 1 ? "You missed this once" : "You missed this " + m + " times";
+    $("drill-q").textContent = d.q;
+    var box = $("drill-opts"); box.textContent = "";
+    D.opts.forEach(function (text, j) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[j];
+      var t = document.createElement("span"); t.className = "t"; t.textContent = text;
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pickDrill(j); };
+      box.appendChild(b);
+    });
+    $("drill-fb").hidden = true; $("drill-next").hidden = true;
+    if (D.answered) paintDrill(false);
+  }
+  function pickDrill(j) {
+    var D = S.drill; if (D.answered) return;
+    var i = D.queue[D.pos], ok = D.opts[j] === DRILLS[i].answer;
+    D.answered = { pick: j, correct: ok };
+    if (ok) { D.done[i] = D.misses[i] ? "later" : "first"; S.streak += 1; if (S.streak > S.best) S.best = S.streak; }
+    else { D.misses[i] = (D.misses[i] || 0) + 1; D.next.push(i); S.streak = 0; }
+    save(); paintDrill(true); renderTabs();
+  }
+  function paintDrill(fresh) {
+    var D = S.drill, i = D.queue[D.pos], d = DRILLS[i], a = D.answered;
+    var reveal = !a.correct && (D.misses[i] || 0) >= 3;
+    $("drill-opts").querySelectorAll(".opt").forEach(function (b, j) {
+      b.disabled = true;
+      if (j === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && D.opts[j] === d.answer) b.classList.add("right");
+      else b.classList.add("dim");
+      if (fresh && j === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("drill-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h"; var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    if (a.correct) { fb.classList.add("good"); h.textContent = "Correct!"; p.textContent = d.why; }
+    else if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = d.why; n.textContent = "It comes back in round " + (D.round + 1) + "."; }
+    else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + d.hint; n.textContent = "It comes back in round " + (D.round + 1) + "."; }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n); fb.hidden = false;
+    var last = D.pos + 1 >= D.queue.length;
+    $("drill-next").textContent = last ? (D.next.length ? "Finish round " + D.round : "Finish Stage 2") : "Next question";
+    $("drill-next").hidden = false;
+    if (fresh) { $("drill-next").focus({ preventScroll: true }); $("drill-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  $("drill-next").onclick = function () {
+    var D = S.drill; if (!D.answered) return;
+    D.pos += 1; D.opts = null; D.answered = null;
+    if (D.pos >= D.queue.length && D.next.length) D.between = true;
+    save(); renderMain(); $("drill-q").focus({ preventScroll: true });
+  };
+  $("drill-go").onclick = function () {
+    var D = S.drill; D.between = false; D.round += 1; D.queue = shuffle(D.next); D.next = []; D.pos = 0; D.opts = null; D.answered = null;
+    save(); renderMain(); $("drill-q").focus({ preventScroll: true });
+  };
+  $("btn-to-3").onclick = function () { S.stage = 3; save(); renderMain(); window.scrollTo(0, 0); };
+
+  /* ---------- STAGE 3 ---------- */
+  function chosen() { return S.pick.map(function (id) { return CBY[id]; }); }
+  function renderStage3() {
+    var pk = $("picker"); pk.textContent = "";
+    CLUES.forEach(function (c) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "chip" + (S.pick.indexOf(c.id) >= 0 ? " sel" : "");
+      b.textContent = c.id.slice(1) + " · " + c.device + ": “" + (c.text.length > 34 ? c.text.slice(0, 32) + "…" : c.text) + "”";
+      b.setAttribute("aria-pressed", S.pick.indexOf(c.id) >= 0 ? "true" : "false");
+      b.onclick = function () {
+        if (S.filed) return;
+        var at = S.pick.indexOf(c.id);
+        if (at >= 0) S.pick.splice(at, 1);
+        else {
+          var same = S.pick.filter(function (x) { return CBY[x].device === c.device; });
+          if (same.length) S.pick.splice(S.pick.indexOf(same[0]), 1);
+          if (S.pick.length >= 2) S.pick.shift();
+          S.pick.push(c.id);
+        }
+        save(); renderStage3();
+      };
+      pk.appendChild(b);
+    });
+    $("desk").hidden = S.pick.length < 2 || S.filed;
+    $("filed").hidden = !S.filed;
+    if (S.pick.length === 2 && !S.filed) buildDesk();
+    if (S.filed) renderFiled();
+  }
+  function buildDesk() {
+    var c = chosen(), box = $("slots"); box.textContent = "";
+    SLOTS.forEach(function (sl) {
+      var wrap = document.createElement("div"); wrap.className = "slot"; wrap.id = "slot-" + sl.k;
+      var head = document.createElement("div"); head.className = "slot-h";
+      var b = document.createElement("b"); b.textContent = sl.n + " — " + sl.label;
+      var sp = document.createElement("span");
+      if (sl.k === "e1" || sl.k === "t1") sp.textContent = "Clue " + c[0].id.slice(1) + ": " + c[0].device;
+      if (sl.k === "e2" || sl.k === "t2") sp.textContent = "Clue " + c[1].id.slice(1) + ": " + c[1].device;
+      head.appendChild(b); head.appendChild(sp);
+      var st = document.createElement("p"); st.className = "starter";
+      var starter = sl.starter;
+      if (sl.k === "t1") starter = STARTERS[c[0].device];
+      if (sl.k === "t2") starter = STARTERS[c[1].device];
+      st.textContent = "Try: " + starter;
+      var ta = document.createElement("textarea"); ta.id = "w-" + sl.k; ta.rows = sl.k === "p" ? 4 : 3;
+      ta.setAttribute("aria-label", sl.label); ta.value = S.text[sl.k] || "";
+      ta.addEventListener("input", function () { S.text[sl.k] = ta.value; save(); runChecks(); });
+      var ul = document.createElement("ul"); ul.className = "checks"; ul.id = "ck-" + sl.k;
+      wrap.appendChild(head); wrap.appendChild(st); wrap.appendChild(ta); wrap.appendChild(ul);
+      box.appendChild(wrap);
+    });
+    runChecks();
+  }
+  function quoted(s) { var out = [], re = /[“"]([^”"]+)[”"]/g, m; while ((m = re.exec(s))) out.push(m[1]); return out; }
+  function words(s) { return String(s).trim().split(/\s+/).filter(Boolean).length; }
+  function hasDevice(s, dev) { var t = norm(s); return KEYS[dev].some(function (k) { return t.indexOf(k) >= 0; }); }
+  var BANNED = /\b(to sum up|to conclude|all in all|in conclusion)\b/i;
+  var QUOTEWORD = /\bquot(e|es|ed|ing)\b/i;
+  function checksFor(k, v) {
+    var c = chosen(), t = norm(v), list = [];
+    var filled = words(v) >= 5;
+    if (k === "p") {
+      list.push([/opinion (article|piece)/.test(t), "Names the genre (opinion article)"]);
+      list.push([t.indexOf(norm(ART.hed)) >= 0, "Gives the full title"]);
+      list.push([/morgan/.test(t), "Names the writer (Leyla Morgan)"]);
+      list.push([/green ledger/.test(t), "Names the publication"]);
+      list.push([/(harm|danger|damag|bad for|hurt|destroy|pollut|poison|wast|threat|disaster|biased|one-sided)/.test(t), "States the writer's claim"]);
+      list.push([hasDevice(v, c[0].device) && hasDevice(v, c[1].device), "Names both techniques (" + c[0].device.toLowerCase() + ", " + c[1].device.toLowerCase() + ")"]);
+    } else if (k === "e1" || k === "e2") {
+      var q = quoted(v);
+      list.push([q.length > 0, "Puts words from the article in quotation marks"]);
+      list.push([q.length > 0 && q.every(function (x) { var y = norm(x).replace(/^[\s.,;:!?…]+|[\s.,;:!?…]+$/g, ""); return y.length > 0 && ART_NORM.indexOf(y) >= 0; }), "The quoted words really appear in the article"]);
+      list.push([q.length > 0 && q.every(function (x) { return words(x) <= 15; }), "Keeps the evidence short (15 words or fewer)"]);
+      if (k === "e2") list.push([/^(furthermore|moreover|in addition|additionally|also|secondly)/.test(t), "Starts with Furthermore (or another adding word)"]);
+    } else if (k === "t1" || k === "t2") {
+      var dev = k === "t1" ? c[0].device : c[1].device;
+      list.push([hasDevice(v, dev), "Names the device (" + dev.toLowerCase() + ")"]);
+      list.push([quoted(v).length > 0 || /\b(word|phrase|verb|adjective|noun|pronoun|number)\b/.test(t), "Zooms in on a key word or phrase"]);
+    } else if (k === "f1" || k === "f2") {
+      list.push([/reader/.test(t), "Says what the reader feels or thinks"]);
+      list.push([/\b(because|so|as|since)\b/.test(t), "Explains HOW with because / so"]);
+      list.push([filled && !/read on/.test(t), "Goes beyond “makes the reader want to read on”"]);
+    } else {
+      list.push([/^(therefore|thus|through this|the overriding|as a result|consequently)/.test(t), "Starts with Therefore / Thus"]);
+      list.push([/(bias|one-sided|persuad|point|harm)/.test(t), "Links back to your point (bias / persuasion)"]);
+    }
+    list.push([filled, "Written as a full sentence"]);
+    list.push([!QUOTEWORD.test(v), "Does not use the word “quote”"]);
+    list.push([!BANNED.test(v), "No “To sum up / To conclude / All in all”"]);
+    return list;
+  }
+  function runChecks() {
+    var all = true;
+    SLOTS.forEach(function (sl) {
+      var v = S.text[sl.k] || "", list = checksFor(sl.k, v), ul = $("ck-" + sl.k); if (!ul) return;
+      ul.textContent = "";
+      var ok = list.every(function (x) { return x[0]; });
+      list.forEach(function (x) {
+        var li = document.createElement("li");
+        li.className = !v.trim() ? "" : (x[0] ? "ok" : "no");
+        li.textContent = x[1]; ul.appendChild(li);
+      });
+      $("slot-" + sl.k).classList.toggle("ok", ok);
+      if (!ok) all = false;
+    });
+    $("btn-file").disabled = !all;
+    var left = SLOTS.filter(function (sl) { return !checksFor(sl.k, S.text[sl.k] || "").every(function (x) { return x[0]; }); }).length;
+    $("file-note").textContent = all ? "All boxes are green. File your report." : left + (left === 1 ? " box still needs work." : " boxes still need work.");
+  }
+  function paragraph() { return SLOTS.map(function (sl) { return (S.text[sl.k] || "").trim(); }).filter(Boolean).join(" "); }
+  $("btn-file").onclick = function () { S.filed = true; save(); renderMain(); $("filed").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-edit").onclick = function () { S.filed = false; save(); renderMain(); };
+  function renderFiled() {
+    $("final").textContent = paragraph();
+    $("model").textContent = MODEL;
+    var ul = $("tick"); ul.textContent = "";
+    TICKS.forEach(function (t, i) {
+      var li = document.createElement("li"); var lab = document.createElement("label");
+      var cb = document.createElement("input"); cb.type = "checkbox"; cb.id = "tick-" + i; cb.checked = !!S.ticks[i];
+      cb.onchange = function () { S.ticks[i] = cb.checked; save(); };
+      var sp = document.createElement("span"); sp.textContent = t;
+      lab.appendChild(cb); lab.appendChild(sp); li.appendChild(lab); ul.appendChild(li);
+    });
+    $("improve").value = S.improve || "";
+  }
+  $("improve").addEventListener("input", function () { S.improve = $("improve").value; save(); });
+  $("btn-copy").onclick = function () {
+    var txt = paragraph();
+    var done = function () { $("copy-note").textContent = "Copied. Paste it into your notes or send it to your teacher."; };
+    try {
+      navigator.clipboard.writeText(txt).then(done, function () { selectFinal(); });
+    } catch (e) { selectFinal(); }
+  };
+  function selectFinal() {
+    var r = document.createRange(); r.selectNodeContents($("final"));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    $("copy-note").textContent = "Your paragraph is selected. Copy it from the menu.";
+  }
+  $("btn-report").onclick = function () { S.screen = "report"; save(); route(); window.scrollTo(0, 0); };
+
+  /* ---------- REPORT ---------- */
+  function renderReport() {
+    var first = CLUES.filter(function (c) { return S.clues[c.id].status === "first"; }).length;
+    var big = $("r-big"); big.textContent = "";
+    big.appendChild(document.createTextNode(first));
+    var sm = document.createElement("small"); sm.textContent = " / " + CLUES.length; big.appendChild(sm);
+    var dFirst = Object.keys(S.drill.done).filter(function (k) { return S.drill.done[k] === "first"; }).length;
+    var stats = [[S.sweep, S.sweep === 1 ? "sweep" : "sweeps"], [dFirst + "/" + DRILLS.length, "sentences first try"], [S.best, "best streak"]];
+    var box = $("r-stats"); box.textContent = "";
+    stats.forEach(function (s) { var d = document.createElement("div"); d.className = "stat"; var b = document.createElement("b"); b.textContent = s[0]; var t = document.createElement("span"); t.textContent = s[1]; d.appendChild(b); d.appendChild(t); box.appendChild(d); });
+    var ul = $("r-revise"); ul.textContent = "";
+    CLUES.filter(function (c) { return S.clues[c.id].misses; }).forEach(function (c) {
+      var li = document.createElement("li"); var q = document.createElement("b"); q.textContent = "“" + c.text + "”";
+      var a = document.createElement("span"); a.className = "a"; a.textContent = c.device + ": " + c.effect;
+      li.appendChild(q); li.appendChild(a); ul.appendChild(li);
+    });
+    DRILLS.forEach(function (d, i) {
+      if (!S.drill.misses[i]) return;
+      var li = document.createElement("li"); var q = document.createElement("b"); q.textContent = d.q;
+      var a = document.createElement("span"); a.className = "a"; a.textContent = d.answer;
+      li.appendChild(q); li.appendChild(a); ul.appendChild(li);
+    });
+    $("r-revise-block").hidden = ul.children.length === 0;
+    $("r-para").textContent = paragraph() || "Not written yet.";
+    $("r-improve-block").hidden = !(S.improve || "").trim();
+    $("r-improve").textContent = S.improve || "";
+    var who = $("r-who"); who.textContent = "";
+    var n = document.createElement("span"); n.appendChild(document.createTextNode("Detective: ")); var nb = document.createElement("b"); nb.textContent = S.name || "—"; n.appendChild(nb);
+    var dt = document.createElement("span"); dt.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(dt);
+    show("s-report");
+  }
+  $("btn-back").onclick = function () { S.screen = "main"; save(); route(); window.scrollTo(0, 0); };
+  $("btn-again").onclick = function () { var name = S.name; try { localStorage.removeItem(KEY); } catch (e) {} S = null; renderStart(); $("student-name").value = name; window.scrollTo(0, 0); };
+
+  function route() {
+    if (!S) return renderStart();
+    if (S.screen === "report") renderReport(); else renderMain();
+    if (S.cur && S.phase && S.screen !== "report") { renderSheet(); $("sheet-back").hidden = false; } else { $("sheet-back").hidden = true; }
+  }
+  function boot(data) { if (data && data.S && data.S.clues) { S = data.S; route(); } else renderStart(); }
+  try { window.claude && window.claude.hot && window.claude.hot.snapshot && window.claude.hot.snapshot(function () { return { S: S }; }); } catch (e) {}
+  var hot = window.claude && window.claude.hot;
+  if (hot && hot.ready) hot.ready(boot); else boot((hot && hot.data) || {});
+})();
+</script>
+
+</body>
+</html>
