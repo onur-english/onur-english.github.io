@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Myth Lab · Grade 10 Unit 1</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a lab notebook on graph paper. Unit 1 is about graphs and checking facts, so the page is a plotting grid;
+   level cards are "case files", answers get a VERIFIED / MYTH stamp, stars are data points. */
+:root {
+  --paper: #EDF2F7;        /* graph-paper ground */
+  --grid: #D3DEE8;         /* grid lines */
+  --card: #FFFFFF;
+  --ink: #14213D;          /* navy ink */
+  --muted: #56637A;
+  --line: #D7DFE9;
+  --soft: #F3F6FA;
+  --cobalt: #2459D6;       /* brand accent */
+  --marker: #FFD84D;       /* highlighter */
+  --marker-soft: #FFF4C2;
+  --marker-ink: #6B4E00;
+  --right: #11845A; --right-soft: #DDF3E9;
+  --wrong: #CF3A2B; --wrong-soft: #FBE3DF;
+  --boss: #14213D; --boss-ink: #FFFFFF;
+  --shadow: 0 1px 0 rgba(20, 33, 61, .06), 0 8px 22px rgba(20, 33, 61, .08);
+  --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0D1524; --grid: #18243A; --card: #152038; --ink: #E8EEF8; --muted: #9DABC4; --line: #263553; --soft: #1B2843;
+    --cobalt: #7DA2FF; --marker: #FFD84D; --marker-soft: #3A3215; --marker-ink: #FFE58A;
+    --right: #4CD49A; --right-soft: #12352A; --wrong: #FF8A7C; --wrong-soft: #40201E;
+    --boss: #E8EEF8; --boss-ink: #0D1524;
+    --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0D1524; --grid: #18243A; --card: #152038; --ink: #E8EEF8; --muted: #9DABC4; --line: #263553; --soft: #1B2843;
+  --cobalt: #7DA2FF; --marker: #FFD84D; --marker-soft: #3A3215; --marker-ink: #FFE58A;
+  --right: #4CD49A; --right-soft: #12352A; --wrong: #FF8A7C; --wrong-soft: #40201E;
+  --boss: #E8EEF8; --boss-ink: #0D1524;
+  --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .35);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; min-height: 100vh;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.wrap { max-width: 740px; margin: 0 auto; padding-block: 14px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; line-height: 1.1; text-wrap: balance; font-weight: 800; font-stretch: 100%; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+.mono { font-family: var(--f-mono); }
+
+/* Header */
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #fff; border-radius: 10px; padding: 4px 6px; flex: none; box-shadow: var(--shadow); display: grid; place-items: center; }
+.logo img { width: 68px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-display); font-weight: 800; font-size: 1.12rem; line-height: 1.15; font-stretch: 112%; }
+.top-sub { color: var(--muted); font-size: .85rem; }
+
+.card { background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 14px; border: 1px solid var(--line); }
+
+/* Buttons */
+.btn {
+  appearance: none; border: 2px solid var(--ink); border-radius: 10px; padding: 12px 20px; font-family: var(--f-display); font-weight: 800; font-size: 1.05rem; font-stretch: 110%;
+  letter-spacing: .01em; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px;
+  background: var(--ink); color: var(--paper); box-shadow: 3px 3px 0 var(--cobalt); transition: transform .08s, box-shadow .08s;
+}
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--cobalt); }
+.btn-ghost { background: var(--card); color: var(--ink); box-shadow: 3px 3px 0 var(--line); }
+.btn-ghost:active { box-shadow: 1px 1px 0 var(--line); }
+.btn-marker { background: var(--marker); color: #2A2100; border-color: #2A2100; box-shadow: 3px 3px 0 var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Welcome */
+.hero { padding-block: 26px; gap: 16px; }
+.eyebrow { font-family: var(--f-mono); font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cobalt); }
+.hero h1 { font-size: clamp(2.3rem, 10vw, 3.6rem); font-stretch: 125%; font-weight: 900; letter-spacing: -.01em; }
+.hero h1 .strike { position: relative; display: inline-block; color: var(--muted); }
+.hero h1 .strike::after { content: ""; position: absolute; left: -4%; right: -4%; top: 52%; height: .12em; background: var(--wrong); transform: rotate(-4deg); border-radius: 4px; }
+.hero h1 .fact { background: linear-gradient(transparent 58%, var(--marker) 58%); padding: 0 .08em; }
+.hero .sub { color: var(--muted); font-size: 1.05rem; max-width: 34em; }
+.claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; }
+.claim { border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; background: var(--soft); }
+.claim b { font-weight: 700; }
+.claim span { font-family: var(--f-mono); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.claim .m { color: var(--wrong); } .claim .v { color: var(--right); }
+.field { display: flex; flex-direction: column; gap: 6px; max-width: 380px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input { font: inherit; font-size: 1.1rem; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--line); background: var(--soft); color: var(--ink); }
+.field input:focus { border-color: var(--cobalt); outline: none; }
+.hero .btn { max-width: 380px; }
+
+/* Player strip */
+.player { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; }
+.avatar { width: 50px; height: 50px; border-radius: 10px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 900; font-size: 1.4rem; color: var(--paper); background: var(--ink); box-shadow: 3px 3px 0 var(--marker); }
+.player-name { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; line-height: 1.1; overflow-wrap: anywhere; }
+.rank { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--marker-ink); background: var(--marker-soft); padding: 2px 8px; border-radius: 6px; margin-top: 6px; }
+.totals { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-family: var(--f-mono); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.totals .stars-total { font-size: 1.05rem; }
+.totals .xp { font-size: .82rem; color: var(--muted); }
+.rank-bar { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 4px; }
+.rank-bar .track { height: 8px; background: var(--soft); border-radius: 4px; overflow: hidden; border: 1px solid var(--line); }
+.rank-bar .fill { height: 100%; background: var(--cobalt); transition: width .6s; }
+.rank-bar small { color: var(--muted); font-size: .8rem; }
+
+/* Map */
+.map-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 10px; padding-inline: 2px; }
+.map-title h2 { font-size: 1.4rem; font-stretch: 115%; }
+.map-title small { color: var(--muted); font-family: var(--f-mono); font-size: .78rem; }
+.levels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 420px) { .levels { grid-template-columns: 1fr; } }
+.lvl {
+  appearance: none; text-align: left; cursor: pointer; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; position: relative; min-width: 0; transition: transform .1s, border-color .15s;
+}
+.lvl:active { transform: translateY(2px); }
+@media (hover: hover) { .lvl:hover { border-color: var(--c); transform: translateY(-2px); } }
+.lvl-head { display: flex; align-items: center; gap: 10px; }
+.lvl-icon { width: 44px; height: 44px; flex: none; border-radius: 10px; display: grid; place-items: center; font-size: 1.45rem; background: color-mix(in srgb, var(--c) 16%, transparent); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); }
+.lvl-num { font-family: var(--f-mono); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+.lvl-name { font-family: var(--f-display); font-weight: 800; font-size: 1.06rem; line-height: 1.15; font-stretch: 105%; }
+.lvl-topic { font-size: .85rem; color: var(--muted); line-height: 1.35; }
+.lvl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); }
+.dots { display: inline-flex; gap: 5px; align-items: center; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--c, var(--cobalt)); display: inline-block; }
+.dots i.on { background: var(--c, var(--cobalt)); }
+.lvl-status { font-family: var(--f-mono); font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+.lvl-status.go { background: color-mix(in srgb, var(--c) 16%, transparent); color: var(--ink); }
+.lvl.boss { grid-column: 1 / -1; background: var(--boss); color: var(--boss-ink); border-color: var(--boss); }
+.lvl.boss .lvl-icon { background: color-mix(in srgb, var(--marker) 25%, transparent); border-color: var(--marker); }
+.lvl.boss .lvl-num { color: var(--marker); }
+.lvl.boss .lvl-topic { color: color-mix(in srgb, var(--boss-ink) 75%, transparent); }
+.lvl.boss .lvl-foot { border-top-color: color-mix(in srgb, var(--boss-ink) 25%, transparent); }
+.lvl.boss .lvl-status { background: color-mix(in srgb, var(--boss-ink) 14%, transparent); color: var(--boss-ink); }
+.lvl.boss .dots i { border-color: var(--marker); }
+.lvl.boss .dots i.on { background: var(--marker); }
+.group-h { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 10px 2px 0; border-bottom: 2px solid var(--ink); }
+.group-h h3 { font-size: 1.15rem; font-stretch: 118%; text-transform: uppercase; letter-spacing: .03em; }
+.group-h small { color: var(--muted); font-family: var(--f-mono); font-size: .75rem; font-weight: 700; }
+.how p { display: flex; gap: 10px; }
+.how p b.k { font-family: var(--f-mono); flex: none; width: 1.6em; color: var(--cobalt); }
+.tiny-links { display: flex; justify-content: center; gap: 16px; font-size: .85rem; color: var(--muted); }
+.link { appearance: none; background: none; border: 0; padding: 4px; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.confirm { border: 2px solid var(--wrong); }
+.confirm .btn-row .btn { flex: 1 1 140px; }
+
+/* Play */
+.play-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.back { appearance: none; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); border-radius: 10px; padding: 8px 14px; font-weight: 700; cursor: pointer; min-height: 44px; }
+.chips { display: flex; gap: 8px; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 8px; padding: 6px 10px; font-family: var(--f-mono); font-weight: 700; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.chip.cold { opacity: .55; }
+.chip.hot { animation: bump .45s; }
+@keyframes bump { 40% { transform: scale(1.18); } }
+.lvl-banner { display: flex; align-items: center; gap: 12px; }
+.lvl-banner .lvl-icon { width: 48px; height: 48px; }
+.lvl-banner .r { font-family: var(--f-mono); font-size: .76rem; color: var(--muted); font-weight: 700; letter-spacing: .03em; }
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(16px, 1fr)); gap: 4px; }
+.cell { aspect-ratio: 1; border-radius: 3px; background: var(--soft); border: 1px solid var(--line); }
+.cell.first { background: var(--marker); border-color: color-mix(in srgb, var(--marker) 60%, #000); }
+.cell.later { background: var(--c, var(--cobalt)); border-color: var(--c, var(--cobalt)); }
+.cell.missed { background: var(--wrong-soft); border: 2px solid var(--wrong); }
+.cell.now { outline: 2px solid var(--ink); outline-offset: 1px; }
+.cell.pop { animation: pop .45s ease-out; }
+@keyframes pop { 0% { transform: scale(.3); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.board-meta { display: flex; justify-content: space-between; gap: 8px; font-family: var(--f-mono); font-size: .76rem; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+.retry-tag { align-self: flex-start; font-family: var(--f-mono); font-size: .74rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; background: var(--wrong-soft); color: var(--wrong); }
+.q-note { font-size: .9rem; color: var(--muted); font-weight: 700; margin-bottom: -4px; }
+.q-fig { border: 1px solid var(--line); border-radius: 10px; background: var(--soft); padding: 10px; overflow-x: auto; }
+.q-fig svg { display: block; width: 100%; height: auto; max-width: 560px; margin: 0 auto; }
+.q-fig .cap { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); text-align: right; margin-top: 4px; }
+.q-fig table { border-collapse: collapse; width: 100%; font-size: .72rem; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.q-fig th, .q-fig td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+.q-fig td:first-child, .q-fig thead th { white-space: normal; }
+.q-fig th, .q-fig td { padding-inline: 3px; }
+@media (min-width: 500px) { .q-fig table { font-size: .92rem; } .q-fig th, .q-fig td { padding: 6px 8px; } }
+.q-fig th:first-child, .q-fig td:first-child { text-align: left; }
+.q-fig thead th { font-family: var(--f-mono); font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-bottom: 2px solid var(--ink); }
+.q-fig tfoot td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 0; }
+.q-fig .ftitle { font-family: var(--f-display); font-weight: 800; font-size: .95rem; margin-bottom: 6px; }
+.fig-axis { stroke: var(--muted); stroke-width: 1; fill: none; }
+.fig-gridl { stroke: var(--line); stroke-width: 1; fill: none; }
+.fig-line { stroke: var(--cobalt); stroke-width: 3; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.fig-pt { fill: var(--card); stroke: var(--cobalt); stroke-width: 2; }
+.fig-bar { fill: var(--ink); }
+.fig-t { fill: var(--muted); font-family: var(--f-body); font-size: 12px; }
+.fig-tb { fill: var(--ink); font-family: var(--f-body); font-size: 13px; font-weight: 700; }
+.fig-title { fill: var(--ink); font-family: var(--f-display); font-size: 16px; font-weight: 800; }
+
+.q-text { font-family: var(--f-display); font-weight: 700; font-stretch: 100%; font-size: clamp(1.2rem, 4.6vw, 1.48rem); line-height: 1.35; white-space: pre-line; }
+.q-text .hl { background: linear-gradient(transparent 55%, var(--marker) 55%); padding: 0 3px; color: inherit; font-weight: 800; }
+.q-text .gap { display: inline-block; min-width: 3.2em; border-bottom: 3px solid var(--c, var(--cobalt)); height: 1em; vertical-align: baseline; }
+
+.opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.opt {
+  appearance: none; text-align: left; border: 2px solid var(--line); background: var(--card); border-radius: 10px; padding: 11px 12px;
+  display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 58px; min-width: 0;
+  transition: transform .08s, border-color .15s, background .15s; font-weight: 700; font-size: 1.03rem;
+}
+.opt:active:not(:disabled) { transform: translateY(2px); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--c, var(--cobalt)); } }
+.opt .key { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-family: var(--f-mono); font-weight: 700; background: var(--soft); border: 1px solid var(--line); }
+.opt .txt { min-width: 0; overflow-wrap: anywhere; }
+.opt:disabled { cursor: default; }
+.opt.is-right { border-color: var(--right); background: var(--right-soft); }
+.opt.is-right .key { background: var(--right); color: var(--card); border-color: var(--right); }
+.opt.is-wrong { border-color: var(--wrong); background: var(--wrong-soft); }
+.opt.is-wrong .key { background: var(--wrong); color: var(--card); border-color: var(--wrong); }
+.opt.is-dim { opacity: .45; }
+.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+.feedback { border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; border: 2px solid transparent; }
+.feedback.good { background: var(--right-soft); border-color: color-mix(in srgb, var(--right) 40%, transparent); }
+.feedback.bad { background: var(--wrong-soft); border-color: color-mix(in srgb, var(--wrong) 40%, transparent); }
+.feedback.reveal { background: var(--marker-soft); border-color: color-mix(in srgb, var(--marker) 70%, transparent); }
+.stamp { align-self: flex-start; font-family: var(--f-mono); font-weight: 700; font-size: .95rem; letter-spacing: .14em; text-transform: uppercase; padding: 3px 10px; border: 3px double currentColor; border-radius: 6px; transform: rotate(-3deg); }
+.feedback.good .stamp { color: var(--right); }
+.feedback.bad .stamp { color: var(--wrong); }
+.feedback.reveal .stamp { color: var(--marker-ink); }
+.stamp.thud { animation: thud .35s ease-out; }
+@keyframes thud { 0% { transform: rotate(-3deg) scale(1.8); opacity: 0; } 100% { transform: rotate(-3deg) scale(1); opacity: 1; } }
+.fb-head { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.fb-xp { font-family: var(--f-mono); font-weight: 700; font-size: .85rem; color: var(--marker-ink); }
+.fb-answer { font-weight: 700; }
+
+/* Between + results */
+.center { text-align: center; align-items: center; }
+.big-num { font-family: var(--f-display); font-weight: 900; font-stretch: 120%; font-size: clamp(3rem, 15vw, 4.4rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big-num small { font-size: .36em; color: var(--muted); font-weight: 700; font-family: var(--f-mono); font-stretch: 100%; }
+.mega-dots { display: flex; gap: 14px; justify-content: center; }
+.mega-dots i { width: 34px; height: 34px; border-radius: 50%; border: 4px solid var(--c, var(--cobalt)); display: inline-block; }
+.mega-dots i.on { background: var(--c, var(--cobalt)); animation: dotpop .5s backwards; }
+@keyframes dotpop { 0% { transform: scale(0); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.stat { background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.stat b { font-family: var(--f-mono); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .78rem; color: var(--muted); text-align: center; }
+.tricky { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; text-align: left; width: 100%; }
+.tricky li { border-left: 4px solid var(--wrong); background: var(--soft); border-radius: 0 10px 10px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.tricky .tq { font-weight: 700; white-space: pre-line; }
+.tricky .ta { color: var(--right); font-weight: 700; }
+.tricky .tm { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .92rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 12px; width: 100%; }
+.who b { color: var(--ink); }
+.rank-up { background: var(--marker-soft); color: var(--marker-ink); font-weight: 700; padding: 8px 14px; border-radius: 10px; }
+
+/* Typed gaps */
+.q-lead { display: block; font-family: var(--f-body); font-size: 1rem; font-weight: 400; color: var(--ink); background: var(--soft); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; line-height: 1.45; white-space: normal; }
+.q-text.typed { line-height: 2.15; }
+.tglue { white-space: nowrap; }
+.tgap { display: inline-flex; align-items: baseline; white-space: nowrap; vertical-align: baseline; background: var(--marker-soft); border-bottom: 3px solid var(--c, var(--cobalt)); border-radius: 6px 6px 0 0; padding-left: 6px; }
+.tgap .first { font-family: var(--f-body); font-weight: 700; color: var(--marker-ink); }
+.tgap input { font: inherit; font-family: var(--f-body); font-weight: 700; color: var(--ink); width: 7em; max-width: 68vw; padding: 0 6px 0 0; line-height: 1.45; border: 0; border-radius: 0; background: transparent; }
+.tgap:not(:has(.first)) input { padding-left: 0; }
+.tgap.wide input { width: 10em; }
+.tgap.xwide input { width: 15em; }
+.tgap input:focus { outline: none; }
+.tgap:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--cobalt)) 40%, transparent); }
+.tgap input:disabled { opacity: 1; -webkit-text-fill-color: currentColor; }
+.tgap.ok { background: var(--right-soft); border-bottom-color: var(--right); }
+.tgap.ok input, .tgap.ok .first { color: var(--right); }
+.tgap.no { background: var(--wrong-soft); border-bottom-color: var(--wrong); }
+.tgap.no input, .tgap.no .first { color: var(--wrong); }
+.check-row { display: flex; }
+.check-row .btn { flex: 1; }
+
+.confetti { position: fixed; pointer-events: none; z-index: 50; width: 8px; height: 8px; border-radius: 50%; animation: fly .9s cubic-bezier(.2, .7, .4, 1) forwards; }
+@keyframes fly { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cell.pop, .shake, .chip.hot, .mega-dots i.on, .tgap.shake, .stamp.thud { animation: none; }
+  .confetti { display: none; }
+  .btn, .opt, .lvl { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCACnAPADASIAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAQFAQMGBwII/8QARBAAAQMDAQUDBwoEBAcBAAAAAQACAwQFEQYSITFBUQcTYRQWIlVxgZMVMjNCUlaRobHRI2LB4SRDU4I0NUZUcnPC8P/EABkBAQADAQEAAAAAAAAAAAAAAAACAwQBBf/EACURAQACAQQBBAMBAQAAAAAAAAABAhEDEiExQQQTIjIzUYFCcf/aAAwDAQACEQMRAD8A9mREQEREBERAREQEREBERAREQEREBERARFrnmipoXzTPbHGwbTnOOAAgxUVEVJTvnmeGRsGSSqmj7+61pqJwWQxH0Y+h6Hx5n3Dqquoqqu91sLmNcyN7v8JC4cBzmeP0C6mmp46WnZDGPRaOJ4k8yVXW26eOk5jbHPbciIrEBERAREQEREBERAREQEREBERAREQEREBERAREQERfL3tjYXvcGtaMkk4ACDEsrIYnSyvDGMGXOccABchcLj8sPNROTFaqf02scMGYj6zh06DnxWa+4P1BPhoLbZGfRadxqXD6x/k6DmtlDSNvFyERGaOieHSnlJLyb7G8T4rJfUnUt7dP60VpFI3WW1ho5GxOr6lmzPUgEMP+Wzk3+p8VbrCytURERiFEzmciIi64IiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIsE4GSgOcGtLnEAAZJPJclcLg7UEphiJFrYd54eVEf/A/P2L7udwdfZXUtO4i3MOJZAf8AiCPqj+Xqea+ZHRU1O6SQtjiibkngGgLD6jX/AMVadLT8y01ckrBFTUjQaupd3cAxub1cfBo3rp7XbobVb4qODJbGN7jxe48XHxJVTpeikmDr1VxlstS3ZgY7jFDy954n3LoldoaWyuZ7V6t904ERFoVCIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgLlrtczeJZLdRSFtKw7NTOw/SdWNP6n3LTqPUXfzG1UM2ztejNM08uYB/qtFHG2mgbDGwBrRgALD6j1GPjVp0tL/UpsUbIo2xxtDWNGA0DcAoTafzhvQtzd9DRkSVjhwe7i2P+pWbpWSUtMyOlb3lZUu7qmj6vPM+A4ldHYbPHZLVHRsd3km980p4yPO9zj71D0+lundPUJat8RhYgADAGAFlEXosgiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiIC47WOrYrdAaSmkBlflu47z1A8Op9ymaw1PTWK2Pe+T0n5axjTh0h6DoOpXhtZdZ7lXSVVS7akcdwHBo5AeCza2pMRtr2v0tPPMuvttSdoyzHIkPpHoc/kuupJO8IGRjkvNqCvGAJM93jBAPNdTaa/Ye2N8hBHzHfaXlzEtvbqrFHB8oy3m5StieAYqSJ+4xszvcR1d+i6L5Ztv/AHkX4rmoazvGDLg4/it4LDxYw+4LXT1O2MRDNbRzOZl0LbrQvOGVLHHwyVvimjnbtRPDgDjIXC0cEup7mYaNxgtVM7FTUR+iZ3f6bD06ld1DDHTwtiiYGMYMNa0bgFt0rWvGZjCi9YrOIlsREVqsREQEREBERAREQEWHOaxpc4gAbyTyVNNrHTcE/cS3yhbJnBaZ27igukWqnqYKuETU00c0buD43BwPvCiS3+zwTPhludJHIw7LmOmaC09CEFgi+I5GTRtkje17HDLXNOQQoD9R2SKV0Ul1o2yNdsuaZmgg9EFkirZNQ2aKR0cl1pGvYcOaZmggqVS11JWwGelqYp4gSC+N4cMjxCCQirYtR2WeZsMV1o3yOOy1rZmkk9F8nU1iBIN4osjd9O1dxJlaKnvdyraRvd0dsqatxbnMQAHszyUinv8AZ6uQR090pJXng1kzSf1U9RmJdiXh+oLDqu+Vz6ystdQX8GtA9Fg5ADoqbzO1G07ZtFTkfyr9ErRW1TKGjlqZA5zYml2GgknwVHsR+18a89YfnqW23C2gOrqKWnGQMvGN6sqOdxe17t5ZxaOYUjU1Tc73c3TvpKswsOfoXYJ5nhw5ewKBbyWyNe1khxyawlefeOeGqs8cuwtk2THKxzi1xI2Sc4UwQVOpK91ooHuipWH/AB1S36g/02n7R/JVFqgrLrUC32zaimd9NI5hAgZ9o559F6VaqS2WKhZb6V7GNi+dl2XOdzLj1Kt9Pobp3W6V62rt4jtLoqKmt1HFSUkLYYIm7LGNG4BSFgOBbtAgg78qO+40cZw6pjGf5l6fTCkotbJ4pCAyRrieQO9fJq6cEjvmZG7ig3IvhkjJRljw4DduKxJPFEQ18jWkjIBKDYi1sqIZHbLJGuPQFfE1ZT0/00zGe0pkb0WqOphlAMcjXZGdxXyKymJwJmH2FBvRazPE1geZGhpOAc7ivkVdOTgTMz7UHjXaFqmu1DrCPStDUPgomTtgl2DgyvJGc+AzwXq1LpmzUlpba47dTmlDNgsdGDtdSep8V4Lc4pLF2sSGry0MuQl2nc2OdkH8Cv0cCC3IOQd4Vt+IjCFe5eDMulT2ado1TQ08rzbO9G1C52QY3bx7xnj4LoO1XTovl3tLbTTw+WVUM0m0G4MwaA4Anmei5TtNa669p09HSDvJXd1AA3fl2P7r1O4Qmm1ppOnccujp5mE+yMBSmcYnyjEdw4fst1661zt05eZCyBztmB8m7uXZ+Yegz+BXYXez22XtUssjqKBxko53vzGMOc3GCepGSue7V+z8y95qW0RfxGjaq4WD5w+2PHr+KhdnWpqvUGrrPBW+nLQUU8QlJ3vacYz4jCTEWjdBzHxlB7aaanp9WUjoYY4zLShz9hoG0dojJ8V7Jp+lp6WwUMVPBHFH5Ow7LGgDJaMleP8AbgCNVUBxuNHx/wB5XslkcHWGgcCCDTR7/wDaFG30hKPtLk6C026Ptar3sooGltujkbiMbnF2C4dD4rzntEp4IO1ERQwxxsc6Aua1oAJJGdy9RoSH9q902TnYtkIdjkS47l5h2mgu7US0OLSe4AcOI8VLT+38cv06jtjstro7HR3GkpoaasFQIw6FoYXtIJOcccYC6XstuFfctEU01we+R7XuZHI/i5g4b+fT3LzXW8NxsWtKQ6immvdtGJIROcBzPrDA3ZH57l7daKihqrTSz20MFI+MGIMGAG9MclG3FIh2Psmqs1HUS0mnq6ogeWSRwlzXA8Ctl5ukNotstXK4DYadkE8Sqerrpavs9nrXnMklK5+SFntaOYWxHl5tTazvrD3r66aSIbnb8jfyKiULZqjuzBkyF+y0B2NrdwUR9f5TbzAfQPeB+A0DgPBdZaNPvobTbLrO7ZfPWNAjx9XfgnxXlRuvOO3oTtrC30ffTQVD6CuaWyOdskvGHAj6p9nJXuoKSmlu9seGDFS8tlLTjvANnAOOKh610u6sabvbmf4qMfxY2/5rRzH8w/NVdlvZudRa4JXHvIJuJHzgcftvWuJnTn27deGfEX+df6tdS3p0dQbdSlrIoAA9oONo4yG+zgrW2abo46Nj66FlVVSNBkfIM4J5AcgFyF3a+HWVVFNkNfM17fFrgMH+i9EkMz6MmlcwSlvoF4JbnxU9L5alpt4Q1PjSsQp6e01Fvv8AH5M0ut7mFwBOe5fwwM78H8lAu4bSXyYQfwhJC17g04Bdl2/HVZotS19dOynY2NkzpCz0gC0EEg8N/JR9Tvey/NBI30zMnhvy5R1bVnSma/tLTraNSNzqLTBHBbKdsbA0OYHHHMkbyVC1M1raSCoAxLHOwNeOIBO8Kxt3/Lab/wBTf0VPqirilshfA9r9iojaSOR2lff8c/8AFVPvD5trwIK+ta3vJoY/QJ3keiTgKLZW0Na5tTXbM7nMBHebxk7ycdVv0zPHDR1s8xwxpaXHHLC1V2l358rss7Gtf6fk8nzN/wBkj5v6LPWL7K2rzjwtnbutErGmtJpruKijkYKFzCTEDua/h6PgeYVRX93T1ddTwtMbNv5rSQBlozhYtN+mgrRRzxubIJRE9jjvDs4x4+1aL098d6rWtcWFzm4OM49ELmpeLaeY45dpWYvif06q408Js08Xdt2GQktbjgQN2FRWYNqq+m74iXYYXDaOcHA34Uur08I6OaUXOtJbG47yzB3f+KrtLzOkucQcd/dE/kFZqfkohT6Wbdbdn1u1jGyV8hpa6IYjqGDOR0cOYWi3U2vrZbmW4m01ndN2I6uSR7XY5Etxvx7VOn1dVwzyRDS94kDHFoeyJuHeI3r488qz7p3r4Tf3W3M4wzcZQ9KdnUFlucl7ulV8o3eVxeZi3DGE8S0dfFfV9sWqK7VlDd6KW3Mht+2IY5NvLw4YO1jh7lK88qz7p3r4Tf3WPPKs+6d6+E390zOcnDp2hzoQJWt2i30gN4zz9y4e0dnTbF2gvvtvkjZQSRPzT79pj3ch4Ky88qz7p3r4Tf3WPPKt+6V6+G391yMw7wxrvQtNrOhiHfeTVlPnuZsZGDxa4dFR2Ww9pNloWWyG6Wt9NGNmOSZrnOY3w3fqr3zyrvujefht/dPPKu+6N5+G3913M4w5x2m6a038hRVE9RVOrbjWv7yqqnjBeeQA5NHILhNQ9mepr/qZ97krbbG8uaWMaH4Abwyuu88q77o3n4bf3Qaxrz/0jefht/dImYnJMRMYY1LpCTWGl4qK6PhhuEXpsmgBLGP4c9+COKh6C01qPScTqCurKOpt2S5uyXB8Z8M8ld2jUFXc6zuJrBcKFuyXd7UNaG+zcVF1xqCGy2aXadhzm7wDvI5D3nd7MqFr7a8pRXdPDhu0XVEFfcora2dzaYH03N34b1x4/phWNLrfT81h+QWx1T6fuTG6RzsO2epOMBeSzTz11bJPIdqSVxc48h/Zer9nehAY4rtc4iI9z4IHj555PcOnQe9Y43zbjy2WrSteW2j0BTz00dXTW6fDhtRsq6rHsJaG59y6Gsst6mordSxsoyylIkftPI2n79w3cN6trjen0FT3LbXW1I2QduCPab7FG85pvUNz+CrdlI4UbrzyuKU1Bp2eVNY2XHpBjshc3No/utVQ3eheyOFz9ueI8j1b7eimecsvqK5/C/us+csvqK5/CH7qc7bdoxFo6fWotNQ32Jj2ymnq4h/DmaM7uhHMKNRDU9BAKeWmpqvZ3CVk2zn2gjct/nLL6iufwR+6z5ySepLn8H+65iuc+XfljCssulbhTXVldVTQMa2Rz+7YC5xyScE7hxKXvT95utyNS1tIGhoY0GR3zQc9PFWnnHJ6lufwf7oNRv8AU1y+Ao+3p7dvhLffOUfudTNpRTRx0TGBmwCJXZAxjoo0lguxsLKBraTvHSd7I4vOAQdwG7grPzhf6nuXwU84Xep7l8BdmtZ7RibQr7bYbrFQVVBVGmZHUscDJG4kg43biFIom6it9OKd9NT1WyMCVkuyD44I3KT8vu9UXH4KyL8fVVw+CkVrEREE2tPaFb9OTuu5u9xdF3wJcyGPeA7GNonmcfgodZp+91l0fWO8jDXOBLdt28AY6K6+XT6quHwU+XXeqrh8FJ06TGHYvaJykVTa6W1ujZHD5Q9uy5pedkZ478Ln7JYr3a64TSikkZjZ3PcC0fhvVx8uu9VV/wAFfUd5fJKxgtla3aONp0eAPFSmtbTEz4Ri1oiYjys0WUViAsLKIMIsogwiyiDCLKINFXVR0VLJUSnDWDPiegC8A1vqCe/3t0Eb9qONx2sHcXc/cBu/Fdv2naudAW2qhdmVxLfR+1zPu4e32KB2fdnzazu7pc480wO0xjh9OfH+Ufms95m9tsNOnEUrvlt7O+z5k7YrtdIswAh0MTx9KeTiPs9Bz4r1gAAYCNaGtDWgADcAFlXVrFYxCi95tOZERFJEREQEREBERAREQEREBERAREQEREBERAREQEREBUuqL5HY7TJMX4leCI+vt/8A3PCuHvaxhe4hrWjJJ5BcGbZNrjUBq59plppXbLeXekch/UqF5nGI7TpEZzPSi0foyXUdzdfLu13k216EZ/zMfV9nU8yvWWMbGwMY0Na0YAAwAFiKKOCJkUTGsjYA1rWjAAX2lKRWMF7zaRERTQEREBERAREQEREBERAREQEREBERAREQEREBERAREQVl2p5riG29jzHDJvnkB37P2R4nqp1PTxUsDIII2xxxjDWtG4BETBltREQEREBERAREQEREBERAREQEREBERAREQf/Z"></div>
+    <div class="top-text">
+      <span class="top-title" id="top-title"></span>
+      <span class="top-sub" id="top-sub"></span>
+    </div>
+  </header>
+
+  <!-- WELCOME -->
+  <section id="screen-welcome" class="card hero" hidden aria-labelledby="welcome-h">
+    <span class="eyebrow">Grade 10 · Unit 1 · Misconceptions</span>
+    <h1 id="welcome-h"><span class="strike">Myth</span> <span class="fact">Lab</span></h1>
+    <p class="sub">Revise everything in the Unit 1 booklet before the exam: the vocabulary, the grammar, graphs, fake news, report writing and the texts. Missed questions come back until you get them right.</p>
+    <div class="claims" aria-hidden="true">
+      <div class="claim"><span class="m">Myth</span><b>Vikings wore horned helmets.</b></div>
+      <div class="claim"><span class="v">Fact</span><b>About 80% of the world's 1-year-olds are vaccinated.</b></div>
+    </div>
+    <div class="field">
+      <label for="student-name">Your name</label>
+      <input id="student-name" type="text" autocomplete="given-name" maxlength="30" placeholder="Type your name">
+    </div>
+    <button class="btn" id="btn-welcome" type="button">Open the lab</button>
+  </section>
+
+  <!-- MAP -->
+  <section id="screen-map" hidden>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card player" id="player"></div>
+      <div class="map-title"><h2>Case files</h2><small id="map-count"></small></div>
+      <div class="levels" id="levels"></div>
+      <div class="card how" style="gap:8px">
+        <h3 style="font-size:1.1rem">How it works</h3>
+        <p><b class="k">01</b><span>Answer every question in a level. Missed questions come back in the next round until you get them right.</span></p>
+        <p><b class="k">02</b><span>In typing questions, check your spelling. Capital letters don't matter. Short forms like <b>hadn't</b> and long forms like <b>had not</b> are both fine.</span></p>
+        <p><b class="k">03</b><span>Your first-try score fills the dots: 90% or more = 3 dots, 70% or more = 2 dots, finished = 1 dot. Get 3 dots everywhere before the exam.</span></p>
+        <p><b class="k">04</b><span>Correct answers in a row build your streak and earn XP.</span></p>
+      </div>
+      <div class="card confirm" id="confirm-reset" hidden>
+        <p><b>Reset all your dots, XP and progress?</b> This can't be undone.</p>
+        <div class="btn-row">
+          <button class="btn" id="btn-reset-yes" type="button">Yes, reset</button>
+          <button class="btn btn-ghost" id="btn-reset-no" type="button">Keep my progress</button>
+        </div>
+      </div>
+      <div class="tiny-links">
+        <button class="link" id="btn-rename" type="button">Change name</button>
+        <button class="link" id="btn-reset" type="button">Reset all progress</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="screen-play" hidden>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="play-top">
+        <button class="back" id="btn-back" type="button">← Case files</button>
+        <div class="chips">
+          <span class="chip" id="streak-chip" title="Correct answers in a row">🔥 <span id="streak-n">0</span></span>
+          <span class="chip" title="XP">XP <span id="xp-n">0</span></span>
+        </div>
+      </div>
+      <div class="card" id="play-card">
+        <div class="lvl-banner">
+          <div class="lvl-icon" id="play-icon" aria-hidden="true"></div>
+          <div style="min-width:0">
+            <div class="lvl-name" id="play-name"></div>
+            <div class="r" id="play-round"></div>
+          </div>
+        </div>
+        <div class="board" id="board" aria-hidden="true"></div>
+        <div class="board-meta"><span id="progress-line"></span><span id="q-count"></span></div>
+        <span class="retry-tag" id="retry-tag" hidden></span>
+        <p class="q-note" id="q-note"></p>
+        <div class="q-fig" id="q-fig" hidden></div>
+        <h2 class="q-text" id="q-text" tabindex="-1"></h2>
+        <div class="check-row" id="check-row" hidden><button class="btn" id="btn-tcheck" type="button">Check my answer</button></div>
+        <div class="opts" id="opts" role="group" aria-labelledby="q-text"></div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+        <button class="btn" id="btn-next" type="button" hidden>Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BETWEEN ROUNDS -->
+  <section id="screen-between" class="card center" hidden aria-labelledby="between-h">
+    <span class="eyebrow" id="between-eyebrow"></span>
+    <h2 id="between-h"></h2>
+    <div class="big-num" id="between-big"></div>
+    <p id="between-text"></p>
+    <div class="board" id="board-between" aria-hidden="true" style="width:100%"></div>
+    <div class="legend">
+      <span><i style="background:var(--marker)"></i>Right first time</span>
+      <span><i id="legend-later" style="background:var(--cobalt)"></i>Cleared later</span>
+      <span><i style="background:var(--wrong-soft);box-shadow:inset 0 0 0 2px var(--wrong)"></i>Still to clear</span>
+    </div>
+    <button class="btn" id="btn-next-round" type="button" style="width:100%"></button>
+  </section>
+
+  <!-- LEVEL COMPLETE -->
+  <section id="screen-done" class="card center" hidden aria-labelledby="done-h">
+    <span class="eyebrow" id="done-eyebrow"></span>
+    <h2 id="done-h" style="font-size:1.8rem"></h2>
+    <div class="mega-dots" id="done-dots" aria-hidden="true"></div>
+    <div>
+      <div style="color:var(--muted)">First-try score</div>
+      <div class="big-num" id="done-big"></div>
+    </div>
+    <p class="rank-up" id="rank-up" hidden></p>
+    <div class="stats" id="done-stats"></div>
+    <div id="tricky-block" style="width:100%;display:flex;flex-direction:column;gap:10px">
+      <h3 style="font-size:1.15rem;text-align:left">Questions to revise</h3>
+      <ul class="tricky" id="tricky"></ul>
+    </div>
+    <div class="who" id="who"></div>
+    <div class="btn-row" style="width:100%">
+      <button class="btn btn-marker" id="btn-practice" type="button">Practice the tricky ones</button>
+      <button class="btn" id="btn-map" type="button">Back to case files</button>
+      <button class="btn btn-ghost" id="btn-replay" type="button">Play this level again</button>
+    </div>
+  </section>
+</div>
+
+<script id="game-data" type="application/json">
+{"id": "terakki10-unit1-v1", "title": "Myth Lab · Unit 1 Misconceptions", "subtitle": "Grade 10 English exam revision", "bossCount": 30, "bossPer": 1, "figs": {"ny": "<svg viewBox=\"0 0 420 270\" role=\"img\" aria-label=\"Line graph: Annual homicides in New York, 2007 to 2017. The line stays around 470 to 540 until 2011, then falls to about 330 in 2013 and about 290 in 2017.\"><text class=\"fig-title\" x=\"38\" y=\"20\">Annual homicides in New York<\/text><text class=\"fig-t\" x=\"38\" y=\"36\">— New York<\/text><line class=\"fig-gridl\" x1=\"38\" y1=\"240.0\" x2=\"404\" y2=\"240.0\"/><text class=\"fig-t\" x=\"30\" y=\"244.0\" text-anchor=\"end\">0<\/text><line class=\"fig-gridl\" x1=\"38\" y1=\"207.3\" x2=\"404\" y2=\"207.3\"/><text class=\"fig-t\" x=\"30\" y=\"211.3\" text-anchor=\"end\">100<\/text><line class=\"fig-gridl\" x1=\"38\" y1=\"174.7\" x2=\"404\" y2=\"174.7\"/><text class=\"fig-t\" x=\"30\" y=\"178.7\" text-anchor=\"end\">200<\/text><line class=\"fig-gridl\" x1=\"38\" y1=\"142.0\" x2=\"404\" y2=\"142.0\"/><text class=\"fig-t\" x=\"30\" y=\"146.0\" text-anchor=\"end\">300<\/text><line class=\"fig-gridl\" x1=\"38\" y1=\"109.3\" x2=\"404\" y2=\"109.3\"/><text class=\"fig-t\" x=\"30\" y=\"113.3\" text-anchor=\"end\">400<\/text><line class=\"fig-gridl\" x1=\"38\" y1=\"76.7\" x2=\"404\" y2=\"76.7\"/><text class=\"fig-t\" x=\"30\" y=\"80.7\" text-anchor=\"end\">500<\/text><line class=\"fig-gridl\" x1=\"38\" y1=\"44.0\" x2=\"404\" y2=\"44.0\"/><text class=\"fig-t\" x=\"30\" y=\"48.0\" text-anchor=\"end\">600<\/text><line class=\"fig-axis\" x1=\"38\" y1=\"240.0\" x2=\"404\" y2=\"240.0\"/><text class=\"fig-t\" x=\"38.0\" y=\"258\" text-anchor=\"middle\">2007<\/text><text class=\"fig-t\" x=\"74.6\" y=\"258\" text-anchor=\"middle\">2008<\/text><text class=\"fig-t\" x=\"111.2\" y=\"258\" text-anchor=\"middle\">2009<\/text><text class=\"fig-t\" x=\"147.8\" y=\"258\" text-anchor=\"middle\">2010<\/text><text class=\"fig-t\" x=\"184.4\" y=\"258\" text-anchor=\"middle\">2011<\/text><text class=\"fig-t\" x=\"221.0\" y=\"258\" text-anchor=\"middle\">2012<\/text><text class=\"fig-t\" x=\"257.6\" y=\"258\" text-anchor=\"middle\">2013<\/text><text class=\"fig-t\" x=\"294.2\" y=\"258\" text-anchor=\"middle\">2014<\/text><text class=\"fig-t\" x=\"330.8\" y=\"258\" text-anchor=\"middle\">2015<\/text><text class=\"fig-t\" x=\"367.4\" y=\"258\" text-anchor=\"middle\">2016<\/text><text class=\"fig-t\" x=\"404.0\" y=\"258\" text-anchor=\"middle\">2017<\/text><polyline class=\"fig-line\" points=\"38.0,78.0 74.6,69.2 111.2,86.1 147.8,64.9 184.4,71.8 221.0,103.1 257.6,130.6 294.2,131.2 330.8,125.0 367.4,130.6 404.0,144.6\"/><\/svg><div class=\"cap\">Source: FBI · redrawn from booklet p. 34<\/div>", "bar": "<svg viewBox=\"0 0 440 310\" role=\"img\" aria-label=\"Horizontal bar graph: Students' Favorite After-School Activities. Play Sports 45, Talk on Phone 53, Visit with Friends 99, Earn Money 44, Chat Online 66, School Clubs 22, Watch TV 37.\"><text class=\"fig-title\" x=\"220.0\" y=\"22\" text-anchor=\"middle\">Students' Favorite After-School Activities<\/text><line class=\"fig-gridl\" x1=\"124.0\" y1=\"40\" x2=\"124.0\" y2=\"264\"/><text class=\"fig-t\" x=\"124.0\" y=\"280\" text-anchor=\"middle\">0<\/text><line class=\"fig-gridl\" x1=\"181.2\" y1=\"40\" x2=\"181.2\" y2=\"264\"/><text class=\"fig-t\" x=\"181.2\" y=\"280\" text-anchor=\"middle\">20<\/text><line class=\"fig-gridl\" x1=\"238.4\" y1=\"40\" x2=\"238.4\" y2=\"264\"/><text class=\"fig-t\" x=\"238.4\" y=\"280\" text-anchor=\"middle\">40<\/text><line class=\"fig-gridl\" x1=\"295.6\" y1=\"40\" x2=\"295.6\" y2=\"264\"/><text class=\"fig-t\" x=\"295.6\" y=\"280\" text-anchor=\"middle\">60<\/text><line class=\"fig-gridl\" x1=\"352.8\" y1=\"40\" x2=\"352.8\" y2=\"264\"/><text class=\"fig-t\" x=\"352.8\" y=\"280\" text-anchor=\"middle\">80<\/text><line class=\"fig-gridl\" x1=\"410.0\" y1=\"40\" x2=\"410.0\" y2=\"264\"/><text class=\"fig-t\" x=\"410.0\" y=\"280\" text-anchor=\"middle\">100<\/text><text class=\"fig-tb\" x=\"116\" y=\"60\" text-anchor=\"end\">Play Sports<\/text><rect class=\"fig-bar\" x=\"124\" y=\"45\" width=\"128.7\" height=\"22\" rx=\"2\"/><text class=\"fig-tb\" x=\"257.7\" y=\"60\">45<\/text><text class=\"fig-tb\" x=\"116\" y=\"92\" text-anchor=\"end\">Talk on Phone<\/text><rect class=\"fig-bar\" x=\"124\" y=\"77\" width=\"151.6\" height=\"22\" rx=\"2\"/><text class=\"fig-tb\" x=\"280.6\" y=\"92\">53<\/text><text class=\"fig-tb\" x=\"116\" y=\"124\" text-anchor=\"end\">Visit with Friends<\/text><rect class=\"fig-bar\" x=\"124\" y=\"109\" width=\"283.1\" height=\"22\" rx=\"2\"/><text class=\"fig-tb\" x=\"412.1\" y=\"124\">99<\/text><text class=\"fig-tb\" x=\"116\" y=\"156\" text-anchor=\"end\">Earn Money<\/text><rect class=\"fig-bar\" x=\"124\" y=\"141\" width=\"125.8\" height=\"22\" rx=\"2\"/><text class=\"fig-tb\" x=\"254.8\" y=\"156\">44<\/text><text class=\"fig-tb\" x=\"116\" y=\"188\" text-anchor=\"end\">Chat Online<\/text><rect class=\"fig-bar\" x=\"124\" y=\"173\" width=\"188.8\" height=\"22\" rx=\"2\"/><text class=\"fig-tb\" x=\"317.8\" y=\"188\">66<\/text><text class=\"fig-tb\" x=\"116\" y=\"220\" text-anchor=\"end\">School Clubs<\/text><rect class=\"fig-bar\" x=\"124\" y=\"205\" width=\"62.9\" height=\"22\" rx=\"2\"/><text class=\"fig-tb\" x=\"191.9\" y=\"220\">22<\/text><text class=\"fig-tb\" x=\"116\" y=\"252\" text-anchor=\"end\">Watch TV<\/text><rect class=\"fig-bar\" x=\"124\" y=\"237\" width=\"105.8\" height=\"22\" rx=\"2\"/><text class=\"fig-tb\" x=\"234.8\" y=\"252\">37<\/text><line class=\"fig-axis\" x1=\"124\" y1=\"40\" x2=\"124\" y2=\"264\"/><text class=\"fig-t\" x=\"267.0\" y=\"300\" text-anchor=\"middle\">Number of Students<\/text><\/svg><div class=\"cap\">Survey of 366 students at a UK school, 2018 · redrawn from booklet p. 36<\/div>", "table": "<div class=\"ftitle\">Profits for a cake shop, financial year 2008<\/div><table><thead><tr><th>Product<\/th><th>Qtr 1<\/th><th>Qtr 2<\/th><th>Grand Total<\/th><\/tr><\/thead><tbody><tr><td>Chocolade<\/td><td>$744.60<\/td><td>$162.56<\/td><td>$907.16<\/td><\/tr><tr><td>Gummibarchen<\/td><td>$5,079.60<\/td><td>$1,249.20<\/td><td>$6,328.80<\/td><\/tr><tr><td>Scottish Longbreads<\/td><td>$1,267.50<\/td><td>$1,062.50<\/td><td>$2,330.00<\/td><\/tr><tr><td>Sir Rodney's Scones<\/td><td>$1,418.00<\/td><td>$756.00<\/td><td>$2,174.00<\/td><\/tr><tr><td>Tarte au sucre<\/td><td>$4,728.00<\/td><td>$4,547.92<\/td><td>$9,275.92<\/td><\/tr><tr><td>Chocolate Biscuits<\/td><td>$943.89<\/td><td>$349.60<\/td><td>$1,293.49<\/td><\/tr><\/tbody><tfoot><tr><td>Total<\/td><td>$14,181.59<\/td><td>$8,127.78<\/td><td>$22,309.37<\/td><\/tr><\/tfoot><\/table><div class=\"cap\">Redrawn from booklet p. 35<\/div>"}, "levels": [{"key": "v1", "group": "Vocabulary", "kind": "Choose", "name": "Myths & Beliefs", "icon": "🧩", "color": "#2459D6", "topic": "misconception, myth, generalization, focus on, belief, response, lead to, pretend", "note": "Choose the word that best completes the sentence.", "questions": [{"q": "Many people believe that the Great Wall of China is visible from space, but this is a common ___.", "answer": "misconception", "wrong": ["generalization", "intuition", "approach"], "hint": "The sentence describes an idea that many people have, but which is wrong.", "why": "A misconception is a wrong idea that many people believe. The Great Wall is one of the misconceptions on p. 7 of the booklet."}, {"q": "There is a popular ___ that Vikings wore horned helmets, but historians have found no evidence for it.", "answer": "myth", "wrong": ["source", "function", "approach"], "hint": "Look for a word for a story or idea that people believe but that is not true.", "why": "A myth is a commonly believed but false idea (booklet p. 10)."}, {"q": "Saying that all teenagers are lazy is an unfair ___. Some teenagers are lazy, but most are not.", "answer": "generalization", "wrong": ["intuition", "manipulation", "function"], "hint": "The speaker takes something true about some people and says it about everyone.", "why": "A generalization says something very basic that is often true but not always true (p. 10)."}, {"q": "In my report, I will ___ one misconception about Africa and look at it in detail.", "answer": "focus on", "wrong": ["lead to", "pretend", "mislead"], "hint": "The writer wants to give most of their attention to one thing.", "why": "To focus on something means to give a lot of attention to one particular person, subject or thing (p. 10)."}, {"q": "It is my strong ___ that everyone should check a news story before sharing it.", "answer": "belief", "wrong": ["myth", "source", "poverty"], "hint": "The speaker is describing an idea they feel certain is true.", "why": "A belief is an idea that you are certain is true (p. 10). We often say 'my strong/firm belief'."}, {"q": "I sent the newspaper an email about their mistake, but I never got a ___.", "answer": "response", "wrong": ["source", "belief", "function"], "hint": "What do you hope to get after you send someone an email?", "why": "A response is an answer or reaction to something that has been said or done (p. 10)."}, {"q": "Eating too much sugar can ___ health problems such as tooth decay.", "answer": "lead to", "wrong": ["focus on", "pretend", "alter"], "hint": "Sugar is the cause; health problems are the result.", "why": "To lead to something means to cause it to happen or exist (p. 10)."}, {"q": "My little brother likes to ___ that he is asleep when it is time to brush his teeth.", "answer": "pretend", "wrong": ["focus", "misinform", "alter"], "hint": "He is not really asleep. He is only acting as if he is.", "why": "To pretend means to behave as if something is true when it is not (p. 10)."}]}, {"key": "v2", "group": "Vocabulary", "kind": "Write", "name": "Myths & Beliefs", "icon": "✍️", "color": "#2459D6", "topic": "The same 8 words, in the booklet's own sentences (pp. 10, 11, 34)", "note": "Write the missing word. The first letter is given.", "questions": [{"type": "type", "q": "Some people have the {misconception} that New York is a dangerous city which is ruled by criminals.", "hint": "It is a wrong idea that many people have. It is the key word of the whole unit.", "why": "Booklet p. 34: 'Some people have the misconception that it is a dangerous city which is ruled by criminals.'"}, {"type": "type", "q": "'Africa is a country' is a common {myth} about the developing world.", "hint": "A short word (4 letters) for a commonly believed but false idea.", "why": "Myth 2 in 'Myths About the Developing World' (p. 11) is 'Africa is a country.' Africa is a continent."}, {"type": "type", "q": "Reducing speed limits should {lead to} fewer deaths on the roads.", "hint": "Two words: a verb + 'to'. It means 'cause'.", "why": "Booklet p. 10, B1. Lower speed limits cause fewer deaths, so they lead to fewer deaths."}, {"type": "type", "q": "The government should mainly {focus on} reducing crime.", "hint": "Two words: a verb + 'on'. It means 'give a lot of attention to'.", "why": "Booklet p. 10, B2. The government should give most of its attention to reducing crime."}, {"type": "type", "q": "Everybody was waiting for an answer, but John made no {response} and continued reading his book.", "hint": "John didn't answer or react. 'Made no ___'.", "why": "Booklet p. 10, B3. A response is an answer or reaction."}, {"type": "type", "q": "Some footballers {pretend} to be hurt when they are actually not hurt at all.", "hint": "They act as if something is true when it isn't.", "why": "Booklet p. 10, B4. 'Pretend to be hurt' = act as if you are hurt."}, {"type": "type", "q": "It is still my firm {belief} that we did the right thing.", "hint": "A noun: an idea that you are certain is true. It goes with 'firm'.", "why": "Booklet p. 10, B5. 'My firm belief' = an idea I am certain is true."}, {"type": "type", "q": "It is a sweeping {generalization|generalisation} to say that girls read more than boys.", "hint": "A long noun. It goes with 'sweeping' and means saying something is true for everyone.", "why": "Booklet p. 10, B6. 'A sweeping generalization' says something about a whole group that is not true for everyone."}]}, {"key": "v3", "group": "Vocabulary", "kind": "Choose", "name": "Rosling's World", "icon": "🌍", "color": "#0F7C8C", "topic": "ignorant, poverty, approach, skewed, intuition, function", "note": "Choose the word that best completes the sentence.", "questions": [{"q": "Before the Factfulness test, I was ___ about vaccinations. I had no idea that most children in the world are vaccinated.", "answer": "ignorant", "wrong": ["credible", "reputable", "vigilant"], "hint": "The speaker did not know facts that they should have known.", "why": "Ignorant means not knowing facts or information that you ought to know (p. 15)."}, {"q": "Millions of families still live in extreme ___, without enough money for food or clean water.", "answer": "poverty", "wrong": ["intuition", "approach", "belief"], "hint": "Which noun describes the situation of being poor?", "why": "Poverty is the situation or experience of being poor (p. 15). 'Extreme poverty' appears in the Factfulness test."}, {"q": "Our teacher has a new ___ to teaching grammar: we learn the rules by playing games.", "answer": "approach", "wrong": ["function", "belief", "poverty"], "hint": "The sentence talks about a method or way of doing something. Notice 'a new ___ to'.", "why": "An approach is a method of doing something or dealing with a problem (p. 15). We say 'an approach to something'."}, {"q": "The survey only asked rich people, so the results were ___ and did not show the real picture.", "answer": "skewed", "wrong": ["relevant", "credible", "reputable"], "hint": "The results were not accurate because only one group answered.", "why": "Skewed means not accurate or exact (p. 15). Asking only one group gives skewed results."}, {"q": "I had no facts to help me, so I trusted my ___ and guessed the answer.", "answer": "intuition", "wrong": ["poverty", "source", "response"], "hint": "The speaker used a feeling, not facts.", "why": "Intuition is the ability to understand or know something because of a feeling rather than by considering the facts (p. 15)."}, {"q": "The main ___ of a title page is to tell the reader what the report is about and who wrote it.", "answer": "function", "wrong": ["poverty", "intuition", "myth"], "hint": "What job does the title page do?", "why": "A function is the job that something or someone does (p. 15)."}]}, {"key": "v4", "group": "Vocabulary", "kind": "Write", "name": "Rosling's World", "icon": "✍️", "color": "#0F7C8C", "topic": "The same 6 words, booklet p. 15", "note": "Write the missing word. The first letter is given.", "questions": [{"type": "type", "q": "Jane thought the baby would be a girl, and her {intuition} was right.", "hint": "Jane had no facts. She had a feeling.", "why": "Booklet p. 15, B1. Intuition = knowing something because of a feeling."}, {"type": "type", "q": "Many teenagers are surprisingly {ignorant} about politics. They do not know what is going on in their country.", "hint": "An adjective: they don't know facts they ought to know.", "why": "Booklet p. 15, B2. The second sentence explains it: they don't know what is going on."}, {"type": "type", "q": "Surely the {function} of the law is to protect everyone's rights.", "hint": "A noun: the job that something does.", "why": "Booklet p. 15, B3. The job (function) of the law is to protect rights."}, {"type": "type", "q": "Today's {approach} to raising children is very different from 40 years ago.", "hint": "A noun: a method or way of doing something. It is followed by 'to'.", "why": "Booklet p. 15, B4. 'Approach to raising children' = the way people raise children."}, {"type": "type", "q": "Many people heard inaccurate, {skewed} reports about the accident.", "hint": "An adjective that means almost the same as 'inaccurate'.", "why": "Booklet p. 15, B5. Skewed = not accurate or exact."}, {"type": "type", "q": "The government must increase its efforts to decrease {poverty} and raise living standards.", "hint": "A noun: the situation of being poor.", "why": "Booklet p. 15, B6. Decreasing poverty raises living standards."}]}, {"key": "v5", "group": "Vocabulary", "kind": "Choose", "name": "Finding the Truth", "icon": "🔍", "color": "#6A44C2", "topic": "credible, source, relevant, inaccurate, outrageous, twist, embellish", "note": "Choose the word that best completes the sentence.", "questions": [{"q": "Dr. Shain is an expert in teen psychiatry, so he is a ___ person to quote in your report.", "answer": "credible", "wrong": ["outrageous", "inaccurate", "ignorant"], "hint": "Because he is an expert, readers can believe and trust him.", "why": "Credible means able to be believed or trusted (p. 19). Experts make credible sources."}, {"q": "Wikipedia is a good place to start, but you should check every fact in another ___.", "answer": "source", "wrong": ["function", "response", "approach"], "hint": "Where does information come from?", "why": "A source is someone or something that supplies information (p. 19)."}, {"q": "Your paragraph about football is interesting, but it is not ___ to a report about misconceptions.", "answer": "relevant", "wrong": ["credible", "reputable", "vigilant"], "hint": "The paragraph is not connected to the topic of the report.", "why": "Relevant means connected with what is happening or being discussed (p. 19)."}, {"q": "The map was ___: it showed the river in completely the wrong place.", "answer": "inaccurate", "wrong": ["outrageous", "ignorant", "reputable"], "hint": "The map was not correct.", "why": "Inaccurate means not completely correct or exact (p. 19)."}, {"q": "The headline was so ___ that thousands of people clicked on it in shock.", "answer": "outrageous", "wrong": ["relevant", "accurate", "reputable"], "hint": "The headline was shocking.", "why": "Outrageous means shocking and morally unacceptable (p. 19). The fake news guide on p. 20 warns that headlines can be outrageous to get clicks."}, {"q": "That's not what I said at all! You're ___ my words to make me look bad.", "answer": "twisting", "wrong": ["pretending", "focusing", "informing"], "hint": "The speaker means their words have been changed so they mean something different.", "why": "If you twist someone's words, you change their meaning (p. 29: \"You're twisting my words — that's not what I said at all.\")."}, {"q": "My grandfather always ___ his fishing stories: the fish gets bigger every time he tells them.", "answer": "embellishes", "wrong": ["misinforms", "pretends", "focuses"], "hint": "He adds extra details to make the story more interesting.", "why": "To embellish a story means to add details to make it more interesting (p. 29)."}]}, {"key": "v6", "group": "Vocabulary", "kind": "Write", "name": "Finding the Truth", "icon": "✍️", "color": "#6A44C2", "topic": "The same 7 words, booklet pp. 19 and 29", "note": "Write the missing word. The first letter is given.", "questions": [{"type": "type", "q": "I'm sorry, but your personal wishes are not {relevant} in this case.", "hint": "An adjective: connected with what is being discussed.", "why": "Booklet p. 19, B1. Personal wishes are not connected with this case, so they are not relevant."}, {"type": "type", "q": "The journalist refused to reveal her {source}. Therefore, nobody knew who gave the information to her.", "hint": "A noun: the person who gave her the information.", "why": "Booklet p. 19, B2. A source supplies information."}, {"type": "type", "q": "Because of your {inaccurate} information, I was late and missed half of the show.", "hint": "The information was not correct. Add a negative prefix to 'accurate'.", "why": "Booklet p. 19, B3. Inaccurate = not completely correct."}, {"type": "type", "q": "He was unable to give a {credible} explanation for his behaviour. That's why nobody believed him.", "hint": "An adjective: able to be believed.", "why": "Booklet p. 19, B4. Nobody believed him because his explanation was not credible."}, {"type": "type", "q": "These prices are just {outrageous}! They are much too high!", "hint": "An adjective: shocking.", "why": "Booklet p. 19, B5. Shockingly high prices are outrageous."}, {"type": "type", "q": "\"You're {twisting} my words — that's not what I said at all.\"", "hint": "A verb + -ing: changing the meaning of someone's words.", "why": "Booklet p. 29. To twist someone's words is to change what they meant."}, {"type": "type", "q": "Some historical stories were originally based on fact, but they all became twisted and {embellished} as they were told and retold.", "hint": "A past participle: extra details were added.", "why": "Booklet p. 29, 'The Biggest Enemy of Historical Knowledge'. Embellished = had details added to make them more interesting."}]}, {"key": "v7", "group": "Vocabulary", "kind": "Choose", "name": "Graph Tricks", "icon": "📉", "color": "#B23A6B", "topic": "spread, reputable, mislead, manipulate, trick, misinform, alter, misunderstand, vigilant", "note": "Choose the word that best completes the sentence.", "questions": [{"q": "Please don't ___ this story on social media until you have checked that it is true.", "answer": "spread", "wrong": ["trick", "pretend", "focus"], "hint": "What happens when lots of people share a story?", "why": "To spread a story or gossip means to pass it on to many people (p. 41)."}, {"q": "For your report, only use information from ___ websites, such as universities and well-known newspapers.", "answer": "reputable", "wrong": ["outrageous", "skewed", "ignorant"], "hint": "These websites have a good name and people trust them.", "why": "Reputable means having a good reputation, so people trust it (p. 41: 'buy it from a reputable company')."}, {"q": "The graph started at 50 instead of 0 in order to ___ readers about the size of the difference.", "answer": "mislead", "wrong": ["spread", "pretend", "focus"], "hint": "The writer wanted readers to believe something false.", "why": "To mislead means to make someone believe something that is not true (p. 41)."}, {"q": "The company ___ the numbers so that its sales looked much better than they really were.", "answer": "manipulated", "wrong": ["pretended", "misunderstood", "embellished"], "hint": "The company changed the numbers dishonestly to get an advantage.", "why": "To manipulate statistics means to change or control them dishonestly for your own advantage (p. 41)."}, {"q": "The fake email ___ my grandmother into giving away her bank password.", "answer": "tricked", "wrong": ["altered", "misunderstood", "embellished"], "hint": "Look at the pattern '___ someone into doing something'.", "why": "To trick someone into doing something means to deceive them so they do it (p. 41: 'They tricked him into signing the papers')."}, {"q": "The website ___ its readers: it said that the law had changed, but it hadn't.", "answer": "misinformed", "wrong": ["embellished", "altered", "pretended"], "hint": "The website gave its readers wrong information.", "why": "To misinform someone means to give them wrong information (p. 41)."}, {"q": "The internet has completely ___ the way we get our news.", "answer": "altered", "wrong": ["misled", "tricked", "misinformed"], "hint": "The way we get news is now different.", "why": "To alter something means to change it (p. 41: 'Mobile phones have really altered our lifestyle')."}, {"q": "Sorry, I ___ the question. I thought you were asking about the bar graph, not the line graph.", "answer": "misunderstood", "wrong": ["misinformed", "manipulated", "embellished"], "hint": "The speaker understood the question in the wrong way.", "why": "To misunderstand means to understand something wrongly (p. 41)."}, {"q": "When you read news online, stay ___ and always check where the information comes from.", "answer": "vigilant", "wrong": ["ignorant", "outrageous", "skewed"], "hint": "You need to be careful and watch out for problems.", "why": "Vigilant means always careful and watching for possible danger or problems (p. 41, and the conclusion on p. 46: 'be vigilant')."}]}, {"key": "v8", "group": "Vocabulary", "kind": "Write", "name": "Graph Tricks", "icon": "✍️", "color": "#B23A6B", "topic": "The same 9 words, booklet p. 41", "note": "Write the missing word. The first letter is given.", "questions": [{"type": "type", "q": "Have you been {spreading} gossip about David and Mary? Everybody's talking about them.", "hint": "A verb + -ing: passing a story on to many people.", "why": "Booklet p. 41, sentence 1."}, {"type": "type", "q": "If you want a burglar alarm, make sure you buy it from a {reputable} company.", "hint": "An adjective: a company with a good name that people trust.", "why": "Booklet p. 41, sentence 2."}, {"type": "type", "q": "He tried to {mislead} the police about his movements on the night of the murder, but he couldn't hide the truth.", "hint": "A verb: make someone believe something false.", "why": "Booklet p. 41, sentence 3."}, {"type": "type", "q": "The opposition party leader accused the government of {manipulating} the statistics to their advantage.", "hint": "A verb + -ing (after 'of'): changing numbers dishonestly.", "why": "Booklet p. 41, sentence 4. After a preposition ('of') we use the -ing form."}, {"type": "type", "q": "They {tricked} him into signing the papers and stole all his money from his bank account.", "hint": "A past simple verb: they deceived him.", "why": "Booklet p. 41, sentence 5. Pattern: trick someone into doing something."}, {"type": "type", "q": "I'm afraid they {misinformed} you about your exam results. You have actually failed!", "hint": "A past simple verb: they gave you wrong information.", "why": "Booklet p. 41, sentence 6."}, {"type": "type", "q": "Mobile phones have really {altered} our lifestyle. In the past, we used to be more social.", "hint": "A past participle (after 'have'): changed.", "why": "Booklet p. 41, sentence 7."}, {"type": "type", "q": "I told him I'd meet him here, but perhaps he {misunderstood} and went straight to the restaurant.", "hint": "A past simple verb: he understood wrongly.", "why": "Booklet p. 41, sentence 8. 'Understand' is irregular: understood, so misunderstood."}, {"type": "type", "q": "We have been getting a lot of threats. Therefore, please remain {vigilant} at all times and report anything suspicious!", "hint": "An adjective: careful and watching for danger.", "why": "Booklet p. 41, sentence 9."}]}, {"key": "u1", "group": "Use of English", "kind": "Type", "name": "It Is Said That…", "icon": "🗣️", "color": "#C25E12", "topic": "It + passive: It is said / It was found / It has been suggested (p. 25)", "note": "Rewrite the sentence in the box starting with It + passive. Be careful with tense.", "questions": [{"type": "type", "q": "It {=was felt} that the cost was too high.", "hint": "Past simple active (felt) → past simple passive: was + past participle.", "why": "Booklet p. 25 example: They felt → It was felt.", "lead": "They felt that the cost was too high."}, {"type": "type", "q": "It {=has been predicted} that the weekend will be very cold.", "hint": "Present perfect active (have predicted) → present perfect passive: has been + past participle.", "why": "have predicted → has been predicted. 'It' is singular, so 'has'.", "lead": "Forecasters have predicted that the weekend will be very cold."}, {"type": "type", "q": "It {=is claimed} that the government will call an early election.", "hint": "Present simple active (claim) → present simple passive: is + past participle.", "why": "claim → is claimed.", "lead": "They claim that the government will call an early election."}, {"type": "type", "q": "It {=is being suggested} that inflation will remain steady.", "hint": "Present continuous active (are suggesting) → present continuous passive: is being + past participle.", "why": "are suggesting → is being suggested.", "lead": "Experts are suggesting that inflation will remain steady."}, {"type": "type", "q": "It {=had been understood} that the hostages would be released yesterday.", "hint": "Past perfect active (had understood) → past perfect passive: had been + past participle.", "why": "had understood → had been understood.", "lead": "We had understood that the hostages would be released yesterday."}, {"type": "type", "q": "It {=has been announced} that the princess will leave hospital next week.", "hint": "Present perfect active → has been + past participle.", "why": "have announced → has been announced.", "lead": "Officials have announced that the princess will leave hospital next week."}, {"type": "type", "q": "It {=is said} that New York is a very dangerous city.", "hint": "Present simple: is + past participle of 'say'.", "why": "People say → It is said. 'Say' is irregular: said.", "lead": "People say that New York is a very dangerous city."}, {"type": "type", "q": "It {=is widely believed|is believed} that the Great Wall of China is visible from space.", "hint": "Present simple passive of 'believe'. The booklet (p. 34) adds the adverb 'widely' when many people believe something.", "why": "Many people believe → It is widely believed (booklet p. 34: 'It is widely believed that New York … has the highest rate of homicide').", "lead": "Many people believe that the Great Wall of China is visible from space."}, {"type": "type", "q": "It {=was found} that only 32% of the people could recognize the signs.", "hint": "Past simple active (found) → was + past participle.", "why": "found → was found. 'It was found that…' is in the useful report language on p. 24.", "lead": "The researchers found that only 32% of the people could recognize the signs."}, {"type": "type", "q": "It {=is expected} that temperatures will rise.", "hint": "Present simple → is + past participle.", "why": "expect → is expected.", "lead": "Scientists expect that temperatures will rise."}, {"type": "type", "q": "It {=was believed} for centuries that Benjamin Franklin had discovered electricity.", "hint": "Past simple active (believed) → was + past participle.", "why": "believed → was believed. (This is one of the historical misconceptions on p. 29.)", "lead": "For centuries, people believed that Benjamin Franklin had discovered electricity."}, {"type": "type", "q": "It {=has been discovered} that the data was skewed.", "hint": "Present perfect → has been + past participle.", "why": "have discovered → has been discovered.", "lead": "We have discovered that the data was skewed."}, {"type": "type", "q": "It {=will be reported} that the river is safe again.", "hint": "Future with will → will be + past participle.", "why": "will report → will be reported.", "lead": "They will report that the river is safe again."}, {"type": "type", "q": "It {=is recommended} that students check at least two sources.", "hint": "Present simple → is + past participle.", "why": "recommend → is recommended. 'It is recommended that…' is useful for report conclusions (p. 24).", "lead": "Teachers recommend that students check at least two sources."}, {"type": "type", "q": "It {=is known} that the Moon goes around the Earth.", "hint": "Present simple → is + past participle. 'Know' is irregular.", "why": "know → is known.", "lead": "Everybody knows that the Moon goes around the Earth."}, {"type": "type", "q": "It {=was calculated} that the project would cost two million dollars.", "hint": "Past simple → was + past participle.", "why": "calculated → was calculated.", "lead": "They calculated that the project would cost two million dollars."}, {"type": "type", "q": "It {=is hoped} that the new law will reduce crime.", "hint": "Present simple → is + past participle.", "why": "hope → is hoped.", "lead": "People hope that the new law will reduce crime."}, {"type": "type", "q": "It {=has been agreed} that the report needs more evidence.", "hint": "Present perfect → has been + past participle.", "why": "have agreed → has been agreed.", "lead": "The teachers have agreed that the report needs more evidence."}]}, {"key": "u2", "group": "Use of English", "kind": "Type", "name": "Report Language", "icon": "📑", "color": "#C25E12", "topic": "Useful language for introductions, quoting, speculating, summing up; reporting numbers (pp. 24, 26)", "note": "Complete the useful report language.", "questions": [{"type": "type", "q": "The {=aim|purpose|goal} of this report is to analyze a common misconception about Turkey.", "hint": "A noun that means 'what the report wants to do'.", "why": "'The aim of this report is to…' (useful language for introductions, p. 24)."}, {"type": "type", "q": "This report is {=intended} to show whether the misconception is true or false.", "hint": "A past participle: 'is ___ to' = is planned to.", "why": "'This report is intended to…' (p. 24)."}, {"type": "type", "q": "It {=draws} on two online articles and a survey of 20 students.", "hint": "A verb + 'on': it uses information from.", "why": "'It draws on…' (p. 24) means the report uses these sources."}, {"type": "type", "q": "It is {=based} on online research and a class survey.", "hint": "'It is ___ on' = its information comes from.", "why": "'It is based on…' (p. 24)."}, {"type": "type", "q": "It {=seems|appears} that most students believe the myth.", "hint": "A verb used when reporting an observation without being too definite.", "why": "'It seems / appears that…' (p. 24) reports an observation in an impersonal way."}, {"type": "type", "q": "{=According} to the FBI, the number of homicides in New York fell between 2010 and 2017.", "hint": "Quoting a source: '___ to…'.", "why": "'According to…' (p. 24) is used for quoting. The New York graph on p. 34 uses FBI data."}, {"type": "type", "q": "In the {=words} of the report's writer, the misconception is 'more likely to be false'.", "hint": "Quoting: 'In the ___ of…'.", "why": "'In the words of…' (p. 24)."}, {"type": "type", "q": "It may {=well} be that social media is the main cause of this misconception.", "hint": "Speculating: 'It may (___) be that…'.", "why": "'It may / could / might (well) be that…' (p. 24) is the language for speculating."}, {"type": "type", "q": "On the {=whole}, the students' answers were correct.", "hint": "Generalising: 'On the ___'.", "why": "'On the whole' and 'In general' are used for generalising (p. 24)."}, {"type": "type", "q": "{=Surprisingly|Interestingly|Curiously|Strangely|Oddly}, only 22 students chose school clubs.", "hint": "A commenting adverb from the list: it shows the result was not expected.", "why": "Commenting words (p. 24): Interestingly, Curiously, Oddly / Strangely, Surprisingly, Predictably."}, {"type": "type", "q": "It is {=recommended} that students check at least two sources.", "hint": "Making a recommendation: 'It is ___ that…'.", "why": "'It is recommended that…' (p. 24)."}, {"type": "type", "q": "Perhaps it would be {=advisable} for schools to teach students how to read graphs.", "hint": "'(Perhaps) it would be ___ for X to (do)'.", "why": "'Perhaps it would be advisable for X to…' (p. 24) is a polite way to recommend."}, {"type": "type", "q": "To {=sum|summarise|summarize} up, the misconception is false.", "hint": "Summing up: 'To ___ up'.", "why": "'To sum up / To summarise' (p. 24)."}, {"type": "type", "q": "On {=balance}, the evidence shows that the myth is untrue.", "hint": "Summing up: 'On ___'.", "why": "'On balance' (p. 24) means after considering everything."}, {"type": "type", "q": "{=Half} of the students in the class have the misconception that Russia is a very expensive country.", "hint": "50% = ?", "why": "Booklet p. 26: Half = 50% = 50 out of 100."}, {"type": "type", "q": "{=A quarter} of the students in the class believe that English is the second national language in Italy.", "hint": "25% = ? (two words)", "why": "Booklet p. 26: A quarter = 25%."}, {"type": "type", "q": "15 out of 20 students is {=three quarters} of the class.", "hint": "75% = ? (two words)", "why": "Booklet p. 26: Three quarters = 75% = 15 out of 20."}, {"type": "type", "q": "Instead of 'I found that…', a report writer writes: 'It {=was found} that…'", "hint": "Use the impersonal 'It' + a passive.", "why": "Reports avoid personal opinions, so they use 'It was found that…' (p. 24)."}, {"type": "type", "q": "Instead of 'It is true', a careful report writer writes: 'It {=could|may|might} be true.'", "hint": "Use a modal verb to sound less definite.", "why": "Avoid very definite statements unless you are sure: use could / may / might (p. 24)."}, {"type": "type", "q": "The {=majority} of the 20 students (14 of them) believed the myth.", "hint": "More than half = 'the ___ of'.", "why": "'The majority / minority of…' (p. 24) is useful for reporting survey results."}]}, {"key": "u3", "group": "Use of English", "kind": "Type", "name": "Must Have, Can't Have", "icon": "🕵️", "color": "#C25E12", "topic": "Modals of deduction: must / can't / may / might / could (+ have) (pp. 29–32)", "note": "Complete with a modal of deduction and the correct form of the verb in brackets.", "questions": [{"type": "type", "q": "Electricity was already well known at the time. Franklin {=must have tried} (try) to prove the electrical nature of lightning.", "hint": "You are almost sure this happened in the past: must + have + past participle.", "why": "Booklet p. 29. must have + past participle = I am almost sure it happened."}, {"type": "type", "q": "Benjamin Franklin would have died if he had been struck by lightning. Therefore, his kite {=can't have been|couldn't have been|cannot have been} (be) struck by lightning.", "hint": "You are sure this did NOT happen in the past.", "why": "Booklet p. 29. can't / couldn't have + past participle = I am sure it did not happen."}, {"type": "type", "q": "In 1766, Marie Antoinette was only 11 years old, so she {=can't have made|couldn't have made|cannot have made} (make) the statement.", "hint": "It was impossible: she was a child.", "why": "Booklet p. 29: 'Marie Antoinette can't / couldn't have made the statement'."}, {"type": "type", "q": "Historians now believe that Rousseau's \"great princess\" {=may have been|might have been|could have been} (be) Marie Thérèse, the wife of Louis XIV.", "hint": "Historians think it is possible, but they are not sure.", "why": "Booklet p. 29. may / might / could have + past participle = perhaps it happened."}, {"type": "type", "q": "Marie Antoinette {=must have been} (be) clever enough not to tell hungry mothers to eat cake.", "hint": "The writer is almost sure about this.", "why": "Booklet p. 29: 'she must have been clever enough not to suggest…'."}, {"type": "type", "q": "Violins weren't even invented back then. Therefore, Nero {=can't have fiddled|couldn't have fiddled|cannot have fiddled} (fiddle) while Rome burned.", "hint": "It was impossible: there were no violins.", "why": "Booklet p. 30. No violins existed, so it can't have happened."}, {"type": "type", "q": "Back then, people played the lyre, so Nero {=might have played|may have played|could have played} (play) the lyre.", "hint": "It is possible, but we are not sure.", "why": "Booklet p. 30. might have + past participle = maybe."}, {"type": "type", "q": "Nero hated the Christian community, so he {=must have blamed} (blame) the Christians for the fire.", "hint": "The writer is almost sure because of the evidence (he hated them).", "why": "Booklet p. 30: '(must have / blame)'."}, {"type": "type", "q": "Human activity, in particular the burning of fossil fuels, {=must be} (be) the cause of this dreadful situation.", "hint": "A present deduction: the writer is almost sure it is true now.", "why": "Booklet p. 31. must + base verb = I am almost sure this is true now."}, {"type": "type", "q": "This also shows that governments {=can't be doing|cannot be doing} (do) the right thing to reduce the burning of fossil fuels.", "hint": "A present deduction about an action happening now: the writer is sure it is NOT happening. Use the continuous form.", "why": "Booklet p. 31. can't be + -ing = I'm sure this is not happening now."}, {"type": "type", "q": "If governments delay taking the necessary precautions, polar bears {=may go|might go|could go} (go) extinct.", "hint": "A possibility in the future.", "why": "Booklet p. 31. may / might / could + base verb = it is possible in the future."}, {"type": "type", "q": "Coral reefs, which provide shelter for a quarter of all sea animals, {=may die|might die|could die} (die) out.", "hint": "A future possibility, not a certainty.", "why": "Booklet p. 31. may / might / could die out = it is possible, not certain."}, {"type": "type", "q": "She got 100% on the test. She {=must have studied} (study) very hard.", "hint": "You are almost sure about the past because of the evidence (100%).", "why": "must have + past participle: a strong deduction about the past."}, {"type": "type", "q": "I can't find my phone. I {=might have left|may have left|could have left} (leave) it at school.", "hint": "You are not sure. It is one possibility.", "why": "might / may / could have + past participle = a possibility about the past."}, {"type": "type", "q": "He says he saw the Great Wall of China from the Moon. He {=can't have seen|couldn't have seen|cannot have seen} (see) it. It is far too narrow.", "hint": "You are sure this did not happen.", "why": "can't / couldn't have + past participle = impossible in the past."}, {"type": "type", "q": "The lights are off and nobody is answering the door. They {=must be} (be) out.", "hint": "A present deduction: you are almost sure.", "why": "must + base verb = almost sure about now."}, {"type": "type", "q": "That {=can't be|cannot be} (be) Ayşe. She is in London this week.", "hint": "A present deduction: you are sure it is NOT true.", "why": "can't + base verb = sure it is not true now."}]}, {"key": "u4", "group": "Use of English", "kind": "Type", "name": "Reported Speech", "icon": "💬", "color": "#C25E12", "topic": "Tense back-shift, pronouns, time and place words (pp. 37–38)", "note": "Change the sentence in the box into reported speech.", "questions": [{"type": "type", "q": "Melissa said that it {=took} {=her} 50 minutes to drive to work.", "hint": "Move the verb one tense back, and change the pronoun 'me'.", "why": "takes → took; me → her (booklet p. 37, no. 1).", "lead": "\"It takes me 50 minutes to drive to work,\" said Melissa."}, {"type": "type", "q": "Pat said that they {=were hoping} to go away {=that weekend|the following weekend}.", "hint": "Present continuous → past continuous. 'This weekend' also changes.", "why": "are hoping → were hoping; this weekend → that weekend (p. 37, no. 2).", "lead": "\"We are hoping to go away this weekend,\" said Pat."}, {"type": "type", "q": "Alison said that he still {=hadn't finished|had not finished} writing his book.", "hint": "Present perfect → past perfect.", "why": "hasn't finished → hadn't finished (p. 37, no. 3).", "lead": "\"He still hasn't finished writing his book,\" said Alison."}, {"type": "type", "q": "Scott said that he {=had told} me to email {=him} three days {=before|earlier}.", "hint": "Past simple → past perfect; change 'me'; 'ago' changes too.", "why": "told → had told; me → him; ago → before/earlier (p. 37, no. 4).", "lead": "\"I told you to email me three days ago,\" said Scott."}, {"type": "type", "q": "Bob said that he {=enjoyed} working in {=his} garden.", "hint": "Present simple → past simple; change 'my'.", "why": "enjoy → enjoyed; my → his (p. 37, no. 5).", "lead": "\"I enjoy working in my garden,\" said Bob."}, {"type": "type", "q": "Mike said that he {=would phone|would call} me {=the next day|the following day|the day after}.", "hint": "will → ?  'Tomorrow' also changes.", "why": "'ll phone → would phone; tomorrow → the next day (p. 38, no. 6).", "lead": "\"I'll phone you tomorrow,\" said Mike."}, {"type": "type", "q": "Maria said that he {=couldn't|could not} come there {=the next day|the following day|the day after}.", "hint": "can't → ?  'Tomorrow' also changes.", "why": "can't → couldn't; here → there; tomorrow → the next day (p. 38, no. 7).", "lead": "\"He can't come here tomorrow,\" said Maria."}, {"type": "type", "q": "John said that he {=had been working} as a waiter before he {=met|had met} me.", "hint": "Past continuous → past perfect continuous.", "why": "was working → had been working (like 'They were waiting' → 'had been waiting' on p. 37). p. 38, no. 8.", "lead": "\"I was working as a waiter before I met you,\" said John."}, {"type": "type", "q": "His mother said that she {=wanted} {=him} to prepare the dinner.", "hint": "Present simple → past simple; 'you' is now the son.", "why": "want → wanted; you → him (p. 38, no. 9).", "lead": "\"I want you to prepare the dinner,\" said his mother."}, {"type": "type", "q": "Oliver said that he {=had forgotten} to tell me that my brother {=had called} {=that morning}.", "hint": "Both past simple verbs → past perfect. 'This morning' changes too.", "why": "forgot → had forgotten; called → had called; this morning → that morning (p. 38, no. 10).", "lead": "\"I forgot to tell you that your brother called this morning,\" said Oliver."}, {"type": "type", "q": "Jamila said that she {=travelled|traveled} a lot in {=her} job.", "hint": "Present simple → past simple; change 'my'.", "why": "travel → travelled; my → her (booklet example, p. 37).", "lead": "\"I travel a lot in my job,\" Jamila said."}, {"type": "type", "q": "Tom said they {=would be} there until Tuesday.", "hint": "will be → ?", "why": "will → would; here → there (booklet example, p. 37).", "lead": "\"We will be here until Tuesday,\" Tom said."}, {"type": "type", "q": "Anna told me it {=had been raining} all day.", "hint": "Present perfect continuous → past perfect continuous.", "why": "has been raining → had been raining (booklet example, p. 37).", "lead": "\"It has been raining all day,\" Anna said."}, {"type": "type", "q": "Sara said she {=had hurt} {=her} leg.", "hint": "Present perfect → past perfect; change 'my'.", "why": "have hurt → had hurt; my → her (booklet example, p. 37).", "lead": "\"I have hurt my leg,\" Sara said."}, {"type": "type", "q": "Alina told me {=they had|they'd} played tennis for {=their} school.", "hint": "Past simple → past perfect, and change the pronouns 'we' and 'our'.", "why": "we played → they had played; our → their (booklet example, p. 37).", "lead": "\"We played tennis for our school,\" said Alina."}, {"type": "type", "q": "He said {=that} was his house.", "hint": "You are NOT in front of the house now, so the demonstrative changes.", "why": "this → that when you are no longer in the place (booklet p. 37).", "lead": "\"This is my house,\" he said. (You are not in front of the house now.)"}]}, {"key": "u5", "group": "Use of English", "kind": "Type", "name": "Reporting Verbs", "icon": "📣", "color": "#C25E12", "topic": "announced, explained, promised, reminded, revealed, suggested; said vs told (p. 38)", "note": "Report the sentence. Reporting verbs: announced, explained, promised, reminded, revealed, suggested (or said / told).", "questions": [{"type": "type", "q": "Tom {=suggested} that I could eat less bread and pasta if I {=wanted} to lose weight.", "hint": "Use one verb from: announced, explained, promised, reminded, revealed, suggested. Tom gives advice.", "why": "Giving advice → suggested; want → wanted (booklet p. 38, no. 1).", "lead": "\"You can eat less bread and pasta if you want to lose weight,\" said Tom."}, {"type": "type", "q": "Lana {=reminded} me to call {=her} on Tuesday.", "hint": "Lana doesn't want you to forget. Pattern: ___ someone to do something.", "why": "'Don't forget to…' → reminded someone to… (p. 38, no. 2).", "lead": "\"Don't forget to call me on Tuesday,\" said Lana."}, {"type": "type", "q": "Joe {=explained} that more people {=were using} public transport because it {=was} cheaper.", "hint": "Joe gives a reason ('because'). Then move the verbs back one tense.", "why": "Giving a reason → explained; are using → were using; is → was (p. 38, no. 3).", "lead": "\"More people are using public transport because it is cheaper,\" said Joe."}, {"type": "type", "q": "Leo {=announced} that he {=had won} the first prize.", "hint": "Leo tells everyone some big news.", "why": "Telling news publicly → announced; have won → had won (p. 38, no. 4).", "lead": "\"I've won the first prize!\" said Leo."}, {"type": "type", "q": "Paula {=revealed} that she {=had broken} the computer.", "hint": "Paula tells a secret that nobody knew.", "why": "Telling a secret → revealed; broke → had broken (p. 38, no. 5).", "lead": "\"I broke the computer!\" said Paula."}, {"type": "type", "q": "Jack {=promised} that he {=would} never do it again.", "hint": "Jack says he will definitely not do it again.", "why": "Saying you will (not) do something → promised; will → would (p. 38, no. 6).", "lead": "\"I will never do it again!\" said Jack."}, {"type": "type", "q": "Ali {=told} me that he {=was} tired.", "hint": "There is a person after the verb (me), so not 'said'.", "why": "say + that…, but tell + person + that… ; am → was.", "lead": "\"I'm tired,\" Ali said to me."}, {"type": "type", "q": "The teacher said that the report {=was} due on Friday.", "hint": "Present simple 'is' moves back one tense.", "why": "is → was.", "lead": "\"The report is due on Friday,\" the teacher said."}]}, {"key": "u6", "group": "Use of English", "kind": "Type", "name": "Fix the Subject", "icon": "🛠️", "color": "#C25E12", "topic": "Graph sentences with the wrong subject (pp. 39–40)", "note": "The sentence in the box has the wrong subject. Complete the corrected sentence.", "questions": [{"type": "type", "q": "{=Cinema attendance|Attendance at cinemas|The attendance at cinemas|Attendance at the cinema|The cinema attendance} increased from 2000 to 2005.", "hint": "A cinema cannot increase. Use the word in brackets to make the real subject.", "why": "The thing that increased is the attendance, not the cinemas (booklet p. 40, no. 1).", "lead": "Wrong: Cinema's increased from 2000 to 2005. (attendance)"}, {"type": "type", "q": "{=Saudi Arabia's oil production|Oil production in Saudi Arabia|The oil production in Saudi Arabia|Saudi Arabian oil production|Saudi oil production} fell significantly to 270 million barrels a year.", "hint": "A country cannot fall. What fell?", "why": "The subject is the oil production, not the country (p. 40, no. 2).", "lead": "Wrong: Saudi Arabia fell significantly to 270 million barrels a year. (oil production)"}, {"type": "type", "q": "2000 to 2010 saw the {=percentage|proportion|number} of DVDs {=purchased|bought} drop from 70% to 60%.", "hint": "DVDs did not drop. Add a word like 'number' or 'percentage', and use the word in brackets.", "why": "It is the percentage of DVDs purchased that dropped (p. 40, no. 3).", "lead": "Wrong: 2000 to 2010 saw DVDs drop from 70% to 60%. (purchased)"}, {"type": "type", "q": "From 1975 to 2000, {=the consumption of|consumption of|the number of|the eating of} hamburgers increased dramatically.", "hint": "Look at the graph title: 'Consumption of Fast Food…'. Hamburgers themselves did not increase.", "why": "Booklet p. 39: the subject should be the consumption of hamburgers.", "lead": "Wrong: From 1975 to 2000, hamburgers increased dramatically from 10 to 100 times per year."}, {"type": "type", "q": "At the same time, {=the consumption of|consumption of|the number of|the eating of} fish and chips fell significantly to just under 40.", "hint": "Fish and chips did not fall. Use the same idea as the graph title.", "why": "Booklet p. 39: it was the consumption of fish and chips that fell.", "lead": "Wrong: At the same time, fish and chips fell significantly to just under 40."}, {"type": "type", "q": "The {=percentage|proportion|number} of people travelling by bus fell from just over 25% to around 16% in 2000.", "hint": "Buses did not fall. Look at the y-axis: '% of total travellers'.", "why": "Booklet p. 39: the subject is the percentage of travellers using buses.", "lead": "Wrong: While buses fell from just over 25% to around 16% in 2000…"}, {"type": "type", "q": "The {=percentage|proportion|number} of people travelling by car increased dramatically to over 35%.", "hint": "Cars did not increase. What does the y-axis measure?", "why": "Booklet p. 39: the percentage of travellers using cars increased.", "lead": "Wrong: …cars increased dramatically to over 35%."}, {"type": "type", "q": "The {=number} of {=homicides|murders} in New York fell from about 500 in 2007 to about 300 in 2017.", "hint": "New York did not fall. Look at the title of the line graph on p. 34.", "why": "The graph shows 'Annual homicides in New York', so the subject is the number of homicides.", "lead": "Wrong: New York fell from about 500 in 2007 to about 300 in 2017. (homicides)"}]}, {"key": "u7", "group": "Use of English", "kind": "Type", "name": "Word Builder", "icon": "🧱", "color": "#C25E12", "topic": "Word forms of the unit vocabulary: belief, credibility, misleading, vigilance…", "note": "Complete with the correct form of the word in CAPITALS.", "questions": [{"type": "type", "q": "It is a common {=belief} that Africa is one country. (BELIEVE)", "hint": "You need a noun. The verb changes its last letters.", "why": "believe (verb) → belief (noun)."}, {"type": "type", "q": "Saying that every American eats fast food is a {=generalization|generalisation}. (GENERAL)", "hint": "You need a noun ending in -ization.", "why": "general → generalize → generalization."}, {"type": "type", "q": "The newspaper's {=response} to our complaint was very quick. (RESPOND)", "hint": "You need a noun after 'The newspaper's'.", "why": "respond (verb) → response (noun)."}, {"type": "type", "q": "{=Ignorance} about the world can lead to fear of other countries. (IGNORANT)", "hint": "You need a noun as the subject of the sentence.", "why": "ignorant (adjective) → ignorance (noun)."}, {"type": "type", "q": "Many families in the world still live in {=poverty}. (POOR)", "hint": "You need a noun: the situation of being poor.", "why": "poor (adjective) → poverty (noun)."}, {"type": "type", "q": "The writer lost all his {=credibility} when people found out that he had invented the quotes. (CREDIBLE)", "hint": "You need a noun ending in -ity.", "why": "credible (adjective) → credibility (noun): the quality of being believed and trusted."}, {"type": "type", "q": "The report was full of {=inaccurate} information, so the teacher gave it a low mark. (ACCURATE)", "hint": "You need a negative adjective. Add a prefix.", "why": "accurate → inaccurate (not correct)."}, {"type": "type", "q": "This paragraph is {=irrelevant} to our topic, so leave it out. (RELEVANT)", "hint": "You need a negative adjective. The prefix starts with 'ir'.", "why": "relevant → irrelevant (not connected with the topic)."}, {"type": "type", "q": "The newspaper has a good {=reputation} for checking its facts. (REPUTABLE)", "hint": "You need a noun after 'a good'.", "why": "reputable (adjective) → reputation (noun)."}, {"type": "type", "q": "The graph was {=misleading} because its vertical axis did not start at 0. (MISLEAD)", "hint": "You need an adjective ending in -ing.", "why": "mislead (verb) → misleading (adjective): making people believe something false."}, {"type": "type", "q": "The {=manipulation} of statistics is a serious problem on social media. (MANIPULATE)", "hint": "You need a noun ending in -ion.", "why": "manipulate (verb) → manipulation (noun)."}, {"type": "type", "q": "Fake news is everywhere, so {=vigilance} is very important. (VIGILANT)", "hint": "You need a noun ending in -ance.", "why": "vigilant (adjective) → vigilance (noun)."}, {"type": "type", "q": "Spreading {=misinformation} online can be dangerous. (INFORM)", "hint": "You need a noun with a prefix and a suffix: wrong information.", "why": "inform → information → misinformation (wrong information)."}, {"type": "type", "q": "There was a {=misunderstanding} about the time of the meeting. (UNDERSTAND)", "hint": "You need a noun with the prefix mis- and the suffix -ing.", "why": "understand → misunderstand → misunderstanding (noun)."}, {"type": "type", "q": "These prices are {=outrageous}! (OUTRAGE)", "hint": "You need an adjective ending in -ous.", "why": "outrage (noun) → outrageous (adjective)."}, {"type": "type", "q": "Copying someone's words without citing them is {=plagiarism}. (PLAGIARIZE)", "hint": "You need a noun ending in -ism.", "why": "plagiarize (verb) → plagiarism (noun). Booklet p. 27."}, {"type": "type", "q": "Many historical stories were {=embellished} as they were told and retold. (EMBELLISH)", "hint": "A passive verb: you need the past participle.", "why": "were + past participle: were embellished (booklet p. 29)."}, {"type": "type", "q": "Some people have the {=misconception} that New York is very dangerous. (CONCEPTION)", "hint": "Add a prefix that means 'wrong'.", "why": "conception → misconception (a wrong idea)."}]}, {"key": "g1", "group": "Graphs & data", "kind": "Read", "name": "Line Graph: New York", "icon": "📈", "color": "#11845A", "topic": "Annual homicides in New York, 2007–2017 (p. 34)", "note": "Use the line graph to answer.", "questions": [{"q": "What is the title of this line graph?", "answer": "Annual homicides in New York", "wrong": ["Crime in American cities", "New York homicides by month", "Annual crime rate in the USA"], "hint": "Read the bold words at the top of the graph.", "why": "The title is 'Annual homicides in New York'. Annual means 'every year'.", "fig": "ny"}, {"q": "What is the range of values on the horizontal scale?", "answer": "2007 to 2017", "wrong": ["0 to 600", "2007 to 2012", "100 to 500"], "hint": "The horizontal scale goes from left to right along the bottom.", "why": "The horizontal (x) axis shows the years 2007 to 2017.", "fig": "ny"}, {"q": "What is the range of values on the vertical scale?", "answer": "0 to 600", "wrong": ["2007 to 2017", "300 to 550", "0 to 1,000"], "hint": "The vertical scale goes up the left side.", "why": "The vertical (y) axis shows the number of homicides, from 0 to 600.", "fig": "ny"}, {"q": "When was the lowest number of homicides recorded?", "answer": "2017", "wrong": ["2013", "2014", "2007"], "hint": "Find the lowest point of the line.", "why": "The line is lowest in 2017, at just under 300.", "fig": "ny"}, {"q": "When was the highest number of homicides recorded?", "answer": "2010", "wrong": ["2008", "2011", "2007"], "hint": "Find the highest point of the line.", "why": "The line is highest in 2010, at a little over 500.", "fig": "ny"}, {"q": "About how many homicides were committed in 2007?", "answer": "about 500", "wrong": ["about 400", "about 300", "about 600"], "hint": "Find 2007 on the left and look across to the vertical scale.", "why": "In 2007 the line starts close to the 500 grid line.", "fig": "ny"}, {"q": "About how many homicides were committed in 2013?", "answer": "about 330", "wrong": ["about 430", "about 280", "about 380"], "hint": "Find 2013 and look across: is it above or below 350?", "why": "In 2013 the line is between 300 and 350, at about 330.", "fig": "ny"}, {"q": "Were more homicides committed in 2017 than in 2008?", "answer": "No, there were fewer in 2017", "wrong": ["Yes, there were more in 2017", "No, the two years were equal", "Yes, about twice as many"], "hint": "Compare the height of the line at 2008 and at 2017.", "why": "2008 was over 500; 2017 was under 300. So there were fewer homicides in 2017.", "fig": "ny"}, {"q": "Which misconception does this graph challenge?", "answer": "That New York is a very dangerous city", "wrong": ["That New York is the largest US city", "That crime is rising in every country", "That the FBI does not collect data"], "hint": "Read the text under the graph on p. 34.", "why": "Some people think New York is a dangerous city ruled by criminals, but the homicide numbers have fallen a lot.", "fig": "ny"}, {"q": "Where does the data in this graph come from?", "answer": "The FBI", "wrong": ["The BBC", "The UN", "Gapminder"], "hint": "Look at the bottom-left corner of the graph.", "why": "'Source: FBI' is printed under the graph. On the booklet page, the BBC logo shows who published the graph, not where the data comes from.", "fig": "ny"}]}, {"key": "g2", "group": "Graphs & data", "kind": "Read", "name": "Bar Graph: After School", "icon": "📊", "color": "#11845A", "topic": "Students' favorite after-school activities (p. 36)", "note": "Use the bar graph to answer.", "questions": [{"q": "What is the title of this bar graph?", "answer": "Students' Favorite After-School Activities", "wrong": ["Students' Favorite School Subjects", "Number of Students in UK Schools", "Activities Students Do During Lessons"], "hint": "Read the words above the bars.", "why": "The title is 'Students' Favorite After-School Activities'.", "fig": "bar"}, {"q": "What is the range of values on the horizontal scale?", "answer": "0 to 100", "wrong": ["22 to 99", "0 to 366", "20 to 80"], "hint": "Read the numbers along the bottom of the graph.", "why": "The horizontal scale shows the number of students, from 0 to 100.", "fig": "bar"}, {"q": "How many categories are in the graph?", "answer": "7", "wrong": ["6", "5", "8"], "hint": "Count the bars.", "why": "There are 7 activities: Play Sports, Talk on Phone, Visit with Friends, Earn Money, Chat Online, School Clubs and Watch TV.", "fig": "bar"}, {"q": "Which after-school activity do students like most?", "answer": "Visit with Friends", "wrong": ["Chat Online", "Talk on Phone", "Play Sports"], "hint": "Find the longest bar.", "why": "Visit with Friends has the longest bar: 99 students.", "fig": "bar"}, {"q": "Which after-school activity do students like least?", "answer": "School Clubs", "wrong": ["Watch TV", "Earn Money", "Play Sports"], "hint": "Find the shortest bar.", "why": "School Clubs has the shortest bar: 22 students.", "fig": "bar"}, {"q": "How many students like to talk on the phone?", "answer": "53", "wrong": ["45", "44", "66"], "hint": "Read the number at the end of the 'Talk on Phone' bar.", "why": "53 students chose Talk on Phone.", "fig": "bar"}, {"q": "How many students like to earn money?", "answer": "44", "wrong": ["45", "37", "53"], "hint": "Read the number at the end of the 'Earn Money' bar.", "why": "44 students chose Earn Money.", "fig": "bar"}, {"q": "Which two activities are liked almost equally?", "answer": "Play Sports and Earn Money", "wrong": ["Talk on Phone and Chat Online", "Watch TV and School Clubs", "Chat Online and Visit with Friends"], "hint": "Look for two bars that are almost the same length.", "why": "Play Sports (45) and Earn Money (44) differ by only one student.", "fig": "bar"}, {"q": "Which list shows the categories from greatest to least?", "answer": "Friends, Online, Phone, Sports, Money, TV, Clubs", "wrong": ["Friends, Online, Phone, Money, Sports, TV, Clubs", "Friends, Phone, Online, Sports, Money, Clubs, TV", "Friends, Online, Sports, Phone, Money, TV, Clubs"], "hint": "Put the numbers in order: 99, 66, 53, 45, 44, 37, 22.", "why": "Visit with Friends 99, Chat Online 66, Talk on Phone 53, Play Sports 45, Earn Money 44, Watch TV 37, School Clubs 22.", "fig": "bar"}, {"q": "Which misconception does this survey challenge?", "answer": "That students' favorite activity is computer games", "wrong": ["That UK students do not have free time", "That most students dislike their friends", "That school clubs are the most popular"], "hint": "Read the sentence above the graph on p. 36.", "why": "Many people think students' favorite after-school activity is playing computer games, but the survey shows the opposite.", "fig": "bar"}, {"q": "What is a bar graph especially useful for?", "answer": "Comparing quantities in different categories", "wrong": ["Showing parts of one whole", "Showing exact dates of events", "Hiding small differences in data"], "hint": "Read the summary under the graph.", "why": "Booklet p. 36: 'A bar graph is useful for comparing facts… comparing quantities in different categories.'", "fig": "bar"}]}, {"key": "g3", "group": "Graphs & data", "kind": "Read", "name": "Table: The Cake Shop", "icon": "🧁", "color": "#11845A", "topic": "Profits for a cake shop, 2008 (p. 35)", "note": "Use the table to answer.", "questions": [{"q": "Which dessert made the most profit in the first quarter?", "answer": "Gummibarchen", "wrong": ["Tarte au sucre", "Sir Rodney's Scones", "Scottish Longbreads"], "hint": "Look down the 'Qtr 1' column for the biggest number.", "why": "Gummibarchen: $5,079.60 in Qtr 1.", "fig": "table"}, {"q": "Which dessert made the most profit in the second quarter?", "answer": "Tarte au sucre", "wrong": ["Gummibarchen", "Scottish Longbreads", "Sir Rodney's Scones"], "hint": "Look down the 'Qtr 2' column for the biggest number.", "why": "Tarte au sucre: $4,547.92 in Qtr 2.", "fig": "table"}, {"q": "Which dessert made the least profit in the first quarter?", "answer": "Chocolade", "wrong": ["Chocolate Biscuits", "Scottish Longbreads", "Sir Rodney's Scones"], "hint": "Look down the 'Qtr 1' column for the smallest number.", "why": "Chocolade: $744.60 in Qtr 1.", "fig": "table"}, {"q": "Which dessert made the least profit in the second quarter?", "answer": "Chocolade", "wrong": ["Chocolate Biscuits", "Sir Rodney's Scones", "Gummibarchen"], "hint": "Look down the 'Qtr 2' column for the smallest number.", "why": "Chocolade: $162.56 in Qtr 2.", "fig": "table"}, {"q": "Which quarter made the most profit?", "answer": "Quarter 1", "wrong": ["Quarter 2", "Both quarters equally", "The table does not show it"], "hint": "Compare the two numbers in the 'Total' row.", "why": "Qtr 1 total $14,181.59 is more than Qtr 2 total $8,127.78.", "fig": "table"}, {"q": "Which dessert made the most profit overall?", "answer": "Tarte au sucre", "wrong": ["Gummibarchen", "Scottish Longbreads", "Sir Rodney's Scones"], "hint": "Look down the 'Grand Total' column for the biggest number.", "why": "Tarte au sucre: $9,275.92 overall.", "fig": "table"}, {"q": "Which dessert made the least profit overall?", "answer": "Chocolade", "wrong": ["Chocolate Biscuits", "Sir Rodney's Scones", "Scottish Longbreads"], "hint": "Look down the 'Grand Total' column for the smallest number.", "why": "Chocolade: $907.16 overall.", "fig": "table"}, {"q": "What is the grand total profit shown in the table?", "answer": "$22,309.37", "wrong": ["$14,181.59", "$8,127.78", "$9,275.92"], "hint": "Look at the bottom-right cell.", "why": "The Total row's Grand Total is $22,309.37 (Qtr 1 + Qtr 2).", "fig": "table"}]}, {"key": "g4", "group": "Graphs & data", "kind": "Spot", "name": "Misleading Graphs", "icon": "🎭", "color": "#11845A", "topic": "Five tricks: baseline, y-axis, cherry picking, wrong graph, conventions (pp. 42–46)", "note": "", "questions": [{"q": "A bar graph's vertical axis starts at 50 instead of 0, so a small difference between groups looks huge. Which trick is this?", "answer": "Omitting the baseline", "wrong": ["Cherry picking data", "Using the wrong graph", "Going against conventions"], "hint": "Think about where the axis begins.", "why": "Omitting the baseline (p. 42): the baseline is usually 0, but the writer makes it a different number."}, {"q": "What is another name for a graph whose baseline is not 0?", "answer": "A truncated graph", "wrong": ["A cherry-picked graph", "A flipped graph", "A pie chart"], "hint": "'Truncated' means 'cut short'.", "why": "Booklet p. 42: 'This is known as a truncated graph.'"}, {"q": "In the booklet's example, the groups scored 62%, 54% and 54%. Why is the graph that starts at 0 more accurate?", "answer": "It shows the groups are actually quite close", "wrong": ["It makes Group A look three times bigger", "It removes Groups B and C from the data", "It uses a pie chart to compare the groups"], "hint": "What does the right-hand graph on p. 42 show about the difference?", "why": "Starting at 0, the difference between the groups does not seem as dramatic (only about a 14% difference)."}, {"q": "A writer stretches or squashes the scale of a graph to make a change look bigger or smaller than it really is. Which trick is this?", "answer": "Manipulating the y-axis", "wrong": ["Omitting the baseline", "Cherry picking data", "Going against conventions"], "hint": "The trick is about the whole scale, not only where it starts.", "why": "Manipulating the y-axis (p. 43): expanding or compressing the scale, also called axis changing."}, {"q": "Why did the National Review graph show temperatures from -10 to 110 degrees?", "answer": "To make the line flat, so warming seems unreal", "wrong": ["To show every temperature on Earth clearly", "To make the rise in temperature look bigger", "Because the data started in the year 1880"], "hint": "With such a big scale, what happens to a small change?", "why": "Booklet p. 43: the huge scale made the line as flat as possible, to push the idea that global warming is not real."}, {"q": "A graph shows only May to August 2020, so the line goes up. The full data from 2019 to 2023 goes down. Which trick is this?", "answer": "Cherry picking data", "wrong": ["Omitting the baseline", "Manipulating the y-axis", "Using the wrong graph"], "hint": "The writer chose only some of the data.", "why": "Cherry picking (p. 44): only certain data points are included to support the writer's story."}, {"q": "Why was the first 'UK national debt' graph misleading?", "answer": "It showed only recent years of data", "wrong": ["Its vertical axis started at 50, not at 0", "It used dark colors for the lowest numbers", "It used a pie chart instead of bars"], "hint": "Compare it with the second graph, which shows the full time series.", "why": "Booklet p. 44: with the full time series, national debt is actually low compared with the past."}, {"q": "Teams A, B and C scored 50%, 64% and 38%, and a writer showed this in a pie chart. What is wrong?", "answer": "Pie charts show parts of a whole, not differences", "wrong": ["Pie charts cannot show any percentages", "The colors in the pie chart were reversed", "The pie chart should start at zero"], "hint": "What is a pie chart for?", "why": "Booklet p. 45: pie charts compare parts of a whole. These numbers add up to more than 100%."}, {"q": "Which kind of graph is best for showing the differences between groups?", "answer": "A bar graph", "wrong": ["A pie chart", "A shaded map", "A truncated graph"], "hint": "Look at the 'Accurate' side of p. 45.", "why": "Booklet p. 45: bar graphs are better for showing the differences between groups."}, {"q": "ESPN ranked the football teams correctly from highest to lowest, but its bar graph made no sense to most people. Which trick does the booklet put this under?", "answer": "Using the wrong graph", "wrong": ["Cherry picking data", "Omitting the baseline", "Going against conventions"], "hint": "The data was fine; the type of graph was the problem.", "why": "Booklet p. 45 puts the ESPN example under 'Using the wrong graph'."}, {"q": "On a population map, darker shades normally show ___.", "answer": "higher population density", "wrong": ["lower population density", "older population data", "places with no data"], "hint": "Think about the usual convention readers expect.", "why": "Booklet p. 46: the convention is lighter shades for lower density and darker shades for higher density."}, {"q": "The 'Gun deaths in Florida' graph turned the vertical axis upside down. What did readers wrongly think?", "answer": "That gun deaths went down after the law", "wrong": ["That gun deaths went up after the law", "That the law was passed in 2010", "That the data came from a hospital"], "hint": "With 0 at the top, a rising line actually means fewer deaths.", "why": "Booklet p. 46: it looked like gun deaths were going down when in reality they increased after the Stand Your Ground law (2005)."}, {"q": "Which trick is the upside-down Florida graph an example of?", "answer": "Going against conventions", "wrong": ["Cherry picking data", "Using the wrong graph", "Omitting the baseline"], "hint": "Readers expect 0 at the bottom of the axis.", "why": "It is on p. 46 under 'Going against conventions': flipping the usual standard confuses readers."}, {"q": "According to the text, can a graph mislead even when the data is correct?", "answer": "Yes, if it is presented in a misleading way", "wrong": ["No, correct data always gives a fair graph", "Only if the graph is a pie chart", "Only if the source is a government"], "hint": "Read the first paragraph on p. 42.", "why": "Booklet p. 42: 'The data doesn't even have to be bad – it could just be presented in a misleading way.'"}, {"q": "According to the conclusion, what should you do first when you see a graph?", "answer": "Check where the graph is coming from", "wrong": ["Share it if it looks professional", "Trust it if it shows numbers", "Count how many colors it uses"], "hint": "Read the conclusion on p. 46.", "why": "Booklet p. 46: first check where the graph is coming from, then look at the data. Be vigilant and stay sceptical."}]}, {"key": "m1", "group": "Media & reports", "kind": "Spot", "name": "Spot the Fake News", "icon": "📰", "color": "#8A5A00", "topic": "How to spot fake news (8 tips) and evaluating news sources (5 steps) (pp. 20–21)", "note": "", "questions": [{"q": "A story has a shocking headline, but you haven't read the whole article yet. Which tip should you follow?", "answer": "Read beyond", "wrong": ["Check the date", "Ask the experts", "Check your biases"], "hint": "Headlines can be outrageous to get clicks.", "why": "'Read beyond' (p. 20): headlines can be outrageous in an effort to get clicks. What's the whole story?"}, {"q": "You don't know who wrote an article, so you do a quick search on the writer's name. Which tip is this?", "answer": "Check the author", "wrong": ["Consider the source", "Supporting sources?", "Is it a joke?"], "hint": "It is about a person, not a website.", "why": "'Check the author' (p. 20): are they credible? Are they real?"}, {"q": "A news story was first published in 2015, and people are sharing it again today. Which tip warns you about this?", "answer": "Check the date", "wrong": ["Read beyond", "Check your biases", "Consider the source"], "hint": "Old news may not be relevant now.", "why": "'Check the date' (p. 20): reposting old news stories doesn't mean they're relevant to current events."}, {"q": "A story is so strange and outlandish that it might be satire. Which tip should you think about?", "answer": "Is it a joke?", "wrong": ["Check the author", "Ask the experts", "Supporting sources?"], "hint": "Satire is writing that makes fun of something.", "why": "'Is it a joke?' (p. 20): if it is too outlandish, it might be satire."}, {"q": "You believe a story immediately because it matches what you already think. Which tip should you follow?", "answer": "Check your biases", "wrong": ["Check the date", "Read beyond", "Is it a joke?"], "hint": "Your own beliefs can affect your judgement.", "why": "'Check your biases' (p. 20): consider if your own beliefs could affect your judgement."}, {"q": "You ask a librarian, or you check a fact-checking website. Which tip is this?", "answer": "Ask the experts", "wrong": ["Consider the source", "Check the author", "Supporting sources?"], "hint": "You are getting help from people who know.", "why": "'Ask the experts' (p. 20): ask a librarian, or consult a fact-checking site."}, {"q": "You click on the links in an article to see if they really support the story. Which tip is this?", "answer": "Supporting sources?", "wrong": ["Read beyond", "Consider the source", "Check the date"], "hint": "The links are the article's evidence.", "why": "'Supporting sources?' (p. 20): click on those links and decide if the info actually supports the story."}, {"q": "You click away from the story to learn about the website, its mission and its contact information. Which tip is this?", "answer": "Consider the source", "wrong": ["Check the author", "Ask the experts", "Check your biases"], "hint": "You are investigating the website, not the writer.", "why": "'Consider the source' (p. 20): investigate the site, its mission and its contact info."}, {"q": "\"Is this a recent article? If not, the claims may no longer be relevant.\" Which step of evaluating news is this?", "answer": "Currency", "wrong": ["Relevance", "Authority", "Accuracy"], "hint": "This step is about time.", "why": "Currency (p. 21) asks whether the article is recent."}, {"q": "\"Who is the author? What are the author's credentials? Is the website a blog, a hoax or a news source?\" Which step is this?", "answer": "Authority", "wrong": ["Purpose", "Currency", "Relevance"], "hint": "This step is about who is behind the article.", "why": "Authority (p. 21) checks the author and the website."}, {"q": "\"Can the content be verified by multiple sources? Is it from an unbiased source?\" Which step is this?", "answer": "Accuracy", "wrong": ["Authority", "Purpose", "Currency"], "hint": "This step asks whether the facts are correct.", "why": "Accuracy (p. 21): if a story appears in only one publication with no links to sources, it is very likely to be inaccurate."}, {"q": "\"Does this article provoke an emotional response, like anger or fear?\" Which step is this?", "answer": "Purpose", "wrong": ["Accuracy", "Relevance", "Authority"], "hint": "This step asks why the article was written.", "why": "Purpose (p. 21): valid news aims to inform; inaccurate news is often written to provoke anger, outrage, fear or excitement."}, {"q": "\"Read past the headline. Is the content really about your topic?\" Which step is this?", "answer": "Relevance", "wrong": ["Currency", "Purpose", "Accuracy"], "hint": "This step asks whether the article is connected to what you need.", "why": "Relevance (p. 21): read past the headline and decide if the content is relevant for your purposes."}, {"q": "According to the guide, what is the intent of a valid news source?", "answer": "To inform readers", "wrong": ["To make readers angry", "To sell more products", "To confirm readers' beliefs"], "hint": "Read the 'Purpose' row on p. 21.", "why": "Booklet p. 21: 'The intent of a valid news source is to inform.'"}, {"q": "A story appears in only one publication and has no links to sources. According to the guide, it is very likely to be ___.", "answer": "inaccurate", "wrong": ["recent", "relevant", "reputable"], "hint": "Read the 'Accuracy' row on p. 21.", "why": "Booklet p. 21: it is very likely to be inaccurate."}]}, {"key": "m2", "group": "Media & reports", "kind": "Know", "name": "Report Writing", "icon": "🗂️", "color": "#8A5A00", "topic": "Report structure, introduction, findings, conclusion, language, project rules (pp. 18, 22–24, 33)", "note": "", "questions": [{"q": "Which list shows the five parts of a report in the right order?", "answer": "Title page, contents, introduction, findings, conclusion", "wrong": ["Title page, introduction, findings, contents, conclusion", "Contents, title page, introduction, conclusion, findings", "Introduction, title page, findings, contents, conclusion"], "hint": "The contents page comes near the front.", "why": "Booklet p. 22: Title page, Contents page, Introduction, Findings, Conclusion."}, {"q": "What should a title page normally include?", "answer": "Title, name, date, unit, course and teacher", "wrong": ["Title, aim, findings and conclusion", "Name, sources, graphs and page numbers", "Title, introduction and a short summary"], "hint": "Think about who wrote it, when and for whom.", "why": "Booklet p. 22: the title, your name, the date, the unit/subject, the course and the name of the teacher."}, {"q": "When is it best to write the contents page?", "answer": "Right at the end", "wrong": ["Before you start researching", "Straight after the introduction", "Before the findings section"], "hint": "You need to know all the sections and page numbers first.", "why": "Booklet p. 22: 'It is best to do your list of contents right at the end.' Don't forget the page numbers."}, {"q": "About how long should the introduction be?", "answer": "About 160 words", "wrong": ["About 50 words", "About 500 words", "About two pages"], "hint": "The style should be brief.", "why": "Booklet p. 23: explain very briefly (about 160 words)."}, {"q": "The introduction should start with a topic sentence that gives ___.", "answer": "the aim and rationale for the study", "wrong": ["your personal opinion of the topic", "a summary of all the findings", "a provocative question for readers"], "hint": "It tells the reader what the report is for and why.", "why": "Booklet p. 23: start with a topic sentence providing the aim and rationale for the study."}, {"q": "In the introduction, 'participants and setting' means saying ___.", "answer": "who, when, where, how many and how old", "wrong": ["which charts and graphs you used", "what your final opinion is", "which sources you will cite"], "hint": "Think about the people in your research.", "why": "Booklet p. 23: describe participants and setting: who, when, where, how many, how old, what groups?"}, {"q": "In the introduction, 'method' means saying ___.", "answer": "what surveys or tests you used", "wrong": ["who took part in the research", "what your recommendations are", "why the misconception is false"], "hint": "How did you do your research?", "why": "Booklet p. 23: describe the method: what design, questionnaires, surveys or tests you used."}, {"q": "Which sentence shows the plan of a report?", "answer": "The report is divided into four main sections.", "wrong": ["I think this misconception is very harmful.", "Interestingly, most students chose sports.", "It is recommended that schools act now."], "hint": "A plan tells the reader how the report is organized.", "why": "Booklet p. 23: 'The report is divided into four main sections. It will first consider… Then…'"}, {"q": "What must you NOT include in the findings section?", "answer": "Opinions or recommendations", "wrong": ["Charts or tables", "Evidence from sources", "Numbers from a survey"], "hint": "Save these for the end of the report.", "why": "Booklet p. 23: do not include opinions, conclusions or recommendations in the findings. Save them for the conclusion."}, {"q": "What can you use in the findings to reinforce your arguments?", "answer": "Charts, diagrams and tables", "wrong": ["Personal opinions and feelings", "A provocative question", "Your recommendations"], "hint": "Think about visuals.", "why": "Booklet p. 23: charts, diagrams and tables can be used to reinforce your arguments."}, {"q": "Which of these does a good conclusion do?", "answer": "Restates the main ideas in a fresh way", "wrong": ["Repeats the introduction word for word", "Adds lots of brand-new evidence", "Lists every source you used"], "hint": "Don't use the same language again.", "why": "Booklet p. 24: reinforce your main ideas, but restate them in a fresh way, and refer back to the introduction."}, {"q": "Which of these may a conclusion include, if appropriate?", "answer": "A prediction, a solution or a call to action", "wrong": ["A new topic for a different report", "The full method of the research", "The title, the date and your name"], "hint": "Think about results, consequences and the future.", "why": "Booklet p. 24: suggest results or consequences, make a call for action, make predictions or suggest solutions, perhaps a provocative question."}, {"q": "Reports are the most ___ kind of writing.", "answer": "impersonal", "wrong": ["personal", "emotional", "informal"], "hint": "Reports avoid 'I think' and personal feelings.", "why": "Booklet p. 24: reports are the most impersonal kind of writing."}, {"q": "Instead of 'I think that…', a report should say:", "answer": "It seems that…", "wrong": ["In my heart, I feel that…", "Honestly, I believe that…", "Everybody knows that…"], "hint": "Use the impersonal 'It' construction.", "why": "Booklet p. 24: use the impersonal 'It' construction, e.g. 'It seems that…' or 'It was found that…'."}, {"q": "In the report outline, what should follow each argument in the findings?", "answer": "One piece of evidence and its analysis", "wrong": ["A personal opinion about the topic", "A new misconception to research", "A summary of the whole report"], "hint": "Look at 'Explain' in the outline on p. 33.", "why": "Booklet p. 33: Argument, then Explain: give one piece of evidence, then analyze how it supports your argument."}, {"q": "How long should your unit project presentation be?", "answer": "Around 3 minutes", "wrong": ["Around 10 minutes", "Around 1 minute", "Around 20 minutes"], "hint": "Read the presentation guidelines on p. 18.", "why": "Booklet p. 18: it needs to be around 3 minutes long."}, {"q": "Can you use notes during your presentation?", "answer": "No, you cannot use notes", "wrong": ["Yes, you can read your report", "Yes, but only for the introduction", "Only if you show visuals too"], "hint": "The guidelines say this in capital letters.", "why": "Booklet p. 18: 'YOU CANNOT USE NOTES!!' You will not just read out your report."}, {"q": "Why must you write the report in Google Docs?", "answer": "To prove that the work is your own", "wrong": ["Because it checks your spelling", "Because the teacher prints it", "To make the report look nicer"], "hint": "Read the last line of the report guidelines on p. 18.", "why": "Booklet p. 18: 'You can only use Google Docs in order to prove that the work is your own!'"}]}, {"key": "m3", "group": "Media & reports", "kind": "Know", "name": "Citation & Plagiarism", "icon": "🔖", "color": "#8A5A00", "topic": "Why we cite sources and how to avoid plagiarism (p. 27)", "note": "", "questions": [{"q": "Which of these is a reason for citing your sources?", "answer": "To show you have done proper research", "wrong": ["To make your report look longer", "To avoid writing a conclusion", "To hide where ideas came from"], "hint": "Read the list on p. 27.", "why": "Booklet p. 27: citing shows your reader you've done proper research by listing the sources you used."}, {"q": "Citing sources also lets you ___.", "answer": "give credit to other researchers", "wrong": ["take credit for others' ideas", "skip the findings section", "use other people's words freely"], "hint": "Being a responsible scholar means acknowledging other people's ideas.", "why": "Booklet p. 27: to be a responsible scholar by giving credit to other researchers and acknowledging their ideas."}, {"q": "Why should you cite sources accurately?", "answer": "So readers can track down your sources", "wrong": ["So readers can skip the sources", "So your report is shorter", "So you don't need a bibliography"], "hint": "Think about a reader who wants to check your information.", "why": "Booklet p. 27: to allow your reader to track down the sources you used, through footnotes, a bibliography or a reference list."}, {"q": "Plagiarism happens when you ___.", "answer": "use someone's words or ideas without saying so", "wrong": ["quote someone and give the source", "write about a famous misconception", "share your report with a friend"], "hint": "Read the definition on p. 27.", "why": "Booklet p. 27: plagiarism occurs when you borrow another's words (or ideas) and do not acknowledge that you have done so."}, {"q": "Can you plagiarize by accident?", "answer": "Yes, it can be inadvertent", "wrong": ["No, only on purpose", "Only in the conclusion", "Only with online sources"], "hint": "'Inadvertently' means without meaning to.", "why": "Booklet p. 27: plagiarism can be deliberate or inadvertent, and both can have serious consequences."}, {"q": "In this culture, our words and ideas are considered ___.", "answer": "intellectual property", "wrong": ["public information", "common knowledge", "shared opinions"], "hint": "Like a car or any other possession.", "why": "Booklet p. 27: we consider our words and ideas intellectual property; they belong to us."}, {"q": "What does the booklet say can happen to students who plagiarize?", "answer": "Some have had to leave their school", "wrong": ["They only lose one point", "Nothing, if it was a short quote", "They must rewrite the introduction"], "hint": "Plagiarism is a very serious offense.", "why": "Booklet p. 27: in some instances, students have had to leave the institutions where they were studying."}, {"q": "What is the best way to avoid plagiarism?", "answer": "Cite sources in the text and in a bibliography", "wrong": ["Change a few words from the source", "Use only one source for the report", "Copy ideas but not exact words"], "hint": "Cite in two places.", "why": "Booklet p. 27: cite your sources both within the body of your paper and in a bibliography at the end."}]}, {"key": "t1", "group": "Texts & facts", "kind": "Read", "name": "History's Myths", "icon": "🏛️", "color": "#4B5563", "topic": "Franklin, Marie Antoinette, Nero, and 'Conclusions We Can Draw Today' (pp. 29–31)", "note": "", "questions": [{"q": "According to the text, why didn't Benjamin Franklin discover electricity?", "answer": "Electricity was already well known then", "wrong": ["Lightning never strikes kites", "He was too young at the time", "Rousseau discovered it first"], "hint": "Read the first misconception on p. 29.", "why": "Booklet p. 29: electricity was already well known at the time. Franklin must have tried to prove the electrical nature of lightning."}, {"q": "Why can't Franklin's kite have been struck by lightning?", "answer": "He would have died if it had been", "wrong": ["Kites were not invented until later", "It never rained in Philadelphia", "Electricity was not known yet"], "hint": "What would lightning do to a person holding the kite?", "why": "Booklet p. 29: Franklin would have died if he had been struck by lightning."}, {"q": "Why can't Marie Antoinette have said \"Let them eat cake\" in 1766?", "answer": "She was only 11 years old", "wrong": ["She did not speak French", "She had not met Rousseau", "Cake was not eaten in France"], "hint": "How old was she when Rousseau wrote it?", "why": "Booklet p. 29: in 1766, she was only 11 years old."}, {"q": "Who wrote about the \"great princess\" and her famous saying in his \"Confessions\"?", "answer": "Jean Jacques Rousseau", "wrong": ["Louis XVI", "Benjamin Franklin", "Nero"], "hint": "He was writing a book in 1766.", "why": "Booklet p. 29: Jean Jacques Rousseau was writing his \"Confessions\" when he quoted the famous saying of a great princess."}, {"q": "Who do historians now believe the \"great princess\" may have been?", "answer": "Marie Thérèse, wife of Louis XIV", "wrong": ["Marie Antoinette, wife of Louis XVI", "Cleopatra, Queen of Egypt", "Cinderella, the fairy-tale princess"], "hint": "She lived more than 75 years before Marie Antoinette.", "why": "Booklet p. 29: historians believe she may have been Marie Thérèse, the wife of Louis XIV."}, {"q": "According to the text, how did historical stories become misconceptions?", "answer": "They were twisted and embellished over time", "wrong": ["Historians invented them on purpose", "They were written in the wrong language", "Nobody wrote them down at all"], "hint": "Read the introduction to the text on p. 29.", "why": "Booklet p. 29: some were originally based on fact, but all became twisted and embellished as they were told and retold."}, {"q": "Why can't Nero have fiddled while Rome burned?", "answer": "Violins hadn't been invented yet", "wrong": ["He was not in Rome at the time", "Rome never burned in 64 AD", "He hated music and musicians"], "hint": "A 'fiddle' is another word for a violin.", "why": "Booklet p. 30: violins weren't even invented back then."}, {"q": "In the text, what does Nero hating the Christian community suggest?", "answer": "He must have blamed them for the fire", "wrong": ["He must have started the fire himself", "He can't have known about the fire", "He might have played the violin"], "hint": "Look at the last (must have / blame) gap on p. 30.", "why": "Booklet p. 30: since he hated the Christian community, he must have blamed them for the fire."}, {"q": "According to 'Conclusions We Can Draw Today', how much have the snows of Kilimanjaro melted since 1912?", "answer": "More than 80 percent", "wrong": ["About 10 percent", "Exactly half", "About 25 percent"], "hint": "Read the second paragraph on p. 31.", "why": "Booklet p. 31: the famed snows of Kilimanjaro have melted more than 80 percent since 1912."}, {"q": "According to the text, by how much has the size of Arctic sea ice declined in the past 30 years?", "answer": "About 10 percent", "wrong": ["More than 80 percent", "About 50 percent", "About 25 percent"], "hint": "Read the sentence about Arctic sea ice on p. 31.", "why": "Booklet p. 31: its size has declined by about 10 percent in the past 30 years."}, {"q": "\"Human activity… must be the cause of this dreadful situation.\" What does 'must' show?", "answer": "The writer is almost sure from evidence", "wrong": ["It is a fully proven, 100% fact", "The writer has no idea at all", "It is impossible that it is true"], "hint": "'Must' is a modal of deduction, not a fact.", "why": "Must = a strong deduction based on evidence. We are almost sure, but it is the writer's conclusion (p. 31, question 1)."}, {"q": "\"Coral reefs… may / might / could die out.\" Are we sure that coral reefs are going to die out?", "answer": "No, it is only a possibility", "wrong": ["Yes, it is certain to happen", "Yes, it has already happened", "No, it is impossible"], "hint": "may / might / could = possible.", "why": "may / might / could show a possibility in the future, not a certainty (p. 31, question 3)."}, {"q": "According to the text, coral reefs provide shelter for ___ of all the sea animals.", "answer": "a quarter", "wrong": ["a half", "three quarters", "a third"], "hint": "Read the last paragraph on p. 31.", "why": "Booklet p. 31: coral reefs provide shelter for a quarter of all the sea animals."}, {"q": "\"Governments can't be doing the right thing.\" What does the writer mean?", "answer": "The writer is sure they are not acting well", "wrong": ["The writer knows governments are doing well", "The writer thinks governments might help", "The writer is asking a question"], "hint": "can't be + -ing = a negative deduction about now.", "why": "can't be doing = I'm sure this is not happening (p. 31, question 2). It is still a deduction, not a proven fact."}]}, {"key": "t2", "group": "Texts & facts", "kind": "Know", "name": "Factfulness Facts", "icon": "🌐", "color": "#4B5563", "topic": "The Official Factfulness Test answers (pp. 3–6) and two common myths (p. 7)", "note": "", "questions": [{"q": "In all low-income countries across the world today, how many girls finish primary school?", "answer": "60%", "wrong": ["20%", "40%"], "hint": "Most people guess too low.", "why": "The correct answer in the official Factfulness test is C: 60%."}, {"q": "Where does the majority of the world population live?", "answer": "In middle-income countries", "wrong": ["In low-income countries", "In high-income countries"], "hint": "Most people think the world is divided into 'rich' and 'poor'. It isn't.", "why": "Correct answer: B, in middle-income countries."}, {"q": "In the last 20 years, the proportion of the world population living in extreme poverty has…", "answer": "almost halved", "wrong": ["almost doubled", "remained more or less the same"], "hint": "The news about poverty is better than most people think.", "why": "Correct answer: C, it has almost halved."}, {"q": "What is the average life expectancy of the world today?", "answer": "70 years", "wrong": ["50 years", "60 years"], "hint": "It is higher than most people guess.", "why": "Correct answer: C, 70 years."}, {"q": "There are 2 billion children in the world today, aged 0 to 15. How many children will there be in 2100, according to the United Nations?", "answer": "2 billion", "wrong": ["4 billion", "3 billion"], "hint": "The UN expects the number of children to stop growing.", "why": "Correct answer: C, 2 billion."}, {"q": "The UN predicts that by 2100 the world population will have increased by another 4 billion. What is the main reason?", "answer": "There will be more adults (15 to 74)", "wrong": ["There will be more children (below 15)", "There will be more very old people (75+)"], "hint": "The number of children will stay about the same.", "why": "Correct answer: B, there will be more adults (age 15 to 74)."}, {"q": "How did the number of deaths per year from natural disasters change over the last hundred years?", "answer": "Decreased to less than half", "wrong": ["More than doubled", "Remained about the same"], "hint": "The news shows many disasters, but deaths per year tell a different story.", "why": "Correct answer: C, it decreased to less than half."}, {"q": "There are roughly 7 billion people in the world. Which option most accurately shows where they live?", "answer": "Europe 1, Asia 4, Africa 1, Americas 1 (billion)", "wrong": ["Europe 1, Asia 3, Africa 2, Americas 1 (billion)", "Europe 1, Asia 3, Africa 1, Americas 2 (billion)"], "hint": "Most of the world's people live on one continent.", "why": "Correct answer: A: 1 billion in Europe, 4 billion in Asia, 1 billion in Africa and 1 billion in the Americas."}, {"q": "How many of the world's 1-year-old children today have been vaccinated against some disease?", "answer": "80%", "wrong": ["20%", "50%"], "hint": "It is much higher than most people think.", "why": "Correct answer: C, 80%."}, {"q": "Worldwide, 30-year-old men have spent 10 years in school, on average. How many years have women of the same age spent in school?", "answer": "9 years", "wrong": ["6 years", "3 years"], "hint": "The gap is much smaller than most people guess.", "why": "Correct answer: A, 9 years."}, {"q": "In 1996, tigers, giant pandas and black rhinos were all listed as endangered. How many of these three are more critically endangered today?", "answer": "None of them", "wrong": ["Two of them", "One of them"], "hint": "Most people expect bad news here.", "why": "Correct answer: C, none of them."}, {"q": "How many people in the world have some access to electricity?", "answer": "80%", "wrong": ["20%", "50%"], "hint": "It is a large majority.", "why": "Correct answer: C, 80%."}, {"q": "Global climate experts believe that, over the next 100 years, the average temperature will…", "answer": "get warmer", "wrong": ["remain the same", "get colder"], "hint": "Most people get this one right.", "why": "Correct answer: A, get warmer."}, {"q": "Myth or fact? \"Vikings wore horned helmets.\"", "answer": "Myth", "wrong": ["Fact"], "hint": "Think about the first picture in '50 Common Misconceptions' (p. 7).", "why": "It is a myth. There is no evidence that Vikings wore horned helmets in battle; the image comes from much later art and costumes."}, {"q": "Myth or fact? \"The Great Wall of China is visible from space with the naked eye.\"", "answer": "Myth", "wrong": ["Fact"], "hint": "The wall is very long, but how wide is it?", "why": "It is a myth. The wall is very long but narrow, so it can't be seen with the naked eye from the Moon, and it is very hard to see even from low orbit."}]}]}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("game-data").textContent);
+  var KEY = "onur-terakki10:" + DATA.id;
+  var LETTERS = ["A", "B", "C", "D"];
+  var CHEERS = ["Fact confirmed!", "Spot on!", "Sharp eye!", "Correct!", "Nailed it!", "Exactly right!", "Well checked!", "That's the truth!"];
+  var MAXDOTS = (DATA.levels.length + 1) * 3;
+  var RANKS = [
+    [0, "📝", "Cub Reporter"], [Math.round(MAXDOTS * 0.2), "🔎", "Fact Finder"], [Math.round(MAXDOTS * 0.45), "🧾", "Source Checker"],
+    [Math.round(MAXDOTS * 0.7), "💥", "Myth Buster"], [Math.round(MAXDOTS * 0.9), "🏆", "Chief Fact-Checker"]
+  ];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- typed gaps ---------- */
+  // {word|alt} = gap with first letter shown; {=words|alt} = gap with no letter.
+  function parseGaps(text) {
+    var parts = [], re = /\{(=?)([^}]+)\}/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parts.push({ t: text.slice(last, m.index) });
+      var alts = m[2].split("|");
+      parts.push({ gap: true, letter: m[1] ? "" : alts[0].charAt(0), alts: alts });
+      last = re.lastIndex;
+    }
+    if (last < text.length) parts.push({ t: text.slice(last) });
+    return parts;
+  }
+  function tnorm(v) {
+    var s = " " + String(v || "").toLowerCase().replace(/[‘’ʼ`´]/g, "'").replace(/[.,!?;:"“”]+/g, " ").replace(/-/g, " ").replace(/\s+/g, " ").trim() + " ";
+    s = s.replace(/ won't /g, " will not ").replace(/ can't /g, " cannot ").replace(/ can not /g, " cannot ").replace(/ couldn't /g, " could not ")
+      .replace(/n't /g, " not ").replace(/'ve /g, " have ").replace(/'re /g, " are ").replace(/'m /g, " am ").replace(/'ll /g, " will ").replace(/'d /g, " had ");
+    return s.replace(/\s+/g, " ").trim();
+  }
+  function gapOk(p, v) {
+    var c = [tnorm(v)];
+    if (p.letter) c.push(tnorm(p.letter + v));
+    return p.alts.some(function (a) { return c.indexOf(tnorm(a)) >= 0; });
+  }
+
+  /* ---------- question index ---------- */
+  var Q = {}, LEVELS = [], BOSS = { key: "boss", name: "Final Edition", icon: "🗞️", topic: "Exam rehearsal: " + DATA.bossCount + " mixed questions from every case file", color: "#FFD84D", boss: true };
+  DATA.levels.forEach(function (lv, li) {
+    lv.ids = [];
+    lv.num = li + 1;
+    lv.questions.forEach(function (q, qi) {
+      var id = lv.key + ":" + qi;
+      var item = { id: id, level: lv.key, levelName: lv.name, note: q.note || lv.note || "", type: q.type || "mcq", q: q.q, answer: q.answer, wrong: q.wrong,
+        hint: q.hint, why: q.why, lead: q.lead || "", fig: q.fig || "" };
+      if (item.type === "type") {
+        item.parts = parseGaps(q.q);
+        item.blank = item.parts.map(function (p) { return p.gap ? (p.letter ? p.letter + "_____" : "_______") : p.t; }).join("");
+        item.filled = item.parts.map(function (p) { return p.gap ? p.alts[0] : p.t; }).join("");
+      }
+      Q[id] = item;
+      lv.ids.push(id);
+    });
+    LEVELS.push(lv);
+  });
+  var ALL_LEVELS = LEVELS.concat([BOSS]);
+  function levelByKey(k) { for (var i = 0; i < ALL_LEVELS.length; i++) if (ALL_LEVELS[i].key === k) return ALL_LEVELS[i]; return null; }
+
+  /* ---------- state ---------- */
+  var P = null, CUR = null;
+  function blank() { return { name: "", xp: 0, levels: {}, runs: {} }; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY); if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (!p || typeof p !== "object" || !p.levels || !p.runs) return null;
+      for (var k in p.runs) {
+        var r = p.runs[k];
+        if (!r || !Array.isArray(r.ids) || !r.ids.every(function (i) { return Q[i]; })) delete p.runs[k];
+      }
+      return p;
+    } catch (e) { return null; }
+  }
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) {
+    var arr = a.slice();
+    for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    return arr;
+  }
+  function count(obj, val) { var n = 0; for (var k in obj) if (!val || obj[k] === val) n++; return n; }
+  function show(screen) {
+    ["welcome", "map", "play", "between", "done"].forEach(function (n) { $("screen-" + n).hidden = n !== screen; });
+  }
+  function lvState(k) { if (!P.levels[k]) P.levels[k] = { stars: 0, best: 0, plays: 0 }; return P.levels[k]; }
+  function totalDots() { var n = 0; ALL_LEVELS.forEach(function (l) { n += (P.levels[l.key] && P.levels[l.key].stars) || 0; }); return n; }
+  function rankFor(d) { var r = RANKS[0]; RANKS.forEach(function (x) { if (d >= x[0]) r = x; }); return r; }
+  function nextRank(d) { for (var i = 0; i < RANKS.length; i++) if (RANKS[i][0] > d) return RANKS[i]; return null; }
+  function dotsEl(n, el) {
+    el.textContent = "";
+    for (var i = 0; i < 3; i++) { var s = document.createElement("i"); if (i < n) s.className = "on"; el.appendChild(s); }
+  }
+  function setColor(el, c) { el.style.setProperty("--c", c); }
+
+  function bossIds() {
+    var picked = [];
+    LEVELS.forEach(function (lv) { picked = picked.concat(shuffle(lv.ids).slice(0, DATA.bossPer || 1)); });
+    var rest = shuffle(Object.keys(Q).filter(function (id) { return picked.indexOf(id) < 0; }));
+    while (picked.length < DATA.bossCount && rest.length) picked.push(rest.shift());
+    return shuffle(picked).slice(0, Math.max(DATA.bossCount, picked.length));
+  }
+  function newRun(k, ids, practice) {
+    return { level: k, ids: ids.slice(), practice: !!practice, round: 1, queue: ids.slice(), pos: 0, next: [], wrong: {}, done: {},
+      opts: null, typed: null, answered: null, streak: 0, best: 0, xp: 0, screen: "play" };
+  }
+
+  /* ---------- WELCOME ---------- */
+  function renderWelcome() {
+    $("student-name").value = P.name || "";
+    show("welcome");
+    setTimeout(function () { try { $("student-name").focus(); } catch (e) {} }, 50);
+  }
+  function submitName() {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); $("student-name").classList.add("shake"); setTimeout(function () { $("student-name").classList.remove("shake"); }, 400); return; }
+    P.name = n; save(); renderMap();
+  }
+  $("btn-welcome").onclick = submitName;
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") submitName(); });
+
+  /* ---------- MAP ---------- */
+  function renderMap() {
+    CUR = null;
+    $("confirm-reset").hidden = true;
+    var dots = totalDots(), max = ALL_LEVELS.length * 3, rank = rankFor(dots), nr = nextRank(dots);
+    var pl = $("player"); pl.textContent = "";
+    var av = document.createElement("div"); av.className = "avatar"; av.textContent = (P.name || "?").charAt(0).toUpperCase();
+    var mid = document.createElement("div"); mid.style.minWidth = "0";
+    var nm = document.createElement("div"); nm.className = "player-name"; nm.textContent = P.name;
+    var rk = document.createElement("span"); rk.className = "rank"; rk.textContent = rank[1] + " " + rank[2];
+    mid.appendChild(nm); mid.appendChild(rk);
+    var tot = document.createElement("div"); tot.className = "totals";
+    var st = document.createElement("span"); st.className = "stars-total"; st.textContent = "● " + dots + " / " + max;
+    var xp = document.createElement("span"); xp.className = "xp"; xp.textContent = P.xp + " XP";
+    tot.appendChild(st); tot.appendChild(xp);
+    var bar = document.createElement("div"); bar.className = "rank-bar";
+    var track = document.createElement("div"); track.className = "track";
+    var fill = document.createElement("div"); fill.className = "fill";
+    var lo = rank[0], hi = nr ? nr[0] : max;
+    fill.style.width = (nr ? Math.round((dots - lo) / (hi - lo) * 100) : 100) + "%";
+    track.appendChild(fill);
+    var sm = document.createElement("small");
+    sm.textContent = nr ? (hi - dots) + " more " + (hi - dots === 1 ? "dot" : "dots") + " to become " + nr[1] + " " + nr[2] : "Top rank reached: Chief Fact-Checker. Keep every dot filled before the exam.";
+    bar.appendChild(track); bar.appendChild(sm);
+    pl.appendChild(av); pl.appendChild(mid); pl.appendChild(tot); pl.appendChild(bar);
+
+    var total = 0; LEVELS.forEach(function (l) { total += l.ids.length; });
+    $("map-count").textContent = LEVELS.length + " files · " + total + " questions + final";
+
+    var box = $("levels"), lastGroup = null; box.textContent = "";
+    ALL_LEVELS.forEach(function (lv) {
+      var grp = lv.boss ? "Final challenge" : (lv.group || "");
+      if (grp && grp !== lastGroup) {
+        lastGroup = grp;
+        var gh = document.createElement("div"); gh.className = "group-h";
+        var gt = document.createElement("h3"); gt.textContent = grp;
+        var gs = document.createElement("small");
+        if (!lv.boss) { var gl = LEVELS.filter(function (l) { return l.group === grp; }), gq = 0; gl.forEach(function (l) { gq += l.ids.length; }); gs.textContent = gl.length + " files · " + gq + " Qs"; }
+        gh.appendChild(gt); gh.appendChild(gs); box.appendChild(gh);
+      }
+      var s = lvState(lv.key), run = P.runs[lv.key];
+      var b = document.createElement("button"); b.type = "button"; b.className = "lvl" + (lv.boss ? " boss" : "");
+      setColor(b, lv.color);
+      var head = document.createElement("div"); head.className = "lvl-head";
+      var ic = document.createElement("div"); ic.className = "lvl-icon"; ic.textContent = lv.icon; ic.setAttribute("aria-hidden", "true");
+      var tx = document.createElement("div"); tx.style.minWidth = "0";
+      var num = document.createElement("div"); num.className = "lvl-num"; num.textContent = lv.boss ? "Exam rehearsal" : "File " + (lv.num < 10 ? "0" : "") + lv.num + (lv.kind ? " · " + lv.kind : "");
+      var name = document.createElement("div"); name.className = "lvl-name"; name.textContent = lv.name;
+      tx.appendChild(num); tx.appendChild(name);
+      head.appendChild(ic); head.appendChild(tx);
+      var topic = document.createElement("div"); topic.className = "lvl-topic"; topic.textContent = lv.topic;
+      var foot = document.createElement("div"); foot.className = "lvl-foot";
+      var dEl = document.createElement("span"); dEl.className = "dots"; dotsEl(s.stars, dEl);
+      dEl.setAttribute("aria-label", s.stars + " of 3 dots");
+      var status = document.createElement("span"); status.className = "lvl-status";
+      if (run && run.screen !== "done") { status.textContent = "Continue · " + count(run.done) + "/" + run.ids.length; status.classList.add("go"); }
+      else if (s.plays) status.textContent = "Best " + s.best + "%";
+      else { status.textContent = lv.boss ? DATA.bossCount + " Qs" : lv.ids.length + " Qs"; status.classList.add("go"); }
+      foot.appendChild(dEl); foot.appendChild(status);
+      b.appendChild(head); b.appendChild(topic); b.appendChild(foot);
+      b.onclick = function () { openLevel(lv.key); };
+      box.appendChild(b);
+    });
+    show("map");
+  }
+  $("btn-rename").onclick = function () { renderWelcome(); };
+  $("btn-reset").onclick = function () { $("confirm-reset").hidden = false; $("confirm-reset").scrollIntoView({ block: "nearest" }); };
+  $("btn-reset-no").onclick = function () { $("confirm-reset").hidden = true; };
+  $("btn-reset-yes").onclick = function () { var name = P.name; P = blank(); P.name = name; save(); renderMap(); window.scrollTo(0, 0); };
+
+  function openLevel(k) {
+    var run = P.runs[k];
+    if (!run || run.screen === "done") {
+      var lv = levelByKey(k);
+      P.runs[k] = newRun(k, lv.boss ? bossIds() : lv.ids, false);
+      save();
+    }
+    CUR = k; route(); window.scrollTo(0, 0);
+  }
+
+  /* ---------- PLAY ---------- */
+  function R() { return P.runs[CUR]; }
+  function currentQ() { var r = R(); return Q[r.queue[r.pos]]; }
+  function drawBoard(el, opts) {
+    var r = R(); el.textContent = "";
+    r.ids.forEach(function (id) {
+      var c = document.createElement("i"); c.className = "cell";
+      if (r.done[id]) c.className += " " + r.done[id];
+      else if (r.wrong[id]) c.className += " missed";
+      if (opts && opts.current === id) c.className += " now";
+      if (opts && opts.pop === id && !reduceMotion) c.className += " pop";
+      el.appendChild(c);
+    });
+  }
+  function richText(el, text) {
+    el.textContent = "";
+    var parts = String(text).split("**");
+    parts.forEach(function (part, i) {
+      if (i % 2 === 1) { var s = document.createElement("strong"); s.className = "hl"; s.textContent = part; el.appendChild(s); return; }
+      var bits = part.split("___");
+      bits.forEach(function (b, j) {
+        if (j > 0) { var g = document.createElement("span"); g.className = "gap"; g.setAttribute("aria-label", "blank"); el.appendChild(g); }
+        el.appendChild(document.createTextNode(b));
+      });
+    });
+  }
+  function updateChips(hot) {
+    var r = R();
+    $("streak-n").textContent = r.streak;
+    $("streak-chip").classList.toggle("cold", r.streak === 0);
+    $("xp-n").textContent = P.xp;
+    if (hot && !reduceMotion) { var c = $("streak-chip"); c.classList.remove("hot"); void c.offsetWidth; c.classList.add("hot"); }
+  }
+  function renderPlay() {
+    var r = R(), lv = levelByKey(CUR), q = currentQ();
+    setColor($("screen-play"), lv.boss ? "#2459D6" : lv.color);
+    $("play-icon").textContent = lv.icon;
+    $("play-name").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("play-round").textContent = "ROUND " + r.round + (CUR === "boss" ? " · FROM " + q.levelName.toUpperCase() : (r.round === 1 ? " · FIRST TRY" : " · CLEAR THE MISSED ONES"));
+    updateChips(false);
+    drawBoard($("board"), { current: q.id });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    $("q-count").textContent = "Q " + (r.pos + 1) + " / " + r.queue.length;
+    var misses = r.wrong[q.id] || 0;
+    $("retry-tag").hidden = misses === 0;
+    $("retry-tag").textContent = misses === 1 ? "Missed once. Try again!" : "Missed " + misses + " times. You can do it!";
+    $("q-note").textContent = q.note;
+    $("q-note").hidden = !q.note;
+    var fig = $("q-fig");
+    if (q.fig && DATA.figs && DATA.figs[q.fig]) { fig.innerHTML = DATA.figs[q.fig]; fig.hidden = false; } else { fig.innerHTML = ""; fig.hidden = true; }
+    $("q-text").classList.toggle("typed", q.type === "type");
+    $("check-row").hidden = true;
+    if (q.type === "type") renderTyped(q); else richText($("q-text"), q.q);
+    $("feedback").hidden = true; $("btn-next").hidden = true;
+
+    if (q.type === "type") {
+      $("opts").hidden = true; $("check-row").hidden = !!r.answered;
+    } else {
+      $("opts").hidden = false;
+      if (!r.opts) { r.opts = shuffle([q.answer].concat(q.wrong)); save(); }
+      var box = $("opts"); box.textContent = "";
+      var short = r.opts.every(function (t) { return t.length <= 9; });
+      box.className = "opts" + (short ? " two" : "");
+      r.opts.forEach(function (text, i) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+        var k = document.createElement("span"); k.className = "key"; k.textContent = LETTERS[i];
+        var t = document.createElement("span"); t.className = "txt"; t.textContent = text;
+        b.appendChild(k); b.appendChild(t);
+        b.onclick = function () { pick(i, b); };
+        box.appendChild(b);
+      });
+    }
+    if (r.answered) paintAnswer(false);
+    show("play");
+  }
+
+  /* typed */
+  function renderTyped(q) {
+    var r = R(), h = $("q-text"); h.textContent = "";
+    if (q.lead) { var l = document.createElement("span"); l.className = "q-lead"; l.textContent = q.lead; h.appendChild(l); }
+    var gi = 0, carry = "";
+    q.parts.forEach(function (p, pi) {
+      if (!p.gap) { h.appendChild(document.createTextNode(p.t.slice(carry.length))); carry = ""; return; }
+      var nxt = q.parts[pi + 1], tail = "";
+      if (nxt && !nxt.gap) { var mt = nxt.t.match(/^(\s?\([^)]{1,24}\))?[.,!?;:]*/); tail = mt ? mt[0] : ""; }
+      carry = tail;
+      var longest = 0; p.alts.forEach(function (a) { if (a.length > longest) longest = a.length; });
+      var w = document.createElement("span"); w.className = "tgap" + (longest > 20 ? " xwide" : longest > 10 ? " wide" : "");
+      if (p.letter) { var f = document.createElement("span"); f.className = "first"; f.textContent = p.letter; w.appendChild(f); }
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.spellcheck = false; inp.id = "gap-" + gi;
+      inp.setAttribute("autocomplete", "off"); inp.setAttribute("autocorrect", "off"); inp.setAttribute("autocapitalize", "off");
+      inp.setAttribute("enterkeyhint", "done");
+      inp.setAttribute("aria-label", p.letter ? "Missing word, starts with " + p.letter : "Missing words " + (gi + 1));
+      if (r.typed && r.typed[gi] != null) inp.value = r.typed[gi];
+      (function (idx) {
+        inp.addEventListener("input", function () { var rr = R(); if (!rr.typed) rr.typed = []; rr.typed[idx] = inp.value; save(); });
+      })(gi);
+      inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); if (!R().answered) checkTyped(); } });
+      w.appendChild(inp);
+      if (tail) { var glue = document.createElement("span"); glue.className = "tglue"; glue.appendChild(w); glue.appendChild(document.createTextNode(tail)); h.appendChild(glue); }
+      else h.appendChild(w);
+      gi++;
+    });
+  }
+  function checkTyped() {
+    var r = R(), q = currentQ(); if (r.answered) return;
+    var inputs = $("q-text").querySelectorAll("input"), vals = [], empty = null;
+    inputs.forEach(function (inp) { vals.push(inp.value); if (!inp.value.trim() && !empty) empty = inp; });
+    if (empty) {
+      empty.focus();
+      var g = empty.parentNode;
+      if (!reduceMotion) { g.classList.remove("shake"); void g.offsetWidth; g.classList.add("shake"); }
+      return;
+    }
+    var gaps = q.parts.filter(function (p) { return p.gap; });
+    var oks = gaps.map(function (p, i) { return gapOk(p, vals[i]); });
+    r.typed = vals; r.oks = oks;
+    grade(oks.every(Boolean), -1, $("q-text"));
+  }
+  $("btn-tcheck").onclick = checkTyped;
+  function paintTyped(fresh) {
+    var r = R();
+    $("check-row").hidden = true;
+    $("q-text").querySelectorAll("input").forEach(function (inp, i) {
+      inp.value = (r.typed && r.typed[i]) || ""; inp.disabled = true;
+      var ok = r.oks ? r.oks[i] : r.answered.correct;
+      inp.parentNode.classList.add(ok ? "ok" : "no");
+      if (fresh && !ok && !reduceMotion) inp.parentNode.classList.add("shake");
+    });
+  }
+  function focusTyped() {
+    var inp = $("q-text").querySelector("input:not([disabled])");
+    if (inp) { try { inp.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  function pick(i) {
+    var r = R(); if (r.answered) return;
+    grade(r.opts[i] === currentQ().answer, i, $("opts").children[i]);
+  }
+  function grade(correct, pickIdx, srcEl) {
+    var r = R(), q = currentQ(), popId = null, gained = 0;
+    r.answered = { pick: pickIdx, correct: correct };
+    if (correct) {
+      r.done[q.id] = r.wrong[q.id] ? "later" : "first";
+      gained = r.wrong[q.id] ? 5 : 10;
+      r.streak += 1; if (r.streak > r.best) r.best = r.streak;
+      r.xp += gained; P.xp += gained;
+      popId = q.id;
+      r.cheer = CHEERS[Math.floor(Math.random() * CHEERS.length)];
+      r.gained = gained;
+    } else {
+      r.wrong[q.id] = (r.wrong[q.id] || 0) + 1;
+      r.streak = 0;
+      r.next.push(q.id);
+    }
+    save();
+    drawBoard($("board"), { current: q.id, pop: popId });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    updateChips(correct);
+    paintAnswer(true);
+    if (correct) confetti(srcEl);
+  }
+
+  function paintAnswer(fresh) {
+    var r = R(), q = currentQ(), a = r.answered;
+    var misses = r.wrong[q.id] || 0;
+    var reveal = !a.correct && misses >= 3;
+    if (q.type === "type") {
+      paintTyped(fresh);
+    } else {
+      var buttons = $("opts").querySelectorAll(".opt");
+      buttons.forEach(function (b, i) {
+        b.disabled = true;
+        var isAnswer = r.opts[i] === q.answer;
+        if (i === a.pick) b.classList.add(a.correct ? "is-right" : "is-wrong");
+        else if (isAnswer && reveal) b.classList.add("is-right");
+        else b.classList.add("is-dim");
+        if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+      });
+    }
+    var fb = $("feedback"); fb.textContent = ""; fb.className = "feedback";
+    var stamp = document.createElement("span"); stamp.className = "stamp" + (fresh && !reduceMotion ? " thud" : "");
+    var head = document.createElement("div"); head.className = "fb-head";
+    var body = document.createElement("p");
+    var note = document.createElement("p"); note.className = "fb-note";
+    if (a.correct) {
+      fb.classList.add("good");
+      stamp.textContent = "Verified ✓";
+      head.textContent = r.cheer || "Correct!";
+      body.textContent = q.why;
+      var xp = document.createElement("p"); xp.className = "fb-xp"; xp.textContent = "+" + (r.gained || 10) + " XP" + (misses ? " · square cleared" : "");
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(xp);
+    } else if (reveal) {
+      fb.classList.add("reveal");
+      stamp.textContent = "The facts";
+      var ans = document.createElement("p"); ans.className = "fb-answer";
+      ans.textContent = "Answer: " + (q.type === "type" ? q.filled : q.answer);
+      body.textContent = q.why;
+      note.textContent = "Remember it. This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(ans); fb.appendChild(body); fb.appendChild(note);
+    } else {
+      fb.classList.add("bad");
+      stamp.textContent = "Not verified ✗";
+      head.textContent = "Check again.";
+      body.textContent = "Hint: " + q.hint;
+      note.textContent = "This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(note);
+    }
+    fb.hidden = false;
+    var last = r.pos + 1 >= r.queue.length;
+    $("btn-next").textContent = last ? (r.next.length ? "Finish round " + r.round + " →" : "See my result →") : "Next question →";
+    $("btn-next").hidden = false;
+    if (fresh) {
+      $("btn-next").focus({ preventScroll: true });
+      $("btn-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+    }
+  }
+
+  function next() {
+    var r = R(); if (!r.answered) return;
+    r.pos += 1; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.cheer = null;
+    if (r.pos >= r.queue.length) {
+      if (r.next.length) r.screen = "between";
+      else finishLevel();
+    }
+    save(); route();
+    if (r.screen === "play") {
+      var top = $("play-card").getBoundingClientRect().top;
+      if (top < 0) $("play-card").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+      if (currentQ().type === "type") focusTyped(); else $("q-text").focus({ preventScroll: true });
+    } else window.scrollTo(0, 0);
+  }
+  $("btn-next").onclick = next;
+  $("btn-back").onclick = function () { save(); renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- BETWEEN ROUNDS ---------- */
+  function renderBetween() {
+    var r = R(), lv = levelByKey(CUR), left = r.next.length, col = lv.boss ? "#2459D6" : lv.color;
+    setColor($("screen-between"), col);
+    $("legend-later").style.background = col;
+    $("between-eyebrow").textContent = lv.name;
+    if (r.round === 1) {
+      var first = count(r.done, "first");
+      $("between-h").textContent = "Round 1 done. Your first-try score:";
+      var big = $("between-big"); big.textContent = first;
+      var sm = document.createElement("small"); sm.textContent = " / " + r.ids.length; big.appendChild(sm);
+    } else {
+      $("between-h").textContent = "Round " + r.round + " done.";
+      $("between-big").textContent = "";
+    }
+    $("between-text").textContent = (left === 1 ? "1 question comes" : left + " questions come") + " back now. Clear " + (left === 1 ? "it" : "them all") + " to fill the board.";
+    drawBoard($("board-between"));
+    $("btn-next-round").textContent = "Start round " + (r.round + 1) + " →";
+    show("between");
+  }
+  $("btn-next-round").onclick = function () {
+    var r = R();
+    r.round += 1; r.queue = shuffle(r.next); r.next = []; r.pos = 0; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.screen = "play";
+    save(); route(); window.scrollTo(0, 0); $("q-text").focus({ preventScroll: true });
+  };
+
+  /* ---------- LEVEL COMPLETE ---------- */
+  function dotsFor(pct) { return pct >= 90 ? 3 : pct >= 70 ? 2 : 1; }
+  function finishLevel() {
+    var r = R(), first = count(r.done, "first"), pct = Math.round(first / r.ids.length * 100);
+    r.screen = "done"; r.pct = pct; r.earned = dotsFor(pct);
+    if (!r.practice) {
+      var s = lvState(CUR), before = totalDots();
+      s.plays += 1;
+      if (pct > s.best) s.best = pct;
+      if (r.earned > s.stars) s.stars = r.earned;
+      var rb = rankFor(before), ra = rankFor(totalDots());
+      r.rankUp = ra[2] !== rb[2] ? ra[1] + " New rank: " + ra[2] + "!" : "";
+    } else r.rankUp = "";
+  }
+  function renderDone() {
+    var r = R(), lv = levelByKey(CUR), total = r.ids.length, first = count(r.done, "first");
+    setColor($("screen-done"), lv.boss ? "#2459D6" : lv.color);
+    $("done-eyebrow").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("done-h").textContent = r.practice ? "Tricky ones cleared." : (r.earned === 3 ? "Case closed: top marks!" : r.earned === 2 ? "Strong work." : "File cleared.");
+    var md = $("done-dots"); md.textContent = "";
+    for (var i = 0; i < 3; i++) {
+      var s = document.createElement("i");
+      if (i < r.earned) { s.className = "on"; s.style.animationDelay = (0.15 + i * 0.22) + "s"; }
+      md.appendChild(s);
+    }
+    md.hidden = !!r.practice;
+    var big = $("done-big"); big.textContent = first;
+    var sm = document.createElement("small"); sm.textContent = " / " + total + "  (" + r.pct + "%)"; big.appendChild(sm);
+    $("rank-up").hidden = !r.rankUp; $("rank-up").textContent = r.rankUp || "";
+    var stats = [[r.round, r.round === 1 ? "round" : "rounds"], ["🔥 " + r.best, "best streak"], ["+" + r.xp, "XP earned"]];
+    var box = $("done-stats"); box.textContent = "";
+    stats.forEach(function (x) {
+      var d = document.createElement("div"); d.className = "stat";
+      var b = document.createElement("b"); b.textContent = x[0];
+      var t = document.createElement("span"); t.textContent = x[1];
+      d.appendChild(b); d.appendChild(t); box.appendChild(d);
+    });
+    var tricky = r.ids.filter(function (id) { return r.wrong[id]; }).sort(function (a, b) { return r.wrong[b] - r.wrong[a]; });
+    var ul = $("tricky"); ul.textContent = "";
+    tricky.forEach(function (id) {
+      var q = Q[id], li = document.createElement("li");
+      var tq = document.createElement("span"); tq.className = "tq";
+      tq.textContent = q.type === "type" ? (q.lead ? q.lead + "  →  " : "") + q.blank : q.q.replace(/\*\*/g, "");
+      var ta = document.createElement("span"); ta.className = "ta";
+      ta.textContent = "✔ " + (q.type === "type" ? q.filled : q.answer);
+      var tm = document.createElement("span"); tm.className = "tm";
+      tm.textContent = (CUR === "boss" ? q.levelName + " · " : "") + "missed " + (r.wrong[id] === 1 ? "once" : r.wrong[id] + " times");
+      li.appendChild(tq); li.appendChild(ta); li.appendChild(tm); ul.appendChild(li);
+    });
+    $("tricky-block").hidden = tricky.length === 0;
+    $("btn-practice").hidden = tricky.length === 0;
+    var who = $("who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = P.name || "—"; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("done");
+    if (!r.practice && r.earned === 3 && !r.celebrated) { r.celebrated = true; save(); setTimeout(function () { confetti(md, 50); }, 600); }
+  }
+  $("btn-practice").onclick = function () {
+    var r = R(); var ids = r.ids.filter(function (id) { return r.wrong[id]; });
+    P.runs[CUR] = newRun(CUR, ids, true); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-replay").onclick = function () {
+    var lv = levelByKey(CUR);
+    P.runs[CUR] = newRun(CUR, lv.boss ? bossIds() : lv.ids, false); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-map").onclick = function () { renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- confetti ---------- */
+  function confetti(el, n) {
+    if (reduceMotion || !el) return;
+    var rect = el.getBoundingClientRect();
+    var x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+    var colors = ["#FFD84D", "#2459D6", "#11845A", "#CF3A2B", "#14213D"];
+    n = n || 22;
+    for (var i = 0; i < n; i++) {
+      var c = document.createElement("i"); c.className = "confetti";
+      c.style.left = x + "px"; c.style.top = y + "px";
+      c.style.background = colors[i % colors.length];
+      var ang = Math.random() * Math.PI * 2, dist = 60 + Math.random() * 120;
+      c.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+      c.style.setProperty("--dy", (Math.sin(ang) * dist - 50 + Math.random() * 100) + "px");
+      document.body.appendChild(c);
+      (function (node) { setTimeout(function () { node.remove(); }, 950); })(c);
+    }
+  }
+
+  /* ---------- router + keys ---------- */
+  function route() {
+    if (!P.name) return renderWelcome();
+    if (!CUR || !R()) return renderMap();
+    var r = R();
+    if (r.screen === "play") renderPlay();
+    else if (r.screen === "between") renderBetween();
+    else renderDone();
+  }
+  document.addEventListener("keydown", function (e) {
+    if ($("screen-play").hidden || !CUR) return;
+    if (e.target && e.target.tagName === "INPUT") return;
+    var r = R(), q = currentQ(), k = e.key.toLowerCase();
+    if (q.type === "mcq") {
+      var idx = ["1", "2", "3", "4"].indexOf(k); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(k);
+      if (idx >= 0 && r.opts && idx < r.opts.length && !r.answered) { e.preventDefault(); pick(idx); return; }
+    }
+    if ((k === "enter" || k === "arrowright") && r.answered && e.target.tagName !== "BUTTON") { e.preventDefault(); next(); }
+  });
+
+  $("top-title").textContent = DATA.title;
+  $("top-sub").textContent = DATA.subtitle;
+  P = load() || blank();
+  route();
+})();
+</script>
+
+</body>
+</html>
