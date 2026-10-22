@@ -1,0 +1,2719 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>The Expedition · Units 1–2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: an explorer's field journal on a topographic map. Units 1-2 cover facing challenges, space and ocean
+   exploration and the natural world, so levels are stages on an expedition, the final test is the summit,
+   answers get a LOGGED / OFF COURSE stamp, and progress dots are waypoints. */
+:root {
+  --paper: #F3EEE2;        /* parchment map */
+  --grid: #E4DCCB;
+  --topo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cg fill='none' stroke='%230F7B83' stroke-opacity='.26' stroke-width='1.2'%3E%3Cpath d='M60 160c0-55 48-96 104-92s92 46 86 98-56 84-104 80-86-31-86-86z'/%3E%3Cpath d='M84 160c0-40 35-70 76-67s67 34 62 71-41 61-76 58-62-23-62-62z'/%3E%3Cpath d='M108 160c0-25 22-44 48-42s42 21 39 45-26 38-48 36-39-14-39-39z'/%3E%3Cpath d='M132 160c0-11 10-19 21-18s18 9 17 20-11 17-21 16-17-7-17-18z'/%3E%3Cpath d='M-40 40c40-30 90-10 120 20s20 70-10 80'/%3E%3Cpath d='M250 330c10-40 50-60 90-50'/%3E%3Cpath d='M-20 290c30-20 60-10 80 10s50 30 80 20'/%3E%3Cpath d='M220 -10c20 30 60 40 100 30'/%3E%3Cpath d='M230 20c30 20 60 50 110 40'/%3E%3C/g%3E%3C/svg%3E");
+  --card: #FFFDF8;
+  --ink: #0F2A3A;          /* deep-sea navy */
+  --muted: #586874;
+  --line: #E2D9C7;
+  --soft: #F8F3E9;
+  --cobalt: #0F7B83;       /* lagoon teal accent */
+  --marker: #FFB547;       /* signal-flare amber */
+  --marker-soft: #FFEFD2;
+  --marker-ink: #7A4600;
+  --right: #1D7A4C; --right-soft: #DDF2E6;
+  --wrong: #C2412D; --wrong-soft: #FBE2DC;
+  --boss: #0F2A3A; --boss-ink: #FFFDF8;
+  --shadow: 0 1px 0 rgba(15, 42, 58, .06), 0 8px 22px rgba(15, 42, 58, .09);
+  --f-display: "Fraunces", "Georgia", "Times New Roman", serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0A1A24; --grid: #12303D; --topo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cg fill='none' stroke='%234FC7CF' stroke-opacity='.26' stroke-width='1.2'%3E%3Cpath d='M60 160c0-55 48-96 104-92s92 46 86 98-56 84-104 80-86-31-86-86z'/%3E%3Cpath d='M84 160c0-40 35-70 76-67s67 34 62 71-41 61-76 58-62-23-62-62z'/%3E%3Cpath d='M108 160c0-25 22-44 48-42s42 21 39 45-26 38-48 36-39-14-39-39z'/%3E%3Cpath d='M132 160c0-11 10-19 21-18s18 9 17 20-11 17-21 16-17-7-17-18z'/%3E%3Cpath d='M-40 40c40-30 90-10 120 20s20 70-10 80'/%3E%3Cpath d='M250 330c10-40 50-60 90-50'/%3E%3Cpath d='M-20 290c30-20 60-10 80 10s50 30 80 20'/%3E%3Cpath d='M220 -10c20 30 60 40 100 30'/%3E%3Cpath d='M230 20c30 20 60 50 110 40'/%3E%3C/g%3E%3C/svg%3E"); --card: #10242F; --ink: #EAF1EF; --muted: #9DB0B5; --line: #1F3D4A; --soft: #143040;
+    --cobalt: #4FC7CF; --marker: #FFB547; --marker-soft: #3B2C12; --marker-ink: #FFD08A;
+    --right: #5ED39A; --right-soft: #12352A; --wrong: #FF8B76; --wrong-soft: #40201B;
+    --boss: #EAF1EF; --boss-ink: #0A1A24;
+    --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0A1A24; --grid: #12303D; --topo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cg fill='none' stroke='%234FC7CF' stroke-opacity='.26' stroke-width='1.2'%3E%3Cpath d='M60 160c0-55 48-96 104-92s92 46 86 98-56 84-104 80-86-31-86-86z'/%3E%3Cpath d='M84 160c0-40 35-70 76-67s67 34 62 71-41 61-76 58-62-23-62-62z'/%3E%3Cpath d='M108 160c0-25 22-44 48-42s42 21 39 45-26 38-48 36-39-14-39-39z'/%3E%3Cpath d='M132 160c0-11 10-19 21-18s18 9 17 20-11 17-21 16-17-7-17-18z'/%3E%3Cpath d='M-40 40c40-30 90-10 120 20s20 70-10 80'/%3E%3Cpath d='M250 330c10-40 50-60 90-50'/%3E%3Cpath d='M-20 290c30-20 60-10 80 10s50 30 80 20'/%3E%3Cpath d='M220 -10c20 30 60 40 100 30'/%3E%3Cpath d='M230 20c30 20 60 50 110 40'/%3E%3C/g%3E%3C/svg%3E"); --card: #10242F; --ink: #EAF1EF; --muted: #9DB0B5; --line: #1F3D4A; --soft: #143040;
+  --cobalt: #4FC7CF; --marker: #FFB547; --marker-soft: #3B2C12; --marker-ink: #FFD08A;
+  --right: #5ED39A; --right-soft: #12352A; --wrong: #FF8B76; --wrong-soft: #40201B;
+  --boss: #EAF1EF; --boss-ink: #0A1A24;
+  --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .35);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; min-height: 100vh;
+  background-color: var(--paper);
+  background-image: var(--topo);
+  background-size: 320px 320px;
+  background-attachment: fixed;
+}
+.wrap { max-width: 740px; margin: 0 auto; padding-block: 14px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; line-height: 1.1; text-wrap: balance; font-weight: 800; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+.mono { font-family: var(--f-mono); }
+
+/* Header */
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #fff; border-radius: 10px; padding: 4px 6px; flex: none; box-shadow: var(--shadow); display: grid; place-items: center; }
+.logo img { width: 68px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-display); font-weight: 800; font-size: 1.12rem; line-height: 1.15; }
+.top-sub { color: var(--muted); font-size: .85rem; }
+
+.card { background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 14px; border: 1px solid var(--line); }
+
+/* Buttons */
+.btn {
+  appearance: none; border: 2px solid var(--ink); border-radius: 10px; padding: 12px 20px; font-family: var(--f-display); font-weight: 800; font-size: 1.05rem;
+  letter-spacing: .01em; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px;
+  background: var(--ink); color: var(--paper); box-shadow: 3px 3px 0 var(--cobalt); transition: transform .08s, box-shadow .08s;
+}
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--cobalt); }
+.btn-ghost { background: var(--card); color: var(--ink); box-shadow: 3px 3px 0 var(--line); }
+.btn-ghost:active { box-shadow: 1px 1px 0 var(--line); }
+.btn-marker { background: var(--marker); color: #2A2100; border-color: #2A2100; box-shadow: 3px 3px 0 var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Welcome */
+.hero { padding-block: 26px; gap: 16px; }
+.eyebrow { font-family: var(--f-mono); font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cobalt); }
+.hero h1 { font-size: clamp(2.3rem, 10vw, 3.6rem); font-weight: 900; letter-spacing: -.02em; }
+.hero h1 .the { display: block; font-size: .42em; font-weight: 700; font-style: italic; color: var(--cobalt); letter-spacing: 0; }
+.hero h1 .peak { background: linear-gradient(transparent 62%, var(--marker) 62%); padding: 0 .06em; }
+.hero-art { width: 100%; height: auto; display: block; margin-block: -4px 2px; }
+.hero-art .ridge { fill: var(--ink); opacity: .9; }
+.hero-art .ridge2 { fill: var(--cobalt); opacity: .55; }
+.hero-art .snow { fill: var(--card); }
+.hero-art .trail { fill: none; stroke: var(--marker); stroke-width: 3; stroke-dasharray: 2 7; stroke-linecap: round; }
+.hero-art .flag { fill: var(--marker); }
+.hero-art .pole { stroke: var(--ink); stroke-width: 2; }
+.hero-art .wave { fill: none; stroke: var(--cobalt); stroke-width: 2.5; stroke-linecap: round; opacity: .7; }
+.hero .sub { color: var(--muted); font-size: 1.05rem; max-width: 34em; }
+.route { list-style: none; margin: 0; padding: 0 0 0 4px; display: flex; flex-direction: column; gap: 0; }
+.route li { position: relative; padding: 0 0 12px 26px; display: flex; flex-direction: column; }
+.route li::before { content: ""; position: absolute; left: 3px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--card); border: 3px solid var(--cobalt); }
+.route li::after { content: ""; position: absolute; left: 10px; top: 22px; bottom: 0; border-left: 2px dashed var(--line); }
+.route li:last-child { padding-bottom: 0; }
+.route li:last-child::after { display: none; }
+.route li:last-child::before { border-color: var(--marker); background: var(--marker); }
+.route span { font-family: var(--f-mono); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.route b { font-weight: 700; line-height: 1.3; }
+.field { display: flex; flex-direction: column; gap: 6px; max-width: 380px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input { font: inherit; font-size: 1.1rem; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--line); background: var(--soft); color: var(--ink); }
+.field input:focus { border-color: var(--cobalt); outline: none; }
+.hero .btn { max-width: 380px; }
+
+/* Player strip */
+.player { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; }
+.avatar { width: 50px; height: 50px; border-radius: 10px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 900; font-size: 1.4rem; color: var(--paper); background: var(--ink); box-shadow: 3px 3px 0 var(--marker); }
+.player-name { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; line-height: 1.1; overflow-wrap: anywhere; }
+.rank { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--marker-ink); background: var(--marker-soft); padding: 2px 8px; border-radius: 6px; margin-top: 6px; }
+.totals { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-family: var(--f-mono); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.totals .stars-total { font-size: 1.05rem; }
+.totals .xp { font-size: .82rem; color: var(--muted); }
+.rank-bar { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 4px; }
+.rank-bar .track { height: 8px; background: var(--soft); border-radius: 4px; overflow: hidden; border: 1px solid var(--line); }
+.rank-bar .fill { height: 100%; background: var(--cobalt); transition: width .6s; }
+.rank-bar small { color: var(--muted); font-size: .8rem; }
+
+/* Map */
+.map-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 10px; padding-inline: 2px; }
+.map-title h2 { font-size: 1.4rem; }
+.map-title small { color: var(--muted); font-family: var(--f-mono); font-size: .78rem; }
+.levels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 420px) { .levels { grid-template-columns: 1fr; } }
+.lvl {
+  appearance: none; text-align: left; cursor: pointer; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; position: relative; min-width: 0; transition: transform .1s, border-color .15s;
+}
+.lvl:active { transform: translateY(2px); }
+@media (hover: hover) { .lvl:hover { border-color: var(--c); transform: translateY(-2px); } }
+.lvl-head { display: flex; align-items: center; gap: 10px; }
+.lvl-icon { width: 44px; height: 44px; flex: none; border-radius: 10px; display: grid; place-items: center; font-size: 1.45rem; background: color-mix(in srgb, var(--c) 16%, transparent); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); }
+.lvl-num { font-family: var(--f-mono); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+.lvl-name { font-family: var(--f-display); font-weight: 800; font-size: 1.06rem; line-height: 1.15; }
+.lvl-topic { font-size: .85rem; color: var(--muted); line-height: 1.35; }
+.lvl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); }
+.dots { display: inline-flex; gap: 5px; align-items: center; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--c, var(--cobalt)); display: inline-block; }
+.dots i.on { background: var(--c, var(--cobalt)); }
+.lvl-status { font-family: var(--f-mono); font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+.lvl-status.go { background: color-mix(in srgb, var(--c) 16%, transparent); color: var(--ink); }
+.lvl.boss { grid-column: 1 / -1; background: var(--boss); color: var(--boss-ink); border-color: var(--boss); }
+.lvl.boss .lvl-icon { background: color-mix(in srgb, var(--marker) 25%, transparent); border-color: var(--marker); }
+.lvl.boss .lvl-num { color: var(--marker); }
+.lvl.boss .lvl-topic { color: color-mix(in srgb, var(--boss-ink) 75%, transparent); }
+.lvl.boss .lvl-foot { border-top-color: color-mix(in srgb, var(--boss-ink) 25%, transparent); }
+.lvl.boss .lvl-status { background: color-mix(in srgb, var(--boss-ink) 14%, transparent); color: var(--boss-ink); }
+.lvl.boss .dots i { border-color: var(--marker); }
+.lvl.boss .dots i.on { background: var(--marker); }
+.group-h { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 10px 2px 0; border-bottom: 2px solid var(--ink); }
+.group-h h3 { font-size: 1.15rem; text-transform: uppercase; letter-spacing: .03em; }
+.group-h small { white-space: nowrap; color: var(--muted); font-family: var(--f-mono); font-size: .75rem; font-weight: 700; }
+.how p { display: flex; gap: 10px; }
+.how p b.k { font-family: var(--f-mono); flex: none; width: 1.6em; color: var(--cobalt); }
+.tiny-links { display: flex; justify-content: center; gap: 16px; font-size: .85rem; color: var(--muted); }
+.link { appearance: none; background: none; border: 0; padding: 4px; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.confirm { border: 2px solid var(--wrong); }
+.confirm .btn-row .btn { flex: 1 1 140px; }
+
+/* Play */
+.play-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.back { appearance: none; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); border-radius: 10px; padding: 8px 14px; font-weight: 700; cursor: pointer; min-height: 44px; }
+.chips { display: flex; gap: 8px; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 8px; padding: 6px 10px; font-family: var(--f-mono); font-weight: 700; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.chip.cold { opacity: .55; }
+.chip.hot { animation: bump .45s; }
+@keyframes bump { 40% { transform: scale(1.18); } }
+.lvl-banner { display: flex; align-items: center; gap: 12px; }
+.lvl-banner .lvl-icon { width: 48px; height: 48px; }
+.lvl-banner .r { font-family: var(--f-mono); font-size: .76rem; color: var(--muted); font-weight: 700; letter-spacing: .03em; }
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(16px, 1fr)); gap: 4px; }
+.cell { aspect-ratio: 1; border-radius: 3px; background: var(--soft); border: 1px solid var(--line); }
+.cell.first { background: var(--marker); border-color: color-mix(in srgb, var(--marker) 60%, #000); }
+.cell.later { background: var(--c, var(--cobalt)); border-color: var(--c, var(--cobalt)); }
+.cell.missed { background: var(--wrong-soft); border: 2px solid var(--wrong); }
+.cell.now { outline: 2px solid var(--ink); outline-offset: 1px; }
+.cell.pop { animation: pop .45s ease-out; }
+@keyframes pop { 0% { transform: scale(.3); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.board-meta { display: flex; justify-content: space-between; gap: 8px; font-family: var(--f-mono); font-size: .76rem; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+.retry-tag { align-self: flex-start; font-family: var(--f-mono); font-size: .74rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; background: var(--wrong-soft); color: var(--wrong); }
+.q-note { font-size: .9rem; color: var(--muted); font-weight: 700; margin-bottom: -4px; }
+.q-fig { border: 1px solid var(--line); border-radius: 10px; background: var(--soft); padding: 10px; overflow-x: auto; }
+.q-fig svg { display: block; width: 100%; height: auto; max-width: 560px; margin: 0 auto; }
+.q-fig .cap { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); text-align: right; margin-top: 4px; }
+.q-fig table { border-collapse: collapse; width: 100%; font-size: .72rem; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.q-fig th, .q-fig td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+.q-fig td:first-child, .q-fig thead th { white-space: normal; }
+.q-fig th, .q-fig td { padding-inline: 3px; }
+@media (min-width: 500px) { .q-fig table { font-size: .92rem; } .q-fig th, .q-fig td { padding: 6px 8px; } }
+.q-fig th:first-child, .q-fig td:first-child { text-align: left; }
+.q-fig thead th { font-family: var(--f-mono); font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-bottom: 2px solid var(--ink); }
+.q-fig tfoot td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 0; }
+.q-fig .ftitle { font-family: var(--f-display); font-weight: 800; font-size: .95rem; margin-bottom: 6px; }
+.fig-axis { stroke: var(--muted); stroke-width: 1; fill: none; }
+.fig-gridl { stroke: var(--line); stroke-width: 1; fill: none; }
+.fig-line { stroke: var(--cobalt); stroke-width: 3; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.fig-pt { fill: var(--card); stroke: var(--cobalt); stroke-width: 2; }
+.fig-bar { fill: var(--ink); }
+.fig-t { fill: var(--muted); font-family: var(--f-body); font-size: 12px; }
+.fig-tb { fill: var(--ink); font-family: var(--f-body); font-size: 13px; font-weight: 700; }
+.fig-title { fill: var(--ink); font-family: var(--f-display); font-size: 16px; font-weight: 800; }
+
+.q-text { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.2rem, 4.6vw, 1.48rem); line-height: 1.35; white-space: pre-line; }
+.q-text .hl { background: linear-gradient(transparent 55%, var(--marker) 55%); padding: 0 3px; color: inherit; font-weight: 800; }
+.q-text .gap { display: inline-block; min-width: 3.2em; border-bottom: 3px solid var(--c, var(--cobalt)); height: 1em; vertical-align: baseline; }
+
+.opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.opt {
+  appearance: none; text-align: left; border: 2px solid var(--line); background: var(--card); border-radius: 10px; padding: 11px 12px;
+  display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 58px; min-width: 0;
+  transition: transform .08s, border-color .15s, background .15s; font-weight: 700; font-size: 1.03rem;
+}
+.opt:active:not(:disabled) { transform: translateY(2px); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--c, var(--cobalt)); } }
+.opt .key { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-family: var(--f-mono); font-weight: 700; background: var(--soft); border: 1px solid var(--line); }
+.opt .txt { min-width: 0; overflow-wrap: anywhere; }
+.opt:disabled { cursor: default; }
+.opt.is-right { border-color: var(--right); background: var(--right-soft); }
+.opt.is-right .key { background: var(--right); color: var(--card); border-color: var(--right); }
+.opt.is-wrong { border-color: var(--wrong); background: var(--wrong-soft); }
+.opt.is-wrong .key { background: var(--wrong); color: var(--card); border-color: var(--wrong); }
+.opt.is-dim { opacity: .45; }
+.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+.feedback { border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; border: 2px solid transparent; }
+.feedback.good { background: var(--right-soft); border-color: color-mix(in srgb, var(--right) 40%, transparent); }
+.feedback.bad { background: var(--wrong-soft); border-color: color-mix(in srgb, var(--wrong) 40%, transparent); }
+.feedback.reveal { background: var(--marker-soft); border-color: color-mix(in srgb, var(--marker) 70%, transparent); }
+.stamp { align-self: flex-start; font-family: var(--f-mono); font-weight: 700; font-size: .95rem; letter-spacing: .14em; text-transform: uppercase; padding: 3px 10px; border: 3px double currentColor; border-radius: 6px; transform: rotate(-3deg); }
+.feedback.good .stamp { color: var(--right); }
+.feedback.bad .stamp { color: var(--wrong); }
+.feedback.reveal .stamp { color: var(--marker-ink); }
+.stamp.thud { animation: thud .35s ease-out; }
+@keyframes thud { 0% { transform: rotate(-3deg) scale(1.8); opacity: 0; } 100% { transform: rotate(-3deg) scale(1); opacity: 1; } }
+.fb-head { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.fb-xp { font-family: var(--f-mono); font-weight: 700; font-size: .85rem; color: var(--marker-ink); }
+.fb-answer { font-weight: 700; }
+
+/* Between + results */
+.center { text-align: center; align-items: center; }
+.big-num { font-family: var(--f-display); font-weight: 900; font-size: clamp(3rem, 15vw, 4.4rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big-num small { font-size: .36em; color: var(--muted); font-weight: 700; font-family: var(--f-mono); }
+.mega-dots { display: flex; gap: 14px; justify-content: center; }
+.mega-dots i { width: 34px; height: 34px; border-radius: 50%; border: 4px solid var(--c, var(--cobalt)); display: inline-block; }
+.mega-dots i.on { background: var(--c, var(--cobalt)); animation: dotpop .5s backwards; }
+@keyframes dotpop { 0% { transform: scale(0); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.stat { background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.stat b { font-family: var(--f-mono); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .78rem; color: var(--muted); text-align: center; }
+.tricky { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; text-align: left; width: 100%; }
+.tricky li { border-left: 4px solid var(--wrong); background: var(--soft); border-radius: 0 10px 10px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.tricky .tq { font-weight: 700; white-space: pre-line; }
+.tricky .ta { color: var(--right); font-weight: 700; }
+.tricky .tm { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .92rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 12px; width: 100%; }
+.who b { color: var(--ink); }
+.rank-up { background: var(--marker-soft); color: var(--marker-ink); font-weight: 700; padding: 8px 14px; border-radius: 10px; }
+
+/* Typed gaps */
+.q-lead { display: block; font-family: var(--f-body); font-size: 1rem; font-weight: 400; color: var(--ink); background: var(--soft); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; line-height: 1.45; white-space: normal; }
+.q-text.typed { line-height: 2.15; }
+.tglue { white-space: nowrap; }
+.tgap { display: inline-flex; align-items: baseline; white-space: nowrap; vertical-align: baseline; background: var(--marker-soft); border-bottom: 3px solid var(--c, var(--cobalt)); border-radius: 6px 6px 0 0; padding-left: 6px; }
+.tgap .first { font-family: var(--f-body); font-weight: 700; color: var(--marker-ink); }
+.tgap input { font: inherit; font-family: var(--f-body); font-weight: 700; color: var(--ink); width: 7em; max-width: 68vw; padding: 0 6px 0 0; line-height: 1.45; border: 0; border-radius: 0; background: transparent; }
+.tgap:not(:has(.first)) input { padding-left: 0; }
+.tgap.wide input { width: 10em; }
+.tgap.xwide input { width: 15em; }
+.tgap input:focus { outline: none; }
+.tgap:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--cobalt)) 40%, transparent); }
+.tgap input:disabled { opacity: 1; -webkit-text-fill-color: currentColor; }
+.tgap.ok { background: var(--right-soft); border-bottom-color: var(--right); }
+.tgap.ok input, .tgap.ok .first { color: var(--right); }
+.tgap.no { background: var(--wrong-soft); border-bottom-color: var(--wrong); }
+.tgap.no input, .tgap.no .first { color: var(--wrong); }
+.check-row { display: flex; }
+.check-row .btn { flex: 1; }
+
+.confetti { position: fixed; pointer-events: none; z-index: 50; width: 8px; height: 8px; border-radius: 50%; animation: fly .9s cubic-bezier(.2, .7, .4, 1) forwards; }
+@keyframes fly { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cell.pop, .shake, .chip.hot, .mega-dots i.on, .tgap.shake, .stamp.thud { animation: none; }
+  .confetti { display: none; }
+  .btn, .opt, .lvl { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title" id="top-title"></span>
+      <span class="top-sub" id="top-sub"></span>
+    </div>
+  </header>
+
+  <!-- WELCOME -->
+  <section id="screen-welcome" class="card hero" hidden aria-labelledby="welcome-h">
+    <span class="eyebrow">Units 1–2 · Exam practice</span>
+    <svg class="hero-art" viewBox="0 0 600 120" aria-hidden="true">
+      <path class="ridge2" d="M0 120 L90 62 L150 92 L250 30 L330 84 L400 56 L470 92 L540 48 L600 76 L600 120 Z"/>
+      <path class="ridge" d="M0 120 L120 78 L190 104 L300 14 L370 70 L430 50 L520 98 L600 84 L600 120 Z"/>
+      <path class="snow" d="M300 14 L322 33 L311 31 L300 40 L290 31 L280 33 Z"/>
+      <path class="trail" d="M20 116 C80 108 120 112 170 100 S240 70 268 52 S292 26 300 16"/>
+      <line class="pole" x1="300" y1="16" x2="300" y2="-6"/>
+      <path class="flag" d="M300 -6 L322 0 L300 6 Z"/>
+      <path class="wave" d="M20 112 q10 -6 20 0 t20 0 t20 0"/>
+    </svg>
+    <h1 id="welcome-h"><span class="the">The</span><span class="peak">Expedition</span></h1>
+    <p class="sub">Every word and grammar point from Units 1 and 2, stage by stage. Missed questions come back until you get them right. Reach the summit with three dots everywhere before the exam.</p>
+    <ol class="route" aria-label="Route">
+      <li><span>Unit 1</span><b>Facing challenges · Annoying things</b></li>
+      <li><span>Unit 1 grammar</span><b>Present and past habits</b></li>
+      <li><span>Unit 2</span><b>Space &amp; ocean · The natural world</b></li>
+      <li><span>Unit 2 grammar</span><b>Comparatives · Superlatives · Ungradable adjectives</b></li>
+      <li><span>Summit</span><b>30-question final challenge</b></li>
+    </ol>
+    <div class="field">
+      <label for="student-name">Your name</label>
+      <input id="student-name" type="text" autocomplete="given-name" maxlength="30" placeholder="Type your name">
+    </div>
+    <button class="btn" id="btn-welcome" type="button">Start the expedition</button>
+  </section>
+
+  <!-- MAP -->
+  <section id="screen-map" hidden>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card player" id="player"></div>
+      <div class="map-title"><h2>Expedition map</h2><small id="map-count"></small></div>
+      <div class="levels" id="levels"></div>
+      <div class="card how" style="gap:8px">
+        <h3 style="font-size:1.1rem">How it works</h3>
+        <p><b class="k">01</b><span>Answer every question in a level. Missed questions come back in the next round until you get them right.</span></p>
+        <p><b class="k">02</b><span>In typing questions, check your spelling. Capital letters don't matter. Short forms like <b>can't</b> and long forms like <b>cannot</b> are both fine.</span></p>
+        <p><b class="k">03</b><span>Your first-try score fills the dots: 90% or more = 3 dots, 70% or more = 2 dots, finished = 1 dot. Get 3 dots on every stage before the exam.</span></p>
+        <p><b class="k">04</b><span>Correct answers in a row build your streak and earn XP.</span></p>
+      </div>
+      <div class="card confirm" id="confirm-reset" hidden>
+        <p><b>Reset all your dots, XP and progress?</b> This can't be undone.</p>
+        <div class="btn-row">
+          <button class="btn" id="btn-reset-yes" type="button">Yes, reset</button>
+          <button class="btn btn-ghost" id="btn-reset-no" type="button">Keep my progress</button>
+        </div>
+      </div>
+      <div class="tiny-links">
+        <button class="link" id="btn-rename" type="button">Change name</button>
+        <button class="link" id="btn-reset" type="button">Reset all progress</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="screen-play" hidden>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="play-top">
+        <button class="back" id="btn-back" type="button">← Map</button>
+        <div class="chips">
+          <span class="chip" id="streak-chip" title="Correct answers in a row">🔥 <span id="streak-n">0</span></span>
+          <span class="chip" title="XP">XP <span id="xp-n">0</span></span>
+        </div>
+      </div>
+      <div class="card" id="play-card">
+        <div class="lvl-banner">
+          <div class="lvl-icon" id="play-icon" aria-hidden="true"></div>
+          <div style="min-width:0">
+            <div class="lvl-name" id="play-name"></div>
+            <div class="r" id="play-round"></div>
+          </div>
+        </div>
+        <div class="board" id="board" aria-hidden="true"></div>
+        <div class="board-meta"><span id="progress-line"></span><span id="q-count"></span></div>
+        <span class="retry-tag" id="retry-tag" hidden></span>
+        <p class="q-note" id="q-note"></p>
+        <div class="q-fig" id="q-fig" hidden></div>
+        <h2 class="q-text" id="q-text" tabindex="-1"></h2>
+        <div class="check-row" id="check-row" hidden><button class="btn" id="btn-tcheck" type="button">Check my answer</button></div>
+        <div class="opts" id="opts" role="group" aria-labelledby="q-text"></div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+        <button class="btn" id="btn-next" type="button" hidden>Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BETWEEN ROUNDS -->
+  <section id="screen-between" class="card center" hidden aria-labelledby="between-h">
+    <span class="eyebrow" id="between-eyebrow"></span>
+    <h2 id="between-h"></h2>
+    <div class="big-num" id="between-big"></div>
+    <p id="between-text"></p>
+    <div class="board" id="board-between" aria-hidden="true" style="width:100%"></div>
+    <div class="legend">
+      <span><i style="background:var(--marker)"></i>Right first time</span>
+      <span><i id="legend-later" style="background:var(--cobalt)"></i>Cleared later</span>
+      <span><i style="background:var(--wrong-soft);box-shadow:inset 0 0 0 2px var(--wrong)"></i>Still to clear</span>
+    </div>
+    <button class="btn" id="btn-next-round" type="button" style="width:100%"></button>
+  </section>
+
+  <!-- LEVEL COMPLETE -->
+  <section id="screen-done" class="card center" hidden aria-labelledby="done-h">
+    <span class="eyebrow" id="done-eyebrow"></span>
+    <h2 id="done-h" style="font-size:1.8rem"></h2>
+    <div class="mega-dots" id="done-dots" aria-hidden="true"></div>
+    <div>
+      <div style="color:var(--muted)">First-try score</div>
+      <div class="big-num" id="done-big"></div>
+    </div>
+    <p class="rank-up" id="rank-up" hidden></p>
+    <div class="stats" id="done-stats"></div>
+    <div id="tricky-block" style="width:100%;display:flex;flex-direction:column;gap:10px">
+      <h3 style="font-size:1.15rem;text-align:left">Questions to revise</h3>
+      <ul class="tricky" id="tricky"></ul>
+    </div>
+    <div class="who" id="who"></div>
+    <div class="btn-row" style="width:100%">
+      <button class="btn btn-marker" id="btn-practice" type="button">Practice the tricky ones</button>
+      <button class="btn" id="btn-map" type="button">Back to the map</button>
+      <button class="btn btn-ghost" id="btn-replay" type="button">Play this stage again</button>
+    </div>
+  </section>
+</div>
+
+<script id="game-data" type="application/json">
+{
+ "id": "expedition-units-1-2-v1",
+ "title": "The Expedition · Units 1–2",
+ "subtitle": "Vocabulary & grammar exam practice",
+ "bossCount": 30,
+ "bossPer": 1,
+ "levels": [
+  {
+   "key": "v1",
+   "group": "Unit 1 · Vocabulary",
+   "kind": "Choose",
+   "name": "Facing Challenges",
+   "icon": "🧗",
+   "color": "#D9572B",
+   "topic": "accept, adapt, be a step forward, be capable of, be frightened of, can't take, cope with, get a grip, get through, resist, survive, tackle, underestimate, welcome",
+   "note": "Choose the word or phrase that best completes the sentence.",
+   "questions": [
+    {
+     "q": "It was sad when we sold my grandmother's house, but I've learned to ___ that it's gone.",
+     "answer": "accept",
+     "wrong": [
+      "tackle",
+      "survive",
+      "welcome"
+     ],
+     "hint": "You can't change the situation, so you agree to live with it.",
+     "why": "Accept = agree that something is true and stop fighting it. We often say \"accept that …\"."
+    },
+    {
+     "q": "When Mert moved to Canada, it took him months to ___ to the cold weather.",
+     "answer": "adapt",
+     "wrong": [
+      "resist",
+      "tackle",
+      "survive"
+     ],
+     "hint": "Which verb is followed by \"to\" and means changing yourself to fit a new situation?",
+     "why": "Adapt to something = change the way you live so that it suits a new situation."
+    },
+    {
+     "q": "The new hospital is ___ for our town: people no longer have to travel two hours to see a doctor.",
+     "answer": "a big step forward",
+     "wrong": [
+      "a real survivor",
+      "a big underestimate",
+      "a strong grip"
+     ],
+     "hint": "Life in the town is now better than before. That is progress.",
+     "why": "Be a step forward = be progress, a change that makes things better."
+    },
+    {
+     "q": "Don't worry about the exam. You're perfectly ___ passing it if you study.",
+     "answer": "capable of",
+     "wrong": [
+      "frightened of",
+      "coping with",
+      "welcoming"
+     ],
+     "hint": "The speaker believes you have the ability.",
+     "why": "Be capable of + noun or -ing = have the ability to do something."
+    },
+    {
+     "q": "My little sister is ___ the dark, so she sleeps with a light on.",
+     "answer": "frightened of",
+     "wrong": [
+      "capable of",
+      "coping with",
+      "getting through"
+     ],
+     "hint": "Why does she need a light on? How does she feel?",
+     "why": "Be frightened of something = be afraid of it. Notice the preposition: frightened OF."
+    },
+    {
+     "q": "Turn that music down! I ___ the noise any more!",
+     "answer": "can't take",
+     "wrong": [
+      "can't resist",
+      "can't adapt",
+      "can't welcome"
+     ],
+     "hint": "It is too much and you are at your limit.",
+     "why": "Can't take something = it's too much and you can't deal with it any longer."
+    },
+    {
+     "q": "Some students find it hard to ___ the stress of exams.",
+     "answer": "cope with",
+     "wrong": [
+      "welcome",
+      "adapt",
+      "be capable"
+     ],
+     "hint": "You need a verb + preposition that means \"deal successfully with\".",
+     "why": "Cope with something = deal successfully with something difficult. Cope always needs \"with\"."
+    },
+    {
+     "q": "My friend was panicking before her speech, so I told her to ___. She knew the topic really well.",
+     "answer": "get a grip",
+     "wrong": [
+      "get through",
+      "resist it",
+      "underestimate"
+     ],
+     "hint": "You tell her to calm down and control her feelings.",
+     "why": "Get a grip = take control of your feelings and calm down. It's informal, so use it with friends."
+    },
+    {
+     "q": "It was a really hard year, but our family ___ it together.",
+     "answer": "got through",
+     "wrong": [
+      "coped",
+      "welcomed",
+      "underestimated"
+     ],
+     "hint": "Which two-word verb means \"came successfully to the end of a difficult time\"?",
+     "why": "Get through something = survive a difficult time until it ends. \"Coped it\" is wrong: you cope WITH something."
+    },
+    {
+     "q": "Some people ___ new technology because they prefer the old ways.",
+     "answer": "resist",
+     "wrong": [
+      "welcome",
+      "survive",
+      "tackle"
+     ],
+     "hint": "They prefer the old ways, so they fight against the new thing.",
+     "why": "Resist = fight against something or refuse to accept it. It is the opposite of welcome."
+    },
+    {
+     "q": "Only a few trees ___ the terrible fire, but the forest is growing back now.",
+     "answer": "survived",
+     "wrong": [
+      "welcomed",
+      "underestimated",
+      "accepted"
+     ],
+     "hint": "Those trees are still alive after the fire.",
+     "why": "Survive = continue to live or exist after something dangerous or difficult."
+    },
+    {
+     "q": "The school is starting a new program to ___ bullying.",
+     "answer": "tackle",
+     "wrong": [
+      "welcome",
+      "underestimate",
+      "survive"
+     ],
+     "hint": "The school wants to deal with a problem in a strong, determined way.",
+     "why": "Tackle a problem = make a serious effort to deal with it."
+    },
+    {
+     "q": "Never ___ how much you can learn in a month. You might surprise yourself!",
+     "answer": "underestimate",
+     "wrong": [
+      "resist",
+      "welcome",
+      "tackle"
+     ],
+     "hint": "Don't think it is smaller or less than it really is.",
+     "why": "Underestimate = think something is smaller, easier or less than it really is."
+    },
+    {
+     "q": "Our team ___ new ideas. We love hearing different opinions.",
+     "answer": "welcomes",
+     "wrong": [
+      "resists",
+      "underestimates",
+      "can't take"
+     ],
+     "hint": "The team loves new ideas. How do they feel when one arrives?",
+     "why": "Welcome something = be happy to receive or accept it. The opposite is resist."
+    }
+   ]
+  },
+  {
+   "key": "v2",
+   "group": "Unit 1 · Vocabulary",
+   "kind": "Write",
+   "name": "Facing Challenges",
+   "icon": "✍️",
+   "color": "#D9572B",
+   "topic": "The same 14 words and phrases, in new sentences",
+   "note": "Write the missing word. The first letter is given.",
+   "questions": [
+    {
+     "type": "type",
+     "q": "It took me a few weeks to {adapt} to my new school, but now I love it.",
+     "hint": "Change yourself to fit a new situation. It comes before \"to\".",
+     "why": "Adapt to something = change to suit a new situation."
+    },
+    {
+     "type": "type",
+     "q": "Life isn't always fair. Sometimes you just have to {accept} things you can't change.",
+     "hint": "Agree to live with something you can't change.",
+     "why": "Accept = agree that something is true and stop fighting it."
+    },
+    {
+     "type": "type",
+     "q": "The new metro line is a big {step} {forward} for our city.",
+     "hint": "Two words. Progress, like walking ahead.",
+     "why": "Be a step forward = be progress or an improvement."
+    },
+    {
+     "type": "type",
+     "q": "Children are {capable} of much more than adults think.",
+     "hint": "Able to do something. It comes before \"of\".",
+     "why": "Be capable of = have the ability to do something."
+    },
+    {
+     "type": "type",
+     "q": "My cat is {frightened} of loud noises and hides under the bed.",
+     "hint": "The cat hides, so it feels afraid.",
+     "why": "Be frightened of something = be afraid of it."
+    },
+    {
+     "type": "type",
+     "q": "Turn that music down! I {can't|cannot} {take} it any more!",
+     "hint": "It's too much. Don't forget the apostrophe in the first word.",
+     "why": "Can't take something = can't deal with it any longer."
+    },
+    {
+     "type": "type",
+     "q": "Exercise helps me {cope} with stress.",
+     "hint": "Deal successfully with something difficult. It comes before \"with\".",
+     "why": "Cope with something = deal successfully with a difficult situation."
+    },
+    {
+     "type": "type",
+     "q": "Stop worrying about one small mistake and {get} a {grip}!",
+     "hint": "Calm down and control your feelings.",
+     "why": "Get a grip = control your feelings and calm down (informal)."
+    },
+    {
+     "type": "type",
+     "q": "Don't worry. We'll {get} {through} this difficult time together.",
+     "hint": "Two words. Survive a hard time until it ends.",
+     "why": "Get through something = manage to survive a difficult time."
+    },
+    {
+     "type": "type",
+     "q": "My grandfather {resisted} using a smartphone for years, but now he loves it.",
+     "hint": "He fought against the change. Use the past tense.",
+     "why": "Resist = fight against something or refuse to accept it. Past tense: resisted."
+    },
+    {
+     "type": "type",
+     "q": "Many small businesses didn't {survive} the crisis and had to close.",
+     "hint": "Continue to exist after a difficult situation.",
+     "why": "Survive = continue to live or exist after something difficult."
+    },
+    {
+     "type": "type",
+     "q": "The government needs to {tackle} the problem of air pollution.",
+     "hint": "Deal with a problem in a strong, determined way.",
+     "why": "Tackle a problem = make a serious effort to deal with it."
+    },
+    {
+     "type": "type",
+     "q": "Don't {underestimate} your little sister. She's smarter than you think!",
+     "hint": "Think someone is less able than they really are.",
+     "why": "Underestimate = think something or someone is less than they really are."
+    },
+    {
+     "type": "type",
+     "q": "Most teenagers would {welcome} the idea of a shorter school day.",
+     "hint": "Be happy to accept something new.",
+     "why": "Welcome something = be happy to receive or accept it."
+    }
+   ]
+  },
+  {
+   "key": "v3",
+   "group": "Unit 1 · Vocabulary",
+   "kind": "Choose",
+   "name": "Annoying Things",
+   "icon": "😤",
+   "color": "#B23A6B",
+   "topic": "awkward, be a waste of time, be hard to operate, clumsy, complex, drive somebody crazy, frustrating, get on somebody's nerves, infuriating, lose patience, time-consuming, tricky",
+   "note": "Choose the word or phrase that best completes the sentence.",
+   "questions": [
+    {
+     "q": "When he told the joke, nobody laughed. There was a long, ___ silence.",
+     "answer": "awkward",
+     "wrong": [
+      "tricky",
+      "clumsy",
+      "time-consuming"
+     ],
+     "hint": "Everyone in the room felt uncomfortable and embarrassed.",
+     "why": "Awkward = uncomfortable or embarrassing. \"An awkward silence\" is a very common phrase."
+    },
+    {
+     "q": "That meeting ___. We talked for an hour and decided nothing!",
+     "answer": "was a waste of time",
+     "wrong": [
+      "was hard to operate",
+      "was very clumsy",
+      "lost its patience"
+     ],
+     "hint": "They spent an hour and got nothing useful from it.",
+     "why": "Be a waste of time = not worth the time you spend on it."
+    },
+    {
+     "q": "The new coffee machine is so ___ that nobody in the office knows how to switch it on.",
+     "answer": "hard to operate",
+     "wrong": [
+      "time-consuming",
+      "clumsy",
+      "frustrated"
+     ],
+     "hint": "The problem is using the machine.",
+     "why": "Be hard to operate = it is difficult to make a machine work."
+    },
+    {
+     "q": "I'm so ___ today. I dropped my phone and knocked over my coffee in the same minute!",
+     "answer": "clumsy",
+     "wrong": [
+      "tricky",
+      "complex",
+      "time-consuming"
+     ],
+     "hint": "This word describes a person who moves badly and often drops things.",
+     "why": "Clumsy = moving in a careless way, so you drop or knock over things."
+    },
+    {
+     "q": "I can't understand this metro map. There are so many lines and colors that it's really ___.",
+     "answer": "complex",
+     "wrong": [
+      "clumsy",
+      "time-consuming",
+      "frustrated"
+     ],
+     "hint": "The map has many different parts.",
+     "why": "Complex = made of many connected parts, so it is difficult to understand."
+    },
+    {
+     "q": "It ___ me crazy when people talk during a film at the cinema.",
+     "answer": "drives",
+     "wrong": [
+      "gets",
+      "loses",
+      "takes"
+     ],
+     "hint": "Which verb do we also use with a car?",
+     "why": "Drive somebody crazy = make somebody very annoyed."
+    },
+    {
+     "q": "I tried to fix the printer for an hour, but it still didn't work. It was so ___.",
+     "answer": "frustrating",
+     "wrong": [
+      "frustrated",
+      "clumsy",
+      "awkward"
+     ],
+     "hint": "-ing adjectives describe the thing. -ed adjectives describe how a person feels.",
+     "why": "The printer was frustrating; I was frustrated."
+    },
+    {
+     "q": "My brother keeps humming the same song. It's really getting on my ___.",
+     "answer": "nerves",
+     "wrong": [
+      "patience",
+      "crazy",
+      "time"
+     ],
+     "hint": "Get on somebody's ___ = annoy them.",
+     "why": "Get on somebody's nerves = annoy them, usually again and again."
+    },
+    {
+     "q": "My brother ate the last piece of cake and then lied about it. It was absolutely ___!",
+     "answer": "infuriating",
+     "wrong": [
+      "tricky",
+      "complex",
+      "time-consuming"
+     ],
+     "hint": "How angry did the speaker feel? Notice \"absolutely\".",
+     "why": "Infuriating = extremely annoying. It is an extreme adjective, so it goes with absolutely."
+    },
+    {
+     "q": "After waiting 40 minutes for the bus, I started to ___ and called a taxi.",
+     "answer": "lose patience",
+     "wrong": [
+      "get on my nerves",
+      "drive me crazy",
+      "be hard to operate"
+     ],
+     "hint": "The subject is \"I\": I am the one who can't wait calmly any more.",
+     "why": "Lose patience = stop being able to wait calmly. With get on my nerves or drive me crazy, the subject is the annoying thing."
+    },
+    {
+     "q": "Writing every invitation by hand was very ___. It took me the whole weekend.",
+     "answer": "time-consuming",
+     "wrong": [
+      "clumsy",
+      "awkward",
+      "complex"
+     ],
+     "hint": "Look at how long it took.",
+     "why": "Time-consuming = taking a lot of time."
+    },
+    {
+     "q": "The last question on the test was a bit ___, but I worked it out in the end.",
+     "answer": "tricky",
+     "wrong": [
+      "clumsy",
+      "frustrated",
+      "patient"
+     ],
+     "hint": "The question was difficult and needed care.",
+     "why": "Tricky = difficult and needing care or skill."
+    }
+   ]
+  },
+  {
+   "key": "v4",
+   "group": "Unit 1 · Vocabulary",
+   "kind": "Write",
+   "name": "Annoying Things",
+   "icon": "✍️",
+   "color": "#B23A6B",
+   "topic": "The same 12 words and phrases, in new sentences",
+   "note": "Write the missing word. The first letter is given.",
+   "questions": [
+    {
+     "type": "type",
+     "q": "I felt a bit {awkward} at the party because I didn't know anyone.",
+     "hint": "Uncomfortable and a little embarrassed.",
+     "why": "Awkward = uncomfortable or embarrassing."
+    },
+    {
+     "type": "type",
+     "q": "Watching that film was a {waste} of {time}. It was so boring!",
+     "hint": "Not worth the hours you spent on it.",
+     "why": "Be a waste of time = not worth the time you spend on it."
+    },
+    {
+     "type": "type",
+     "q": "This old camera is {hard} to {operate} because it has so many tiny buttons.",
+     "hint": "Difficult to make a machine work.",
+     "why": "Be hard to operate = difficult to use or control (for a machine)."
+    },
+    {
+     "type": "type",
+     "q": "He's very {clumsy}. He's always dropping things and bumping into furniture.",
+     "hint": "This word describes a person who moves badly.",
+     "why": "Clumsy = moving badly or carelessly, so you drop things or knock into them."
+    },
+    {
+     "type": "type",
+     "q": "The human brain is a very {complex|complicated} organ.",
+     "hint": "Made of many connected parts, so it is difficult to understand.",
+     "why": "Complex = with many parts and difficult to understand. (Complicated also works here.)"
+    },
+    {
+     "type": "type",
+     "q": "The noise from the building site next door is {driving} me {crazy}!",
+     "hint": "Making me very annoyed. After \"is\", use the -ing form.",
+     "why": "Drive somebody crazy = make them very annoyed."
+    },
+    {
+     "type": "type",
+     "q": "It's really {frustrating} when the Wi-Fi stops in the middle of a video call.",
+     "hint": "An -ing adjective: it makes you annoyed because you can't do what you want.",
+     "why": "Frustrating describes the situation. To describe your feeling, say \"I'm frustrated\"."
+    },
+    {
+     "type": "type",
+     "q": "People who talk loudly on the phone on the bus really {get} on my {nerves}.",
+     "hint": "They annoy me.",
+     "why": "Get on somebody's nerves = annoy them."
+    },
+    {
+     "type": "type",
+     "q": "It's absolutely {infuriating} when someone takes your seat and pretends they didn't see you!",
+     "hint": "An extreme adjective (that's why we can use \"absolutely\"). It means extremely annoying.",
+     "why": "Infuriating = extremely annoying."
+    },
+    {
+     "type": "type",
+     "q": "Our teacher never {loses} {patience} with us, even when we ask the same question ten times.",
+     "hint": "The subject is \"our teacher\" (he or she), so check the verb ending.",
+     "why": "Lose patience = stop being able to stay calm. Our teacher loses patience."
+    },
+    {
+     "type": "type",
+     "q": "Making bread at home is {time}-{consuming}: it takes about four hours.",
+     "hint": "It takes a lot of time.",
+     "why": "Time-consuming = taking a lot of time. It is written with a hyphen."
+    },
+    {
+     "type": "type",
+     "q": "The last question on the test was a bit {tricky}, but I worked it out in the end.",
+     "hint": "Difficult, and needing care to answer.",
+     "why": "Tricky = difficult and needing care or skill."
+    }
+   ]
+  },
+  {
+   "key": "g1",
+   "group": "Unit 1 · Grammar",
+   "kind": "Type",
+   "name": "Present Habits",
+   "icon": "🔁",
+   "color": "#6A44C2",
+   "topic": "always / constantly + present continuous, will, tend to, present continuous + habit",
+   "note": "Complete the sentence. Use the words in brackets.",
+   "questions": [
+    {
+     "type": "type",
+     "q": "For a habit that happens a lot and often annoys us, use always or constantly with the present {=continuous|progressive}.",
+     "hint": "be + always + verb-ing, like \"He's always forgetting his keys!\"",
+     "why": "Always / constantly + present continuous = a habit that happens a lot, often an annoying one.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "We can use the modal verb {=will} + base verb to talk about typical present behavior.",
+     "hint": "\"My cat ___ sleep in the sun for hours.\"",
+     "why": "Will + base verb can describe typical present behavior. For the past, we use would.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "For general habits, things that usually happen, use {=tend} to + base verb.",
+     "hint": "\"We ___ to fear change.\" (Christa's podcast)",
+     "why": "Tend to + base verb = usually do something.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "My little brother {=is always taking|'s always taking} my things without asking. It's so annoying!",
+     "hint": "An annoying habit: be + always + verb-ing.",
+     "why": "Always goes between be and the -ing verb: is always taking.",
+     "lead": "(always / take)"
+    },
+    {
+     "type": "type",
+     "q": "She {=is constantly checking|'s constantly checking} her phone during dinner!",
+     "hint": "Constantly works like always: be + constantly + verb-ing.",
+     "why": "\"She's constantly checking her phone\" shows an annoying habit.",
+     "lead": "(constantly / check)"
+    },
+    {
+     "type": "type",
+     "q": "When I'm tired after work, I {=will lie|'ll lie} on the sofa and fall asleep in front of the TV.",
+     "hint": "will + base verb for typical behavior.",
+     "why": "\"I'll lie on the sofa\" = this is what I typically do.",
+     "lead": "(will / lie)"
+    },
+    {
+     "type": "type",
+     "q": "Teenagers {=tend to sleep} later than adults.",
+     "hint": "tend + to + base verb. The subject is plural.",
+     "why": "Plural subject → tend to; he / she / it → tends to.",
+     "lead": "(tend / sleep)"
+    },
+    {
+     "type": "type",
+     "q": "We {=tend to fear} change.",
+     "hint": "tend + to + base verb.",
+     "why": "This sentence is from Christa's podcast: \"We tend to fear change.\"",
+     "lead": "(tend / fear)"
+    },
+    {
+     "type": "type",
+     "q": "When we {=are having|'re having} dinner, my dad always tells funny stories about his day.",
+     "hint": "Dinner is an activity in progress while the habit (Dad tells stories) happens.",
+     "why": "Present continuous for the activity in progress + simple present for the habit.",
+     "lead": "(have)"
+    },
+    {
+     "type": "type",
+     "q": "I {=don't tend to eat|do not tend to eat|tend not to eat} breakfast on school days.",
+     "hint": "Make tend to negative, then add the base verb.",
+     "why": "\"I don't tend to eat\" and \"I tend not to eat\" are both correct.",
+     "lead": "(tend / not / eat)"
+    },
+    {
+     "type": "type",
+     "q": "My grandmother {=will sit|'ll sit} in the garden for hours.",
+     "hint": "will + base verb for typical behavior.",
+     "why": "\"She will sit in the garden for hours\" = this is what she typically does.",
+     "lead": "Rewrite with WILL: My grandmother usually sits in the garden for hours."
+    },
+    {
+     "type": "type",
+     "q": "I {=tend to check} my phone as soon as I wake up.",
+     "hint": "tend + to + base verb.",
+     "why": "\"I tend to check\" = I usually check.",
+     "lead": "Rewrite with TEND: I usually check my phone as soon as I wake up."
+    },
+    {
+     "type": "type",
+     "q": "My sister {=is always borrowing|'s always borrowing} my clothes without asking!",
+     "hint": "Annoying habit: be + always + verb-ing.",
+     "why": "always + present continuous for an annoying habit.",
+     "lead": "Rewrite with ALWAYS: My sister borrows my clothes without asking all the time, and it's annoying!"
+    },
+    {
+     "type": "type",
+     "q": "You {=are constantly interrupting|'re constantly interrupting} me! Please let me finish.",
+     "hint": "be + constantly + verb-ing.",
+     "why": "Present continuous with constantly shows an annoying habit.",
+     "lead": "(constantly / interrupt)"
+    },
+    {
+     "type": "type",
+     "q": "He {=is always forgetting|'s always forgetting} his keys!",
+     "hint": "Always goes AFTER be, before the -ing verb.",
+     "why": "Correct: He's always forgetting. Wrong: He always is forgetting.",
+     "lead": "Correct the mistake: He always is forgetting his keys!"
+    },
+    {
+     "type": "type",
+     "q": "I {=tend to get} nervous before exams.",
+     "hint": "Tend is a normal verb. Don't put am / is / are before it.",
+     "why": "Correct: I tend to get. Wrong: I'm tend to get.",
+     "lead": "Correct the mistake: I'm tend to get nervous before exams."
+    }
+   ]
+  },
+  {
+   "key": "g2",
+   "group": "Unit 1 · Grammar",
+   "kind": "Type",
+   "name": "Past Habits",
+   "icon": "🕰️",
+   "color": "#6A44C2",
+   "topic": "used to / didn't use to / never used to, would, simple past",
+   "note": "Complete the sentence. Use the words in brackets.",
+   "questions": [
+    {
+     "type": "type",
+     "q": "Used to can describe past habits, repeated past actions and past {=states}.",
+     "hint": "Think of verbs like be, have, live, like.",
+     "why": "Used to = past habits, repeated actions and states. \"I used to have long hair.\"",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "We can't use {=would} for past states like be, have, live, like and know.",
+     "hint": "Which modal is only for repeated past actions?",
+     "why": "\"We'd play outside every day\" is fine. \"We'd have a dog\" is wrong → \"We used to have a dog.\"",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "For one single action in the past, use the simple {=past}.",
+     "hint": "\"I watched a film last night.\"",
+     "why": "One action at one time → simple past. Used to and would are for repeated actions.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "When I was a child, I {=used to have} long hair.",
+     "hint": "\"Have long hair\" is a state, so would is not possible.",
+     "why": "State → used to (or simple past: had).",
+     "lead": "(have)"
+    },
+    {
+     "type": "type",
+     "q": "Every summer, we {=would go|'d go} to my grandparents' village and swim in the river.",
+     "hint": "would + base verb for a repeated past action.",
+     "why": "Would + base verb for a repeated past action. \"Used to go\" is also correct English.",
+     "lead": "(would / go)"
+    },
+    {
+     "type": "type",
+     "q": "I {=didn't use to like|did not use to like} vegetables, but now I love them.",
+     "hint": "Negative: didn't + use to (no -d) + base verb.",
+     "why": "After didn't, write use, not used.",
+     "lead": "(not / like)"
+    },
+    {
+     "type": "type",
+     "q": "Last Saturday, I {=met} my old school friends for the first time in years.",
+     "hint": "Did this happen many times or once?",
+     "why": "Last Saturday = one single action → simple past.",
+     "lead": "(meet)"
+    },
+    {
+     "type": "type",
+     "q": "My family {=used to live|lived} in a small apartment in Izmir before we moved to Istanbul.",
+     "hint": "Living somewhere is a state, so would is not possible.",
+     "why": "used to live / lived. \"Would live\" is wrong.",
+     "lead": "(live)"
+    },
+    {
+     "type": "type",
+     "q": "{=Did} you {=use to play} outside a lot when you were a kid?",
+     "hint": "Question: Did + subject + use to (no -d) + base verb.",
+     "why": "\"Did you use to play…?\"",
+     "lead": "(play)"
+    },
+    {
+     "type": "type",
+     "q": "On Sundays, my mom {=would make|'d make} pancakes for breakfast.",
+     "hint": "would + base verb for a repeated past action.",
+     "why": "Making pancakes every Sunday is a repeated action, so would is correct.",
+     "lead": "(would / make)"
+    },
+    {
+     "type": "type",
+     "q": "When I was a kid, I {=used to ride} my bike to school every day.",
+     "hint": "used to + base verb",
+     "why": "\"I used to ride\" = a past habit.",
+     "lead": "Rewrite with USED: When I was a kid, I rode my bike to school every day."
+    },
+    {
+     "type": "type",
+     "q": "As a child, I {=didn't use to like|did not use to like} spicy food.",
+     "hint": "Negative: didn't + use to + base verb.",
+     "why": "After didn't, write use, not used.",
+     "lead": "Rewrite with USE: As a child, I didn't like spicy food."
+    },
+    {
+     "type": "type",
+     "q": "My grandfather {=would tell|'d tell} us a story every night.",
+     "hint": "would + base verb for a repeated past action.",
+     "why": "Telling a story every night is a repeated action, so would is correct.",
+     "lead": "Rewrite with WOULD: My grandfather told us a story every night."
+    },
+    {
+     "type": "type",
+     "q": "I {=never used to have} enough money for the cinema when I was at school.",
+     "hint": "never + used to + base verb",
+     "why": "\"I never used to have\" = I didn't use to have.",
+     "lead": "Rewrite with NEVER: I didn't have enough money for the cinema when I was at school."
+    },
+    {
+     "type": "type",
+     "q": "Did your parents {=use to have} a car when you were young?",
+     "hint": "After did, write use (no -d).",
+     "why": "\"Did your parents use to have a car?\"",
+     "lead": "Rewrite with USE: Did your parents have a car when you were young?"
+    },
+    {
+     "type": "type",
+     "q": "I {=used to play|would play|'d play|played} football every weekend when I was at school.",
+     "hint": "It's a past habit. Remove \"am\" and choose a past form.",
+     "why": "Correct: used to play / would play / played. Never \"I am used to play\".",
+     "lead": "Correct the mistake: I am used to play football every weekend when I was at school."
+    },
+    {
+     "type": "type",
+     "q": "We {=used to have|had} a dog when I was little.",
+     "hint": "Have a dog is a state, so would is wrong.",
+     "why": "Correct: used to have / had.",
+     "lead": "Correct the mistake: We would have a dog when I was little."
+    },
+    {
+     "type": "type",
+     "q": "Did you {=use to walk} to school?",
+     "hint": "After did, write use (no -d).",
+     "why": "Correct: Did you use to walk…? Wrong: Did you used to walk…?",
+     "lead": "Correct the mistake: Did you used to walk to school?"
+    }
+   ]
+  },
+  {
+   "key": "v5",
+   "group": "Unit 2 · Vocabulary",
+   "kind": "Choose",
+   "name": "Space & Ocean",
+   "icon": "🚀",
+   "color": "#1E5BC6",
+   "topic": "atmosphere, come across, exploration, investigation, launch, monitor, observe, preserve, resources, satellite, species, surface, use up",
+   "note": "Choose the word or phrase that best completes the sentence.",
+   "questions": [
+    {
+     "q": "The spacecraft became very hot as it came back through Earth's ___.",
+     "answer": "atmosphere",
+     "wrong": [
+      "surface",
+      "satellite",
+      "species"
+     ],
+     "hint": "The layer of air around Earth.",
+     "why": "The atmosphere is the layer of gases around a planet. Spacecraft get very hot as they pass through it."
+    },
+    {
+     "q": "While we were diving near the reef, we ___ a strange fish that none of us had seen before.",
+     "answer": "came across",
+     "wrong": [
+      "used up",
+      "launched",
+      "preserved"
+     ],
+     "hint": "They found it by chance.",
+     "why": "Come across = find or meet something by chance. Past: came across."
+    },
+    {
+     "q": "Space ___ is very expensive, but it has given us useful inventions.",
+     "answer": "exploration",
+     "wrong": [
+      "resources",
+      "surface",
+      "atmosphere"
+     ],
+     "hint": "Traveling to new places to discover what is there.",
+     "why": "Exploration = traveling to a place to discover what is there. Space exploration, ocean exploration."
+    },
+    {
+     "q": "The police are carrying out a full ___ into the robbery at the museum.",
+     "answer": "investigation",
+     "wrong": [
+      "exploration",
+      "atmosphere",
+      "observation"
+     ],
+     "hint": "The police want to find out what happened.",
+     "why": "Investigation = a careful examination to find out the facts. We say \"an investigation into something\"."
+    },
+    {
+     "q": "The rocket will ___ from Florida at 9 a.m. tomorrow.",
+     "answer": "launch",
+     "wrong": [
+      "observe",
+      "preserve",
+      "monitor"
+     ],
+     "hint": "This is what rockets do when they leave the ground.",
+     "why": "Launch = send a rocket or spacecraft into the sky or space."
+    },
+    {
+     "q": "Doctors ___ the patient's heart rate all night to make sure it stays normal.",
+     "answer": "monitor",
+     "wrong": [
+      "launch",
+      "preserve",
+      "use up"
+     ],
+     "hint": "They check it again and again over a period of time.",
+     "why": "Monitor = watch and check something carefully over a period of time."
+    },
+    {
+     "q": "On a clear night, you can ___ the planet Venus without a telescope.",
+     "answer": "observe",
+     "wrong": [
+      "launch",
+      "preserve",
+      "use up"
+     ],
+     "hint": "You look at it carefully.",
+     "why": "Observe = watch or notice something carefully."
+    },
+    {
+     "q": "We should ___ our oceans' resources instead of using them up.",
+     "answer": "preserve",
+     "wrong": [
+      "launch",
+      "observe",
+      "come across"
+     ],
+     "hint": "Johanna wants to keep the oceans safe for the future.",
+     "why": "Preserve = keep something safe from harm or loss. This is Johanna's idea in the podcast."
+    },
+    {
+     "q": "Earth's natural ___, such as water, oil and forests, are not unlimited.",
+     "answer": "resources",
+     "wrong": [
+      "species",
+      "satellites",
+      "surfaces"
+     ],
+     "hint": "Useful things that people take from nature.",
+     "why": "Resources = useful things such as water, oil, minerals and forests."
+    },
+    {
+     "q": "Thousands of ___ travel around Earth, sending TV signals and GPS data.",
+     "answer": "satellites",
+     "wrong": [
+      "species",
+      "resources",
+      "atmospheres"
+     ],
+     "hint": "Machines that go around Earth in space.",
+     "why": "A satellite is a machine sent into space to travel around Earth, used for TV, phones, GPS and weather."
+    },
+    {
+     "q": "Scientists discover thousands of new ___ of animals and plants every year.",
+     "answer": "species",
+     "wrong": [
+      "resources",
+      "satellites",
+      "surfaces"
+     ],
+     "hint": "Types of living things.",
+     "why": "A species is a group of animals or plants of the same type. The plural is also species."
+    },
+    {
+     "q": "About 71 percent of Earth's ___ is covered by water.",
+     "answer": "surface",
+     "wrong": [
+      "atmosphere",
+      "satellite",
+      "species"
+     ],
+     "hint": "The outside part of the planet.",
+     "why": "The surface is the outer part or top layer of something."
+    },
+    {
+     "q": "If we don't save energy, we will ___ all the oil on the planet.",
+     "answer": "use up",
+     "wrong": [
+      "come across",
+      "launch",
+      "monitor"
+     ],
+     "hint": "Nothing will be left.",
+     "why": "Use up = use all of something, so nothing is left."
+    }
+   ]
+  },
+  {
+   "key": "v6",
+   "group": "Unit 2 · Vocabulary",
+   "kind": "Write",
+   "name": "Space & Ocean",
+   "icon": "✍️",
+   "color": "#1E5BC6",
+   "topic": "The same 13 words and phrases, including sentences from the podcast",
+   "note": "Write the missing word. The first letter is given.",
+   "questions": [
+    {
+     "type": "type",
+     "q": "There's so much mystery beyond Earth's {atmosphere}.",
+     "hint": "The layer of air around a planet. (Ronnie, in the podcast)",
+     "why": "Ronnie says: \"There's so much mystery beyond Earth's atmosphere.\""
+    },
+    {
+     "type": "type",
+     "q": "While I was cleaning the attic, I {came} {across} some old photos of my grandparents.",
+     "hint": "Two words: found by chance. Use the past tense.",
+     "why": "Come across = find something by chance. Past: came across."
+    },
+    {
+     "type": "type",
+     "q": "Johanna thinks ocean {exploration} is cheaper and a lot safer than space travel.",
+     "hint": "Traveling to new places to discover what is there.",
+     "why": "Exploration = traveling to a place to discover it."
+    },
+    {
+     "type": "type",
+     "q": "Scientists are carrying out an {investigation} into why the fish are disappearing.",
+     "hint": "A careful examination to find out the facts.",
+     "why": "Investigation into something = a careful search for the facts."
+    },
+    {
+     "type": "type",
+     "q": "The company plans to {launch} its first rocket next year.",
+     "hint": "Send a rocket into the sky.",
+     "why": "Launch = send a rocket or spacecraft into the sky or space."
+    },
+    {
+     "type": "type",
+     "q": "Satellites {monitor} the weather, so we know when a storm is coming.",
+     "hint": "Watch and check over a period of time.",
+     "why": "Monitor = watch and check something carefully over time."
+    },
+    {
+     "type": "type",
+     "q": "Astronomers {observe} the stars through powerful telescopes.",
+     "hint": "Watch carefully.",
+     "why": "Observe = watch or notice something carefully."
+    },
+    {
+     "type": "type",
+     "q": "Maybe we should {preserve} our oceans' resources instead of using them up.",
+     "hint": "Keep safe from harm. (Johanna, in the podcast)",
+     "why": "Johanna says we should preserve the oceans' resources."
+    },
+    {
+     "type": "type",
+     "q": "Many countries are rich in natural {resources} such as oil and gas.",
+     "hint": "Useful things that come from nature.",
+     "why": "Natural resources = water, oil, gas, minerals, forests."
+    },
+    {
+     "type": "type",
+     "q": "The first {satellite} was sent into space in 1957.",
+     "hint": "A machine that travels around Earth.",
+     "why": "Sputnik 1, the first satellite, was launched in 1957."
+    },
+    {
+     "type": "type",
+     "q": "The giant panda is a {species} that people have worked hard to protect.",
+     "hint": "A type of animal or plant.",
+     "why": "A species is a group of animals or plants of the same type."
+    },
+    {
+     "type": "type",
+     "q": "The {surface} of the Moon is covered in dust and craters.",
+     "hint": "The outside layer of something.",
+     "why": "Surface = the outer part or top layer."
+    },
+    {
+     "type": "type",
+     "q": "Don't {use} {up} all the hot water. I need a shower too!",
+     "hint": "Two words: use all of it.",
+     "why": "Use up = use all of something, so nothing is left."
+    }
+   ]
+  },
+  {
+   "key": "v7",
+   "group": "Unit 2 · Vocabulary",
+   "kind": "Choose",
+   "name": "The Natural World",
+   "icon": "🦜",
+   "color": "#2E8B57",
+   "topic": "adaptable, animal life, creature, endangered, environment, form of life, habitat, origin, plant life, poisonous, pond, sea life, survivor, territory, volcano",
+   "note": "Choose the word or phrase that best completes the sentence.",
+   "questions": [
+    {
+     "q": "Pigeons are very ___: they can live on cliffs, on farms and in busy cities.",
+     "answer": "adaptable",
+     "wrong": [
+      "endangered",
+      "poisonous",
+      "frightened"
+     ],
+     "hint": "They can change to live in many different places.",
+     "why": "Adaptable = able to change to suit new conditions."
+    },
+    {
+     "q": "Monkeys, parrots and snakes are all part of the rich ___ of the rainforest.",
+     "answer": "animal life",
+     "wrong": [
+      "plant life",
+      "sea life",
+      "form of life"
+     ],
+     "hint": "Monkeys, parrots and snakes are all animals.",
+     "why": "Animal life = all the animals that live in a place."
+    },
+    {
+     "q": "In the cave, scientists found a strange ___ with eight legs and no eyes.",
+     "answer": "creature",
+     "wrong": [
+      "habitat",
+      "origin",
+      "territory"
+     ],
+     "hint": "A living thing, usually an animal.",
+     "why": "Creature = a living thing, especially an animal."
+    },
+    {
+     "q": "Only a few thousand tigers are left in the wild, so they are ___.",
+     "answer": "endangered",
+     "wrong": [
+      "adaptable",
+      "poisonous",
+      "survivors"
+     ],
+     "hint": "They are in danger of disappearing completely.",
+     "why": "Endangered = at risk of no longer existing."
+    },
+    {
+     "q": "We should all try to protect the ___ by using less plastic.",
+     "answer": "environment",
+     "wrong": [
+      "territory",
+      "origin",
+      "creature"
+     ],
+     "hint": "The air, water and land around us.",
+     "why": "The environment = the natural world: air, water, land, plants and animals."
+    },
+    {
+     "q": "A microbe is a tiny ___ that can only be seen with a microscope.",
+     "answer": "form of life",
+     "wrong": [
+      "habitat",
+      "territory",
+      "sea life"
+     ],
+     "hint": "A microbe is a living thing.",
+     "why": "Form of life = a type of living thing. The article's glossary says a microbe is a very small living thing."
+    },
+    {
+     "q": "The rainforest is the natural ___ of the orangutan.",
+     "answer": "habitat",
+     "wrong": [
+      "territory",
+      "origin",
+      "volcano"
+     ],
+     "hint": "The place where an animal naturally lives.",
+     "why": "Habitat = the natural home of an animal or plant."
+    },
+    {
+     "q": "Scientists are still trying to understand the ___ of life on Earth.",
+     "answer": "origins",
+     "wrong": [
+      "surfaces",
+      "habitats",
+      "territories"
+     ],
+     "hint": "How and where life began.",
+     "why": "Origin(s) = the beginning or cause of something. The article says extremophiles may help explain the origins of life."
+    },
+    {
+     "q": "In autumn, the trees, flowers and other ___ in the park change color.",
+     "answer": "plant life",
+     "wrong": [
+      "animal life",
+      "sea life",
+      "territory"
+     ],
+     "hint": "Trees and flowers are plants.",
+     "why": "Plant life = all the plants in a place."
+    },
+    {
+     "q": "Don't eat those wild mushrooms. Some of them are ___.",
+     "answer": "poisonous",
+     "wrong": [
+      "adaptable",
+      "complex",
+      "capable"
+     ],
+     "hint": "They could make you very sick.",
+     "why": "Poisonous = containing poison, so it can make you sick or kill you."
+    },
+    {
+     "q": "The children fed the ducks at the small ___ in the park.",
+     "answer": "pond",
+     "wrong": [
+      "volcano",
+      "territory",
+      "habitat"
+     ],
+     "hint": "A small area of water.",
+     "why": "Pond = a small area of still water."
+    },
+    {
+     "q": "Plastic in the oceans is killing fish, turtles and other ___.",
+     "answer": "sea life",
+     "wrong": [
+      "plant life",
+      "territory",
+      "origins"
+     ],
+     "hint": "Fish and turtles live in the ocean.",
+     "why": "Sea life = the animals and plants that live in the sea."
+    },
+    {
+     "q": "The cat lost a leg in an accident, but she's a real ___ and now runs around happily.",
+     "answer": "survivor",
+     "wrong": [
+      "creature",
+      "habitat",
+      "origin"
+     ],
+     "hint": "She lived through something terrible and is doing well.",
+     "why": "Survivor = someone or something that continues to live after a difficult or dangerous event."
+    },
+    {
+     "q": "Male lions roar loudly to protect their ___ from other lions.",
+     "answer": "territory",
+     "wrong": [
+      "origin",
+      "pond",
+      "volcano"
+     ],
+     "hint": "The area an animal thinks belongs to it.",
+     "why": "Territory = an area that an animal or group thinks is its own and defends."
+    },
+    {
+     "q": "Mount Etna in Italy is one of the most active ___ in Europe.",
+     "answer": "volcanoes",
+     "wrong": [
+      "territories",
+      "habitats",
+      "ponds"
+     ],
+     "hint": "Mountains that can send out hot rock and gas.",
+     "why": "Volcano = a mountain with a hole at the top that can send out lava and gas. Plural: volcanoes."
+    }
+   ]
+  },
+  {
+   "key": "v8",
+   "group": "Unit 2 · Vocabulary",
+   "kind": "Write",
+   "name": "The Natural World",
+   "icon": "✍️",
+   "color": "#2E8B57",
+   "topic": "The same 15 words, mostly in sentences from \"Nature's Tough Cookies\"",
+   "note": "Write the missing word. The first letter is given.",
+   "questions": [
+    {
+     "type": "type",
+     "q": "Rats are the most {adaptable} mammal that we know of.",
+     "hint": "Able to change to suit new conditions. (from the article)",
+     "why": "The article says rats live almost everywhere, so they are adaptable."
+    },
+    {
+     "type": "type",
+     "q": "We often discuss how to preserve {endangered} species of wildlife.",
+     "hint": "At risk of disappearing. (from the article)",
+     "why": "Endangered species = types of animals or plants at risk of no longer existing."
+    },
+    {
+     "type": "type",
+     "q": "We rarely talk about {creatures} that can survive in extremely difficult places.",
+     "hint": "Living things, especially animals. Plural.",
+     "why": "Creatures = living things, especially animals."
+    },
+    {
+     "type": "type",
+     "q": "Some creatures can survive in extremely difficult {environments}.",
+     "hint": "The conditions and places where things live. Plural. (from the article)",
+     "why": "Environment = the natural world around a living thing."
+    },
+    {
+     "type": "type",
+     "q": "Nicaragua's Masaya Volcano is one of the most active {volcanoes|volcanos} in Central America.",
+     "hint": "Plural. Mountains that send out hot gas. (from the article)",
+     "why": "volcano → volcanoes. After \"one of the most active\", use a plural noun."
+    },
+    {
+     "type": "type",
+     "q": "{Poisonous} gas rises from the volcano.",
+     "hint": "An adjective: it can kill you. (from the article)",
+     "why": "Poisonous = containing poison."
+    },
+    {
+     "type": "type",
+     "q": "Experts aren't sure how the parrots survive in a {habitat} that would kill other forms of life.",
+     "hint": "The natural home of an animal. (from the article)",
+     "why": "Habitat = the natural home of an animal or plant."
+    },
+    {
+     "type": "type",
+     "q": "A microbe is a tiny {form} of {life} that can only be seen with a microscope.",
+     "hint": "Three words: a type of living thing.",
+     "why": "Form of life = a type of living thing."
+    },
+    {
+     "type": "type",
+     "q": "In the spring, the wood frogs thaw out and head straight for the nearest {pond}.",
+     "hint": "A small area of water. (from the article)",
+     "why": "Pond = a small area of still water."
+    },
+    {
+     "type": "type",
+     "q": "In and around these holes in the ocean floor, various forms of {sea} {life} exist.",
+     "hint": "Two words: animals and plants that live in the sea. (from the article)",
+     "why": "Sea life = the animals and plants in the sea."
+    },
+    {
+     "type": "type",
+     "q": "Their existence may help explain the {origins|origin} of life on earth.",
+     "hint": "How and where something began. (from the article)",
+     "why": "Origins = the beginning of something."
+    },
+    {
+     "type": "type",
+     "q": "The final \"tough cookie\" has few limits to its {territory}.",
+     "hint": "The area that an animal lives in and thinks is its own. (from the article)",
+     "why": "Territory = the area an animal lives in and defends."
+    },
+    {
+     "type": "type",
+     "q": "Rats definitely get the first prize for being super {survivors}.",
+     "hint": "Plural: living things that keep living after dangerous events. (from the article)",
+     "why": "Survivor = someone or something that continues to live after something difficult."
+    },
+    {
+     "type": "type",
+     "q": "In spring, our garden is full of {plant} {life}: flowers, bushes and young trees.",
+     "hint": "Two words: all the plants in a place.",
+     "why": "Plant life = all the plants in a place."
+    },
+    {
+     "type": "type",
+     "q": "The national park protects all kinds of {animal} {life}, from bears to butterflies.",
+     "hint": "Two words: all the animals in a place.",
+     "why": "Animal life = all the animals in a place."
+    }
+   ]
+  },
+  {
+   "key": "g3",
+   "group": "Unit 2 · Grammar",
+   "kind": "Type",
+   "name": "Comparative Structures",
+   "icon": "⚖️",
+   "color": "#B7700E",
+   "topic": "prefer … rather than, more / less as pronouns, adjective + enough + infinitive, less / fewer, than (not then)",
+   "note": "Complete the sentence. Use the words in brackets.",
+   "questions": [
+    {
+     "type": "type",
+     "q": "When comparing, put the thing you like less after {=rather than}.",
+     "hint": "\"I would prefer to explore space ___ study the ocean.\"",
+     "why": "prefer A rather than B: B is the thing you like less.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "To compare actions, use a gerund or the {=base form} of the verb after rather than.",
+     "hint": "\"…rather than study the ocean.\" What form is study?",
+     "why": "rather than + gerund (studying) or base form (study).",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "When using more or less as a pronoun, put it {=after} a verb.",
+     "hint": "\"We can learn ___ from research…\" Where is more?",
+     "why": "\"We can learn more…\" More comes after the verb learn.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "Use an {=infinitive} after an adjective + enough.",
+     "hint": "\"…isn't useful enough ___ justify the cost.\"",
+     "why": "adjective + enough + to-infinitive: useful enough to justify.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "Use less with {=non-count|uncount|uncountable|noncount} nouns. Use fewer with {=count|countable} nouns.",
+     "hint": "less oxygen, fewer benefits. Can you count oxygen?",
+     "why": "less + non-count nouns (less oxygen); fewer + plural count nouns (fewer benefits).",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "You {=don't always have to|do not always have to} repeat the first subject + verb in comparative structures.",
+     "hint": "\"It's less important to fix future problems than (it is) to fix current ones.\" Are the words in brackets needed?",
+     "why": "\"(it is)\" can be left out, so you don't always have to repeat the subject + verb.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "I would definitely prefer to explore space {=rather than} study the ocean.",
+     "hint": "Two words before the thing you like less.",
+     "why": "This is Ronnie's sentence from the podcast.",
+     "lead": "(rather / than)"
+    },
+    {
+     "type": "type",
+     "q": "I'd prefer to text my friends rather than {=call} them.",
+     "hint": "After \"prefer to text … rather than\", use the base form.",
+     "why": "prefer to + verb … rather than + base form.",
+     "lead": "(call)"
+    },
+    {
+     "type": "type",
+     "q": "I prefer {=reading} books rather than watching TV.",
+     "hint": "Use the same form as the verb after rather than (watching).",
+     "why": "prefer + gerund … rather than + gerund: reading … watching.",
+     "lead": "(read)"
+    },
+    {
+     "type": "type",
+     "q": "Space exploration just isn't {=useful enough to justify} the cost.",
+     "hint": "adjective + enough + to + base verb",
+     "why": "This is Johanna's sentence from the podcast.",
+     "lead": "(useful / enough / justify)"
+    },
+    {
+     "type": "type",
+     "q": "This water isn't {=clean enough to drink}.",
+     "hint": "adjective + enough + to + base verb",
+     "why": "Enough comes AFTER the adjective: clean enough to drink.",
+     "lead": "(clean / enough / drink)"
+    },
+    {
+     "type": "type",
+     "q": "Are you {=old enough to drive}?",
+     "hint": "adjective + enough + to + base verb",
+     "why": "old enough to drive.",
+     "lead": "(old / enough / drive)"
+    },
+    {
+     "type": "type",
+     "q": "We can learn {=more} from research into space than most people realize.",
+     "hint": "Ronnie thinks space research teaches us a lot.",
+     "why": "More is a pronoun here, after the verb learn.",
+     "lead": "(more / less)"
+    },
+    {
+     "type": "type",
+     "q": "I know {=less} about the ocean than my brother does. He's a diver.",
+     "hint": "Your brother knows a lot because he's a diver.",
+     "why": "Less is a pronoun here, after the verb know.",
+     "lead": "(more / less)"
+    },
+    {
+     "type": "type",
+     "q": "There are {=fewer} benefits to space exploration.",
+     "hint": "Benefits is a plural count noun.",
+     "why": "fewer + count nouns: fewer benefits.",
+     "lead": "(less / fewer)"
+    },
+    {
+     "type": "type",
+     "q": "There is {=less} oxygen on Mars than on Earth.",
+     "hint": "Oxygen is a non-count noun.",
+     "why": "less + non-count nouns: less oxygen.",
+     "lead": "(less / fewer)"
+    },
+    {
+     "type": "type",
+     "q": "There are {=fewer} animals in the city than in the countryside.",
+     "hint": "Animals is a plural count noun.",
+     "why": "fewer animals, not less animals.",
+     "lead": "Correct the mistake: There are less animals in the city than in the countryside."
+    },
+    {
+     "type": "type",
+     "q": "It's less important to fix future problems {=than} to fix current ones.",
+     "hint": "Comparisons use than. Then is about time.",
+     "why": "This is Johanna's sentence. Use than, not then.",
+     "lead": "(than / then)"
+    },
+    {
+     "type": "type",
+     "q": "There is less oxygen on Mars {=than} on Earth.",
+     "hint": "Then means \"after that\". Which word compares?",
+     "why": "Accuracy check: use than, not then, with comparative structures.",
+     "lead": "Correct the mistake: There is less oxygen on Mars then on Earth."
+    },
+    {
+     "type": "type",
+     "q": "This box isn't {=strong enough} to hold all the books.",
+     "hint": "Enough goes AFTER the adjective.",
+     "why": "Correct: strong enough. Wrong: enough strong.",
+     "lead": "Correct the mistake: This box isn't enough strong to hold all the books."
+    },
+    {
+     "type": "type",
+     "q": "The test was easy enough {=to pass}.",
+     "hint": "adjective + enough + to-infinitive",
+     "why": "Correct: easy enough to pass. Wrong: easy enough for passing.",
+     "lead": "Correct the mistake: The test was easy enough for passing."
+    }
+   ]
+  },
+  {
+   "key": "g4",
+   "group": "Unit 2 · Grammar",
+   "kind": "Type",
+   "name": "Superlative Structures",
+   "icon": "🏔️",
+   "color": "#B7700E",
+   "topic": "one of the most + plural noun, leaving out the noun, that clauses",
+   "note": "Complete the sentence. Use the word in brackets.",
+   "questions": [
+    {
+     "type": "type",
+     "q": "After one of the most + adjective, use a {=plural} noun.",
+     "hint": "\"one of the most active volcanoes\": is volcanoes singular or plural?",
+     "why": "one of the most + adjective + PLURAL noun.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "The tiniest and most common are microbes. The missing words after \"the tiniest and most common\" are \"{=forms of sea life}\".",
+     "hint": "Read the sentence before it in the box.",
+     "why": "Nouns are not always repeated after superlatives: the tiniest and most common (forms of sea life).",
+     "lead": "Yet in and around these holes, various forms of sea life exist. The tiniest and most common are microbes."
+    },
+    {
+     "type": "type",
+     "q": "For superlative structures with that clauses, that is {=not always} needed.",
+     "hint": "\"Rats are the most adaptable mammal (that) we know of.\" Why is that in brackets?",
+     "why": "You can leave out that when it is the object of the clause: the most adaptable mammal (that) we know of.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "In \"This is the best pizza that I've ever eaten,\" you can leave out the word {=that}.",
+     "hint": "Which word can disappear without changing the meaning?",
+     "why": "\"This is the best pizza I've ever eaten\" is also correct.",
+     "note": "Complete the sentence."
+    },
+    {
+     "type": "type",
+     "q": "Nicaragua's Masaya Volcano is one of the most active {=volcanoes|volcanos} in Central America.",
+     "hint": "one of the most + adjective + plural noun",
+     "why": "volcano → volcanoes (plural after \"one of the\").",
+     "lead": "(volcano)"
+    },
+    {
+     "type": "type",
+     "q": "The black mamba is one of the most poisonous {=snakes} in Africa.",
+     "hint": "one of the most + adjective + plural noun",
+     "why": "snake → snakes.",
+     "lead": "(snake)"
+    },
+    {
+     "type": "type",
+     "q": "She is one of the best {=players} on our team.",
+     "hint": "After one of the best, the noun must be plural.",
+     "why": "Correct: one of the best players. Wrong: one of the best player.",
+     "lead": "Correct the mistake: She is one of the best player on our team."
+    },
+    {
+     "type": "type",
+     "q": "Rats are {=the most adaptable} mammal that we know of.",
+     "hint": "Long adjective → the most + adjective.",
+     "why": "From the article: \"Rats are the most adaptable mammal that we know of.\"",
+     "lead": "(adaptable)"
+    },
+    {
+     "type": "type",
+     "q": "Tokyo is one of the {=largest} cities in the world.",
+     "hint": "Short adjective → -est.",
+     "why": "large → the largest; one of the largest + plural noun.",
+     "lead": "(large)"
+    },
+    {
+     "type": "type",
+     "q": "This is one of the {=most interesting} books I've ever read.",
+     "hint": "Long adjective → most + adjective.",
+     "why": "interesting → the most interesting.",
+     "lead": "(interesting)"
+    },
+    {
+     "type": "type",
+     "q": "That was {=the worst} film I've ever seen.",
+     "hint": "Bad is irregular.",
+     "why": "bad → worse → the worst.",
+     "lead": "(bad)"
+    },
+    {
+     "type": "type",
+     "q": "The blue whale is {=the largest|the biggest} animal on Earth today.",
+     "hint": "Superlative of large (or big).",
+     "why": "large → the largest (big → the biggest).",
+     "lead": "(large)"
+    },
+    {
+     "type": "type",
+     "q": "Mercury is {=the closest} planet to the sun.",
+     "hint": "Short adjective → the + -est.",
+     "why": "close → the closest.",
+     "lead": "(close)"
+    },
+    {
+     "type": "type",
+     "q": "It's {=the cheapest} phone in the shop.",
+     "hint": "Don't use most AND -est together.",
+     "why": "Correct: the cheapest. Wrong: the most cheapest.",
+     "lead": "Correct the mistake: It's the most cheapest phone in the shop."
+    },
+    {
+     "type": "type",
+     "q": "Of all the animals in the article, I think the wood frogs are {=the toughest}.",
+     "hint": "Short adjective → the + -est.",
+     "why": "tough → the toughest.",
+     "lead": "(tough)"
+    }
+   ]
+  },
+  {
+   "key": "g5",
+   "group": "Unit 2 · Grammar",
+   "kind": "Type",
+   "name": "Ungradable Adjectives",
+   "icon": "🌋",
+   "color": "#B7700E",
+   "topic": "absolutely / completely + ungradable (extreme) adjectives; very + gradable adjectives",
+   "note": "Complete the sentence.",
+   "questions": [
+    {
+     "type": "type",
+     "q": "You {=can} use ungradable adjectives with absolutely and completely.",
+     "hint": "\"It's an absolutely awful place to live.\"",
+     "why": "Ungradable (extreme or absolute) adjectives go with absolutely / completely: absolutely awful, completely dead.",
+     "note": "Complete the rule."
+    },
+    {
+     "type": "type",
+     "q": "Hard can go with very, but dead can't, because dead is {=ungradable}.",
+     "hint": "You can't be \"a little dead\" or \"very dead\".",
+     "why": "Hard is gradable (a bit hard, very hard). Dead is ungradable.",
+     "lead": "They become very hard and appear to be dead."
+    },
+    {
+     "type": "type",
+     "q": "It's an {=absolutely} awful place to live.",
+     "hint": "Awful is an extreme adjective.",
+     "why": "absolutely + extreme adjective: absolutely awful. (from the article)",
+     "lead": "(very / absolutely)"
+    },
+    {
+     "type": "type",
+     "q": "Wood frogs become {=very} hard and appear to be dead.",
+     "hint": "Hard is a normal (gradable) adjective.",
+     "why": "very + gradable adjective: very hard. (from the article)",
+     "lead": "(very / absolutely)"
+    },
+    {
+     "type": "type",
+     "q": "I'm {=very} tired after the long hike.",
+     "hint": "Tired is a normal (gradable) adjective.",
+     "why": "very tired. For the extreme adjective, say absolutely exhausted.",
+     "lead": "(very / absolutely)"
+    },
+    {
+     "type": "type",
+     "q": "The water in the geysers can be very hot or even absolutely {boiling}.",
+     "hint": "The extreme adjective for very hot.",
+     "why": "hot → boiling. absolutely boiling.",
+     "lead": "(very hot → extreme adjective)"
+    },
+    {
+     "type": "type",
+     "q": "After the long hike, I was absolutely {exhausted}.",
+     "hint": "The extreme adjective for very tired.",
+     "why": "tired → exhausted.",
+     "lead": "(very tired → extreme adjective)"
+    },
+    {
+     "type": "type",
+     "q": "The sea was absolutely {freezing}, so we didn't swim.",
+     "hint": "The extreme adjective for very cold.",
+     "why": "cold → freezing.",
+     "lead": "(very cold → extreme adjective)"
+    },
+    {
+     "type": "type",
+     "q": "Their new house is absolutely {enormous}.",
+     "hint": "The extreme adjective for very big.",
+     "why": "big → enormous.",
+     "lead": "(very big → extreme adjective)"
+    },
+    {
+     "type": "type",
+     "q": "My bedroom is absolutely {tiny}. There's only space for a bed.",
+     "hint": "The extreme adjective for very small.",
+     "why": "small → tiny.",
+     "lead": "(very small → extreme adjective)"
+    },
+    {
+     "type": "type",
+     "q": "I'm absolutely {starving}! What's for dinner?",
+     "hint": "The extreme adjective for very hungry.",
+     "why": "hungry → starving.",
+     "lead": "(very hungry → extreme adjective)"
+    },
+    {
+     "type": "type",
+     "q": "This pizza is absolutely {delicious}!",
+     "hint": "The extreme adjective for very tasty.",
+     "why": "tasty / good → delicious.",
+     "lead": "(very tasty → extreme adjective)"
+    },
+    {
+     "type": "type",
+     "q": "The roller coaster was absolutely {terrifying}.",
+     "hint": "The extreme adjective for very scary.",
+     "why": "scary → terrifying.",
+     "lead": "(very scary → extreme adjective)"
+    },
+    {
+     "type": "type",
+     "q": "The box is {=completely|absolutely} empty.",
+     "hint": "Empty is ungradable.",
+     "why": "completely / absolutely + ungradable adjective.",
+     "lead": "(very / completely)"
+    },
+    {
+     "type": "type",
+     "q": "The test was {=completely|absolutely} impossible.",
+     "hint": "Impossible is ungradable, so not very.",
+     "why": "Correct: completely / absolutely impossible. Wrong: very impossible.",
+     "lead": "Correct the mistake: The test was very impossible."
+    },
+    {
+     "type": "type",
+     "q": "Your answer is {=absolutely|completely} correct.",
+     "hint": "Correct is ungradable: it's right or it isn't.",
+     "why": "absolutely / completely correct.",
+     "lead": "(very / absolutely)"
+    }
+   ]
+  }
+ ]
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("game-data").textContent);
+  var KEY = "onur-expedition:" + DATA.id;
+  var LETTERS = ["A", "B", "C", "D"];
+  var CHEERS = ["On course!", "Spot on!", "Land ho!", "Great navigating!", "Nailed it!", "Exactly right!", "Summit-worthy!", "Brilliant!"];
+  var MAXDOTS = (DATA.levels.length + 1) * 3;
+  var RANKS = [
+    [0, "🎒", "Trainee Explorer"], [Math.round(MAXDOTS * 0.2), "🧭", "Navigator"], [Math.round(MAXDOTS * 0.45), "🗺️", "Pathfinder"],
+    [Math.round(MAXDOTS * 0.7), "🤿", "Deep-Sea Diver"], [Math.round(MAXDOTS * 0.9), "🏔️", "Summit Leader"]
+  ];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- typed gaps ---------- */
+  // {word|alt} = gap with first letter shown; {=words|alt} = gap with no letter.
+  function parseGaps(text) {
+    var parts = [], re = /\{(=?)([^}]+)\}/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parts.push({ t: text.slice(last, m.index) });
+      var alts = m[2].split("|");
+      parts.push({ gap: true, letter: m[1] ? "" : alts[0].charAt(0), alts: alts });
+      last = re.lastIndex;
+    }
+    if (last < text.length) parts.push({ t: text.slice(last) });
+    return parts;
+  }
+  function tnorm(v) {
+    var s = " " + String(v || "").toLowerCase().replace(/[‘’ʼ`´]/g, "'").replace(/[.,!?;:"“”]+/g, " ").replace(/-/g, " ").replace(/\s+/g, " ").trim() + " ";
+    s = s.replace(/ won't /g, " will not ").replace(/ can't /g, " cannot ").replace(/ can not /g, " cannot ").replace(/ couldn't /g, " could not ")
+      .replace(/n't /g, " not ").replace(/'ve /g, " have ").replace(/'re /g, " are ").replace(/'m /g, " am ").replace(/'ll /g, " will ").replace(/'d /g, " had ");
+    return s.replace(/\s+/g, " ").trim();
+  }
+  function gapOk(p, v) {
+    var c = [tnorm(v)];
+    if (p.letter) c.push(tnorm(p.letter + v));
+    return p.alts.some(function (a) { return c.indexOf(tnorm(a)) >= 0; });
+  }
+
+  /* ---------- question index ---------- */
+  var Q = {}, LEVELS = [], BOSS = { key: "boss", name: "The Summit", icon: "🏔️", topic: "Exam rehearsal: " + DATA.bossCount + " mixed questions from every stage", color: "#FFB547", boss: true };
+  DATA.levels.forEach(function (lv, li) {
+    lv.ids = [];
+    lv.num = li + 1;
+    lv.questions.forEach(function (q, qi) {
+      var id = lv.key + ":" + qi;
+      var item = { id: id, level: lv.key, levelName: lv.name, note: q.note || lv.note || "", type: q.type || "mcq", q: q.q, answer: q.answer, wrong: q.wrong,
+        hint: q.hint, why: q.why, lead: q.lead || "", fig: q.fig || "" };
+      if (item.type === "type") {
+        item.parts = parseGaps(q.q);
+        item.blank = item.parts.map(function (p) { return p.gap ? (p.letter ? p.letter + "_____" : "_______") : p.t; }).join("");
+        item.filled = item.parts.map(function (p) { return p.gap ? p.alts[0] : p.t; }).join("");
+      }
+      Q[id] = item;
+      lv.ids.push(id);
+    });
+    LEVELS.push(lv);
+  });
+  var ALL_LEVELS = LEVELS.concat([BOSS]);
+  function levelByKey(k) { for (var i = 0; i < ALL_LEVELS.length; i++) if (ALL_LEVELS[i].key === k) return ALL_LEVELS[i]; return null; }
+
+  /* ---------- state ---------- */
+  var P = null, CUR = null;
+  function blank() { return { name: "", xp: 0, levels: {}, runs: {} }; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY); if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (!p || typeof p !== "object" || !p.levels || !p.runs) return null;
+      for (var k in p.runs) {
+        var r = p.runs[k];
+        if (!r || !Array.isArray(r.ids) || !r.ids.every(function (i) { return Q[i]; })) delete p.runs[k];
+      }
+      return p;
+    } catch (e) { return null; }
+  }
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) {
+    var arr = a.slice();
+    for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    return arr;
+  }
+  function count(obj, val) { var n = 0; for (var k in obj) if (!val || obj[k] === val) n++; return n; }
+  function show(screen) {
+    ["welcome", "map", "play", "between", "done"].forEach(function (n) { $("screen-" + n).hidden = n !== screen; });
+  }
+  function lvState(k) { if (!P.levels[k]) P.levels[k] = { stars: 0, best: 0, plays: 0 }; return P.levels[k]; }
+  function totalDots() { var n = 0; ALL_LEVELS.forEach(function (l) { n += (P.levels[l.key] && P.levels[l.key].stars) || 0; }); return n; }
+  function rankFor(d) { var r = RANKS[0]; RANKS.forEach(function (x) { if (d >= x[0]) r = x; }); return r; }
+  function nextRank(d) { for (var i = 0; i < RANKS.length; i++) if (RANKS[i][0] > d) return RANKS[i]; return null; }
+  function dotsEl(n, el) {
+    el.textContent = "";
+    for (var i = 0; i < 3; i++) { var s = document.createElement("i"); if (i < n) s.className = "on"; el.appendChild(s); }
+  }
+  function setColor(el, c) { el.style.setProperty("--c", c); }
+
+  function bossIds() {
+    var picked = [];
+    LEVELS.forEach(function (lv) { picked = picked.concat(shuffle(lv.ids).slice(0, DATA.bossPer || 1)); });
+    var rest = shuffle(Object.keys(Q).filter(function (id) { return picked.indexOf(id) < 0; }));
+    while (picked.length < DATA.bossCount && rest.length) picked.push(rest.shift());
+    return shuffle(picked).slice(0, Math.max(DATA.bossCount, picked.length));
+  }
+  function newRun(k, ids, practice) {
+    return { level: k, ids: ids.slice(), practice: !!practice, round: 1, queue: ids.slice(), pos: 0, next: [], wrong: {}, done: {},
+      opts: null, typed: null, answered: null, streak: 0, best: 0, xp: 0, screen: "play" };
+  }
+
+  /* ---------- WELCOME ---------- */
+  function renderWelcome() {
+    $("student-name").value = P.name || "";
+    show("welcome");
+    setTimeout(function () { try { $("student-name").focus(); } catch (e) {} }, 50);
+  }
+  function submitName() {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); $("student-name").classList.add("shake"); setTimeout(function () { $("student-name").classList.remove("shake"); }, 400); return; }
+    P.name = n; save(); renderMap();
+  }
+  $("btn-welcome").onclick = submitName;
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") submitName(); });
+
+  /* ---------- MAP ---------- */
+  function renderMap() {
+    CUR = null;
+    $("confirm-reset").hidden = true;
+    var dots = totalDots(), max = ALL_LEVELS.length * 3, rank = rankFor(dots), nr = nextRank(dots);
+    var pl = $("player"); pl.textContent = "";
+    var av = document.createElement("div"); av.className = "avatar"; av.textContent = (P.name || "?").charAt(0).toUpperCase();
+    var mid = document.createElement("div"); mid.style.minWidth = "0";
+    var nm = document.createElement("div"); nm.className = "player-name"; nm.textContent = P.name;
+    var rk = document.createElement("span"); rk.className = "rank"; rk.textContent = rank[1] + " " + rank[2];
+    mid.appendChild(nm); mid.appendChild(rk);
+    var tot = document.createElement("div"); tot.className = "totals";
+    var st = document.createElement("span"); st.className = "stars-total"; st.textContent = "● " + dots + " / " + max;
+    var xp = document.createElement("span"); xp.className = "xp"; xp.textContent = P.xp + " XP";
+    tot.appendChild(st); tot.appendChild(xp);
+    var bar = document.createElement("div"); bar.className = "rank-bar";
+    var track = document.createElement("div"); track.className = "track";
+    var fill = document.createElement("div"); fill.className = "fill";
+    var lo = rank[0], hi = nr ? nr[0] : max;
+    fill.style.width = (nr ? Math.round((dots - lo) / (hi - lo) * 100) : 100) + "%";
+    track.appendChild(fill);
+    var sm = document.createElement("small");
+    sm.textContent = nr ? (hi - dots) + " more " + (hi - dots === 1 ? "dot" : "dots") + " to become " + nr[1] + " " + nr[2] : "Top rank reached: Summit Leader. Keep every dot filled before the exam.";
+    bar.appendChild(track); bar.appendChild(sm);
+    pl.appendChild(av); pl.appendChild(mid); pl.appendChild(tot); pl.appendChild(bar);
+
+    var total = 0; LEVELS.forEach(function (l) { total += l.ids.length; });
+    $("map-count").textContent = LEVELS.length + " stages · " + total + " questions + final";
+
+    var box = $("levels"), lastGroup = null; box.textContent = "";
+    ALL_LEVELS.forEach(function (lv) {
+      var grp = lv.boss ? "Final challenge" : (lv.group || "");
+      if (grp && grp !== lastGroup) {
+        lastGroup = grp;
+        var gh = document.createElement("div"); gh.className = "group-h";
+        var gt = document.createElement("h3"); gt.textContent = grp;
+        var gs = document.createElement("small");
+        if (!lv.boss) { var gl = LEVELS.filter(function (l) { return l.group === grp; }), gq = 0; gl.forEach(function (l) { gq += l.ids.length; }); gs.textContent = gl.length + " stages · " + gq + " Qs"; }
+        gh.appendChild(gt); gh.appendChild(gs); box.appendChild(gh);
+      }
+      var s = lvState(lv.key), run = P.runs[lv.key];
+      var b = document.createElement("button"); b.type = "button"; b.className = "lvl" + (lv.boss ? " boss" : "");
+      setColor(b, lv.color);
+      var head = document.createElement("div"); head.className = "lvl-head";
+      var ic = document.createElement("div"); ic.className = "lvl-icon"; ic.textContent = lv.icon; ic.setAttribute("aria-hidden", "true");
+      var tx = document.createElement("div"); tx.style.minWidth = "0";
+      var num = document.createElement("div"); num.className = "lvl-num"; num.textContent = lv.boss ? "Exam rehearsal" : "Stage " + (lv.num < 10 ? "0" : "") + lv.num + (lv.kind ? " · " + lv.kind : "");
+      var name = document.createElement("div"); name.className = "lvl-name"; name.textContent = lv.name;
+      tx.appendChild(num); tx.appendChild(name);
+      head.appendChild(ic); head.appendChild(tx);
+      var topic = document.createElement("div"); topic.className = "lvl-topic"; topic.textContent = lv.topic;
+      var foot = document.createElement("div"); foot.className = "lvl-foot";
+      var dEl = document.createElement("span"); dEl.className = "dots"; dotsEl(s.stars, dEl);
+      dEl.setAttribute("aria-label", s.stars + " of 3 dots");
+      var status = document.createElement("span"); status.className = "lvl-status";
+      if (run && run.screen !== "done") { status.textContent = "Continue · " + count(run.done) + "/" + run.ids.length; status.classList.add("go"); }
+      else if (s.plays) status.textContent = "Best " + s.best + "%";
+      else { status.textContent = lv.boss ? DATA.bossCount + " Qs" : lv.ids.length + " Qs"; status.classList.add("go"); }
+      foot.appendChild(dEl); foot.appendChild(status);
+      b.appendChild(head); b.appendChild(topic); b.appendChild(foot);
+      b.onclick = function () { openLevel(lv.key); };
+      box.appendChild(b);
+    });
+    show("map");
+  }
+  $("btn-rename").onclick = function () { renderWelcome(); };
+  $("btn-reset").onclick = function () { $("confirm-reset").hidden = false; $("confirm-reset").scrollIntoView({ block: "nearest" }); };
+  $("btn-reset-no").onclick = function () { $("confirm-reset").hidden = true; };
+  $("btn-reset-yes").onclick = function () { var name = P.name; P = blank(); P.name = name; save(); renderMap(); window.scrollTo(0, 0); };
+
+  function openLevel(k) {
+    var run = P.runs[k];
+    if (!run || run.screen === "done") {
+      var lv = levelByKey(k);
+      P.runs[k] = newRun(k, lv.boss ? bossIds() : lv.ids, false);
+      save();
+    }
+    CUR = k; route(); window.scrollTo(0, 0);
+  }
+
+  /* ---------- PLAY ---------- */
+  function R() { return P.runs[CUR]; }
+  function currentQ() { var r = R(); return Q[r.queue[r.pos]]; }
+  function drawBoard(el, opts) {
+    var r = R(); el.textContent = "";
+    r.ids.forEach(function (id) {
+      var c = document.createElement("i"); c.className = "cell";
+      if (r.done[id]) c.className += " " + r.done[id];
+      else if (r.wrong[id]) c.className += " missed";
+      if (opts && opts.current === id) c.className += " now";
+      if (opts && opts.pop === id && !reduceMotion) c.className += " pop";
+      el.appendChild(c);
+    });
+  }
+  function richText(el, text) {
+    el.textContent = "";
+    var parts = String(text).split("**");
+    parts.forEach(function (part, i) {
+      if (i % 2 === 1) { var s = document.createElement("strong"); s.className = "hl"; s.textContent = part; el.appendChild(s); return; }
+      var bits = part.split("___");
+      bits.forEach(function (b, j) {
+        if (j > 0) { var g = document.createElement("span"); g.className = "gap"; g.setAttribute("aria-label", "blank"); el.appendChild(g); }
+        el.appendChild(document.createTextNode(b));
+      });
+    });
+  }
+  function updateChips(hot) {
+    var r = R();
+    $("streak-n").textContent = r.streak;
+    $("streak-chip").classList.toggle("cold", r.streak === 0);
+    $("xp-n").textContent = P.xp;
+    if (hot && !reduceMotion) { var c = $("streak-chip"); c.classList.remove("hot"); void c.offsetWidth; c.classList.add("hot"); }
+  }
+  function renderPlay() {
+    var r = R(), lv = levelByKey(CUR), q = currentQ();
+    setColor($("screen-play"), lv.boss ? "#0F7B83" : lv.color);
+    $("play-icon").textContent = lv.icon;
+    $("play-name").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("play-round").textContent = "ROUND " + r.round + (CUR === "boss" ? " · FROM " + q.levelName.toUpperCase() : (r.round === 1 ? " · FIRST TRY" : " · CLEAR THE MISSED ONES"));
+    updateChips(false);
+    drawBoard($("board"), { current: q.id });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    $("q-count").textContent = "Q " + (r.pos + 1) + " / " + r.queue.length;
+    var misses = r.wrong[q.id] || 0;
+    $("retry-tag").hidden = misses === 0;
+    $("retry-tag").textContent = misses === 1 ? "Missed once. Try again!" : "Missed " + misses + " times. You can do it!";
+    $("q-note").textContent = q.note;
+    $("q-note").hidden = !q.note;
+    var fig = $("q-fig");
+    if (q.fig && DATA.figs && DATA.figs[q.fig]) { fig.innerHTML = DATA.figs[q.fig]; fig.hidden = false; } else { fig.innerHTML = ""; fig.hidden = true; }
+    $("q-text").classList.toggle("typed", q.type === "type");
+    $("check-row").hidden = true;
+    if (q.type === "type") renderTyped(q); else richText($("q-text"), q.q);
+    $("feedback").hidden = true; $("btn-next").hidden = true;
+
+    if (q.type === "type") {
+      $("opts").hidden = true; $("check-row").hidden = !!r.answered;
+    } else {
+      $("opts").hidden = false;
+      if (!r.opts) { r.opts = shuffle([q.answer].concat(q.wrong)); save(); }
+      var box = $("opts"); box.textContent = "";
+      var short = r.opts.every(function (t) { return t.length <= 9; });
+      box.className = "opts" + (short ? " two" : "");
+      r.opts.forEach(function (text, i) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+        var k = document.createElement("span"); k.className = "key"; k.textContent = LETTERS[i];
+        var t = document.createElement("span"); t.className = "txt"; t.textContent = text;
+        b.appendChild(k); b.appendChild(t);
+        b.onclick = function () { pick(i, b); };
+        box.appendChild(b);
+      });
+    }
+    if (r.answered) paintAnswer(false);
+    show("play");
+  }
+
+  /* typed */
+  function renderTyped(q) {
+    var r = R(), h = $("q-text"); h.textContent = "";
+    if (q.lead) { var l = document.createElement("span"); l.className = "q-lead"; l.textContent = q.lead; h.appendChild(l); }
+    var gi = 0, carry = "";
+    q.parts.forEach(function (p, pi) {
+      if (!p.gap) { h.appendChild(document.createTextNode(p.t.slice(carry.length))); carry = ""; return; }
+      var nxt = q.parts[pi + 1], tail = "";
+      if (nxt && !nxt.gap) { var mt = nxt.t.match(/^(\s?\([^)]{1,24}\))?[.,!?;:]*/); tail = mt ? mt[0] : ""; }
+      carry = tail;
+      var longest = 0; p.alts.forEach(function (a) { if (a.length > longest) longest = a.length; });
+      var w = document.createElement("span"); w.className = "tgap" + (longest > 20 ? " xwide" : longest > 10 ? " wide" : "");
+      if (p.letter) { var f = document.createElement("span"); f.className = "first"; f.textContent = p.letter; w.appendChild(f); }
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.spellcheck = false; inp.id = "gap-" + gi;
+      inp.setAttribute("autocomplete", "off"); inp.setAttribute("autocorrect", "off"); inp.setAttribute("autocapitalize", "off");
+      inp.setAttribute("enterkeyhint", "done");
+      inp.setAttribute("aria-label", p.letter ? "Missing word, starts with " + p.letter : "Missing words " + (gi + 1));
+      if (r.typed && r.typed[gi] != null) inp.value = r.typed[gi];
+      (function (idx) {
+        inp.addEventListener("input", function () { var rr = R(); if (!rr.typed) rr.typed = []; rr.typed[idx] = inp.value; save(); });
+      })(gi);
+      inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); if (!R().answered) checkTyped(); } });
+      w.appendChild(inp);
+      if (tail) { var glue = document.createElement("span"); glue.className = "tglue"; glue.appendChild(w); glue.appendChild(document.createTextNode(tail)); h.appendChild(glue); }
+      else h.appendChild(w);
+      gi++;
+    });
+  }
+  function checkTyped() {
+    var r = R(), q = currentQ(); if (r.answered) return;
+    var inputs = $("q-text").querySelectorAll("input"), vals = [], empty = null;
+    inputs.forEach(function (inp) { vals.push(inp.value); if (!inp.value.trim() && !empty) empty = inp; });
+    if (empty) {
+      empty.focus();
+      var g = empty.parentNode;
+      if (!reduceMotion) { g.classList.remove("shake"); void g.offsetWidth; g.classList.add("shake"); }
+      return;
+    }
+    var gaps = q.parts.filter(function (p) { return p.gap; });
+    var oks = gaps.map(function (p, i) { return gapOk(p, vals[i]); });
+    r.typed = vals; r.oks = oks;
+    grade(oks.every(Boolean), -1, $("q-text"));
+  }
+  $("btn-tcheck").onclick = checkTyped;
+  function paintTyped(fresh) {
+    var r = R();
+    $("check-row").hidden = true;
+    $("q-text").querySelectorAll("input").forEach(function (inp, i) {
+      inp.value = (r.typed && r.typed[i]) || ""; inp.disabled = true;
+      var ok = r.oks ? r.oks[i] : r.answered.correct;
+      inp.parentNode.classList.add(ok ? "ok" : "no");
+      if (fresh && !ok && !reduceMotion) inp.parentNode.classList.add("shake");
+    });
+  }
+  function focusTyped() {
+    var inp = $("q-text").querySelector("input:not([disabled])");
+    if (inp) { try { inp.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  function pick(i) {
+    var r = R(); if (r.answered) return;
+    grade(r.opts[i] === currentQ().answer, i, $("opts").children[i]);
+  }
+  function grade(correct, pickIdx, srcEl) {
+    var r = R(), q = currentQ(), popId = null, gained = 0;
+    r.answered = { pick: pickIdx, correct: correct };
+    if (correct) {
+      r.done[q.id] = r.wrong[q.id] ? "later" : "first";
+      gained = r.wrong[q.id] ? 5 : 10;
+      r.streak += 1; if (r.streak > r.best) r.best = r.streak;
+      r.xp += gained; P.xp += gained;
+      popId = q.id;
+      r.cheer = CHEERS[Math.floor(Math.random() * CHEERS.length)];
+      r.gained = gained;
+    } else {
+      r.wrong[q.id] = (r.wrong[q.id] || 0) + 1;
+      r.streak = 0;
+      r.next.push(q.id);
+    }
+    save();
+    drawBoard($("board"), { current: q.id, pop: popId });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    updateChips(correct);
+    paintAnswer(true);
+    if (correct) confetti(srcEl);
+  }
+
+  function paintAnswer(fresh) {
+    var r = R(), q = currentQ(), a = r.answered;
+    var misses = r.wrong[q.id] || 0;
+    var reveal = !a.correct && misses >= 3;
+    if (q.type === "type") {
+      paintTyped(fresh);
+    } else {
+      var buttons = $("opts").querySelectorAll(".opt");
+      buttons.forEach(function (b, i) {
+        b.disabled = true;
+        var isAnswer = r.opts[i] === q.answer;
+        if (i === a.pick) b.classList.add(a.correct ? "is-right" : "is-wrong");
+        else if (isAnswer && reveal) b.classList.add("is-right");
+        else b.classList.add("is-dim");
+        if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+      });
+    }
+    var fb = $("feedback"); fb.textContent = ""; fb.className = "feedback";
+    var stamp = document.createElement("span"); stamp.className = "stamp" + (fresh && !reduceMotion ? " thud" : "");
+    var head = document.createElement("div"); head.className = "fb-head";
+    var body = document.createElement("p");
+    var note = document.createElement("p"); note.className = "fb-note";
+    if (a.correct) {
+      fb.classList.add("good");
+      stamp.textContent = "Logged ✓";
+      head.textContent = r.cheer || "Correct!";
+      body.textContent = q.why;
+      var xp = document.createElement("p"); xp.className = "fb-xp"; xp.textContent = "+" + (r.gained || 10) + " XP" + (misses ? " · square cleared" : "");
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(xp);
+    } else if (reveal) {
+      fb.classList.add("reveal");
+      stamp.textContent = "Field notes";
+      var ans = document.createElement("p"); ans.className = "fb-answer";
+      ans.textContent = "Answer: " + (q.type === "type" ? q.filled : q.answer);
+      body.textContent = q.why;
+      note.textContent = "Remember it. This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(ans); fb.appendChild(body); fb.appendChild(note);
+    } else {
+      fb.classList.add("bad");
+      stamp.textContent = "Off course ✗";
+      head.textContent = "Not yet. Check again.";
+      body.textContent = "Hint: " + q.hint;
+      note.textContent = "This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(note);
+    }
+    fb.hidden = false;
+    var last = r.pos + 1 >= r.queue.length;
+    $("btn-next").textContent = last ? (r.next.length ? "Finish round " + r.round + " →" : "See my result →") : "Next question →";
+    $("btn-next").hidden = false;
+    if (fresh) {
+      $("btn-next").focus({ preventScroll: true });
+      $("btn-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+    }
+  }
+
+  function next() {
+    var r = R(); if (!r.answered) return;
+    r.pos += 1; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.cheer = null;
+    if (r.pos >= r.queue.length) {
+      if (r.next.length) r.screen = "between";
+      else finishLevel();
+    }
+    save(); route();
+    if (r.screen === "play") {
+      var top = $("play-card").getBoundingClientRect().top;
+      if (top < 0) $("play-card").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+      if (currentQ().type === "type") focusTyped(); else $("q-text").focus({ preventScroll: true });
+    } else window.scrollTo(0, 0);
+  }
+  $("btn-next").onclick = next;
+  $("btn-back").onclick = function () { save(); renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- BETWEEN ROUNDS ---------- */
+  function renderBetween() {
+    var r = R(), lv = levelByKey(CUR), left = r.next.length, col = lv.boss ? "#0F7B83" : lv.color;
+    setColor($("screen-between"), col);
+    $("legend-later").style.background = col;
+    $("between-eyebrow").textContent = lv.name;
+    if (r.round === 1) {
+      var first = count(r.done, "first");
+      $("between-h").textContent = "Round 1 done. Your first-try score:";
+      var big = $("between-big"); big.textContent = first;
+      var sm = document.createElement("small"); sm.textContent = " / " + r.ids.length; big.appendChild(sm);
+    } else {
+      $("between-h").textContent = "Round " + r.round + " done.";
+      $("between-big").textContent = "";
+    }
+    $("between-text").textContent = (left === 1 ? "1 question comes" : left + " questions come") + " back now. Clear " + (left === 1 ? "it" : "them all") + " to fill the board.";
+    drawBoard($("board-between"));
+    $("btn-next-round").textContent = "Start round " + (r.round + 1) + " →";
+    show("between");
+  }
+  $("btn-next-round").onclick = function () {
+    var r = R();
+    r.round += 1; r.queue = shuffle(r.next); r.next = []; r.pos = 0; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.screen = "play";
+    save(); route(); window.scrollTo(0, 0); $("q-text").focus({ preventScroll: true });
+  };
+
+  /* ---------- LEVEL COMPLETE ---------- */
+  function dotsFor(pct) { return pct >= 90 ? 3 : pct >= 70 ? 2 : 1; }
+  function finishLevel() {
+    var r = R(), first = count(r.done, "first"), pct = Math.round(first / r.ids.length * 100);
+    r.screen = "done"; r.pct = pct; r.earned = dotsFor(pct);
+    if (!r.practice) {
+      var s = lvState(CUR), before = totalDots();
+      s.plays += 1;
+      if (pct > s.best) s.best = pct;
+      if (r.earned > s.stars) s.stars = r.earned;
+      var rb = rankFor(before), ra = rankFor(totalDots());
+      r.rankUp = ra[2] !== rb[2] ? ra[1] + " New rank: " + ra[2] + "!" : "";
+    } else r.rankUp = "";
+  }
+  function renderDone() {
+    var r = R(), lv = levelByKey(CUR), total = r.ids.length, first = count(r.done, "first");
+    setColor($("screen-done"), lv.boss ? "#0F7B83" : lv.color);
+    $("done-eyebrow").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("done-h").textContent = r.practice ? "Tricky ones cleared." : (r.earned === 3 ? "Summit reached: top marks!" : r.earned === 2 ? "Strong work." : "Stage cleared.");
+    var md = $("done-dots"); md.textContent = "";
+    for (var i = 0; i < 3; i++) {
+      var s = document.createElement("i");
+      if (i < r.earned) { s.className = "on"; s.style.animationDelay = (0.15 + i * 0.22) + "s"; }
+      md.appendChild(s);
+    }
+    md.hidden = !!r.practice;
+    var big = $("done-big"); big.textContent = first;
+    var sm = document.createElement("small"); sm.textContent = " / " + total + "  (" + r.pct + "%)"; big.appendChild(sm);
+    $("rank-up").hidden = !r.rankUp; $("rank-up").textContent = r.rankUp || "";
+    var stats = [[r.round, r.round === 1 ? "round" : "rounds"], ["🔥 " + r.best, "best streak"], ["+" + r.xp, "XP earned"]];
+    var box = $("done-stats"); box.textContent = "";
+    stats.forEach(function (x) {
+      var d = document.createElement("div"); d.className = "stat";
+      var b = document.createElement("b"); b.textContent = x[0];
+      var t = document.createElement("span"); t.textContent = x[1];
+      d.appendChild(b); d.appendChild(t); box.appendChild(d);
+    });
+    var tricky = r.ids.filter(function (id) { return r.wrong[id]; }).sort(function (a, b) { return r.wrong[b] - r.wrong[a]; });
+    var ul = $("tricky"); ul.textContent = "";
+    tricky.forEach(function (id) {
+      var q = Q[id], li = document.createElement("li");
+      var tq = document.createElement("span"); tq.className = "tq";
+      tq.textContent = q.type === "type" ? (q.lead ? q.lead + "  →  " : "") + q.blank : q.q.replace(/\*\*/g, "");
+      var ta = document.createElement("span"); ta.className = "ta";
+      ta.textContent = "✔ " + (q.type === "type" ? q.filled : q.answer);
+      var tm = document.createElement("span"); tm.className = "tm";
+      tm.textContent = (CUR === "boss" ? q.levelName + " · " : "") + "missed " + (r.wrong[id] === 1 ? "once" : r.wrong[id] + " times");
+      li.appendChild(tq); li.appendChild(ta); li.appendChild(tm); ul.appendChild(li);
+    });
+    $("tricky-block").hidden = tricky.length === 0;
+    $("btn-practice").hidden = tricky.length === 0;
+    var who = $("who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = P.name || "—"; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("done");
+    if (!r.practice && r.earned === 3 && !r.celebrated) { r.celebrated = true; save(); setTimeout(function () { confetti(md, 50); }, 600); }
+  }
+  $("btn-practice").onclick = function () {
+    var r = R(); var ids = r.ids.filter(function (id) { return r.wrong[id]; });
+    P.runs[CUR] = newRun(CUR, ids, true); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-replay").onclick = function () {
+    var lv = levelByKey(CUR);
+    P.runs[CUR] = newRun(CUR, lv.boss ? bossIds() : lv.ids, false); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-map").onclick = function () { renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- confetti ---------- */
+  function confetti(el, n) {
+    if (reduceMotion || !el) return;
+    var rect = el.getBoundingClientRect();
+    var x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+    var colors = ["#FFB547", "#0F7B83", "#1D7A4C", "#D9572B", "#0F2A3A"];
+    n = n || 22;
+    for (var i = 0; i < n; i++) {
+      var c = document.createElement("i"); c.className = "confetti";
+      c.style.left = x + "px"; c.style.top = y + "px";
+      c.style.background = colors[i % colors.length];
+      var ang = Math.random() * Math.PI * 2, dist = 60 + Math.random() * 120;
+      c.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+      c.style.setProperty("--dy", (Math.sin(ang) * dist - 50 + Math.random() * 100) + "px");
+      document.body.appendChild(c);
+      (function (node) { setTimeout(function () { node.remove(); }, 950); })(c);
+    }
+  }
+
+  /* ---------- router + keys ---------- */
+  function route() {
+    if (!P.name) return renderWelcome();
+    if (!CUR || !R()) return renderMap();
+    var r = R();
+    if (r.screen === "play") renderPlay();
+    else if (r.screen === "between") renderBetween();
+    else renderDone();
+  }
+  document.addEventListener("keydown", function (e) {
+    if ($("screen-play").hidden || !CUR) return;
+    if (e.target && e.target.tagName === "INPUT") return;
+    var r = R(), q = currentQ(), k = e.key.toLowerCase();
+    if (q.type === "mcq") {
+      var idx = ["1", "2", "3", "4"].indexOf(k); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(k);
+      if (idx >= 0 && r.opts && idx < r.opts.length && !r.answered) { e.preventDefault(); pick(idx); return; }
+    }
+    if ((k === "enter" || k === "arrowright") && r.answered && e.target.tagName !== "BUTTON") { e.preventDefault(); next(); }
+  });
+
+  $("top-title").textContent = DATA.title;
+  $("top-sub").textContent = DATA.subtitle;
+  P = load() || blank();
+  route();
+})();
+</script>
+
+</body>
+</html>
