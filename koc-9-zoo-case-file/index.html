@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Zoo Case File</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Bebas+Neue&display=swap">
+<style>
+body{margin:0}img{max-width:100%}
+/* Layout: one phone-width column. A detective's case file: stage tabs on top, then the newspaper article with highlighter-marked clues, a bottom sheet for each interrogation, a drill card, and a guided writing desk. Newsprint palette with highlighter colors; stamp red only for alarms and stamps. */
+:root {
+  --paper: #EEF0EC;
+  --sheet: #FFFFFF;
+  --ink: #16181D;
+  --muted: #5A606B;
+  --rule: #D6D9D2;
+  --navy: #1F2B4D;
+  --hl: #FFE45C;
+  --hl-deep: #E9C400;
+  --hl-green: #B7EBC5;
+  --hl-blue: #C6DCFF;
+  --hl-pink: #FFC9D6;
+  --stamp: #C2302A;
+  --good: #1D7548;
+  --good-soft: #DCF0E3;
+  --bad-soft: #FBE1DE;
+  --f-type: "Special Elite", "Courier New", monospace;
+  --f-body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  --f-news: "Source Serif 4", "Georgia", "Times New Roman", serif;
+  --r: 12px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--paper); }
+body { color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 680px; margin: 0 auto; padding-inline: 16px; padding-block: 14px 64px; display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #FFFFFF; border-radius: 10px; padding: 4px 6px; flex: none; display: grid; place-items: center; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.logo img { width: 70px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-type); font-size: 1.1rem; letter-spacing: .03em; }
+.top-sub { color: var(--muted); font-size: .88rem; }
+
+.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--r); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.label { font-family: var(--f-type); font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+
+.btn { appearance: none; border: 0; border-radius: 10px; padding: 13px 18px; font-weight: 700; font-size: 1rem; cursor: pointer; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-ink { background: var(--ink); color: #FFFFFF; }
+.btn-ink:hover { background: var(--navy); }
+.btn-ink:disabled { background: #9AA0A8; cursor: not-allowed; }
+.btn-ghost { background: transparent; border: 2px solid var(--rule); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Start */
+.folder { position: relative; background: #F7E9B8; border: 1px solid #D9C27A; border-radius: 4px 14px 14px 14px; padding: 26px 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+.folder::before { content: ""; position: absolute; top: -14px; left: -1px; width: 130px; height: 15px; background: #F7E9B8; border: 1px solid #D9C27A; border-bottom: 0; border-radius: 8px 8px 0 0; }
+.folder h1 { font-family: var(--f-type); font-weight: 400; font-size: clamp(2rem, 9vw, 2.9rem); line-height: 1.05; }
+.stamp { align-self: flex-start; font-family: var(--f-type); color: var(--stamp); border: 3px solid var(--stamp); border-radius: 6px; padding: 2px 10px; transform: rotate(-4deg); font-size: 1rem; letter-spacing: .08em; }
+.folder .sub { font-size: 1.05rem; max-width: 40ch; }
+.stages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.stages li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+.stages .n { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: #FFFFFF; font-family: var(--f-type); font-size: 1.1rem; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input, .field textarea { font: inherit; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); width: 100%; }
+.field input:focus, .field textarea:focus { border-color: var(--navy); outline: none; }
+.resume { border: 2px dashed var(--ink); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Tabs */
+.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); padding-block: 6px; }
+.tab { appearance: none; border: 2px solid var(--rule); background: var(--sheet); border-radius: 10px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; min-width: 0; }
+.tab b { font-family: var(--f-type); font-weight: 400; font-size: .95rem; }
+.tab span { font-size: .75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tab.on { border-color: var(--ink); background: var(--ink); color: #FFFFFF; }
+.tab.on span { color: #D5D8DE; }
+.tab:disabled { opacity: .5; cursor: not-allowed; }
+.tab.done:not(.on) { border-color: var(--good); }
+
+/* Stage 1: article */
+.brief { display: flex; flex-direction: column; gap: 8px; }
+.meter { height: 10px; border-radius: 999px; background: var(--rule); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--ink); width: 0; transition: width .4s; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 16px; height: 10px; border-radius: 2px; display: inline-block; }
+.news { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 22px 18px; font-family: var(--f-news); display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 0 var(--rule); }
+.news .kicker { font-family: var(--f-body); font-size: .75rem; letter-spacing: .12em; font-weight: 700; color: var(--stamp); }
+.news .hed { font-family: var(--f-news); font-size: clamp(1.6rem, 6.4vw, 2.1rem); font-weight: 700; line-height: 1.15; }
+.news .dek { font-style: italic; font-size: 1.08rem; color: #33363D; }
+.news .byline { font-family: var(--f-body); font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: 6px; }
+.news .para { display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-size: 1.04rem; line-height: 1.7; }
+.news .pn { font-family: var(--f-body); font-size: .75rem; color: var(--muted); padding-top: 5px; text-align: right; font-variant-numeric: tabular-nums; }
+.news .ptxt { min-width: 0; }
+.news .foot { font-family: var(--f-body); font-size: .8rem; color: var(--muted); font-style: italic; border-top: 1px solid var(--rule); padding-top: 8px; }
+.clue { padding: 1px 2px; background: linear-gradient(transparent 8%, var(--hl) 8%, var(--hl) 92%, transparent 92%); border-radius: 2px; cursor: pointer; text-align: left; box-decoration-break: clone; -webkit-box-decoration-break: clone; display: inline; }
+.clue sup { font-family: var(--f-body); font-size: .62em; font-weight: 700; background: var(--ink); color: #FFFFFF; border-radius: 999px; padding: 0 5px; margin-left: 2px; vertical-align: super; }
+.clue:hover { background: linear-gradient(transparent 8%, var(--hl-deep) 8%, var(--hl-deep) 92%, transparent 92%); }
+.clue.first { background: linear-gradient(transparent 8%, var(--hl-green) 8%, var(--hl-green) 92%, transparent 92%); }
+.clue.later { background: linear-gradient(transparent 8%, var(--hl-blue) 8%, var(--hl-blue) 92%, transparent 92%); }
+.clue.cold { background: linear-gradient(transparent 8%, var(--hl-pink) 8%, var(--hl-pink) 92%, transparent 92%); cursor: not-allowed; }
+.clue.first sup, .clue.later sup { background: var(--good); }
+.clue.cold sup { background: var(--stamp); }
+.clue .tag { font-family: var(--f-type); font-size: .72em; color: var(--good); margin-left: 4px; white-space: nowrap; }
+.sweep { border: 2px solid var(--stamp); background: #FFF6F5; }
+.sweep .label { color: var(--stamp); }
+
+/* Bottom sheet */
+.sheet-back { position: fixed; inset: 0; background: rgba(22,24,29,.45); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: var(--sheet); width: 100%; max-width: 680px; max-height: 88vh; overflow-y: auto; border-radius: 16px 16px 0 0; padding: 18px 16px calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 14px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.x { appearance: none; border: 2px solid var(--rule); background: transparent; border-radius: 999px; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; line-height: 1; }
+.evidence { font-family: var(--f-news); font-size: 1.12rem; background: linear-gradient(transparent 8%, var(--hl) 8%, var(--hl) 92%, transparent 92%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.steps2 { display: flex; gap: 6px; flex-wrap: wrap; }
+.st { font-size: .75rem; font-weight: 700; border-radius: 999px; padding: 2px 10px; border: 1px solid var(--rule); color: var(--muted); }
+.st.on { border-color: var(--ink); color: var(--ink); }
+.st.done { border-color: var(--good); color: var(--good); }
+.q { font-size: 1.2rem; font-weight: 700; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; border: 2px solid var(--rule); background: var(--sheet); border-radius: 10px; padding: 12px 14px; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 54px; color: var(--ink); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--ink); } }
+.opt .k { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-weight: 700; background: var(--paper); }
+.opt .t { min-width: 0; }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.right .k { background: var(--good); color: #FFFFFF; }
+.opt.wrong { border-color: var(--stamp); background: var(--bad-soft); }
+.opt.wrong .k { background: var(--stamp); color: #FFFFFF; }
+.opt.dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.fb { border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--good-soft); }
+.fb.bad { background: var(--bad-soft); }
+.fb.reveal { background: #FFF3BF; }
+.fb-h { font-family: var(--f-type); font-size: 1.15rem; }
+.fb.good .fb-h { color: var(--good); }
+.fb.bad .fb-h { color: var(--stamp); }
+.fb-note { font-size: .88rem; color: var(--muted); }
+
+/* Stage 2 */
+.board { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.sq { aspect-ratio: 1; max-width: 100%; border-radius: 4px; background: var(--rule); }
+.sq.first { background: var(--hl-green); box-shadow: inset 0 0 0 2px var(--good); }
+.sq.later { background: var(--hl-blue); }
+.sq.missed { background: var(--hl-pink); box-shadow: inset 0 0 0 2px var(--stamp); }
+.sq.now { box-shadow: inset 0 0 0 3px var(--ink); }
+.retry { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--bad-soft); color: var(--stamp); }
+
+/* Stage 3 */
+.picker { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { appearance: none; border: 2px solid var(--rule); background: var(--sheet); border-radius: 999px; padding: 6px 12px; cursor: pointer; font-size: .9rem; text-align: left; }
+.chip.sel { border-color: var(--ink); background: var(--ink); color: #FFFFFF; }
+.slot { display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--rule); padding-left: 12px; }
+.slot.ok { border-left-color: var(--good); }
+.slot-h { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.slot-h b { font-family: var(--f-type); font-weight: 400; font-size: 1.05rem; }
+.slot-h span { font-size: .85rem; color: var(--muted); }
+.starter { font-size: .85rem; color: var(--muted); font-style: italic; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; font-size: .85rem; }
+.checks li { display: flex; gap: 6px; align-items: baseline; color: var(--muted); }
+.checks li::before { content: "○"; font-weight: 700; }
+.checks li.ok { color: var(--good); }
+.checks li.ok::before { content: "✓"; }
+.checks li.no { color: var(--stamp); }
+.checks li.no::before { content: "✗"; }
+textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
+.slot textarea { font: inherit; padding: 10px 12px; border-radius: 10px; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); width: 100%; }
+.slot textarea:focus { border-color: var(--navy); outline: none; }
+.final { font-family: var(--f-news); font-size: 1.04rem; line-height: 1.7; background: var(--paper); border-radius: 10px; padding: 14px; }
+.model { font-family: var(--f-news); line-height: 1.7; }
+.tick { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.tick label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.tick input { width: 20px; height: 20px; margin-top: 2px; flex: none; }
+
+/* Report */
+.big { font-family: var(--f-type); font-size: clamp(2.6rem, 12vw, 3.6rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big small { font-size: .4em; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.stat { border: 2px solid var(--rule); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; min-width: 0; }
+.stat b { font-family: var(--f-type); font-weight: 400; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .8rem; color: var(--muted); }
+.revise { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.revise li { border-left: 4px solid var(--stamp); background: var(--paper); border-radius: 0 8px 8px 0; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; }
+.revise .a { color: var(--good); font-size: .92rem; }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; }
+.who b { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+/* ---------- THEME: "Behind the Bars" — a zoo admission ticket under investigation: warm sand page, an amber ticket stub with punched notches, faint iron bars, deep teal for actions and brick red for alarms. Bebas Neue for display. ---------- */
+:root {
+  --paper: #F4EEE2;
+  --sheet: #FFFDF8;
+  --ink: #1D1C1A;
+  --muted: #5F5A50;
+  --rule: #E2D8C5;
+  --navy: #0F5B5E;
+  --hl: #FFD98A;
+  --hl-deep: #F6C24E;
+  --hl-green: #C9EBD9;
+  --hl-blue: #CFE3EE;
+  --hl-pink: #F8CFC6;
+  --stamp: #B23A2B;
+  --good: #1C6E4A;
+  --good-soft: #DFF2E7;
+  --bad-soft: #FBE3DD;
+  --amber: #F2A93B;
+  --f-type: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
+  --r: 14px;
+}
+html, body { background: var(--paper); }
+body {
+  background:
+    linear-gradient(90deg, rgba(29,28,26,.045) 0 3px, transparent 3px) 0 0 / 46px 100%,
+    radial-gradient(1200px 500px at 50% -10%, #FFF6E2 0%, transparent 70%),
+    var(--paper);
+  min-height: 100vh;
+}
+.top-title { font-size: 1.55rem; letter-spacing: .06em; color: var(--ink); line-height: 1; }
+.label { font-size: 1.05rem; letter-spacing: .1em; color: var(--navy); }
+.card { border: 0; border-top: 4px solid var(--ink); box-shadow: 0 1px 0 rgba(29,28,26,.06), 0 10px 28px rgba(60,45,20,.09); }
+.btn-ink { background: var(--navy); color: #FFFFFF; letter-spacing: .02em; }
+.btn-ink:hover { background: #0A4547; }
+.btn-ink:disabled { background: #B9B2A4; }
+.btn-ghost { border-color: var(--ink); background: var(--sheet); }
+/* Start: an admission ticket */
+.folder { background: var(--amber); color: var(--ink); border: 0; border-radius: 14px; padding: 26px 26px 24px; overflow: hidden; box-shadow: 0 14px 30px rgba(120,70,10,.28);
+  -webkit-mask: radial-gradient(circle 14px at 0 50%, transparent 13px, #000 14px) left / 51% 100% no-repeat, radial-gradient(circle 14px at 100% 50%, transparent 13px, #000 14px) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 14px at 0 50%, transparent 13px, #000 14px) left / 51% 100% no-repeat, radial-gradient(circle 14px at 100% 50%, transparent 13px, #000 14px) right / 51% 100% no-repeat; }
+.folder::before { content: ""; position: absolute; top: 0; bottom: 0; right: 0; left: auto; width: 34%; height: auto; border: 0; border-radius: 0; background: repeating-linear-gradient(90deg, rgba(29,28,26,.16) 0 6px, transparent 6px 22px); }
+.folder::after { content: ""; position: absolute; left: 22px; right: 22px; bottom: 10px; border-top: 2px dashed rgba(29,28,26,.35); }
+.folder > * { position: relative; z-index: 1; }
+.folder h1 { font-size: clamp(2.8rem, 13vw, 3.9rem); line-height: .95; letter-spacing: .02em; max-width: 9ch; }
+.folder .sub { color: #2B2418; }
+.stamp { transform: rotate(-3deg); background: var(--ink); color: var(--amber); border: 0; border-radius: 4px; padding: 3px 12px 1px; font-size: 1.1rem; letter-spacing: .14em; }
+.card > .stamp, #s-report .stamp { background: var(--stamp); color: #FFFFFF; }
+.stages .n { background: var(--navy); font-size: 1.3rem; }
+/* Tabs */
+.tabs { background: rgba(244,238,226,.93); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.tab { border: 2px solid var(--rule); border-radius: 10px; }
+.tab b { font-size: 1.15rem; letter-spacing: .04em; }
+.tab.on { background: var(--ink); border-color: var(--ink); }
+.tab.on b { color: var(--amber); }
+.tab.on span { color: #E8E1D3; }
+.tab.done:not(.on) { border-color: var(--good); }
+.meter { background: #E6DCC8; }
+.meter i { background: linear-gradient(90deg, var(--navy), #1A8A86); }
+/* Article */
+.news { border: 0; border-radius: 6px; border-top: 6px solid var(--amber); box-shadow: 0 1px 0 rgba(29,28,26,.06), 0 10px 28px rgba(60,45,20,.1); }
+.news .kicker { color: var(--stamp); }
+.news .hed { font-weight: 700; }
+.clue sup { background: var(--ink); }
+.sweep { border: 0; border-top: 4px solid var(--stamp); background: #FCEFEA; }
+/* Sheet */
+.sheet { border-radius: 20px 20px 0 0; border-top: 6px solid var(--amber); }
+.sheet-back { background: rgba(29,28,26,.55); }
+.opt { border-radius: 10px; }
+.opt .k { background: #F1E9D9; color: var(--ink); font-family: var(--f-type); font-size: 1.15rem; }
+.opt .olab { color: var(--navy); font-weight: 700; }
+.opt.right .olab, .opt.wrong .olab { color: inherit; }
+.st.on { border-color: var(--navy); color: var(--navy); }
+.fb-h { font-size: 1.4rem; letter-spacing: .03em; }
+.fb.reveal { background: #FFF1CF; }
+.chip.sel { background: var(--ink); border-color: var(--ink); color: var(--amber); }
+.big { color: var(--navy); }
+.stat b { font-size: 1.8rem; color: var(--navy); }
+.stat { border-color: var(--rule); background: var(--sheet); }
+.final { background: #F6F0E4; }
+.revise li { background: #F6F0E4; }
+/* 6-step writing frame */
+.sep { font-family: var(--f-type); font-weight: 400; font-size: 1.45rem; letter-spacing: .04em; color: var(--ink); border-bottom: 3px solid var(--amber); padding-bottom: 4px; margin-top: 6px; }
+.slot-h { align-items: center; }
+.slot-h b { font-size: 1.35rem; letter-spacing: .03em; }
+.num { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--navy); color: var(--navy); display: grid; place-items: center; font-family: var(--f-type); font-size: 1.15rem; flex: none; }
+.slot.ok .num { background: var(--good); border-color: var(--good); color: #FFFFFF; }
+.frame { list-style: none; margin: 0; padding: 8px 12px; display: flex; flex-direction: column; gap: 3px; background: #FFF6E0; border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; font-size: .92rem; color: #3D3628; }
+.frame.more { background: transparent; border-left: 3px dashed var(--rule); color: var(--muted); font-size: .88rem; }
+.frame.more li:not(.more-h)::before { content: "+ "; color: var(--navy); font-weight: 700; }
+.more-h { font-family: var(--f-type); font-size: 1rem; letter-spacing: .06em; color: var(--navy); }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title">MEDIA DETECTIVES</span>
+      <span class="top-sub">Koç Grade 9 · Behind the Headline</span>
+    </div>
+  </header>
+
+  <!-- START -->
+  <section id="s-start" hidden>
+    <div class="wrap" style="padding:0">
+      <div class="folder">
+        <span class="stamp">CASE FILE 10</span>
+        <h1>The Zoo Article</h1>
+        <p class="sub">An opinion article is trying to persuade you. This one is harder: the language is subtler and the bias is better hidden. Fifteen phrases have been marked with a highlighter. Find out what each one is doing, then write your report.</p>
+      </div>
+      <div class="card">
+        <ol class="stages">
+          <li><span class="n">1</span><span><b>Investigate.</b> Tap each highlighted clue. Name the device, then choose what it does to the reader.</span></li>
+          <li><span class="n">2</span><span><b>Sharpen.</b> Choose the stronger sentence for each step of the writing frame.</span></li>
+          <li><span class="n">3</span><span><b>Report.</b> Write your paragraph with the 6-step frame: point, evidence, dictionary meaning, So?, the reader, and “Through the use of…”. Then do steps 2–6 again for a second example. The desk checks each step as you type, then shows you the model answer.</span></li>
+        </ol>
+        <p class="small muted">A wrong answer turns a clue into a cold case. It comes back in the next sweep, with the answers moved around. Your first-try score is your real score.</p>
+        <div class="resume" id="resume" hidden>
+          <p><b>You have a case in progress.</b> <span id="resume-text"></span></p>
+          <div class="btn-row">
+            <button class="btn btn-ink" id="btn-resume" type="button">Continue</button>
+            <button class="btn btn-ghost" id="btn-wipe" type="button">Start over</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="student-name">Detective name</label>
+          <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+        </div>
+        <button class="btn btn-ink" id="btn-start" type="button">Open the case file</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <section id="s-main" hidden>
+    <div class="wrap" style="padding:0">
+      <nav class="tabs" aria-label="Stages">
+        <button class="tab" id="tab-1" type="button"><b>1 Investigate</b><span id="tab-1-s"></span></button>
+        <button class="tab" id="tab-2" type="button"><b>2 Sharpen</b><span id="tab-2-s"></span></button>
+        <button class="tab" id="tab-3" type="button"><b>3 Report</b><span id="tab-3-s"></span></button>
+      </nav>
+
+      <!-- STAGE 1 -->
+      <div id="st-1" hidden>
+        <div class="wrap" style="padding:0">
+          <div class="card brief">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+              <span class="label" id="sweep-label">Sweep 1</span>
+              <span class="small" id="clue-count"></span>
+            </div>
+            <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+            <div class="legend">
+              <span><i style="background:var(--hl)"></i>Clue to crack</span>
+              <span><i style="background:var(--hl-green)"></i>Cracked first try</span>
+              <span><i style="background:var(--hl-blue)"></i>Cracked later</span>
+              <span><i style="background:var(--hl-pink)"></i>Cold case</span>
+            </div>
+          </div>
+          <div class="card sweep" id="sweep-card" hidden>
+            <span class="label">Sweep complete</span>
+            <p id="sweep-text"></p>
+            <button class="btn btn-ink" id="btn-sweep" type="button"></button>
+          </div>
+          <div class="card" id="closed-card" hidden>
+            <span class="label" style="color:var(--good)">Case cracked</span>
+            <p>Every clue is solved. Stage 2 is open.</p>
+            <button class="btn btn-ink" id="btn-to-2" type="button">Go to Stage 2: Sharpen</button>
+          </div>
+          <article class="news" id="news" aria-label="The article"></article>
+        </div>
+      </div>
+
+      <!-- STAGE 2 -->
+      <div id="st-2" hidden>
+        <div class="card" id="drill-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span class="label" id="drill-round"></span>
+            <span class="small" id="drill-count"></span>
+          </div>
+          <div class="board" id="drill-board" aria-hidden="true"></div>
+          <span class="label" id="drill-part"></span>
+          <span class="retry" id="drill-retry" hidden></span>
+          <h3 class="q" id="drill-q" tabindex="-1"></h3>
+          <div class="opts" id="drill-opts" role="group" aria-labelledby="drill-q"></div>
+          <div class="fb" id="drill-fb" role="status" aria-live="polite" hidden></div>
+          <button class="btn btn-ink" id="drill-next" type="button" hidden></button>
+        </div>
+        <div class="card" id="drill-between" hidden>
+          <span class="label" style="color:var(--stamp)">Round complete</span>
+          <h3 id="drill-between-h" style="font-size:1.3rem"></h3>
+          <p id="drill-between-t"></p>
+          <button class="btn btn-ink" id="drill-go" type="button"></button>
+        </div>
+        <div class="card" id="drill-done" hidden>
+          <span class="label" style="color:var(--good)">Sharpened</span>
+          <p>Every sentence is fixed. Stage 3 is open: time to write your report.</p>
+          <button class="btn btn-ink" id="btn-to-3" type="button">Go to Stage 3: Report</button>
+        </div>
+      </div>
+
+      <!-- STAGE 3 -->
+      <div id="st-3" hidden>
+        <div class="wrap" style="padding:0">
+          <div class="card">
+            <span class="label">Writing question</span>
+            <p style="font-weight:700">How does the writer use biased language to persuade the reader that zoos are cruel?</p>
+            <p class="small muted">Pick your TWO strongest clues. They must be two different devices.</p>
+            <div class="picker" id="picker"></div>
+          </div>
+          <div class="card" id="desk" hidden>
+            <span class="label">Your report: the 6-step frame</span>
+            <p class="small muted">Each box turns green when its structure is right. The checks look at structure, not quality, so compare with the model answer at the end.</p>
+            <div id="slots" style="display:flex;flex-direction:column;gap:18px"></div>
+            <button class="btn btn-ink" id="btn-file" type="button" disabled>File my report</button>
+            <p class="small muted" id="file-note"></p>
+          </div>
+          <div class="card" id="filed" hidden>
+            <span class="label" style="color:var(--good)">Report filed</span>
+            <div class="final" id="final"></div>
+            <div class="btn-row">
+              <button class="btn btn-ghost" id="btn-copy" type="button">Copy my paragraph</button>
+              <button class="btn btn-ghost" id="btn-edit" type="button">Edit my paragraph</button>
+            </div>
+            <p class="small muted" id="copy-note" role="status"></p>
+            <span class="label">Model answer</span>
+            <p class="model" id="model"></p>
+            <span class="label">Now check your paragraph</span>
+            <ul class="tick" id="tick"></ul>
+            <div class="field">
+              <label for="improve">One thing I will improve next time</label>
+              <textarea id="improve" maxlength="300"></textarea>
+            </div>
+            <button class="btn btn-ink" id="btn-report" type="button">Close the case</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="s-report" hidden>
+    <div class="card">
+      <span class="stamp">CASE CLOSED</span>
+      <h2 style="font-size:1.6rem">Detective report</h2>
+      <div>
+        <div class="muted">Clues cracked first try</div>
+        <div class="big" id="r-big"></div>
+      </div>
+      <div class="stats" id="r-stats"></div>
+      <div id="r-revise-block">
+        <h3 style="font-size:1.15rem;margin-bottom:8px">Clues and sentences to revise</h3>
+        <ul class="revise" id="r-revise"></ul>
+      </div>
+      <span class="label">My paragraph</span>
+      <div class="final" id="r-para"></div>
+      <div id="r-improve-block"><span class="label">I will improve</span><p id="r-improve"></p></div>
+      <div class="who" id="r-who"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="btn-back" type="button">Back to the case file</button>
+        <button class="btn btn-ghost" id="btn-again" type="button">Start a new case</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="sheet-back" id="sheet-back" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
+    <div class="sheet-head">
+      <span class="label" id="sheet-label"></span>
+      <button class="x" id="sheet-x" type="button" aria-label="Close">×</button>
+    </div>
+    <p class="evidence" id="sheet-ev"></p>
+    <div class="steps2" id="sheet-steps"></div>
+    <span class="retry" id="sheet-retry" hidden></span>
+    <h3 class="q" id="sheet-q" tabindex="-1"></h3>
+    <div class="opts" id="sheet-opts" role="group" aria-labelledby="sheet-q"></div>
+    <div class="fb" id="sheet-fb" role="status" aria-live="polite" hidden></div>
+    <button class="btn btn-ink" id="sheet-next" type="button" hidden></button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- ARTICLE (Writing Practice 6; fictional, written for classroom practice) ---------- */
+  var ART = {
+    hed: "Zoos Are Prisons With a Gift Shop",
+    dek: "Behind the cheerful mascots and overpriced ice cream lies an industry that profits from misery. It is time we stopped buying tickets.",
+    by: "By Adrian Vance | The Weekly Compass | 22 October 2026",
+    paras: [
+      "Last summer, I stood beside the glass of a polar bear enclosure and watched an animal slowly come apart. He walked twelve steps, turned, and walked the same twelve steps back. Twelve steps. Turn. Twelve steps. Turn. For forty minutes, he did nothing else. A little boy beside me giggled and asked his father whether the bear was dancing. He was not dancing. He was losing his mind.",
+      "Zoos prefer to call these spaces “enclosures,” a soft, scientific word that sounds almost comforting. A more honest word would be “cell.” Creatures that evolved to roam vast, frozen landscapes spend their entire lives in a space smaller than a school car park, staring at the same painted walls while crowds tap on the glass.",
+      "The numbers should trouble anyone with a conscience. According to one animal-welfare group, more than three quarters of elephants kept in zoos show signs of serious stress. Yet every weekend, families queue at the gates with their cameras ready, laughing and licking ice cream. Zoos may advertise themselves as fun for the whole family, but they are, quite simply, the saddest places on Earth.",
+      "The zoos, naturally, insist that they are not businesses at all but “centers of education.” How very educational it must be for a child to discover that a lion is a sleepy creature who lies behind a fence all day, waiting for meat to arrive in a bucket.",
+      "A former zookeeper, who asked not to be named, was more honest when I spoke to her last month. “We told visitors we were protecting animals,” she said. “In reality, we were selling tickets.”",
+      "Supporters of zoos will, of course, point to their breeding programs and the handful of rare species they claim to have rescued. But for every tiger cub that makes the evening news, how many animals live and die unseen, far from the cameras?",
+      "These animals are not ambassadors for the wild, as the glossy brochures claim. They are prisoners serving a life sentence for a crime they never committed.",
+      "Thankfully, the tide is turning. In country after country, people are rejecting animal captivity, and millions have already signed petitions demanding that zoos close their gates for good.",
+      "We can choose to look away, or we can choose to listen. Every ticket we buy pays for another set of bars. Unless we act now, our grandchildren may only ever see an elephant in a history book. So, the next time someone suggests a fun family day out at the zoo, ask yourself one simple question: fun for whom?"
+    ],
+    foot: "This opinion piece was written for classroom practice. The writer, the publication, and the statistics and quotations it mentions are fictional."
+  };
+
+  /* where: 0 = headline, 1..9 = paragraph number. Every option is written for its own clue. */
+  var CLUES = [
+    { id: "c1", where: 0, text: "Zoos Are Prisons With a Gift Shop", device: "Headline",
+      dAns: "Headline: the big title at the top, which calls zoos ‘Prisons’ to shock the reader.",
+      dWrong: ["Rhetorical question: the title asks the reader whether zoos are really prisons.",
+               "Statistics and facts: the title gives the exact number of zoos with gift shops.",
+               "Bandwagon: the title says that everyone has already stopped visiting zoos."],
+      dHint: "Check each statement against the words. Where does this text sit in the article? What is its job?",
+      dWhy: "This is the big title at the top. It calls zoos “Prisons” and adds “a Gift Shop” to suggest they only want money. That is a headline.",
+      effect: "Calling zoos “Prisons” with “a Gift Shop” makes the reader see them as cruel and greedy before reading any evidence.",
+      eWrong: ["Calling zoos “Prisons” with “a Gift Shop” makes the reader expect a calm, balanced guide to visiting zoos.",
+               "Calling zoos “Prisons” with “a Gift Shop” makes the reader excited to buy toys and souvenirs at the zoo.",
+               "Calling zoos “Prisons” with “a Gift Shop” makes the reader think the article is about real prisons for people, not about animals."], eHint: "Think about how the reader sees zoos before reading a single paragraph." },
+    { id: "c2", where: 1, text: "Twelve steps. Turn. Twelve steps. Turn.", device: "Repetition",
+      dAns: "Repetition: the same short words come back again, just like the bear’s walk.",
+      dWrong: ["Statistics and facts: the writer measures the size of the bear’s space in steps.",
+               "Inclusive language: the short sentences put the writer and the reader in one group.",
+               "Hyperbole: the writer claims the bear walks a million steps every single day."],
+      dHint: "Check each statement against the words. Which words come back again?",
+      dWhy: "“Twelve steps. Turn.” is said twice in short, broken sentences, copying the bear’s endless walk. That is repetition.",
+      effect: "Repeating “Twelve steps. Turn.” makes the reader feel the bear’s endless pacing, so its life seems trapped and empty.",
+      eWrong: ["Repeating “Twelve steps. Turn.” makes the reader feel the bear is doing fun exercise, so its life seems healthy.",
+               "Repeating “Twelve steps. Turn.” makes the reader feel the writer is counting badly, so the article seems careless.",
+               "Repeating “Twelve steps. Turn.” makes the reader feel the bear is dancing for the crowd, so the whole visit seems happy."], eHint: "Read it aloud. How does it feel to hear the same words again and again?" },
+    { id: "c3", where: 1, text: "He was losing his mind.", device: "Evocative language",
+      dAns: "Evocative language: strong words that create a painful picture of the bear’s suffering.",
+      dWrong: ["Expert opinion: a named animal doctor explains the bear’s mental health in a report.",
+               "Statistics and facts: the writer gives the exact number of bears with mental illness.",
+               "Selective detail: the zoo gets a full paragraph to explain how the bear really feels."],
+      dHint: "Check each statement against the words. Which words make you feel something strongly?",
+      dWhy: "“Losing his mind” is a strong, emotional phrase that makes us picture the bear’s mental suffering. That is evocative language.",
+      effect: "“Losing his mind” makes the reader feel upset and sympathetic, because the bear seems to be suffering like a person.",
+      eWrong: ["“Losing his mind” makes the reader feel amused and relaxed, because the bear seems to be playing a funny little game.",
+               "“Losing his mind” makes the reader feel bored and tired, because the writer gives a long list of scientific facts.",
+               "“Losing his mind” makes the reader feel proud of the zoo, because the bear seems calm and very well cared for."], eHint: "How would you feel if you watched an animal “losing his mind”?" },
+    { id: "c4", where: 2, text: "A more honest word would be “cell.”", device: "Loaded language",
+      dAns: "Loaded language: the word ‘cell’ carries a hidden judgment that zoos are prisons.",
+      dWrong: ["Statistics and facts: the word ‘cell’ gives the exact size of every zoo enclosure.",
+               "Bandwagon: the word ‘cell’ shows that everyone now agrees that zoos must close.",
+               "Inclusive language: the word ‘cell’ puts the reader and the writer in one group."],
+      dHint: "Check each statement against the words. Zoos say “enclosure.” Which word does the writer choose instead, and what does it suggest?",
+      dWhy: "The writer swaps the neutral word “enclosure” for “cell,” a word that carries the judgment that zoos are prisons. That is loaded language.",
+      effect: "Swapping “enclosure” for “cell” makes the reader see the animals as locked-up prisoners, so the zoo seems to hide the truth.",
+      eWrong: ["Swapping “enclosure” for “cell” makes the reader see the animals as happy guests, so the zoo seems like a fine hotel.",
+               "Swapping “enclosure” for “cell” makes the reader see the animals as tiny living cells, so they think of biology class.",
+               "Swapping “enclosure” for “cell” makes the reader see the writer as neutral, so they trust that both sides are fairly shown."], eHint: "Where do you usually find a “cell”? Who lives in one?" },
+    { id: "c5", where: 2, text: "Creatures that evolved to roam vast, frozen landscapes spend their entire lives in a space smaller than a school car park", device: "Juxtaposition",
+      dAns: "Juxtaposition: huge wild landscapes are placed right next to a tiny car-park space.",
+      dWrong: ["Statistics and facts: the writer measures both spaces in exact square kilometers.",
+               "Expert opinion: a named scientist compares the size of the wild with the zoo.",
+               "Rhetorical question: the writer asks the reader how big a school car park is."],
+      dHint: "Check each statement against the words. Which two very different places sit side by side?",
+      dWhy: "“Vast, frozen landscapes” are placed right next to “a space smaller than a school car park.” That is juxtaposition.",
+      effect: "Placing “vast, frozen landscapes” next to a “school car park” shows how much the animals have lost, so the zoo seems unfair.",
+      eWrong: ["Placing “vast, frozen landscapes” next to a “school car park” shows that the two spaces are equal, so the zoo seems perfectly fair.",
+               "Placing “vast, frozen landscapes” next to a “school car park” shows that the zoo is huge, so the reader feels impressed.",
+               "Placing “vast, frozen landscapes” next to a “school car park” shows where to park, so the reader plans a zoo visit."], eHint: "Picture both places. Which one would you rather live in?" },
+    { id: "c6", where: 3, text: "According to one animal-welfare group, more than three quarters of elephants kept in zoos show signs of serious stress", device: "Statistics and facts",
+      dAns: "Statistics and facts: ‘three quarters’ is a number from a group that is never named.",
+      dWrong: ["Expert opinion: a named elephant scientist explains her own study in great detail.",
+               "Hyperbole: the writer claims that every animal on the planet is stressed forever.",
+               "Juxtaposition: a happy elephant and a stressed elephant are placed side by side."],
+      dHint: "Check each statement against the words. Look for a number. Who gave it?",
+      dWhy: "“More than three quarters” is a number, but “one animal-welfare group” is never named. That is a statistic the reader cannot check.",
+      effect: "The number makes the problem sound proven and huge, but the group is never named, so the reader cannot check it.",
+      eWrong: ["The number makes the problem sound small and rare, so the reader feels elephants in zoos are mostly happy.",
+               "The number comes from a named, trusted study, so the reader can easily check for themselves that it is completely true.",
+               "The number is clearly a joke, so the reader laughs and stops taking the rest of the article very seriously."], eHint: "Which group is it? Could the reader check the number?" },
+    { id: "c7", where: 3, text: "the saddest places on Earth", device: "Hyperbole",
+      dAns: "Hyperbole: calling zoos the saddest places on Earth is a huge exaggeration.",
+      dWrong: ["Statistics and facts: the writer ranks every place on Earth by how sad it is.",
+               "Metaphor: zoos are compared to the Earth without using ‘like’ or ‘as’.",
+               "Inclusive language: ‘Earth’ includes the reader in the writer’s own group."],
+      dHint: "Check each statement against the words. Is this exactly true, or much bigger than the truth?",
+      dWhy: "No one could prove that zoos are the saddest places on the whole planet. It is a huge exaggeration. That is hyperbole.",
+      effect: "Calling zoos “the saddest places on Earth” makes the problem sound enormous, so zoos seem worse than anywhere else.",
+      eWrong: ["Calling zoos “the saddest places on Earth” makes the problem sound tiny and unimportant, so zoos seem fine just as they are.",
+               "Calling zoos “the saddest places on Earth” proves the claim with data, so the reader trusts it completely.",
+               "Calling zoos “the saddest places on Earth” makes the reader cheerful, as if zoos were fun holiday spots."], eHint: "Could anyone really prove this is the saddest place on the whole planet?" },
+    { id: "c8", where: 4, text: "How very educational it must be", device: "Tone",
+      dAns: "Tone: the writer’s sarcastic voice says ‘educational’ but means the opposite.",
+      dWrong: ["Expert opinion: a named teacher explains how much children learn at zoos.",
+               "Rhetorical question: the writer asks the zoo how educational its lessons are.",
+               "Statistics and facts: the writer measures how much children learn at zoos."],
+      dHint: "Check each statement against the words. Does the writer really think zoos are educational? Listen to the voice.",
+      dWhy: "The writer says “How very educational” but means the opposite. This sarcastic voice is the writer’s tone.",
+      effect: "The sarcastic tone mocks the zoos’ claim, so the reader starts to laugh at the idea that zoos teach children anything.",
+      eWrong: ["The sarcastic tone praises the zoos’ claim, so the reader starts to believe that zoos are the best place to learn anything.",
+               "The sarcastic tone is calm and neutral, so the reader feels that the writer is giving both sides of the argument.",
+               "The sarcastic tone confuses the writer, so the reader feels the article was written by someone who loves zoos."], eHint: "Is the writer praising the zoos, or making fun of them?" },
+    { id: "c9", where: 5, text: "A former zookeeper, who asked not to be named", device: "Expert opinion",
+      dAns: "Expert opinion: a zookeeper has inside knowledge, but her name is kept secret.",
+      dWrong: ["Statistics and facts: the zookeeper gives the exact number of tickets sold.",
+               "Bandwagon: every zookeeper in the world is said to agree with the writer.",
+               "Hyperbole: the zookeeper claims that she has worked in a thousand zoos."],
+      dHint: "Check each statement against the words. Who is speaking here? Do we know her name?",
+      dWhy: "A former zookeeper has inside knowledge, but she “asked not to be named.” That is unverified expert opinion.",
+      effect: "An insider sounds trustworthy, but her name is hidden, so the reader cannot check whether her story is true.",
+      eWrong: ["An insider sounds trustworthy, and her full name is given, so the reader can easily check the story online.",
+               "An insider sounds silly and unreliable, so the reader decides that nothing in the whole article can be believed.",
+               "An insider sounds like a zoo fan, so the reader thinks the writer secretly wants people to visit zoos."], eHint: "Can the reader find out who she is?" },
+    { id: "c10", where: 6, text: "Supporters of zoos will, of course, point to their breeding programs and the handful of rare species they claim to have rescued.", device: "Selective detail",
+      dAns: "Selective detail: the zoos’ side gets one quick sentence before it is pushed away.",
+      dWrong: ["Balanced argument: the zoos get a full paragraph to explain their side fairly.",
+               "Expert opinion: a named zoo director proves that every species has been saved.",
+               "Statistics and facts: the writer lists every rare species that zoos have rescued."],
+      dHint: "Check each statement against the words. Whose side is this? How much space does the writer give it?",
+      dWhy: "The zoos’ conservation work gets one sentence, and the words “handful” and “claim” shrink it before the writer moves on. That is selective detail.",
+      effect: "The words “handful” and “claim” make the zoos’ good work seem small and doubtful, so the reader only sees one side.",
+      eWrong: ["The words “handful” and “claim” make the zoos’ good work seem huge and proven, so the reader sees both sides.",
+               "The words “handful” and “claim” make the zoos sound kind and generous, so the reader wants to support them and visit.",
+               "The words “handful” and “claim” make the reader laugh at the animals, so the article seems like a comedy."], eHint: "Does a “handful” sound like a lot? Does “claim” sound like proof?" },
+    { id: "c11", where: 6, text: "how many animals live and die unseen, far from the cameras?", device: "Rhetorical question",
+      dAns: "Rhetorical question: a question the reader answers in their head: far too many.",
+      dWrong: ["Statistics and facts: the question gives the exact number of animals that die.",
+               "Expert opinion: a named camera operator asks this question on the evening news.",
+               "Fear appeal: the writer warns the reader that hidden cameras are filming them."],
+      dHint: "Check each statement against the words. Look at the punctuation. Does the writer expect a real answer?",
+      dWhy: "No number is given and no reply is expected. The question pushes the reader to imagine many hidden deaths. That is a rhetorical question.",
+      effect: "The question makes the reader imagine many hidden deaths, so they suspect that zoos are hiding something terrible.",
+      eWrong: ["The question makes the reader look up the real number, so they feel confident that zoos are completely safe.",
+               "The question makes the reader imagine happy animals, so they feel relaxed and plan a fun family trip to the zoo this weekend.",
+               "The question makes the reader think the writer forgot the number, so the article seems badly researched."], eHint: "What picture does the question put in your head?" },
+    { id: "c12", where: 7, text: "They are prisoners serving a life sentence for a crime they never committed.", device: "Metaphor",
+      dAns: "Metaphor: the animals are called prisoners, without using ‘like’ or ‘as’.",
+      dWrong: ["Simile: the animals are compared to prisoners using the word ‘like’.",
+               "Statistics and facts: the writer gives the length of each prison sentence.",
+               "Expert opinion: a named judge explains the crimes the animals committed."],
+      dHint: "Check each statement against the words. Are the animals really prisoners? Is “like” or “as” used?",
+      dWhy: "The animals are described as prisoners serving a life sentence, with no “like” or “as.” That is a metaphor.",
+      effect: "Calling the animals innocent “prisoners” makes the reader angry at the injustice, as if zoos punish them for nothing.",
+      eWrong: ["Calling the animals innocent “prisoners” makes the reader think they are dangerous criminals who deserve to be locked up.",
+               "Calling the animals innocent “prisoners” makes the reader feel calm, as if a life sentence were a short holiday.",
+               "Calling the animals innocent “prisoners” makes the reader think the writer is reporting on a real court case."], eHint: "How do we feel about someone punished for a crime they never committed?" },
+    { id: "c13", where: 8, text: "millions have already signed petitions demanding that zoos close their gates for good", device: "Bandwagon",
+      dAns: "Bandwagon: millions are said to be acting already, so the reader should join them.",
+      dWrong: ["Statistics and facts: the number of signatures comes from a named, official count.",
+               "Expert opinion: a named lawyer explains how to write a petition against zoos.",
+               "Rhetorical question: the writer asks the reader how many petitions they signed."],
+      dHint: "Check each statement against the words. Look at “millions” and “already.” What does the writer want you to join?",
+      dWhy: "The writer says “millions” have “already” signed, so you should join them. That is bandwagon.",
+      effect: "Saying “millions” have “already” signed makes the reader feel left behind, so they want to join the crowd against zoos.",
+      eWrong: ["Saying “millions” have “already” signed makes the reader feel the problem is solved, so nothing more needs to be done.",
+               "Saying “millions” have “already” signed makes the reader feel sorry for zoos, so they decide to buy a zoo ticket today.",
+               "Saying “millions” have “already” signed makes the reader doubt that anyone cares, so they ignore the petitions."], eHint: "How would you feel if millions of people had already joined and you had not?" },
+    { id: "c14", where: 9, text: "We can choose to look away, or we can choose to listen.", device: "Inclusive language",
+      dAns: "Inclusive language: ‘we’ puts the writer and the reader in the same group.",
+      dWrong: ["Loaded language: ‘choose’ is an insult aimed only at the people who run zoos.",
+               "Expert opinion: ‘we’ refers to a team of named scientists who study zoos.",
+               "Statistics and facts: the writer counts how many people choose to listen."],
+      dHint: "Check each statement against the words. Who is “we”?",
+      dWhy: "“We” includes both the writer and the reader, so the reader becomes part of the writer’s group. That is inclusive language.",
+      effect: "“We” pulls the reader into the writer’s group, so it feels hard to disagree and easy to share the responsibility.",
+      eWrong: ["“We” pushes the reader out of the writer’s group, so it feels easy to disagree and to ignore the whole problem of zoos.",
+               "“We” refers only to the writer’s own family, so the reader feels the article is not about them at all.",
+               "“We” refers to the zoo owners, so the reader feels the writer is now defending zoos and their shops."], eHint: "Is the reader one of the “we”?" },
+    { id: "c15", where: 9, text: "Unless we act now, our grandchildren may only ever see an elephant in a history book.", device: "Fear appeal",
+      dAns: "Fear appeal: the writer warns of a frightening future unless we act ‘now’.",
+      dWrong: ["Statistics and facts: the writer gives the exact year elephants will disappear.",
+               "Expert opinion: a named historian explains what history books will contain.",
+               "Juxtaposition: a happy grandchild and a sad grandchild are placed side by side."],
+      dHint: "Check each statement against the words. What does the writer warn will happen if nobody acts?",
+      dWhy: "The writer warns of a frightening future, with elephants gone, unless we “act now.” That is a fear appeal.",
+      effect: "The warning makes the reader anxious about losing elephants forever, so they feel they must act right now.",
+      eWrong: ["The warning makes the reader relaxed about the future, so they feel there is plenty of time before anything changes.",
+               "The warning makes the reader excited about history books, so they plan to read more about elephants at school.",
+               "The warning makes the reader laugh at the writer, so they decide to ignore everything else in the article."], eHint: "What is the reader afraid of losing?" }
+  ];
+  var CBY = {}; CLUES.forEach(function (c) { CBY[c.id] = c; });
+
+  /* ---------- STAGE 2 DRILLS (one for each step of the 6-step frame) ---------- */
+  var DRILLS = [
+    { part: "① Point", q: "Which POINT sentence is complete?",
+      answer: "In the opinion article “Zoos Are Prisons With a Gift Shop,” published in The Weekly Compass, written by Adrian Vance, he presents a biased opinion towards zoos through the use of loaded language and a metaphor.",
+      wrong: ["In the opinion article “Zoos Are Prisons With a Gift Shop,” written by the journalist Adrian Vance, he presents a biased opinion towards zoos through the use of loaded language and a metaphor.",
+              "In the opinion article “Zoos Are Prisons With a Gift Shop,” published in The Weekly Compass, written by Adrian Vance, he presents a biased opinion towards zoos through the use of loaded language.",
+              "In the opinion article “Zoos Are Prisons With a Gift Shop,” published in The Weekly Compass, written by Adrian Vance, he presents a fair and balanced view of zoos through the use of loaded language and a metaphor."],
+      hint: "Check every part of the frame: genre, title, publication, writer, a biased opinion towards the topic, and TWO techniques.",
+      why: "It has every part of the frame: genre, title, publication, writer, the biased opinion towards zoos and both techniques. The others leave out the publication, give only one technique, or call the article balanced." },
+    { part: "② Evidence", q: "Which EVIDENCE sentence gives the evidence naturally?",
+      answer: "First, Vance suggests that a zoo enclosure is really a “cell.”",
+      wrong: ["First, the quote “cell” shows what Vance really thinks about zoos.",
+              "First, Vance suggests that a zoo enclosure is really a cell.",
+              "First, Vance suggests that a zoo enclosure is really a “cage.”"],
+      hint: "Natural evidence is exact, inside quotation marks and part of your own sentence. Never write “quote.” Check the word in paragraph 2.",
+      why: "The word is exact, in quotation marks, and built into the sentence. The others use the word “quote,” leave out the quotation marks, or change the writer’s word." },
+    { part: "③ Dictionary meaning", q: "Which sentence gives the best DICTIONARY meaning of “cell”?",
+      answer: "The word “cell” means a small room in a prison where a prisoner is locked up.",
+      wrong: ["The word “cell” means that the writer thinks zoos are cruel to their animals.",
+              "The word “cell” means a large, open field where animals can run around freely.",
+              "The word “cell” means a strong, emotional word that makes the readers feel sad."],
+      hint: "A dictionary meaning explains what the word means anywhere, not what the writer thinks or how the reader feels.",
+      why: "A dictionary gives the word’s usual meaning: a small room where a prisoner is locked up. The others give the writer’s opinion, the reader’s feeling or a wrong meaning. Save opinions and feelings for steps 4 and 5." },
+    { part: "④ So? Analyze", q: "Which SO? (ANALYZE) sentence is strongest?",
+      answer: "The author suggests that zoo animals are treated like criminals rather than living creatures.",
+      wrong: ["The author suggests that the word “cell” is a word that he uses in the second paragraph.",
+              "The author suggests that zoo animals are treated like kings who live in luxury every day.",
+              "The author suggests a lot of things about zoos, and this is very interesting to read about."],
+      hint: "“So?” means: what is the writer really saying about zoos by choosing this word?",
+      why: "It explains what the word “cell” says about zoos: the animals are treated like criminals. The others only say where the word is, get the meaning backwards, or say nothing precise." },
+    { part: "⑤ The reader", q: "Which READER sentence is strongest?",
+      answer: "The reader feels sorry for the animals, because a cell is a punishment for doing something wrong.",
+      wrong: ["The reader feels interested in the animals and wants to keep reading the rest of the article.",
+              "The reader feels happy for the animals, because a cell is a safe and comfortable place to live.",
+              "The reader feels many different feelings when they read this word in the opinion article."],
+      hint: "Name a precise feeling and say why the word creates it. “Wants to keep reading” is never enough.",
+      why: "It names a precise feeling (sorry for the animals) and explains why the word creates it. The others are vague, rely on “keep reading,” or name the wrong feeling." },
+    { part: "⑥ Through the use of…", q: "Which “Through the use of…” sentence is correct?",
+      answer: "Through the use of loaded language, the author aims to make the reader see zoos as prisons, which reveals his bias.",
+      wrong: ["To sum up, through the use of loaded language, the author makes the reader see zoos as prisons, which shows bias.",
+              "Through the use of statistics, the author aims to make the reader see zoos as prisons, which reveals his bias.",
+              "Through the use of loaded language, the author uses a very good technique that works well in this article."],
+      hint: "Name the right device, then say what the author is trying to make the reader think. Check the opening too.",
+      why: "It names the right device (loaded language), gives its aim and links to bias. The others use a banned opening, name the wrong device, or never give the aim." },
+    { part: "⑤ The reader", q: "Which “The reader notices…” sentence shows the best critical thinking about the zookeeper?",
+      answer: "The reader notices that the zookeeper is never named, so the reader cannot check whether her story is true.",
+      wrong: ["The reader notices that the zookeeper is a real expert, so every word she says must be completely true.",
+              "The reader notices that the zookeeper is named in full, so the reader can easily check her story online.",
+              "The reader notices that the zookeeper likes animals, so the reader decides to visit the zoo very soon."],
+      hint: "A good detective asks: who is this person, and can I check what she says? Look at paragraph 5.",
+      why: "It spots the problem: the zookeeper “asked not to be named,” so her story cannot be checked. That is the bias a detective should notice." }
+  ];
+
+  /* ---------- MODEL ANSWER (follows the 6-step frame, two examples) ---------- */
+  var MODEL_PARTS = [
+    "In the opinion article “Zoos Are Prisons With a Gift Shop,” published in The Weekly Compass, written by Adrian Vance, he presents a biased opinion towards zoos, showing them as cruel prisons for animals, through the use of loaded language and a metaphor.",
+    "First, Vance suggests that a zoo enclosure is really a “cell.”",
+    "The word “cell” means a small room in a prison where a prisoner is locked up. It also means one of the small compartments in a larger structure, such as a honeycomb. It is also commonly associated with punishment, locked doors and the loss of freedom.",
+    "The author suggests that zoo animals are treated like criminals rather than living creatures. He also highlights the gap between the zoos’ gentle word “enclosure” and the harsh reality. He compares a zoo to a prison, and he demonstrates that the animals are trapped in a tiny space with no way out.",
+    "The reader feels shocked and sorry for the animals. The reader also realizes that zoos use soft words to hide the truth. The reader notices that the writer gives no evidence that the enclosures are really like prison cells. The reader believes that keeping animals in zoos is a cruel punishment.",
+    "Through the use of loaded language, the author aims to make the reader see zoos as prisons, which reveals his one-sided opinion against them.",
+    "Furthermore, Vance describes zoo animals as “prisoners serving a life sentence for a crime they never committed.”",
+    "The word “prisoners” means people who are kept in prison as a punishment for a crime. It also means people or animals that have been captured and are not free to leave. It is also commonly associated with guards, chains, bars and long, lonely years.",
+    "The author suggests that zoo animals are being punished for something they did not do. He also highlights how long their suffering lasts, because a “life sentence” never ends. He compares the animals to innocent people in jail, and he demonstrates that keeping them in zoos is deeply unfair.",
+    "The reader feels angry about this injustice. The reader also realizes that the animals may never be free. The reader notices that this image leaves no room for the zoos’ side, such as their breeding programs. The reader believes that zoos are wrong and should close.",
+    "Through the use of a metaphor, the author aims to turn the reader against zoos, which further reveals the one-sided nature of the article."
+  ];
+  var MODEL = MODEL_PARTS.join(" ");
+  var TICKS = [
+    "① My point sentence has the genre, title, publication, writer, the biased opinion and TWO techniques.",
+    "② I gave each piece of evidence naturally, inside my own sentence.",
+    "③ I gave a real dictionary meaning, a second meaning and what the word is associated with.",
+    "④ My “So?” part says what the author suggests, highlights, compares and demonstrates.",
+    "⑤ My reader part says what the reader feels, realizes, notices and believes.",
+    "⑥ Each example ends with “Through the use of (device), the author…” and the aim of the device.",
+    "I did not use the word “quote,” “To sum up” or “To conclude.”"
+  ];
+
+  /* ---------- WRITING DESK: the 6-step frame from class, with extra starters in the same style ---------- */
+  var KEYS = {
+    "Headline": ["headline"], "Repetition": ["repetition", "repeat"], "Evocative language": ["evocative", "emotive"],
+    "Loaded language": ["loaded"], "Juxtaposition": ["juxtapos"], "Statistics and facts": ["statistic"],
+    "Hyperbole": ["hyperbole", "exaggerat"], "Tone": ["tone", "sarcas"], "Expert opinion": ["expert"],
+    "Selective detail": ["selective"], "Rhetorical question": ["rhetorical"], "Metaphor": ["metaphor"],
+    "Bandwagon": ["bandwagon"], "Inclusive language": ["inclusive"], "Fear appeal": ["fear"]
+  };
+  var AIMDEV = {
+    "Headline": "the headline", "Repetition": "repetition", "Evocative language": "evocative language",
+    "Loaded language": "loaded language", "Juxtaposition": "juxtaposition", "Statistics and facts": "statistics",
+    "Hyperbole": "hyperbole", "Tone": "a sarcastic tone", "Expert opinion": "unverified expert opinion",
+    "Selective detail": "selective detail", "Rhetorical question": "a rhetorical question", "Metaphor": "a metaphor",
+    "Bandwagon": "the bandwagon technique", "Inclusive language": "inclusive language", "Fear appeal": "fear appeal"
+  };
+  var STEP = {
+    p: { n: "1", label: "Point",
+      frame: ["In the article “…” published in …, written by …, he presents a biased opinion towards … through the use of … and …."],
+      more: ["In the opinion article “…,” published in …, written by …, he presents a biased opinion towards …, showing them as …, through the use of … and …."] },
+    e: { n: "2", label: "Evidence: give it naturally",
+      frame: ["First, the author describes … as “…”."],
+      frame2: ["Furthermore, the author describes … as “…”."],
+      more: ["First, he claims that “…”.", "First, he warns the reader that “…”.", "First, he argues that … is really a “…”."],
+      more2: ["Furthermore, he claims that “…”.", "Moreover, he states that “…”.", "In addition, he argues that … are “…”."] },
+    m: { n: "3", label: "Dictionary meaning",
+      frame: ["The word “…” means …", "It also means …", "It is also commonly associated with …"],
+      more: ["It can also refer to …", "It has negative connotations of …"] },
+    s: { n: "4", label: "So? Analyze",
+      frame: ["The author suggests …", "He also highlights …", "He compares …", "He demonstrates …"],
+      more: ["He implies that …", "He emphasizes …", "He contrasts … with …", "He reveals …"] },
+    f: { n: "5", label: "The reader",
+      frame: ["The reader feels …", "The reader also realizes …", "The reader notices …", "The reader believes …"],
+      more: ["The reader questions whether …", "The reader is shocked by … because …", "The reader begins to sympathize with …"] },
+    a: { n: "6", label: "Through the use of…",
+      frame: ["Through the use of (device), the author (aim of the device)."],
+      more: ["…, the author aims to make the reader …, which reveals his bias against …", "…, the author tries to convince the reader that …, ignoring …"] }
+  };
+  var SLOTS = [
+    { k: "p" },
+    { k: "e1", sep: "Example 1" }, { k: "m1" }, { k: "s1" }, { k: "f1" }, { k: "a1" },
+    { k: "e2", sep: "Example 2: steps 2–6 again" }, { k: "m2" }, { k: "s2" }, { k: "f2" }, { k: "a2" }
+  ];
+  SLOTS.forEach(function (sl) { var st = STEP[sl.k.charAt(0)]; sl.n = st.n; sl.label = st.label; sl.ex = sl.k === "p" ? 0 : +sl.k.charAt(1); });
+
+  var KEY = "onur-case:zoo-v1";
+  var LETTERS = ["A", "B", "C", "D"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var S = null;
+
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) { var r = a.slice(); for (var i = r.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = r[i]; r[i] = r[j]; r[j] = t; } return r; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() { try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); return s && s.clues && s.drill ? s : null; } catch (e) { return null; } }
+  function fresh(name) {
+    var clues = {}; CLUES.forEach(function (c) { clues[c.id] = { status: "open", misses: 0 }; });
+    return { name: name || "", stage: 1, screen: "main", sweep: 1, clues: clues, streak: 0, best: 0,
+      cur: null, phase: null, opts: null, answered: null,
+      drill: { round: 1, queue: DRILLS.map(function (_, i) { return i; }), pos: 0, next: [], misses: {}, done: {}, opts: null, answered: null, between: false },
+      pick: [], text: {}, filed: false, ticks: {}, improve: "" };
+  }
+  function show(id) { ["s-start", "s-main", "s-report"].forEach(function (s) { $(s).hidden = s !== id; }); }
+  function norm(s) { return String(s).toLowerCase().replace(/[“”"]/g, '"').replace(/[‘’']/g, "'").replace(/[–—]/g, "-").replace(/\s+/g, " ").trim(); }
+  var ART_NORM = norm([ART.hed, ART.dek, ART.by].concat(ART.paras).join(" "));
+
+  function cracked() { return CLUES.filter(function (c) { var s = S.clues[c.id].status; return s === "first" || s === "later"; }).length; }
+  function stage1Done() { return cracked() === CLUES.length; }
+  function stage2Done() { return Object.keys(S.drill.done).length === DRILLS.length; }
+
+  /* ---------- START ---------- */
+  function renderStart() {
+    var saved = load();
+    if (saved && saved.screen !== "report") {
+      $("resume").hidden = false;
+      var n = CLUES.filter(function (c) { var s = saved.clues[c.id].status; return s === "first" || s === "later"; }).length;
+      $("resume-text").textContent = n + " of " + CLUES.length + " clues cracked.";
+      $("btn-resume").onclick = function () { S = saved; route(); };
+      $("btn-wipe").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} $("resume").hidden = true; };
+      if (saved.name) $("student-name").value = saved.name;
+    } else { $("resume").hidden = true; }
+    show("s-start");
+  }
+  $("btn-start").onclick = function () { S = fresh($("student-name").value.trim()); save(); route(); window.scrollTo(0, 0); };
+
+  /* ---------- MAIN / TABS ---------- */
+  function renderTabs() {
+    var n = cracked();
+    $("tab-1-s").textContent = n + "/" + CLUES.length + " clues";
+    $("tab-2-s").textContent = stage1Done() ? Object.keys(S.drill.done).length + "/" + DRILLS.length + " fixed" : "locked";
+    $("tab-3-s").textContent = !stage2Done() ? "locked" : (S.filed ? "filed" : "to write");
+    $("tab-2").disabled = !stage1Done(); $("tab-3").disabled = !stage2Done();
+    [1, 2, 3].forEach(function (i) {
+      $("tab-" + i).classList.toggle("on", S.stage === i);
+      $("tab-" + i).classList.toggle("done", (i === 1 && stage1Done()) || (i === 2 && stage2Done()) || (i === 3 && S.filed));
+      $("st-" + i).hidden = S.stage !== i;
+    });
+  }
+  [1, 2, 3].forEach(function (i) {
+    $("tab-" + i).onclick = function () { S.stage = i; save(); renderMain(); window.scrollTo(0, 0); };
+  });
+  function renderMain() {
+    renderTabs();
+    if (S.stage === 1) renderStage1();
+    else if (S.stage === 2) renderStage2();
+    else renderStage3();
+    show("s-main");
+  }
+
+  /* ---------- STAGE 1 ---------- */
+  function buildText(el, text, where) {
+    var marks = CLUES.filter(function (c) { return c.where === where; })
+      .map(function (c) { return { c: c, at: text.indexOf(c.text) }; })
+      .filter(function (m) { return m.at >= 0; })
+      .sort(function (a, b) { return a.at - b.at; });
+    var pos = 0;
+    marks.forEach(function (m) {
+      el.appendChild(document.createTextNode(text.slice(pos, m.at)));
+      var st = S.clues[m.c.id];
+      var b = document.createElement("span"); b.setAttribute("role", "button"); b.tabIndex = 0;
+      b.className = "clue" + (st.status !== "open" ? " " + st.status : "");
+      b.appendChild(document.createTextNode(m.c.text));
+      var sup = document.createElement("sup"); sup.textContent = m.c.id.slice(1); b.appendChild(sup);
+      if (st.status === "first" || st.status === "later") { var tg = document.createElement("span"); tg.className = "tag"; tg.textContent = "[" + m.c.device + "]"; b.appendChild(tg); }
+      var lab = "Clue " + m.c.id.slice(1) + ": " + m.c.text + ". ";
+      lab += st.status === "open" ? "Tap to investigate." : st.status === "cold" ? "Cold case. It reopens next sweep." : "Cracked: " + m.c.device + ".";
+      b.setAttribute("aria-label", lab);
+      if (st.status === "open") b.onclick = function () { openClue(m.c.id); };
+      else if (st.status === "cold") b.onclick = function () { nudge(); };
+      else b.onclick = function () { openSolved(m.c.id); };
+      b.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); b.click(); } });
+      el.appendChild(b);
+      pos = m.at + m.c.text.length;
+    });
+    el.appendChild(document.createTextNode(text.slice(pos)));
+  }
+  function renderStage1() {
+    var news = $("news"); news.textContent = "";
+    var k = document.createElement("span"); k.className = "kicker"; k.textContent = "OPINION"; news.appendChild(k);
+    var h = document.createElement("h2"); h.className = "hed"; buildText(h, ART.hed, 0); news.appendChild(h);
+    var d = document.createElement("p"); d.className = "dek"; d.textContent = ART.dek; news.appendChild(d);
+    var by = document.createElement("p"); by.className = "byline"; by.textContent = ART.by; news.appendChild(by);
+    ART.paras.forEach(function (t, i) {
+      var row = document.createElement("div"); row.className = "para";
+      var pn = document.createElement("span"); pn.className = "pn"; pn.textContent = "¶" + (i + 1);
+      var p = document.createElement("p"); p.className = "ptxt"; buildText(p, t, i + 1);
+      row.appendChild(pn); row.appendChild(p); news.appendChild(row);
+    });
+    var f = document.createElement("p"); f.className = "foot"; f.textContent = ART.foot; news.appendChild(f);
+
+    var n = cracked();
+    $("clue-count").textContent = n + " of " + CLUES.length + " clues cracked";
+    $("meter").style.width = (n / CLUES.length * 100) + "%";
+    $("sweep-label").textContent = "Sweep " + S.sweep;
+    var open = CLUES.filter(function (c) { return S.clues[c.id].status === "open"; }).length;
+    var cold = CLUES.filter(function (c) { return S.clues[c.id].status === "cold"; }).length;
+    $("sweep-card").hidden = !(open === 0 && cold > 0);
+    if (open === 0 && cold > 0) {
+      $("sweep-text").textContent = (cold === 1 ? "1 cold case reopens" : cold + " cold cases reopen") + " in sweep " + (S.sweep + 1) + ", with the answers in a new order.";
+      $("btn-sweep").textContent = "Start sweep " + (S.sweep + 1);
+    }
+    $("closed-card").hidden = !stage1Done();
+  }
+  $("btn-sweep").onclick = function () {
+    CLUES.forEach(function (c) { if (S.clues[c.id].status === "cold") S.clues[c.id].status = "open"; });
+    S.sweep += 1; save(); renderMain();
+    var first = document.querySelector(".clue:not(.first):not(.later):not(.cold)"); if (first) first.focus();
+  };
+  $("btn-to-2").onclick = function () { S.stage = 2; save(); renderMain(); window.scrollTo(0, 0); };
+  function nudge() {
+    var card = $("sweep-label"); card.textContent = "Cold case: crack the other clues first";
+    setTimeout(function () { if (S) $("sweep-label").textContent = "Sweep " + S.sweep; }, 1800);
+  }
+
+  /* Interrogation sheet */
+  var lastFocus = null;
+  function openClue(id) {
+    lastFocus = document.activeElement;
+    S.cur = id; S.phase = "device"; S.answered = null;
+    var c = CBY[id]; S.opts = shuffle([c.dAns].concat(c.dWrong));
+    save(); renderSheet(); $("sheet-back").hidden = false; $("sheet-q").focus();
+  }
+  function openSolved(id) {
+    lastFocus = document.activeElement;
+    S.cur = id; S.phase = "solved"; S.opts = null; S.answered = null;
+    renderSheet(); $("sheet-back").hidden = false; $("sheet-x").focus();
+  }
+  function closeSheet() {
+    if (S.answered && S.phase !== "device") finishClue();
+    else if (S.answered && S.phase === "device" && !S.answered.correct) finishClue();
+    S.cur = null; S.phase = null; S.opts = null; S.answered = null;
+    $("sheet-back").hidden = true; save(); renderMain();
+    if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  $("sheet-x").onclick = closeSheet;
+  $("sheet-back").addEventListener("click", function (e) { if (e.target === $("sheet-back")) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if ($("sheet-back").hidden) return;
+    if (e.key === "Escape") { closeSheet(); return; }
+    var idx = ["1", "2", "3", "4"].indexOf(e.key); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(e.key.toLowerCase());
+    if (idx >= 0 && S.opts && idx < S.opts.length && !S.answered && e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") { e.preventDefault(); pickClue(idx); }
+  });
+
+  function renderSheet() {
+    var c = CBY[S.cur], st = S.clues[S.cur];
+    $("sheet-label").textContent = "Clue " + c.id.slice(1) + " · " + (c.where === 0 ? "Headline" : "¶" + c.where);
+    $("sheet-ev").textContent = "“" + c.text + "”";
+    var steps = $("sheet-steps"); steps.textContent = "";
+    [["device", "1 Name the device"], ["effect", "2 What it does"]].forEach(function (p) {
+      var s = document.createElement("span"); s.className = "st";
+      if (S.phase === p[0]) s.className += " on";
+      if ((p[0] === "device" && (S.phase === "effect" || S.phase === "solved")) || (p[0] === "effect" && S.phase === "solved")) s.className += " done";
+      s.textContent = p[1]; steps.appendChild(s);
+    });
+    $("sheet-retry").hidden = !st.misses;
+    $("sheet-retry").textContent = st.misses === 1 ? "Cold case: missed once" : "Cold case: missed " + st.misses + " times";
+    var box = $("sheet-opts"); box.textContent = "";
+    $("sheet-fb").hidden = true; $("sheet-next").hidden = true;
+    if (S.phase === "solved") {
+      $("sheet-q").textContent = c.device;
+      var fb = $("sheet-fb"); fb.className = "fb good"; fb.textContent = "";
+      var p1 = document.createElement("p"); p1.textContent = c.dWhy;
+      var p2 = document.createElement("p"); p2.textContent = c.effect;
+      fb.appendChild(p1); fb.appendChild(p2); fb.hidden = false;
+      return;
+    }
+    $("sheet-q").textContent = S.phase === "device" ? "Which device is this? Choose the statement that is true." : "It is " + c.device.toLowerCase() + ". What does it do to the reader?";
+    S.opts.forEach(function (text, i) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[i];
+      var t = document.createElement("span"); t.className = "t"; fillOpt(t, text, S.phase === "device");
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pickClue(i); };
+      box.appendChild(b);
+    });
+    if (S.answered) paintClue(false);
+  }
+  /* "Device: claim" options show the device name in bold. */
+  function fillOpt(el, text, labelled) {
+    el.textContent = "";
+    var m = labelled ? /^([^:]{2,32}): (.+)$/.exec(text) : null;
+    if (m) { var b = document.createElement("b"); b.className = "olab"; b.textContent = m[1] + ":"; el.appendChild(b); el.appendChild(document.createTextNode(" " + m[2])); }
+    else el.textContent = text;
+  }
+  function correctClue(c) { return S.phase === "device" ? c.dAns : c.effect; }
+  function pickClue(i) {
+    if (S.answered) return;
+    var c = CBY[S.cur], st = S.clues[S.cur];
+    var ok = S.opts[i] === correctClue(c);
+    S.answered = { pick: i, correct: ok };
+    if (!ok) { st.misses += 1; S.streak = 0; }
+    else if (S.phase === "effect") { S.streak += 1; if (S.streak > S.best) S.best = S.streak; }
+    save(); paintClue(true);
+  }
+  function paintClue(fresh) {
+    var c = CBY[S.cur], st = S.clues[S.cur], a = S.answered;
+    var reveal = !a.correct && st.misses >= 3;
+    var ans = correctClue(c);
+    $("sheet-opts").querySelectorAll(".opt").forEach(function (b, i) {
+      b.disabled = true;
+      if (i === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && S.opts[i] === ans) b.classList.add("right");
+      else b.classList.add("dim");
+      if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("sheet-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h";
+    var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    var btn = $("sheet-next");
+    if (a.correct && S.phase === "device") {
+      fb.classList.add("good"); h.textContent = "Correct. Now the effect."; p.textContent = c.dWhy; btn.textContent = "Next: what it does";
+    } else if (a.correct) {
+      fb.classList.add("good"); h.textContent = st.misses ? "Cracked. Cold case closed." : "Clue cracked!";
+      p.textContent = "Remember it like this: " + c.device + ". " + c.effect; btn.textContent = "Back to the article";
+    } else {
+      if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = "Answer: " + ans; }
+      else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + (S.phase === "device" ? c.dHint : c.eHint); }
+      n.textContent = "This clue becomes a cold case. It reopens in sweep " + (S.sweep + 1) + ".";
+      btn.textContent = "Back to the article";
+    }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n);
+    fb.hidden = false; btn.hidden = false;
+    if (fresh) { btn.focus({ preventScroll: true }); btn.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  function finishClue() {
+    var st = S.clues[S.cur];
+    if (!S.answered) return;
+    if (S.answered.correct && S.phase === "effect") st.status = st.misses ? "later" : "first";
+    else if (!S.answered.correct) st.status = "cold";
+  }
+  $("sheet-next").onclick = function () {
+    if (S.answered && S.answered.correct && S.phase === "device") {
+      var c = CBY[S.cur];
+      S.phase = "effect"; S.answered = null; S.opts = shuffle([c.effect].concat(c.eWrong));
+      save(); renderSheet(); $("sheet-q").focus(); return;
+    }
+    closeSheet();
+  };
+
+  /* ---------- STAGE 2 ---------- */
+  function drillOpts(i) { var d = DRILLS[i]; return shuffle([d.answer].concat(d.wrong)); }
+  function renderStage2() {
+    var D = S.drill;
+    $("drill-card").hidden = true; $("drill-between").hidden = true; $("drill-done").hidden = true;
+    if (stage2Done()) { $("drill-done").hidden = false; return; }
+    if (D.between) {
+      var n = D.next.length;
+      $("drill-between-h").textContent = n === 1 ? "1 sentence to fix again" : n + " sentences to fix again";
+      $("drill-between-t").textContent = (n === 1 ? "It comes" : "They come") + " back in round " + (D.round + 1) + " with the answers in a new order.";
+      $("drill-go").textContent = "Start round " + (D.round + 1);
+      $("drill-between").hidden = false; return;
+    }
+    var i = D.queue[D.pos], d = DRILLS[i];
+    if (!D.opts) { D.opts = drillOpts(i); save(); }
+    $("drill-card").hidden = false;
+    $("drill-round").textContent = "Round " + D.round;
+    $("drill-count").textContent = "Question " + (D.pos + 1) + " of " + D.queue.length;
+    var board = $("drill-board"); board.textContent = "";
+    DRILLS.forEach(function (_, j) {
+      var s = document.createElement("i"); s.className = "sq";
+      if (D.done[j]) s.className += " " + D.done[j]; else if (D.misses[j]) s.className += " missed";
+      if (j === i) s.className += " now";
+      board.appendChild(s);
+    });
+    $("drill-part").textContent = d.part;
+    var m = D.misses[i] || 0;
+    $("drill-retry").hidden = !m; $("drill-retry").textContent = m === 1 ? "You missed this once" : "You missed this " + m + " times";
+    $("drill-q").textContent = d.q;
+    var box = $("drill-opts"); box.textContent = "";
+    D.opts.forEach(function (text, j) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[j];
+      var t = document.createElement("span"); t.className = "t"; t.textContent = text;
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pickDrill(j); };
+      box.appendChild(b);
+    });
+    $("drill-fb").hidden = true; $("drill-next").hidden = true;
+    if (D.answered) paintDrill(false);
+  }
+  function pickDrill(j) {
+    var D = S.drill; if (D.answered) return;
+    var i = D.queue[D.pos], ok = D.opts[j] === DRILLS[i].answer;
+    D.answered = { pick: j, correct: ok };
+    if (ok) { D.done[i] = D.misses[i] ? "later" : "first"; S.streak += 1; if (S.streak > S.best) S.best = S.streak; }
+    else { D.misses[i] = (D.misses[i] || 0) + 1; D.next.push(i); S.streak = 0; }
+    save(); paintDrill(true); renderTabs();
+  }
+  function paintDrill(fresh) {
+    var D = S.drill, i = D.queue[D.pos], d = DRILLS[i], a = D.answered;
+    var reveal = !a.correct && (D.misses[i] || 0) >= 3;
+    $("drill-opts").querySelectorAll(".opt").forEach(function (b, j) {
+      b.disabled = true;
+      if (j === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && D.opts[j] === d.answer) b.classList.add("right");
+      else b.classList.add("dim");
+      if (fresh && j === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("drill-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h"; var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    if (a.correct) { fb.classList.add("good"); h.textContent = "Correct!"; p.textContent = d.why; }
+    else if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = d.why; n.textContent = "It comes back in round " + (D.round + 1) + "."; }
+    else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + d.hint; n.textContent = "It comes back in round " + (D.round + 1) + "."; }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n); fb.hidden = false;
+    var last = D.pos + 1 >= D.queue.length;
+    $("drill-next").textContent = last ? (D.next.length ? "Finish round " + D.round : "Finish Stage 2") : "Next question";
+    $("drill-next").hidden = false;
+    if (fresh) { $("drill-next").focus({ preventScroll: true }); $("drill-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  $("drill-next").onclick = function () {
+    var D = S.drill; if (!D.answered) return;
+    D.pos += 1; D.opts = null; D.answered = null;
+    if (D.pos >= D.queue.length && D.next.length) D.between = true;
+    save(); renderMain(); $("drill-q").focus({ preventScroll: true });
+  };
+  $("drill-go").onclick = function () {
+    var D = S.drill; D.between = false; D.round += 1; D.queue = shuffle(D.next); D.next = []; D.pos = 0; D.opts = null; D.answered = null;
+    save(); renderMain(); $("drill-q").focus({ preventScroll: true });
+  };
+  $("btn-to-3").onclick = function () { S.stage = 3; save(); renderMain(); window.scrollTo(0, 0); };
+
+  /* ---------- STAGE 3 ---------- */
+  function chosen() { return S.pick.map(function (id) { return CBY[id]; }); }
+  function renderStage3() {
+    var pk = $("picker"); pk.textContent = "";
+    CLUES.forEach(function (c) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "chip" + (S.pick.indexOf(c.id) >= 0 ? " sel" : "");
+      b.textContent = c.id.slice(1) + " · " + c.device + ": “" + (c.text.length > 34 ? c.text.slice(0, 32) + "…" : c.text) + "”";
+      b.setAttribute("aria-pressed", S.pick.indexOf(c.id) >= 0 ? "true" : "false");
+      b.onclick = function () {
+        if (S.filed) return;
+        var at = S.pick.indexOf(c.id);
+        if (at >= 0) S.pick.splice(at, 1);
+        else {
+          var same = S.pick.filter(function (x) { return CBY[x].device === c.device; });
+          if (same.length) S.pick.splice(S.pick.indexOf(same[0]), 1);
+          if (S.pick.length >= 2) S.pick.shift();
+          S.pick.push(c.id);
+        }
+        save(); renderStage3();
+      };
+      pk.appendChild(b);
+    });
+    $("desk").hidden = S.pick.length < 2 || S.filed;
+    $("filed").hidden = !S.filed;
+    if (S.pick.length === 2 && !S.filed) buildDesk();
+    if (S.filed) renderFiled();
+  }
+  function buildDesk() {
+    var c = chosen(), box = $("slots"); box.textContent = "";
+    SLOTS.forEach(function (sl) {
+      var st = STEP[sl.k.charAt(0)], ex = sl.ex ? c[sl.ex - 1] : null;
+      if (sl.sep) {
+        var sep = document.createElement("h3"); sep.className = "sep";
+        sep.textContent = sl.sep + " · Clue " + ex.id.slice(1) + ": " + ex.device; box.appendChild(sep);
+      }
+      var wrap = document.createElement("div"); wrap.className = "slot"; wrap.id = "slot-" + sl.k;
+      var head = document.createElement("div"); head.className = "slot-h";
+      var num = document.createElement("span"); num.className = "num"; num.textContent = sl.n;
+      var b = document.createElement("b"); b.textContent = sl.label;
+      head.appendChild(num); head.appendChild(b);
+      var frame = sl.k === "e2" ? st.frame2 : st.frame;
+      var more = sl.k === "e2" ? st.more2 : st.more;
+      if (sl.k.charAt(0) === "a") frame = ["Through the use of " + AIMDEV[ex.device] + ", the author … (aim of the device)."];
+      var fl = document.createElement("ul"); fl.className = "frame";
+      frame.forEach(function (x) { var li = document.createElement("li"); li.textContent = x; fl.appendChild(li); });
+      var ml = document.createElement("ul"); ml.className = "frame more";
+      var mh = document.createElement("li"); mh.className = "more-h"; mh.textContent = "More ways to say it"; ml.appendChild(mh);
+      more.forEach(function (x) { var li = document.createElement("li"); li.textContent = x; ml.appendChild(li); });
+      var ta = document.createElement("textarea"); ta.id = "w-" + sl.k; ta.rows = /^[msf]/.test(sl.k) ? 5 : 3;
+      ta.setAttribute("aria-label", "Step " + sl.n + ": " + sl.label + (sl.ex ? " (example " + sl.ex + ")" : ""));
+      ta.value = S.text[sl.k] || "";
+      ta.addEventListener("input", function () { S.text[sl.k] = ta.value; save(); runChecks(); });
+      var ul = document.createElement("ul"); ul.className = "checks"; ul.id = "ck-" + sl.k;
+      wrap.appendChild(head); wrap.appendChild(fl); wrap.appendChild(ml); wrap.appendChild(ta); wrap.appendChild(ul);
+      box.appendChild(wrap);
+    });
+    runChecks();
+  }
+  function quoted(s) { var out = [], re = /[“"]([^”"]+)[”"]/g, m; while ((m = re.exec(s))) out.push(m[1]); return out; }
+  function words(s) { return String(s).trim().split(/\s+/).filter(Boolean).length; }
+  function hasDevice(s, dev) { var t = norm(s); return KEYS[dev].some(function (k) { return t.indexOf(k) >= 0; }); }
+  function trimP(x) { return norm(x).replace(/^[\s.,;:!?…]+|[\s.,;:!?…]+$/g, ""); }
+  function count(re, t) { var m = t.match(re); return m ? m.length : 0; }
+  var BANNED = /\b(to sum up|to conclude|all in all|in conclusion)\b/i;
+  var QUOTEWORD = /\bquot(e|es|ed|ing)\b/i;
+  function checksFor(k, v) {
+    var c = chosen(), t = norm(v), list = [], step = k.charAt(0), ex = k === "p" ? null : c[+k.charAt(1) - 1];
+    var filled = words(v) >= 5;
+    if (step === "p") {
+      list.push([/\barticle\b/.test(t), "Names the genre (opinion article)"]);
+      list.push([t.indexOf(norm(ART.hed)) >= 0, "Gives the full title"]);
+      list.push([/weekly compass/.test(t), "Names the publication"]);
+      list.push([/vance/.test(t), "Names the writer (Adrian Vance)"]);
+      list.push([/bias/.test(t) && /toward.{0,25}zoo/.test(t), "Says he presents a biased opinion towards zoos"]);
+      list.push([hasDevice(v, c[0].device) && hasDevice(v, c[1].device), "Names both techniques (" + c[0].device.toLowerCase() + ", " + c[1].device.toLowerCase() + ")"]);
+    } else if (step === "e") {
+      var q = quoted(v);
+      list.push([q.length > 0, "Puts words from the article in quotation marks"]);
+      list.push([q.length > 0 && q.every(function (x) { var y = trimP(x); return y.length > 0 && ART_NORM.indexOf(y) >= 0; }), "The quoted words really appear in the article"]);
+      list.push([q.length > 0 && q.every(function (x) { return words(x) <= 15; }), "Keeps the evidence short (15 words or fewer)"]);
+      list.push([q.length > 0 && words(v.replace(/[“"][^”"]+[”"]/g, "")) >= 3, "Builds it into your own sentence (naturally)"]);
+      if (k === "e2") list.push([/^(furthermore|moreover|in addition|additionally|secondly)/.test(t), "Starts with Furthermore (or another adding word)"]);
+    } else if (step === "m") {
+      var w = quoted(v), ev = norm(S.text["e" + k.charAt(1)] || "");
+      list.push([w.length > 0, "Puts the key word in quotation marks (The word “…”)"]);
+      list.push([w.length > 0 && trimP(w[0]).length > 0 && ev.indexOf(trimP(w[0])) >= 0, "Takes the word from your evidence in step 2"]);
+      list.push([/\bmeans\b/.test(t), "Gives the dictionary meaning (… means …)"]);
+      list.push([/also (means|refer)/.test(t), "Gives a second meaning (It also means …)"]);
+      list.push([/(associated with|connotation)/.test(t), "Says what it is associated with"]);
+    } else if (step === "s") {
+      var verbs = t.match(/\b(suggest|highlight|compare|demonstrate|impl(y|ie)|emphasi[sz]e|contrast|reveal|show)s?\b/g) || [];
+      var uniq = {}; verbs.forEach(function (x) { uniq[x.replace(/s$/, "").replace(/ie$/, "y")] = 1; });
+      list.push([Object.keys(uniq).length >= 3, "Uses at least three analysis verbs (suggests, highlights, compares, demonstrates…)"]);
+      list.push([/\b(author|writer|he|she)\b/.test(t), "Says what the author is doing"]);
+      list.push([count(/[.!?](\s|$)/g, v.trim() + " ") >= 3, "Written as at least three sentences"]);
+    } else if (step === "f") {
+      list.push([count(/\bthe reader\b/g, t) >= 3, "Has at least three “The reader …” sentences"]);
+      list.push([/\bfeel/.test(t), "Says what the reader feels"]);
+      list.push([/(realiz|notic|believ|question|understand)/.test(t), "Says what the reader realizes, notices or believes"]);
+      list.push([filled && !/read on|keep reading/.test(t), "Goes beyond “makes the reader want to keep reading”"]);
+    } else {
+      list.push([/^through the use of/.test(t), "Starts with “Through the use of”"]);
+      list.push([hasDevice(v, ex.device), "Names the device (" + ex.device.toLowerCase() + ")"]);
+      list.push([/\b(author|writer|he|she)\b/.test(t) && /(aim|tr(y|ies) to|want|persuad|convinc|make the reader|turn the reader|encourag|position)/.test(t), "Gives the aim of the device (the author aims to …)"]);
+      list.push([/(bias|one-sided|opinion|against|persuad|convinc)/.test(t), "Links back to the writer’s bias"]);
+    }
+    list.push([filled, "Written as a full sentence"]);
+    list.push([!QUOTEWORD.test(v), "Does not use the word “quote”"]);
+    list.push([!BANNED.test(v), "No “To sum up / To conclude / All in all”"]);
+    return list;
+  }
+  function runChecks() {
+    var all = true;
+    SLOTS.forEach(function (sl) {
+      var v = S.text[sl.k] || "", list = checksFor(sl.k, v), ul = $("ck-" + sl.k); if (!ul) return;
+      ul.textContent = "";
+      var ok = list.every(function (x) { return x[0]; });
+      list.forEach(function (x) {
+        var li = document.createElement("li");
+        li.className = !v.trim() ? "" : (x[0] ? "ok" : "no");
+        li.textContent = x[1]; ul.appendChild(li);
+      });
+      $("slot-" + sl.k).classList.toggle("ok", ok);
+      if (!ok) all = false;
+    });
+    $("btn-file").disabled = !all;
+    var left = SLOTS.filter(function (sl) { return !checksFor(sl.k, S.text[sl.k] || "").every(function (x) { return x[0]; }); }).length;
+    $("file-note").textContent = all ? "All boxes are green. File your report." : left + (left === 1 ? " box still needs work." : " boxes still need work.");
+  }
+  function paragraph() { return SLOTS.map(function (sl) { return (S.text[sl.k] || "").trim(); }).filter(Boolean).join(" "); }
+  $("btn-file").onclick = function () { S.filed = true; save(); renderMain(); $("filed").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-edit").onclick = function () { S.filed = false; save(); renderMain(); };
+  function renderFiled() {
+    $("final").textContent = paragraph();
+    $("model").textContent = MODEL;
+    var ul = $("tick"); ul.textContent = "";
+    TICKS.forEach(function (t, i) {
+      var li = document.createElement("li"); var lab = document.createElement("label");
+      var cb = document.createElement("input"); cb.type = "checkbox"; cb.id = "tick-" + i; cb.checked = !!S.ticks[i];
+      cb.onchange = function () { S.ticks[i] = cb.checked; save(); };
+      var sp = document.createElement("span"); sp.textContent = t;
+      lab.appendChild(cb); lab.appendChild(sp); li.appendChild(lab); ul.appendChild(li);
+    });
+    $("improve").value = S.improve || "";
+  }
+  $("improve").addEventListener("input", function () { S.improve = $("improve").value; save(); });
+  $("btn-copy").onclick = function () {
+    var txt = paragraph();
+    var done = function () { $("copy-note").textContent = "Copied. Paste it into your notes or send it to your teacher."; };
+    try {
+      navigator.clipboard.writeText(txt).then(done, function () { selectFinal(); });
+    } catch (e) { selectFinal(); }
+  };
+  function selectFinal() {
+    var r = document.createRange(); r.selectNodeContents($("final"));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    $("copy-note").textContent = "Your paragraph is selected. Copy it from the menu.";
+  }
+  $("btn-report").onclick = function () { S.screen = "report"; save(); route(); window.scrollTo(0, 0); };
+
+  /* ---------- REPORT ---------- */
+  function renderReport() {
+    var first = CLUES.filter(function (c) { return S.clues[c.id].status === "first"; }).length;
+    var big = $("r-big"); big.textContent = "";
+    big.appendChild(document.createTextNode(first));
+    var sm = document.createElement("small"); sm.textContent = " / " + CLUES.length; big.appendChild(sm);
+    var dFirst = Object.keys(S.drill.done).filter(function (k) { return S.drill.done[k] === "first"; }).length;
+    var stats = [[S.sweep, S.sweep === 1 ? "sweep" : "sweeps"], [dFirst + "/" + DRILLS.length, "sentences first try"], [S.best, "best streak"]];
+    var box = $("r-stats"); box.textContent = "";
+    stats.forEach(function (s) { var d = document.createElement("div"); d.className = "stat"; var b = document.createElement("b"); b.textContent = s[0]; var t = document.createElement("span"); t.textContent = s[1]; d.appendChild(b); d.appendChild(t); box.appendChild(d); });
+    var ul = $("r-revise"); ul.textContent = "";
+    CLUES.filter(function (c) { return S.clues[c.id].misses; }).forEach(function (c) {
+      var li = document.createElement("li"); var q = document.createElement("b"); q.textContent = "“" + c.text + "”";
+      var a = document.createElement("span"); a.className = "a"; a.textContent = c.device + ": " + c.effect;
+      li.appendChild(q); li.appendChild(a); ul.appendChild(li);
+    });
+    DRILLS.forEach(function (d, i) {
+      if (!S.drill.misses[i]) return;
+      var li = document.createElement("li"); var q = document.createElement("b"); q.textContent = d.q;
+      var a = document.createElement("span"); a.className = "a"; a.textContent = d.answer;
+      li.appendChild(q); li.appendChild(a); ul.appendChild(li);
+    });
+    $("r-revise-block").hidden = ul.children.length === 0;
+    $("r-para").textContent = paragraph() || "Not written yet.";
+    $("r-improve-block").hidden = !(S.improve || "").trim();
+    $("r-improve").textContent = S.improve || "";
+    var who = $("r-who"); who.textContent = "";
+    var n = document.createElement("span"); n.appendChild(document.createTextNode("Detective: ")); var nb = document.createElement("b"); nb.textContent = S.name || "—"; n.appendChild(nb);
+    var dt = document.createElement("span"); dt.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(dt);
+    show("s-report");
+  }
+  $("btn-back").onclick = function () { S.screen = "main"; save(); route(); window.scrollTo(0, 0); };
+  $("btn-again").onclick = function () { var name = S.name; try { localStorage.removeItem(KEY); } catch (e) {} S = null; renderStart(); $("student-name").value = name; window.scrollTo(0, 0); };
+
+  function route() {
+    if (!S) return renderStart();
+    if (S.screen === "report") renderReport(); else renderMain();
+    if (S.cur && S.phase && S.screen !== "report") { renderSheet(); $("sheet-back").hidden = false; } else { $("sheet-back").hidden = true; }
+  }
+  function boot(data) { if (data && data.S && data.S.clues) { S = data.S; route(); } else renderStart(); }
+  try { window.claude && window.claude.hot && window.claude.hot.snapshot && window.claude.hot.snapshot(function () { return { S: S }; }); } catch (e) {}
+  var hot = window.claude && window.claude.hot;
+  if (hot && hot.ready) hot.ready(boot); else boot((hot && hot.data) || {});
+})();
+</script>
+
+</body>
+</html>
