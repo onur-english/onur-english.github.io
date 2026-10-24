@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1430">
+<title>Romeo and Juliet · Acts 3–4 · Stars of Verona</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+:root {
+  --night-1: #0d1430;
+  --night-2: #1a2352;
+  --night-3: #2b2a5e;
+  --star: #f6e7b8;
+  --gold: #c9993a;
+  --gold-deep: #8a6418;
+  --rose: #c2566a;
+  --rose-deep: #8f2438;
+  --parch: #fbf6ea;
+  --parch-2: #f3ead4;
+  --ink: #2a1f17;
+  --ink-soft: #6b5a48;
+  --line: #e2d5b8;
+  --right: #2f7a4d;
+  --right-soft: #e1f1e6;
+  --wrong: #b0362d;
+  --wrong-soft: #f8e0dc;
+  --reveal-soft: #f6e9c8;
+  --f-display: "Cormorant Garamond", "Palatino Linotype", Palatino, Georgia, serif;
+  --f-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --r: 18px;
+  --shadow: 0 2px 4px rgba(5, 8, 25, .25), 0 18px 40px rgba(5, 8, 25, .45);
+}
+* { box-sizing: border-box; }
+html { background: var(--night-1); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink);
+  font-family: var(--f-body); font-size: 17px; line-height: 1.5;
+  background:
+    radial-gradient(ellipse at 78% 8%, rgba(246, 231, 184, .16), transparent 32%),
+    radial-gradient(ellipse at 15% 40%, rgba(194, 86, 106, .12), transparent 45%),
+    linear-gradient(180deg, var(--night-1) 0%, var(--night-2) 55%, var(--night-3) 100%);
+  background-attachment: fixed;
+  padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
+}
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+h1, h2, h3 { margin: 0; font-family: var(--f-display); line-height: 1.12; text-wrap: balance; }
+p { margin: 0; }
+
+/* Sky decoration */
+#sky { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+#sky i { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: var(--star); opacity: .7; animation: twinkle 4s ease-in-out infinite; }
+@keyframes twinkle { 0%, 100% { opacity: .25; } 50% { opacity: .9; } }
+.moon { margin-left: auto; flex: none; width: 46px; height: 46px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff9e4, #ecd9a0 60%, #c9b27a); box-shadow: 0 0 34px 8px rgba(246, 231, 184, .25); pointer-events: none; }
+.skyline { position: fixed; left: 0; right: 0; bottom: 0; height: 120px; pointer-events: none; z-index: 0; opacity: .9; }
+.skyline svg { width: 100%; height: 100%; display: block; }
+
+.wrap { position: relative; z-index: 1; max-width: 660px; margin: 0 auto; padding: 16px 16px 150px; display: flex; flex-direction: column; gap: 16px; }
+
+/* Header */
+.top { display: flex; align-items: center; gap: 12px; color: var(--star); }
+.badge { background: #fff; border-radius: 12px; padding: 4px 6px; flex: none; box-shadow: 0 0 0 2px rgba(201, 153, 58, .5); }
+.badge img { width: 70px; display: block; }
+.top-title { font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; line-height: 1.1; }
+.top-sub { font-size: .85rem; color: #c9c3e6; }
+
+/* Card */
+.card {
+  position: relative; background: linear-gradient(180deg, var(--parch), var(--parch-2));
+  border-radius: var(--r); box-shadow: var(--shadow); padding: 22px 20px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.card::before { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(138, 100, 24, .28); border-radius: 13px; pointer-events: none; }
+.eyebrow { font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--rose-deep); }
+
+/* Buttons */
+.btn { appearance: none; border: 0; border-radius: 999px; padding: 14px 22px; min-height: 52px; font-weight: 700; font-size: 1.02rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-primary { background: linear-gradient(180deg, #a8323f, var(--rose-deep)); color: #fff7ec; box-shadow: 0 4px 12px rgba(143, 36, 56, .35); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-ghost { background: transparent; border: 2px solid var(--line); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--gold); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Start */
+.hero h1 { font-size: clamp(2.3rem, 9vw, 3.3rem); font-weight: 700; color: var(--rose-deep); }
+.hero h1 em { font-style: italic; color: var(--gold-deep); }
+.hero .sub { margin-top: 6px; font-size: 1.12rem; color: var(--ink-soft); }
+.quote { font-family: var(--f-display); font-style: italic; font-size: 1.2rem; color: var(--ink-soft); border-left: 3px solid var(--gold); padding-left: 12px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.fact { background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: .9rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.steps li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; }
+.steps svg { width: 26px; height: 26px; margin-top: 1px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input { font: inherit; padding: 12px 14px; border-radius: 12px; border: 2px solid var(--line); background: #fff; color: var(--ink); }
+.field input:focus { border-color: var(--gold); outline: none; }
+.resume { border: 2px dashed var(--gold); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: rgba(255, 255, 255, .5); }
+
+/* Sky board */
+.skyboard { background: linear-gradient(180deg, #121a3d, #232a5c); border-radius: 14px; padding: 12px; box-shadow: inset 0 0 0 1px rgba(246, 231, 184, .15); }
+.board { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
+.cell { aspect-ratio: 1; display: grid; place-items: center; }
+.cell svg { width: 88%; height: 88%; overflow: visible; }
+.cell path { fill: none; stroke: rgba(246, 231, 184, .3); stroke-width: 1.4; transition: fill .3s, stroke .3s; }
+.cell.first path { fill: #f3c75a; stroke: #ffe7a0; filter: drop-shadow(0 0 3px rgba(243, 199, 90, .9)); }
+.cell.later path { fill: #e8a2b0; stroke: #ffd2db; filter: drop-shadow(0 0 3px rgba(232, 162, 176, .8)); }
+.cell.missed path { fill: rgba(176, 54, 45, .35); stroke: #ff8a7d; }
+.cell.now path { stroke: #fff; stroke-width: 2; }
+.cell.now svg { animation: pulse 1.4s ease-in-out infinite; }
+.cell.pop svg { animation: pop .5s ease-out; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+@keyframes pop { 0% { transform: scale(.3) rotate(-30deg); } 70% { transform: scale(1.35); } 100% { transform: scale(1); } }
+.board-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 12px; margin-top: 10px; font-size: .8rem; color: #d9d3f2; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+/* Status */
+.status { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.round-chip { font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; color: var(--rose-deep); }
+.round-chip small { font-family: var(--f-body); font-weight: 400; font-size: .85rem; color: var(--ink-soft); margin-left: 6px; }
+.streak { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--rose-deep); background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px 3px 7px; }
+.streak svg { width: 18px; height: 18px; }
+.streak.cold { color: var(--ink-soft); }
+.streak.cold svg { opacity: .45; }
+
+/* Question */
+.q-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.q-count { font-size: .85rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.q-text { font-family: var(--f-body); font-size: clamp(1.18rem, 4.4vw, 1.4rem); font-weight: 700; line-height: 1.35; }
+.retry-tag { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--wrong-soft); color: var(--wrong); }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; cursor: pointer; border: 2px solid var(--line); background: #fff; border-radius: 14px; padding: 12px 14px; min-height: 58px; display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center; transition: border-color .15s, background .15s, transform .1s; }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--gold); background: #fffaf0; } }
+.opt:active:not(:disabled) { transform: scale(.99); }
+.opt .key { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; background: var(--parch-2); color: var(--rose-deep); }
+.opt:disabled { cursor: default; }
+.opt.is-right { border-color: var(--right); background: var(--right-soft); }
+.opt.is-right .key { background: var(--right); color: #fff; }
+.opt.is-wrong { border-color: var(--wrong); background: var(--wrong-soft); }
+.opt.is-wrong .key { background: var(--wrong); color: #fff; }
+.opt.is-dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.feedback { border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.feedback.good { background: var(--right-soft); }
+.feedback.bad { background: var(--wrong-soft); }
+.feedback.reveal { background: var(--reveal-soft); }
+.fb-head { font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; }
+.good .fb-head { color: var(--right); }
+.bad .fb-head { color: var(--wrong); }
+.reveal .fb-head { color: var(--gold-deep); }
+.fb-note { font-size: .9rem; color: var(--ink-soft); }
+
+/* Between + results */
+.big { font-family: var(--f-display); font-weight: 700; font-size: clamp(3.2rem, 15vw, 4.6rem); line-height: 1; color: var(--rose-deep); font-variant-numeric: tabular-nums; }
+.big small { font-size: .42em; color: var(--ink-soft); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.stat { min-width: 0; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; }
+.stat b { font-family: var(--f-display); font-size: 1.7rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .82rem; color: var(--ink-soft); }
+.tricky { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.tricky li { border-left: 4px solid var(--rose); background: #fff; border-radius: 0 12px 12px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.tricky .tq { font-weight: 700; }
+.tricky .ta { color: var(--right); }
+.tricky .tm { font-size: .8rem; color: var(--ink-soft); }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; border-top: 1px solid var(--line); padding-top: 12px; font-size: .95rem; color: var(--ink-soft); }
+.who b { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  #sky i, .cell.now svg, .cell.pop svg, .opt.shake { animation: none; }
+}
+@media print {
+  body { background: #fff; }
+  #sky, .moon, .skyline, .btn, .btn-row, #screen-start, #screen-play, #screen-between { display: none !important; }
+  .card { box-shadow: none; background: #fff; }
+  .top { color: #000; }
+  .skyboard { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<div id="sky" aria-hidden="true"></div>
+<div class="skyline" aria-hidden="true">
+  <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+    <path fill="#090e24" d="M0 120V86h40V70h18v16h30V58l10-12 10 12v28h34V74h26V50h8V36h6v14h8v24h22V82h40V64l18-14 18 14v18h30V40h6V24h6v16h6v42h36V70h44V54h12v16h28V88h30V60h10V44h4V30h4v14h4v16h10v28h40V72h22V58h30v14h26V90h44V62l14-10 14 10v28h32V48h8V32h8v16h8v42h38V76h30V60h18v16h40V84h34V56h10l6-10 6 10h10v34h44V70h30V52h6V38h6v14h6v18h30V92h40V74h26V60h20v14h34V88h38V66h16v22h30v32z"/>
+    <path fill="#f6e7b8" opacity=".55" d="M264 70h4v6h-4zM392 64h4v6h-4zM618 70h4v6h-4zM772 58h4v6h-4zM948 66h4v6h-4zM1102 74h4v6h-4z"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="badge"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div>
+      <div class="top-title">Romeo and Juliet</div>
+      <div class="top-sub">Acts 3 &amp; 4 · Comprehension Quiz</div>
+    </div>
+    <div class="moon" aria-hidden="true"></div>
+  </header>
+
+  <!-- START -->
+  <section id="screen-start" class="card" aria-labelledby="start-h">
+    <div class="hero">
+      <span class="eyebrow">Mastery quiz · Acts 3 &amp; 4</span>
+      <h1 id="start-h">Stars of <em>Verona</em></h1>
+      <p class="sub">Light up all 50 stars to master Acts 3 and 4.</p>
+    </div>
+    <div class="facts">
+      <span class="fact">50 questions</span>
+      <span class="fact">Act 3: 32</span>
+      <span class="fact">Act 4: 18</span>
+    </div>
+    <ul class="steps">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.8 6.2 6.7.7-5 4.5 1.4 6.6L12 17.2 6.1 20.5l1.4-6.6-5-4.5 6.7-.7z" fill="#c9993a"/></svg><span>Answer each question. You find out straight away if you are right.</span></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.8 6.2 6.7.7-5 4.5 1.4 6.6L12 17.2 6.1 20.5l1.4-6.6-5-4.5 6.7-.7z" fill="#e8a2b0"/></svg><span>If you get one wrong, you get a hint. That question comes back in the next round, with the answers in a new order.</span></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.8 6.2 6.7.7-5 4.5 1.4 6.6L12 17.2 6.1 20.5l1.4-6.6-5-4.5 6.7-.7z" fill="none" stroke="#8a6418" stroke-width="1.6"/></svg><span>Keep going until every star is lit. Your first-try score is your real score.</span></li>
+    </ul>
+    <div class="resume" id="resume" hidden>
+      <p><b>You have a quiz in progress.</b> <span id="resume-text"></span></p>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-resume" type="button">Continue</button>
+        <button class="btn btn-ghost" id="btn-restart" type="button">Start over</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="student-name">Your name</label>
+      <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+    </div>
+    <button class="btn btn-primary" id="btn-start" type="button">Start round 1</button>
+  </section>
+
+  <!-- PLAY -->
+  <section id="screen-play" class="card" hidden>
+    <div class="status">
+      <div class="round-chip" id="round-chip"></div>
+      <div class="streak" id="streak" title="Correct answers in a row">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.3-9.4C1.4 8.1 3.5 4.5 7 4.5c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 3.5 0 5.6 3.6 4.3 7.1C19.5 16.4 12 21 12 21z" fill="currentColor"/></svg>
+        <span id="streak-n">0</span>
+      </div>
+    </div>
+    <div class="skyboard">
+      <div class="board" id="board" aria-hidden="true"></div>
+      <div class="board-foot"><span id="progress-line"></span></div>
+    </div>
+    <div class="q-meta">
+      <span class="eyebrow" id="q-scene"></span>
+      <span class="q-count" id="q-count"></span>
+    </div>
+    <span class="retry-tag" id="retry-tag" hidden></span>
+    <h2 class="q-text" id="q-text" tabindex="-1"></h2>
+    <div class="opts" id="opts" role="group" aria-labelledby="q-text"></div>
+    <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+    <button class="btn btn-primary" id="btn-next" type="button" hidden>Next question</button>
+  </section>
+
+  <!-- BETWEEN ROUNDS -->
+  <section id="screen-between" class="card" hidden aria-labelledby="between-h">
+    <span class="eyebrow" id="between-eyebrow"></span>
+    <h2 id="between-h" style="font-size:2rem;color:var(--rose-deep)"></h2>
+    <div class="big" id="between-big"></div>
+    <p id="between-text"></p>
+    <div class="skyboard">
+      <div class="board" id="board-between" aria-hidden="true"></div>
+      <div class="board-foot"><div class="legend">
+        <span><i style="background:#f3c75a"></i>Right first time</span>
+        <span><i style="background:#e8a2b0"></i>Cleared later</span>
+        <span><i style="background:rgba(176,54,45,.6);box-shadow:0 0 0 1.5px #ff8a7d"></i>Still to clear</span>
+      </div></div>
+    </div>
+    <button class="btn btn-primary" id="btn-next-round" type="button"></button>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="screen-results" class="card" hidden aria-labelledby="results-h">
+    <span class="eyebrow" id="results-eyebrow">Every star is lit</span>
+    <h2 id="results-h" style="font-size:2rem;color:var(--rose-deep)">You answered every question correctly.</h2>
+    <div>
+      <div style="color:var(--ink-soft)" id="res-label">First-try score</div>
+      <div class="big" id="res-big"></div>
+    </div>
+    <div class="stats" id="res-stats"></div>
+    <div class="skyboard">
+      <div class="board" id="board-results" aria-hidden="true"></div>
+      <div class="board-foot"><div class="legend">
+        <span><i style="background:#f3c75a"></i>Right first time</span>
+        <span><i style="background:#e8a2b0"></i>Cleared later</span>
+      </div></div>
+    </div>
+    <div id="tricky-block">
+      <h3 style="font-size:1.5rem;margin-bottom:10px">Questions to revise</h3>
+      <ul class="tricky" id="tricky"></ul>
+    </div>
+    <div class="who" id="who"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-practice" type="button">Practice the tricky ones</button>
+      <button class="btn btn-ghost" id="btn-again" type="button">Start the full quiz again</button>
+    </div>
+  </section>
+</div>
+
+<script id="quiz-data" type="application/json">{"id": "rj-acts-3-4-verona-v1", "title": "Romeo and Juliet", "subtitle": "Acts 3 & 4 Comprehension Quiz", "sections": [{"name": "Act 3", "questions": [{"q": "At the beginning of Act 3, Scene 1, why does Benvolio want Mercutio to leave the street?", "answer": "The day is hot and the Capulets are out, so he fears a fight will start.", "wrong": ["The Prince has ordered all young men to stay indoors that day.", "He wants to reach Friar Laurence's cell in time for Romeo's wedding.", "He is tired of Mercutio's jokes and wants to go home alone."], "hint": "Think about the weather, and about who else is walking around Verona.", "why": "Benvolio says the day is hot and the Capulets are out in the streets. If the two groups meet, he expects a fight.", "scene": "Act 3, Scene 1"}, {"q": "Why is Tybalt looking for Romeo in this scene?", "answer": "He wants to fight Romeo for coming to the Capulet feast uninvited.", "wrong": ["He has been ordered by the Prince to arrest Romeo.", "He wants to apologize for losing his temper at the feast.", "He wants to warn Romeo that Lord Capulet knows about the marriage."], "hint": "Remember what made Tybalt so angry in Act 1, Scene 5.", "why": "Tybalt recognized Romeo, a Montague, at the Capulet feast and was furious. Lord Capulet stopped him then, so now he wants revenge.", "scene": "Act 3, Scene 1"}, {"q": "Why does Romeo refuse to fight Tybalt?", "answer": "He has just married Juliet, so Tybalt is now his relative.", "wrong": ["He has promised Benvolio that he will never fight again.", "He wants to win Lord Capulet's respect before asking to marry Juliet.", "He is afraid of Tybalt's great skill with a sword."], "hint": "What has Romeo just done that nobody else in the street knows about?", "why": "Romeo has just married Juliet in secret, so Tybalt, Juliet's cousin, is now his family too. He cannot explain this, so his refusal looks weak.", "scene": "Act 3, Scene 1"}, {"q": "How does Mercutio react when Romeo refuses to fight?", "answer": "He calls it shameful and draws his sword against Tybalt himself.", "wrong": ["He praises Romeo for keeping the Prince's peace.", "He runs to fetch the Prince before anyone is hurt.", "He begs Tybalt to forgive Romeo and go home."], "hint": "Mercutio cares a lot about honor and hates to see his friend look weak.", "why": "Mercutio thinks Romeo's calm answer is a dishonorable surrender, so he fights Tybalt himself.", "scene": "Act 3, Scene 1"}, {"q": "How is Mercutio fatally wounded?", "answer": "Tybalt stabs him under Romeo's arm when Romeo steps between them.", "wrong": ["Tybalt stabs him in the back as he is walking away.", "Romeo's sword accidentally cuts him during the fight.", "One of Tybalt's servants attacks him from behind."], "hint": "Think about what Romeo does to try to stop the fight.", "why": "Romeo steps between the two men to stop the fight, and Tybalt stabs Mercutio under Romeo's arm. Romeo's attempt to make peace leads to his friend's death.", "scene": "Act 3, Scene 1"}, {"q": "As he dies, Mercutio cries, “A plague o’ both your houses!” What does he mean?", "answer": "He curses both the Montagues and the Capulets, blaming their feud for his death.", "wrong": ["He wishes that Tybalt and Romeo will both die before the day ends.", "He warns the crowd that a real disease is spreading through Verona.", "He asks the Prince to punish both families with heavy fines."], "hint": "Here, “houses” means families. Which two families are fighting in Verona?", "why": "Mercutio is neither a Montague nor a Capulet, but he dies because of their feud. So he curses both families.", "scene": "Act 3, Scene 1"}, {"q": "Romeo says that Juliet’s beauty has made him “effeminate.” What does he mean?", "answer": "His love for Juliet has made him too soft to defend his friend.", "wrong": ["His love for Juliet has made him strong enough to beat Tybalt.", "He is ashamed that he once loved Rosaline instead of Juliet.", "He wishes Juliet were there to watch him fight bravely."], "hint": "Here, “effeminate” means weak or too gentle.", "why": "Romeo blames his love for Juliet for making him too gentle to fight Tybalt. He believes this is why Mercutio died.", "scene": "Act 3, Scene 1"}, {"q": "Why does Romeo finally fight Tybalt?", "answer": "He wants revenge for Mercutio's death.", "wrong": ["Tybalt insults Juliet in front of the crowd.", "Benvolio orders him to defend the Montague name.", "Tybalt threatens to tell Lord Capulet about the marriage."], "hint": "What has just happened to Romeo's best friend?", "why": "When Tybalt comes back after killing Mercutio, Romeo's anger takes over and he fights to avenge his friend.", "scene": "Act 3, Scene 1"}, {"q": "After killing Tybalt, Romeo cries, “O, I am fortune’s fool!” What does he mean?", "answer": "Fate is playing with him and has turned his happiness into disaster.", "wrong": ["He has been foolish to spend so much money on his wedding.", "He believes Benvolio has tricked him into fighting Tybalt.", "He is pretending to be mad so that the Prince will forgive him."], "hint": "Here, “fortune” means fate or luck.", "why": "In one hour Romeo has gone from a happy new husband to the killer of his wife's cousin. He feels like a toy that fate is playing with.", "scene": "Act 3, Scene 1"}, {"q": "When Benvolio explains the fight to the Prince, how does Lady Capulet respond?", "answer": "She says Benvolio is lying because he is a Montague, and demands Romeo's death.", "wrong": ["She agrees that Tybalt started the fight and asks for mercy for Romeo.", "She faints and has to be carried home by her servants.", "She blames Mercutio and asks the Prince to banish his family."], "hint": "Lady Capulet is grieving for her nephew Tybalt.", "why": "Lady Capulet says Benvolio is a Montague, so he cannot be trusted, and she asks the Prince to sentence Romeo to death.", "scene": "Act 3, Scene 1"}, {"q": "What argument does Lord Montague make to save Romeo?", "answer": "Tybalt had killed Mercutio, so Romeo only did what the law would have done.", "wrong": ["Romeo was not in the street at the moment Tybalt was killed.", "Romeo should be forgiven because Mercutio started the fight.", "Romeo is too young to be punished under the laws of Verona."], "hint": "Montague points out that Tybalt was a killer too.", "why": "Montague argues that Tybalt would have been executed for killing Mercutio anyway, so Romeo only ended a life the law would have ended.", "scene": "Act 3, Scene 1"}, {"q": "What punishment does the Prince give Romeo?", "answer": "He banishes Romeo, who will be killed if he is found in Verona.", "wrong": ["He sentences Romeo to death by hanging the next morning.", "He orders Romeo to pay a heavy fine to the Capulets.", "He sends Romeo to prison until the families make peace."], "hint": "The Prince chooses a punishment that sends Romeo away.", "why": "The Prince banishes Romeo from Verona immediately and warns that if he is found in the city, he will be put to death.", "scene": "Act 3, Scene 1"}, {"q": "Why is the Prince personally hurt by the fighting in this scene?", "answer": "Mercutio, who has been killed, was his relative.", "wrong": ["Tybalt, who has been killed, was his nephew.", "Romeo, who killed Tybalt, is his godson.", "His own servant was killed during the fight."], "hint": "Mercutio was not a Montague or a Capulet. Whose family was he part of?", "why": "Mercutio was a relative of the Prince. The families' feud has now cost the Prince's own family a life.", "scene": "Act 3, Scene 1"}, {"q": "At the beginning of Act 3, Scene 2, how is Juliet feeling?", "answer": "Impatient for night to fall so that Romeo can come to her.", "wrong": ["Worried because she has heard rumors of a street fight.", "Guilty about lying to her parents about the wedding.", "Nervous about meeting Paris at the Capulet feast."], "hint": "Juliet has not heard about the fight yet. What is she waiting for?", "why": "Juliet begins the scene wishing the sun would set quickly so that night will bring Romeo to her. She does not yet know that Tybalt is dead.", "scene": "Act 3, Scene 2"}, {"q": "When the Nurse enters crying, “He’s dead,” whom does Juliet first believe has died?", "answer": "Romeo", "wrong": ["Tybalt", "Mercutio", "Paris"], "hint": "The Nurse is upset and does not say a name at first. Whom does Juliet fear for most?", "why": "The Nurse cries over a death without clearly saying whose, so Juliet fears the worst: that Romeo is dead.", "scene": "Act 3, Scene 2"}, {"q": "When Juliet learns that Romeo killed Tybalt, she calls him a “serpent heart, hid with a flowering face.” What does this show?", "answer": "She is shocked that someone who looks so good could do something so evil.", "wrong": ["She has decided that she never truly loved Romeo.", "She believes Tybalt was a cruel man who deserved to die.", "She admires the courage Romeo showed in the fight."], "hint": "Compare a “serpent” (snake) with a “flowering face.”", "why": "Juliet uses opposites: a beautiful face hiding a snake's heart. She cannot believe that someone who looks so good could kill her cousin. She soon defends him again.", "scene": "Act 3, Scene 2"}, {"q": "How does Juliet react when the Nurse says, “Shame come to Romeo!”?", "answer": "She angrily defends Romeo and regrets speaking against her husband.", "wrong": ["She agrees with the Nurse and swears never to see Romeo again.", "She asks the Nurse to tell her parents about the secret marriage.", "She orders the Nurse to find Paris and bring him to her."], "hint": "Juliet's first loyalty is now to her husband.", "why": "As soon as the Nurse insults Romeo, Juliet turns on her and is sorry she spoke badly of her husband. Her loyalty to Romeo is stronger than her grief.", "scene": "Act 3, Scene 2"}, {"q": "Juliet says that one word has “slain ten thousand Tybalts.” Which news upsets her even more than Tybalt’s death?", "answer": "That Romeo has been banished", "wrong": ["That Romeo has been arrested", "That her father has chosen Paris", "That Mercutio has been killed"], "hint": "Which single word does Juliet keep repeating with horror?", "why": "The word is “banished.” For Juliet, losing Romeo to banishment feels worse than the deaths of ten thousand Tybalts.", "scene": "Act 3, Scene 2"}, {"q": "In Friar Laurence’s cell, Romeo says, “There is no world without Verona walls.” What does he mean?", "answer": "Life outside Verona, away from Juliet, would be no life at all.", "wrong": ["He has never traveled and is afraid of the world outside.", "The walls of Verona will protect him from the Prince.", "He plans to hide inside the city walls instead of leaving."], "hint": "Where is Juliet?", "why": "Juliet is inside Verona. For Romeo, the world outside the city has no Juliet in it, so banishment feels as bad as death.", "scene": "Act 3, Scene 3"}, {"q": "How does Friar Laurence view the Prince’s punishment?", "answer": "As an act of mercy, because the law could have sentenced Romeo to death", "wrong": ["As unfair, because Tybalt was the one who started the fight", "As too gentle, because Romeo deserves to die for his crime", "As a mistake that he will ask Lord Capulet to correct"], "hint": "What could the law have done to Romeo for killing someone?", "why": "The Friar tells Romeo that the Prince was kind: he changed a death sentence into banishment, so Romeo should be grateful.", "scene": "Act 3, Scene 3"}, {"q": "What does Romeo try to do after the Nurse describes Juliet’s grief?", "answer": "He draws a dagger to kill himself.", "wrong": ["He rushes out to find Juliet in daylight.", "He writes a farewell letter to Juliet.", "He begs the Nurse to hide him in the Capulet house."], "hint": "Romeo feels terrible guilt for hurting Juliet's family.", "why": "Hearing how much Juliet is suffering, Romeo tries to stab himself and has to be stopped. The Friar then tells him to act like a man.", "scene": "Act 3, Scene 3"}, {"q": "What is Friar Laurence’s plan for Romeo at the end of Act 3, Scene 3?", "answer": "Visit Juliet tonight, then go to Mantua until the Friar can arrange a pardon.", "wrong": ["Hide in the Friar's cell until the Prince forgets about the fight.", "Run away with Juliet to Mantua that same night and marry again there.", "Go to the Prince in the morning and ask for forgiveness in person."], "hint": "The Friar wants Romeo to see Juliet, but also to be safe outside Verona.", "why": "The Friar tells Romeo to spend the night with Juliet, leave for Mantua before morning, and wait there while the Friar tries to make the marriage public and win a pardon.", "scene": "Act 3, Scene 3"}, {"q": "In Act 3, Scene 4, what does Lord Capulet’s promise to Paris show?", "answer": "He is sure Juliet will obey him, so he agrees without asking her.", "wrong": ["He wants to wait until Juliet has finished mourning Tybalt.", "He wants Juliet to choose freely between Paris and other men.", "He secretly doubts that Paris is good enough for Juliet."], "hint": "Does Capulet ask Juliet what she wants?", "why": "Capulet tells Paris he is sure Juliet will do whatever her father decides, and he agrees to the marriage without asking her.", "scene": "Act 3, Scene 4"}, {"q": "On which day does Lord Capulet first set Juliet’s wedding to Paris?", "answer": "Thursday", "wrong": ["Wednesday", "Monday", "Saturday"], "hint": "Capulet thinks of an earlier day first, then decides it is too soon.", "why": "Capulet first thinks of Wednesday, decides it is too soon, and sets the wedding for Thursday. In Act 4 he moves it forward to Wednesday.", "scene": "Act 3, Scene 4"}, {"q": "Why does Juliet insist that the bird they hear is the nightingale and not the lark?", "answer": "She wants to believe it is still night so that Romeo will stay longer.", "wrong": ["She knows much more about birds than Romeo does.", "She wants Romeo to leave before the Nurse finds them.", "She believes that the song of the lark brings bad luck."], "hint": "One bird sings at night, the other sings at dawn.", "why": "The nightingale sings at night and the lark sings at dawn. Juliet wants it to still be night so Romeo does not have to leave.", "scene": "Act 3, Scene 5"}, {"q": "As Romeo leaves, Juliet says she sees him “as one dead in the bottom of a tomb.” What does this moment do?", "answer": "It foreshadows Romeo's death later in the play.", "wrong": ["It shows that Juliet wants Romeo to stay away for good.", "It reveals that Juliet has already planned to fake her death.", "It is a joke to make Romeo laugh before he leaves."], "hint": "What happens to Romeo at the end of the play?", "why": "Juliet's image of Romeo dead in a tomb hints at the ending: Romeo dies in the Capulet tomb. A hint like this is called foreshadowing.", "scene": "Act 3, Scene 5"}, {"q": "When Lady Capulet talks to Juliet about Romeo, Juliet’s answers have double meanings. Why does this create dramatic irony?", "answer": "Her mother thinks Juliet hates Romeo, but the audience knows she loves him.", "wrong": ["Her mother knows about the marriage, but Juliet does not realize it.", "Juliet thinks Romeo is dead, but the audience knows he is alive.", "The audience thinks Juliet hates Romeo, but her mother knows the truth."], "hint": "Dramatic irony happens when the audience knows something a character does not.", "why": "Juliet's words can sound like hatred or like love. Lady Capulet hears hatred, but the audience knows Juliet loves Romeo.", "scene": "Act 3, Scene 5"}, {"q": "How does Juliet respond when she hears that she must marry Paris on Thursday?", "answer": "She refuses, saying she would sooner marry Romeo, “whom you know I hate.”", "wrong": ["She happily agrees because she wants to forget Romeo quickly.", "She asks her mother for one more week to think about it.", "She agrees, but only if Romeo is pardoned by the Prince."], "hint": "Juliet uses a double meaning again. Is she really agreeing?", "why": "Juliet refuses. She says she would rather marry Romeo, whom her mother thinks she hates, than Paris. The audience hears the secret truth in her words.", "scene": "Act 3, Scene 5"}, {"q": "How does Lord Capulet react to Juliet’s refusal?", "answer": "He insults her and threatens to throw her out into the streets.", "wrong": ["He calmly agrees to delay the wedding until she is ready.", "He blames Lady Capulet for raising a disobedient daughter.", "He sends for Paris to come and persuade Juliet himself."], "hint": "Capulet is no longer the patient father from Act 1.", "why": "Capulet calls Juliet cruel names and says that if she will not marry Paris, she can beg, starve and die in the streets.", "scene": "Act 3, Scene 5"}, {"q": "Lady Capulet says, “I would the fool were married to her grave!” Why is this line powerful for the audience?", "answer": "It foreshadows Juliet's death and the tomb that waits for her.", "wrong": ["It shows Lady Capulet secretly supports Juliet's love for Romeo.", "It reveals that Lady Capulet knows about the secret marriage.", "It is a joke that makes the angry scene less serious."], "hint": "Where does Juliet end up at the end of the play?", "why": "Lady Capulet says it in anger, but the audience knows Juliet will end up in the tomb. The line foreshadows her death.", "scene": "Act 3, Scene 5"}, {"q": "What advice does the Nurse give Juliet after her parents leave?", "answer": "To marry Paris, because Romeo is banished and Paris is the better man", "wrong": ["To run away to Mantua and join Romeo there", "To tell her parents the whole truth about her marriage", "To pretend to be ill until her father calms down"], "hint": "The Nurse thinks in a practical way and wants to keep Juliet safe.", "why": "The Nurse says Romeo is banished and will never come back, so Juliet should marry Paris, who she says is the better man.", "scene": "Act 3, Scene 5"}, {"q": "What does Juliet decide at the end of Act 3?", "answer": "To stop trusting the Nurse and go to Friar Laurence for help", "wrong": ["To obey her father and marry Paris on Thursday", "To write to Romeo and beg him to return at once", "To go to the Prince and ask him to stop the wedding"], "hint": "Who is the only adult left who knows about the marriage?", "why": "Alone, Juliet calls the Nurse wicked, decides never to trust her again, and goes to Friar Laurence for a solution.", "scene": "Act 3, Scene 5"}]}, {"name": "Act 4", "questions": [{"q": "Why is Paris at Friar Laurence’s cell at the start of Act 4?", "answer": "To arrange his wedding to Juliet on Thursday", "wrong": ["To confess that he has quarreled with Romeo", "To ask the Friar to make Juliet fall in love with him", "To collect medicine for the sick Lord Capulet"], "hint": "Paris is happy and in a hurry.", "why": "Paris visits the Friar to arrange the wedding for Thursday. The Friar is worried because he knows Juliet is already married.", "scene": "Act 4, Scene 1"}, {"q": "According to Paris, why is Lord Capulet hurrying the wedding?", "answer": "He thinks marriage will stop Juliet's great grief for Tybalt.", "wrong": ["He is worried that Romeo will return and marry Juliet.", "He is ill and wants to see Juliet married before he dies.", "He wants to show the Montagues how powerful he is."], "hint": "Capulet thinks Juliet is crying for her cousin.", "why": "Paris explains that Capulet thinks Juliet's tears are for Tybalt, and that a wedding will stop her grief.", "scene": "Act 4, Scene 1"}, {"q": "The Friar says in an aside, “I would I knew not why it should be slowed.” What does this show?", "answer": "The Friar knows a secret reason why the wedding must not happen.", "wrong": ["The Friar thinks Paris is far too old to marry Juliet.", "The Friar is too busy to perform a wedding on Thursday.", "The Friar does not understand why Paris is in such a hurry."], "hint": "In an aside, only the audience hears the words. What does the Friar know that Paris does not?", "why": "The Friar privately wishes he did not know why the wedding should be delayed. He knows Juliet is already Romeo's wife.", "scene": "Act 4, Scene 1"}, {"q": "What does Juliet threaten to do if Friar Laurence cannot help her?", "answer": "Kill herself with a knife", "wrong": ["Tell her father about the marriage", "Run away from Verona alone", "Poison Paris on the wedding day"], "hint": "Juliet would rather die than marry Paris.", "why": "Juliet shows the Friar a knife and says she will kill herself if he cannot find a way to stop the marriage.", "scene": "Act 4, Scene 1"}, {"q": "Juliet says she would rather leap from a tower, be chained with roaring bears, or lie hidden with the dead than marry Paris. What do these images show?", "answer": "She will face any horror rather than be unfaithful to Romeo.", "wrong": ["She has always been fascinated by danger and death.", "She is trying to frighten the Friar into refusing to help.", "She hopes Paris will hear her and give up the wedding."], "hint": "Look at how frightening each image is.", "why": "Juliet lists terrible things to show she would face anything, even death, rather than betray Romeo by marrying Paris.", "scene": "Act 4, Scene 1"}, {"q": "What does Friar Laurence tell Juliet to do when she gets home?", "answer": "Agree to marry Paris and sleep alone on Wednesday night.", "wrong": ["Refuse Paris again and lock herself in her room.", "Confess the marriage to her mother but not her father.", "Pack her things and wait for Romeo to come for her."], "hint": "The Friar's plan starts with Juliet pretending.", "why": "The Friar tells Juliet to go home happily, agree to marry Paris, and sleep alone on Wednesday night so she can drink the potion without the Nurse.", "scene": "Act 4, Scene 1"}, {"q": "For how long will the Friar’s potion make Juliet appear dead?", "answer": "Forty-two hours", "wrong": ["Twenty-four hours", "Twelve hours", "Three full days"], "hint": "It is a little less than two full days.", "why": "The Friar says the potion will make Juliet seem dead for forty-two hours. Then she will wake up as if from a pleasant sleep.", "scene": "Act 4, Scene 1"}, {"q": "According to the Friar’s plan, where will Juliet’s “dead” body be taken?", "answer": "The Capulet family vault", "wrong": ["The Montague family tomb", "Friar Laurence's cell", "A grave outside the city walls"], "hint": "Where are the dead members of Juliet's family placed?", "why": "Juliet will be carried to the old vault where all the Capulets are buried. This is where Romeo can find her when she wakes.", "scene": "Act 4, Scene 1"}, {"q": "How will Romeo learn about the Friar’s plan?", "answer": "The Friar will send him a letter in Mantua.", "wrong": ["Juliet will secretly write to him herself.", "The Nurse will travel to Mantua to tell him.", "His servant Balthasar will explain it to him."], "hint": "The Friar will contact Romeo in writing.", "why": "The Friar plans to send a letter to Romeo in Mantua so he can come to the tomb when Juliet wakes. In Act 5, this letter never reaches Romeo.", "scene": "Act 4, Scene 1"}, {"q": "When Juliet returns home in Act 4, Scene 2, what does she do?", "answer": "She kneels, asks her father's pardon, and promises to obey him.", "wrong": ["She tells her father she will run away if he forces her to marry.", "She asks her mother to cancel the wedding feast.", "She goes straight to bed without speaking to anyone."], "hint": "Juliet is following the Friar's plan and pretending.", "why": "Juliet kneels, asks her father to forgive her, and promises to obey him. This pretending is the first step of the Friar's plan.", "scene": "Act 4, Scene 2"}, {"q": "How does Lord Capulet’s reaction to Juliet’s apology affect the Friar’s plan?", "answer": "He moves the wedding to Wednesday, so Juliet must take the potion a day early.", "wrong": ["He cancels the wedding, so the potion is no longer needed.", "He delays the wedding to Friday, giving the Friar more time.", "He invites Romeo to the wedding as a sign of peace."], "hint": "Capulet is so happy that he rushes things.", "why": "Delighted, Capulet moves the wedding forward one day to Wednesday. Juliet has to drink the potion a night early, which upsets the Friar's timing.", "scene": "Act 4, Scene 2"}, {"q": "In Act 4, Scene 3, why does Juliet place a dagger beside her bed?", "answer": "If the potion does not work, she will kill herself rather than marry Paris.", "wrong": ["She is afraid that the Montagues will attack her in the night.", "She plans to use it on the Nurse if the Nurse enters the room.", "She wants the dagger to be buried with her in the family tomb."], "hint": "Juliet has a back-up plan in case the potion fails.", "why": "Juliet says that if the mixture does not work, the dagger will stop the marriage: she will use it on herself.", "scene": "Act 4, Scene 3"}, {"q": "Before drinking the potion, what fear does Juliet express about the Friar?", "answer": "That it is really poison, meant to hide his part in her first marriage", "wrong": ["That he will tell her parents everything about her plan", "That he secretly wants her to marry Paris after all", "That he has already told Paris about her love for Romeo"], "hint": "Juliet wonders whether the Friar might want to protect himself.", "why": "Juliet worries the Friar has given her poison so that no one will find out he married her to Romeo. Then she decides he is a holy man and would not do that.", "scene": "Act 4, Scene 3"}, {"q": "Just before she drinks, whom does Juliet imagine she sees?", "answer": "Tybalt's ghost looking for Romeo", "wrong": ["Mercutio's ghost cursing her family", "Romeo lying dead in the street", "Paris waiting for her at the church"], "hint": "Think about who has just been placed in the Capulet tomb.", "why": "Juliet imagines Tybalt's ghost searching for Romeo, who killed him. She cries out for it to stop, then drinks the potion.", "scene": "Act 4, Scene 3"}, {"q": "Who discovers Juliet’s “dead” body on the morning of the wedding?", "answer": "The Nurse", "wrong": ["Lady Capulet", "Lord Capulet", "Paris"], "hint": "Who would normally come to wake Juliet in the morning?", "why": "The Nurse comes to wake Juliet for the wedding and finds her apparently dead.", "scene": "Act 4, Scene 5"}, {"q": "Lord Capulet says, “Death lies on her like an untimely frost / Upon the sweetest flower of all the field.” What does this comparison suggest?", "answer": "Juliet has died too young, like a flower killed by an early frost.", "wrong": ["Juliet's body is cold because she was left outside in the garden.", "Juliet was never as beautiful as people believed her to be.", "Winter has come unusually early to Verona this year."], "hint": "“Untimely” means coming too early. What does an early frost do to a young flower?", "why": "An untimely frost kills a flower before it can bloom. Capulet means Juliet has died young, before her life could grow.", "scene": "Act 4, Scene 5"}, {"q": "Why is Act 4, Scene 5 full of dramatic irony?", "answer": "The family mourns Juliet as dead, but the audience knows she is alive.", "wrong": ["The audience thinks Juliet is dead, but the family knows she is alive.", "Paris knows about Juliet's marriage to Romeo, but the family does not.", "The Nurse knows about the potion but pretends to cry for Juliet."], "hint": "Who knows about the potion: the family, or the audience?", "why": "Her family and Paris grieve for Juliet, but the audience knows she has only taken the Friar's potion and will wake up.", "scene": "Act 4, Scene 5"}, {"q": "After Juliet is found “dead,” what does Lord Capulet say will happen to the wedding preparations?", "answer": "They will be used for her funeral instead: the music, feast, and flowers.", "wrong": ["They will be saved so that Paris can marry another Capulet.", "They will be sent to the Montagues as a gift of peace.", "They will be given to the poor people of Verona."], "hint": "The celebration turns into its opposite.", "why": "Capulet says everything prepared for the wedding will now serve the funeral: the music becomes sad bells, the feast a funeral meal, and the bridal flowers go on her body.", "scene": "Act 4, Scene 5"}]}]}</script>
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("quiz-data").textContent);
+  var QS = [];
+  DATA.sections.forEach(function (s) { s.questions.forEach(function (q) { QS.push(q); }); });
+  var N = QS.length;
+  var KEY = "onur-rj:" + DATA.id;
+  var STAR = "M12 2.5l2.8 6.2 6.7.7-5 4.5 1.4 6.6L12 17.2 6.1 20.5l1.4-6.6-5-4.5 6.7-.7z";
+  var LETTERS = ["A", "B", "C", "D"];
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---- sky ----
+  (function () {
+    var sky = $("sky"), html = "";
+    for (var i = 0; i < 70; i++) {
+      var s = (Math.random() < .15) ? 3 : 2;
+      html += '<i style="left:' + (Math.random() * 100).toFixed(2) + '%;top:' + (Math.random() * 70).toFixed(2) +
+        '%;width:' + s + 'px;height:' + s + 'px;animation-delay:' + (Math.random() * 4).toFixed(2) + 's"></i>';
+    }
+    sky.innerHTML = html;
+  })();
+
+  // ---- storage (never required) ----
+  function load() { try { var r = localStorage.getItem(KEY); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function wipe() { try { localStorage.removeItem(KEY); } catch (e) {} }
+
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  var S = null;      // saved state
+  var cur = null;    // current question view state (not saved): {qi, opts, answered}
+
+  function newState(pool, practice) {
+    var st = { v: 1, name: ($("student-name").value || "").trim(), started: Date.now(), practice: !!practice,
+      pool: pool, round: 1, order: pool.slice(), pos: 0, next: [], streak: 0, best: 0, q: {} };
+    pool.forEach(function (i) { st.q[i] = { first: null, misses: 0, cleared: false }; });
+    return st;
+  }
+
+  function show(id) {
+    ["screen-start", "screen-play", "screen-between", "screen-results"].forEach(function (s) { $(s).hidden = (s !== id); });
+    window.scrollTo(0, 0);
+  }
+
+  function boardHTML(activeQi) {
+    var h = "";
+    S.pool.forEach(function (i) {
+      var st = S.q[i], c = "cell";
+      if (st.cleared) c += st.first ? " first" : " later";
+      else if (st.misses > 0) c += " missed";
+      if (i === activeQi) c += " now";
+      h += '<div class="' + c + '" data-i="' + i + '"><svg viewBox="0 0 24 24"><path d="' + STAR + '"/></svg></div>';
+    });
+    return h;
+  }
+  function clearedCount() { return S.pool.filter(function (i) { return S.q[i].cleared; }).length; }
+  function firstCount() { return S.pool.filter(function (i) { return S.q[i].first === true; }).length; }
+
+  // ---- start screen ----
+  function initStart() {
+    var saved = load();
+    if (saved && saved.v === 1 && saved.pool && clearedCount.call(null, S = saved) < saved.pool.length) {
+      $("resume").hidden = false;
+      $("resume-text").textContent = (saved.name ? saved.name + ", you have " : "You have ") + clearedCount() + " of " + saved.pool.length + " stars lit (round " + saved.round + ").";
+      $("student-name").value = saved.name || "";
+    } else { S = null; $("resume").hidden = true; }
+    show("screen-start");
+  }
+  $("btn-start").onclick = function () { S = newState(QS.map(function (_, i) { return i; }), false); save(); startQuestion(); };
+  $("btn-resume").onclick = function () {
+    if (S.pos >= S.order.length) { endRound(); return; }
+    startQuestion();
+  };
+  $("btn-restart").onclick = function () { wipe(); S = null; $("resume").hidden = true; $("student-name").focus(); };
+
+  // ---- play ----
+  function startQuestion() {
+    var qi = S.order[S.pos], q = QS[qi], st = S.q[qi];
+    cur = { qi: qi, opts: shuffle([q.answer].concat(q.wrong)), answered: false };
+    show("screen-play");
+    $("round-chip").innerHTML = (S.practice ? "Practice · " : "") + "Round " + S.round + "<small>" + (S.round === 1 ? "all questions" : "questions to clear") + "</small>";
+    $("q-scene").textContent = q.scene || "";
+    $("q-count").textContent = "Question " + (S.pos + 1) + " of " + S.order.length;
+    $("board").innerHTML = boardHTML(qi);
+    $("progress-line").textContent = clearedCount() + " of " + S.pool.length + " stars lit";
+    setStreak();
+    var tag = $("retry-tag");
+    if (st.misses > 0) { tag.hidden = false; tag.textContent = st.misses === 1 ? "Second try" : "Try " + (st.misses + 1); } else tag.hidden = true;
+    $("q-text").textContent = q.q;
+    var box = $("opts"); box.innerHTML = "";
+    cur.opts.forEach(function (o, k) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opt";
+      b.innerHTML = '<span class="key">' + LETTERS[k] + '</span><span class="txt">' + esc(o) + "</span>";
+      b.onclick = function () { choose(k); };
+      box.appendChild(b);
+    });
+    $("feedback").hidden = true; $("btn-next").hidden = true;
+    $("q-text").focus({ preventScroll: true });
+  }
+  function setStreak() {
+    $("streak-n").textContent = S.streak;
+    $("streak").classList.toggle("cold", S.streak === 0);
+  }
+
+  function choose(k) {
+    if (!cur || cur.answered) return;
+    cur.answered = true;
+    var qi = cur.qi, q = QS[qi], st = S.q[qi];
+    var right = cur.opts[k] === q.answer;
+    var btns = $("opts").querySelectorAll(".opt");
+    btns.forEach(function (b) { b.disabled = true; });
+    var fb = $("feedback");
+    if (right) {
+      if (st.first === null) st.first = true;
+      st.cleared = true;
+      S.streak++; if (S.streak > S.best) S.best = S.streak;
+      btns[k].classList.add("is-right");
+      btns.forEach(function (b, j) { if (j !== k) b.classList.add("is-dim"); });
+      fb.className = "feedback good";
+      fb.innerHTML = '<div class="fb-head">' + pick(["Correct!", "Well done!", "Exactly right!", "Yes!"]) + "</div><p>" + esc(q.why) + "</p>";
+    } else {
+      if (st.first === null) st.first = false;
+      st.misses++;
+      S.streak = 0;
+      S.next.push(qi);
+      btns[k].classList.add("is-wrong", "shake");
+      if (st.misses >= 3) {
+        btns.forEach(function (b, j) { if (cur.opts[j] === q.answer) b.classList.add("is-right"); else if (j !== k) b.classList.add("is-dim"); });
+        fb.className = "feedback reveal";
+        fb.innerHTML = '<div class="fb-head">Here is the answer</div><p><b>' + esc(q.answer) + "</b></p><p>" + esc(q.why) + '</p><p class="fb-note">This question will come back. Remember the answer for next time.</p>';
+      } else {
+        btns.forEach(function (b, j) { if (j !== k) b.classList.add("is-dim"); });
+        fb.className = "feedback bad";
+        fb.innerHTML = '<div class="fb-head">Not quite</div><p><b>Hint:</b> ' + esc(q.hint) + '</p><p class="fb-note">This question will come back in the next round.</p>';
+      }
+    }
+    fb.hidden = false;
+    setStreak();
+    var cell = $("board").querySelector('[data-i="' + qi + '"]');
+    $("board").innerHTML = boardHTML(-1);
+    cell = $("board").querySelector('[data-i="' + qi + '"]');
+    if (cell && right) cell.classList.add("pop");
+    $("progress-line").textContent = clearedCount() + " of " + S.pool.length + " stars lit";
+    S.pos++;
+    save();
+    var nb = $("btn-next");
+    nb.textContent = S.pos >= S.order.length ? "Finish round " + S.round : "Next question";
+    nb.hidden = false;
+    nb.focus({ preventScroll: true });
+    nb.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+  $("btn-next").onclick = function () {
+    if (S.pos >= S.order.length) endRound(); else startQuestion();
+  };
+
+  function endRound() {
+    if (S.next.length === 0) { results(); return; }
+    var left = S.next.length;
+    show("screen-between");
+    $("between-eyebrow").textContent = (S.practice ? "Practice · " : "") + "End of round " + S.round;
+    $("between-h").textContent = left === 1 ? "One star left to light" : left + " stars left to light";
+    $("between-big").innerHTML = clearedCount() + "<small> / " + S.pool.length + "</small>";
+    $("between-text").textContent = "The questions you missed come back now, in a new order. Read each hint carefully before you answer.";
+    $("board-between").innerHTML = boardHTML(-1);
+    $("btn-next-round").textContent = "Start round " + (S.round + 1);
+  }
+  $("btn-next-round").onclick = function () {
+    S.round++; S.order = shuffle(S.next); S.next = []; S.pos = 0; save(); startQuestion();
+  };
+
+  function results() {
+    show("screen-results");
+    var f = firstCount(), tot = S.pool.length, pct = Math.round(f / tot * 100);
+    $("results-eyebrow").textContent = S.practice ? "Practice complete" : "Every star is lit";
+    $("res-label").textContent = S.practice ? "Right first time in this practice" : "First-try score";
+    $("res-big").innerHTML = f + "<small> / " + tot + " · " + pct + "%</small>";
+    $("res-stats").innerHTML =
+      '<div class="stat"><b>' + S.round + '</b><span>' + (S.round === 1 ? "round" : "rounds") + '</span></div>' +
+      '<div class="stat"><b>' + S.best + '</b><span>best streak</span></div>' +
+      '<div class="stat"><b>' + (tot - f) + '</b><span>to revise</span></div>';
+    $("board-results").innerHTML = boardHTML(-1);
+    var miss = S.pool.filter(function (i) { return S.q[i].first === false; });
+    $("tricky-block").hidden = miss.length === 0;
+    $("tricky").innerHTML = miss.map(function (i) {
+      var q = QS[i], m = S.q[i].misses;
+      return '<li><span class="tq">' + esc(q.q) + '</span><span class="ta">' + esc(q.answer) + '</span><span class="tm">' + esc(q.scene || "") + " · missed " + m + (m === 1 ? " time" : " times") + "</span></li>";
+    }).join("");
+    $("btn-practice").hidden = miss.length === 0;
+    var d = new Date();
+    $("who").innerHTML = "<span>Name: <b>" + esc(S.name || "—") + "</b></span><span>" + d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) + "</span>";
+    S.done = true; save();
+  }
+  $("btn-practice").onclick = function () {
+    var miss = S.pool.filter(function (i) { return S.q[i].first === false; });
+    var name = S.name;
+    $("student-name").value = name || "";
+    S = newState(miss, true); S.name = name; save(); startQuestion();
+  };
+  $("btn-again").onclick = function () {
+    var name = S.name; wipe();
+    $("student-name").value = name || "";
+    S = null; $("resume").hidden = true; show("screen-start");
+  };
+
+  // ---- keyboard ----
+  document.addEventListener("keydown", function (e) {
+    if (e.target && e.target.tagName === "INPUT") { if (e.key === "Enter") $("btn-start").click(); return; }
+    if (!$("screen-play").hidden) {
+      var k = "1234".indexOf(e.key); if (k < 0) k = "abcd".indexOf(e.key.toLowerCase());
+      if (k >= 0 && cur && !cur.answered) { choose(k); e.preventDefault(); return; }
+      if (e.key === "Enter" && cur && cur.answered) { $("btn-next").click(); e.preventDefault(); }
+    } else if (!$("screen-between").hidden && e.key === "Enter") { $("btn-next-round").click(); e.preventDefault(); }
+  });
+
+  initStart();
+})();
+</script>
+</body>
+</html>
