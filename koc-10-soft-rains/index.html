@@ -1,0 +1,1275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Soft Rains Writing Lab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a rain-washed spring garden. Fine rain streaks on sage paper, plum-blossom highlights,
+   robin-red accent. Levels are garden beds; answers bloom, or wait for the next shower. */
+:root {
+  --paper: #E8EFE6;
+  --grid: rgba(70, 112, 130, .13);
+  --margin: transparent;
+  --card: #FBFCF8;
+  --ink: #1D2A24;
+  --muted: #55665D;
+  --line: #D2DDD0;
+  --soft: #F0F5ED;
+  --cobalt: #B5432A;
+  --marker: #E2A0BA;
+  --marker-soft: #F8E6ED;
+  --marker-ink: #7A2846;
+  --right: #2E7853; --right-soft: #DCEFE3;
+  --wrong: #B3261E; --wrong-soft: #F8DEDA;
+  --boss: #24343B; --boss-ink: #F3F7F2;
+  --sky: #4F7A8C;
+  --shadow: 0 1px 0 rgba(29, 42, 36, .05), 0 10px 26px rgba(40, 70, 80, .10);
+  --f-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #101916; --grid: rgba(140, 180, 196, .07); --card: #18231F; --ink: #E5EDE6; --muted: #9DB0A5; --line: #2B3A33; --soft: #1D2925;
+    --cobalt: #F08A6E; --marker: #E59BB6; --marker-soft: #3A2230; --marker-ink: #F6C3D5;
+    --right: #6FD09B; --right-soft: #16301F; --wrong: #FF8A7C; --wrong-soft: #3E1D1A;
+    --boss: #DCE6E0; --boss-ink: #101916; --sky: #8DB7C9;
+    --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 10px 26px rgba(0, 0, 0, .45);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #101916; --grid: rgba(140, 180, 196, .07); --card: #18231F; --ink: #E5EDE6; --muted: #9DB0A5; --line: #2B3A33; --soft: #1D2925;
+  --cobalt: #F08A6E; --marker: #E59BB6; --marker-soft: #3A2230; --marker-ink: #F6C3D5;
+  --right: #6FD09B; --right-soft: #16301F; --wrong: #FF8A7C; --wrong-soft: #3E1D1A;
+  --boss: #DCE6E0; --boss-ink: #101916; --sky: #8DB7C9;
+  --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 10px 26px rgba(0, 0, 0, .45);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; min-height: 100vh;
+  background-color: var(--paper);
+  background-image:
+    repeating-linear-gradient(104deg, transparent 0 34px, var(--grid) 34px 35px, transparent 35px 71px),
+    linear-gradient(180deg, color-mix(in srgb, var(--sky) 14%, transparent), transparent 420px);
+}
+.wrap { max-width: 740px; margin: 0 auto; padding-block: 14px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; line-height: 1.1; text-wrap: balance; font-weight: 800; font-stretch: 100%; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+.mono { font-family: var(--f-mono); }
+
+/* Header */
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #fff; border-radius: 10px; padding: 4px 6px; flex: none; box-shadow: var(--shadow); display: grid; place-items: center; }
+.logo img { width: 68px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-display); font-weight: 800; font-size: 1.12rem; line-height: 1.15; font-stretch: 112%; }
+.top-sub { color: var(--muted); font-size: .85rem; }
+
+.card { background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 14px; border: 1px solid var(--line); }
+
+/* Buttons */
+.btn {
+  appearance: none; border: 2px solid var(--ink); border-radius: 10px; padding: 12px 20px; font-family: var(--f-display); font-weight: 800; font-size: 1.05rem; font-stretch: 110%;
+  letter-spacing: .01em; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px;
+  background: var(--ink); color: var(--paper); box-shadow: 3px 3px 0 var(--cobalt); transition: transform .08s, box-shadow .08s;
+}
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--cobalt); }
+.btn-ghost { background: var(--card); color: var(--ink); box-shadow: 3px 3px 0 var(--line); }
+.btn-ghost:active { box-shadow: 1px 1px 0 var(--line); }
+.btn-marker { background: var(--marker); color: #2A2100; border-color: #2A2100; box-shadow: 3px 3px 0 var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Welcome */
+.hero { padding-block: 26px; gap: 16px; }
+.eyebrow { font-family: var(--f-mono); font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cobalt); }
+.hero h1 { font-size: clamp(2.3rem, 10vw, 3.6rem); font-stretch: 125%; font-weight: 900; letter-spacing: -.01em; }
+.hero h1 .strike { position: relative; display: inline-block; color: var(--muted); }
+.hero h1 .strike::after { content: ""; position: absolute; left: -4%; right: -4%; top: 52%; height: .12em; background: var(--wrong); transform: rotate(-4deg); border-radius: 4px; }
+.hero h1 .fact { background: linear-gradient(transparent 58%, var(--marker) 58%); padding: 0 .08em; }
+.hero .sub { color: var(--muted); font-size: 1.05rem; max-width: 34em; }
+.claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; }
+.claim { border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; background: var(--soft); }
+.claim b { font-weight: 700; }
+.claim span { font-family: var(--f-mono); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.claim .m { color: var(--wrong); } .claim .v { color: var(--right); }
+.field { display: flex; flex-direction: column; gap: 6px; max-width: 380px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input { font: inherit; font-size: 1.1rem; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--line); background: var(--soft); color: var(--ink); }
+.field input:focus { border-color: var(--cobalt); outline: none; }
+.hero .btn { max-width: 380px; }
+
+/* Player strip */
+.player { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; }
+.avatar { width: 50px; height: 50px; border-radius: 10px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 900; font-size: 1.4rem; color: var(--paper); background: var(--ink); box-shadow: 3px 3px 0 var(--marker); }
+.player-name { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; line-height: 1.1; overflow-wrap: anywhere; }
+.rank { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--marker-ink); background: var(--marker-soft); padding: 2px 8px; border-radius: 6px; margin-top: 6px; }
+.totals { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-family: var(--f-mono); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.totals .stars-total { font-size: 1.05rem; }
+.totals .xp { font-size: .82rem; color: var(--muted); }
+.rank-bar { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 4px; }
+.rank-bar .track { height: 8px; background: var(--soft); border-radius: 4px; overflow: hidden; border: 1px solid var(--line); }
+.rank-bar .fill { height: 100%; background: var(--cobalt); transition: width .6s; }
+.rank-bar small { color: var(--muted); font-size: .8rem; }
+
+/* Map */
+.map-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 10px; padding-inline: 2px; }
+.map-title h2 { font-size: 1.4rem; font-stretch: 115%; }
+.map-title small { color: var(--muted); font-family: var(--f-mono); font-size: .78rem; }
+.levels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 420px) { .levels { grid-template-columns: 1fr; } }
+.lvl {
+  appearance: none; text-align: left; cursor: pointer; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; position: relative; min-width: 0; transition: transform .1s, border-color .15s;
+}
+.lvl:active { transform: translateY(2px); }
+@media (hover: hover) { .lvl:hover { border-color: var(--c); transform: translateY(-2px); } }
+.lvl-head { display: flex; align-items: center; gap: 10px; }
+.lvl-icon { width: 44px; height: 44px; flex: none; border-radius: 10px; display: grid; place-items: center; font-size: 1.45rem; background: color-mix(in srgb, var(--c) 16%, transparent); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); }
+.lvl-num { font-family: var(--f-mono); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+.lvl-name { font-family: var(--f-display); font-weight: 800; font-size: 1.06rem; line-height: 1.15; font-stretch: 105%; }
+.lvl-topic { font-size: .85rem; color: var(--muted); line-height: 1.35; }
+.lvl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); }
+.dots { display: inline-flex; gap: 5px; align-items: center; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--c, var(--cobalt)); display: inline-block; }
+.dots i.on { background: var(--c, var(--cobalt)); }
+.lvl-status { font-family: var(--f-mono); font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+.lvl-status.go { background: color-mix(in srgb, var(--c) 16%, transparent); color: var(--ink); }
+.lvl.boss { grid-column: 1 / -1; background: var(--boss); color: var(--boss-ink); border-color: var(--boss); }
+.lvl.boss .lvl-icon { background: color-mix(in srgb, var(--marker) 25%, transparent); border-color: var(--marker); }
+.lvl.boss .lvl-num { color: var(--marker); }
+.lvl.boss .lvl-topic { color: color-mix(in srgb, var(--boss-ink) 75%, transparent); }
+.lvl.boss .lvl-foot { border-top-color: color-mix(in srgb, var(--boss-ink) 25%, transparent); }
+.lvl.boss .lvl-status { background: color-mix(in srgb, var(--boss-ink) 14%, transparent); color: var(--boss-ink); }
+.lvl.boss .dots i { border-color: var(--marker); }
+.lvl.boss .dots i.on { background: var(--marker); }
+.group-h { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 10px 2px 0; border-bottom: 2px solid var(--ink); }
+.group-h h3 { font-size: 1.15rem; font-stretch: 118%; text-transform: uppercase; letter-spacing: .03em; }
+.group-h small { color: var(--muted); font-family: var(--f-mono); font-size: .75rem; font-weight: 700; }
+.how p { display: flex; gap: 10px; }
+.how p b.k { font-family: var(--f-mono); flex: none; width: 1.6em; color: var(--cobalt); }
+.tiny-links { display: flex; justify-content: center; gap: 16px; font-size: .85rem; color: var(--muted); }
+.link { appearance: none; background: none; border: 0; padding: 4px; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.confirm { border: 2px solid var(--wrong); }
+.confirm .btn-row .btn { flex: 1 1 140px; }
+
+/* Play */
+.play-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.back { appearance: none; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); border-radius: 10px; padding: 8px 14px; font-weight: 700; cursor: pointer; min-height: 44px; }
+.chips { display: flex; gap: 8px; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 8px; padding: 6px 10px; font-family: var(--f-mono); font-weight: 700; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.chip.cold { opacity: .55; }
+.chip.hot { animation: bump .45s; }
+@keyframes bump { 40% { transform: scale(1.18); } }
+.lvl-banner { display: flex; align-items: center; gap: 12px; }
+.lvl-banner .lvl-icon { width: 48px; height: 48px; }
+.lvl-banner .r { font-family: var(--f-mono); font-size: .76rem; color: var(--muted); font-weight: 700; letter-spacing: .03em; }
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(16px, 1fr)); gap: 4px; }
+.cell { aspect-ratio: 1; border-radius: 3px; background: var(--soft); border: 1px solid var(--line); }
+.cell.first { background: var(--marker); border-color: color-mix(in srgb, var(--marker) 60%, #000); }
+.cell.later { background: var(--c, var(--cobalt)); border-color: var(--c, var(--cobalt)); }
+.cell.missed { background: var(--wrong-soft); border: 2px solid var(--wrong); }
+.cell.now { outline: 2px solid var(--ink); outline-offset: 1px; }
+.cell.pop { animation: pop .45s ease-out; }
+@keyframes pop { 0% { transform: scale(.3); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.board-meta { display: flex; justify-content: space-between; gap: 8px; font-family: var(--f-mono); font-size: .76rem; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+.retry-tag { align-self: flex-start; font-family: var(--f-mono); font-size: .74rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; background: var(--wrong-soft); color: var(--wrong); }
+.q-note { font-size: .9rem; color: var(--muted); font-weight: 700; margin-bottom: -4px; }
+.q-fig { border: 1px solid var(--line); border-radius: 10px; background: var(--soft); padding: 10px; overflow-x: auto; }
+.q-fig svg { display: block; width: 100%; height: auto; max-width: 560px; margin: 0 auto; }
+.q-fig .cap { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); text-align: right; margin-top: 4px; }
+.q-fig table { border-collapse: collapse; width: 100%; font-size: .72rem; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.q-fig th, .q-fig td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+.q-fig td:first-child, .q-fig thead th { white-space: normal; }
+.q-fig th, .q-fig td { padding-inline: 3px; }
+@media (min-width: 500px) { .q-fig table { font-size: .92rem; } .q-fig th, .q-fig td { padding: 6px 8px; } }
+.q-fig th:first-child, .q-fig td:first-child { text-align: left; }
+.q-fig thead th { font-family: var(--f-mono); font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-bottom: 2px solid var(--ink); }
+.q-fig tfoot td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 0; }
+.q-fig .ftitle { font-family: var(--f-display); font-weight: 800; font-size: .95rem; margin-bottom: 6px; }
+.fig-axis { stroke: var(--muted); stroke-width: 1; fill: none; }
+.fig-gridl { stroke: var(--line); stroke-width: 1; fill: none; }
+.fig-line { stroke: var(--cobalt); stroke-width: 3; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.fig-pt { fill: var(--card); stroke: var(--cobalt); stroke-width: 2; }
+.fig-bar { fill: var(--ink); }
+.fig-t { fill: var(--muted); font-family: var(--f-body); font-size: 12px; }
+.fig-tb { fill: var(--ink); font-family: var(--f-body); font-size: 13px; font-weight: 700; }
+.fig-title { fill: var(--ink); font-family: var(--f-display); font-size: 16px; font-weight: 800; }
+
+.q-text { font-family: var(--f-display); font-weight: 700; font-stretch: 100%; font-size: clamp(1.2rem, 4.6vw, 1.48rem); line-height: 1.35; white-space: pre-line; }
+.q-text .hl { background: linear-gradient(transparent 55%, var(--marker) 55%); padding: 0 3px; color: inherit; font-weight: 800; }
+.q-text .gap { display: inline-block; min-width: 3.2em; border-bottom: 3px solid var(--c, var(--cobalt)); height: 1em; vertical-align: baseline; }
+
+.opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.opt {
+  appearance: none; text-align: left; border: 2px solid var(--line); background: var(--card); border-radius: 10px; padding: 11px 12px;
+  display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 58px; min-width: 0;
+  transition: transform .08s, border-color .15s, background .15s; font-weight: 700; font-size: 1.03rem;
+}
+.opt:active:not(:disabled) { transform: translateY(2px); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--c, var(--cobalt)); } }
+.opt .key { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-family: var(--f-mono); font-weight: 700; background: var(--soft); border: 1px solid var(--line); }
+.opt .txt { min-width: 0; overflow-wrap: anywhere; }
+.opt:disabled { cursor: default; }
+.opt.is-right { border-color: var(--right); background: var(--right-soft); }
+.opt.is-right .key { background: var(--right); color: var(--card); border-color: var(--right); }
+.opt.is-wrong { border-color: var(--wrong); background: var(--wrong-soft); }
+.opt.is-wrong .key { background: var(--wrong); color: var(--card); border-color: var(--wrong); }
+.opt.is-dim { opacity: .45; }
+.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+.feedback { border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; border: 2px solid transparent; }
+.feedback.good { background: var(--right-soft); border-color: color-mix(in srgb, var(--right) 40%, transparent); }
+.feedback.bad { background: var(--wrong-soft); border-color: color-mix(in srgb, var(--wrong) 40%, transparent); }
+.feedback.reveal { background: var(--marker-soft); border-color: color-mix(in srgb, var(--marker) 70%, transparent); }
+.stamp { align-self: flex-start; font-family: var(--f-mono); font-weight: 700; font-size: .95rem; letter-spacing: .14em; text-transform: uppercase; padding: 3px 10px; border: 3px double currentColor; border-radius: 6px; transform: rotate(-3deg); }
+.feedback.good .stamp { color: var(--right); }
+.feedback.bad .stamp { color: var(--wrong); }
+.feedback.reveal .stamp { color: var(--marker-ink); }
+.stamp.thud { animation: thud .35s ease-out; }
+@keyframes thud { 0% { transform: rotate(-3deg) scale(1.8); opacity: 0; } 100% { transform: rotate(-3deg) scale(1); opacity: 1; } }
+.fb-head { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.fb-xp { font-family: var(--f-mono); font-weight: 700; font-size: .85rem; color: var(--marker-ink); }
+.fb-answer { font-weight: 700; }
+
+/* Between + results */
+.center { text-align: center; align-items: center; }
+.big-num { font-family: var(--f-display); font-weight: 900; font-stretch: 120%; font-size: clamp(3rem, 15vw, 4.4rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big-num small { font-size: .36em; color: var(--muted); font-weight: 700; font-family: var(--f-mono); font-stretch: 100%; }
+.mega-dots { display: flex; gap: 14px; justify-content: center; }
+.mega-dots i { width: 34px; height: 34px; border-radius: 50%; border: 4px solid var(--c, var(--cobalt)); display: inline-block; }
+.mega-dots i.on { background: var(--c, var(--cobalt)); animation: dotpop .5s backwards; }
+@keyframes dotpop { 0% { transform: scale(0); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.stat { background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.stat b { font-family: var(--f-mono); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .78rem; color: var(--muted); text-align: center; }
+.tricky { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; text-align: left; width: 100%; }
+.tricky li { border-left: 4px solid var(--wrong); background: var(--soft); border-radius: 0 10px 10px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.tricky .tq { font-weight: 700; white-space: pre-line; }
+.tricky .ta { color: var(--right); font-weight: 700; }
+.tricky .tm { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .92rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 12px; width: 100%; }
+.who b { color: var(--ink); }
+.rank-up { background: var(--marker-soft); color: var(--marker-ink); font-weight: 700; padding: 8px 14px; border-radius: 10px; }
+
+/* Typed gaps */
+.q-lead { display: block; font-family: var(--f-body); font-size: 1rem; font-weight: 400; color: var(--ink); background: var(--soft); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; line-height: 1.45; white-space: normal; }
+.q-text.typed { line-height: 2.15; }
+.tglue { white-space: nowrap; }
+.tgap { display: inline-flex; align-items: baseline; white-space: nowrap; vertical-align: baseline; background: var(--marker-soft); border-bottom: 3px solid var(--c, var(--cobalt)); border-radius: 6px 6px 0 0; padding-left: 6px; }
+.tgap .first { font-family: var(--f-body); font-weight: 700; color: var(--marker-ink); }
+.tgap input { font: inherit; font-family: var(--f-body); font-weight: 700; color: var(--ink); width: 7em; max-width: 68vw; padding: 0 6px 0 0; line-height: 1.45; border: 0; border-radius: 0; background: transparent; }
+.tgap:not(:has(.first)) input { padding-left: 0; }
+.tgap.wide input { width: 10em; }
+.tgap.xwide input { width: 15em; }
+.tgap input:focus { outline: none; }
+.tgap:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--cobalt)) 40%, transparent); }
+.tgap input:disabled { opacity: 1; -webkit-text-fill-color: currentColor; }
+.tgap.ok { background: var(--right-soft); border-bottom-color: var(--right); }
+.tgap.ok input, .tgap.ok .first { color: var(--right); }
+.tgap.no { background: var(--wrong-soft); border-bottom-color: var(--wrong); }
+.tgap.no input, .tgap.no .first { color: var(--wrong); }
+.check-row { display: flex; }
+.check-row .btn { flex: 1; }
+
+.confetti { position: fixed; pointer-events: none; z-index: 50; width: 8px; height: 8px; border-radius: 50%; animation: fly .9s cubic-bezier(.2, .7, .4, 1) forwards; }
+@keyframes fly { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
+
+
+/* rain-garden extras */
+.btn { border-radius: 999px; border-color: var(--ink); box-shadow: 0 3px 0 color-mix(in srgb, var(--ink) 30%, transparent); font-family: var(--f-body); font-weight: 700; font-size: 1.04rem; letter-spacing: 0; }
+.btn:active { box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 30%, transparent); transform: translateY(2px); }
+.btn-ghost { box-shadow: 0 3px 0 var(--line); }
+.btn-marker { background: var(--marker); border-color: var(--marker-ink); color: #3D1024; box-shadow: 0 3px 0 var(--marker-ink); }
+.card { border-radius: 18px; }
+.hero { position: relative; overflow: hidden; }
+.hero::after { content: ""; position: absolute; right: -78px; top: -82px; width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--marker) 45%, transparent) 0 30%, transparent 31%),
+              radial-gradient(circle at 70% 70%, color-mix(in srgb, var(--marker) 30%, transparent) 0 22%, transparent 23%);
+  pointer-events: none; }
+.hero h1 { font-size: clamp(2.6rem, 12vw, 4rem); font-weight: 900; line-height: 1; }
+.hero h1 em { font-style: italic; color: var(--cobalt); font-weight: 700; }
+.hero h1 .drop { display: block; font-family: var(--f-mono); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--sky); font-weight: 600; margin-bottom: 8px; }
+.task-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+.task-strip div { background: var(--soft); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.task-strip b { font-family: var(--f-display); font-size: 1.35rem; line-height: 1.1; }
+.task-strip span { font-size: .82rem; color: var(--muted); }
+.eyebrow, .lvl-num, .rank, .chip, .board-meta, .stamp, .lvl-status, .map-title small, .group-h small { font-family: var(--f-mono); }
+.group-h { border-bottom: 2px solid color-mix(in srgb, var(--ink) 70%, transparent); }
+.group-h h3 { font-family: var(--f-display); text-transform: none; letter-spacing: 0; font-size: 1.25rem; font-style: italic; }
+.lvl { border-radius: 16px; }
+.lvl-name { font-family: var(--f-display); font-weight: 800; }
+.lvl-icon { border-radius: 50%; }
+.avatar { border-radius: 50%; background: var(--cobalt); box-shadow: 0 0 0 4px var(--marker-soft); }
+.start-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 420px) { .start-cards { grid-template-columns: 1fr; } }
+.start { appearance: none; text-align: left; cursor: pointer; border-radius: 16px; padding: 16px; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 6px; min-width: 0; color: var(--ink); }
+.start .si { font-size: 1.6rem; }
+.start b { font-family: var(--f-display); font-size: 1.2rem; font-weight: 800; line-height: 1.15; }
+.start span { font-size: .88rem; color: var(--muted); }
+.start.write { background: var(--boss); color: var(--boss-ink); border-color: var(--boss); }
+.start.write span { color: color-mix(in srgb, var(--boss-ink) 75%, transparent); }
+@media (hover: hover) { .start:hover { transform: translateY(-2px); } }
+.q-text { font-family: var(--f-body); font-weight: 700; font-size: clamp(1.12rem, 4.4vw, 1.36rem); }
+.q-text .hl { color: var(--cobalt); text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: .16em; text-underline-offset: .18em; background: none; padding: 0; }
+.q-fig { background: var(--card); border-left: 4px solid var(--sky); border-radius: 12px; }
+.stamp { border-radius: 999px; transform: rotate(-2deg); border-width: 2px; border-style: solid; margin-left: 6px; }
+
+/* poem */
+.poem { font-family: var(--f-display); font-size: 1.06rem; line-height: 1.6; }
+.poem .ptitle { font-weight: 800; font-size: 1.28rem; line-height: 1.2; }
+.poem .psub { font-style: italic; font-weight: 600; color: var(--muted); font-size: .9em; }
+.poem .pby { font-family: var(--f-mono); font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; color: var(--sky); margin: 4px 0 10px; }
+.poem .pl { display: grid; grid-template-columns: 2.1em 1fr; align-items: baseline; }
+.poem .ln { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); text-align: right; padding-right: .9em; }
+.poem .pgap { height: .55em; }
+.poem .psrc { font-family: var(--f-body); font-size: .78rem; color: var(--muted); margin-top: 12px; }
+.peek { border: 1px dashed var(--line); border-radius: 12px; padding: 8px 12px; background: var(--soft); }
+.peek summary { cursor: pointer; font-weight: 700; color: var(--sky); }
+.peek[open] summary { margin-bottom: 8px; }
+
+/* notes */
+.notes-wrap { display: flex; flex-direction: column; gap: 14px; }
+.note { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.note h3 { font-size: 1.35rem; font-weight: 800; }
+.note h4 { font-family: var(--f-display); font-size: 1.08rem; margin: 6px 0 0; }
+.note p { margin: 0; }
+.note.task { border-top: 6px solid var(--cobalt); }
+.note.poemsec { border-left: 6px solid var(--sky); }
+.note .intro { background: var(--soft); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 14px; font-style: italic; }
+.gloss { display: grid; grid-template-columns: minmax(0, 10em) 1fr; gap: 6px 14px; margin: 0; }
+.gloss dt { font-weight: 700; }
+.gloss dd { margin: 0; color: var(--ink); }
+@media (max-width: 460px) { .gloss { grid-template-columns: 1fr; } .gloss dd { margin-bottom: 6px; color: var(--muted); } }
+.frames { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.frames li { display: grid; grid-template-columns: minmax(0, 9.5em) 1fr; gap: 10px; background: var(--soft); border-radius: 10px; padding: 10px 12px; border: 1px solid var(--line); }
+@media (max-width: 460px) { .frames li { grid-template-columns: 1fr; gap: 2px; } }
+.frames .fl { font-family: var(--f-mono); font-size: .78rem; font-weight: 600; color: var(--cobalt); text-transform: uppercase; letter-spacing: .04em; }
+.model { line-height: 1.75; }
+.mp { padding: 1px 2px; border-radius: 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.mp-ts { background: color-mix(in srgb, #E2A0BA 45%, transparent); }
+.mp-ev { background: color-mix(in srgb, #8DB7C9 42%, transparent); }
+.mp-in { background: color-mix(in srgb, #A8D5B5 48%, transparent); }
+.mp-ef { background: color-mix(in srgb, #F2CF7A 50%, transparent); }
+.mp-bi { background: color-mix(in srgb, #C9B6E4 52%, transparent); }
+.mp-pu { background: color-mix(in srgb, #F0A98F 45%, transparent); }
+.mlegend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .82rem; color: var(--muted); }
+.mlegend span { display: inline-flex; align-items: center; gap: 6px; }
+.mlegend .sw { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+.sub-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+/* write */
+.timer { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.clock { font-family: var(--f-mono); font-weight: 600; font-size: clamp(2.4rem, 12vw, 3.4rem); font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: -.02em; }
+.clock.low { color: var(--cobalt); }
+.clock.up { color: var(--wrong); }
+.timer .btn { flex: 0 1 auto; min-height: 46px; padding: 8px 18px; }
+.box-label { font-weight: 700; font-size: .95rem; }
+.ta { width: 100%; font: inherit; font-size: 1.02rem; line-height: 1.6; padding: 12px 14px; border-radius: 12px; border: 2px solid var(--line); background: var(--soft); color: var(--ink); resize: vertical; }
+.ta:focus { outline: none; border-color: var(--sky); }
+.plan-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 520px) { .plan-grid { grid-template-columns: 1fr; } }
+.wc { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); text-align: right; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.checks label { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border-radius: 10px; background: var(--soft); border: 1px solid var(--line); cursor: pointer; }
+.checks input { width: 22px; height: 22px; flex: none; margin: 1px 0 0; accent-color: var(--right); }
+.checks label:has(input:checked) { background: var(--right-soft); border-color: color-mix(in srgb, var(--right) 40%, transparent); }
+.done-count { font-family: var(--f-mono); font-size: .85rem; color: var(--muted); }
+.write details > summary { cursor: pointer; font-weight: 700; color: var(--sky); }
+
+/* (old extras below are overridden where needed) */
+.hero h1 .strike { font-size: .62em; display: inline-block; margin-bottom: .1em; }
+.hero h1 .fact { display: inline; background: linear-gradient(transparent 62%, var(--marker) 62%); }
+.lvl-num, .eyebrow, .rank, .chip, .board-meta, .stamp, .lvl-status { font-family: var(--f-mono); }
+.top-title { font-stretch: normal; }
+.passage { font-family: var(--f-body); font-size: .95rem; line-height: 1.6; max-height: 46vh; overflow-y: auto; padding-right: 4px; }
+.passage p { margin: 0 0 .7em; }
+.passage .ptitle { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; color: var(--cobalt); }
+.passage sup { font-family: var(--f-mono); font-weight: 700; color: var(--cobalt); margin: 0 3px 0 2px; }
+.passage .pn { display: inline-grid; place-items: center; width: 1.5em; height: 1.5em; margin-right: 6px; border-radius: 4px; background: var(--ink); color: var(--paper); font-family: var(--f-mono); font-size: .75rem; }
+.passage .cap { text-align: left; }
+.q-text .hl { background: none; color: var(--cobalt); text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: .16em; text-underline-offset: .18em; padding: 0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hero h1 .fact { background: none; color: var(--marker); } }
+:root[data-theme="dark"] .hero h1 .fact { background: none; color: var(--marker); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cell.pop, .shake, .chip.hot, .mega-dots i.on, .tgap.shake, .stamp.thud { animation: none; }
+  .confetti { display: none; }
+  .btn, .opt, .lvl { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title" id="top-title"></span>
+      <span class="top-sub" id="top-sub"></span>
+    </div>
+  </header>
+
+  <!-- WELCOME -->
+  <section id="screen-welcome" class="card hero" hidden aria-labelledby="welcome-h">
+    <span class="eyebrow">Grade 10 · Unseen poem · Exam writing practice</span>
+    <h1 id="welcome-h"><span class="drop">Sara Teasdale, 1918</span>Soft <em>Rains</em></h1>
+    <p class="sub">Practice the exam task on a poem you haven't studied: read it, learn two easy devices, then write <b>one body paragraph</b> that analyzes them. Every missed question comes back until you get it right.</p>
+    <div class="task-strip" aria-label="The exam task">
+      <div><b>Given</b><span>the poem and the introduction</span></div>
+      <div><b>1</b><span>body paragraph to write</span></div>
+      <div><b>2</b><span>devices to analyze</span></div>
+      <div><b>40</b><span>minutes</span></div>
+    </div>
+    <div class="field">
+      <label for="student-name">Your name</label>
+      <input id="student-name" type="text" autocomplete="given-name" maxlength="30" placeholder="Type your name">
+    </div>
+    <button class="btn" id="btn-welcome" type="button">Step into the garden</button>
+  </section>
+
+  <!-- MAP -->
+  <section id="screen-map" hidden>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card player" id="player"></div>
+      <div class="start-cards">
+        <button class="start" id="btn-notes" type="button"><span class="si" aria-hidden="true">📖</span><b>Study notes</b><span>The poem, key words, both devices, the paragraph recipe and a full-mark model.</span></button>
+        <button class="start write" id="btn-write" type="button"><span class="si" aria-hidden="true">⏱️</span><b>Write it in 40 minutes</b><span>The real task: timer, introduction, poem, your paragraph and a checklist.</span></button>
+      </div>
+      <div class="map-title"><h2>Your path</h2><small id="map-count"></small></div>
+      <div class="levels" id="levels"></div>
+      <div class="card how" style="gap:8px">
+        <h3 style="font-size:1.1rem">How it works</h3>
+        <p><b class="k">01</b><span>Answer every question in a level. Missed questions come back in the next round until you get them right.</span></p>
+        <p><b class="k">02</b><span>In typing questions, the first letter is given. Check your spelling; capital letters don't matter.</span></p>
+        <p><b class="k">03</b><span>Your first-try score fills the dots: 90% or more = 3 dots, 70% or more = 2 dots, finished = 1 dot. Get 3 dots everywhere, then write your paragraph against the clock.</span></p>
+        <p><b class="k">04</b><span>Correct answers in a row build your streak and earn XP.</span></p>
+      </div>
+      <div class="card confirm" id="confirm-reset" hidden>
+        <p><b>Reset all your dots, XP and progress?</b> This can't be undone.</p>
+        <div class="btn-row">
+          <button class="btn" id="btn-reset-yes" type="button">Yes, reset</button>
+          <button class="btn btn-ghost" id="btn-reset-no" type="button">Keep my progress</button>
+        </div>
+      </div>
+      <div class="tiny-links">
+        <button class="link" id="btn-rename" type="button">Change name</button>
+        <button class="link" id="btn-reset" type="button">Reset all progress</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="screen-play" hidden>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="play-top">
+        <button class="back" id="btn-back" type="button">← Garden path</button>
+        <div class="chips">
+          <span class="chip" id="streak-chip" title="Correct answers in a row">🔥 <span id="streak-n">0</span></span>
+          <span class="chip" title="XP">XP <span id="xp-n">0</span></span>
+        </div>
+      </div>
+      <div class="card" id="play-card">
+        <div class="lvl-banner">
+          <div class="lvl-icon" id="play-icon" aria-hidden="true"></div>
+          <div style="min-width:0">
+            <div class="lvl-name" id="play-name"></div>
+            <div class="r" id="play-round"></div>
+          </div>
+        </div>
+        <details class="peek" id="peek"><summary>📜 Show the whole poem</summary><div id="peek-body"></div></details>
+        <div class="board" id="board" aria-hidden="true"></div>
+        <div class="board-meta"><span id="progress-line"></span><span id="q-count"></span></div>
+        <span class="retry-tag" id="retry-tag" hidden></span>
+        <p class="q-note" id="q-note"></p>
+        <div class="q-fig" id="q-fig" hidden></div>
+        <h2 class="q-text" id="q-text" tabindex="-1"></h2>
+        <div class="check-row" id="check-row" hidden><button class="btn" id="btn-tcheck" type="button">Check my answer</button></div>
+        <div class="opts" id="opts" role="group" aria-labelledby="q-text"></div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+        <button class="btn" id="btn-next" type="button" hidden>Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BETWEEN ROUNDS -->
+  <section id="screen-between" class="card center" hidden aria-labelledby="between-h">
+    <span class="eyebrow" id="between-eyebrow"></span>
+    <h2 id="between-h"></h2>
+    <div class="big-num" id="between-big"></div>
+    <p id="between-text"></p>
+    <div class="board" id="board-between" aria-hidden="true" style="width:100%"></div>
+    <div class="legend">
+      <span><i style="background:var(--marker)"></i>Right first time</span>
+      <span><i id="legend-later" style="background:var(--cobalt)"></i>Cleared later</span>
+      <span><i style="background:var(--wrong-soft);box-shadow:inset 0 0 0 2px var(--wrong)"></i>Still to clear</span>
+    </div>
+    <button class="btn" id="btn-next-round" type="button" style="width:100%"></button>
+  </section>
+
+  <!-- LEVEL COMPLETE -->
+  <section id="screen-done" class="card center" hidden aria-labelledby="done-h">
+    <span class="eyebrow" id="done-eyebrow"></span>
+    <h2 id="done-h" style="font-size:1.8rem"></h2>
+    <div class="mega-dots" id="done-dots" aria-hidden="true"></div>
+    <div>
+      <div style="color:var(--muted)">First-try score</div>
+      <div class="big-num" id="done-big"></div>
+    </div>
+    <p class="rank-up" id="rank-up" hidden></p>
+    <div class="stats" id="done-stats"></div>
+    <div id="tricky-block" style="width:100%;display:flex;flex-direction:column;gap:10px">
+      <h3 style="font-size:1.15rem;text-align:left">Questions to revise</h3>
+      <ul class="tricky" id="tricky"></ul>
+    </div>
+    <div class="who" id="who"></div>
+    <div class="btn-row" style="width:100%">
+      <button class="btn btn-marker" id="btn-practice" type="button">Practice the tricky ones</button>
+      <button class="btn" id="btn-map" type="button">Back to the garden path</button>
+      <button class="btn btn-ghost" id="btn-replay" type="button">Play this level again</button>
+    </div>
+  </section>
+
+  <!-- NOTES -->
+  <section id="screen-notes" hidden aria-labelledby="notes-h">
+    <div class="notes-wrap">
+      <div class="sub-top"><button class="back" data-home type="button">← Garden path</button><button class="back" id="notes-to-write" type="button">⏱️ Write it</button></div>
+      <h2 id="notes-h" style="font-size:1.9rem">Study notes</h2>
+      <div id="notes-body" class="notes-wrap"></div>
+      <button class="btn" data-home type="button">Back to the garden path</button>
+    </div>
+  </section>
+
+  <!-- WRITE -->
+  <section id="screen-write" hidden aria-labelledby="write-h">
+    <div class="notes-wrap write">
+      <div class="sub-top"><button class="back" data-home type="button">← Garden path</button><button class="back" id="write-to-notes" type="button">📖 Notes</button></div>
+      <div class="card">
+        <span class="eyebrow">Exam rehearsal</span>
+        <h2 id="write-h" style="font-size:1.7rem">Write one body paragraph</h2>
+        <p>Analyze <b>two devices</b> in "There Will Come Soft Rains." The introduction is written for you. Start the clock when you are ready.</p>
+        <div class="timer">
+          <div class="clock" id="clock" role="timer" aria-live="off">40:00</div>
+          <button class="btn" id="t-start" type="button">Start</button>
+          <button class="btn btn-ghost" id="t-reset" type="button">Reset</button>
+        </div>
+      </div>
+      <div class="card">
+        <details open><summary>The introduction (given)</summary><p class="intro" id="w-intro" style="margin-top:10px;font-style:italic;background:var(--soft);border:1px dashed var(--line);border-radius:12px;padding:12px 14px"></p></details>
+        <details><summary>The poem</summary><div id="w-poem" style="margin-top:10px"></div></details>
+      </div>
+      <div class="card">
+        <span class="box-label">Plan (5 minutes)</span>
+        <div class="plan-grid">
+          <textarea class="ta" id="w-p1" rows="3" placeholder="Device 1 + short quotation + key word"></textarea>
+          <textarea class="ta" id="w-p2" rows="3" placeholder="Device 2 + short quotation + key word"></textarea>
+        </div>
+        <label class="box-label" for="w-text">Your body paragraph</label>
+        <textarea class="ta" id="w-text" rows="14" placeholder="Teasdale uses ... and ... to show that ..."></textarea>
+        <div class="wc" id="w-wc">0 words</div>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap"><span class="box-label">Check before time runs out</span><span class="done-count" id="w-count"></span></div>
+        <ul class="checks" id="w-checks"></ul>
+      </div>
+      <div class="card">
+        <button class="btn btn-marker" id="w-show" type="button">Compare with the model paragraph</button>
+        <div id="w-model" hidden></div>
+      </div>
+      <button class="btn" data-home type="button">Back to the garden path</button>
+    </div>
+  </section>
+</div>
+
+<script id="game-data" type="application/json">
+{"id": "koc10-soft-rains-v1", "title": "Soft Rains · Writing Lab", "subtitle": "Grade 10 · Unseen poem practice", "bossCount": 20, "bossPer": 2, "levels": [{"key": "read", "group": "Read the poem", "name": "First Read", "icon": "🌧️", "color": "#4F7A8C", "topic": "What happens in the poem, line by line", "questions": [{"q": "Which season does the poem describe?", "answer": "Spring, with rain, blossom and birds", "wrong": ["Autumn, with falling leaves and colder nights", "Winter, with snow covering the quiet fields", "Late summer, with dry grass and long, hot days"], "hint": "Look at line 11, and at the plum-trees in blossom in line 4.", "why": "Line 11 names \"Spring herself,\" and plum blossom, swallows and robins are all signs of spring."}, {"q": "Which living things appear in lines 1-6?", "answer": "Swallows, frogs, plum-trees and robins", "wrong": ["Swallows, owls, apple trees and robins", "Sparrows, frogs, plum-trees and crows", "Robins, bees, cherry trees and frogs"], "hint": "Read lines 2, 3, 4 and 5 again and name the creature or plant in each one.", "why": "Line 2 has swallows, line 3 frogs, line 4 plum-trees and line 5 robins.", "fig": "l1_6"}, {"q": "Are there any people in lines 1-6?", "answer": "No. There are only rain, birds, frogs and trees.", "wrong": ["Yes. A farmer is listening to the birds sing.", "Yes. Children are playing by the low fence.", "Yes. A soldier walks home through the rain."], "hint": "Check every line from 1 to 6. Is a person ever mentioned?", "why": "Lines 1-6 show only nature. Humans are first mentioned in line 10 (\"mankind\"), when the poem imagines them gone.", "fig": "l1_6"}, {"q": "In the lines of the poem (not the subtitle), where is war first mentioned?", "answer": "Line 7: \"And not one will know of the war\"", "wrong": ["Line 1: \"There will come soft rains\"", "Line 5: \"Robins will wear their feathery fire\"", "Line 11: \"And Spring herself, when she woke\""], "hint": "Find the first line that contains the word \"war.\"", "why": "Line 7 is the first line to mention the war. Before that, the poem shows only peaceful nature."}, {"q": "What does \"And not one will know of the war\" (line 7) mean?", "answer": "None of the animals or plants will know about the war.", "wrong": ["Nobody in the town will talk about the war again.", "Only one soldier will remember what the war was like.", "The birds will warn the people that a war is coming."], "hint": "\"Not one\" refers back to the creatures in lines 1-6.", "why": "\"Not one\" means not one of the birds, frogs or trees. Nature has no idea that a war is happening.", "fig": "l7"}, {"q": "What does \"If mankind perished utterly\" (line 10) imagine?", "answer": "Every human being on Earth dying", "wrong": ["One village being destroyed by a storm", "The soldiers losing one important battle", "People moving away from the countryside"], "hint": "\"Mankind\" means all humans, \"perished\" means died and \"utterly\" means completely.", "why": "The line imagines all of humanity dying out completely, perhaps because of the war.", "fig": "l9"}, {"q": "How would Spring react if humans disappeared (lines 11-12)?", "answer": "She would hardly notice that we had gone.", "wrong": ["She would cry and refuse to come back again.", "She would bring storms to punish the soldiers.", "She would search the fields to find the people."], "hint": "\"Scarcely\" means hardly.", "why": "Spring \"Would scarcely know that we were gone\": she would hardly notice at all.", "fig": "l11"}, {"q": "Lines 1-6 use \"will\" (\"There will come,\" \"Robins will wear\"). What does this tell us?", "answer": "The poem imagines a spring in the future.", "wrong": ["The poem remembers a spring from childhood.", "The poem describes a spring happening right now.", "The poem retells a story told by a soldier."], "hint": "\"Will\" points to a time that has not happened yet.", "why": "\"Will\" is the future tense, so the speaker is imagining a spring that is still to come.", "fig": "l1_6"}, {"q": "Who is \"we\" in line 12 (\"Would scarcely know that we were gone\")?", "answer": "Human beings: the poet, the reader and everyone", "wrong": ["The birds and frogs living near the pools", "The soldiers fighting on the other side", "The plum-trees at the edge of the field"], "hint": "Line 10 talks about \"mankind.\" Who is gone?", "why": "\"We\" means all people, the same \"mankind\" from line 10. It includes the poet and the reader.", "fig": "l11"}, {"q": "Which sentence best sums up the poem?", "answer": "Spring will keep returning, even if war destroys every human.", "wrong": ["Nature is angry with humans and plans to punish them.", "A soldier comes home in spring and is glad to see the birds.", "The animals hide during the war and return when it ends."], "hint": "Think about what happens in lines 9-12.", "why": "The poem shows nature carrying on as normal, untouched, even in a world with no people left."}]}, {"key": "words", "group": "Read the poem", "name": "Word Garden", "icon": "🌸", "color": "#B55C83", "topic": "The tricky words, in context (choose, then type)", "questions": [{"q": "Line 4 describes \"wild plum-trees in tremulous white.\" What picture does \"tremulous\" create?", "answer": "White blossom trembling slightly in the breeze", "wrong": ["White blossom lying flat and still on the ground", "White blossom glowing brightly in strong sunlight", "White blossom dying and turning brown at the edges"], "hint": "\"Tremulous\" is linked to the word \"tremble.\"", "why": "\"Tremulous\" means trembling, so the blossom shakes gently.", "fig": "l3"}, {"q": "What are the \"swallows\" in line 2 doing?", "answer": "Small birds flying in curves, making a light sound", "wrong": ["Small birds sitting quietly in their nests, asleep", "Small fish jumping out of the pools at night", "Small insects buzzing loudly over the water"], "hint": "Here \"swallows\" is a noun, not the verb \"to swallow.\" The line says they are \"circling.\"", "why": "Swallows are small, fast birds. \"Circling\" shows them flying round in curves.", "fig": "l1"}, {"q": "\"Shimmering\" usually describes light that flickers. What does \"shimmering sound\" (line 2) suggest?", "answer": "A light, flickering, sparkling sound", "wrong": ["A deep, heavy, booming sound", "A sharp, angry, screaming sound", "A slow, sad, crying sound"], "hint": "Think of how light shimmers on water.", "why": "The word turns a sound into something light and sparkling, like light on water.", "fig": "l1"}, {"q": "What is the \"feathery fire\" that the robins \"wear\" (line 5)?", "answer": "Their bright red-orange chest feathers", "wrong": ["A real fire burning along the fence-wire", "The warm sunlight on their dark wings", "The orange glow of the evening sky"], "hint": "Robins are known for the color of their chests.", "why": "Robins have bright red-orange chests, so their feathers look like fire.", "fig": "l5"}, {"q": "The robins are \"Whistling their whims\" (line 6). What does \"whims\" tell us?", "answer": "They whistle whatever playful tune they feel like.", "wrong": ["They whistle a warning that danger is near.", "They whistle the same tune every single day.", "They whistle sadly because their nest is lost."], "hint": "A whim is a sudden, playful wish.", "why": "\"Whims\" are sudden, playful wishes, so the robins whistle freely, just as they like.", "fig": "l5"}, {"q": "\"Not one would mind\" (line 9). What does \"mind\" mean here?", "answer": "No bird or tree would care or be upset.", "wrong": ["No bird or tree would remember the way.", "No bird or tree would be able to think.", "No bird or tree would stay in the garden."], "hint": "If you \"don't mind,\" you are not bothered.", "why": "To \"mind\" is to care about something or be upset by it.", "fig": "l9"}, {"q": "\"If mankind perished utterly\" (line 10). What does \"utterly\" add?", "answer": "Every single person would die, with no one left.", "wrong": ["Only the people in the cities would die.", "People would die slowly over many years.", "People would almost die but then recover."], "hint": "\"Utterly\" means completely.", "why": "\"Utterly\" means completely, so not one human would survive.", "fig": "l9"}, {"q": "Spring \"Would scarcely know that we were gone\" (line 12). What does \"scarcely\" tell us?", "answer": "Spring would hardly notice at all.", "wrong": ["Spring would notice straight away.", "Spring would notice only at night.", "Spring would notice and feel sad."], "hint": "\"Scarcely\" means almost not.", "why": "\"Scarcely\" means hardly, so Spring would barely notice that humans had gone.", "fig": "l11"}, {"type": "type", "q": "The white blossom is {tremulous}: it trembles gently in the breeze.", "hint": "It is in line 4 and starts with t.", "why": "\"Tremulous\" means trembling or shaking slightly."}, {"type": "type", "q": "Small birds called {swallows} fly round and round in curves.", "hint": "They appear in line 2.", "why": "Swallows are small, fast birds with pointed wings."}, {"type": "type", "q": "The robins whistle their {whims}: whatever playful tune they feel like.", "hint": "Line 6: \"Whistling their w___.\"", "why": "Whims are sudden, playful wishes."}, {"type": "type", "q": "All human beings together can be called {mankind|humankind}.", "hint": "Line 10 uses this word.", "why": "\"Mankind\" means all people."}, {"type": "type", "q": "If every human died, mankind would have {perished}.", "hint": "Line 10: \"If mankind p___ utterly.\"", "why": "\"Perished\" means died."}, {"type": "type", "q": "Not just some people but all of them: mankind would die {utterly}.", "hint": "It means completely. Line 10.", "why": "\"Utterly\" means completely."}, {"type": "type", "q": "Spring would {scarcely} notice, which means she would hardly notice at all.", "hint": "Line 12. It means hardly.", "why": "\"Scarcely\" means hardly; almost not at all."}, {"type": "type", "q": "Spring {woke} at dawn, as if she were a person getting up in the morning.", "hint": "Line 11. It is the past tense of \"wake.\"", "why": "\"Woke\" is a human action, which is why it is personification."}]}, {"key": "idea", "group": "Read the poem", "name": "The Turn and the Big Idea", "icon": "🕊️", "color": "#6C6A9E", "topic": "War time, couplets, the change at line 7, the message", "questions": [{"q": "The poem's subtitle is \"(War Time).\" Why is this important?", "answer": "It tells us the poem was written while a war was going on.", "wrong": ["It tells us the poem is about a time before any wars.", "It tells us the poem is a song that soldiers used to sing.", "It tells us the poem describes one famous battle in detail."], "hint": "\"War time\" means a period when a war is happening.", "why": "The subtitle sets the poem in war time, so we read the peaceful nature with the war in mind."}, {"q": "Teasdale first published the poem in July 1918. Which war was happening then?", "answer": "The First World War", "wrong": ["The Second World War", "The American Civil War", "The Korean War"], "hint": "1918 is the last year of this war.", "why": "The First World War lasted from 1914 to 1918, so the poem appeared while it was still being fought."}, {"q": "How is the poem built?", "answer": "Six pairs of rhyming lines (couplets)", "wrong": ["Three stanzas of four lines each", "One long stanza with no rhyme", "Four stanzas of three unrhymed lines"], "hint": "Count the lines in each group and check the line endings.", "why": "There are six couplets: pairs of lines that rhyme, like \"ground\" and \"sound.\""}, {"q": "Line 5 ends with \"fire.\" Which line ending rhymes with it?", "answer": "\"fence-wire\" (line 6)", "wrong": ["\"white\" (line 4)", "\"night\" (line 3)", "\"tree\" (line 9)"], "hint": "Each couplet is a rhyming pair.", "why": "Lines 5 and 6 are a couplet: \"fire\" rhymes with \"fence-wire.\"", "fig": "l5"}, {"q": "Where does the mood of the poem change?", "answer": "Line 7, when the war is mentioned", "wrong": ["Line 3, when the frogs begin to sing", "Line 5, when the robins appear", "Line 12, the very last line"], "hint": "Find the first line that is not about peaceful nature.", "why": "Lines 1-6 are peaceful. Line 7 brings in the war, and the poem turns darker."}, {"q": "How does the mood change at line 7?", "answer": "From calm and lovely to dark and unsettling", "wrong": ["From sad and gloomy to happy and hopeful", "From angry and loud to quiet and sleepy", "From funny and light to romantic and warm"], "hint": "Compare the birds and blossom with the idea of mankind dying.", "why": "The poem moves from gentle nature to the idea of every human dying, which is dark and disturbing."}, {"q": "\"Not one\" is repeated in lines 7-9. What does this repetition stress?", "answer": "That no creature at all would care about us", "wrong": ["That only one bird would remember the war", "That one tree is more special than the rest", "That the war will last for only one year"], "hint": "\"Not one\" means not a single one.", "why": "Repeating \"not one\" makes it clear that not a single bird, frog or tree would care.", "fig": "l7_12"}, {"q": "What is the big idea of the poem?", "answer": "Nature does not need us, so war only destroys ourselves.", "wrong": ["Humans must protect animals because animals are weak.", "Spring is the most beautiful season of the whole year.", "Wars always end when the warm spring weather arrives."], "hint": "What would happen to nature if people disappeared?", "why": "Nature would carry on without us. War harms only humans, which makes it seem pointless."}, {"q": "Why does Teasdale fill the first six lines with lovely nature?", "answer": "So the idea of mankind dying feels more shocking later", "wrong": ["So the reader forgets that the poem is about war", "So the poem can be used to teach about birds", "So the robins can be the heroes of the story"], "hint": "Think about contrast: calm first, then something terrible.", "why": "The calm, beautiful opening makes the turn to human extinction hit harder."}, {"q": "What does the poem suggest about how important humans are?", "answer": "We are less important to the world than we think.", "wrong": ["We are the only reason that spring returns.", "We are needed to look after every plant.", "We are loved and missed by all the birds."], "hint": "Would Spring notice if we were gone?", "why": "Nature would hardly notice our disappearance, so the poem suggests we are not as important as we believe.", "fig": "l7_12"}]}, {"key": "imagery", "group": "Two devices", "name": "Device 1: Imagery", "icon": "🌿", "color": "#3F7F5A", "topic": "Soft rains, shimmering sound, tremulous white", "questions": [{"q": "Which explanation of imagery is correct?", "answer": "Words that help us see, hear, smell, taste or feel something", "wrong": ["Words that compare two things using \"like\" or \"as\"", "Words close together that begin with the same sound", "Words that give human feelings to animals or objects"], "hint": "Imagery is about the five senses.", "why": "Imagery uses the senses to build a picture in the reader's mind."}, {"q": "Which sense does \"the smell of the ground\" (line 1) appeal to?", "answer": "Smell", "wrong": ["Sight", "Taste", "Hearing"], "hint": "Read the line slowly.", "why": "The line names a smell: wet earth after rain.", "fig": "l1"}, {"q": "What picture does \"soft rains\" (line 1) create?", "answer": "Gentle, light rain rather than a violent storm", "wrong": ["Heavy rain that floods the fields below", "Cold rain that makes the animals shiver", "Dirty rain full of smoke from the war"], "hint": "What does \"soft\" usually suggest?", "why": "\"Soft\" makes the rain seem gentle and kind, which sets a peaceful mood.", "fig": "l1"}, {"q": "Line 2, \"swallows circling with their shimmering sound,\" appeals most to which sense?", "answer": "Hearing, through the \"shimmering sound\"", "wrong": ["Taste, through the word \"swallows\"", "Smell, through the \"circling\" birds", "Touch, through the \"shimmering\" water"], "hint": "The line ends with the word \"sound.\"", "why": "The line is mainly about what we hear: the light, sparkling sound of the birds.", "fig": "l1"}, {"q": "Line 4, \"wild plum-trees in tremulous white,\" appeals to which sense?", "answer": "Sight: we picture trembling white blossom", "wrong": ["Taste: we imagine eating sweet, ripe plums", "Smell: we notice the scent of the plums", "Hearing: we hear the trees creak in wind"], "hint": "\"White\" is a color.", "why": "The line is a visual picture of white blossom shaking gently.", "fig": "l3"}, {"q": "What do the images in lines 1-6 have in common?", "answer": "They are all gentle, peaceful pictures of nature.", "wrong": ["They are all frightening pictures of a storm.", "They are all pictures of a busy city street.", "They are all sad pictures of dying animals."], "hint": "Think about the mood of rain, birds and blossom.", "why": "Every image in lines 1-6 is calm, soft and natural.", "fig": "l1_6"}, {"q": "What effect do the images in lines 1-4 have on the reader?", "answer": "We feel calm, as if standing in a fresh spring garden.", "wrong": ["We feel scared, as if a storm is about to break.", "We feel bored, because nothing happens in the scene.", "We feel angry, because the animals are treated badly."], "hint": "How do soft rain and blossom make you feel?", "why": "The gentle images create a calm, peaceful mood for the reader.", "fig": "l1_6"}, {"q": "Why does it matter that there are no humans in these images?", "answer": "It prepares us for the idea of a world without people.", "wrong": ["It shows that humans are too busy to enjoy nature.", "It proves the poem was written in a remote place.", "It shows the animals are hiding from the soldiers."], "hint": "Later the poem imagines all humans gone.", "why": "The empty, human-free scene quietly prepares us for lines 9-12, where humans have disappeared.", "fig": "l1_6"}, {"q": "Which sentence correctly names and quotes the device?", "answer": "Teasdale uses imagery in \"wild plum-trees in tremulous white\" (line 4).", "wrong": ["Teasdale uses a simile in \"wild plum-trees in tremulous white\" (line 4).", "Teasdale uses imagery in \"wild plum-trees in tremulous white\" (line 9).", "Teasdale uses imagery in \"wild plum trees and white flowers\" (line 4)."], "hint": "Check three things: the device name, the exact words and the line number.", "why": "It is imagery (no \"like\" or \"as\"), the words are copied exactly and the line number is 4."}, {"q": "Which explanation of \"tremulous white\" goes deepest?", "answer": "The blossom trembles, so it seems delicate and easily harmed.", "wrong": ["The blossom is white, the color of plum flowers.", "The trees are wild, so nobody planted them there.", "\"Tremulous\" is an example of imagery in line 4."], "hint": "A deep explanation says what the word suggests, not just what it is.", "why": "It explains what \"tremulous\" suggests: something fragile and delicate.", "fig": "l3"}, {"q": "Which sentence explains the effect on the reader instead of retelling?", "answer": "This makes the reader feel calm, as if the world is healing.", "wrong": ["In this line the swallows fly in circles and make a sound.", "Then the poem tells us about frogs singing in the pools.", "The next line says the plum-trees are white and tremulous."], "hint": "Retelling just repeats what happens. An effect says how the reader feels.", "why": "Only this sentence explains how the reader feels and why."}, {"q": "Line 2 repeats \"s\" and \"sh\" sounds (\"swallows,\" \"shimmering sound\"). What does this add?", "answer": "A soft, hushed sound, like gentle rain or wings", "wrong": ["A hard, harsh sound, like gunfire on a battlefield", "A slow, heavy sound, like a tired soldier walking", "A loud, sharp sound, like a robin's warning cry"], "hint": "Say the line aloud. Is it loud or quiet?", "why": "The repeated \"s\" sounds are soft and hushed, which matches the gentle scene.", "fig": "l1"}]}, {"key": "person", "group": "Two devices", "name": "Device 2: Personification", "icon": "🐦", "color": "#B5432A", "topic": "Robins that wear, trees that don't mind, Spring herself", "questions": [{"q": "Which explanation of personification is correct?", "answer": "Giving human actions or feelings to something not human", "wrong": ["Exaggerating something a lot to make a strong point", "Comparing two things by saying one thing is another", "Repeating a word or phrase to make it stand out"], "hint": "Look inside the word: \"person.\"", "why": "Personification makes something non-human act or feel like a person."}, {"q": "Line 5: \"Robins will wear their feathery fire.\" Which word gives the robins a human action?", "answer": "wear", "wrong": ["feathery", "fire", "Robins"], "hint": "Which of these is something people do every day?", "why": "People wear clothes. Saying the robins \"wear\" their feathers treats them like people.", "fig": "l5"}, {"q": "How does \"Whistling their whims\" (line 6) make the robins seem human?", "answer": "Whims are playful wishes, so the birds seem to have moods.", "wrong": ["Whims are a kind of seed, so the birds seem hungry.", "Whims are loud alarms, so the birds seem to warn us.", "Whims are sad songs, so the birds seem to mourn us."], "hint": "A whim is a sudden, playful wish.", "why": "Only people really have whims, so the robins seem to have human moods and wishes.", "fig": "l5"}, {"q": "Lines 9-10: \"Not one would mind, neither bird nor tree, / If mankind perished utterly.\" What is personified?", "answer": "The birds and trees, who are given the human ability to mind", "wrong": ["Mankind, which is given the feathers and wings of a bird", "The war, which is given the body of a dangerous animal", "The rain, which is given the voice of a singing bird"], "hint": "Line 9 says \"Not one would mind.\" Not one of what?", "why": "Minding (caring) is a human feeling, and here it is given to birds and trees.", "fig": "l9"}, {"q": "What do lines 9-10 suggest?", "answer": "Nature would not be upset at all if every human died.", "wrong": ["Nature would be heartbroken and stop growing forever.", "Nature would celebrate loudly at the end of humans.", "Nature would try hard to bring the humans back to life."], "hint": "\"Not one would mind.\"", "why": "No bird or tree would care, so our disappearance would not upset nature at all.", "fig": "l9"}, {"q": "Line 11: \"And Spring herself, when she woke at dawn.\" Which TWO words make Spring seem human?", "answer": "\"herself\" and \"woke\"", "wrong": ["\"dawn\" and \"Spring\"", "\"when\" and \"woke\"", "\"herself\" and \"dawn\""], "hint": "One word is a pronoun for a person and one is a human action.", "why": "\"Herself\" treats Spring as a woman and \"woke\" is something a person does.", "fig": "l11"}, {"q": "Why is \"Spring\" written with a capital S in line 11?", "answer": "To treat Spring like a person with a name", "wrong": ["Because it is the first word of the line", "Because seasons always need a capital letter", "Because it is the title of a famous song"], "hint": "Check the first word of line 11. Seasons are usually written with a small letter.", "why": "The capital letter turns Spring into a character, like a person's name.", "fig": "l11"}, {"q": "Spring \"Would scarcely know that we were gone\" (line 12). What is the effect on the reader?", "answer": "We feel small and forgotten, because the world would not miss us.", "wrong": ["We feel proud, because Spring will always remember our names.", "We feel excited, because Spring will wake us every morning.", "We feel safe, because Spring will protect us from the war."], "hint": "How does it feel to know nobody would notice you were gone?", "why": "The reader feels unimportant: even a human-like Spring would hardly notice us.", "fig": "l11"}, {"q": "Why is it surprising that Spring is personified as someone who does NOT care?", "answer": "We expect a person to notice when everyone else has gone.", "wrong": ["We expect spring to be the coldest season of all.", "We expect birds to be more important than Spring.", "We expect the poem to end with the robins' song."], "hint": "Spring is made human. What would a human usually do?", "why": "Because Spring is made to seem human, we expect her to care, so her not noticing is shocking.", "fig": "l11"}, {"q": "How does the personification link to the big idea?", "answer": "Nature seems alive and able to feel, yet it would not miss us.", "wrong": ["Nature seems weak and needs humans to survive the war.", "Nature seems angry and wants humans to stop fighting.", "Nature seems confused and cannot tell the seasons apart."], "hint": "The big idea: nature would carry on without humans.", "why": "Even when nature is given human feelings, it still would not care about us, so war is pointless.", "fig": "l7_12"}, {"q": "Which sentence correctly names, quotes and explains the device?", "answer": "Teasdale personifies Spring as a woman who \"woke at dawn\" (line 11), so she seems human.", "wrong": ["Teasdale uses a simile when Spring \"woke at dawn\" (line 11), so she seems human.", "Teasdale personifies Spring as a woman who \"woke at dawn\" (line 7), so she seems human.", "Teasdale personifies Spring as a woman who \"woke up early\" (line 11), so she seems human."], "hint": "Check the device name, the exact words and the line number.", "why": "Correct device, exact quotation and the right line number (11)."}, {"q": "Which is the strongest effect-on-the-reader sentence for lines 9-10?", "answer": "The reader is shocked, because our deaths would mean nothing to nature.", "wrong": ["The reader can see that these lines talk about birds and trees.", "The reader learns that lines 9 and 10 rhyme with each other.", "The reader notices that \"mankind\" means all human beings."], "hint": "An effect names a feeling and gives the reason for it.", "why": "It names a feeling (shock) and explains why the reader feels it.", "fig": "l9"}]}, {"key": "build", "group": "One body paragraph", "name": "Build the Paragraph", "icon": "🧱", "color": "#8A6A2E", "topic": "Topic sentence, evidence, explanation, effect, big idea", "questions": [{"q": "Which is the best topic sentence for one body paragraph on two devices?", "answer": "Teasdale uses imagery and personification to show that nature would carry on without humans.", "wrong": ["In this paragraph I am going to talk about imagery and personification in the poem.", "Teasdale uses imagery and personification in her poem, which are two literary devices.", "The poem \"There Will Come Soft Rains\" was published by Sara Teasdale in 1918."], "hint": "A topic sentence names both devices AND the idea they show.", "why": "It names both devices and says what they show about the poem's meaning."}, {"q": "What must your topic sentence include?", "answer": "Both devices and the idea they show about the poem", "wrong": ["A quotation from the poem with its line number", "The poet's full name and the date of publication", "A question that makes the reader want to read on"], "hint": "Look at the best topic sentence from the last question.", "why": "The topic sentence is the paragraph's argument: device 1 + device 2 + the idea."}, {"q": "Which sentence sets out the evidence correctly?", "answer": "Teasdale writes, \"Robins will wear their feathery fire\" (line 5).", "wrong": ["Teasdale writes, Robins will wear their feathery fire (line 5).", "Teasdale writes, \"Robins will wear their feathery fire\" (stanza 5).", "Teasdale writes, \"Robins wear feathery fire on the wire\" (line 5)."], "hint": "Check the quotation marks, the exact words and the reference.", "why": "The words are exact, inside quotation marks, with the correct line number."}, {"q": "How long should a quotation usually be?", "answer": "Short: just the words you are going to explain", "wrong": ["Long: the whole stanza, so nothing is missed", "Very long: as much as possible, to show effort", "None: describe it in your own words instead"], "hint": "You must explain every word you quote.", "why": "Short quotations let you zoom in on key words like \"tremulous\" or \"woke.\""}, {"q": "Which interpretation sentence explains rather than retells?", "answer": "The verb \"woke\" makes Spring seem like a person getting up in the morning.", "wrong": ["Then Spring wakes up at dawn and does not know that we have gone.", "After that, the poem talks about Spring waking up in line 11.", "Spring wakes at dawn in this line, which happens in the morning."], "hint": "An explanation zooms in on a word and says what it suggests.", "why": "It picks out the word \"woke\" and explains what it suggests."}, {"q": "Which is the best way to move from device 1 to device 2?", "answer": "Teasdale also uses personification to show that nature does not care about us.", "wrong": ["Also, there is another device in the poem that I found next to the first one.", "Personification. This is when something is given human qualities in a poem.", "Now I will write about the second device, which is called personification."], "hint": "A good link names the device AND says what it shows.", "why": "It moves smoothly to device 2 and connects it to the meaning."}, {"q": "Where does the effect on the reader go?", "answer": "Straight after you explain each quotation", "wrong": ["Only once, in the very first sentence", "Only in the introduction, never the body", "Nowhere, because readers' feelings don't count"], "hint": "Each device needs its own effect.", "why": "After each quotation and explanation, say how it makes the reader feel and why."}, {"q": "Which is the best final (big idea) sentence?", "answer": "Through imagery and personification, Teasdale suggests that war is pointless, since nature will go on without us.", "wrong": ["In conclusion, this is how Teasdale uses imagery and personification in her poem.", "Imagery and personification are both very common devices that lots of poets use.", "That is the end of my paragraph about the two devices that are in the poem."], "hint": "The last sentence links both devices back to the big idea.", "why": "It links both devices to the poem's big idea about war and nature."}, {"q": "Which sentence explains the poet's purpose?", "answer": "Writing during the First World War, Teasdale warns readers how much war could destroy.", "wrong": ["Teasdale was a poet who wrote many different poems during her life.", "Teasdale wants the reader to read every line of the poem carefully.", "Teasdale uses lots of devices because good poems always need them."], "hint": "Purpose = why the poet wrote it, and what she wants readers to think.", "why": "It explains why Teasdale wrote the poem and what she wanted readers to realize."}, {"q": "Which order of parts is correct for the whole paragraph?", "answer": "Topic sentence, device 1, device 2, big idea", "wrong": ["Device 1, topic sentence, big idea, device 2", "Big idea, device 2, device 1, topic sentence", "Device 1, device 2, topic sentence, big idea"], "hint": "Start with your argument and finish with the big idea.", "why": "Open with the topic sentence, analyze each device in turn, then link to the big idea."}, {"q": "For each device, which order of steps works best?", "answer": "Quote it, explain the key words, give the effect", "wrong": ["Give the effect, quote it, name the device", "Explain the key words, give the effect, quote it", "Quote it, give the effect, add another quotation"], "hint": "Evidence comes first, then you explain it.", "why": "Quote, then explain the words, then say how the reader feels."}, {"q": "In the exam the introduction is written for you. What should you do with it first?", "answer": "Read it, and if its thesis names devices, write about those.", "wrong": ["Copy it out again at the start of your own paragraph.", "Ignore it and choose any three devices that you like.", "Write a second, longer introduction underneath it."], "hint": "Your paragraph must match the introduction you are given.", "why": "Your body paragraph continues the introduction, so it should follow the thesis it gives."}]}, {"key": "fix", "group": "One body paragraph", "name": "Fix the Paragraph", "icon": "🔧", "color": "#5E6B73", "topic": "Spot and fix the mistakes that lose marks", "questions": [{"q": "A student writes:\nTeasdale uses imagery in \"tremulous white.\"\nWhat is missing?", "answer": "The line number after the quotation", "wrong": ["The name of the poet who wrote it", "The name of the device being used", "Quotation marks around the evidence"], "hint": "How would the examiner find the words in the poem?", "why": "Add the reference: \"tremulous white\" (line 4)."}, {"q": "A student writes:\nIn line 3 the frogs sing in the pools at night, and in line 4 the trees are white.\nWhat is the problem?", "answer": "It only retells the poem and doesn't analyze it", "wrong": ["It uses quotations that are far too long", "It names too many devices in one sentence", "It gives line numbers that are not needed"], "hint": "Does it explain any word or effect?", "why": "It just describes what happens. Analysis explains what words suggest and how the reader feels."}, {"q": "A student writes:\nTeasdale uses personification in \"There will come soft rains\" (line 1).\nWhat is wrong?", "answer": "This quotation is imagery, not personification", "wrong": ["The line number for this quotation is wrong", "The quotation needs to be much longer here", "The poet's name should be written in full"], "hint": "Is the rain given a human action or feeling?", "why": "\"Soft rains\" is a sense picture (imagery). Nothing is given human qualities."}, {"q": "A student writes:\nThis makes the reader feel good.\nHow can this sentence be improved?", "answer": "Name the exact feeling and explain why we feel it", "wrong": ["Make it shorter so it can be read more quickly", "Add another device name to the same sentence", "Move it to the very start of the paragraph"], "hint": "\"Good\" is vague.", "why": "For example: \"This makes the reader feel calm, as if standing in a fresh spring garden.\""}, {"q": "A student writes:\nTeasdale uses lots of devices, such as imagery, personification, alliteration, repetition and rhyme.\nWhy is this weak?", "answer": "It lists devices instead of analyzing two in depth", "wrong": ["It uses the poet's surname instead of her full name", "It should list the devices in alphabetical order", "It does not include any rhyming words of its own"], "hint": "The task asks for two devices.", "why": "A list earns little. Choose two devices and explain them carefully."}, {"q": "A student quotes all of lines 1-6 as evidence. What's the problem?", "answer": "Too long: choose the few words you will explain", "wrong": ["Too short: the whole poem should be quoted", "Wrong: you must never quote the first stanza", "Fine: longer quotations always earn more marks"], "hint": "Can you explain every word of six lines?", "why": "Pick short quotations, such as \"tremulous white,\" and zoom in on them."}, {"q": "A student writes:\nSpring is personified because it is a person.\nWhat is the mistake?", "answer": "Spring isn't a person; it is only described like one", "wrong": ["Spring should be written with a small letter s", "Personification works only for animals, not seasons", "The sentence needs a quotation at the very start"], "hint": "What does personification do?", "why": "Personification describes something non-human AS IF it were human."}, {"q": "A student's paragraph ends:\nThat is my two devices.\nWhat is missing?", "answer": "A link back to the big idea and the poet's purpose", "wrong": ["A third device to make the paragraph longer", "A new quotation from a different poem", "A question asking the reader what they think"], "hint": "How should a body paragraph finish?", "why": "End by linking both devices to the big idea and why Teasdale wrote the poem."}, {"q": "A student writes:\nTeasdale writes \"Not one would mind\" (line 9). This is personification.\nWhat is missing?", "answer": "An explanation of what it shows and its effect", "wrong": ["A second line number for the same quotation", "The full title of the poem in quotation marks", "The date when the poem was first published"], "hint": "Naming a device is only the start.", "why": "Explain that \"mind\" is a human feeling, what it shows, and how the reader feels."}, {"q": "A student writes:\nThe robins wear fire (line 5).\nWhat is wrong with the evidence?", "answer": "It has no quotation marks and misquotes the line", "wrong": ["It uses the wrong line number for the robins", "It names the robins instead of the swallows", "It should say \"stanza\" instead of \"line\""], "hint": "Compare it with line 5 of the poem.", "why": "Line 5 says \"Robins will wear their feathery fire.\" Copy the exact words inside quotation marks.", "fig": "l5"}]}, {"key": "model", "group": "One body paragraph", "name": "Complete the Model", "icon": "✍️", "color": "#2F6E78", "topic": "Type the missing words of the full-mark paragraph", "questions": [{"type": "type", "q": "Teasdale uses {imagery} and {personification} to show that nature would carry on without humans.", "hint": "The two devices in this paragraph.", "why": "This is the topic sentence: both devices plus the idea."}, {"type": "type", "q": "The adjective \"{soft}\" makes the rain seem gentle rather than stormy.", "hint": "Line 1: \"There will come s___ rains.\"", "why": "\"Soft\" creates a gentle, peaceful picture."}, {"type": "type", "q": "\"{Tremulous}\" means trembling, so the white blossom seems to shake gently in the breeze.", "hint": "Line 4.", "why": "Zooming in on one word is the key to a strong interpretation."}, {"type": "type", "q": "These peaceful pictures make the reader feel {calm|peaceful|relaxed}, as if standing in a fresh spring garden.", "hint": "A feeling that matches soft rain and blossom.", "why": "Always name the exact feeling."}, {"type": "type", "q": "To \"{mind}\" is a human feeling, so the birds and trees are treated like people.", "hint": "Line 9: \"Not one would m___.\"", "why": "\"Mind\" is the word that personifies the birds and trees."}, {"type": "type", "q": "The pronoun \"{herself}\" and the verb \"{woke}\" make Spring seem human.", "hint": "Line 11.", "why": "Both words treat Spring as a woman."}, {"type": "type", "q": "Spring would \"{scarcely}\" notice that people had disappeared.", "hint": "Line 12. It means hardly.", "why": "\"Scarcely\" shows how little Spring would notice."}, {"type": "type", "q": "The reader feels shocked and {small}, because people usually think they are the most important part of the world.", "hint": "The opposite of big or important.", "why": "The effect names a feeling and gives a reason."}, {"type": "type", "q": "Teasdale suggests that war is {pointless|meaningless|useless}: humans may destroy each other, but nature will go on without them.", "hint": "It means having no point or purpose.", "why": "This is the big idea that ends the paragraph."}, {"type": "type", "q": "Each quotation is followed by its {line} number in parentheses, for example (line 4).", "hint": "How the examiner finds your quotation.", "why": "Every quotation needs a reference like (line 4) or (lines 9-10)."}]}], "figs": {"poem": "<div class=\"poem\"><div class=\"ptitle\">There Will Come Soft Rains <span class=\"psub\">(War Time)<\/span><\/div><div class=\"pby\">Sara Teasdale<\/div><div class=\"pl\"><span class=\"ln\">1<\/span><span>There will come soft rains and the smell of the ground,<\/span><\/div><div class=\"pl\"><span class=\"ln\">2<\/span><span>And swallows circling with their shimmering sound;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">3<\/span><span>And frogs in the pools singing at night,<\/span><\/div><div class=\"pl\"><span class=\"ln\">4<\/span><span>And wild plum-trees in tremulous white;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">5<\/span><span>Robins will wear their feathery fire,<\/span><\/div><div class=\"pl\"><span class=\"ln\">6<\/span><span>Whistling their whims on a low fence-wire;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">7<\/span><span>And not one will know of the war, not one<\/span><\/div><div class=\"pl\"><span class=\"ln\">8<\/span><span>Will care at last when it is done.<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">9<\/span><span>Not one would mind, neither bird nor tree,<\/span><\/div><div class=\"pl\"><span class=\"ln\">10<\/span><span>If mankind perished utterly;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">11<\/span><span>And Spring herself, when she woke at dawn,<\/span><\/div><div class=\"pl\"><span class=\"ln\">12<\/span><span>Would scarcely know that we were gone.<\/span><\/div><div class=\"psrc\">Sara Teasdale. From <i>Flame and Shadow<\/i> (1920). First published in <i>Harper's Monthly Magazine<\/i>, July 1918.<\/div><\/div>", "l1": "<div class=\"poem\"><div class=\"pl\"><span class=\"ln\">1<\/span><span>There will come soft rains and the smell of the ground,<\/span><\/div><div class=\"pl\"><span class=\"ln\">2<\/span><span>And swallows circling with their shimmering sound;<\/span><\/div><\/div>", "l3": "<div class=\"poem\"><div class=\"pl\"><span class=\"ln\">3<\/span><span>And frogs in the pools singing at night,<\/span><\/div><div class=\"pl\"><span class=\"ln\">4<\/span><span>And wild plum-trees in tremulous white;<\/span><\/div><\/div>", "l5": "<div class=\"poem\"><div class=\"pl\"><span class=\"ln\">5<\/span><span>Robins will wear their feathery fire,<\/span><\/div><div class=\"pl\"><span class=\"ln\">6<\/span><span>Whistling their whims on a low fence-wire;<\/span><\/div><\/div>", "l7": "<div class=\"poem\"><div class=\"pl\"><span class=\"ln\">7<\/span><span>And not one will know of the war, not one<\/span><\/div><div class=\"pl\"><span class=\"ln\">8<\/span><span>Will care at last when it is done.<\/span><\/div><\/div>", "l9": "<div class=\"poem\"><div class=\"pl\"><span class=\"ln\">9<\/span><span>Not one would mind, neither bird nor tree,<\/span><\/div><div class=\"pl\"><span class=\"ln\">10<\/span><span>If mankind perished utterly;<\/span><\/div><\/div>", "l11": "<div class=\"poem\"><div class=\"pl\"><span class=\"ln\">11<\/span><span>And Spring herself, when she woke at dawn,<\/span><\/div><div class=\"pl\"><span class=\"ln\">12<\/span><span>Would scarcely know that we were gone.<\/span><\/div><\/div>", "l1_6": "<div class=\"poem\"><div class=\"pl\"><span class=\"ln\">1<\/span><span>There will come soft rains and the smell of the ground,<\/span><\/div><div class=\"pl\"><span class=\"ln\">2<\/span><span>And swallows circling with their shimmering sound;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">3<\/span><span>And frogs in the pools singing at night,<\/span><\/div><div class=\"pl\"><span class=\"ln\">4<\/span><span>And wild plum-trees in tremulous white;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">5<\/span><span>Robins will wear their feathery fire,<\/span><\/div><div class=\"pl\"><span class=\"ln\">6<\/span><span>Whistling their whims on a low fence-wire;<\/span><\/div><\/div>", "l7_12": "<div class=\"poem\"><div class=\"pl\"><span class=\"ln\">7<\/span><span>And not one will know of the war, not one<\/span><\/div><div class=\"pl\"><span class=\"ln\">8<\/span><span>Will care at last when it is done.<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">9<\/span><span>Not one would mind, neither bird nor tree,<\/span><\/div><div class=\"pl\"><span class=\"ln\">10<\/span><span>If mankind perished utterly;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">11<\/span><span>And Spring herself, when she woke at dawn,<\/span><\/div><div class=\"pl\"><span class=\"ln\">12<\/span><span>Would scarcely know that we were gone.<\/span><\/div><\/div>"}, "poem": "<div class=\"poem\"><div class=\"ptitle\">There Will Come Soft Rains <span class=\"psub\">(War Time)<\/span><\/div><div class=\"pby\">Sara Teasdale<\/div><div class=\"pl\"><span class=\"ln\">1<\/span><span>There will come soft rains and the smell of the ground,<\/span><\/div><div class=\"pl\"><span class=\"ln\">2<\/span><span>And swallows circling with their shimmering sound;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">3<\/span><span>And frogs in the pools singing at night,<\/span><\/div><div class=\"pl\"><span class=\"ln\">4<\/span><span>And wild plum-trees in tremulous white;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">5<\/span><span>Robins will wear their feathery fire,<\/span><\/div><div class=\"pl\"><span class=\"ln\">6<\/span><span>Whistling their whims on a low fence-wire;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">7<\/span><span>And not one will know of the war, not one<\/span><\/div><div class=\"pl\"><span class=\"ln\">8<\/span><span>Will care at last when it is done.<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">9<\/span><span>Not one would mind, neither bird nor tree,<\/span><\/div><div class=\"pl\"><span class=\"ln\">10<\/span><span>If mankind perished utterly;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">11<\/span><span>And Spring herself, when she woke at dawn,<\/span><\/div><div class=\"pl\"><span class=\"ln\">12<\/span><span>Would scarcely know that we were gone.<\/span><\/div><div class=\"psrc\">Sara Teasdale. From <i>Flame and Shadow<\/i> (1920). First published in <i>Harper's Monthly Magazine<\/i>, July 1918.<\/div><\/div>", "glossary": [["swallows (line 2)", "small birds with long, pointed wings that fly fast in curves"], ["shimmering (line 2)", "usually describes light that shines and flickers; here it describes a light, sparkling sound"], ["plum-trees (line 4)", "fruit trees that are covered in white blossom in spring"], ["tremulous (line 4)", "trembling or shaking slightly"], ["robins (line 5)", "small birds with bright red-orange chest feathers (the \"feathery fire\")"], ["whims (line 6)", "sudden, playful wishes or ideas"], ["fence-wire (line 6)", "the wire of a fence, where birds often sit"], ["mind (line 9)", "to care about something or be upset by it"], ["mankind (line 10)", "all human beings together"], ["perished (line 10)", "died"], ["utterly (line 10)", "completely"], ["scarcely (line 12)", "hardly; almost not at all"]], "intro": "Sara Teasdale's poem \"There Will Come Soft Rains\" was first published in 1918, during the First World War, and was later printed in her 1920 collection <i>Flame and Shadow<\/i> with the subtitle \"(War Time).\" The poem imagines a peaceful spring in the future, full of rain, birds, frogs and blossom, and then asks what would happen if the war destroyed every human being. None of the birds or trees would notice, and even Spring would hardly know that people were gone. Teasdale uses imagery and personification in \"There Will Come Soft Rains\" to show that nature is calm and beautiful and would carry on without humans, which makes war seem pointless.", "model": [["ts", "Teasdale uses imagery and personification to show that nature is calm and beautiful, and that it would carry on without humans."], ["ev", "First, the poem opens with gentle imagery: \"There will come soft rains and the smell of the ground\" (line 1)."], ["in", "The adjective \"soft\" makes the rain seem gentle rather than stormy, and \"the smell of the ground\" appeals to the sense of smell, so the reader can almost smell the fresh, wet earth."], ["ev", "Teasdale then adds an image of sight, \"wild plum-trees in tremulous white\" (line 4)."], ["in", "\"Tremulous\" means trembling, so the white blossom seems to shake gently in the breeze, delicate and easily harmed."], ["ef", "These peaceful pictures make the reader feel calm, as if standing in a fresh spring garden, and they also make us notice that there are no people anywhere in the scene."], ["ev", "Next, Teasdale uses personification to show that nature does not care about us: \"Not one would mind, neither bird nor tree, / If mankind perished utterly\" (lines 9-10)."], ["in", "To \"mind\" is a human feeling, so the birds and trees are treated like people, yet they would feel nothing even if every human died."], ["ev", "Finally, Spring is described as a woman who wakes up: \"And Spring herself, when she woke at dawn, / Would scarcely know that we were gone\" (lines 11-12)."], ["in", "The pronoun \"herself\" and the verb \"woke\" make Spring seem human, but she would \"scarcely\" (hardly) notice that people had disappeared."], ["ef", "The reader feels shocked and small, because people usually think they are the most important part of the world."], ["bi", "Through this imagery and personification, Teasdale suggests that war is pointless: humans may destroy each other, but nature will simply go on without them."], ["pu", "By publishing the poem during the First World War, Teasdale warns her readers how much they could lose."]], "parts": {"ts": "Topic sentence", "ev": "Evidence + authorial choice", "in": "Interpretation", "ef": "Effect on the reader", "bi": "Big idea", "pu": "Purpose of the author"}, "notesHtml": "<section class=\"note task\"><h3>Your exam task<\/h3><p>In the exam you get a poem you have never seen before (an <b>unseen poem<\/b>) and an <b>introduction paragraph that is already written for you<\/b>.<\/p><p>Your job is to write <b>ONE body paragraph<\/b> that analyzes <b>TWO devices<\/b>. You have <b>40 minutes<\/b>.<\/p><p>This app practices that task with a real poem: \"There Will Come Soft Rains\" by the American poet Sara Teasdale. Learn the method here and you can use it on any unseen poem.<\/p><h4>A 40-minute plan<\/h4><ul class=\"frames\"><li><span class=\"fl\">Minutes 0-5<\/span><span class=\"fx\">Read the poem twice. The first time, find out what happens. The second time, notice the feelings and where the mood changes. Work out tricky words from the words around them.<\/span><\/li><li><span class=\"fl\">Minutes 5-8<\/span><span class=\"fx\">Read the introduction you are given. Its last sentence is usually the thesis. If the thesis names devices, those are the two you write about. If it does not, choose two easy ones: imagery, personification, simile, metaphor, repetition or contrast.<\/span><\/li><li><span class=\"fl\">Minutes 8-13<\/span><span class=\"fx\">Plan. For each device, pick one or two SHORT quotations and circle one key word in each that you will zoom in on.<\/span><\/li><li><span class=\"fl\">Minutes 13-35<\/span><span class=\"fx\">Write the paragraph, following the recipe below.<\/span><\/li><li><span class=\"fl\">Minutes 35-40<\/span><span class=\"fx\">Check: every quotation copied exactly, inside quotation marks, with a line number; both devices named; an effect on the reader for each device; a big-idea sentence at the end.<\/span><\/li><\/ul><\/section><section class=\"note poemsec\"><h3>The poem<\/h3><div class=\"poem\"><div class=\"ptitle\">There Will Come Soft Rains <span class=\"psub\">(War Time)<\/span><\/div><div class=\"pby\">Sara Teasdale<\/div><div class=\"pl\"><span class=\"ln\">1<\/span><span>There will come soft rains and the smell of the ground,<\/span><\/div><div class=\"pl\"><span class=\"ln\">2<\/span><span>And swallows circling with their shimmering sound;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">3<\/span><span>And frogs in the pools singing at night,<\/span><\/div><div class=\"pl\"><span class=\"ln\">4<\/span><span>And wild plum-trees in tremulous white;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">5<\/span><span>Robins will wear their feathery fire,<\/span><\/div><div class=\"pl\"><span class=\"ln\">6<\/span><span>Whistling their whims on a low fence-wire;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">7<\/span><span>And not one will know of the war, not one<\/span><\/div><div class=\"pl\"><span class=\"ln\">8<\/span><span>Will care at last when it is done.<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">9<\/span><span>Not one would mind, neither bird nor tree,<\/span><\/div><div class=\"pl\"><span class=\"ln\">10<\/span><span>If mankind perished utterly;<\/span><\/div><div class=\"pgap\"><\/div><div class=\"pl\"><span class=\"ln\">11<\/span><span>And Spring herself, when she woke at dawn,<\/span><\/div><div class=\"pl\"><span class=\"ln\">12<\/span><span>Would scarcely know that we were gone.<\/span><\/div><div class=\"psrc\">Sara Teasdale. From <i>Flame and Shadow<\/i> (1920). First published in <i>Harper's Monthly Magazine<\/i>, July 1918.<\/div><\/div><\/section><section class=\"note \"><h3>Key words<\/h3><dl class=\"gloss\"><dt>swallows (line 2)<\/dt><dd>small birds with long, pointed wings that fly fast in curves<\/dd><dt>shimmering (line 2)<\/dt><dd>usually describes light that shines and flickers; here it describes a light, sparkling sound<\/dd><dt>plum-trees (line 4)<\/dt><dd>fruit trees that are covered in white blossom in spring<\/dd><dt>tremulous (line 4)<\/dt><dd>trembling or shaking slightly<\/dd><dt>robins (line 5)<\/dt><dd>small birds with bright red-orange chest feathers (the \"feathery fire\")<\/dd><dt>whims (line 6)<\/dt><dd>sudden, playful wishes or ideas<\/dd><dt>fence-wire (line 6)<\/dt><dd>the wire of a fence, where birds often sit<\/dd><dt>mind (line 9)<\/dt><dd>to care about something or be upset by it<\/dd><dt>mankind (line 10)<\/dt><dd>all human beings together<\/dd><dt>perished (line 10)<\/dt><dd>died<\/dd><dt>utterly (line 10)<\/dt><dd>completely<\/dd><dt>scarcely (line 12)<\/dt><dd>hardly; almost not at all<\/dd><\/dl><\/section><section class=\"note \"><h3>What happens<\/h3><p><b>Lines 1-6.<\/b> The speaker imagines a spring in the future. Soft rain falls, and the ground smells fresh. Swallows fly in circles, frogs sing in the pools at night, plum-trees are covered in white blossom, and robins with bright red-orange chests whistle on a fence. Every picture is calm and beautiful, and there are no people anywhere.<\/p><p><b>Lines 7-8.<\/b> The mood changes. For the first time the poem mentions \"the war.\" Not one of these creatures will know about it, or care when it is over.<\/p><p><b>Lines 9-10.<\/b> The poem goes further. Not one bird or tree would \"mind\" (care) even if \"mankind perished utterly\": if every human being died.<\/p><p><b>Lines 11-12.<\/b> Even Spring, described as a woman who wakes up at dawn, would \"scarcely\" (hardly) notice that people were gone.<\/p><p><b>Shape.<\/b> The poem has six couplets (pairs of rhyming lines). The subtitle \"(War Time)\" tells us it was written while a war was being fought: Teasdale first published it in July 1918, during the First World War.<\/p><\/section><section class=\"note \"><h3>The big idea<\/h3><p>Nature does not need human beings. If war destroyed every person on Earth, rain, birds, trees and Spring would carry on exactly as before. This makes war seem <b>pointless<\/b>: it can only destroy us, while the world goes on without noticing.<\/p><p>Big-idea sentence you can use: <i>Teasdale suggests that war is pointless, because nature would carry on without us.<\/i><\/p><\/section><section class=\"note introsec\"><h3>Practice introduction (in the exam, this part is written for you)<\/h3><p class=\"intro\">Sara Teasdale's poem \"There Will Come Soft Rains\" was first published in 1918, during the First World War, and was later printed in her 1920 collection <i>Flame and Shadow<\/i> with the subtitle \"(War Time).\" The poem imagines a peaceful spring in the future, full of rain, birds, frogs and blossom, and then asks what would happen if the war destroyed every human being. None of the birds or trees would notice, and even Spring would hardly know that people were gone. Teasdale uses imagery and personification in \"There Will Come Soft Rains\" to show that nature is calm and beautiful and would carry on without humans, which makes war seem pointless.<\/p><p>Notice the last sentence. It is the <b>thesis<\/b>, and it names the two devices: <b>imagery<\/b> and <b>personification<\/b>. So your body paragraph analyzes those two.<\/p><\/section><section class=\"note \"><h3>Device 1: Imagery<\/h3><p><b>What it is.<\/b> Imagery is language that helps the reader see, hear, smell, taste or feel something. It builds a picture in your mind using the five senses.<\/p><p><b>Where it is.<\/b> \"There will come soft rains and the smell of the ground\" (line 1) appeals to smell, and \"soft\" makes the rain gentle. \"And swallows circling with their shimmering sound\" (line 2) appeals to hearing. \"And wild plum-trees in tremulous white\" (line 4) appeals to sight: \"tremulous\" means trembling, so the blossom shakes gently.<\/p><p><b>What it shows.<\/b> The world after the war is calm, fresh and beautiful. The images are also delicate (\"tremulous\"), like something easily harmed. And there are no people in any of these pictures.<\/p><p><b>Effect on the reader.<\/b> We feel calm and peaceful, as if standing in a spring garden after rain. Later we realize the scene is so peaceful partly because the people are gone, and that is unsettling.<\/p><ul class=\"frames\"><li><span class=\"fl\">Name it<\/span><span class=\"fx\">Teasdale uses imagery in \"...\" (line _).<\/span><\/li><li><span class=\"fl\">Zoom in<\/span><span class=\"fx\">The word \"...\" appeals to the sense of ... / suggests that ...<\/span><\/li><li><span class=\"fl\">Effect<\/span><span class=\"fx\">This makes the reader feel ..., as if ...<\/span><\/li><\/ul><\/section><section class=\"note \"><h3>Device 2: Personification<\/h3><p><b>What it is.<\/b> Personification gives human actions or feelings to something that is not human.<\/p><p><b>Where it is.<\/b> \"Robins will wear their feathery fire\" (line 5): wearing is a human action. \"Not one would mind, neither bird nor tree, / If mankind perished utterly\" (lines 9-10): to \"mind\" is a human feeling. \"And Spring herself, when she woke at dawn, / Would scarcely know that we were gone\" (lines 11-12): \"herself\" and \"woke\" make Spring a woman who wakes up. Spring even has a capital letter, like a name.<\/p><p><b>What it shows.<\/b> Nature is made to seem alive and almost human, yet it still would not care about us. Even Spring, who seems like a person, would hardly notice that every human had died.<\/p><p><b>Effect on the reader.<\/b> We feel shocked and small. People usually think they are the most important thing in the world, but the poem shows that the world would not miss us.<\/p><ul class=\"frames\"><li><span class=\"fl\">Name it<\/span><span class=\"fx\">Teasdale personifies ... in \"...\" (line _).<\/span><\/li><li><span class=\"fl\">Zoom in<\/span><span class=\"fx\">The verb/pronoun \"...\" makes ... seem human, because ...<\/span><\/li><li><span class=\"fl\">Effect<\/span><span class=\"fx\">The reader feels ..., because ...<\/span><\/li><\/ul><\/section><section class=\"note \"><h3>The recipe: one body paragraph, two devices<\/h3><ul class=\"frames\"><li><span class=\"fl\">1. Topic sentence<\/span><span class=\"fx\">[Poet] uses [device 1] and [device 2] to show that [big idea].<\/span><\/li><li><span class=\"fl\">2. Device 1: evidence<\/span><span class=\"fx\">First, [poet] uses [device 1]: \"[short quotation]\" (line _).<\/span><\/li><li><span class=\"fl\">3. Device 1: zoom in<\/span><span class=\"fx\">The word \"...\" suggests / shows / makes ... seem ...<\/span><\/li><li><span class=\"fl\">4. Device 1: effect<\/span><span class=\"fx\">This makes the reader feel ..., because ...<\/span><\/li><li><span class=\"fl\">5. Device 2: evidence<\/span><span class=\"fx\">Next, [poet] uses [device 2] to show that ...: \"[short quotation]\" (line _).<\/span><\/li><li><span class=\"fl\">6. Device 2: zoom in + effect<\/span><span class=\"fx\">The word \"...\" ... This makes the reader feel ...<\/span><\/li><li><span class=\"fl\">7. Big idea + purpose<\/span><span class=\"fx\">Through [device 1] and [device 2], [poet] suggests that ... [Poet] wants readers to ...<\/span><\/li><\/ul><p>Each device can have one or two quotations. Keep every quotation short, copy it exactly, and add the line number in parentheses: (line 4) or (lines 9-10).<\/p><\/section><section class=\"note modelsec\"><h3>Model body paragraph<\/h3><p class=\"model\"><span class=\"mp mp-ts\">Teasdale uses imagery and personification to show that nature is calm and beautiful, and that it would carry on without humans.<\/span> <span class=\"mp mp-ev\">First, the poem opens with gentle imagery: \"There will come soft rains and the smell of the ground\" (line 1).<\/span> <span class=\"mp mp-in\">The adjective \"soft\" makes the rain seem gentle rather than stormy, and \"the smell of the ground\" appeals to the sense of smell, so the reader can almost smell the fresh, wet earth.<\/span> <span class=\"mp mp-ev\">Teasdale then adds an image of sight, \"wild plum-trees in tremulous white\" (line 4).<\/span> <span class=\"mp mp-in\">\"Tremulous\" means trembling, so the white blossom seems to shake gently in the breeze, delicate and easily harmed.<\/span> <span class=\"mp mp-ef\">These peaceful pictures make the reader feel calm, as if standing in a fresh spring garden, and they also make us notice that there are no people anywhere in the scene.<\/span> <span class=\"mp mp-ev\">Next, Teasdale uses personification to show that nature does not care about us: \"Not one would mind, neither bird nor tree, / If mankind perished utterly\" (lines 9-10).<\/span> <span class=\"mp mp-in\">To \"mind\" is a human feeling, so the birds and trees are treated like people, yet they would feel nothing even if every human died.<\/span> <span class=\"mp mp-ev\">Finally, Spring is described as a woman who wakes up: \"And Spring herself, when she woke at dawn, / Would scarcely know that we were gone\" (lines 11-12).<\/span> <span class=\"mp mp-in\">The pronoun \"herself\" and the verb \"woke\" make Spring seem human, but she would \"scarcely\" (hardly) notice that people had disappeared.<\/span> <span class=\"mp mp-ef\">The reader feels shocked and small, because people usually think they are the most important part of the world.<\/span> <span class=\"mp mp-bi\">Through this imagery and personification, Teasdale suggests that war is pointless: humans may destroy each other, but nature will simply go on without them.<\/span> <span class=\"mp mp-pu\">By publishing the poem during the First World War, Teasdale warns her readers how much they could lose.<\/span> <\/p><div class=\"mlegend\"><span><i class=\"sw mp-ts\"><\/i>Topic sentence<\/span><span><i class=\"sw mp-ev\"><\/i>Evidence + authorial choice<\/span><span><i class=\"sw mp-in\"><\/i>Interpretation<\/span><span><i class=\"sw mp-ef\"><\/i>Effect on the reader<\/span><span><i class=\"sw mp-bi\"><\/i>Big idea<\/span><span><i class=\"sw mp-pu\"><\/i>Purpose of the author<\/span><\/div><p><b>Why it scores well.<\/b> The topic sentence names both devices and the idea they show. Every quotation is short, exact and has a line number. Each quotation is followed by a zoom-in on one or two key words (\"soft,\" \"tremulous,\" \"mind,\" \"herself,\" \"woke,\" \"scarcely\"). Each device has an effect on the reader with a reason. Linking words (First, Next, Finally) guide the examiner. The paragraph ends with the big idea and the poet's purpose.<\/p><\/section><section class=\"note \"><h3>If your introduction names different devices<\/h3><p>Sometimes the thesis you are given names other devices. Here are three more easy ones in this poem, ready to use.<\/p><p><b>Repetition.<\/b> \"Not one\" is repeated in lines 7 and 9: \"And not one will know of the war, not one\" (line 7). Repeating \"not one\" stresses that not a single creature would care. The reader feels how alone humans really are.<\/p><p><b>Contrast.<\/b> Lines 1-6 are full of peaceful nature, but lines 7-12 bring in war and the death of all mankind. The calm opening makes the dark ending more shocking.<\/p><p><b>Alliteration.<\/b> \"Whistling their whims\" (line 6) repeats the \"w\" sound, and \"swallows circling with their shimmering sound\" (line 2) repeats soft \"s\" sounds. These gentle sounds make nature seem relaxed and carefree.<\/p><\/section>", "modelHtml": "<p class=\"model\"><span class=\"mp mp-ts\">Teasdale uses imagery and personification to show that nature is calm and beautiful, and that it would carry on without humans.<\/span> <span class=\"mp mp-ev\">First, the poem opens with gentle imagery: \"There will come soft rains and the smell of the ground\" (line 1).<\/span> <span class=\"mp mp-in\">The adjective \"soft\" makes the rain seem gentle rather than stormy, and \"the smell of the ground\" appeals to the sense of smell, so the reader can almost smell the fresh, wet earth.<\/span> <span class=\"mp mp-ev\">Teasdale then adds an image of sight, \"wild plum-trees in tremulous white\" (line 4).<\/span> <span class=\"mp mp-in\">\"Tremulous\" means trembling, so the white blossom seems to shake gently in the breeze, delicate and easily harmed.<\/span> <span class=\"mp mp-ef\">These peaceful pictures make the reader feel calm, as if standing in a fresh spring garden, and they also make us notice that there are no people anywhere in the scene.<\/span> <span class=\"mp mp-ev\">Next, Teasdale uses personification to show that nature does not care about us: \"Not one would mind, neither bird nor tree, / If mankind perished utterly\" (lines 9-10).<\/span> <span class=\"mp mp-in\">To \"mind\" is a human feeling, so the birds and trees are treated like people, yet they would feel nothing even if every human died.<\/span> <span class=\"mp mp-ev\">Finally, Spring is described as a woman who wakes up: \"And Spring herself, when she woke at dawn, / Would scarcely know that we were gone\" (lines 11-12).<\/span> <span class=\"mp mp-in\">The pronoun \"herself\" and the verb \"woke\" make Spring seem human, but she would \"scarcely\" (hardly) notice that people had disappeared.<\/span> <span class=\"mp mp-ef\">The reader feels shocked and small, because people usually think they are the most important part of the world.<\/span> <span class=\"mp mp-bi\">Through this imagery and personification, Teasdale suggests that war is pointless: humans may destroy each other, but nature will simply go on without them.<\/span> <span class=\"mp mp-pu\">By publishing the poem during the First World War, Teasdale warns her readers how much they could lose.<\/span> <\/p><div class=\"mlegend\"><span><i class=\"sw mp-ts\"><\/i>Topic sentence<\/span><span><i class=\"sw mp-ev\"><\/i>Evidence + authorial choice<\/span><span><i class=\"sw mp-in\"><\/i>Interpretation<\/span><span><i class=\"sw mp-ef\"><\/i>Effect on the reader<\/span><span><i class=\"sw mp-bi\"><\/i>Big idea<\/span><span><i class=\"sw mp-pu\"><\/i>Purpose of the author<\/span><\/div>", "introHtml": "Sara Teasdale's poem \"There Will Come Soft Rains\" was first published in 1918, during the First World War, and was later printed in her 1920 collection <i>Flame and Shadow<\/i> with the subtitle \"(War Time).\" The poem imagines a peaceful spring in the future, full of rain, birds, frogs and blossom, and then asks what would happen if the war destroyed every human being. None of the birds or trees would notice, and even Spring would hardly know that people were gone. Teasdale uses imagery and personification in \"There Will Come Soft Rains\" to show that nature is calm and beautiful and would carry on without humans, which makes war seem pointless."}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("game-data").textContent);
+  var KEY = "onur-koc10-softrains:" + DATA.id;
+  var LETTERS = ["A", "B", "C", "D"];
+  var CHEERS = ["In full bloom!", "Spot on!", "Sharp reading!", "Exactly right!", "Lovely analysis!", "Correct!", "Fresh as the rain!", "Well spotted!"];
+  var MAXDOTS = (DATA.levels.length + 1) * 3;
+  var RANKS = [
+    [0, "🌱", "Seedling"], [Math.round(MAXDOTS * 0.2), "🌧️", "Soft Rain"], [Math.round(MAXDOTS * 0.45), "🌸", "Plum Blossom"],
+    [Math.round(MAXDOTS * 0.7), "🐦", "Robin"], [Math.round(MAXDOTS * 0.9), "🌤️", "Spring Herself"]
+  ];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- typed gaps ---------- */
+  // {word|alt} = gap with first letter shown; {=words|alt} = gap with no letter.
+  function parseGaps(text) {
+    var parts = [], re = /\{(=?)([^}]+)\}/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parts.push({ t: text.slice(last, m.index) });
+      var alts = m[2].split("|");
+      parts.push({ gap: true, letter: m[1] ? "" : alts[0].charAt(0), alts: alts });
+      last = re.lastIndex;
+    }
+    if (last < text.length) parts.push({ t: text.slice(last) });
+    return parts;
+  }
+  function tnorm(v) {
+    var s = " " + String(v || "").toLowerCase().replace(/[‘’ʼ`´]/g, "'").replace(/[.,!?;:"“”]+/g, " ").replace(/-/g, " ").replace(/\s+/g, " ").trim() + " ";
+    s = s.replace(/ won't /g, " will not ").replace(/ can't /g, " cannot ").replace(/ can not /g, " cannot ").replace(/ couldn't /g, " could not ")
+      .replace(/n't /g, " not ").replace(/'ve /g, " have ").replace(/'re /g, " are ").replace(/'m /g, " am ").replace(/'ll /g, " will ").replace(/'d /g, " had ");
+    return s.replace(/\s+/g, " ").trim();
+  }
+  function gapOk(p, v) {
+    var c = [tnorm(v)];
+    if (p.letter) c.push(tnorm(p.letter + v));
+    return p.alts.some(function (a) { return c.indexOf(tnorm(a)) >= 0; });
+  }
+
+  /* ---------- question index ---------- */
+  var Q = {}, LEVELS = [], BOSS = { key: "boss", name: "The Final Shower", icon: "🌦️", topic: DATA.bossCount + " mixed questions from every level. Then write your paragraph.", color: "#B5432A", boss: true };
+  DATA.levels.forEach(function (lv, li) {
+    lv.ids = [];
+    lv.num = li + 1;
+    lv.questions.forEach(function (q, qi) {
+      var id = lv.key + ":" + qi;
+      var item = { id: id, level: lv.key, levelName: lv.name, note: q.note || lv.note || "", type: q.type || "mcq", q: q.q, answer: q.answer, wrong: q.wrong,
+        hint: q.hint, why: q.why, lead: q.lead || "", fig: q.fig || "" };
+      if (item.type === "type") {
+        item.parts = parseGaps(q.q);
+        item.blank = item.parts.map(function (p) { return p.gap ? (p.letter ? p.letter + "_____" : "_______") : p.t; }).join("");
+        item.filled = item.parts.map(function (p) { return p.gap ? p.alts[0] : p.t; }).join("");
+      }
+      Q[id] = item;
+      lv.ids.push(id);
+    });
+    LEVELS.push(lv);
+  });
+  var ALL_LEVELS = LEVELS.concat([BOSS]);
+  function levelByKey(k) { for (var i = 0; i < ALL_LEVELS.length; i++) if (ALL_LEVELS[i].key === k) return ALL_LEVELS[i]; return null; }
+
+  /* ---------- state ---------- */
+  var P = null, CUR = null;
+  function blank() { return { name: "", xp: 0, levels: {}, runs: {} }; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY); if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (!p || typeof p !== "object" || !p.levels || !p.runs) return null;
+      for (var k in p.runs) {
+        var r = p.runs[k];
+        if (!r || !Array.isArray(r.ids) || !r.ids.every(function (i) { return Q[i]; })) delete p.runs[k];
+      }
+      return p;
+    } catch (e) { return null; }
+  }
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) {
+    var arr = a.slice();
+    for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    return arr;
+  }
+  function count(obj, val) { var n = 0; for (var k in obj) if (!val || obj[k] === val) n++; return n; }
+  function show(screen) {
+    ["welcome", "map", "play", "between", "done", "notes", "write"].forEach(function (n) { $("screen-" + n).hidden = n !== screen; });
+  }
+  function lvState(k) { if (!P.levels[k]) P.levels[k] = { stars: 0, best: 0, plays: 0 }; return P.levels[k]; }
+  function totalDots() { var n = 0; ALL_LEVELS.forEach(function (l) { n += (P.levels[l.key] && P.levels[l.key].stars) || 0; }); return n; }
+  function rankFor(d) { var r = RANKS[0]; RANKS.forEach(function (x) { if (d >= x[0]) r = x; }); return r; }
+  function nextRank(d) { for (var i = 0; i < RANKS.length; i++) if (RANKS[i][0] > d) return RANKS[i]; return null; }
+  function dotsEl(n, el) {
+    el.textContent = "";
+    for (var i = 0; i < 3; i++) { var s = document.createElement("i"); if (i < n) s.className = "on"; el.appendChild(s); }
+  }
+  function setColor(el, c) { el.style.setProperty("--c", c); }
+
+  function bossIds() {
+    var picked = [];
+    LEVELS.forEach(function (lv) { picked = picked.concat(shuffle(lv.ids).slice(0, DATA.bossPer || 1)); });
+    var rest = shuffle(Object.keys(Q).filter(function (id) { return picked.indexOf(id) < 0; }));
+    while (picked.length < DATA.bossCount && rest.length) picked.push(rest.shift());
+    return shuffle(picked).slice(0, Math.max(DATA.bossCount, picked.length));
+  }
+  function newRun(k, ids, practice) {
+    return { level: k, ids: ids.slice(), practice: !!practice, round: 1, queue: ids.slice(), pos: 0, next: [], wrong: {}, done: {},
+      opts: null, typed: null, answered: null, streak: 0, best: 0, xp: 0, screen: "play" };
+  }
+
+  /* ---------- WELCOME ---------- */
+  function renderWelcome() {
+    $("student-name").value = P.name || "";
+    show("welcome");
+    setTimeout(function () { try { $("student-name").focus(); } catch (e) {} }, 50);
+  }
+  function submitName() {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); $("student-name").classList.add("shake"); setTimeout(function () { $("student-name").classList.remove("shake"); }, 400); return; }
+    P.name = n; save(); renderMap();
+  }
+  $("btn-welcome").onclick = submitName;
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") submitName(); });
+
+  /* ---------- MAP ---------- */
+  function renderMap() {
+    CUR = null;
+    $("confirm-reset").hidden = true;
+    var dots = totalDots(), max = ALL_LEVELS.length * 3, rank = rankFor(dots), nr = nextRank(dots);
+    var pl = $("player"); pl.textContent = "";
+    var av = document.createElement("div"); av.className = "avatar"; av.textContent = (P.name || "?").charAt(0).toUpperCase();
+    var mid = document.createElement("div"); mid.style.minWidth = "0";
+    var nm = document.createElement("div"); nm.className = "player-name"; nm.textContent = P.name;
+    var rk = document.createElement("span"); rk.className = "rank"; rk.textContent = rank[1] + " " + rank[2];
+    mid.appendChild(nm); mid.appendChild(rk);
+    var tot = document.createElement("div"); tot.className = "totals";
+    var st = document.createElement("span"); st.className = "stars-total"; st.textContent = "● " + dots + " / " + max;
+    var xp = document.createElement("span"); xp.className = "xp"; xp.textContent = P.xp + " XP";
+    tot.appendChild(st); tot.appendChild(xp);
+    var bar = document.createElement("div"); bar.className = "rank-bar";
+    var track = document.createElement("div"); track.className = "track";
+    var fill = document.createElement("div"); fill.className = "fill";
+    var lo = rank[0], hi = nr ? nr[0] : max;
+    fill.style.width = (nr ? Math.round((dots - lo) / (hi - lo) * 100) : 100) + "%";
+    track.appendChild(fill);
+    var sm = document.createElement("small");
+    sm.textContent = nr ? (hi - dots) + " more " + (hi - dots === 1 ? "dot" : "dots") + " to become " + nr[1] + " " + nr[2] : "Top rank reached: Spring Herself. Now write your paragraph against the clock.";
+    bar.appendChild(track); bar.appendChild(sm);
+    pl.appendChild(av); pl.appendChild(mid); pl.appendChild(tot); pl.appendChild(bar);
+
+    var total = 0; LEVELS.forEach(function (l) { total += l.ids.length; });
+    $("map-count").textContent = LEVELS.length + " levels · " + total + " questions + final";
+
+    var box = $("levels"), lastGroup = null; box.textContent = "";
+    ALL_LEVELS.forEach(function (lv) {
+      var grp = lv.boss ? "Final challenge" : (lv.group || "");
+      if (grp && grp !== lastGroup) {
+        lastGroup = grp;
+        var gh = document.createElement("div"); gh.className = "group-h";
+        var gt = document.createElement("h3"); gt.textContent = grp;
+        var gs = document.createElement("small");
+        if (!lv.boss) { var gl = LEVELS.filter(function (l) { return l.group === grp; }), gq = 0; gl.forEach(function (l) { gq += l.ids.length; }); gs.textContent = gl.length + " levels · " + gq + " Qs"; }
+        gh.appendChild(gt); gh.appendChild(gs); box.appendChild(gh);
+      }
+      var s = lvState(lv.key), run = P.runs[lv.key];
+      var b = document.createElement("button"); b.type = "button"; b.className = "lvl" + (lv.boss ? " boss" : "");
+      setColor(b, lv.color);
+      var head = document.createElement("div"); head.className = "lvl-head";
+      var ic = document.createElement("div"); ic.className = "lvl-icon"; ic.textContent = lv.icon; ic.setAttribute("aria-hidden", "true");
+      var tx = document.createElement("div"); tx.style.minWidth = "0";
+      var num = document.createElement("div"); num.className = "lvl-num"; num.textContent = lv.boss ? "Final check" : "Level " + (lv.num < 10 ? "0" : "") + lv.num + (lv.kind ? " · " + lv.kind : "");
+      var name = document.createElement("div"); name.className = "lvl-name"; name.textContent = lv.name;
+      tx.appendChild(num); tx.appendChild(name);
+      head.appendChild(ic); head.appendChild(tx);
+      var topic = document.createElement("div"); topic.className = "lvl-topic"; topic.textContent = lv.topic;
+      var foot = document.createElement("div"); foot.className = "lvl-foot";
+      var dEl = document.createElement("span"); dEl.className = "dots"; dotsEl(s.stars, dEl);
+      dEl.setAttribute("aria-label", s.stars + " of 3 dots");
+      var status = document.createElement("span"); status.className = "lvl-status";
+      if (run && run.screen !== "done") { status.textContent = "Continue · " + count(run.done) + "/" + run.ids.length; status.classList.add("go"); }
+      else if (s.plays) status.textContent = "Best " + s.best + "%";
+      else { status.textContent = lv.boss ? DATA.bossCount + " Qs" : lv.ids.length + " Qs"; status.classList.add("go"); }
+      foot.appendChild(dEl); foot.appendChild(status);
+      b.appendChild(head); b.appendChild(topic); b.appendChild(foot);
+      b.onclick = function () { openLevel(lv.key); };
+      box.appendChild(b);
+    });
+    show("map");
+  }
+  $("btn-rename").onclick = function () { renderWelcome(); };
+  $("btn-reset").onclick = function () { $("confirm-reset").hidden = false; $("confirm-reset").scrollIntoView({ block: "nearest" }); };
+  $("btn-reset-no").onclick = function () { $("confirm-reset").hidden = true; };
+  $("btn-reset-yes").onclick = function () { var name = P.name; P = blank(); P.name = name; save(); renderMap(); window.scrollTo(0, 0); };
+
+  function openLevel(k) {
+    var run = P.runs[k];
+    if (!run || run.screen === "done") {
+      var lv = levelByKey(k);
+      P.runs[k] = newRun(k, lv.boss ? bossIds() : lv.ids, false);
+      save();
+    }
+    CUR = k; route(); window.scrollTo(0, 0);
+  }
+
+  /* ---------- PLAY ---------- */
+  function R() { return P.runs[CUR]; }
+  function currentQ() { var r = R(); return Q[r.queue[r.pos]]; }
+  function drawBoard(el, opts) {
+    var r = R(); el.textContent = "";
+    r.ids.forEach(function (id) {
+      var c = document.createElement("i"); c.className = "cell";
+      if (r.done[id]) c.className += " " + r.done[id];
+      else if (r.wrong[id]) c.className += " missed";
+      if (opts && opts.current === id) c.className += " now";
+      if (opts && opts.pop === id && !reduceMotion) c.className += " pop";
+      el.appendChild(c);
+    });
+  }
+  function richText(el, text) {
+    el.textContent = "";
+    var parts = String(text).split("**");
+    parts.forEach(function (part, i) {
+      if (i % 2 === 1) { var s = document.createElement("strong"); s.className = "hl"; s.textContent = part; el.appendChild(s); return; }
+      var bits = part.split("___");
+      bits.forEach(function (b, j) {
+        if (j > 0) { var g = document.createElement("span"); g.className = "gap"; g.setAttribute("aria-label", "blank"); el.appendChild(g); }
+        el.appendChild(document.createTextNode(b));
+      });
+    });
+  }
+  function updateChips(hot) {
+    var r = R();
+    $("streak-n").textContent = r.streak;
+    $("streak-chip").classList.toggle("cold", r.streak === 0);
+    $("xp-n").textContent = P.xp;
+    if (hot && !reduceMotion) { var c = $("streak-chip"); c.classList.remove("hot"); void c.offsetWidth; c.classList.add("hot"); }
+  }
+  function renderPlay() {
+    var r = R(), lv = levelByKey(CUR), q = currentQ();
+    setColor($("screen-play"), lv.color);
+    $("play-icon").textContent = lv.icon;
+    $("play-name").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("play-round").textContent = "ROUND " + r.round + (CUR === "boss" ? " · FROM " + q.levelName.toUpperCase() : (r.round === 1 ? " · FIRST TRY" : " · CLEAR THE MISSED ONES"));
+    updateChips(false);
+    drawBoard($("board"), { current: q.id });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    $("q-count").textContent = "Q " + (r.pos + 1) + " / " + r.queue.length;
+    var misses = r.wrong[q.id] || 0;
+    $("retry-tag").hidden = misses === 0;
+    $("retry-tag").textContent = misses === 1 ? "Missed once. Try again!" : "Missed " + misses + " times. You can do it!";
+    $("q-note").textContent = q.note;
+    $("q-note").hidden = !q.note;
+    var showPeek = q.fig !== "poem";
+    $("peek").hidden = !showPeek;
+    if (showPeek && !$("peek-body").innerHTML) $("peek-body").innerHTML = DATA.poem;
+    if (!showPeek) $("peek").open = false;
+    var fig = $("q-fig");
+    if (q.fig && DATA.figs && DATA.figs[q.fig]) { fig.innerHTML = DATA.figs[q.fig]; fig.hidden = false; } else { fig.innerHTML = ""; fig.hidden = true; }
+    $("q-text").classList.toggle("typed", q.type === "type");
+    $("check-row").hidden = true;
+    if (q.type === "type") renderTyped(q); else richText($("q-text"), q.q);
+    $("feedback").hidden = true; $("btn-next").hidden = true;
+
+    if (q.type === "type") {
+      $("opts").hidden = true; $("check-row").hidden = !!r.answered;
+    } else {
+      $("opts").hidden = false;
+      if (!r.opts) { r.opts = shuffle([q.answer].concat(q.wrong)); save(); }
+      var box = $("opts"); box.textContent = "";
+      var short = r.opts.every(function (t) { return t.length <= 9; });
+      box.className = "opts" + (short ? " two" : "");
+      r.opts.forEach(function (text, i) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+        var k = document.createElement("span"); k.className = "key"; k.textContent = LETTERS[i];
+        var t = document.createElement("span"); t.className = "txt"; t.textContent = text;
+        b.appendChild(k); b.appendChild(t);
+        b.onclick = function () { pick(i, b); };
+        box.appendChild(b);
+      });
+    }
+    if (r.answered) paintAnswer(false);
+    show("play");
+  }
+
+  /* typed */
+  function renderTyped(q) {
+    var r = R(), h = $("q-text"); h.textContent = "";
+    if (q.lead) { var l = document.createElement("span"); l.className = "q-lead"; l.textContent = q.lead; h.appendChild(l); }
+    var gi = 0, carry = "";
+    q.parts.forEach(function (p, pi) {
+      if (!p.gap) { h.appendChild(document.createTextNode(p.t.slice(carry.length))); carry = ""; return; }
+      var nxt = q.parts[pi + 1], tail = "";
+      if (nxt && !nxt.gap) { var mt = nxt.t.match(/^(\s?\([^)]{1,24}\))?[.,!?;:]*/); tail = mt ? mt[0] : ""; }
+      carry = tail;
+      var longest = 0; p.alts.forEach(function (a) { if (a.length > longest) longest = a.length; });
+      var w = document.createElement("span"); w.className = "tgap" + (longest > 20 ? " xwide" : longest > 10 ? " wide" : "");
+      if (p.letter) { var f = document.createElement("span"); f.className = "first"; f.textContent = p.letter; w.appendChild(f); }
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.spellcheck = false; inp.id = "gap-" + gi;
+      inp.setAttribute("autocomplete", "off"); inp.setAttribute("autocorrect", "off"); inp.setAttribute("autocapitalize", "off");
+      inp.setAttribute("enterkeyhint", "done");
+      inp.setAttribute("aria-label", p.letter ? "Missing word, starts with " + p.letter : "Missing words " + (gi + 1));
+      if (r.typed && r.typed[gi] != null) inp.value = r.typed[gi];
+      (function (idx) {
+        inp.addEventListener("input", function () { var rr = R(); if (!rr.typed) rr.typed = []; rr.typed[idx] = inp.value; save(); });
+      })(gi);
+      inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); if (!R().answered) checkTyped(); } });
+      w.appendChild(inp);
+      if (tail) { var glue = document.createElement("span"); glue.className = "tglue"; glue.appendChild(w); glue.appendChild(document.createTextNode(tail)); h.appendChild(glue); }
+      else h.appendChild(w);
+      gi++;
+    });
+  }
+  function checkTyped() {
+    var r = R(), q = currentQ(); if (r.answered) return;
+    var inputs = $("q-text").querySelectorAll("input"), vals = [], empty = null;
+    inputs.forEach(function (inp) { vals.push(inp.value); if (!inp.value.trim() && !empty) empty = inp; });
+    if (empty) {
+      empty.focus();
+      var g = empty.parentNode;
+      if (!reduceMotion) { g.classList.remove("shake"); void g.offsetWidth; g.classList.add("shake"); }
+      return;
+    }
+    var gaps = q.parts.filter(function (p) { return p.gap; });
+    var oks = gaps.map(function (p, i) { return gapOk(p, vals[i]); });
+    r.typed = vals; r.oks = oks;
+    grade(oks.every(Boolean), -1, $("q-text"));
+  }
+  $("btn-tcheck").onclick = checkTyped;
+  function paintTyped(fresh) {
+    var r = R();
+    $("check-row").hidden = true;
+    $("q-text").querySelectorAll("input").forEach(function (inp, i) {
+      inp.value = (r.typed && r.typed[i]) || ""; inp.disabled = true;
+      var ok = r.oks ? r.oks[i] : r.answered.correct;
+      inp.parentNode.classList.add(ok ? "ok" : "no");
+      if (fresh && !ok && !reduceMotion) inp.parentNode.classList.add("shake");
+    });
+  }
+  function focusTyped() {
+    var inp = $("q-text").querySelector("input:not([disabled])");
+    if (inp) { try { inp.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  function pick(i) {
+    var r = R(); if (r.answered) return;
+    grade(r.opts[i] === currentQ().answer, i, $("opts").children[i]);
+  }
+  function grade(correct, pickIdx, srcEl) {
+    var r = R(), q = currentQ(), popId = null, gained = 0;
+    r.answered = { pick: pickIdx, correct: correct };
+    if (correct) {
+      r.done[q.id] = r.wrong[q.id] ? "later" : "first";
+      gained = r.wrong[q.id] ? 5 : 10;
+      r.streak += 1; if (r.streak > r.best) r.best = r.streak;
+      r.xp += gained; P.xp += gained;
+      popId = q.id;
+      r.cheer = CHEERS[Math.floor(Math.random() * CHEERS.length)];
+      r.gained = gained;
+    } else {
+      r.wrong[q.id] = (r.wrong[q.id] || 0) + 1;
+      r.streak = 0;
+      r.next.push(q.id);
+    }
+    save();
+    drawBoard($("board"), { current: q.id, pop: popId });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    updateChips(correct);
+    paintAnswer(true);
+    if (correct) confetti(srcEl);
+  }
+
+  function paintAnswer(fresh) {
+    var r = R(), q = currentQ(), a = r.answered;
+    var misses = r.wrong[q.id] || 0;
+    var reveal = !a.correct && misses >= 3;
+    if (q.type === "type") {
+      paintTyped(fresh);
+    } else {
+      var buttons = $("opts").querySelectorAll(".opt");
+      buttons.forEach(function (b, i) {
+        b.disabled = true;
+        var isAnswer = r.opts[i] === q.answer;
+        if (i === a.pick) b.classList.add(a.correct ? "is-right" : "is-wrong");
+        else if (isAnswer && reveal) b.classList.add("is-right");
+        else b.classList.add("is-dim");
+        if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+      });
+    }
+    var fb = $("feedback"); fb.textContent = ""; fb.className = "feedback";
+    var stamp = document.createElement("span"); stamp.className = "stamp" + (fresh && !reduceMotion ? " thud" : "");
+    var head = document.createElement("div"); head.className = "fb-head";
+    var body = document.createElement("p");
+    var note = document.createElement("p"); note.className = "fb-note";
+    if (a.correct) {
+      fb.classList.add("good");
+      stamp.textContent = "In bloom ✓";
+      head.textContent = r.cheer || "Correct!";
+      body.textContent = q.why;
+      var xp = document.createElement("p"); xp.className = "fb-xp"; xp.textContent = "+" + (r.gained || 10) + " XP" + (misses ? " · square cleared" : "");
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(xp);
+    } else if (reveal) {
+      fb.classList.add("reveal");
+      stamp.textContent = "Remember this";
+      var ans = document.createElement("p"); ans.className = "fb-answer";
+      ans.textContent = "Answer: " + (q.type === "type" ? q.filled : q.answer);
+      body.textContent = q.why;
+      note.textContent = "Remember it. This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(ans); fb.appendChild(body); fb.appendChild(note);
+    } else {
+      fb.classList.add("bad");
+      stamp.textContent = "Not yet ✗";
+      head.textContent = "Check again.";
+      body.textContent = "Hint: " + q.hint;
+      note.textContent = "This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(note);
+    }
+    fb.hidden = false;
+    var last = r.pos + 1 >= r.queue.length;
+    $("btn-next").textContent = last ? (r.next.length ? "Finish round " + r.round + " →" : "See my result →") : "Next question →";
+    $("btn-next").hidden = false;
+    if (fresh) {
+      $("btn-next").focus({ preventScroll: true });
+      $("btn-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+    }
+  }
+
+  function next() {
+    var r = R(); if (!r.answered) return;
+    r.pos += 1; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.cheer = null;
+    if (r.pos >= r.queue.length) {
+      if (r.next.length) r.screen = "between";
+      else finishLevel();
+    }
+    save(); route();
+    if (r.screen === "play") {
+      var top = $("play-card").getBoundingClientRect().top;
+      if (top < 0) $("play-card").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+      if (currentQ().type === "type") focusTyped(); else $("q-text").focus({ preventScroll: true });
+    } else window.scrollTo(0, 0);
+  }
+  $("btn-next").onclick = next;
+  $("btn-back").onclick = function () { save(); renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- BETWEEN ROUNDS ---------- */
+  function renderBetween() {
+    var r = R(), lv = levelByKey(CUR), left = r.next.length, col = lv.color;
+    setColor($("screen-between"), col);
+    $("legend-later").style.background = col;
+    $("between-eyebrow").textContent = lv.name;
+    if (r.round === 1) {
+      var first = count(r.done, "first");
+      $("between-h").textContent = "Round 1 done. Your first-try score:";
+      var big = $("between-big"); big.textContent = first;
+      var sm = document.createElement("small"); sm.textContent = " / " + r.ids.length; big.appendChild(sm);
+    } else {
+      $("between-h").textContent = "Round " + r.round + " done.";
+      $("between-big").textContent = "";
+    }
+    $("between-text").textContent = (left === 1 ? "1 question comes" : left + " questions come") + " back now. Clear " + (left === 1 ? "it" : "them all") + " to fill the board.";
+    drawBoard($("board-between"));
+    $("btn-next-round").textContent = "Start round " + (r.round + 1) + " →";
+    show("between");
+  }
+  $("btn-next-round").onclick = function () {
+    var r = R();
+    r.round += 1; r.queue = shuffle(r.next); r.next = []; r.pos = 0; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.screen = "play";
+    save(); route(); window.scrollTo(0, 0); $("q-text").focus({ preventScroll: true });
+  };
+
+  /* ---------- LEVEL COMPLETE ---------- */
+  function dotsFor(pct) { return pct >= 90 ? 3 : pct >= 70 ? 2 : 1; }
+  function finishLevel() {
+    var r = R(), first = count(r.done, "first"), pct = Math.round(first / r.ids.length * 100);
+    r.screen = "done"; r.pct = pct; r.earned = dotsFor(pct);
+    if (!r.practice) {
+      var s = lvState(CUR), before = totalDots();
+      s.plays += 1;
+      if (pct > s.best) s.best = pct;
+      if (r.earned > s.stars) s.stars = r.earned;
+      var rb = rankFor(before), ra = rankFor(totalDots());
+      r.rankUp = ra[2] !== rb[2] ? ra[1] + " New rank: " + ra[2] + "!" : "";
+    } else r.rankUp = "";
+  }
+  function renderDone() {
+    var r = R(), lv = levelByKey(CUR), total = r.ids.length, first = count(r.done, "first");
+    setColor($("screen-done"), lv.color);
+    $("done-eyebrow").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("done-h").textContent = r.practice ? "Tricky ones cleared." : (r.earned === 3 ? "Full bloom: top marks!" : r.earned === 2 ? "Strong work." : "Level cleared.");
+    var md = $("done-dots"); md.textContent = "";
+    for (var i = 0; i < 3; i++) {
+      var s = document.createElement("i");
+      if (i < r.earned) { s.className = "on"; s.style.animationDelay = (0.15 + i * 0.22) + "s"; }
+      md.appendChild(s);
+    }
+    md.hidden = !!r.practice;
+    var big = $("done-big"); big.textContent = first;
+    var sm = document.createElement("small"); sm.textContent = " / " + total + "  (" + r.pct + "%)"; big.appendChild(sm);
+    $("rank-up").hidden = !r.rankUp; $("rank-up").textContent = r.rankUp || "";
+    var stats = [[r.round, r.round === 1 ? "round" : "rounds"], ["🔥 " + r.best, "best streak"], ["+" + r.xp, "XP earned"]];
+    var box = $("done-stats"); box.textContent = "";
+    stats.forEach(function (x) {
+      var d = document.createElement("div"); d.className = "stat";
+      var b = document.createElement("b"); b.textContent = x[0];
+      var t = document.createElement("span"); t.textContent = x[1];
+      d.appendChild(b); d.appendChild(t); box.appendChild(d);
+    });
+    var tricky = r.ids.filter(function (id) { return r.wrong[id]; }).sort(function (a, b) { return r.wrong[b] - r.wrong[a]; });
+    var ul = $("tricky"); ul.textContent = "";
+    tricky.forEach(function (id) {
+      var q = Q[id], li = document.createElement("li");
+      var tq = document.createElement("span"); tq.className = "tq";
+      tq.textContent = q.type === "type" ? (q.lead ? q.lead + "  →  " : "") + q.blank : q.q.replace(/\*\*/g, "");
+      var ta = document.createElement("span"); ta.className = "ta";
+      ta.textContent = "✔ " + (q.type === "type" ? q.filled : q.answer);
+      var tm = document.createElement("span"); tm.className = "tm";
+      tm.textContent = (CUR === "boss" ? q.levelName + " · " : "") + "missed " + (r.wrong[id] === 1 ? "once" : r.wrong[id] + " times");
+      li.appendChild(tq); li.appendChild(ta); li.appendChild(tm); ul.appendChild(li);
+    });
+    $("tricky-block").hidden = tricky.length === 0;
+    $("btn-practice").hidden = tricky.length === 0;
+    var who = $("who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = P.name || "—"; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("done");
+    if (!r.practice && r.earned === 3 && !r.celebrated) { r.celebrated = true; save(); setTimeout(function () { confetti(md, 50); }, 600); }
+  }
+  $("btn-practice").onclick = function () {
+    var r = R(); var ids = r.ids.filter(function (id) { return r.wrong[id]; });
+    P.runs[CUR] = newRun(CUR, ids, true); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-replay").onclick = function () {
+    var lv = levelByKey(CUR);
+    P.runs[CUR] = newRun(CUR, lv.boss ? bossIds() : lv.ids, false); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-map").onclick = function () { renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- confetti ---------- */
+  function confetti(el, n) {
+    if (reduceMotion || !el) return;
+    var rect = el.getBoundingClientRect();
+    var x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+    var colors = ["#E2A0BA", "#B5432A", "#2E7853", "#8DB7C9", "#F2CF7A"];
+    n = n || 22;
+    for (var i = 0; i < n; i++) {
+      var c = document.createElement("i"); c.className = "confetti";
+      c.style.left = x + "px"; c.style.top = y + "px";
+      c.style.background = colors[i % colors.length];
+      var ang = Math.random() * Math.PI * 2, dist = 60 + Math.random() * 120;
+      c.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+      c.style.setProperty("--dy", (Math.sin(ang) * dist - 50 + Math.random() * 100) + "px");
+      document.body.appendChild(c);
+      (function (node) { setTimeout(function () { node.remove(); }, 950); })(c);
+    }
+  }
+
+
+  /* ---------- NOTES ---------- */
+  function renderNotes() {
+    CUR = null;
+    var nb = $("notes-body");
+    if (!nb.innerHTML) nb.innerHTML = DATA.notesHtml;
+    show("notes"); window.scrollTo(0, 0);
+  }
+  /* ---------- WRITE ---------- */
+  var WKEY = KEY + ":write", W = null, tick = null;
+  var CHECKS = [
+    "My topic sentence names both devices and the idea they show.",
+    "Every quotation is short and copied exactly, inside quotation marks.",
+    "Every quotation has a line number, like (line 4) or (lines 9-10).",
+    "For each device, I zoom in on at least one key word.",
+    "For each device, I explain the effect on the reader and why.",
+    "I use linking words such as First, Next and Finally.",
+    "My last sentences link both devices to the big idea and the poet's purpose."
+  ];
+  function wLoad() {
+    try { var w = JSON.parse(localStorage.getItem(WKEY) || "null"); if (w && typeof w === "object") return w; } catch (e) {}
+    return null;
+  }
+  function wSave() { try { localStorage.setItem(WKEY, JSON.stringify(W)); } catch (e) {} }
+  function wBlank() { return { p1: "", p2: "", text: "", checks: [], left: 2400, end: 0, model: false }; }
+  function secsLeft() { return W.end ? Math.max(0, Math.round((W.end - Date.now()) / 1000)) : W.left; }
+  function drawClock() {
+    var s = secsLeft(), m = Math.floor(s / 60), r = s % 60, c = $("clock");
+    c.textContent = (m < 10 ? "0" : "") + m + ":" + (r < 10 ? "0" : "") + r;
+    c.classList.toggle("low", s > 0 && s <= 300);
+    c.classList.toggle("up", s === 0);
+    $("t-start").textContent = W.end ? "Pause" : (s === 0 ? "Time's up" : (s < 2400 ? "Resume" : "Start"));
+    $("t-start").disabled = !W.end && s === 0;
+    if (W.end && s === 0) { W.left = 0; W.end = 0; wSave(); stopTick(); drawClock(); }
+  }
+  function startTick() { stopTick(); tick = setInterval(function () { if (!$("screen-write").hidden) drawClock(); }, 1000); }
+  function stopTick() { if (tick) { clearInterval(tick); tick = null; } }
+  function wordCount() {
+    var t = $("w-text").value.trim(), n = t ? t.split(/\s+/).length : 0;
+    $("w-wc").textContent = n + (n === 1 ? " word" : " words");
+  }
+  function drawChecks() {
+    var ul = $("w-checks"); ul.textContent = "";
+    CHECKS.forEach(function (c, i) {
+      var li = document.createElement("li"), lb = document.createElement("label"), cb = document.createElement("input"), sp = document.createElement("span");
+      cb.type = "checkbox"; cb.checked = !!W.checks[i];
+      cb.onchange = function () { W.checks[i] = cb.checked; wSave(); countChecks(); };
+      sp.textContent = c; lb.appendChild(cb); lb.appendChild(sp); li.appendChild(lb); ul.appendChild(li);
+    });
+    countChecks();
+  }
+  function countChecks() { var n = 0; CHECKS.forEach(function (c, i) { if (W.checks[i]) n++; }); $("w-count").textContent = n + " / " + CHECKS.length + " ticked"; }
+  function renderWrite() {
+    CUR = null;
+    if (!W) W = wLoad() || wBlank();
+    if (!$("w-intro").innerHTML) { $("w-intro").innerHTML = DATA.introHtml; $("w-poem").innerHTML = DATA.poem; $("w-model").innerHTML = DATA.modelHtml; }
+    $("w-p1").value = W.p1 || ""; $("w-p2").value = W.p2 || ""; $("w-text").value = W.text || "";
+    wordCount(); drawChecks();
+    $("w-model").hidden = !W.model;
+    $("w-show").textContent = W.model ? "Hide the model paragraph" : "Compare with the model paragraph";
+    drawClock(); if (W.end) startTick();
+    show("write"); window.scrollTo(0, 0);
+  }
+  ["w-p1", "w-p2", "w-text"].forEach(function (id) {
+    $(id).addEventListener("input", function () { W[id.slice(2)] = $(id).value; wSave(); if (id === "w-text") wordCount(); });
+  });
+  $("t-start").onclick = function () {
+    if (W.end) { W.left = secsLeft(); W.end = 0; stopTick(); }
+    else if (W.left > 0) { W.end = Date.now() + W.left * 1000; startTick(); }
+    wSave(); drawClock();
+  };
+  $("t-reset").onclick = function () { stopTick(); W.left = 2400; W.end = 0; wSave(); drawClock(); };
+  $("w-show").onclick = function () {
+    W.model = !W.model; wSave();
+    $("w-model").hidden = !W.model;
+    $("w-show").textContent = W.model ? "Hide the model paragraph" : "Compare with the model paragraph";
+    if (W.model) $("w-model").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+  };
+  $("btn-notes").onclick = renderNotes;
+  $("btn-write").onclick = renderWrite;
+  $("notes-to-write").onclick = renderWrite;
+  $("write-to-notes").onclick = renderNotes;
+  document.querySelectorAll("[data-home]").forEach(function (b) { b.onclick = function () { renderMap(); window.scrollTo(0, 0); }; });
+
+  /* ---------- router + keys ---------- */
+  function route() {
+    if (!P.name) return renderWelcome();
+    if (!CUR || !R()) return renderMap();
+    var r = R();
+    if (r.screen === "play") renderPlay();
+    else if (r.screen === "between") renderBetween();
+    else renderDone();
+  }
+  document.addEventListener("keydown", function (e) {
+    if ($("screen-play").hidden || !CUR) return;
+    if (e.target && e.target.tagName === "INPUT") return;
+    var r = R(), q = currentQ(), k = e.key.toLowerCase();
+    if (q.type === "mcq") {
+      var idx = ["1", "2", "3", "4"].indexOf(k); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(k);
+      if (idx >= 0 && r.opts && idx < r.opts.length && !r.answered) { e.preventDefault(); pick(idx); return; }
+    }
+    if ((k === "enter" || k === "arrowright") && r.answered && e.target.tagName !== "BUTTON") { e.preventDefault(); next(); }
+  });
+
+  $("top-title").textContent = DATA.title;
+  $("top-sub").textContent = DATA.subtitle;
+  P = load() || blank();
+  route();
+})();
+</script>
+
+</body>
+</html>
