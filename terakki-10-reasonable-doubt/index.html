@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Reasonable Doubt</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* Layout: a jury room in 1957. Legal-pad paper with a red margin line; level cards are exhibits,
+   answers get SUSTAINED / OVERRULED stamps, the final test is the verdict. */
+:root {
+  --paper: #F3ECDB;        /* legal pad */
+  --grid: #D9CDB1;         /* ruled lines */
+  --margin: #D98A7E;       /* red margin line */
+  --card: #FFFDF7;
+  --ink: #2A1E17;          /* walnut ink */
+  --muted: #6B5A4C;
+  --line: #E2D6BE;
+  --soft: #F7F1E3;
+  --cobalt: #8C2F25;       /* oxblood accent */
+  --marker: #D6A63A;       /* brass */
+  --marker-soft: #F6E8C3;
+  --marker-ink: #6A4A06;
+  --right: #2E6B4A; --right-soft: #DDEFE3;
+  --wrong: #B3261E; --wrong-soft: #F8DEDA;
+  --boss: #2A1E17; --boss-ink: #FFF8EA;
+  --shadow: 0 1px 0 rgba(42, 30, 23, .06), 0 8px 22px rgba(42, 30, 23, .10);
+  --f-display: "Zilla Slab", Rockwell, Georgia, serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "Courier Prime", "Courier New", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #17110D; --grid: #241B15; --margin: #4A231E; --card: #221913; --ink: #F2E7D3; --muted: #BBA88F; --line: #3A2C22; --soft: #2A1F18;
+    --cobalt: #E27D6E; --marker: #E3B656; --marker-soft: #3A2D12; --marker-ink: #F2D38C;
+    --right: #6BCB95; --right-soft: #16301F; --wrong: #FF8A7C; --wrong-soft: #3E1D1A;
+    --boss: #F2E7D3; --boss-ink: #17110D;
+    --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .4);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #17110D; --grid: #241B15; --margin: #4A231E; --card: #221913; --ink: #F2E7D3; --muted: #BBA88F; --line: #3A2C22; --soft: #2A1F18;
+  --cobalt: #E27D6E; --marker: #E3B656; --marker-soft: #3A2D12; --marker-ink: #F2D38C;
+  --right: #6BCB95; --right-soft: #16301F; --wrong: #FF8A7C; --wrong-soft: #3E1D1A;
+  --boss: #F2E7D3; --boss-ink: #17110D;
+  --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .4);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; min-height: 100vh;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent 22px, var(--margin) 22px, var(--margin) 24px, transparent 24px),
+    repeating-linear-gradient(transparent 0 31px, var(--grid) 31px 32px);
+  background-attachment: local;
+}
+.wrap { max-width: 740px; margin: 0 auto; padding-block: 14px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; line-height: 1.1; text-wrap: balance; font-weight: 800; font-stretch: 100%; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+.mono { font-family: var(--f-mono); }
+
+/* Header */
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #fff; border-radius: 10px; padding: 4px 6px; flex: none; box-shadow: var(--shadow); display: grid; place-items: center; }
+.logo img { width: 68px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-display); font-weight: 800; font-size: 1.12rem; line-height: 1.15; font-stretch: 112%; }
+.top-sub { color: var(--muted); font-size: .85rem; }
+
+.card { background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 14px; border: 1px solid var(--line); }
+
+/* Buttons */
+.btn {
+  appearance: none; border: 2px solid var(--ink); border-radius: 10px; padding: 12px 20px; font-family: var(--f-display); font-weight: 800; font-size: 1.05rem; font-stretch: 110%;
+  letter-spacing: .01em; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px;
+  background: var(--ink); color: var(--paper); box-shadow: 3px 3px 0 var(--cobalt); transition: transform .08s, box-shadow .08s;
+}
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--cobalt); }
+.btn-ghost { background: var(--card); color: var(--ink); box-shadow: 3px 3px 0 var(--line); }
+.btn-ghost:active { box-shadow: 1px 1px 0 var(--line); }
+.btn-marker { background: var(--marker); color: #2A2100; border-color: #2A2100; box-shadow: 3px 3px 0 var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Welcome */
+.hero { padding-block: 26px; gap: 16px; }
+.eyebrow { font-family: var(--f-mono); font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cobalt); }
+.hero h1 { font-size: clamp(2.3rem, 10vw, 3.6rem); font-stretch: 125%; font-weight: 900; letter-spacing: -.01em; }
+.hero h1 .strike { position: relative; display: inline-block; color: var(--muted); }
+.hero h1 .strike::after { content: ""; position: absolute; left: -4%; right: -4%; top: 52%; height: .12em; background: var(--wrong); transform: rotate(-4deg); border-radius: 4px; }
+.hero h1 .fact { background: linear-gradient(transparent 58%, var(--marker) 58%); padding: 0 .08em; }
+.hero .sub { color: var(--muted); font-size: 1.05rem; max-width: 34em; }
+.claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; }
+.claim { border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; background: var(--soft); }
+.claim b { font-weight: 700; }
+.claim span { font-family: var(--f-mono); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.claim .m { color: var(--wrong); } .claim .v { color: var(--right); }
+.field { display: flex; flex-direction: column; gap: 6px; max-width: 380px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input { font: inherit; font-size: 1.1rem; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--line); background: var(--soft); color: var(--ink); }
+.field input:focus { border-color: var(--cobalt); outline: none; }
+.hero .btn { max-width: 380px; }
+
+/* Player strip */
+.player { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; }
+.avatar { width: 50px; height: 50px; border-radius: 10px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 900; font-size: 1.4rem; color: var(--paper); background: var(--ink); box-shadow: 3px 3px 0 var(--marker); }
+.player-name { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; line-height: 1.1; overflow-wrap: anywhere; }
+.rank { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--marker-ink); background: var(--marker-soft); padding: 2px 8px; border-radius: 6px; margin-top: 6px; }
+.totals { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-family: var(--f-mono); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.totals .stars-total { font-size: 1.05rem; }
+.totals .xp { font-size: .82rem; color: var(--muted); }
+.rank-bar { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 4px; }
+.rank-bar .track { height: 8px; background: var(--soft); border-radius: 4px; overflow: hidden; border: 1px solid var(--line); }
+.rank-bar .fill { height: 100%; background: var(--cobalt); transition: width .6s; }
+.rank-bar small { color: var(--muted); font-size: .8rem; }
+
+/* Map */
+.map-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 10px; padding-inline: 2px; }
+.map-title h2 { font-size: 1.4rem; font-stretch: 115%; }
+.map-title small { color: var(--muted); font-family: var(--f-mono); font-size: .78rem; }
+.levels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 420px) { .levels { grid-template-columns: 1fr; } }
+.lvl {
+  appearance: none; text-align: left; cursor: pointer; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; position: relative; min-width: 0; transition: transform .1s, border-color .15s;
+}
+.lvl:active { transform: translateY(2px); }
+@media (hover: hover) { .lvl:hover { border-color: var(--c); transform: translateY(-2px); } }
+.lvl-head { display: flex; align-items: center; gap: 10px; }
+.lvl-icon { width: 44px; height: 44px; flex: none; border-radius: 10px; display: grid; place-items: center; font-size: 1.45rem; background: color-mix(in srgb, var(--c) 16%, transparent); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); }
+.lvl-num { font-family: var(--f-mono); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+.lvl-name { font-family: var(--f-display); font-weight: 800; font-size: 1.06rem; line-height: 1.15; font-stretch: 105%; }
+.lvl-topic { font-size: .85rem; color: var(--muted); line-height: 1.35; }
+.lvl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); }
+.dots { display: inline-flex; gap: 5px; align-items: center; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--c, var(--cobalt)); display: inline-block; }
+.dots i.on { background: var(--c, var(--cobalt)); }
+.lvl-status { font-family: var(--f-mono); font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+.lvl-status.go { background: color-mix(in srgb, var(--c) 16%, transparent); color: var(--ink); }
+.lvl.boss { grid-column: 1 / -1; background: var(--boss); color: var(--boss-ink); border-color: var(--boss); }
+.lvl.boss .lvl-icon { background: color-mix(in srgb, var(--marker) 25%, transparent); border-color: var(--marker); }
+.lvl.boss .lvl-num { color: var(--marker); }
+.lvl.boss .lvl-topic { color: color-mix(in srgb, var(--boss-ink) 75%, transparent); }
+.lvl.boss .lvl-foot { border-top-color: color-mix(in srgb, var(--boss-ink) 25%, transparent); }
+.lvl.boss .lvl-status { background: color-mix(in srgb, var(--boss-ink) 14%, transparent); color: var(--boss-ink); }
+.lvl.boss .dots i { border-color: var(--marker); }
+.lvl.boss .dots i.on { background: var(--marker); }
+.group-h { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 10px 2px 0; border-bottom: 2px solid var(--ink); }
+.group-h h3 { font-size: 1.15rem; font-stretch: 118%; text-transform: uppercase; letter-spacing: .03em; }
+.group-h small { color: var(--muted); font-family: var(--f-mono); font-size: .75rem; font-weight: 700; }
+.how p { display: flex; gap: 10px; }
+.how p b.k { font-family: var(--f-mono); flex: none; width: 1.6em; color: var(--cobalt); }
+.tiny-links { display: flex; justify-content: center; gap: 16px; font-size: .85rem; color: var(--muted); }
+.link { appearance: none; background: none; border: 0; padding: 4px; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.confirm { border: 2px solid var(--wrong); }
+.confirm .btn-row .btn { flex: 1 1 140px; }
+
+/* Play */
+.play-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.back { appearance: none; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); border-radius: 10px; padding: 8px 14px; font-weight: 700; cursor: pointer; min-height: 44px; }
+.chips { display: flex; gap: 8px; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 8px; padding: 6px 10px; font-family: var(--f-mono); font-weight: 700; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.chip.cold { opacity: .55; }
+.chip.hot { animation: bump .45s; }
+@keyframes bump { 40% { transform: scale(1.18); } }
+.lvl-banner { display: flex; align-items: center; gap: 12px; }
+.lvl-banner .lvl-icon { width: 48px; height: 48px; }
+.lvl-banner .r { font-family: var(--f-mono); font-size: .76rem; color: var(--muted); font-weight: 700; letter-spacing: .03em; }
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(16px, 1fr)); gap: 4px; }
+.cell { aspect-ratio: 1; border-radius: 3px; background: var(--soft); border: 1px solid var(--line); }
+.cell.first { background: var(--marker); border-color: color-mix(in srgb, var(--marker) 60%, #000); }
+.cell.later { background: var(--c, var(--cobalt)); border-color: var(--c, var(--cobalt)); }
+.cell.missed { background: var(--wrong-soft); border: 2px solid var(--wrong); }
+.cell.now { outline: 2px solid var(--ink); outline-offset: 1px; }
+.cell.pop { animation: pop .45s ease-out; }
+@keyframes pop { 0% { transform: scale(.3); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.board-meta { display: flex; justify-content: space-between; gap: 8px; font-family: var(--f-mono); font-size: .76rem; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+.retry-tag { align-self: flex-start; font-family: var(--f-mono); font-size: .74rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; background: var(--wrong-soft); color: var(--wrong); }
+.q-note { font-size: .9rem; color: var(--muted); font-weight: 700; margin-bottom: -4px; }
+.q-fig { border: 1px solid var(--line); border-radius: 10px; background: var(--soft); padding: 10px; overflow-x: auto; }
+.q-fig svg { display: block; width: 100%; height: auto; max-width: 560px; margin: 0 auto; }
+.q-fig .cap { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); text-align: right; margin-top: 4px; }
+.q-fig table { border-collapse: collapse; width: 100%; font-size: .72rem; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.q-fig th, .q-fig td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+.q-fig td:first-child, .q-fig thead th { white-space: normal; }
+.q-fig th, .q-fig td { padding-inline: 3px; }
+@media (min-width: 500px) { .q-fig table { font-size: .92rem; } .q-fig th, .q-fig td { padding: 6px 8px; } }
+.q-fig th:first-child, .q-fig td:first-child { text-align: left; }
+.q-fig thead th { font-family: var(--f-mono); font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-bottom: 2px solid var(--ink); }
+.q-fig tfoot td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 0; }
+.q-fig .ftitle { font-family: var(--f-display); font-weight: 800; font-size: .95rem; margin-bottom: 6px; }
+.fig-axis { stroke: var(--muted); stroke-width: 1; fill: none; }
+.fig-gridl { stroke: var(--line); stroke-width: 1; fill: none; }
+.fig-line { stroke: var(--cobalt); stroke-width: 3; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.fig-pt { fill: var(--card); stroke: var(--cobalt); stroke-width: 2; }
+.fig-bar { fill: var(--ink); }
+.fig-t { fill: var(--muted); font-family: var(--f-body); font-size: 12px; }
+.fig-tb { fill: var(--ink); font-family: var(--f-body); font-size: 13px; font-weight: 700; }
+.fig-title { fill: var(--ink); font-family: var(--f-display); font-size: 16px; font-weight: 800; }
+
+.q-text { font-family: var(--f-display); font-weight: 700; font-stretch: 100%; font-size: clamp(1.2rem, 4.6vw, 1.48rem); line-height: 1.35; white-space: pre-line; }
+.q-text .hl { background: linear-gradient(transparent 55%, var(--marker) 55%); padding: 0 3px; color: inherit; font-weight: 800; }
+.q-text .gap { display: inline-block; min-width: 3.2em; border-bottom: 3px solid var(--c, var(--cobalt)); height: 1em; vertical-align: baseline; }
+
+.opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.opt {
+  appearance: none; text-align: left; border: 2px solid var(--line); background: var(--card); border-radius: 10px; padding: 11px 12px;
+  display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 58px; min-width: 0;
+  transition: transform .08s, border-color .15s, background .15s; font-weight: 700; font-size: 1.03rem;
+}
+.opt:active:not(:disabled) { transform: translateY(2px); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--c, var(--cobalt)); } }
+.opt .key { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-family: var(--f-mono); font-weight: 700; background: var(--soft); border: 1px solid var(--line); }
+.opt .txt { min-width: 0; overflow-wrap: anywhere; }
+.opt:disabled { cursor: default; }
+.opt.is-right { border-color: var(--right); background: var(--right-soft); }
+.opt.is-right .key { background: var(--right); color: var(--card); border-color: var(--right); }
+.opt.is-wrong { border-color: var(--wrong); background: var(--wrong-soft); }
+.opt.is-wrong .key { background: var(--wrong); color: var(--card); border-color: var(--wrong); }
+.opt.is-dim { opacity: .45; }
+.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+.feedback { border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; border: 2px solid transparent; }
+.feedback.good { background: var(--right-soft); border-color: color-mix(in srgb, var(--right) 40%, transparent); }
+.feedback.bad { background: var(--wrong-soft); border-color: color-mix(in srgb, var(--wrong) 40%, transparent); }
+.feedback.reveal { background: var(--marker-soft); border-color: color-mix(in srgb, var(--marker) 70%, transparent); }
+.stamp { align-self: flex-start; font-family: var(--f-mono); font-weight: 700; font-size: .95rem; letter-spacing: .14em; text-transform: uppercase; padding: 3px 10px; border: 3px double currentColor; border-radius: 6px; transform: rotate(-3deg); }
+.feedback.good .stamp { color: var(--right); }
+.feedback.bad .stamp { color: var(--wrong); }
+.feedback.reveal .stamp { color: var(--marker-ink); }
+.stamp.thud { animation: thud .35s ease-out; }
+@keyframes thud { 0% { transform: rotate(-3deg) scale(1.8); opacity: 0; } 100% { transform: rotate(-3deg) scale(1); opacity: 1; } }
+.fb-head { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.fb-xp { font-family: var(--f-mono); font-weight: 700; font-size: .85rem; color: var(--marker-ink); }
+.fb-answer { font-weight: 700; }
+
+/* Between + results */
+.center { text-align: center; align-items: center; }
+.big-num { font-family: var(--f-display); font-weight: 900; font-stretch: 120%; font-size: clamp(3rem, 15vw, 4.4rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big-num small { font-size: .36em; color: var(--muted); font-weight: 700; font-family: var(--f-mono); font-stretch: 100%; }
+.mega-dots { display: flex; gap: 14px; justify-content: center; }
+.mega-dots i { width: 34px; height: 34px; border-radius: 50%; border: 4px solid var(--c, var(--cobalt)); display: inline-block; }
+.mega-dots i.on { background: var(--c, var(--cobalt)); animation: dotpop .5s backwards; }
+@keyframes dotpop { 0% { transform: scale(0); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.stat { background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.stat b { font-family: var(--f-mono); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .78rem; color: var(--muted); text-align: center; }
+.tricky { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; text-align: left; width: 100%; }
+.tricky li { border-left: 4px solid var(--wrong); background: var(--soft); border-radius: 0 10px 10px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.tricky .tq { font-weight: 700; white-space: pre-line; }
+.tricky .ta { color: var(--right); font-weight: 700; }
+.tricky .tm { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .92rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 12px; width: 100%; }
+.who b { color: var(--ink); }
+.rank-up { background: var(--marker-soft); color: var(--marker-ink); font-weight: 700; padding: 8px 14px; border-radius: 10px; }
+
+/* Typed gaps */
+.q-lead { display: block; font-family: var(--f-body); font-size: 1rem; font-weight: 400; color: var(--ink); background: var(--soft); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; line-height: 1.45; white-space: normal; }
+.q-text.typed { line-height: 2.15; }
+.tglue { white-space: nowrap; }
+.tgap { display: inline-flex; align-items: baseline; white-space: nowrap; vertical-align: baseline; background: var(--marker-soft); border-bottom: 3px solid var(--c, var(--cobalt)); border-radius: 6px 6px 0 0; padding-left: 6px; }
+.tgap .first { font-family: var(--f-body); font-weight: 700; color: var(--marker-ink); }
+.tgap input { font: inherit; font-family: var(--f-body); font-weight: 700; color: var(--ink); width: 7em; max-width: 68vw; padding: 0 6px 0 0; line-height: 1.45; border: 0; border-radius: 0; background: transparent; }
+.tgap:not(:has(.first)) input { padding-left: 0; }
+.tgap.wide input { width: 10em; }
+.tgap.xwide input { width: 15em; }
+.tgap input:focus { outline: none; }
+.tgap:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--cobalt)) 40%, transparent); }
+.tgap input:disabled { opacity: 1; -webkit-text-fill-color: currentColor; }
+.tgap.ok { background: var(--right-soft); border-bottom-color: var(--right); }
+.tgap.ok input, .tgap.ok .first { color: var(--right); }
+.tgap.no { background: var(--wrong-soft); border-bottom-color: var(--wrong); }
+.tgap.no input, .tgap.no .first { color: var(--wrong); }
+.check-row { display: flex; }
+.check-row .btn { flex: 1; }
+
+.confetti { position: fixed; pointer-events: none; z-index: 50; width: 8px; height: 8px; border-radius: 50%; animation: fly .9s cubic-bezier(.2, .7, .4, 1) forwards; }
+@keyframes fly { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
+
+
+/* jury-room extras */
+.hero h1 { font-size: clamp(2.1rem, 9.5vw, 3.4rem); line-height: 1.05; }
+.hero h1 .strike { font-size: .62em; display: inline-block; margin-bottom: .1em; }
+.hero h1 .fact { display: inline; background: linear-gradient(transparent 62%, var(--marker) 62%); }
+.lvl-num, .eyebrow, .rank, .chip, .board-meta, .stamp, .lvl-status { font-family: var(--f-mono); }
+.top-title { font-stretch: normal; }
+.passage { font-family: var(--f-body); font-size: .95rem; line-height: 1.6; max-height: 46vh; overflow-y: auto; padding-right: 4px; }
+.passage p { margin: 0 0 .7em; }
+.passage .ptitle { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; color: var(--cobalt); }
+.passage sup { font-family: var(--f-mono); font-weight: 700; color: var(--cobalt); margin: 0 3px 0 2px; }
+.passage .pn { display: inline-grid; place-items: center; width: 1.5em; height: 1.5em; margin-right: 6px; border-radius: 4px; background: var(--ink); color: var(--paper); font-family: var(--f-mono); font-size: .75rem; }
+.passage .cap { text-align: left; }
+.q-text .hl { background: none; color: var(--cobalt); text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: .16em; text-underline-offset: .18em; padding: 0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hero h1 .fact { background: none; color: var(--marker); } }
+:root[data-theme="dark"] .hero h1 .fact { background: none; color: var(--marker); }
+.q-fig:has(.passage) { background: var(--card); border-left: 4px solid var(--cobalt); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cell.pop, .shake, .chip.hot, .mega-dots i.on, .tgap.shake, .stamp.thud { animation: none; }
+  .confetti { display: none; }
+  .btn, .opt, .lvl { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCACnAPADASIAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAQFAQMGBwII/8QARBAAAQMDAQUDBwoEBAcBAAAAAQACAwQFEQYSITFBUQcTYRQWIlVxgZMVMjNCUlaRobHRI2LB4SRDU4I0NUZUcnPC8P/EABkBAQADAQEAAAAAAAAAAAAAAAACAwQBBf/EACURAQACAQQBBAMBAQAAAAAAAAABAhEDEiExQQQTIjIzUYFCcf/aAAwDAQACEQMRAD8A9mREQEREBERAREQEREBERAREQEREBERARFrnmipoXzTPbHGwbTnOOAAgxUVEVJTvnmeGRsGSSqmj7+61pqJwWQxH0Y+h6Hx5n3Dqquoqqu91sLmNcyN7v8JC4cBzmeP0C6mmp46WnZDGPRaOJ4k8yVXW26eOk5jbHPbciIrEBERAREQEREBERAREQEREBERAREQEREBERAREQERfL3tjYXvcGtaMkk4ACDEsrIYnSyvDGMGXOccABchcLj8sPNROTFaqf02scMGYj6zh06DnxWa+4P1BPhoLbZGfRadxqXD6x/k6DmtlDSNvFyERGaOieHSnlJLyb7G8T4rJfUnUt7dP60VpFI3WW1ho5GxOr6lmzPUgEMP+Wzk3+p8VbrCytURERiFEzmciIi64IiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIsE4GSgOcGtLnEAAZJPJclcLg7UEphiJFrYd54eVEf/A/P2L7udwdfZXUtO4i3MOJZAf8AiCPqj+Xqea+ZHRU1O6SQtjiibkngGgLD6jX/AMVadLT8y01ckrBFTUjQaupd3cAxub1cfBo3rp7XbobVb4qODJbGN7jxe48XHxJVTpeikmDr1VxlstS3ZgY7jFDy954n3LoldoaWyuZ7V6t904ERFoVCIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgLlrtczeJZLdRSFtKw7NTOw/SdWNP6n3LTqPUXfzG1UM2ztejNM08uYB/qtFHG2mgbDGwBrRgALD6j1GPjVp0tL/UpsUbIo2xxtDWNGA0DcAoTafzhvQtzd9DRkSVjhwe7i2P+pWbpWSUtMyOlb3lZUu7qmj6vPM+A4ldHYbPHZLVHRsd3km980p4yPO9zj71D0+lundPUJat8RhYgADAGAFlEXosgiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiIC47WOrYrdAaSmkBlflu47z1A8Op9ymaw1PTWK2Pe+T0n5axjTh0h6DoOpXhtZdZ7lXSVVS7akcdwHBo5AeCza2pMRtr2v0tPPMuvttSdoyzHIkPpHoc/kuupJO8IGRjkvNqCvGAJM93jBAPNdTaa/Ye2N8hBHzHfaXlzEtvbqrFHB8oy3m5StieAYqSJ+4xszvcR1d+i6L5Ztv/AHkX4rmoazvGDLg4/it4LDxYw+4LXT1O2MRDNbRzOZl0LbrQvOGVLHHwyVvimjnbtRPDgDjIXC0cEup7mYaNxgtVM7FTUR+iZ3f6bD06ld1DDHTwtiiYGMYMNa0bgFt0rWvGZjCi9YrOIlsREVqsREQEREBERAREQEWHOaxpc4gAbyTyVNNrHTcE/cS3yhbJnBaZ27igukWqnqYKuETU00c0buD43BwPvCiS3+zwTPhludJHIw7LmOmaC09CEFgi+I5GTRtkje17HDLXNOQQoD9R2SKV0Ul1o2yNdsuaZmgg9EFkirZNQ2aKR0cl1pGvYcOaZmggqVS11JWwGelqYp4gSC+N4cMjxCCQirYtR2WeZsMV1o3yOOy1rZmkk9F8nU1iBIN4osjd9O1dxJlaKnvdyraRvd0dsqatxbnMQAHszyUinv8AZ6uQR090pJXng1kzSf1U9RmJdiXh+oLDqu+Vz6ystdQX8GtA9Fg5ADoqbzO1G07ZtFTkfyr9ErRW1TKGjlqZA5zYml2GgknwVHsR+18a89YfnqW23C2gOrqKWnGQMvGN6sqOdxe17t5ZxaOYUjU1Tc73c3TvpKswsOfoXYJ5nhw5ewKBbyWyNe1khxyawlefeOeGqs8cuwtk2THKxzi1xI2Sc4UwQVOpK91ooHuipWH/AB1S36g/02n7R/JVFqgrLrUC32zaimd9NI5hAgZ9o559F6VaqS2WKhZb6V7GNi+dl2XOdzLj1Kt9Pobp3W6V62rt4jtLoqKmt1HFSUkLYYIm7LGNG4BSFgOBbtAgg78qO+40cZw6pjGf5l6fTCkotbJ4pCAyRrieQO9fJq6cEjvmZG7ig3IvhkjJRljw4DduKxJPFEQ18jWkjIBKDYi1sqIZHbLJGuPQFfE1ZT0/00zGe0pkb0WqOphlAMcjXZGdxXyKymJwJmH2FBvRazPE1geZGhpOAc7ivkVdOTgTMz7UHjXaFqmu1DrCPStDUPgomTtgl2DgyvJGc+AzwXq1LpmzUlpba47dTmlDNgsdGDtdSep8V4Lc4pLF2sSGry0MuQl2nc2OdkH8Cv0cCC3IOQd4Vt+IjCFe5eDMulT2ado1TQ08rzbO9G1C52QY3bx7xnj4LoO1XTovl3tLbTTw+WVUM0m0G4MwaA4Anmei5TtNa669p09HSDvJXd1AA3fl2P7r1O4Qmm1ppOnccujp5mE+yMBSmcYnyjEdw4fst1661zt05eZCyBztmB8m7uXZ+Yegz+BXYXez22XtUssjqKBxko53vzGMOc3GCepGSue7V+z8y95qW0RfxGjaq4WD5w+2PHr+KhdnWpqvUGrrPBW+nLQUU8QlJ3vacYz4jCTEWjdBzHxlB7aaanp9WUjoYY4zLShz9hoG0dojJ8V7Jp+lp6WwUMVPBHFH5Ow7LGgDJaMleP8AbgCNVUBxuNHx/wB5XslkcHWGgcCCDTR7/wDaFG30hKPtLk6C026Ptar3sooGltujkbiMbnF2C4dD4rzntEp4IO1ERQwxxsc6Aua1oAJJGdy9RoSH9q902TnYtkIdjkS47l5h2mgu7US0OLSe4AcOI8VLT+38cv06jtjstro7HR3GkpoaasFQIw6FoYXtIJOcccYC6XstuFfctEU01we+R7XuZHI/i5g4b+fT3LzXW8NxsWtKQ6immvdtGJIROcBzPrDA3ZH57l7daKihqrTSz20MFI+MGIMGAG9MclG3FIh2Psmqs1HUS0mnq6ogeWSRwlzXA8Ctl5ukNotstXK4DYadkE8Sqerrpavs9nrXnMklK5+SFntaOYWxHl5tTazvrD3r66aSIbnb8jfyKiULZqjuzBkyF+y0B2NrdwUR9f5TbzAfQPeB+A0DgPBdZaNPvobTbLrO7ZfPWNAjx9XfgnxXlRuvOO3oTtrC30ffTQVD6CuaWyOdskvGHAj6p9nJXuoKSmlu9seGDFS8tlLTjvANnAOOKh610u6sabvbmf4qMfxY2/5rRzH8w/NVdlvZudRa4JXHvIJuJHzgcftvWuJnTn27deGfEX+df6tdS3p0dQbdSlrIoAA9oONo4yG+zgrW2abo46Nj66FlVVSNBkfIM4J5AcgFyF3a+HWVVFNkNfM17fFrgMH+i9EkMz6MmlcwSlvoF4JbnxU9L5alpt4Q1PjSsQp6e01Fvv8AH5M0ut7mFwBOe5fwwM78H8lAu4bSXyYQfwhJC17g04Bdl2/HVZotS19dOynY2NkzpCz0gC0EEg8N/JR9Tvey/NBI30zMnhvy5R1bVnSma/tLTraNSNzqLTBHBbKdsbA0OYHHHMkbyVC1M1raSCoAxLHOwNeOIBO8Kxt3/Lab/wBTf0VPqirilshfA9r9iojaSOR2lff8c/8AFVPvD5trwIK+ta3vJoY/QJ3keiTgKLZW0Na5tTXbM7nMBHebxk7ycdVv0zPHDR1s8xwxpaXHHLC1V2l358rss7Gtf6fk8nzN/wBkj5v6LPWL7K2rzjwtnbutErGmtJpruKijkYKFzCTEDua/h6PgeYVRX93T1ddTwtMbNv5rSQBlozhYtN+mgrRRzxubIJRE9jjvDs4x4+1aL098d6rWtcWFzm4OM49ELmpeLaeY45dpWYvif06q408Js08Xdt2GQktbjgQN2FRWYNqq+m74iXYYXDaOcHA34Uur08I6OaUXOtJbG47yzB3f+KrtLzOkucQcd/dE/kFZqfkohT6Wbdbdn1u1jGyV8hpa6IYjqGDOR0cOYWi3U2vrZbmW4m01ndN2I6uSR7XY5Etxvx7VOn1dVwzyRDS94kDHFoeyJuHeI3r488qz7p3r4Tf3W3M4wzcZQ9KdnUFlucl7ulV8o3eVxeZi3DGE8S0dfFfV9sWqK7VlDd6KW3Mht+2IY5NvLw4YO1jh7lK88qz7p3r4Tf3WPPKs+6d6+E390zOcnDp2hzoQJWt2i30gN4zz9y4e0dnTbF2gvvtvkjZQSRPzT79pj3ch4Ky88qz7p3r4Tf3WPPKt+6V6+G391yMw7wxrvQtNrOhiHfeTVlPnuZsZGDxa4dFR2Ww9pNloWWyG6Wt9NGNmOSZrnOY3w3fqr3zyrvujefht/dPPKu+6N5+G3913M4w5x2m6a038hRVE9RVOrbjWv7yqqnjBeeQA5NHILhNQ9mepr/qZ97krbbG8uaWMaH4Abwyuu88q77o3n4bf3Qaxrz/0jefht/dImYnJMRMYY1LpCTWGl4qK6PhhuEXpsmgBLGP4c9+COKh6C01qPScTqCurKOpt2S5uyXB8Z8M8ld2jUFXc6zuJrBcKFuyXd7UNaG+zcVF1xqCGy2aXadhzm7wDvI5D3nd7MqFr7a8pRXdPDhu0XVEFfcora2dzaYH03N34b1x4/phWNLrfT81h+QWx1T6fuTG6RzsO2epOMBeSzTz11bJPIdqSVxc48h/Zer9nehAY4rtc4iI9z4IHj555PcOnQe9Y43zbjy2WrSteW2j0BTz00dXTW6fDhtRsq6rHsJaG59y6Gsst6mordSxsoyylIkftPI2n79w3cN6trjen0FT3LbXW1I2QduCPab7FG85pvUNz+CrdlI4UbrzyuKU1Bp2eVNY2XHpBjshc3No/utVQ3eheyOFz9ueI8j1b7eimecsvqK5/C/us+csvqK5/CH7qc7bdoxFo6fWotNQ32Jj2ymnq4h/DmaM7uhHMKNRDU9BAKeWmpqvZ3CVk2zn2gjct/nLL6iufwR+6z5ySepLn8H+65iuc+XfljCssulbhTXVldVTQMa2Rz+7YC5xyScE7hxKXvT95utyNS1tIGhoY0GR3zQc9PFWnnHJ6lufwf7oNRv8AU1y+Ao+3p7dvhLffOUfudTNpRTRx0TGBmwCJXZAxjoo0lguxsLKBraTvHSd7I4vOAQdwG7grPzhf6nuXwU84Xep7l8BdmtZ7RibQr7bYbrFQVVBVGmZHUscDJG4kg43biFIom6it9OKd9NT1WyMCVkuyD44I3KT8vu9UXH4KyL8fVVw+CkVrEREE2tPaFb9OTuu5u9xdF3wJcyGPeA7GNonmcfgodZp+91l0fWO8jDXOBLdt28AY6K6+XT6quHwU+XXeqrh8FJ06TGHYvaJykVTa6W1ujZHD5Q9uy5pedkZ478Ln7JYr3a64TSikkZjZ3PcC0fhvVx8uu9VV/wAFfUd5fJKxgtla3aONp0eAPFSmtbTEz4Ri1oiYjys0WUViAsLKIMIsogwiyiDCLKINFXVR0VLJUSnDWDPiegC8A1vqCe/3t0Eb9qONx2sHcXc/cBu/Fdv2naudAW2qhdmVxLfR+1zPu4e32KB2fdnzazu7pc480wO0xjh9OfH+Ufms95m9tsNOnEUrvlt7O+z5k7YrtdIswAh0MTx9KeTiPs9Bz4r1gAAYCNaGtDWgADcAFlXVrFYxCi95tOZERFJEREQEREBERAREQEREBERAREQEREBERAREQEREBUuqL5HY7TJMX4leCI+vt/8A3PCuHvaxhe4hrWjJJ5BcGbZNrjUBq59plppXbLeXekch/UqF5nGI7TpEZzPSi0foyXUdzdfLu13k216EZ/zMfV9nU8yvWWMbGwMY0Na0YAAwAFiKKOCJkUTGsjYA1rWjAAX2lKRWMF7zaRERTQEREBERAREQEREBERAREQEREBERAREQEREBERAREQVl2p5riG29jzHDJvnkB37P2R4nqp1PTxUsDIII2xxxjDWtG4BETBltREQEREBERAREQEREBERAREQEREBERAREQf/Z"></div>
+    <div class="top-text">
+      <span class="top-title" id="top-title"></span>
+      <span class="top-sub" id="top-sub"></span>
+    </div>
+  </header>
+
+  <!-- WELCOME -->
+  <section id="screen-welcome" class="card hero" hidden aria-labelledby="welcome-h">
+    <span class="eyebrow">Grade 10 · Term 1 · Exam 1 revision</span>
+    <h1 id="welcome-h"><span class="strike">Guilty</span> <span class="fact">Reasonable Doubt</span></h1>
+    <p class="sub">Revise everything for the exam: <b>Twelve Angry Men</b>, ethos, pathos and logos, true/false reading with justification, and the Vocabulary Workshop Unit 1 words. Every missed question comes back until you get it right.</p>
+    <div class="claims" aria-hidden="true">
+      <div class="claim"><span class="m">First vote</span><b>11 guilty · 1 not guilty</b></div>
+      <div class="claim"><span class="v">Final vote</span><b>12 not guilty · 0 guilty</b></div>
+    </div>
+    <div class="field">
+      <label for="student-name">Your name</label>
+      <input id="student-name" type="text" autocomplete="given-name" maxlength="30" placeholder="Type your name">
+    </div>
+    <button class="btn" id="btn-welcome" type="button">Enter the jury room</button>
+  </section>
+
+  <!-- MAP -->
+  <section id="screen-map" hidden>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card player" id="player"></div>
+      <div class="map-title"><h2>Exhibits</h2><small id="map-count"></small></div>
+      <div class="levels" id="levels"></div>
+      <div class="card how" style="gap:8px">
+        <h3 style="font-size:1.1rem">How it works</h3>
+        <p><b class="k">01</b><span>Answer every question in a level. Missed questions come back in the next round until you get them right.</span></p>
+        <p><b class="k">02</b><span>In typing questions, check your spelling. Capital letters don't matter. Short forms like <b>hadn't</b> and long forms like <b>had not</b> are both fine.</span></p>
+        <p><b class="k">03</b><span>Your first-try score fills the dots: 90% or more = 3 dots, 70% or more = 2 dots, finished = 1 dot. Get 3 dots everywhere before the exam.</span></p>
+        <p><b class="k">04</b><span>Correct answers in a row build your streak and earn XP.</span></p>
+      </div>
+      <div class="card confirm" id="confirm-reset" hidden>
+        <p><b>Reset all your dots, XP and progress?</b> This can't be undone.</p>
+        <div class="btn-row">
+          <button class="btn" id="btn-reset-yes" type="button">Yes, reset</button>
+          <button class="btn btn-ghost" id="btn-reset-no" type="button">Keep my progress</button>
+        </div>
+      </div>
+      <div class="tiny-links">
+        <button class="link" id="btn-rename" type="button">Change name</button>
+        <button class="link" id="btn-reset" type="button">Reset all progress</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="screen-play" hidden>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="play-top">
+        <button class="back" id="btn-back" type="button">← Exhibits</button>
+        <div class="chips">
+          <span class="chip" id="streak-chip" title="Correct answers in a row">🔥 <span id="streak-n">0</span></span>
+          <span class="chip" title="XP">XP <span id="xp-n">0</span></span>
+        </div>
+      </div>
+      <div class="card" id="play-card">
+        <div class="lvl-banner">
+          <div class="lvl-icon" id="play-icon" aria-hidden="true"></div>
+          <div style="min-width:0">
+            <div class="lvl-name" id="play-name"></div>
+            <div class="r" id="play-round"></div>
+          </div>
+        </div>
+        <div class="board" id="board" aria-hidden="true"></div>
+        <div class="board-meta"><span id="progress-line"></span><span id="q-count"></span></div>
+        <span class="retry-tag" id="retry-tag" hidden></span>
+        <p class="q-note" id="q-note"></p>
+        <div class="q-fig" id="q-fig" hidden></div>
+        <h2 class="q-text" id="q-text" tabindex="-1"></h2>
+        <div class="check-row" id="check-row" hidden><button class="btn" id="btn-tcheck" type="button">Check my answer</button></div>
+        <div class="opts" id="opts" role="group" aria-labelledby="q-text"></div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+        <button class="btn" id="btn-next" type="button" hidden>Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BETWEEN ROUNDS -->
+  <section id="screen-between" class="card center" hidden aria-labelledby="between-h">
+    <span class="eyebrow" id="between-eyebrow"></span>
+    <h2 id="between-h"></h2>
+    <div class="big-num" id="between-big"></div>
+    <p id="between-text"></p>
+    <div class="board" id="board-between" aria-hidden="true" style="width:100%"></div>
+    <div class="legend">
+      <span><i style="background:var(--marker)"></i>Right first time</span>
+      <span><i id="legend-later" style="background:var(--cobalt)"></i>Cleared later</span>
+      <span><i style="background:var(--wrong-soft);box-shadow:inset 0 0 0 2px var(--wrong)"></i>Still to clear</span>
+    </div>
+    <button class="btn" id="btn-next-round" type="button" style="width:100%"></button>
+  </section>
+
+  <!-- LEVEL COMPLETE -->
+  <section id="screen-done" class="card center" hidden aria-labelledby="done-h">
+    <span class="eyebrow" id="done-eyebrow"></span>
+    <h2 id="done-h" style="font-size:1.8rem"></h2>
+    <div class="mega-dots" id="done-dots" aria-hidden="true"></div>
+    <div>
+      <div style="color:var(--muted)">First-try score</div>
+      <div class="big-num" id="done-big"></div>
+    </div>
+    <p class="rank-up" id="rank-up" hidden></p>
+    <div class="stats" id="done-stats"></div>
+    <div id="tricky-block" style="width:100%;display:flex;flex-direction:column;gap:10px">
+      <h3 style="font-size:1.15rem;text-align:left">Questions to revise</h3>
+      <ul class="tricky" id="tricky"></ul>
+    </div>
+    <div class="who" id="who"></div>
+    <div class="btn-row" style="width:100%">
+      <button class="btn btn-marker" id="btn-practice" type="button">Practice the tricky ones</button>
+      <button class="btn" id="btn-map" type="button">Back to the exhibits</button>
+      <button class="btn btn-ghost" id="btn-replay" type="button">Play this level again</button>
+    </div>
+  </section>
+</div>
+
+<script id="game-data" type="application/json">
+{"id": "terakki10-exam1-12am-v1", "title": "Reasonable Doubt · Grade 10", "subtitle": "Term 1 Exam 1 revision", "bossCount": 30, "bossPer": 1, "figs": {"passageA": "<div class=\"passage\"><div class=\"ptitle\">Let Teenagers Sleep<\/div><p><span class=\"ps\"><sup>1<\/sup>Every school morning, thousands of teenagers drag themselves out of bed before the sun is up, and many of them arrive at their first lesson still half asleep.<\/span> <span class=\"ps\"><sup>2<\/sup>This is not laziness.<\/span> <span class=\"ps\"><sup>3<\/sup>Sleep scientists have shown that during the teenage years the body's internal clock shifts later, so teenagers naturally find it hard to fall asleep early at night.<\/span> <span class=\"ps\"><sup>4<\/sup>The American Academy of Pediatrics, an organization of children's doctors, has recommended that middle and high schools start no earlier than 8:30 a.m.<\/span> <span class=\"ps\"><sup>5<\/sup>If students must be awake by 6:30 but cannot fall asleep before 11, they lose sleep every single night, and that missing sleep adds up over a week.<\/span> <span class=\"ps\"><sup>6<\/sup>Picture a sixteen-year-old struggling to keep her eyes open during a math test she studied hard for, knowing she could have done well if only her brain had been awake.<\/span> <span class=\"ps\"><sup>7<\/sup>As a teacher who has watched this happen in my own classroom for fifteen years, I can tell you that the first lesson of the day is often the hardest one to teach.<\/span> <span class=\"ps\"><sup>8<\/sup>Starting school later costs very little, yet it could give every student a fairer chance to learn.<\/span> <span class=\"ps\"><sup>9<\/sup>Our children deserve schools that work with their bodies, not against them.<\/span><\/p><div class=\"cap\">Practice passage written for this app · sentences are numbered<\/div><\/div>", "passageB": "<div class=\"passage\"><div class=\"ptitle\">Adopt, Don't Shop<\/div><p><span class=\"ps\"><sup>1<\/sup>Every year, animal shelters fill up with dogs and cats that did nothing wrong except end up without a home.<\/span> <span class=\"ps\"><sup>2<\/sup>Many families still choose to buy a puppy from a pet shop, often without thinking about the animals already waiting.<\/span> <span class=\"ps\"><sup>3<\/sup>As a veterinarian who has worked with shelter animals for twenty years, I have seen how loyal and loving these second-chance pets can be.<\/span> <span class=\"ps\"><sup>4<\/sup>Think of an old dog who watches the door of his cage every morning, hoping that today someone will take him home.<\/span> <span class=\"ps\"><sup>5<\/sup>When you adopt, you give a home to an animal that already exists, instead of paying for a new one to be bred.<\/span> <span class=\"ps\"><sup>6<\/sup>Adoption also frees up a space in the shelter, so another animal can be rescued from the street.<\/span> <span class=\"ps\"><sup>7<\/sup>Before you buy your next pet, visit your local shelter.<\/span> <span class=\"ps\"><sup>8<\/sup>You might find that your new best friend has been waiting for you all along.<\/span><\/p><div class=\"cap\">Practice passage written for this app · sentences are numbered<\/div><\/div>", "textA": "<div class=\"passage\"><div class=\"ptitle\">TEXT A — Can You Trust Your Memory?<\/div><p><b class=\"pn\">1<\/b>Most people believe that memory works like a video camera: we record an event, store it safely, and play it back exactly when we need it. Psychologists have shown that this picture is wrong. Every time we remember something, we rebuild it, and the pieces we use to rebuild it can come from places other than the original event.<\/p><p><b class=\"pn\">2<\/b>One of the best-known experiments on this subject was published in 1974 by the American psychologists Elizabeth Loftus and John Palmer. They showed university students short films of car accidents and then asked them questions about what they had seen. The key question was about speed: “About how fast were the cars going when they ___ each other?” Each group heard a different verb in the gap: smashed, collided, bumped, hit or contacted.<\/p><p><b class=\"pn\">3<\/b>The results were striking. Every student had watched the same films, yet the verb changed their answers. Students who heard “smashed” gave the highest estimates, about 41 miles per hour on average, while students who heard “contacted” gave the lowest, about 32 miles per hour. A single word in a question was enough to change what people reported.<\/p><p><b class=\"pn\">4<\/b>In a second experiment, Loftus and Palmer went further. They asked a new group of students about a film of an accident, using either “smashed” or “hit,” while a third group was not asked about speed at all. One week later, all the students returned and were asked whether they had seen any broken glass. There was no broken glass in the film. Even so, 16 of the 50 students in the “smashed” group said they had seen it, compared with 7 of the 50 in the “hit” group.<\/p><p><b class=\"pn\">5<\/b>This second result is important because it suggests the question did not just change how people described the accident; it changed the memory itself. The word “smashed” added a new detail, a violent crash with glass everywhere, and the students later remembered that detail as if they had really seen it.<\/p><p><b class=\"pn\">6<\/b>These findings matter far beyond the laboratory. Police officers, lawyers and journalists ask questions every day, and the way they word those questions can shape what a witness later believes. Memory is not a recording. It is closer to a story that we retell, and like any story, it can change a little each time it is told.<\/p><div class=\"cap\">Facts from Loftus &amp; Palmer (1974) · text written for this app<\/div><\/div>", "textB": "<div class=\"passage\"><div class=\"ptitle\">TEXT B — When Witnesses Get It Wrong<\/div><p><b class=\"pn\">1<\/b>In a courtroom, few things are as powerful as a witness who points at the defendant and says, “That's the person I saw.” Jurors find it hard to argue with someone who was there. Yet research and real cases show that honest, confident witnesses can be completely wrong.<\/p><p><b class=\"pn\">2<\/b>The clearest evidence comes from DNA testing. The Innocence Project, an American organization that works to free people who were wrongly convicted, kept track of cases in the United States in which DNA testing proved that a convicted person was innocent. By 2020, it had counted 375 of these DNA exonerations. Eyewitness misidentification played a part in 69 percent of them, making it the leading cause of these wrongful convictions.<\/p><p><b class=\"pn\">3<\/b>These witnesses were not usually lying. In 84 percent of the misidentification cases, the person who made the mistake was a surviving victim of the crime, someone with every reason to want the real criminal caught. Fear and stress can make it harder to take in a face clearly, and a frightened witness may focus on a weapon rather than on the person holding it.<\/p><p><b class=\"pn\">4<\/b>Confidence can also mislead. A witness may feel unsure at first, but if a police officer says something encouraging after the identification, the witness's confidence often grows. By the time of the trial, months later, the witness may sound completely certain.<\/p><p><b class=\"pn\">5<\/b>To reduce these mistakes, many experts recommend changes to the way police run identification lineups. One suggestion is that the officer running the lineup should not know which person is the suspect, so that he or she cannot give the witness hints without meaning to. Another is to write down how confident the witness is at the very moment of the first identification, before anything else can influence the memory.<\/p><p><b class=\"pn\">6<\/b>None of this means that eyewitnesses are useless. It means that their evidence should be tested carefully, like any other evidence, before it is used to decide a person's future.<\/p><div class=\"cap\">Figures from the Innocence Project (375 DNA exonerations, 1989–2020) · text written for this app<\/div><\/div>"}, "levels": [{"key": "jurors", "name": "Meet the Jury", "icon": "👥", "group": "Twelve Angry Men", "kind": "Characters", "topic": "Who is who: each juror's job, background and role", "color": "#8C2F25", "questions": [{"q": "In the very first vote, which juror is the only one to vote **not guilty**?", "answer": "The 8th Juror", "wrong": ["The 9th Juror", "The 11th Juror", "The 5th Juror"], "hint": "Think of the juror who stands alone against eleven others at the start.", "why": "The first vote is 11 to 1. The 8th Juror is the only one who votes not guilty."}, {"q": "Why does the 8th Juror vote **not guilty** in the first vote?", "answer": "He isn't sure, and he won't send a boy to die without discussing it first", "wrong": ["He is completely certain the boy is innocent and wants to prove it now", "He knows the boy's family from his own neighborhood and wants to help", "He believes the old man witness lied on purpose to hurt the boy"], "hint": "He does not say the boy is innocent. What does he say he wants to do?", "why": "The 8th Juror says he doesn't know if the boy is guilty. A life is at stake, so he wants to talk about the case before voting."}, {"q": "Which juror has a broken relationship with **his own son**, which affects how he sees the case?", "answer": "The 3rd Juror", "wrong": ["The 4th Juror", "The 10th Juror", "The 7th Juror"], "hint": "This juror is the last one to change his vote.", "why": "The 3rd Juror tells the story of how he tried to toughen up his son, and how they no longer speak. His anger at his son affects his vote."}, {"q": "Which juror is an **old man** and the first to join the 8th Juror?", "answer": "The 9th Juror", "wrong": ["The 11th Juror", "The 6th Juror", "The 2nd Juror"], "hint": "He changes his vote in the secret ballot.", "why": "The 9th Juror, the oldest man, votes not guilty in the secret ballot because he respects the 8th Juror's courage and wants to hear more."}, {"q": "Which juror **grew up in a slum** and is hurt when others say slum kids are dangerous?", "answer": "The 5th Juror", "wrong": ["The 6th Juror", "The 2nd Juror", "The 12th Juror"], "hint": "He later explains how switchblades are really used.", "why": "The 5th Juror grew up in a poor neighborhood, so he takes the comments about slum kids personally."}, {"q": "How would you describe the **11th Juror**?", "answer": "An immigrant from Europe who deeply respects democracy and the jury system", "wrong": ["A baseball fan who worries he will miss the game he has tickets for", "A wealthy broker who insists that only facts and logic should matter", "An advertising man who doodles and struggles to make up his mind"], "hint": "He gives a speech about responsibility and democracy.", "why": "The 11th Juror came to America from Europe. He takes his duty seriously and talks about how special the jury system is."}, {"q": "Which juror is a **broker** who stays calm and says the jury should stick to the facts?", "answer": "The 4th Juror", "wrong": ["The 12th Juror", "The Foreman", "The 2nd Juror"], "hint": "He is the one who wears glasses and rubs the marks on his nose.", "why": "The 4th Juror is a broker. He is calm, logical and proud of his good memory."}, {"q": "Which juror is a **salesman** who is mainly worried about his tickets for that night's game?", "answer": "The 7th Juror", "wrong": ["The 12th Juror", "The 10th Juror", "The 6th Juror"], "hint": "He is the juror in a hurry.", "why": "The 7th Juror is a salesman and baseball fan. He wants the trial over so he can get to the ballgame."}, {"q": "Which juror's arguments are based mostly on **prejudice** against people from the boy's background?", "answer": "The 10th Juror", "wrong": ["The 6th Juror", "The 2nd Juror", "The 12th Juror"], "hint": "Near the end, the other jurors turn away from him during his speech.", "why": "The 10th Juror judges the boy by where he comes from, not by the evidence. His long prejudiced speech near the end makes the others turn against him."}, {"q": "Which juror works in **advertising**, doodles, and changes his vote more than once?", "answer": "The 12th Juror", "wrong": ["The Foreman", "The 7th Juror", "The 2nd Juror"], "hint": "Think of the juror who can't decide.", "why": "The 12th Juror is an advertising man. He is easily swayed and goes back and forth on his vote."}, {"q": "Who is the **Foreman**, and what is his job in the jury room?", "answer": "A football coach who runs the votes and tries to keep order", "wrong": ["A retired judge who explains the law to the other jurors", "A police officer who brings the evidence in from the court", "A lawyer who decides which witnesses the jury can discuss"], "hint": "He is Juror No. 1. He counts the votes.", "why": "The Foreman is a high school football coach. He organizes the votes and tries to keep the discussion orderly."}, {"q": "Which juror is a **house painter** who stands up for the old 9th Juror when others are rude to him?", "answer": "The 6th Juror", "wrong": ["The 5th Juror", "The 11th Juror", "The 2nd Juror"], "hint": "He is a working man who is protective of the old man.", "why": "The 6th Juror, a house painter, defends the 9th Juror when the 3rd Juror is disrespectful to him."}, {"q": "Which **timid** juror works at a bank and later raises the question about the angle of the stab wound?", "answer": "The 2nd Juror", "wrong": ["The 12th Juror", "The 11th Juror", "The 4th Juror"], "hint": "He is quiet and often talked over.", "why": "The 2nd Juror is shy and works at a bank. He notices that the downward stab wound doesn't fit a shorter attacker."}]}, {"key": "evidence", "name": "The Evidence", "icon": "🔪", "group": "Twelve Angry Men", "kind": "Plot", "topic": "The old man, the woman, the knife, the el train, the alibi, the stab wound", "color": "#A0522D", "questions": [{"q": "What did the **old man downstairs** say he heard on the night of the murder?", "answer": "The boy shouting that he would kill his father, then a body falling", "wrong": ["Two loud gunshots, then the front door slamming shut very hard", "The father calling for help out of the window to the street", "A long argument about money, with the radio playing loudly"], "hint": "His testimony includes a threat and a sound.", "why": "The old man said he heard the boy shout that he would kill his father and then heard a body fall."}, {"q": "The old man said he got from his bed to his front door in how many **seconds**?", "answer": "15 seconds", "wrong": ["5 seconds", "30 seconds", "60 seconds"], "hint": "It is a short time for a man who can barely walk.", "why": "He claimed 15 seconds. The 8th Juror tests whether that was possible."}, {"q": "Why does the 8th Juror doubt that the old man reached his door so quickly?", "answer": "The old man walked slowly and with great difficulty", "wrong": ["The old man lived on a different floor from the boy", "The old man admitted that he had been fast asleep", "The old man's door was locked from the outside"], "hint": "Think about how the old man moved in court.", "why": "The old man had trouble walking, so it seems very unlikely he could get to the door in only 15 seconds."}, {"q": "How does the 8th Juror **test** the old man's story?", "answer": "He acts out the old man's walk while another juror times him", "wrong": ["He asks the guard to measure the old man's real hallway", "He checks the walk against the el train timetable", "He asks the judge to call the old man back to court"], "hint": "He uses the diagram of the apartment and a watch.", "why": "Using the apartment diagram, the 8th Juror copies the old man's slow walk, and the time is checked on a watch."}, {"q": "What does the walking test show?", "answer": "It would have taken much longer than 15 seconds", "wrong": ["It would have taken exactly 15 seconds", "It could easily be done in under 10 seconds", "It is impossible to know how long it took"], "hint": "The result helps the boy, not the prosecution.", "why": "The reenactment takes far longer than 15 seconds, so the old man probably heard someone running and only assumed it was the boy."}, {"q": "Why does the **el train** matter for the old man's testimony?", "answer": "Its roar would have made the boy's shout almost impossible to hear", "wrong": ["It blocked the old man's view of the stairs outside his door", "It was running late, so the time of the murder is wrong", "Its bright lights woke the old man before the murder began"], "hint": "Think about sound, not sight.", "why": "The train takes about ten seconds to pass and is extremely loud, so the old man probably couldn't have heard the shout clearly."}, {"q": "How did the **woman across the street** say she saw the murder?", "answer": "Through the windows of a passing el train", "wrong": ["From the roof of her building", "Through a gap in the boy's front door", "From the bottom of the stairs"], "hint": "Something was moving between her window and the boy's window.", "why": "She said she saw the stabbing through the windows of the el train as it went past."}, {"q": "What does the 9th Juror suggest about the **old man** witness?", "answer": "He may have wanted attention and to feel important for once", "wrong": ["He was paid by the police to say what they wanted", "He hated the boy and wanted to see him punished", "He was confused because of the medicine he took"], "hint": "The 9th Juror, also old, understands how it feels to be ignored.", "why": "The 9th Juror thinks a lonely old man who has never been noticed might convince himself he heard things, just to feel important."}, {"q": "What did the prosecution say was special about the **knife**?", "answer": "It was very unusual, supposedly the only one of its kind", "wrong": ["It had the boy's initials carved into the handle", "It had been stolen from the shop where the boy worked", "It was much too heavy for a teenager to use"], "hint": "The storekeeper had never seen another like it.", "why": "The prosecution said the switchblade was one of a kind, so it must be the boy's knife."}, {"q": "How does the 8th Juror weaken the **knife** evidence?", "answer": "He shows an identical knife he bought in the boy's neighborhood", "wrong": ["He proves the boy's fingerprints were never on the knife", "He shows that the knife was too short to kill anyone", "He finds a receipt proving someone else bought it"], "hint": "He surprises everyone by taking something out of his pocket.", "why": "The 8th Juror sticks an identical switchblade into the table. He bought it near the boy's home, so the knife was not unique."}, {"q": "What did the boy say happened to his knife?", "answer": "It fell through a hole in his coat pocket", "wrong": ["He left it under his seat at the movies", "He lent it to a friend that afternoon", "He threw it into the river that night"], "hint": "It has to do with his clothing.", "why": "The boy claimed the knife fell through a hole in his pocket, so he lost it before the murder."}, {"q": "What was the boy's **alibi** (where he said he was)?", "answer": "At the movies, though he couldn't remember the films", "wrong": ["At a friend's apartment, playing cards all night", "At his night job, though no one remembered him", "Walking by the river, though nobody saw him"], "hint": "His alibi involves a place where people watch films.", "why": "The boy said he was at the movies but couldn't remember what he saw, which made the jurors doubt him."}, {"q": "How does the 8th Juror show that forgetting the movies doesn't prove the boy lied?", "answer": "He asks the 4th Juror about a recent movie, and he struggles to remember", "wrong": ["He asks the guard which movies were showing on that night", "He shows that the movie theater was closed on that night", "He reads out the boy's school report about his poor memory"], "hint": "He tests the memory of the juror who is proudest of his memory.", "why": "Even the calm 4th Juror can't remember details of a film he saw days ago, and he wasn't under stress like the boy."}, {"q": "Why is the **downward angle** of the stab wound important?", "answer": "The boy was shorter, and knife fighters stab upward, not down", "wrong": ["The boy was taller, so a downward stab proves he did it", "The father was sitting, so the angle tells us nothing", "The wound was on the back, so the father was running away"], "hint": "Think about the boy's height and how a switchblade is held.", "why": "The 2nd Juror notes the boy was much shorter than his father. The 5th Juror explains that switchblades are used underhand, stabbing upward."}, {"q": "How does the **5th Juror** know how a switchblade is really used?", "answer": "He has seen knife fights in the neighborhood where he grew up", "wrong": ["He learned about knives while serving in the army", "He works in a shop that sells knives of every kind", "A detective explained it to the jury during the trial"], "hint": "His background is the key.", "why": "The 5th Juror grew up in a slum and saw knife fights, so he knows an experienced fighter would never stab downward."}, {"q": "What question does the **11th Juror** ask about the boy's behavior after the murder?", "answer": "Why would he come back home hours later if he were the killer?", "wrong": ["Why did he call the police as soon as he got home?", "Why did he tell the old man where he was going?", "Why did he buy a second knife the next morning?"], "hint": "The boy was arrested when he returned home.", "why": "The 11th Juror wonders why a guilty boy would return to the scene of the crime, which makes him doubt the case."}]}, {"key": "votes", "name": "Turning Votes", "icon": "🗳️", "group": "Twelve Angry Men", "kind": "Plot", "topic": "Every vote change, in order, and the reason behind it", "color": "#7A5C1E", "questions": [{"q": "What is the result of the **first vote**?", "answer": "11 guilty, 1 not guilty", "wrong": ["10 guilty, 2 not guilty", "12 guilty, 0 not guilty", "9 guilty, 3 not guilty"], "hint": "Only one juror disagrees.", "why": "The first vote is 11 to 1. Only the 8th Juror votes not guilty."}, {"q": "The 8th Juror asks for a **secret ballot**. What does he promise?", "answer": "If everyone else still votes guilty, he won't stand alone any longer", "wrong": ["If anyone votes not guilty, he will tell the judge right away", "If the vote is a tie, the Foreman will decide the verdict", "If he loses, he will ask the judge for a brand new jury"], "hint": "He does not vote in this ballot himself.", "why": "He says he will abstain. If all eleven still vote guilty, he will go along with them. One juror votes not guilty."}, {"q": "Who changes to **not guilty** in the secret ballot, and why?", "answer": "The 9th Juror, because he respects the 8th's courage and wants more discussion", "wrong": ["The 5th Juror, because he grew up in a slum and feels sorry for the boy", "The 11th Juror, because he doubts the boy would come back to the scene", "The 2nd Juror, because he is worried about the angle of the stab wound"], "hint": "It's the oldest juror.", "why": "The 9th Juror changes because it takes courage to stand alone, and he wants to hear more."}, {"q": "After the secret ballot, the 3rd Juror wrongly accuses which juror of changing his vote?", "answer": "The 5th Juror", "wrong": ["The 9th Juror", "The 6th Juror", "The 12th Juror"], "hint": "He picks the juror who grew up in a slum.", "why": "The 3rd Juror attacks the 5th Juror, but it was really the 9th Juror who changed."}, {"q": "What convinces the **5th Juror** to change his vote?", "answer": "The doubts about whether the old man could hear the shout over the train", "wrong": ["The 10th Juror's speech about people from the boy's neighborhood", "The 4th Juror's admission that he wears glasses for reading", "The 7th Juror's complaint that the jury was wasting time"], "hint": "It happens in Act I, after the el train discussion.", "why": "After the el train argument, the 5th Juror changes to not guilty. The vote becomes 9 to 3."}, {"q": "The **11th Juror** changes his vote. What is the new count?", "answer": "8 guilty, 4 not guilty", "wrong": ["9 guilty, 3 not guilty", "6 guilty, 6 not guilty", "7 guilty, 5 not guilty"], "hint": "Four jurors now vote not guilty: 8, 9, 5 and 11.", "why": "With the 11th Juror, the vote is 8 to 4 in favor of guilty."}, {"q": "In Act II, an open vote ends in a **6–6 tie**. Which two jurors have just changed?", "answer": "The 2nd and 6th Jurors", "wrong": ["The 7th and 12th Jurors", "The 4th and 10th Jurors", "The 3rd and Foreman"], "hint": "One is timid; one is a house painter.", "why": "The 2nd and 6th Jurors change to not guilty, making it 6 to 6."}, {"q": "Why does the **7th Juror** change to not guilty?", "answer": "He is tired of the discussion and just wants to leave", "wrong": ["He is finally convinced by the stab wound evidence", "He realizes the woman could not have seen clearly", "He feels sorry for the boy after hearing his history"], "hint": "The 11th Juror is angry about his reason.", "why": "The 7th Juror changes because he has had enough, not because of the evidence. The 11th Juror condemns this."}, {"q": "After the 7th Juror, which jurors change, making it **9–3 for not guilty**?", "answer": "The Foreman and the 12th Juror", "wrong": ["The 3rd and 10th Jurors", "The 4th and 10th Jurors", "The 2nd and 6th Jurors"], "hint": "The three left voting guilty are 3, 4 and 10.", "why": "The Foreman and the 12th Juror change, so only the 3rd, 4th and 10th Jurors still vote guilty."}, {"q": "Which three jurors are the **last holdouts** for guilty?", "answer": "The 3rd, 4th and 10th Jurors", "wrong": ["The 3rd, 7th and 12th Jurors", "The 2nd, 4th and 6th Jurors", "The 4th, 10th and Foreman"], "hint": "One is angry about his son, one is logical, one is prejudiced.", "why": "The 3rd, 4th and 10th Jurors hold out the longest."}, {"q": "What finally makes the **4th Juror** change his vote?", "answer": "Realizing the woman across the street wore glasses but wasn't wearing them in bed", "wrong": ["Learning that the old man had suffered strokes and could not walk quickly", "Seeing that the 8th Juror had bought an identical knife near the boy's home", "Hearing the 10th Juror's angry speech about the boy's neighborhood"], "hint": "Think of the marks on the side of his own nose.", "why": "The 9th Juror remembers the woman had glasses marks on her nose. She wouldn't wear glasses in bed, so she probably saw only a blur. The 4th Juror now has a reasonable doubt."}, {"q": "Who is the **last juror** to vote not guilty?", "answer": "The 3rd Juror", "wrong": ["The 10th Juror", "The 4th Juror", "The 12th Juror"], "hint": "He has been angry from the start.", "why": "The 3rd Juror is the last holdout. He finally gives in, and the verdict is unanimous."}, {"q": "What finally breaks the **3rd Juror**?", "answer": "He realizes his anger at his own son has been driving his vote", "wrong": ["He learns that the boy's lawyer was very experienced", "He sees new evidence that the boy was at the movies", "He is told that the judge will end the trial anyway"], "hint": "The 8th Juror reminds him that the boy is not his son.", "why": "Left alone, the 3rd Juror pours out his anger about his son. Seeing that his feelings, not the facts, drove his vote, he changes to not guilty."}]}, {"key": "clash", "name": "Clashes & Denouncing", "icon": "⚡", "group": "Twelve Angry Men", "kind": "Conflict", "topic": "When jurors condemn, defend or attack each other", "color": "#B03A2E", "questions": [{"q": "When the 3rd Juror starts a game of **tic-tac-toe**, how does the 8th Juror react?", "answer": "He snatches the paper away and says this is not a game", "wrong": ["He joins the game to calm everyone down", "He asks the Foreman to end the meeting", "He laughs and says they all need a break"], "hint": "He is angry that they are not taking a life seriously.", "why": "The 8th Juror grabs the paper. A boy's life is not a game, and this nearly starts a fight."}, {"q": "Early on, the 10th Juror says people like the boy can't be trusted. Who **condemns** this?", "answer": "The 9th Juror, who calls the remark ignorant", "wrong": ["The 7th Juror, who says it's a waste of time", "The 12th Juror, who says it is bad for business", "The 3rd Juror, who says it's not the point"], "hint": "It's the old man.", "why": "The 9th Juror openly condemns the 10th Juror's prejudice early in the play."}, {"q": "The 3rd Juror is rude and dismissive to the old 9th Juror. Who **defends** the 9th Juror?", "answer": "The 6th Juror", "wrong": ["The 7th Juror", "The 4th Juror", "The 12th Juror"], "hint": "The house painter.", "why": "The 6th Juror stands up for the 9th Juror and warns the 3rd Juror, and they almost come to blows."}, {"q": "At the end of Act I, what does the 8th Juror accuse the 3rd Juror of?", "answer": "Wanting the boy to die for personal reasons, like a sadist", "wrong": ["Taking a bribe from the prosecution to vote guilty", "Lying about what he heard during the trial", "Falling asleep while the witnesses were speaking"], "hint": "This makes the 3rd Juror lunge at him.", "why": "The 8th Juror says the 3rd Juror wants the boy dead because he personally wants it, not because of the facts."}, {"q": "Why is the 3rd Juror shouting that he'll kill the 8th Juror such an **important** moment?", "answer": "It proves people say \"I'll kill you\" in anger without meaning it", "wrong": ["It proves the 3rd Juror is the real murderer in the case", "It shows the 8th Juror was trying to get a hung jury", "It means the guard has to end the discussion for the day"], "hint": "Remember the old man's testimony about the boy's shout.", "why": "The 8th Juror had said this phrase is often said without meaning it. The 3rd Juror proves the point himself."}, {"q": "When the 11th Juror questions whether the 7th Juror understands reasonable doubt, how does the 7th react?", "answer": "He mocks him for being an immigrant", "wrong": ["He thanks him and changes his vote", "He asks the Foreman to explain it", "He agrees and apologizes at once"], "hint": "He attacks the person, not the argument.", "why": "The 7th Juror makes insulting comments about the 11th Juror being an immigrant instead of answering the point."}, {"q": "How does the 11th Juror **denounce** the 7th Juror's change of vote?", "answer": "He says he is playing with a man's life and must vote from real conviction", "wrong": ["He says the 7th Juror should have changed his vote at the very start", "He says the 7th Juror has no right to vote because he wasn't listening", "He says the 7th Juror only changed because the 8th Juror paid him"], "hint": "The 7th Juror changed only because he was bored.", "why": "The 11th Juror says changing a vote just to leave is wrong. He demands that the 7th Juror vote because he truly believes it."}, {"q": "During the 10th Juror's prejudiced speech, how do most of the other jurors respond?", "answer": "They get up and turn their backs on him", "wrong": ["They cheer and agree with every point", "They call the guard to take him out", "They vote again to remove him"], "hint": "Their reaction is silent but powerful.", "why": "The jurors move away and turn their backs, showing they reject his prejudice."}, {"q": "What does the 4th Juror tell the 10th Juror after his speech?", "answer": "To sit down and not open his mouth again", "wrong": ["To repeat his point more clearly for all", "To write his ideas down for the judge", "To take a break and get some fresh air"], "hint": "The 4th Juror still votes guilty, but he won't accept prejudice.", "why": "Even the 4th Juror, who still thinks the boy is guilty, firmly silences the 10th Juror."}, {"q": "How does the **5th Juror** react when others say children from slums are dangerous?", "answer": "He is offended and reveals that he grew up in a slum himself", "wrong": ["He agrees and says he moved away from the slums as a boy", "He laughs and says the 10th Juror doesn't mean any harm", "He stays silent and changes his vote to guilty right away"], "hint": "The comments feel personal to him.", "why": "The 5th Juror takes offense because he grew up in a slum. The comments are about people like him."}]}, {"key": "motives", "name": "Motives & Bias", "icon": "🎟️", "group": "Twelve Angry Men", "kind": "Characters", "topic": "Who is in a hurry, who is prejudiced, and why", "color": "#6B4E8C", "questions": [{"q": "Which juror is **in a hurry** to finish, and why?", "answer": "The 7th Juror, because he has tickets for a baseball game that night", "wrong": ["The 2nd Juror, because his child is sick at home with a fever", "The 12th Juror, because he has to finish an advertising campaign", "The Foreman, because his football team has a match in the evening"], "hint": "He keeps talking about the game.", "why": "The 7th Juror wants the deliberation over quickly so he can get to the ballgame."}, {"q": "Why is the 3rd Juror so determined to find the boy **guilty**?", "answer": "He sees his own son in the boy and is angry at him", "wrong": ["He was robbed by a teenager on his way to court", "He is a close friend of the boy's dead father", "He believes the law requires a guilty verdict"], "hint": "His personal story comes out early in Act I.", "why": "The 3rd Juror's pain and anger about his son, who hit him and no longer speaks to him, color how he sees the boy."}, {"q": "What is the main reason the **10th Juror** wants a guilty verdict?", "answer": "He is prejudiced and believes people like the boy are born bad", "wrong": ["He has carefully studied the evidence and found no doubts", "He wants to finish quickly so he can go back to his garage", "He feels sorry for the old man who gave evidence in court"], "hint": "His reasons are about a group of people, not the facts.", "why": "The 10th Juror's vote is based on prejudice against the boy's background, not on the evidence."}, {"q": "The 4th Juror is logical, but what **bias** does he show early in the play?", "answer": "He believes children from slums are likely to become criminals", "wrong": ["He believes old people should never be allowed to give evidence", "He believes immigrants do not understand American law", "He believes anyone who owns a knife must be dangerous"], "hint": "The 5th Juror is hurt by this view.", "why": "The 4th Juror says slum children are a danger to society. In the end, though, he follows the facts and changes his vote."}, {"q": "Why does the **8th Juror** keep asking questions about the evidence?", "answer": "A boy's life is at stake, so the jury must be sure before voting guilty", "wrong": ["He wants to show the others he knows more about the law than they do", "He is being paid by the boy's lawyer to change the jurors' minds", "He is angry at the old man and wants to prove that he is a liar"], "hint": "Think about the death penalty and reasonable doubt.", "why": "The 8th Juror's motive is justice. If they find the boy guilty, he will be executed, so they must be certain."}, {"q": "What does the 8th Juror point out about the 10th Juror's trust in the **woman across the street**?", "answer": "He trusts her, yet she comes from the same background he says can't be trusted", "wrong": ["He trusts her, yet she admitted in court that she was fast asleep that night", "He trusts her, yet she was paid by the police to say what she saw", "He trusts her, yet she said she didn't know the boy or his father"], "hint": "The 10th Juror is being inconsistent.", "why": "The 10th Juror says people like the boy are liars, but he believes the woman, who comes from the same neighborhood."}, {"q": "Why does the 7th Juror like the idea of a **hung jury**?", "answer": "It would let him leave quickly without reaching a real decision", "wrong": ["It would make sure the boy is found guilty at a new trial", "It would give the jury more time to look at the evidence", "It would mean the 8th Juror gets in trouble with the judge"], "hint": "Remember his tickets.", "why": "A hung jury would end the discussion fast, which is all the 7th Juror cares about."}, {"q": "How does the **heat** in the jury room affect the jurors?", "answer": "It makes them uncomfortable, short-tempered and quick to argue", "wrong": ["It makes them sleepy, so nobody speaks for a long time", "It makes them agree quickly so they can go outside", "It has no effect, because the room is air-conditioned"], "hint": "It's the hottest day of the year and the fan doesn't work.", "why": "The heat adds pressure. The men are irritable, and tempers flare easily."}, {"q": "Why is the **12th Juror** a weak juror for most of the play?", "answer": "He isn't really focused and changes his mind easily", "wrong": ["He refuses to change his mind about anything at all", "He is too old to follow the arguments of the others", "He openly says he hates the boy and his family"], "hint": "He doodles and goes back and forth.", "why": "The 12th Juror doodles, thinks like an advertising man and changes his vote, showing he is not deeply engaged."}, {"q": "How does the 6th Juror show **respect for others**, even while he still thinks the boy is guilty?", "answer": "He defends the old 9th Juror when the 3rd Juror is disrespectful", "wrong": ["He gives his chair to the guard when the evidence is brought in", "He thanks the 10th Juror for his long speech about the boy", "He offers to pay for the 7th Juror's baseball tickets himself"], "hint": "He is protective of an older man.", "why": "The 6th Juror insists that the 9th Juror be treated with respect."}]}, {"key": "objects", "name": "Objects & Apparel", "icon": "👓", "group": "Twelve Angry Men", "kind": "Symbols", "topic": "Glasses, jackets, knives, heat and rain: what they reveal", "color": "#2E6B6B", "questions": [{"q": "How do the **woman's glasses** help prove there is reasonable doubt?", "answer": "She normally wore glasses but wouldn't wear them in bed, so she saw only a blur", "wrong": ["She wore dark glasses in court, so the jury could never see her honest eyes", "She broke her glasses that night, so she had to ask the old man what happened", "She wore new glasses that night, so she saw everything far more clearly than usual"], "hint": "She said she was lying in bed when she looked out.", "why": "Marks on her nose showed she wore glasses. She was in bed and had no time to put them on, so she couldn't have seen clearly."}, {"q": "What makes the 9th Juror remember the woman's **glasses**?", "answer": "The 4th Juror takes off his glasses and rubs the marks on his nose", "wrong": ["The 2nd Juror borrows the 4th Juror's glasses to read the clock", "The 8th Juror shows a photo of the woman wearing her glasses", "The Foreman finds a pair of glasses left on the jury table"], "hint": "Watch what the 4th Juror does with his hands.", "why": "When the 4th Juror rubs his nose, the 9th Juror remembers the woman doing the same thing and the marks on her nose."}, {"q": "The 9th Juror noticed the old man's **torn jacket** in court. What does this suggest about him?", "answer": "He was a poor, ignored man who may have wanted to feel important", "wrong": ["He was a violent man who had been in a fight that same night", "He was a careless man who could not be trusted with money", "He was a rich man pretending to be poor to gain sympathy"], "hint": "Clothing tells us about the old man's life.", "why": "The torn jacket shows a poor, lonely man. This supports the 9th Juror's idea that he wanted attention."}, {"q": "How does the boy's **coat pocket** matter to his story?", "answer": "He says his knife fell out through a hole in the pocket", "wrong": ["The police found the father's money hidden inside it", "It had blood on it, which the woman saw from her window", "He kept his movie ticket in it to prove his alibi"], "hint": "Where did the knife go?", "why": "The boy said he lost the knife through a hole in his pocket before the murder."}, {"q": "At the very end, the 8th Juror helps the 3rd Juror put on his **jacket**. What does this show?", "answer": "The 8th Juror's compassion: he doesn't gloat over a beaten opponent", "wrong": ["The 8th Juror's pride: he wants everyone to see he has won", "The 8th Juror's fear: he wants the 3rd Juror to leave quickly", "The 8th Juror's anger: he is still annoyed with the 3rd Juror"], "hint": "Think about kindness after a long fight.", "why": "Instead of celebrating, the 8th Juror shows kindness to the man who fought him hardest. It shows his compassion."}, {"q": "What do the **two identical knives** stuck in the table represent?", "answer": "Doubt: there is another possible version of what happened", "wrong": ["Proof: the boy definitely owned the murder weapon", "Danger: the jurors are afraid of one another", "Wealth: the 8th Juror can afford expensive things"], "hint": "The knife was supposed to be one of a kind.", "why": "The second knife shows that the 'unique' knife was not unique, so another explanation is possible."}, {"q": "What is the effect of the **storm and rain** in Act II?", "answer": "It matches the rising conflict and then cools the room as tempers ease", "wrong": ["It forces the jury to stop and go home until the next morning", "It makes the jury forget about the evidence for a long time", "It proves that the woman could not see across the street"], "hint": "Heat builds, then breaks.", "why": "The storm reflects the conflict in the room. When the rain comes, the heat breaks, just as the jury moves toward agreement."}, {"q": "The **broken fan** and the heat at the start of the play create what kind of atmosphere?", "answer": "Tense and uncomfortable, with tempers close to breaking", "wrong": ["Calm and peaceful, like a quiet afternoon at home", "Cheerful and relaxed, like a holiday among friends", "Cold and lonely, like an empty winter street"], "hint": "It's the hottest day of the year.", "why": "The heat and broken fan make the room stifling, which adds to the pressure and anger."}, {"q": "Why are the **tic-tac-toe** game and the 7th Juror's baseball talk important?", "answer": "They show some jurors treat a life-or-death decision like a game", "wrong": ["They show the jurors are good friends who enjoy each other", "They show the 8th Juror is a sports fan as well", "They show the trial was too short to be fair"], "hint": "Games keep appearing when jurors are not serious.", "why": "Games and sports show that some jurors are not taking their responsibility seriously."}, {"q": "The 4th Juror never seems to lose control. What does his **glasses moment** reveal?", "answer": "Even the calm, logical juror can be moved when the facts change", "wrong": ["Even the calm juror secretly agreed with the 10th Juror's ideas", "Even the calm juror is too proud to admit that he might be wrong", "Even the calm juror cannot see well enough to follow the case"], "hint": "He changes his vote right after this.", "why": "The glasses evidence convinces the 4th Juror. A logical man changes his mind because of new facts."}]}, {"key": "traits", "name": "Character Traits", "icon": "🧩", "group": "Twelve Angry Men", "kind": "Traits", "topic": "Name the trait and back it up with what the juror does", "color": "#3A6B2E", "questions": [{"q": "The 7th Juror keeps checking the time and talking about his ballgame tickets. Which trait does this show?", "answer": "Impatient", "wrong": ["Thoughtful", "Courageous", "Observant"], "hint": "He wants it all to be over.", "why": "He is impatient: he cares more about leaving than about the boy's life."}, {"q": "The 8th Juror refuses to give up even when eleven men are against him. Which trait fits best?", "answer": "Persistent", "wrong": ["Indecisive", "Impatient", "Prejudiced"], "hint": "He keeps going.", "why": "He is persistent: he keeps examining the evidence despite pressure."}, {"q": "The 9th Juror notices small details, like the marks on the woman's nose. Which trait does this show?", "answer": "Observant", "wrong": ["Aggressive", "Indecisive", "Arrogant"], "hint": "He sees what others miss.", "why": "He is observant: he noticed the torn jacket and the nose marks."}, {"q": "The 3rd Juror refuses to listen and shouts down anyone who disagrees. Which trait fits best?", "answer": "Stubborn", "wrong": ["Compassionate", "Timid", "Observant"], "hint": "He won't change his mind.", "why": "He is stubborn: he holds on to his view and is the last to change."}, {"q": "The 2nd Juror speaks quietly and is easily talked over. Which trait does this show?", "answer": "Timid", "wrong": ["Arrogant", "Aggressive", "Stubborn"], "hint": "He is shy.", "why": "He is timid: he struggles to speak up when stronger personalities take over."}, {"q": "The 10th Juror judges the boy by his background, not the evidence. Which trait fits best?", "answer": "Prejudiced", "wrong": ["Fair-minded", "Thoughtful", "Humble"], "hint": "He judges a whole group.", "why": "He is prejudiced: his opinions come from hatred of a group, not facts."}, {"q": "The 12th Juror changes his vote back and forth and can't explain why. Which trait fits best?", "answer": "Indecisive", "wrong": ["Determined", "Principled", "Courageous"], "hint": "He can't make up his mind.", "why": "He is indecisive: he is easily swayed and unsure."}, {"q": "The 11th Juror insists that jurors vote from honest conviction. Which trait does this show?", "answer": "Principled", "wrong": ["Impatient", "Careless", "Cowardly"], "hint": "He has strong beliefs about right and wrong.", "why": "He is principled: he believes in the duty of a juror and defends it."}, {"q": "The 4th Juror argues calmly with facts and never shouts. Which trait fits best?", "answer": "Logical", "wrong": ["Emotional", "Impulsive", "Careless"], "hint": "He relies on reason.", "why": "He is logical: he bases his arguments on facts and stays calm."}, {"q": "The 9th Juror is the first to stand with the 8th Juror, even though it's unpopular. Which trait fits best?", "answer": "Courageous", "wrong": ["Cowardly", "Impatient", "Indifferent"], "hint": "Standing alone takes something.", "why": "He is courageous: he supports an unpopular view because he thinks it's right."}, {"q": "The 8th Juror reminds the others the boy has had a hard life and deserves a fair hearing. Which trait fits best?", "answer": "Compassionate", "wrong": ["Ruthless", "Arrogant", "Indifferent"], "hint": "He cares about the boy as a person.", "why": "He is compassionate: he sees the boy as a human being."}, {"q": "The 6th Juror warns the 3rd Juror to stop disrespecting the old man. Which trait does this show?", "answer": "Protective", "wrong": ["Selfish", "Timid", "Prejudiced"], "hint": "He looks after someone weaker.", "why": "He is protective: he stands up for the 9th Juror."}, {"q": "In an exam, which is the **best** way to explain a character trait?", "answer": "Name the trait, point to what the character says or does, and explain how it shows the trait", "wrong": ["Name the trait and then retell the whole plot of the play from start to finish in order", "Name two or three traits quickly so that at least one of them will be marked correct", "Give your own opinion of the character without using any details from the play at all"], "hint": "Trait → evidence → explanation.", "why": "A full-mark answer names one trait, gives evidence from the passage, and explains the link."}, {"q": "The exam says: \"You may only use information from the passage.\" What should you do?", "answer": "Base your explanation only on what the juror says and does in that passage", "wrong": ["Use everything you remember about the juror from the whole play", "Explain what happens to the juror after the passage ends", "Compare the juror with characters from other books you've read"], "hint": "Read the instruction carefully.", "why": "If the question limits you to the passage, use only evidence from it, or you lose marks."}]}, {"key": "justice", "name": "Justice & Themes", "icon": "⚖️", "group": "Twelve Angry Men", "kind": "Themes", "topic": "Reasonable doubt, prejudice, courage and responsibility", "color": "#1F4E79", "questions": [{"q": "What does **reasonable doubt** mean for the jury?", "answer": "If there is a sensible reason to doubt the boy's guilt, they must vote not guilty", "wrong": ["If most of the jurors think he is guilty, they must vote guilty as a group", "If the boy cannot prove that he is innocent, they must find him guilty", "If the evidence is long and complex, they must ask the judge to decide"], "hint": "The judge explains this at the start.", "why": "The judge tells the jury that if they have a reasonable doubt about guilt, they must find the boy not guilty."}, {"q": "In a criminal trial, who has to **prove** the case?", "answer": "The prosecution must prove guilt; the defendant doesn't have to prove innocence", "wrong": ["The defendant must prove he is innocent, or the jury will find him guilty", "The jury must investigate the crime and decide who the real killer is", "The judge must prove guilt to the jury before they are allowed to vote"], "hint": "This is called the burden of proof.", "why": "The burden of proof is on the prosecution. The defendant is presumed innocent."}, {"q": "Why must the verdict be **unanimous**?", "answer": "All twelve must agree, which protects against wrongly convicting someone", "wrong": ["Only the Foreman's vote counts if the jury cannot agree", "A simple majority of seven jurors is enough to decide", "The judge chooses the verdict if anyone disagrees"], "hint": "One juror can hold out.", "why": "Every juror must agree, so a single juror like the 8th can stop a rushed guilty verdict."}, {"q": "Why are the stakes so high in this case?", "answer": "A guilty verdict means the boy will be sentenced to death", "wrong": ["A guilty verdict means the boy will pay a large fine", "A guilty verdict means the jurors will be paid more", "A guilty verdict means the trial will start again"], "hint": "The judge mentions the sentence.", "why": "The charge is first-degree murder, and a guilty verdict means the death penalty."}, {"q": "Does the jury prove that the boy is **innocent**?", "answer": "No. They only decide there is reasonable doubt about his guilt", "wrong": ["Yes. They find the real killer and name him to the judge", "Yes. The boy's alibi is proven true by a new witness", "No. They decide he is guilty but should not be executed"], "hint": "Think about what 'not guilty' really means.", "why": "The play never proves who killed the father. 'Not guilty' means the case against the boy wasn't proved beyond reasonable doubt."}, {"q": "What does the play suggest about **prejudice** and justice?", "answer": "Prejudice blinds people to the facts and makes fair judgment impossible", "wrong": ["Prejudice helps jurors decide quickly, which makes trials more efficient", "Prejudice only matters if the defendant is found guilty in the end", "Prejudice is acceptable as long as the juror keeps it to himself"], "hint": "Think of the 10th Juror.", "why": "The 10th Juror's prejudice makes him ignore evidence. The play shows that justice needs jurors to set prejudice aside."}, {"q": "What does the 11th Juror's speech about democracy show?", "answer": "Ordinary citizens have a serious duty to judge fairly, with nothing to gain", "wrong": ["Jury service is a waste of time that should be left to experts", "Immigrants understand the law better than people born in America", "Democracy works best when people vote quickly and go home"], "hint": "He talks about responsibility.", "why": "He says the jury has a responsibility: strangers decide fairly, with nothing personal to gain or lose."}, {"q": "What does the 8th Juror's stand show about **courage**?", "answer": "One person who stands up for what is right can change the outcome", "wrong": ["One person should always follow the majority to avoid conflict", "One person cannot change anything when eleven people disagree", "One person is only brave if he is certain he is correct"], "hint": "He starts alone.", "why": "The 8th Juror starts alone but, by questioning the evidence, persuades all eleven others."}, {"q": "Which answer to **\"What have you learned about justice?\"** would earn the most marks?", "answer": "Justice needs patience: the 8th Juror questions each piece of evidence, like the old man's 15 seconds, before accepting it", "wrong": ["Justice is good and important, and everyone should always try to be fair to other people every single day", "Justice is when the bad person goes to prison, and in the play the boy goes to prison at the very end", "Justice means the majority is right, so the eleven jurors should have won the argument in the first vote"], "hint": "Look for a clear idea + specific evidence from the play.", "why": "The best answer makes a clear point about justice and supports it with a specific detail from the play."}, {"q": "How does the 3rd Juror's story about his son connect to the case?", "answer": "Like the boy, his son had a violent relationship with his father, so he confuses the two", "wrong": ["His son was a witness at the trial, so he wants the jury to believe him", "His son is a lawyer, so he knows the defense did a poor job in court", "His son knew the boy at school, so he has heard bad stories about him"], "hint": "Fathers and sons is a key motif.", "why": "The 3rd Juror's anger at his own son is projected onto the boy accused of killing his father."}]}, {"key": "builder", "name": "Full-Mark Answers", "icon": "✍️", "group": "Twelve Angry Men", "kind": "Exam skills", "topic": "Pick the answer that would get full marks, and see why", "color": "#5A4632", "questions": [{"q": "Exam question: **\"Name a juror who is in a hurry to end deliberations. What specific reasons does he have?\"** Which answer gets full marks?", "answer": "The 7th Juror: he has tickets to a baseball game that night, and later he changes his vote just to leave", "wrong": ["The 7th Juror: he is in a hurry because he wants to leave the jury room as soon as he possibly can", "The 3rd Juror: he has tickets to a baseball game that night, and later he changes his vote just to leave", "The 8th Juror: he wants the trial to be over quickly so the boy can go home and see his family soon"], "hint": "Right juror + specific reasons.", "why": "Full marks need the correct juror and specific details (the ballgame tickets, changing his vote to get out)."}, {"q": "Exam question: **\"Find an example of one juror denouncing another. Explain.\"** Which answer is strongest?", "answer": "The 11th Juror condemns the 7th for changing his vote only to leave, saying he must vote from real conviction", "wrong": ["The 11th Juror says something to the 7th Juror and they have an argument, and then the vote goes on", "The 7th Juror condemns the 11th for changing his vote only to leave, saying he must vote from real conviction", "The jurors argue a lot in the play because it is very hot and they all want to go home to their families"], "hint": "Who denounces whom, for what, and how?", "why": "The best answer names both jurors correctly, says what was condemned, and explains it."}, {"q": "Exam question: **\"Find an example where apparel gives information about a character.\"** Which answer is best?", "answer": "The old man's torn jacket shows he is poor and ignored, which supports the idea he wanted attention", "wrong": ["The jurors wear clothes in the jury room, which shows that the play takes place in the city", "The 8th Juror wears glasses, which shows he is clever and notices the woman's nose marks", "The old man's torn jacket shows that he was in a fight with the boy on the night of the murder"], "hint": "Clothing + what it reveals + why it matters.", "why": "The torn jacket is a real detail, and the answer explains what it reveals and why it matters."}, {"q": "Exam question: **\"What finally helped Juror 4 change his vote?\"** Which answer is most precise?", "answer": "Marks on the woman's nose showed she wore glasses; in bed she wouldn't have them on, so she saw only a blur", "wrong": ["The 4th Juror changed his vote because he finally got tired of arguing with all the other jurors", "Marks on the boy's nose showed he wore glasses; at the movies he couldn't see, so he forgot the films", "The 10th Juror's speech made him so angry that he decided to vote on the opposite side to him"], "hint": "Be exact about whose glasses.", "why": "The precise answer: the woman's glasses evidence gives the 4th Juror a reasonable doubt."}, {"q": "The exam says **\"Give SPECIFIC EVIDENCE.\"** Which is the most specific evidence?", "answer": "The 8th Juror sticks an identical switchblade into the table, bought near the boy's home", "wrong": ["The 8th Juror shows the others that the evidence in the case was not very strong", "The 8th Juror does a lot of things in the play to help the boy get a fair trial", "The 8th Juror thinks about the case very carefully before he makes his decision"], "hint": "Specific means a real moment you can point to.", "why": "Specific evidence is a precise moment or detail from the play, not a general statement."}, {"q": "Which sentence **explains** evidence rather than just retelling it?", "answer": "This shows the knife was not unique, so the boy is not the only person who could have used one", "wrong": ["Then the 8th Juror took out a knife and everyone was shocked and looked at the table", "After the knife, the jurors voted again by secret ballot and the 9th Juror changed", "The knife had a carved handle and a long blade, and the guard brought it into the room"], "hint": "Look for 'This shows...'", "why": "Explaining means saying what the evidence proves. Retelling only says what happened."}, {"q": "For a character-trait question, which answer is best?", "answer": "Impatient: he keeps mentioning his ballgame tickets, which shows he cares more about leaving than about the boy", "wrong": ["Impatient: he is a very impatient man and that is why he is impatient all through the play", "Impatient, rude, funny, angry and selfish, because he says many things in the jury room", "He has baseball tickets and he is a salesman and he wears a suit to the court"], "hint": "One trait + evidence + explanation.", "why": "The best answer names one trait, gives a detail, and explains how it shows the trait."}, {"q": "Which answer about the **3rd Juror** would score highest?", "answer": "His vote is driven by anger at his estranged son, which he projects onto the boy until he finally breaks down", "wrong": ["He is a bad man who wants the boy to die because he is mean, and he shouts a lot in the room", "His vote is driven by his tickets to the baseball game, which he worries about all the time", "He changes his vote first because the 8th Juror shows him the second knife from the shop"], "hint": "Accurate + specific + explained.", "why": "This answer is accurate, specific and explains his motive."}]}, {"key": "appeals", "name": "Ethos, Pathos, Logos", "icon": "🎯", "group": "Rhetorical Devices", "kind": "Devices", "topic": "Spot each appeal in a sentence and say how it works", "color": "#8A4B08", "questions": [{"q": "“As a doctor who has treated burn injuries for twenty years, I can tell you that fireworks are not toys.” Which appeal is this, and how does it work?", "answer": "Ethos: her twenty years as a doctor make us trust her warning", "wrong": ["Pathos: the word “burn” makes us feel sorry for the doctor", "Logos: the number twenty proves that fireworks are dangerous", "Pathos: the speaker makes us afraid of going to the doctor"], "hint": "Ask: why should I believe this speaker?", "why": "Ethos is an appeal to the speaker's credibility. Her long experience as a doctor makes her warning believable."}, {"q": "“Imagine a puppy shivering alone in a cage, waiting every day for someone who never comes.” Which appeal is this, and how does it work?", "answer": "Pathos: the sad image makes us feel pity for the puppy", "wrong": ["Ethos: the writer shows she is an expert on puppies", "Logos: the writer gives a reason why cages are too small", "Ethos: the word “imagine” shows the writer is honest"], "hint": "Ask: what does this make me feel?", "why": "Pathos is an appeal to emotion. The image of a lonely, shivering puppy makes the reader feel pity."}, {"q": "“If every one of our 1,000 students brought a reusable bottle, the school would use 1,000 fewer plastic bottles every day.” Which appeal is this?", "answer": "Logos: it uses simple math to show the result of the change", "wrong": ["Pathos: it makes us feel guilty about using plastic bottles", "Ethos: it shows that the writer is a well-known scientist", "Pathos: it makes us feel proud of our school's students"], "hint": "Ask: does this use numbers or logical steps?", "why": "Logos is an appeal to logic. The writer uses a clear calculation to prove the point."}, {"q": "“Our head chef, who has cooked healthy meals for children for fifteen years, supports this new menu.” Which appeal is this?", "answer": "Ethos: the chef's long experience makes the menu seem trustworthy", "wrong": ["Pathos: the word “children” makes us feel warm and caring", "Logos: fifteen years is a fact that proves the food is healthy", "Pathos: the writer makes us hungry for the healthy new food"], "hint": "The writer borrows someone else's credibility.", "why": "This is ethos: the writer uses an experienced expert's support to make readers trust the idea."}, {"q": "“Do you really want your little brother to grow up in a city where he can't breathe clean air?” Which appeal is this?", "answer": "Pathos: it uses love and fear for a family member to move us", "wrong": ["Logos: it gives a clear reason why the air is dirty", "Ethos: it shows the writer is an expert on cities", "Logos: it asks a question that has only one answer"], "hint": "Think about the feeling the question creates.", "why": "This rhetorical question is pathos. It makes us worry about someone we love."}, {"q": "“Cars produce exhaust gas. Exhaust gas pollutes the air. So fewer cars on the road means cleaner air.” Which appeal is this?", "answer": "Logos: it builds the argument step by step, from cause to effect", "wrong": ["Pathos: it makes us angry at drivers who pollute the air", "Ethos: it shows that the writer has studied cars for years", "Pathos: it makes us feel hopeful about a cleaner future"], "hint": "Look at the chain of reasons.", "why": "This is logos: each step leads logically to the conclusion."}, {"q": "“I have volunteered at our local food bank every weekend for three years, so I have seen this problem up close.” Which appeal is this?", "answer": "Ethos: her personal experience shows she knows what she is talking about", "wrong": ["Pathos: the food bank makes us feel sad for hungry families", "Logos: three years is a statistic that proves the problem exists", "Pathos: volunteering makes us feel guilty for staying at home"], "hint": "The writer is building trust in herself.", "why": "Ethos: the writer's first-hand experience gives her credibility."}, {"q": "“Every minute you spend scrolling is a minute stolen from the people who love you.” Which appeal is this?", "answer": "Pathos: it makes the reader feel guilty about neglecting loved ones", "wrong": ["Logos: it calculates exactly how many minutes people waste", "Ethos: it shows the writer is an expert on social media", "Logos: it proves that phones are bad for people's health"], "hint": "The word “stolen” is emotional.", "why": "This is pathos: words like “stolen” and “people who love you” create guilt."}, {"q": "“Libraries are free, but books cost money. Therefore, libraries help families who cannot afford to buy books.” Which appeal is this?", "answer": "Logos: it uses facts and a “therefore” to reach a conclusion", "wrong": ["Pathos: it makes us feel sorry for families without money", "Ethos: it shows the writer works in a large public library", "Pathos: it makes us feel nostalgic about reading as children"], "hint": "“Therefore” is a clue.", "why": "This is logos: two facts lead logically to a conclusion."}, {"q": "To spot **ethos**, which question should you ask about a text?", "answer": "Why should I trust this speaker or source?", "wrong": ["How does this sentence make me feel?", "Does this argument follow logical steps?", "Which words are repeated most often?"], "hint": "Ethos = credibility.", "why": "Ethos is about trust: experience, expertise, honesty or good character."}, {"q": "To spot **logos**, which question should you ask about a text?", "answer": "Does it use facts, evidence or logical reasoning?", "wrong": ["Does the writer seem kind and honest to me?", "Does it make me feel angry, sad or hopeful?", "Does it describe the writer's own job?"], "hint": "Logos = logic.", "why": "Logos appeals to reason: facts, evidence, numbers, cause and effect."}, {"q": "To spot **pathos**, which question should you ask about a text?", "answer": "What emotion is the writer trying to make me feel?", "wrong": ["What qualifications does the writer have?", "What evidence does the writer give for the claim?", "What logical steps lead to the conclusion?"], "hint": "Pathos = emotion.", "why": "Pathos appeals to feelings such as pity, fear, guilt, hope or pride."}]}, {"key": "passage", "name": "Analyze a Passage", "icon": "📰", "group": "Rhetorical Devices", "kind": "Analysis", "topic": "A full persuasive passage: find and explain every appeal", "color": "#9C3D54", "questions": [{"q": "Which sentence uses **ethos** through the writer's own experience?", "answer": "Sentence 7: the writer has taught for fifteen years and seen this in class", "wrong": ["Sentence 6: the writer pictures a tired student during a math test", "Sentence 5: the writer works out how much sleep students lose", "Sentence 9: the writer says our children deserve better schools"], "hint": "Look for “As a teacher...”", "why": "Sentence 7 builds ethos: fifteen years of teaching experience make the writer credible.", "fig": "passageA"}, {"q": "Which sentence uses **pathos** most strongly?", "answer": "Sentence 6: the image of a student fighting to stay awake in a test", "wrong": ["Sentence 3: the scientific fact about the teenage body clock", "Sentence 4: the recommendation of a doctors' organization", "Sentence 5: the calculation of hours of sleep that are lost"], "hint": "Which sentence makes you feel something?", "why": "Sentence 6 creates sympathy: we picture a hard-working student let down by tiredness.", "fig": "passageA"}, {"q": "Sentence 5 (“If students must be awake by 6:30...”) is mainly which appeal?", "answer": "Logos: it shows step by step how the lost sleep adds up", "wrong": ["Pathos: it makes us feel angry at teenagers who stay up", "Ethos: it shows that the writer is a sleep scientist", "Pathos: it makes us feel sorry for tired parents"], "hint": "It's an if... then... argument.", "why": "Sentence 5 uses logical reasoning: if you wake at 6:30 and sleep at 11, you lose sleep every night.", "fig": "passageA"}, {"q": "Sentence 3 mentions what sleep scientists have shown. How does this help the argument?", "answer": "It gives a scientific reason, so tiredness isn't the students' fault", "wrong": ["It makes readers feel angry with scientists for doing research", "It shows the writer is a famous sleep scientist with a lab", "It proves that every teenager is lazy in the morning"], "hint": "It explains a cause.", "why": "This is logos: a scientific explanation shows teenagers' late sleep is biological, not laziness.", "fig": "passageA"}, {"q": "What does mentioning the **American Academy of Pediatrics** add to the argument?", "answer": "It borrows the authority of children's doctors so readers trust the idea", "wrong": ["It makes readers feel sorry for doctors who work very long hours", "It shows that the writer is a doctor working at a large hospital", "It proves that every school in the world starts at 8:30 a.m."], "hint": "Why would a reader trust doctors?", "why": "Citing a respected organization of doctors makes the argument more credible.", "fig": "passageA"}, {"q": "Why does the writer begin sentence 6 with the command **“Picture...”**?", "answer": "To make readers imagine the scene and feel for the student", "wrong": ["To give readers a fact they can check in a book", "To show that the writer once took a photo of a student", "To change the topic from sleep to math tests"], "hint": "It asks the reader to use their imagination.", "why": "Asking the reader to picture a scene is a pathos technique: it creates an emotional image.", "fig": "passageA"}, {"q": "What is the effect of the short sentence **“This is not laziness.”**?", "answer": "It firmly rejects a common criticism of teenagers before explaining why", "wrong": ["It admits that the writer thinks most teenagers are lazy", "It gives a statistic about how much teenagers sleep", "It shows the writer is tired of writing the passage"], "hint": "It answers what some readers are thinking.", "why": "The short sentence stands out and defends teenagers against a likely objection.", "fig": "passageA"}, {"q": "In sentence 9, why does the writer say **“Our children”**?", "answer": "It makes readers feel personally responsible, as if these are their own children", "wrong": ["It shows the writer has many children studying at the school", "It gives readers a fact about how many children go to school", "It shows that only parents are allowed to read the passage"], "hint": "“Our” includes the reader.", "why": "Inclusive language (“our”) draws readers in and adds emotional weight: pathos.", "fig": "passageA"}, {"q": "What is the **main purpose** of the passage?", "answer": "To persuade readers that schools should start later in the morning", "wrong": ["To inform readers about how the human brain stores memories", "To entertain readers with a story about a student's math test", "To warn teenagers that they must go to bed much earlier"], "hint": "What does the writer want to happen?", "why": "The writer wants schools to start later, and uses all three appeals to persuade.", "fig": "passageA"}, {"q": "Which statement best describes how the passage persuades?", "answer": "It combines all three: experience (ethos), science and reasoning (logos), and emotional images (pathos)", "wrong": ["It uses only pathos, because the whole passage is about feelings and never uses any facts at all", "It uses only logos, because it is full of numbers and has no emotional language anywhere in it", "It uses only ethos, because the writer talks about being a teacher in every single sentence"], "hint": "Look for all three appeals.", "why": "A strong answer shows how the writer uses ethos, logos and pathos together.", "fig": "passageA"}]}, {"key": "write", "name": "Write the Analysis", "icon": "🖊️", "group": "Rhetorical Devices", "kind": "Exam skills", "topic": "Device + example + effect: pick the answer that scores", "color": "#4B5D16", "questions": [{"q": "Which sentence identifies a device **and** explains its effect?", "answer": "In sentence 4, the writer uses pathos by asking us to picture an old dog at his cage door, which makes us feel pity and want to help", "wrong": ["In sentence 4, the writer uses pathos. Pathos means emotion. It is a very good example of pathos in the passage", "In sentence 4, the writer talks about an old dog who watches the door of his cage every single morning", "The writer uses lots of devices like ethos, pathos and logos, and they are all very effective"], "hint": "Device + example + effect on the reader.", "why": "Full marks need the device, the example and the effect on the audience.", "fig": "passageB"}, {"q": "Which appeal does **sentence 3** (the veterinarian) use, and why does it work?", "answer": "Ethos: twenty years working with shelter animals make the writer an expert we trust", "wrong": ["Pathos: the word “loving” makes us cry for the veterinarian herself", "Logos: twenty years is a statistic proving shelters are full", "Ethos: the writer says she has never worked with animals"], "hint": "Experience = credibility.", "why": "The writer's long professional experience gives credibility: ethos.", "fig": "passageB"}, {"q": "Which appeal does **sentence 5** (“When you adopt, you give a home to an animal that already exists...”) use?", "answer": "Logos: it gives a logical reason why adopting is better than buying", "wrong": ["Pathos: it makes us angry with families who buy puppies", "Ethos: it shows the writer works at a pet shop", "Pathos: it makes us laugh at the idea of new pets"], "hint": "It compares two choices with a reason.", "why": "This is logos: adopting helps an existing animal instead of creating demand for a new one.", "fig": "passageB"}, {"q": "What is the effect of **sentence 6** (adoption frees up a space in the shelter)?", "answer": "It adds a second logical benefit: one adoption helps two animals", "wrong": ["It makes readers feel guilty for having a garden", "It shows the writer owns the animal shelter", "It tells a sad story about a stray cat"], "hint": "Think about the result of adopting.", "why": "Logos: adopting one pet also makes room for another rescue.", "fig": "passageB"}, {"q": "How does the **final sentence** persuade the reader?", "answer": "It ends on a warm, hopeful image that makes adoption feel personal", "wrong": ["It ends with a statistic about how many pets are adopted", "It ends by explaining the writer's qualifications again", "It ends with a warning that pet shops are illegal"], "hint": "“Your new best friend” is emotional.", "why": "The ending uses pathos: hope and friendship make the reader want to act.", "fig": "passageB"}, {"q": "Which is the **best topic sentence** for an analysis of this passage?", "answer": "The writer persuades readers to adopt pets by combining expert credibility, logical reasons and moving images", "wrong": ["This passage is about animals and pets, and it was a very good passage that I enjoyed reading", "There are many dogs and cats in shelters around the world, and they need homes very badly", "I think everyone should adopt a dog instead of buying one because dogs are very loyal"], "hint": "A topic sentence states the writer's purpose and methods.", "why": "A strong topic sentence names the purpose (persuade) and the methods (ethos, logos, pathos).", "fig": "passageB"}, {"q": "A student writes: “The writer uses pathos.” What is **missing**?", "answer": "An example from the text and an explanation of its effect on the reader", "wrong": ["A longer definition of pathos copied from a dictionary", "A list of every other device the student knows", "A personal story about the student's own pet"], "hint": "Naming a device is only the first step.", "why": "You must quote or point to the example and explain how it affects the audience."}, {"q": "Which phrase is best for explaining **effect on the audience**?", "answer": "…which makes the reader feel … and so more likely to …", "wrong": ["…which is a device that writers often use in texts …", "…which is in the second paragraph of the passage …", "…which I also used in my own essay last year …"], "hint": "Effect = what the reader feels, thinks or does.", "why": "Linking the device to the reader's reaction is what earns the analysis marks."}]}, {"key": "tfrules", "name": "True/False Rules", "icon": "📏", "group": "Reading", "kind": "Exam skills", "topic": "How to justify true and false answers with exact quotes", "color": "#2F5D8C", "questions": [{"q": "In this exam task, which answers must you **justify** with words from the text?", "answer": "Both TRUE and FALSE answers", "wrong": ["Only the TRUE answers", "Only the FALSE answers", "Only the answers you are unsure of"], "hint": "Read the instructions again.", "why": "The instructions say you must justify both true and false answers."}, {"q": "How much of the text should you **quote** as your justification?", "answer": "Only the exact words needed to prove your answer", "wrong": ["The whole paragraph, to be completely safe", "Your own summary of the text in new words", "One word that appears in the statement"], "hint": "“Only use the exact information needed.”", "why": "Copy the shortest exact phrase or sentence that proves the answer. Extra text can lose the mark."}, {"q": "The statement says “Witnesses are **always** wrong.” The text says witnesses “can be completely wrong.” What is the answer?", "answer": "FALSE, because “can be” does not mean always", "wrong": ["TRUE, because both say witnesses are wrong", "TRUE, because “completely” means always", "You can't tell from the text"], "hint": "Watch strong words like always and never.", "why": "“Can be” means sometimes. A statement with “always” is false here."}, {"q": "The statement says “**Most** of the mistaken witnesses were victims.” The text says 84 percent were. What is the answer?", "answer": "TRUE, because 84 percent is most of them", "wrong": ["FALSE, because the text never says “most”", "FALSE, because 84 is not 100 percent", "You can't tell from the text"], "hint": "The text may use different words for the same idea.", "why": "The statement paraphrases the text. 84 percent is more than half, so it is true."}, {"q": "Statements often use **different words** from the text. What should you do?", "answer": "Look for a sentence with the same meaning, even if the words change", "wrong": ["Only accept a sentence that uses exactly the same words", "Choose FALSE whenever the words are not the same", "Choose TRUE whenever a word from the statement appears"], "hint": "Meaning matters more than matching words.", "why": "Exam statements paraphrase the text. Match the meaning, then quote the text's exact words."}, {"q": "Which is a common **mistake** in true/false justification?", "answer": "Quoting a sentence about a different detail that just shares a key word", "wrong": ["Quoting the exact words that prove the exact point in the statement", "Reading the sentences before and after the quote to check the meaning", "Checking strong words like always, never, all and only in the statement"], "hint": "Same word, different idea.", "why": "A quote must prove the exact point in the statement, not just share a word with it."}]}, {"key": "texta", "name": "Text A: Memory", "icon": "🧠", "group": "Reading", "kind": "True/False", "topic": "Can You Trust Your Memory? (Loftus & Palmer)", "color": "#285E61", "questions": [{"q": "**“Psychologists agree that memory works like a video camera.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “Psychologists have shown that this picture is wrong”", "wrong": ["TRUE: “Psychologists have shown that this picture is wrong”", "FALSE: “Most people believe that memory works like a video camera”", "TRUE: “Every time we remember something, we rebuild it”"], "hint": "Who believes memory is like a camera: most people or psychologists?", "why": "The text says psychologists showed the video camera idea is wrong.", "fig": "textA"}, {"q": "**“Loftus and Palmer's experiment was published in the 1970s.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "TRUE: “was published in 1974”", "wrong": ["FALSE: “was published in 1974”", "TRUE: “One week later, all the students returned”", "FALSE: “These findings matter far beyond the laboratory”"], "hint": "Find the year.", "why": "1974 is in the 1970s.", "fig": "textA"}, {"q": "**“Different groups of students watched different films.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “Every student had watched the same films”", "wrong": ["TRUE: “Every student had watched the same films”", "FALSE: “Each group heard a different verb in the gap”", "TRUE: “They showed university students short films of car accidents”"], "hint": "What was different between the groups: the films or the question?", "why": "Every student watched the same films; only the verb in the question changed.", "fig": "textA"}, {"q": "**“The verb “contacted” produced the lowest speed estimates.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "TRUE: “students who heard “contacted” gave the lowest”", "wrong": ["FALSE: “students who heard “contacted” gave the lowest”", "TRUE: “Students who heard “smashed” gave the highest estimates”", "FALSE: “A single word in a question was enough to change what people reported”"], "hint": "Find the lowest estimate.", "why": "The text says the “contacted” group gave the lowest estimates.", "fig": "textA"}, {"q": "**“The film in the second experiment showed broken glass.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “There was no broken glass in the film”", "wrong": ["TRUE: “There was no broken glass in the film”", "FALSE: “asked whether they had seen any broken glass”", "TRUE: “16 of the 50 students in the “smashed” group said they had seen it”"], "hint": "Did the film really have glass in it?", "why": "There was no broken glass, yet some students remembered it.", "fig": "textA"}, {"q": "**“Students in the “hit” group were less likely to report broken glass than the “smashed” group.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "TRUE: “16 of the 50 students in the “smashed” group said they had seen it, compared with 7 of the 50 in the “hit” group”", "wrong": ["FALSE: “16 of the 50 students in the “smashed” group said they had seen it, compared with 7 of the 50 in the “hit” group”", "TRUE: “There was no broken glass in the film”", "FALSE: “One week later, all the students returned”"], "hint": "Compare 16 and 7.", "why": "7 of 50 is fewer than 16 of 50.", "fig": "textA"}, {"q": "**“Every student in the second experiment was asked about the speed of the cars.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “a third group was not asked about speed at all”", "wrong": ["TRUE: “a third group was not asked about speed at all”", "FALSE: “Loftus and Palmer went further”", "TRUE: “They asked a new group of students about a film of an accident”"], "hint": "Were there any students who were not asked about speed?", "why": "One group was not asked about speed at all.", "fig": "textA"}, {"q": "**“The writer thinks the findings only matter to scientists.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “These findings matter far beyond the laboratory”", "wrong": ["TRUE: “These findings matter far beyond the laboratory”", "FALSE: “This second result is important”", "TRUE: “Police officers, lawyers and journalists ask questions every day”"], "hint": "Does the writer limit the findings to the lab?", "why": "The writer says they matter far beyond the laboratory.", "fig": "textA"}, {"q": "**“The way a question is worded can affect what a witness believes later.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "TRUE: “the way they word those questions can shape what a witness later believes”", "wrong": ["FALSE: “the way they word those questions can shape what a witness later believes”", "TRUE: “Memory is not a recording”", "FALSE: “Police officers, lawyers and journalists ask questions every day”"], "hint": "Find the sentence about wording and witnesses.", "why": "The text says the wording can shape what a witness later believes.", "fig": "textA"}, {"q": "**“According to the writer, a memory stays exactly the same each time it is told.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “it can change a little each time it is told”", "wrong": ["TRUE: “it can change a little each time it is told”", "FALSE: “It is closer to a story that we retell”", "TRUE: “we record an event, store it safely, and play it back exactly”"], "hint": "Look at the very last sentence.", "why": "The writer says memory can change each time it is told.", "fig": "textA"}]}, {"key": "textb", "name": "Text B: Witnesses", "icon": "🔍", "group": "Reading", "kind": "True/False", "topic": "When Witnesses Get It Wrong", "color": "#553C9A", "questions": [{"q": "**“Jurors usually find it easy to doubt a witness who was at the scene.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “Jurors find it hard to argue with someone who was there”", "wrong": ["TRUE: “Jurors find it hard to argue with someone who was there”", "FALSE: “honest, confident witnesses can be completely wrong”", "TRUE: “their evidence should be tested carefully”"], "hint": "Easy or hard?", "why": "The text says jurors find it hard, not easy, to argue with a witness.", "fig": "textB"}, {"q": "**“The Innocence Project tries to help people who were wrongly convicted.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "TRUE: “works to free people who were wrongly convicted”", "wrong": ["FALSE: “works to free people who were wrongly convicted”", "TRUE: “The clearest evidence comes from DNA testing”", "FALSE: “kept track of cases in the United States”"], "hint": "What does the organization do?", "why": "Its work is to free wrongly convicted people.", "fig": "textB"}, {"q": "**“By 2020, the Innocence Project had counted fewer than 300 DNA exonerations.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “it had counted 375 of these DNA exonerations”", "wrong": ["TRUE: “it had counted 375 of these DNA exonerations”", "FALSE: “Eyewitness misidentification played a part in 69 percent of them”", "TRUE: “In 84 percent of the misidentification cases”"], "hint": "Find the total number.", "why": "375 is more than 300.", "fig": "textB"}, {"q": "**“Eyewitness misidentification was involved in more than half of these cases.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "TRUE: “Eyewitness misidentification played a part in 69 percent of them”", "wrong": ["FALSE: “Eyewitness misidentification played a part in 69 percent of them”", "TRUE: “By 2020, it had counted 375 of these DNA exonerations”", "FALSE: “These witnesses were not usually lying”"], "hint": "Find the percentage for misidentification.", "why": "69 percent is more than half.", "fig": "textB"}, {"q": "**“Most of the witnesses who made mistakes were lying on purpose.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “These witnesses were not usually lying”", "wrong": ["TRUE: “These witnesses were not usually lying”", "FALSE: “the person who made the mistake was a surviving victim of the crime”", "TRUE: “Confidence can also mislead”"], "hint": "Were they lying?", "why": "The text says they were not usually lying.", "fig": "textB"}, {"q": "**“In most misidentification cases, the witness was a victim of the crime.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "TRUE: “In 84 percent of the misidentification cases, the person who made the mistake was a surviving victim of the crime”", "wrong": ["FALSE: “In 84 percent of the misidentification cases, the person who made the mistake was a surviving victim of the crime”", "TRUE: “These witnesses were not usually lying”", "FALSE: “Eyewitness misidentification played a part in 69 percent of them”"], "hint": "Find who the witnesses usually were.", "why": "84 percent is most.", "fig": "textB"}, {"q": "**“Stress always helps witnesses remember faces more clearly.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “Fear and stress can make it harder to take in a face clearly”", "wrong": ["TRUE: “Fear and stress can make it harder to take in a face clearly”", "FALSE: “a frightened witness may focus on a weapon”", "TRUE: “Confidence can also mislead”"], "hint": "Does stress help or hurt?", "why": "Stress makes it harder, not easier.", "fig": "textB"}, {"q": "**“A witness's confidence can increase after the first identification.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "TRUE: “the witness's confidence often grows”", "wrong": ["FALSE: “the witness's confidence often grows”", "TRUE: “A witness may feel unsure at first”", "FALSE: “the witness may sound completely certain”"], "hint": "What happens to confidence after a police officer encourages the witness?", "why": "The text says confidence often grows after encouragement.", "fig": "textB"}, {"q": "**“Experts suggest that the officer running a lineup should know who the suspect is.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “the officer running the lineup should not know which person is the suspect”", "wrong": ["TRUE: “the officer running the lineup should not know which person is the suspect”", "FALSE: “many experts recommend changes to the way police run identification lineups”", "TRUE: “write down how confident the witness is”"], "hint": "Should or should not know?", "why": "Experts say the officer should not know.", "fig": "textB"}, {"q": "**“The writer thinks eyewitness evidence should be ignored completely.”**\nTrue or false? Choose the verdict with the right justification.", "answer": "FALSE: “None of this means that eyewitnesses are useless”", "wrong": ["TRUE: “None of this means that eyewitnesses are useless”", "FALSE: “their evidence should be tested carefully”", "TRUE: “Yet research and real cases show that honest, confident witnesses can be completely wrong”"], "hint": "Look at the last paragraph.", "why": "The writer says eyewitnesses are not useless; their evidence should be tested.", "fig": "textB"}]}, {"key": "vmc", "name": "Words in Context", "icon": "📚", "group": "Vocabulary Workshop Unit 1", "kind": "Multiple choice", "topic": "All 20 Unit 1 words: pick the word that fits", "color": "#7B341E", "questions": [{"q": "The store sells sports ___, such as running shoes, shorts and jackets.", "answer": "apparel", "wrong": ["repast", "libel", "misgiving"], "hint": "It's a word for clothing.", "why": "Apparel means clothing."}, {"q": "After the singer's surprise concert, fans ___ the hotel, hoping to get a photo of her.", "answer": "besieged", "wrong": ["receded", "doused", "compressed"], "hint": "Lots of people surrounding a building.", "why": "Besiege means to surround, or to crowd around someone with requests."}, {"q": "To fit everything into one small suitcase, she had to ___ her clothes as tightly as possible.", "answer": "compress", "wrong": ["besiege", "denounce", "forsake"], "hint": "Press together to make smaller.", "why": "Compress means to press together or make smaller."}, {"q": "The headteacher publicly ___ the bullying and promised to stop it.", "answer": "denounced", "wrong": ["dispatched", "forsook", "compressed"], "hint": "Condemned it openly.", "why": "Denounce means to condemn openly."}, {"q": "The fire service ___ three trucks as soon as the emergency call came in.", "answer": "dispatched", "wrong": ["denounced", "receded", "irked"], "hint": "Sent off quickly.", "why": "Dispatch means to send off quickly."}, {"q": "The campers ___ the fire with buckets of water before going to sleep.", "answer": "doused", "wrong": ["irked", "forsook", "dispatched"], "hint": "Put out with water.", "why": "Douse means to drench with liquid or put out a fire."}, {"q": "The sign ___ forbids swimming, so nobody can say they didn't know.", "answer": "expressly", "wrong": ["instantaneously", "immensely", "ineptly"], "hint": "Plainly, in so many words.", "why": "Expressly means plainly, clearly stated."}, {"q": "After hiking all day without lunch, the boys were ___ and ate everything on the table.", "answer": "famished", "wrong": ["ingenious", "gainful", "instantaneous"], "hint": "Very hungry.", "why": "Famished means extremely hungry."}, {"q": "A true friend will never ___ you when you are in trouble.", "answer": "forsake", "wrong": ["compress", "douse", "dispatch"], "hint": "Leave or abandon.", "why": "Forsake means to abandon or give up."}, {"q": "After months of searching, he finally found ___ employment at a bank.", "answer": "gainful", "wrong": ["famished", "inept", "instantaneous"], "hint": "Work that pays.", "why": "Gainful means bringing in money or advantage."}, {"q": "The blue whale is an ___ animal; it is the largest creature on Earth.", "answer": "immense", "wrong": ["inept", "ingenious", "instantaneous"], "hint": "Very, very large.", "why": "Immense means huge."}, {"q": "The ___ goalkeeper let in five easy goals and kept dropping the ball.", "answer": "inept", "wrong": ["immense", "gainful", "ingenious"], "hint": "Without skill.", "why": "Inept means totally without skill."}, {"q": "Her ___ idea of using old plastic bottles to build a greenhouse won the science fair.", "answer": "ingenious", "wrong": ["inept", "famished", "immense"], "hint": "Very clever and original.", "why": "Ingenious means clever and inventive."}, {"q": "Thanks to the internet, sending a message across the world is almost ___.", "answer": "instantaneous", "wrong": ["immense", "gainful", "famished"], "hint": "Happening at once.", "why": "Instantaneous means done in an instant."}, {"q": "It really ___ me when people talk loudly on their phones in the library.", "answer": "irks", "wrong": ["recedes", "besieges", "compresses"], "hint": "Annoys.", "why": "Irk means to annoy."}, {"q": "The newspaper was sued for ___ after it printed false claims that damaged the mayor's reputation.", "answer": "libel", "wrong": ["apparel", "repast", "dispatch"], "hint": "False written statements that harm a reputation.", "why": "Libel is a false written statement that harms someone's reputation."}, {"q": "I had some ___ about lending him my bike, because he had broken things before.", "answer": "misgivings", "wrong": ["repasts", "libels", "dispatches"], "hint": "Doubts or worries.", "why": "A misgiving is a feeling of doubt or worry."}, {"q": "The clumsy ___ knocked over three chairs as he walked across the room.", "answer": "oaf", "wrong": ["repast", "libel", "apparel"], "hint": "A clumsy, foolish person.", "why": "An oaf is a clumsy, stupid person."}, {"q": "After the storm, the floodwater slowly began to ___, and people returned to their homes.", "answer": "recede", "wrong": ["besiege", "denounce", "irk"], "hint": "Move back, go down.", "why": "Recede means to move back or withdraw."}, {"q": "After the ceremony, the guests sat down to a delicious ___ of rice, lamb and salad.", "answer": "repast", "wrong": ["libel", "oaf", "misgiving"], "hint": "A meal.", "why": "A repast is a meal."}]}, {"key": "vfill", "name": "First-Letter Fill", "icon": "🔤", "group": "Vocabulary Workshop Unit 1", "kind": "Typing", "topic": "Type the Unit 1 word; the first letter is given", "color": "#975A16", "questions": [{"q": "She saved all her pocket money to buy new winter {apparel}.", "hint": "Meaning: clothing.", "why": "apparel: clothing.", "type": "type"}, {"q": "Reporters {besieged} the actor with questions as he left the court.", "hint": "Meaning: surrounded and crowded.", "why": "besieged: surrounded and crowded.", "type": "type"}, {"q": "The machine can {compress} a pile of cans into a small block.", "hint": "Meaning: press together.", "why": "compress: press together.", "type": "type"}, {"q": "Many world leaders {denounced} the attack as cruel and unfair.", "hint": "Meaning: condemned openly.", "why": "denounced: condemned openly.", "type": "type"}, {"q": "The manager {dispatched} a team to fix the broken bridge.", "hint": "Meaning: sent off.", "why": "dispatched: sent off.", "type": "type"}, {"q": "Firefighters worked all night to {douse} the flames.", "hint": "Meaning: put out with water.", "why": "douse: put out with water.", "type": "type"}, {"q": "The rules {expressly} say that phones must be switched off during exams.", "hint": "Meaning: plainly, clearly.", "why": "expressly: plainly, clearly.", "type": "type"}, {"q": "Having skipped breakfast and lunch, I was absolutely {famished} by dinner time.", "hint": "Meaning: extremely hungry.", "why": "famished: extremely hungry.", "type": "type"}, {"q": "The sailors refused to {forsake} their captain, even when the ship began to sink.", "hint": "Meaning: abandon.", "why": "forsake: abandon.", "type": "type"}, {"q": "Selling homemade cakes turned out to be a surprisingly {gainful} hobby.", "hint": "Meaning: money-making.", "why": "gainful: money-making.", "type": "type"}, {"q": "Climbing the mountain took an {immense} amount of energy.", "hint": "Meaning: huge.", "why": "immense: huge.", "type": "type"}, {"q": "The {inept} waiter brought the wrong food to every table.", "hint": "Meaning: without skill.", "why": "inept: without skill.", "type": "type"}, {"q": "The engineer designed an {ingenious} machine that waters plants automatically.", "hint": "Meaning: very clever.", "why": "ingenious: very clever.", "type": "type"}, {"q": "The effect of the medicine was almost {instantaneous}: the pain stopped at once.", "hint": "Meaning: immediate.", "why": "instantaneous: immediate.", "type": "type"}, {"q": "Loud chewing really {irks} my sister.", "hint": "Meaning: annoys.", "why": "irks: annoys.", "type": "type"}, {"q": "The footballer took the magazine to court for {libel} after it printed lies about him.", "hint": "Meaning: false harmful writing.", "why": "libel: false harmful writing.", "type": "type"}, {"q": "Despite my {misgivings|misgiving}, I agreed to go on the roller coaster.", "hint": "Meaning: doubts.", "why": "misgivings: doubts.", "type": "type"}, {"q": "Don't be such an {oaf}; you've spilled juice all over the carpet!", "hint": "Meaning: clumsy person.", "why": "oaf: clumsy person.", "type": "type"}, {"q": "As the tide began to {recede}, we could see shells on the wet sand.", "hint": "Meaning: move back.", "why": "recede: move back.", "type": "type"}, {"q": "The travelers stopped at an inn for a simple {repast} of bread and soup.", "hint": "Meaning: meal.", "why": "repast: meal.", "type": "type"}]}, {"key": "vplay", "name": "Summarize the Play", "icon": "🎭", "group": "Vocabulary Workshop Unit 1", "kind": "Typing", "topic": "Unit 1 words in sentences about Twelve Angry Men", "color": "#702459", "questions": [{"q": "The judge {expressly} told the jury that if they had a reasonable doubt, they must vote not guilty.", "hint": "Meaning: plainly.", "why": "expressly: plainly.", "type": "type"}, {"q": "The 7th Juror is {irked} when the 8th Juror's vote means the discussion will go on.", "hint": "Meaning: annoyed.", "why": "irked: annoyed.", "type": "type"}, {"q": "Producing an identical knife is an {ingenious} way for the 8th Juror to show the weapon was not unique.", "hint": "Meaning: very clever.", "why": "ingenious: very clever.", "type": "type"}, {"q": "The 8th Juror refuses to {forsake} the boy, even when eleven men are against him.", "hint": "Meaning: abandon.", "why": "forsake: abandon.", "type": "type"}, {"q": "The 9th Juror noticed the old man's torn {apparel} and guessed he was poor and ignored.", "hint": "Meaning: clothing.", "why": "apparel: clothing.", "type": "type"}, {"q": "The 11th Juror {denounces} the 7th Juror for changing his vote just to go home.", "hint": "Meaning: condemns openly.", "why": "denounces: condemns openly.", "type": "type"}, {"q": "The woman across the street saw the killing in an almost {instantaneous} glimpse through the passing train.", "hint": "Meaning: lasting only an instant.", "why": "instantaneous: lasting only an instant.", "type": "type"}, {"q": "The 10th Juror's speech shows the {immense} power of prejudice to blind a person to the facts.", "hint": "Meaning: huge.", "why": "immense: huge.", "type": "type"}, {"q": "When the rain finally falls, the jurors' anger begins to {recede}.", "hint": "Meaning: go down, move back.", "why": "recede: go down, move back.", "type": "type"}, {"q": "By the end, most jurors have serious {misgivings|misgiving} about the woman's evidence because of her glasses.", "hint": "Meaning: doubts.", "why": "misgivings: doubts.", "type": "type"}]}]}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("game-data").textContent);
+  var KEY = "onur-terakki10-12am:" + DATA.id;
+  var LETTERS = ["A", "B", "C", "D"];
+  var CHEERS = ["Sustained!", "Beyond reasonable doubt!", "Sharp juror!", "Well argued!", "Case made!", "Exactly right!", "The jury agrees!", "Correct!"];
+  var MAXDOTS = (DATA.levels.length + 1) * 3;
+  var RANKS = [
+    [0, "🪑", "Juror No. 12"], [Math.round(MAXDOTS * 0.2), "📝", "Note-Taker"], [Math.round(MAXDOTS * 0.45), "🔎", "Evidence Examiner"],
+    [Math.round(MAXDOTS * 0.7), "🗳️", "Jury Foreman"], [Math.round(MAXDOTS * 0.9), "⚖️", "Chief Justice"]
+  ];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- typed gaps ---------- */
+  // {word|alt} = gap with first letter shown; {=words|alt} = gap with no letter.
+  function parseGaps(text) {
+    var parts = [], re = /\{(=?)([^}]+)\}/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parts.push({ t: text.slice(last, m.index) });
+      var alts = m[2].split("|");
+      parts.push({ gap: true, letter: m[1] ? "" : alts[0].charAt(0), alts: alts });
+      last = re.lastIndex;
+    }
+    if (last < text.length) parts.push({ t: text.slice(last) });
+    return parts;
+  }
+  function tnorm(v) {
+    var s = " " + String(v || "").toLowerCase().replace(/[‘’ʼ`´]/g, "'").replace(/[.,!?;:"“”]+/g, " ").replace(/-/g, " ").replace(/\s+/g, " ").trim() + " ";
+    s = s.replace(/ won't /g, " will not ").replace(/ can't /g, " cannot ").replace(/ can not /g, " cannot ").replace(/ couldn't /g, " could not ")
+      .replace(/n't /g, " not ").replace(/'ve /g, " have ").replace(/'re /g, " are ").replace(/'m /g, " am ").replace(/'ll /g, " will ").replace(/'d /g, " had ");
+    return s.replace(/\s+/g, " ").trim();
+  }
+  function gapOk(p, v) {
+    var c = [tnorm(v)];
+    if (p.letter) c.push(tnorm(p.letter + v));
+    return p.alts.some(function (a) { return c.indexOf(tnorm(a)) >= 0; });
+  }
+
+  /* ---------- question index ---------- */
+  var Q = {}, LEVELS = [], BOSS = { key: "boss", name: "The Final Verdict", icon: "🏛️", topic: "Exam rehearsal: " + DATA.bossCount + " mixed questions from every case file", color: "#D6A63A", boss: true };
+  DATA.levels.forEach(function (lv, li) {
+    lv.ids = [];
+    lv.num = li + 1;
+    lv.questions.forEach(function (q, qi) {
+      var id = lv.key + ":" + qi;
+      var item = { id: id, level: lv.key, levelName: lv.name, note: q.note || lv.note || "", type: q.type || "mcq", q: q.q, answer: q.answer, wrong: q.wrong,
+        hint: q.hint, why: q.why, lead: q.lead || "", fig: q.fig || "" };
+      if (item.type === "type") {
+        item.parts = parseGaps(q.q);
+        item.blank = item.parts.map(function (p) { return p.gap ? (p.letter ? p.letter + "_____" : "_______") : p.t; }).join("");
+        item.filled = item.parts.map(function (p) { return p.gap ? p.alts[0] : p.t; }).join("");
+      }
+      Q[id] = item;
+      lv.ids.push(id);
+    });
+    LEVELS.push(lv);
+  });
+  var ALL_LEVELS = LEVELS.concat([BOSS]);
+  function levelByKey(k) { for (var i = 0; i < ALL_LEVELS.length; i++) if (ALL_LEVELS[i].key === k) return ALL_LEVELS[i]; return null; }
+
+  /* ---------- state ---------- */
+  var P = null, CUR = null;
+  function blank() { return { name: "", xp: 0, levels: {}, runs: {} }; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY); if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (!p || typeof p !== "object" || !p.levels || !p.runs) return null;
+      for (var k in p.runs) {
+        var r = p.runs[k];
+        if (!r || !Array.isArray(r.ids) || !r.ids.every(function (i) { return Q[i]; })) delete p.runs[k];
+      }
+      return p;
+    } catch (e) { return null; }
+  }
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) {
+    var arr = a.slice();
+    for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    return arr;
+  }
+  function count(obj, val) { var n = 0; for (var k in obj) if (!val || obj[k] === val) n++; return n; }
+  function show(screen) {
+    ["welcome", "map", "play", "between", "done"].forEach(function (n) { $("screen-" + n).hidden = n !== screen; });
+  }
+  function lvState(k) { if (!P.levels[k]) P.levels[k] = { stars: 0, best: 0, plays: 0 }; return P.levels[k]; }
+  function totalDots() { var n = 0; ALL_LEVELS.forEach(function (l) { n += (P.levels[l.key] && P.levels[l.key].stars) || 0; }); return n; }
+  function rankFor(d) { var r = RANKS[0]; RANKS.forEach(function (x) { if (d >= x[0]) r = x; }); return r; }
+  function nextRank(d) { for (var i = 0; i < RANKS.length; i++) if (RANKS[i][0] > d) return RANKS[i]; return null; }
+  function dotsEl(n, el) {
+    el.textContent = "";
+    for (var i = 0; i < 3; i++) { var s = document.createElement("i"); if (i < n) s.className = "on"; el.appendChild(s); }
+  }
+  function setColor(el, c) { el.style.setProperty("--c", c); }
+
+  function bossIds() {
+    var picked = [];
+    LEVELS.forEach(function (lv) { picked = picked.concat(shuffle(lv.ids).slice(0, DATA.bossPer || 1)); });
+    var rest = shuffle(Object.keys(Q).filter(function (id) { return picked.indexOf(id) < 0; }));
+    while (picked.length < DATA.bossCount && rest.length) picked.push(rest.shift());
+    return shuffle(picked).slice(0, Math.max(DATA.bossCount, picked.length));
+  }
+  function newRun(k, ids, practice) {
+    return { level: k, ids: ids.slice(), practice: !!practice, round: 1, queue: ids.slice(), pos: 0, next: [], wrong: {}, done: {},
+      opts: null, typed: null, answered: null, streak: 0, best: 0, xp: 0, screen: "play" };
+  }
+
+  /* ---------- WELCOME ---------- */
+  function renderWelcome() {
+    $("student-name").value = P.name || "";
+    show("welcome");
+    setTimeout(function () { try { $("student-name").focus(); } catch (e) {} }, 50);
+  }
+  function submitName() {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); $("student-name").classList.add("shake"); setTimeout(function () { $("student-name").classList.remove("shake"); }, 400); return; }
+    P.name = n; save(); renderMap();
+  }
+  $("btn-welcome").onclick = submitName;
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") submitName(); });
+
+  /* ---------- MAP ---------- */
+  function renderMap() {
+    CUR = null;
+    $("confirm-reset").hidden = true;
+    var dots = totalDots(), max = ALL_LEVELS.length * 3, rank = rankFor(dots), nr = nextRank(dots);
+    var pl = $("player"); pl.textContent = "";
+    var av = document.createElement("div"); av.className = "avatar"; av.textContent = (P.name || "?").charAt(0).toUpperCase();
+    var mid = document.createElement("div"); mid.style.minWidth = "0";
+    var nm = document.createElement("div"); nm.className = "player-name"; nm.textContent = P.name;
+    var rk = document.createElement("span"); rk.className = "rank"; rk.textContent = rank[1] + " " + rank[2];
+    mid.appendChild(nm); mid.appendChild(rk);
+    var tot = document.createElement("div"); tot.className = "totals";
+    var st = document.createElement("span"); st.className = "stars-total"; st.textContent = "● " + dots + " / " + max;
+    var xp = document.createElement("span"); xp.className = "xp"; xp.textContent = P.xp + " XP";
+    tot.appendChild(st); tot.appendChild(xp);
+    var bar = document.createElement("div"); bar.className = "rank-bar";
+    var track = document.createElement("div"); track.className = "track";
+    var fill = document.createElement("div"); fill.className = "fill";
+    var lo = rank[0], hi = nr ? nr[0] : max;
+    fill.style.width = (nr ? Math.round((dots - lo) / (hi - lo) * 100) : 100) + "%";
+    track.appendChild(fill);
+    var sm = document.createElement("small");
+    sm.textContent = nr ? (hi - dots) + " more " + (hi - dots === 1 ? "dot" : "dots") + " to become " + nr[1] + " " + nr[2] : "Top rank reached: Chief Justice. Keep every dot filled before the exam.";
+    bar.appendChild(track); bar.appendChild(sm);
+    pl.appendChild(av); pl.appendChild(mid); pl.appendChild(tot); pl.appendChild(bar);
+
+    var total = 0; LEVELS.forEach(function (l) { total += l.ids.length; });
+    $("map-count").textContent = LEVELS.length + " exhibits · " + total + " questions + final";
+
+    var box = $("levels"), lastGroup = null; box.textContent = "";
+    ALL_LEVELS.forEach(function (lv) {
+      var grp = lv.boss ? "Final challenge" : (lv.group || "");
+      if (grp && grp !== lastGroup) {
+        lastGroup = grp;
+        var gh = document.createElement("div"); gh.className = "group-h";
+        var gt = document.createElement("h3"); gt.textContent = grp;
+        var gs = document.createElement("small");
+        if (!lv.boss) { var gl = LEVELS.filter(function (l) { return l.group === grp; }), gq = 0; gl.forEach(function (l) { gq += l.ids.length; }); gs.textContent = gl.length + " exhibits · " + gq + " Qs"; }
+        gh.appendChild(gt); gh.appendChild(gs); box.appendChild(gh);
+      }
+      var s = lvState(lv.key), run = P.runs[lv.key];
+      var b = document.createElement("button"); b.type = "button"; b.className = "lvl" + (lv.boss ? " boss" : "");
+      setColor(b, lv.color);
+      var head = document.createElement("div"); head.className = "lvl-head";
+      var ic = document.createElement("div"); ic.className = "lvl-icon"; ic.textContent = lv.icon; ic.setAttribute("aria-hidden", "true");
+      var tx = document.createElement("div"); tx.style.minWidth = "0";
+      var num = document.createElement("div"); num.className = "lvl-num"; num.textContent = lv.boss ? "Exam rehearsal" : "Exhibit " + (lv.num < 10 ? "0" : "") + lv.num + (lv.kind ? " · " + lv.kind : "");
+      var name = document.createElement("div"); name.className = "lvl-name"; name.textContent = lv.name;
+      tx.appendChild(num); tx.appendChild(name);
+      head.appendChild(ic); head.appendChild(tx);
+      var topic = document.createElement("div"); topic.className = "lvl-topic"; topic.textContent = lv.topic;
+      var foot = document.createElement("div"); foot.className = "lvl-foot";
+      var dEl = document.createElement("span"); dEl.className = "dots"; dotsEl(s.stars, dEl);
+      dEl.setAttribute("aria-label", s.stars + " of 3 dots");
+      var status = document.createElement("span"); status.className = "lvl-status";
+      if (run && run.screen !== "done") { status.textContent = "Continue · " + count(run.done) + "/" + run.ids.length; status.classList.add("go"); }
+      else if (s.plays) status.textContent = "Best " + s.best + "%";
+      else { status.textContent = lv.boss ? DATA.bossCount + " Qs" : lv.ids.length + " Qs"; status.classList.add("go"); }
+      foot.appendChild(dEl); foot.appendChild(status);
+      b.appendChild(head); b.appendChild(topic); b.appendChild(foot);
+      b.onclick = function () { openLevel(lv.key); };
+      box.appendChild(b);
+    });
+    show("map");
+  }
+  $("btn-rename").onclick = function () { renderWelcome(); };
+  $("btn-reset").onclick = function () { $("confirm-reset").hidden = false; $("confirm-reset").scrollIntoView({ block: "nearest" }); };
+  $("btn-reset-no").onclick = function () { $("confirm-reset").hidden = true; };
+  $("btn-reset-yes").onclick = function () { var name = P.name; P = blank(); P.name = name; save(); renderMap(); window.scrollTo(0, 0); };
+
+  function openLevel(k) {
+    var run = P.runs[k];
+    if (!run || run.screen === "done") {
+      var lv = levelByKey(k);
+      P.runs[k] = newRun(k, lv.boss ? bossIds() : lv.ids, false);
+      save();
+    }
+    CUR = k; route(); window.scrollTo(0, 0);
+  }
+
+  /* ---------- PLAY ---------- */
+  function R() { return P.runs[CUR]; }
+  function currentQ() { var r = R(); return Q[r.queue[r.pos]]; }
+  function drawBoard(el, opts) {
+    var r = R(); el.textContent = "";
+    r.ids.forEach(function (id) {
+      var c = document.createElement("i"); c.className = "cell";
+      if (r.done[id]) c.className += " " + r.done[id];
+      else if (r.wrong[id]) c.className += " missed";
+      if (opts && opts.current === id) c.className += " now";
+      if (opts && opts.pop === id && !reduceMotion) c.className += " pop";
+      el.appendChild(c);
+    });
+  }
+  function richText(el, text) {
+    el.textContent = "";
+    var parts = String(text).split("**");
+    parts.forEach(function (part, i) {
+      if (i % 2 === 1) { var s = document.createElement("strong"); s.className = "hl"; s.textContent = part; el.appendChild(s); return; }
+      var bits = part.split("___");
+      bits.forEach(function (b, j) {
+        if (j > 0) { var g = document.createElement("span"); g.className = "gap"; g.setAttribute("aria-label", "blank"); el.appendChild(g); }
+        el.appendChild(document.createTextNode(b));
+      });
+    });
+  }
+  function updateChips(hot) {
+    var r = R();
+    $("streak-n").textContent = r.streak;
+    $("streak-chip").classList.toggle("cold", r.streak === 0);
+    $("xp-n").textContent = P.xp;
+    if (hot && !reduceMotion) { var c = $("streak-chip"); c.classList.remove("hot"); void c.offsetWidth; c.classList.add("hot"); }
+  }
+  function renderPlay() {
+    var r = R(), lv = levelByKey(CUR), q = currentQ();
+    setColor($("screen-play"), lv.boss ? "#8C2F25" : lv.color);
+    $("play-icon").textContent = lv.icon;
+    $("play-name").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("play-round").textContent = "ROUND " + r.round + (CUR === "boss" ? " · FROM " + q.levelName.toUpperCase() : (r.round === 1 ? " · FIRST TRY" : " · CLEAR THE MISSED ONES"));
+    updateChips(false);
+    drawBoard($("board"), { current: q.id });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    $("q-count").textContent = "Q " + (r.pos + 1) + " / " + r.queue.length;
+    var misses = r.wrong[q.id] || 0;
+    $("retry-tag").hidden = misses === 0;
+    $("retry-tag").textContent = misses === 1 ? "Missed once. Try again!" : "Missed " + misses + " times. You can do it!";
+    $("q-note").textContent = q.note;
+    $("q-note").hidden = !q.note;
+    var fig = $("q-fig");
+    if (q.fig && DATA.figs && DATA.figs[q.fig]) { fig.innerHTML = DATA.figs[q.fig]; fig.hidden = false; } else { fig.innerHTML = ""; fig.hidden = true; }
+    $("q-text").classList.toggle("typed", q.type === "type");
+    $("check-row").hidden = true;
+    if (q.type === "type") renderTyped(q); else richText($("q-text"), q.q);
+    $("feedback").hidden = true; $("btn-next").hidden = true;
+
+    if (q.type === "type") {
+      $("opts").hidden = true; $("check-row").hidden = !!r.answered;
+    } else {
+      $("opts").hidden = false;
+      if (!r.opts) { r.opts = shuffle([q.answer].concat(q.wrong)); save(); }
+      var box = $("opts"); box.textContent = "";
+      var short = r.opts.every(function (t) { return t.length <= 9; });
+      box.className = "opts" + (short ? " two" : "");
+      r.opts.forEach(function (text, i) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+        var k = document.createElement("span"); k.className = "key"; k.textContent = LETTERS[i];
+        var t = document.createElement("span"); t.className = "txt"; t.textContent = text;
+        b.appendChild(k); b.appendChild(t);
+        b.onclick = function () { pick(i, b); };
+        box.appendChild(b);
+      });
+    }
+    if (r.answered) paintAnswer(false);
+    show("play");
+  }
+
+  /* typed */
+  function renderTyped(q) {
+    var r = R(), h = $("q-text"); h.textContent = "";
+    if (q.lead) { var l = document.createElement("span"); l.className = "q-lead"; l.textContent = q.lead; h.appendChild(l); }
+    var gi = 0, carry = "";
+    q.parts.forEach(function (p, pi) {
+      if (!p.gap) { h.appendChild(document.createTextNode(p.t.slice(carry.length))); carry = ""; return; }
+      var nxt = q.parts[pi + 1], tail = "";
+      if (nxt && !nxt.gap) { var mt = nxt.t.match(/^(\s?\([^)]{1,24}\))?[.,!?;:]*/); tail = mt ? mt[0] : ""; }
+      carry = tail;
+      var longest = 0; p.alts.forEach(function (a) { if (a.length > longest) longest = a.length; });
+      var w = document.createElement("span"); w.className = "tgap" + (longest > 20 ? " xwide" : longest > 10 ? " wide" : "");
+      if (p.letter) { var f = document.createElement("span"); f.className = "first"; f.textContent = p.letter; w.appendChild(f); }
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.spellcheck = false; inp.id = "gap-" + gi;
+      inp.setAttribute("autocomplete", "off"); inp.setAttribute("autocorrect", "off"); inp.setAttribute("autocapitalize", "off");
+      inp.setAttribute("enterkeyhint", "done");
+      inp.setAttribute("aria-label", p.letter ? "Missing word, starts with " + p.letter : "Missing words " + (gi + 1));
+      if (r.typed && r.typed[gi] != null) inp.value = r.typed[gi];
+      (function (idx) {
+        inp.addEventListener("input", function () { var rr = R(); if (!rr.typed) rr.typed = []; rr.typed[idx] = inp.value; save(); });
+      })(gi);
+      inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); if (!R().answered) checkTyped(); } });
+      w.appendChild(inp);
+      if (tail) { var glue = document.createElement("span"); glue.className = "tglue"; glue.appendChild(w); glue.appendChild(document.createTextNode(tail)); h.appendChild(glue); }
+      else h.appendChild(w);
+      gi++;
+    });
+  }
+  function checkTyped() {
+    var r = R(), q = currentQ(); if (r.answered) return;
+    var inputs = $("q-text").querySelectorAll("input"), vals = [], empty = null;
+    inputs.forEach(function (inp) { vals.push(inp.value); if (!inp.value.trim() && !empty) empty = inp; });
+    if (empty) {
+      empty.focus();
+      var g = empty.parentNode;
+      if (!reduceMotion) { g.classList.remove("shake"); void g.offsetWidth; g.classList.add("shake"); }
+      return;
+    }
+    var gaps = q.parts.filter(function (p) { return p.gap; });
+    var oks = gaps.map(function (p, i) { return gapOk(p, vals[i]); });
+    r.typed = vals; r.oks = oks;
+    grade(oks.every(Boolean), -1, $("q-text"));
+  }
+  $("btn-tcheck").onclick = checkTyped;
+  function paintTyped(fresh) {
+    var r = R();
+    $("check-row").hidden = true;
+    $("q-text").querySelectorAll("input").forEach(function (inp, i) {
+      inp.value = (r.typed && r.typed[i]) || ""; inp.disabled = true;
+      var ok = r.oks ? r.oks[i] : r.answered.correct;
+      inp.parentNode.classList.add(ok ? "ok" : "no");
+      if (fresh && !ok && !reduceMotion) inp.parentNode.classList.add("shake");
+    });
+  }
+  function focusTyped() {
+    var inp = $("q-text").querySelector("input:not([disabled])");
+    if (inp) { try { inp.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  function pick(i) {
+    var r = R(); if (r.answered) return;
+    grade(r.opts[i] === currentQ().answer, i, $("opts").children[i]);
+  }
+  function grade(correct, pickIdx, srcEl) {
+    var r = R(), q = currentQ(), popId = null, gained = 0;
+    r.answered = { pick: pickIdx, correct: correct };
+    if (correct) {
+      r.done[q.id] = r.wrong[q.id] ? "later" : "first";
+      gained = r.wrong[q.id] ? 5 : 10;
+      r.streak += 1; if (r.streak > r.best) r.best = r.streak;
+      r.xp += gained; P.xp += gained;
+      popId = q.id;
+      r.cheer = CHEERS[Math.floor(Math.random() * CHEERS.length)];
+      r.gained = gained;
+    } else {
+      r.wrong[q.id] = (r.wrong[q.id] || 0) + 1;
+      r.streak = 0;
+      r.next.push(q.id);
+    }
+    save();
+    drawBoard($("board"), { current: q.id, pop: popId });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    updateChips(correct);
+    paintAnswer(true);
+    if (correct) confetti(srcEl);
+  }
+
+  function paintAnswer(fresh) {
+    var r = R(), q = currentQ(), a = r.answered;
+    var misses = r.wrong[q.id] || 0;
+    var reveal = !a.correct && misses >= 3;
+    if (q.type === "type") {
+      paintTyped(fresh);
+    } else {
+      var buttons = $("opts").querySelectorAll(".opt");
+      buttons.forEach(function (b, i) {
+        b.disabled = true;
+        var isAnswer = r.opts[i] === q.answer;
+        if (i === a.pick) b.classList.add(a.correct ? "is-right" : "is-wrong");
+        else if (isAnswer && reveal) b.classList.add("is-right");
+        else b.classList.add("is-dim");
+        if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+      });
+    }
+    var fb = $("feedback"); fb.textContent = ""; fb.className = "feedback";
+    var stamp = document.createElement("span"); stamp.className = "stamp" + (fresh && !reduceMotion ? " thud" : "");
+    var head = document.createElement("div"); head.className = "fb-head";
+    var body = document.createElement("p");
+    var note = document.createElement("p"); note.className = "fb-note";
+    if (a.correct) {
+      fb.classList.add("good");
+      stamp.textContent = "Sustained ✓";
+      head.textContent = r.cheer || "Correct!";
+      body.textContent = q.why;
+      var xp = document.createElement("p"); xp.className = "fb-xp"; xp.textContent = "+" + (r.gained || 10) + " XP" + (misses ? " · square cleared" : "");
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(xp);
+    } else if (reveal) {
+      fb.classList.add("reveal");
+      stamp.textContent = "For the record";
+      var ans = document.createElement("p"); ans.className = "fb-answer";
+      ans.textContent = "Answer: " + (q.type === "type" ? q.filled : q.answer);
+      body.textContent = q.why;
+      note.textContent = "Remember it. This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(ans); fb.appendChild(body); fb.appendChild(note);
+    } else {
+      fb.classList.add("bad");
+      stamp.textContent = "Overruled ✗";
+      head.textContent = "Check again.";
+      body.textContent = "Hint: " + q.hint;
+      note.textContent = "This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(note);
+    }
+    fb.hidden = false;
+    var last = r.pos + 1 >= r.queue.length;
+    $("btn-next").textContent = last ? (r.next.length ? "Finish round " + r.round + " →" : "See my result →") : "Next question →";
+    $("btn-next").hidden = false;
+    if (fresh) {
+      $("btn-next").focus({ preventScroll: true });
+      $("btn-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+    }
+  }
+
+  function next() {
+    var r = R(); if (!r.answered) return;
+    r.pos += 1; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.cheer = null;
+    if (r.pos >= r.queue.length) {
+      if (r.next.length) r.screen = "between";
+      else finishLevel();
+    }
+    save(); route();
+    if (r.screen === "play") {
+      var top = $("play-card").getBoundingClientRect().top;
+      if (top < 0) $("play-card").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+      if (currentQ().type === "type") focusTyped(); else $("q-text").focus({ preventScroll: true });
+    } else window.scrollTo(0, 0);
+  }
+  $("btn-next").onclick = next;
+  $("btn-back").onclick = function () { save(); renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- BETWEEN ROUNDS ---------- */
+  function renderBetween() {
+    var r = R(), lv = levelByKey(CUR), left = r.next.length, col = lv.boss ? "#8C2F25" : lv.color;
+    setColor($("screen-between"), col);
+    $("legend-later").style.background = col;
+    $("between-eyebrow").textContent = lv.name;
+    if (r.round === 1) {
+      var first = count(r.done, "first");
+      $("between-h").textContent = "Round 1 done. Your first-try score:";
+      var big = $("between-big"); big.textContent = first;
+      var sm = document.createElement("small"); sm.textContent = " / " + r.ids.length; big.appendChild(sm);
+    } else {
+      $("between-h").textContent = "Round " + r.round + " done.";
+      $("between-big").textContent = "";
+    }
+    $("between-text").textContent = (left === 1 ? "1 question comes" : left + " questions come") + " back now. Clear " + (left === 1 ? "it" : "them all") + " to fill the board.";
+    drawBoard($("board-between"));
+    $("btn-next-round").textContent = "Start round " + (r.round + 1) + " →";
+    show("between");
+  }
+  $("btn-next-round").onclick = function () {
+    var r = R();
+    r.round += 1; r.queue = shuffle(r.next); r.next = []; r.pos = 0; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.screen = "play";
+    save(); route(); window.scrollTo(0, 0); $("q-text").focus({ preventScroll: true });
+  };
+
+  /* ---------- LEVEL COMPLETE ---------- */
+  function dotsFor(pct) { return pct >= 90 ? 3 : pct >= 70 ? 2 : 1; }
+  function finishLevel() {
+    var r = R(), first = count(r.done, "first"), pct = Math.round(first / r.ids.length * 100);
+    r.screen = "done"; r.pct = pct; r.earned = dotsFor(pct);
+    if (!r.practice) {
+      var s = lvState(CUR), before = totalDots();
+      s.plays += 1;
+      if (pct > s.best) s.best = pct;
+      if (r.earned > s.stars) s.stars = r.earned;
+      var rb = rankFor(before), ra = rankFor(totalDots());
+      r.rankUp = ra[2] !== rb[2] ? ra[1] + " New rank: " + ra[2] + "!" : "";
+    } else r.rankUp = "";
+  }
+  function renderDone() {
+    var r = R(), lv = levelByKey(CUR), total = r.ids.length, first = count(r.done, "first");
+    setColor($("screen-done"), lv.boss ? "#8C2F25" : lv.color);
+    $("done-eyebrow").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("done-h").textContent = r.practice ? "Tricky ones cleared." : (r.earned === 3 ? "Verdict: top marks!" : r.earned === 2 ? "Strong work." : "Exhibit cleared.");
+    var md = $("done-dots"); md.textContent = "";
+    for (var i = 0; i < 3; i++) {
+      var s = document.createElement("i");
+      if (i < r.earned) { s.className = "on"; s.style.animationDelay = (0.15 + i * 0.22) + "s"; }
+      md.appendChild(s);
+    }
+    md.hidden = !!r.practice;
+    var big = $("done-big"); big.textContent = first;
+    var sm = document.createElement("small"); sm.textContent = " / " + total + "  (" + r.pct + "%)"; big.appendChild(sm);
+    $("rank-up").hidden = !r.rankUp; $("rank-up").textContent = r.rankUp || "";
+    var stats = [[r.round, r.round === 1 ? "round" : "rounds"], ["🔥 " + r.best, "best streak"], ["+" + r.xp, "XP earned"]];
+    var box = $("done-stats"); box.textContent = "";
+    stats.forEach(function (x) {
+      var d = document.createElement("div"); d.className = "stat";
+      var b = document.createElement("b"); b.textContent = x[0];
+      var t = document.createElement("span"); t.textContent = x[1];
+      d.appendChild(b); d.appendChild(t); box.appendChild(d);
+    });
+    var tricky = r.ids.filter(function (id) { return r.wrong[id]; }).sort(function (a, b) { return r.wrong[b] - r.wrong[a]; });
+    var ul = $("tricky"); ul.textContent = "";
+    tricky.forEach(function (id) {
+      var q = Q[id], li = document.createElement("li");
+      var tq = document.createElement("span"); tq.className = "tq";
+      tq.textContent = q.type === "type" ? (q.lead ? q.lead + "  →  " : "") + q.blank : q.q.replace(/\*\*/g, "");
+      var ta = document.createElement("span"); ta.className = "ta";
+      ta.textContent = "✔ " + (q.type === "type" ? q.filled : q.answer);
+      var tm = document.createElement("span"); tm.className = "tm";
+      tm.textContent = (CUR === "boss" ? q.levelName + " · " : "") + "missed " + (r.wrong[id] === 1 ? "once" : r.wrong[id] + " times");
+      li.appendChild(tq); li.appendChild(ta); li.appendChild(tm); ul.appendChild(li);
+    });
+    $("tricky-block").hidden = tricky.length === 0;
+    $("btn-practice").hidden = tricky.length === 0;
+    var who = $("who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = P.name || "—"; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("done");
+    if (!r.practice && r.earned === 3 && !r.celebrated) { r.celebrated = true; save(); setTimeout(function () { confetti(md, 50); }, 600); }
+  }
+  $("btn-practice").onclick = function () {
+    var r = R(); var ids = r.ids.filter(function (id) { return r.wrong[id]; });
+    P.runs[CUR] = newRun(CUR, ids, true); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-replay").onclick = function () {
+    var lv = levelByKey(CUR);
+    P.runs[CUR] = newRun(CUR, lv.boss ? bossIds() : lv.ids, false); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-map").onclick = function () { renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- confetti ---------- */
+  function confetti(el, n) {
+    if (reduceMotion || !el) return;
+    var rect = el.getBoundingClientRect();
+    var x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+    var colors = ["#FFD84D", "#8C2F25", "#11845A", "#CF3A2B", "#14213D"];
+    n = n || 22;
+    for (var i = 0; i < n; i++) {
+      var c = document.createElement("i"); c.className = "confetti";
+      c.style.left = x + "px"; c.style.top = y + "px";
+      c.style.background = colors[i % colors.length];
+      var ang = Math.random() * Math.PI * 2, dist = 60 + Math.random() * 120;
+      c.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+      c.style.setProperty("--dy", (Math.sin(ang) * dist - 50 + Math.random() * 100) + "px");
+      document.body.appendChild(c);
+      (function (node) { setTimeout(function () { node.remove(); }, 950); })(c);
+    }
+  }
+
+  /* ---------- router + keys ---------- */
+  function route() {
+    if (!P.name) return renderWelcome();
+    if (!CUR || !R()) return renderMap();
+    var r = R();
+    if (r.screen === "play") renderPlay();
+    else if (r.screen === "between") renderBetween();
+    else renderDone();
+  }
+  document.addEventListener("keydown", function (e) {
+    if ($("screen-play").hidden || !CUR) return;
+    if (e.target && e.target.tagName === "INPUT") return;
+    var r = R(), q = currentQ(), k = e.key.toLowerCase();
+    if (q.type === "mcq") {
+      var idx = ["1", "2", "3", "4"].indexOf(k); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(k);
+      if (idx >= 0 && r.opts && idx < r.opts.length && !r.answered) { e.preventDefault(); pick(idx); return; }
+    }
+    if ((k === "enter" || k === "arrowright") && r.answered && e.target.tagName !== "BUTTON") { e.preventDefault(); next(); }
+  });
+
+  $("top-title").textContent = DATA.title;
+  $("top-sub").textContent = DATA.subtitle;
+  P = load() || blank();
+  route();
+})();
+</script>
+
+</body>
+</html>
