@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Device Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito+Sans:ital,wght@0,400;0,700;0,800;1,400&display=swap">
+<style>
+body{margin:0}[hidden]{display:none!important}img{max-width:100%}
+/* One phone-width column styled as a naturalist's field guide: cream pages, forest-green ink, mustard specimen tags. Hub of four expeditions; specimen cards for learning; a mastery-loop quiz card for the three practice stages. */
+:root {
+  --page: #F4EFE2;
+  --card: #FFFCF4;
+  --ink: #1E2A23;
+  --muted: #5F6B63;
+  --rule: #D8D1BE;
+  --forest: #2F5D46;
+  --forest-deep: #224634;
+  --moss: #DDE8DD;
+  --mustard: #D9A441;
+  --mustard-soft: #F6E7C3;
+  --rust: #B4472F;
+  --rust-soft: #F5DDD6;
+  --sky: #2E6A8E;
+  --f-head: "Fraunces", "Georgia", serif;
+  --f-body: "Nunito Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "DM Mono", "Courier New", monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--page); }
+body { color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%;
+  background-image: linear-gradient(rgba(47,93,70,.05) 1px, transparent 1px); background-size: 100% 28px; }
+.wrap { max-width: 680px; margin: 0 auto; padding-inline: 16px; padding-block: 12px 64px; display: flex; flex-direction: column; gap: 16px; }
+.wrap.inner { padding: 0; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #FFFFFF; border-radius: 10px; padding: 3px 5px; flex: none; display: grid; place-items: center; box-shadow: 0 1px 2px rgba(0,0,0,.1); }
+.logo img { width: 66px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-head); font-weight: 800; font-size: 1.3rem; color: var(--forest); }
+.top-sub { color: var(--muted); font-size: .86rem; }
+
+.card { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 2px 0 rgba(30,42,35,.05); }
+.tag { align-self: flex-start; font-family: var(--f-mono); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; background: var(--mustard-soft); color: #7A5714; border: 1px dashed var(--mustard); border-radius: 6px; padding: 2px 8px; }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+
+.btn { appearance: none; border: 0; border-radius: 12px; padding: 13px 18px; font-weight: 800; font-size: 1rem; cursor: pointer; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-go { background: var(--forest); color: #FFFFFF; box-shadow: inset 0 -3px 0 var(--forest-deep); }
+.btn-go:hover { background: var(--forest-deep); }
+.btn-go:disabled { background: #A7B0A9; box-shadow: none; cursor: not-allowed; }
+.btn-ghost { background: transparent; border: 2px solid var(--rule); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--forest); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 160px; }
+.back { appearance: none; border: 0; background: transparent; color: var(--forest); font-weight: 800; cursor: pointer; padding: 4px 0; align-self: flex-start; }
+
+/* Start */
+.hero { background: var(--forest); color: #F4EFE2; border-radius: 16px; padding: 24px 20px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
+.hero::after { content: ""; position: absolute; right: -40px; bottom: -40px; width: 160px; height: 160px; border-radius: 50%; border: 18px solid rgba(217,164,65,.35); }
+.hero .tag { background: rgba(255,255,255,.12); color: #F6E7C3; border-color: rgba(246,231,195,.5); }
+.hero h1 { font-family: var(--f-head); font-weight: 800; font-size: clamp(2rem, 9vw, 2.8rem); }
+.hero p { max-width: 44ch; position: relative; z-index: 1; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 800; font-size: .95rem; }
+.field input { font: inherit; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); width: 100%; }
+.field input:focus { border-color: var(--forest); outline: none; }
+.resume { border: 2px dashed var(--forest); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Hub */
+.tiles { display: flex; flex-direction: column; gap: 12px; }
+.tile { appearance: none; text-align: left; background: var(--card); border: 2px solid var(--rule); border-radius: 14px; padding: 16px; display: grid; grid-template-columns: 52px 1fr; gap: 14px; align-items: center; cursor: pointer; }
+.tile:hover { border-color: var(--forest); }
+.tile .num { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; font-family: var(--f-head); font-weight: 800; font-size: 1.5rem; background: var(--moss); color: var(--forest); }
+.tile.done { border-color: var(--forest); }
+.tile.done .num { background: var(--forest); color: #FFFFFF; }
+.tile b { font-family: var(--f-head); font-size: 1.15rem; display: block; }
+.tile .bar { height: 8px; border-radius: 999px; background: var(--rule); overflow: hidden; margin-top: 8px; }
+.tile .bar i { display: block; height: 100%; background: var(--mustard); width: 0; }
+
+/* Learn */
+.groupchips { display: flex; flex-wrap: wrap; gap: 6px; }
+.gchip { appearance: none; border: 2px solid var(--rule); background: var(--card); border-radius: 999px; padding: 4px 10px; font-size: .8rem; font-weight: 700; cursor: pointer; }
+.gchip.on { background: var(--forest); color: #FFFFFF; border-color: var(--forest); }
+.specimen { background: var(--card); border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; box-shadow: 0 3px 0 rgba(30,42,35,.06); }
+.spec-head { background: var(--forest); color: #FFFFFF; padding: 16px 18px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.spec-head h2 { font-family: var(--f-head); font-weight: 800; font-size: 1.6rem; }
+.spec-head span { font-family: var(--f-mono); font-size: .78rem; opacity: .85; }
+.spec-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 12px; }
+.row { display: grid; grid-template-columns: 82px 1fr; gap: 10px; align-items: baseline; }
+.row .k { font-family: var(--f-mono); font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; color: var(--forest); }
+.real { background: var(--mustard-soft); border-left: 4px solid var(--mustard); border-radius: 0 10px 10px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.real q { font-family: var(--f-head); font-weight: 600; font-size: 1.05rem; quotes: none; }
+.real small { color: #6B5420; font-size: .8rem; }
+.frame { font-style: italic; color: var(--muted); font-size: .92rem; }
+.dots { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--rule); border: 0; padding: 0; cursor: pointer; }
+.dot.seen { background: var(--mustard); }
+.dot.now { outline: 2px solid var(--forest); outline-offset: 2px; }
+
+/* Quiz */
+.qhead { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(14px, 1fr)); gap: 4px; }
+.sq { height: 12px; border-radius: 3px; background: var(--rule); }
+.sq.first { background: var(--forest); }
+.sq.later { background: var(--sky); }
+.sq.missed { background: var(--rust); }
+.sq.now { outline: 2px solid var(--ink); outline-offset: 1px; }
+.retry { align-self: flex-start; font-size: .8rem; font-weight: 800; padding: 3px 10px; border-radius: 999px; background: var(--rust-soft); color: var(--rust); }
+.specimen-text { font-family: var(--f-head); font-weight: 600; font-size: 1.2rem; line-height: 1.5; background: #FFFFFF; border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; }
+.specimen-text mark { background: #F6D88A; color: inherit; padding: 1px 3px; border-radius: 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; border-bottom: 2px solid var(--mustard); }
+.srcline { font-family: var(--f-mono); font-size: .76rem; color: var(--muted); }
+.realbadge { align-self: flex-start; font-size: .75rem; font-weight: 800; color: #FFFFFF; background: var(--forest); border-radius: 999px; padding: 2px 10px; }
+.q { font-size: 1.15rem; font-weight: 800; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 54px; color: var(--ink); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--forest); } }
+.opt .k { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-weight: 800; background: var(--page); font-family: var(--f-mono); }
+.opt .t { min-width: 0; }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--forest); background: var(--moss); }
+.opt.right .k { background: var(--forest); color: #FFFFFF; }
+.opt.wrong { border-color: var(--rust); background: var(--rust-soft); }
+.opt.wrong .k { background: var(--rust); color: #FFFFFF; }
+.opt.dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.fb { border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--moss); }
+.fb.bad { background: var(--rust-soft); }
+.fb.reveal { background: var(--mustard-soft); }
+.fb-h { font-family: var(--f-head); font-weight: 800; font-size: 1.1rem; }
+.fb.good .fb-h { color: var(--forest); }
+.fb.bad .fb-h { color: var(--rust); }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.streak { font-family: var(--f-mono); font-size: .8rem; color: var(--forest); }
+
+/* Report */
+.big { font-family: var(--f-head); font-weight: 800; font-size: clamp(2.4rem, 11vw, 3.4rem); line-height: 1; color: var(--forest); font-variant-numeric: tabular-nums; }
+.big small { font-size: .4em; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.stat { border: 2px solid var(--rule); border-radius: 12px; padding: 8px 10px; display: flex; flex-direction: column; min-width: 0; }
+.stat b { font-family: var(--f-head); font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .78rem; color: var(--muted); }
+.revise { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.revise li { border-left: 4px solid var(--rust); background: #FFFFFF; border-radius: 0 10px 10px 0; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; }
+.revise .a { color: var(--forest); font-size: .92rem; font-weight: 700; }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; }
+.who b { color: var(--ink); }
+.credits { font-size: .8rem; color: var(--muted); }
+.credits li { margin-bottom: 4px; }
+
+@media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title">Device Field Guide</span>
+      <span class="top-sub">IB Paper 1 · Grade 11 · Recognize the features</span>
+    </div>
+  </header>
+
+  <!-- START -->
+  <section id="s-start" hidden>
+    <div class="wrap inner">
+      <div class="hero">
+        <span class="tag">Field guide · 18 species</span>
+        <h1>Spot every device</h1>
+        <p>Paper 1 texts are full of persuasive features. Learn the 18 you will meet most often, then train your eye until you can spot each one in seconds, ending with real speeches, posters and slogans.</p>
+      </div>
+      <div class="card">
+        <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+          <li><b>Learn:</b> read each device card, with a real example.</li>
+          <li><b>Spot it:</b> 54 practice sentences. Name the device in the highlighted words.</li>
+          <li><b>Twins:</b> 12 rounds on devices that students mix up.</li>
+          <li><b>Field test:</b> 18 real texts from history, politics and advertising.</li>
+        </ol>
+        <p class="small muted">A wrong answer comes back in the next round, with the options moved around, until you get it right. Your first-try score is your real score. Practice sentences in Spot it and Twins were written for this app; every example marked “real” is quoted from its actual source.</p>
+        <div class="resume" id="resume" hidden>
+          <p><b>You have a field guide in progress.</b> <span id="resume-text"></span></p>
+          <div class="btn-row">
+            <button class="btn btn-go" id="btn-resume" type="button">Continue</button>
+            <button class="btn btn-ghost" id="btn-wipe" type="button">Start over</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="student-name">Your name</label>
+          <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+        </div>
+        <button class="btn btn-go" id="btn-start" type="button">Open the field guide</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HUB -->
+  <section id="s-hub" hidden>
+    <div class="wrap inner">
+      <div class="card">
+        <span class="tag" id="hub-name">Explorer</span>
+        <h2 style="font-family:var(--f-head);font-size:1.5rem">Choose your next expedition</h2>
+        <p class="small muted">Work from 1 to 4. You can come back to any stage at any time.</p>
+      </div>
+      <div class="tiles" id="tiles"></div>
+      <button class="btn btn-go" id="btn-to-report" type="button">See my field report</button>
+    </div>
+  </section>
+
+  <!-- LEARN -->
+  <section id="s-learn" hidden>
+    <div class="wrap inner">
+      <button class="back" id="learn-back" type="button">← All expeditions</button>
+      <div class="groupchips" id="groupchips"></div>
+      <article class="specimen" aria-live="polite">
+        <div class="spec-head"><h2 id="sp-name"></h2><span id="sp-count"></span></div>
+        <div class="spec-body">
+          <div class="row"><span class="k">Group</span><span id="sp-group"></span></div>
+          <div class="row"><span class="k">What</span><span id="sp-def"></span></div>
+          <div class="row"><span class="k">Spot it</span><span id="sp-spot"></span></div>
+          <div class="row"><span class="k">Effect</span><span id="sp-does"></span></div>
+          <div class="real"><span class="realbadge">Real example</span><q id="sp-real"></q><small id="sp-src"></small></div>
+          <div class="row"><span class="k">Write</span><span class="frame" id="sp-frame"></span></div>
+        </div>
+      </article>
+      <div class="dots" id="dots"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="sp-prev" type="button">← Previous</button>
+        <button class="btn btn-go" id="sp-next" type="button">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="s-quiz" hidden>
+    <div class="wrap inner">
+      <button class="back" id="quiz-back" type="button">← All expeditions</button>
+      <div class="card" id="qcard">
+        <div class="qhead">
+          <span class="tag" id="q-stage"></span>
+          <span class="small" id="q-count"></span>
+        </div>
+        <div class="board" id="q-board" aria-hidden="true"></div>
+        <span class="retry" id="q-retry" hidden></span>
+        <span class="realbadge" id="q-real" hidden>Real text</span>
+        <div class="specimen-text" id="q-text"></div>
+        <span class="srcline" id="q-src"></span>
+        <h3 class="q" id="q-q" tabindex="-1"></h3>
+        <div class="opts" id="q-opts" role="group" aria-labelledby="q-q"></div>
+        <div class="fb" id="q-fb" role="status" aria-live="polite" hidden></div>
+        <button class="btn btn-go" id="q-next" type="button" hidden></button>
+        <span class="streak" id="q-streak"></span>
+      </div>
+      <div class="card" id="q-between" hidden>
+        <span class="tag">Round complete</span>
+        <h3 id="qb-h" style="font-family:var(--f-head);font-size:1.35rem"></h3>
+        <p id="qb-t"></p>
+        <button class="btn btn-go" id="qb-go" type="button"></button>
+      </div>
+      <div class="card" id="q-done" hidden>
+        <span class="tag">Expedition complete</span>
+        <h3 id="qd-h" style="font-family:var(--f-head);font-size:1.35rem"></h3>
+        <p id="qd-t"></p>
+        <button class="btn btn-go" id="qd-go" type="button">Back to all expeditions</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="s-report" hidden>
+    <div class="card">
+      <span class="tag">Field report</span>
+      <h2 style="font-family:var(--f-head);font-size:1.6rem">Devices spotted</h2>
+      <div>
+        <div class="muted">Correct first try, across all three practice stages</div>
+        <div class="big" id="r-big"></div>
+      </div>
+      <div class="stats" id="r-stats"></div>
+      <div id="r-revise-block">
+        <h3 style="font-size:1.1rem;margin-bottom:8px">Devices to revise</h3>
+        <ul class="revise" id="r-revise"></ul>
+      </div>
+      <div class="who" id="r-who"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="r-back" type="button">Back to the field guide</button>
+        <button class="btn btn-ghost" id="r-again" type="button">Start again</button>
+      </div>
+      <details class="credits">
+        <summary>Sources of the real examples</summary>
+        <ul id="r-credits"></ul>
+      </details>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+/* ---------- DEVICE CARDS (real examples checked against their sources) ---------- */
+var DEVICES = [
+  { id: "da", name: "Direct address", group: "Speaking to the reader",
+    def: "The writer speaks straight to the reader using “you” or “your.”",
+    spot: "Look for “you,” “your” and “yours.”",
+    does: "The reader feels personally involved, as if the message is only for them.",
+    real: "“And so, my fellow Americans: ask not what your country can do for you—ask what you can do for your country.”",
+    src: "John F. Kennedy, Inaugural Address, January 20, 1961",
+    frame: "By speaking directly to the reader with “you,” the writer makes them feel …" },
+  { id: "il", name: "Inclusive language", group: "Speaking to the reader",
+    def: "The writer uses “we,” “us” and “our” to put themselves and the reader on the same side.",
+    spot: "Look for “we,” “us,” “our,” “together” and “let us.”",
+    does: "The reader feels part of a team, so it is harder to disagree.",
+    real: "“Let us never negotiate out of fear.”",
+    src: "John F. Kennedy, Inaugural Address, January 20, 1961",
+    frame: "The inclusive pronoun “…” unites the writer and the reader, so …" },
+  { id: "rq", name: "Rhetorical question", group: "Speaking to the reader",
+    def: "A question asked for effect. The writer does not expect a real answer, because the answer is obvious.",
+    spot: "A question mark, but nobody is meant to reply.",
+    does: "The reader thinks about the issue and silently agrees with the obvious answer.",
+    real: "“Is life so dear, or peace so sweet, as to be purchased at the price of chains and slavery?”",
+    src: "Patrick Henry, speech to the Second Virginia Convention, March 23, 1775",
+    frame: "The rhetorical question “…?” forces the reader to consider …" },
+  { id: "im", name: "Imperative", group: "Speaking to the reader",
+    def: "A command. The sentence usually begins with a verb and tells the reader what to do.",
+    spot: "The sentence starts with an action word: “Stop,” “Buy,” “Act,” “Dig.”",
+    does: "The reader knows exactly what action to take, and the message sounds urgent.",
+    real: "“Dig for Victory”",
+    src: "British wartime food campaign slogan, Ministry of Agriculture, from 1939",
+    frame: "The imperative “…” commands the reader to …, creating a sense of urgency." },
+  { id: "rp", name: "Repetition", group: "Patterns",
+    def: "The same word or phrase is used more than once, close together.",
+    spot: "Spot a word or phrase that comes back again and again.",
+    does: "The idea sticks in the reader’s mind and feels important or determined.",
+    real: "“we shall fight on the beaches, we shall fight on the landing grounds,”",
+    src: "Winston Churchill, speech to the House of Commons, June 4, 1940",
+    frame: "The repetition of “…” emphasizes …" },
+  { id: "r3", name: "Rule of three", group: "Patterns",
+    def: "Three words, phrases or ideas in a row.",
+    spot: "Count the items in a list: exactly three.",
+    does: "The message sounds complete, balanced and easy to remember.",
+    real: "“government of the people, by the people, for the people, shall not perish from the earth.”",
+    src: "Abraham Lincoln, Gettysburg Address, November 19, 1863",
+    frame: "The rule of three in “…, … and …” makes the message memorable and …" },
+  { id: "al", name: "Alliteration", group: "Patterns",
+    def: "Two or more words close together begin with the same sound.",
+    spot: "Say it out loud: do the words start with the same letter sound?",
+    does: "The phrase is catchy and easy to remember, and the sound can add mood.",
+    real: "“Keep Calm and Carry On”",
+    src: "British government poster, Ministry of Information, 1939",
+    frame: "The alliteration in “…” makes the phrase catchy and …" },
+  { id: "ct", name: "Contrast", group: "Patterns",
+    def: "Two opposite ideas, words or images are placed side by side (also called antithesis or juxtaposition).",
+    spot: "Look for opposites: best/worst, rich/poor, small/big.",
+    does: "The difference stands out sharply, often showing that something is unfair.",
+    real: "“It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness”",
+    src: "Charles Dickens, A Tale of Two Cities, 1859 (opening line)",
+    frame: "The contrast between “…” and “…” highlights …" },
+  { id: "st", name: "Statistics", group: "Evidence and authority",
+    def: "Numbers, percentages or fractions used as evidence.",
+    spot: "Look for numbers, “%,” “one in five,” “one-third.”",
+    does: "The claim sounds proven, serious and hard to argue with.",
+    real: "“I see one-third of a nation ill-housed, ill-clad, ill-nourished.”",
+    src: "Franklin D. Roosevelt, Second Inaugural Address, January 20, 1937",
+    frame: "The statistic “…” makes the problem seem …" },
+  { id: "ex", name: "Expert opinion", group: "Evidence and authority",
+    def: "The writer uses the words or name of an expert or official to support a message.",
+    spot: "Look for doctors, scientists, officials or titles: “Dr,” “according to,” “Surgeon General.”",
+    does: "The message sounds trustworthy and serious, so the reader believes it.",
+    real: "“SURGEON GENERAL’S WARNING: Smoking Causes Lung Cancer, Heart Disease, Emphysema, And May Complicate Pregnancy.”",
+    src: "Warning required on US cigarette packets by federal law (15 U.S.C. § 1333)",
+    frame: "By citing …, an expert, the writer makes the claim seem trustworthy, so …" },
+  { id: "sl", name: "Slogan", group: "Evidence and authority",
+    def: "A short, catchy phrase that sums up a campaign or brand and is repeated on its materials.",
+    spot: "A short phrase, often under a logo or at the end of an ad or poster.",
+    does: "The message is easy to remember and repeat, so it stays with the audience.",
+    real: "“Loose Lips Might Sink Ships”",
+    src: "US World War II home-front slogan; well-known 1941 poster published by Seagram",
+    frame: "The short, catchy slogan “…” stays in the audience’s mind, reminding them to …" },
+  { id: "em", name: "Emotive language", group: "Feelings and exaggeration",
+    def: "Words chosen to make the reader feel a strong emotion, such as pity, anger or fear.",
+    spot: "Look for words full of feeling: “heartbreaking,” “cruel,” “terrified,” “infamy.”",
+    does: "The reader reacts with feeling rather than calm thought.",
+    real: "“Yesterday, December 7, 1941—a date which will live in infamy—”",
+    src: "Franklin D. Roosevelt, address to Congress, December 8, 1941",
+    frame: "The emotive word “…” makes the reader feel …" },
+  { id: "hy", name: "Hyperbole", group: "Feelings and exaggeration",
+    def: "Deliberate, obvious exaggeration that is not meant to be taken literally.",
+    spot: "Ask: is this literally true, or is it far bigger than the truth?",
+    does: "The idea seems bigger, more exciting or more urgent than it really is.",
+    real: "“The Happiest Place on Earth”",
+    src: "Disneyland’s famous slogan (the park opened in 1955)",
+    frame: "The hyperbole “…” exaggerates …, making the reader …" },
+  { id: "mt", name: "Metaphor", group: "Comparisons",
+    def: "Says one thing IS another thing, without “like” or “as.”",
+    spot: "Something is described as something it cannot literally be.",
+    does: "The reader gets a strong, quick picture of the idea.",
+    real: "“From Stettin in the Baltic to Trieste in the Adriatic an iron curtain has descended across the Continent.”",
+    src: "Winston Churchill, “The Sinews of Peace,” Fulton, Missouri, March 5, 1946",
+    frame: "The metaphor of “…” compares … to …, suggesting …" },
+  { id: "sm", name: "Simile", group: "Comparisons",
+    def: "Compares two things using “like” or “as.”",
+    spot: "Find “like” or “as” joining two different things.",
+    does: "The reader can picture the idea clearly through a familiar comparison.",
+    real: "“I wandered lonely as a cloud / That floats on high o’er vales and hills,”",
+    src: "William Wordsworth, “I wandered lonely as a cloud,” 1807",
+    frame: "The simile “…” compares … to …, which suggests …" },
+  { id: "pf", name: "Personification", group: "Comparisons",
+    def: "Gives human actions or feelings to something that is not human.",
+    spot: "A thing, animal or idea does something only a person can do.",
+    does: "The thing feels alive, so the reader reacts to it as if it were a person.",
+    real: "“Because I could not stop for Death - / He kindly stopped for me -”",
+    src: "Emily Dickinson, “Because I could not stop for Death” (poem 479)",
+    frame: "By personifying … as …, the writer makes it seem …" },
+  { id: "ir", name: "Irony", group: "Meaning beneath the surface",
+    def: "The result or meaning is the opposite of what we expect.",
+    spot: "Something surprising: the opposite of what should happen.",
+    does: "The reader stops, notices the problem, and may laugh or feel shocked.",
+    real: "A door marked “PEOPLES’ ENTRANCE.” carries a “CLOSED” sign and is bolted shut.",
+    src: "Joseph Keppler, “The Bosses of the Senate,” Puck, January 23, 1889",
+    frame: "It is ironic that …, which shows the reader …" },
+  { id: "au", name: "Allusion", group: "Meaning beneath the surface",
+    def: "A reference to a famous text, person, story or event that the reader is expected to know.",
+    spot: "A name, story or famous line from somewhere else.",
+    does: "The text borrows the meaning and feeling of the thing it refers to.",
+    real: "“This is a Senate of the Monopolists by the Monopolists and for the Monopolists!” (echoing Lincoln’s “of the people, by the people, for the people”)",
+    src: "Joseph Keppler, “The Bosses of the Senate,” Puck, January 23, 1889",
+    frame: "The allusion to … reminds the reader of …, suggesting …" }
+];
+
+/* ---------- STAGE 2: SPOT IT (practice sentences written for this app) ----------
+   [[ ]] marks the part to identify. */
+var SPOT = [
+  { a: "Direct address", src: "Charity appeal", t: "[[You]] can give a child clean water today.", w: ["Inclusive language", "Imperative", "Statistics"], h: "Who is the sentence speaking to?", y: "“You” speaks straight to the reader, so they feel the message is for them." },
+  { a: "Direct address", src: "Advertisement", t: "Tired of waking up exhausted? [[Your mornings are about to change.]]", w: ["Inclusive language", "Hyperbole", "Personification"], h: "Look at the first word of the marked part.", y: "“Your” addresses the reader directly, as if the ad knows their problem." },
+  { a: "Direct address", src: "Travel advertisement", t: "This summer, [[you deserve]] a holiday that you will never forget.", w: ["Inclusive language", "Emotive language", "Alliteration"], h: "Is the writer talking about “we” or about one person reading?", y: "“You deserve” speaks to the reader personally and flatters them." },
+  { a: "Inclusive language", src: "Environmental campaign", t: "[[We]] all have a part to play in protecting [[our]] oceans.", w: ["Direct address", "Imperative", "Expert opinion"], h: "Does the writer include themselves?", y: "“We” and “our” put the writer and reader on the same team." },
+  { a: "Inclusive language", src: "Speech by a mayor", t: "Together, [[we]] can make [[our]] town safer for every child.", w: ["Direct address", "Repetition", "Statistics"], h: "Who is “we”: the writer, the reader, or both?", y: "“We” and “our” unite the speaker and audience in one shared goal." },
+  { a: "Inclusive language", src: "Graduation speech", t: "[[Let us]] stand up for what is right.", w: ["Direct address", "Rhetorical question", "Metaphor"], h: "“Us” includes whom?", y: "“Let us” includes the speaker and the listeners in the same action." },
+  { a: "Rhetorical question", src: "Opinion article", t: "[[How many more forests must disappear before we act?]]", w: ["Statistics", "Inclusive language", "Hyperbole"], h: "Does the writer expect a number as an answer?", y: "Nobody is meant to answer. The question makes the reader feel action is overdue." },
+  { a: "Rhetorical question", src: "Charity advertisement", t: "[[Would you let your own child go hungry?]]", w: ["Imperative", "Statistics", "Simile"], h: "What is the only possible answer?", y: "The obvious answer is “no,” so the reader feels they must help." },
+  { a: "Rhetorical question", src: "Student blog", t: "[[Isn’t it time we listened to young people?]]", w: ["Imperative", "Contrast", "Alliteration"], h: "Is this a real question, or one with an obvious answer?", y: "The answer “yes” is built in, pushing the reader to agree." },
+  { a: "Imperative", src: "Advertisement", t: "[[Book now]] and save on your summer trip.", w: ["Statistics", "Rhetorical question", "Hyperbole"], h: "What kind of word starts the sentence?", y: "“Book” is a command verb that tells the reader exactly what to do." },
+  { a: "Imperative", src: "Energy-saving poster", t: "[[Switch off]] the lights when you leave the room.", w: ["Inclusive language", "Personification", "Statistics"], h: "Is the poster asking, telling or describing?", y: "“Switch off” is a direct command." },
+  { a: "Imperative", src: "Health campaign", t: "[[Don’t wait]] until it’s too late. [[Act today.]]", w: ["Rhetorical question", "Simile", "Expert opinion"], h: "Look at the verbs at the start of each sentence.", y: "“Don’t wait” and “Act” are commands that create urgency." },
+  { a: "Repetition", src: "Motivational poster", t: "[[Never]] give up. [[Never]] stop believing.", w: ["Alliteration", "Contrast", "Simile"], h: "Which word appears more than once?", y: "“Never” is repeated to make the message sound determined." },
+  { a: "Repetition", src: "Ocean charity leaflet", t: "[[Plastic]] in the sea, [[plastic]] on the beach, [[plastic]] in our food, [[plastic]] in our bodies.", w: ["Rule of three", "Metaphor", "Statistics"], h: "Count carefully: how many items are there, and which word keeps returning?", y: "“Plastic” is repeated four times, so it is repetition, not a rule of three." },
+  { a: "Repetition", src: "School newsletter", t: "[[Work hard]] in class, and [[work hard]] at home.", w: ["Contrast", "Alliteration", "Rhetorical question"], h: "Is a phrase used twice?", y: "The phrase “work hard” comes back, which stresses effort." },
+  { a: "Rule of three", src: "Phone advertisement", t: "Our new phone is [[fast, light and powerful]].", w: ["Repetition", "Hyperbole", "Alliteration"], h: "Count the describing words.", y: "Three qualities in a row make the phone sound complete and impressive." },
+  { a: "Rule of three", src: "Charity website", t: "The charity gives families [[food, shelter and hope]].", w: ["Repetition", "Metaphor", "Statistics"], h: "How many things are listed?", y: "Three items in a list make the charity’s help sound complete." },
+  { a: "Rule of three", src: "Tourism brochure", t: "This town is [[clean, safe and friendly]].", w: ["Contrast", "Alliteration", "Emotive language"], h: "Count the adjectives.", y: "Three positive adjectives make the town sound perfect." },
+  { a: "Statistics", src: "Advertisement", t: "[[Eight out of ten]] customers would recommend us to a friend.", w: ["Expert opinion", "Hyperbole", "Rule of three"], h: "Is there a number?", y: "A number used as proof makes the claim sound reliable." },
+  { a: "Statistics", src: "School survey report", t: "[[Over 70%]] of the students in our survey said they feel tired every morning.", w: ["Expert opinion", "Emotive language", "Hyperbole"], h: "Look for a percentage.", y: "A percentage gives the claim the weight of evidence." },
+  { a: "Statistics", src: "Concert news", t: "Tickets were bought by [[more than 2,000]] fans in one day.", w: ["Hyperbole", "Repetition", "Slogan"], h: "Is this an exaggeration or a specific number?", y: "A specific figure makes the popularity sound proven." },
+  { a: "Emotive language", src: "Animal charity appeal", t: "These [[terrified, starving]] animals need your help.", w: ["Statistics", "Rule of three", "Simile"], h: "Which words make you feel something?", y: "“Terrified” and “starving” create pity in the reader." },
+  { a: "Emotive language", src: "News report", t: "The flood left families [[heartbroken and homeless]].", w: ["Statistics", "Personification", "Imperative"], h: "What feeling do the marked words create?", y: "“Heartbroken” and “homeless” create sadness and sympathy." },
+  { a: "Emotive language", src: "Opinion article", t: "It was a [[cruel and shameful]] decision.", w: ["Hyperbole", "Metaphor", "Rhetorical question"], h: "Are these words neutral or full of feeling?", y: "“Cruel” and “shameful” make the reader feel angry about the decision." },
+  { a: "Hyperbole", src: "Pizza advertisement", t: "This is [[the best pizza in the universe]].", w: ["Statistics", "Emotive language", "Metaphor"], h: "Is this literally true?", y: "Nobody has tested every pizza in the universe: it is deliberate exaggeration." },
+  { a: "Hyperbole", src: "Parent’s blog", t: "I have told you [[a million times]] to tidy your room.", w: ["Statistics", "Repetition", "Simile"], h: "Is the number real or exaggerated?", y: "“A million times” is not a real count: it exaggerates to show frustration." },
+  { a: "Hyperbole", src: "Travel blog", t: "The queue was [[so long it reached the next city]].", w: ["Simile", "Metaphor", "Statistics"], h: "Could a queue really do this?", y: "The impossible length exaggerates how long the wait felt." },
+  { a: "Metaphor", src: "Magazine article", t: "The city [[is a jungle]] at rush hour.", w: ["Simile", "Personification", "Hyperbole"], h: "Is there “like” or “as”?", y: "The city is said to BE a jungle, with no “like” or “as.”" },
+  { a: "Metaphor", src: "Memoir", t: "Her words [[were a knife]] in my heart.", w: ["Simile", "Emotive language", "Alliteration"], h: "Words cannot literally be a knife. How is the comparison made?", y: "Her words are called a knife directly, without “like” or “as.”" },
+  { a: "Metaphor", src: "Charity report", t: "For many families, the food bank [[is a lifeline]].", w: ["Simile", "Statistics", "Personification"], h: "Is the food bank literally a rope?", y: "The food bank is called a lifeline, showing it saves people." },
+  { a: "Simile", src: "Sports report", t: "The athlete ran [[like the wind]].", w: ["Metaphor", "Personification", "Hyperbole"], h: "Which small word joins the comparison?", y: "“Like” compares the athlete’s speed to the wind." },
+  { a: "Simile", src: "Travel blog", t: "After the storm, the beach looked [[as empty as a desert]].", w: ["Metaphor", "Contrast", "Alliteration"], h: "Look for “as … as.”", y: "“As empty as a desert” compares using “as.”" },
+  { a: "Simile", src: "Furniture advertisement", t: "Our new sofa feels [[like sitting on a cloud]].", w: ["Metaphor", "Hyperbole", "Imperative"], h: "Is the comparison made with “like”?", y: "“Like” compares the sofa to a cloud to suggest softness." },
+  { a: "Personification", src: "Short story", t: "The old house [[groaned]] in the wind.", w: ["Metaphor", "Simile", "Emotive language"], h: "Can a house really groan like a person?", y: "Groaning is a human action given to a house." },
+  { a: "Personification", src: "Festival review", t: "The sun [[smiled down]] on the festival.", w: ["Metaphor", "Hyperbole", "Simile"], h: "Who usually smiles?", y: "Smiling is human, so the sun is personified." },
+  { a: "Personification", src: "Nature article", t: "The wind [[whispered]] through the trees.", w: ["Simile", "Statistics", "Contrast"], h: "Can wind really whisper?", y: "Whispering is a human action given to the wind." },
+  { a: "Alliteration", src: "Car advertisement", t: "[[Big, bold and beautiful]]: the new city car.", w: ["Repetition", "Hyperbole", "Simile"], h: "Say the words aloud. What do you hear at the start of each?", y: "The repeated “b” sound makes the phrase catchy." },
+  { a: "Alliteration", src: "Clothing advertisement", t: "Try our [[super soft socks]].", w: ["Repetition", "Hyperbole", "Metaphor"], h: "Listen to the first sound of each word.", y: "The repeated “s” sound makes the product name memorable." },
+  { a: "Alliteration", src: "Tourism poster", t: "Taste the [[magic of the mountains]].", w: ["Repetition", "Statistics", "Rhetorical question"], h: "Which sound repeats?", y: "The repeated “m” sound makes the slogan flow." },
+  { a: "Contrast", src: "Charity appeal", t: "[[Some children have too much; others have nothing at all.]]", w: ["Repetition", "Hyperbole", "Rule of three"], h: "Look for two opposite situations.", y: "“Too much” is set against “nothing,” showing an unfair gap." },
+  { a: "Contrast", src: "Charity poster", t: "[[Small price, big difference.]]", w: ["Alliteration", "Rule of three", "Simile"], h: "Find the opposite words.", y: "“Small” and “big” are opposites placed side by side." },
+  { a: "Contrast", src: "Travel blog", t: "Outside, the streets were [[freezing]]; inside, the café was [[warm and bright]].", w: ["Simile", "Personification", "Statistics"], h: "Compare outside and inside.", y: "Freezing streets are set against a warm café." },
+  { a: "Irony", src: "Local news", t: "The fire station [[burned down]] last night.", w: ["Hyperbole", "Emotive language", "Alliteration"], h: "What do we expect from a fire station?", y: "The place meant to stop fires was destroyed by one: the opposite of what we expect." },
+  { a: "Irony", src: "Consumer article", t: "The “healthy” cereal contains [[more sugar than a chocolate bar]].", w: ["Statistics", "Repetition", "Personification"], h: "Does the label match the truth?", y: "A food sold as healthy is sugary: the opposite of its label." },
+  { a: "Irony", src: "Opinion article", t: "The sign said “No littering,” and [[the ground around it was covered in rubbish]].", w: ["Hyperbole", "Emotive language", "Alliteration"], h: "Compare what the sign says with what happens.", y: "The rubbish around a no-littering sign is the opposite of what the sign asks." },
+  { a: "Allusion", src: "Business news", t: "Fighting the new supermarket was [[a David and Goliath battle]].", w: ["Hyperbole", "Contrast", "Simile"], h: "Is this a reference to a famous story?", y: "It refers to the famous story of a small fighter beating a giant." },
+  { a: "Allusion", src: "Magazine profile", t: "He has [[the Midas touch]]: every business he starts makes money.", w: ["Hyperbole", "Personification", "Expert opinion"], h: "Who was Midas?", y: "It refers to King Midas, who turned everything he touched to gold." },
+  { a: "Allusion", src: "Technology blog", t: "Opening that email was like [[opening Pandora’s box]].", w: ["Metaphor", "Hyperbole", "Emotive language"], h: "Pandora’s box is from an old story. What feature refers to famous stories?", y: "It refers to the Greek myth of a box that released troubles into the world." },
+  { a: "Expert opinion", src: "Health article", t: "[[Dr Lee, a heart surgeon, says]] that ten minutes of walking a day can protect your heart.", w: ["Statistics", "Direct address", "Inclusive language"], h: "Who is speaking in the marked part?", y: "A named surgeon is used to make the advice sound trustworthy." },
+  { a: "Expert opinion", src: "Weather article", t: "[[According to scientists at the national weather service]], this summer will be the hottest on record.", w: ["Statistics", "Hyperbole", "Rhetorical question"], h: "Whose authority does the writer use?", y: "Scientists are experts, so the claim sounds reliable." },
+  { a: "Expert opinion", src: "Toothpaste advertisement", t: "[[Dentists recommend]] brushing twice a day.", w: ["Imperative", "Statistics", "Slogan"], h: "Who recommends it?", y: "Dentists are experts, which makes the advice convincing." },
+  { a: "Slogan", src: "Gym advertisement", t: "Every advert for the gym ends with the same words: [[“Stronger every day.”]]", w: ["Statistics", "Rhetorical question", "Simile"], h: "A short phrase that always appears with a brand is called …?", y: "A short, catchy phrase repeated on every ad is a slogan." },
+  { a: "Slogan", src: "Road safety poster", t: "Under the logo, the poster says [[“Think before you drink.”]]", w: ["Rhetorical question", "Statistics", "Personification"], h: "Where does it appear, and how long is it?", y: "A short, catchy campaign phrase under a logo is a slogan." },
+  { a: "Slogan", src: "Dairy advertisement", t: "Every bottle carries the brand’s catchphrase: [[“Fresh from the farm, every day.”]]", w: ["Statistics", "Rhetorical question", "Simile"], h: "What do we call a brand’s catchphrase?", y: "The brand’s repeated catchphrase is its slogan." }
+];
+
+/* ---------- STAGE 3: TWINS (commonly confused features; sentences written for this app) ---------- */
+var TWINS = [
+  { q: "Which one is a SIMILE?", a: "The classroom was like a zoo.", w: ["The classroom was a zoo.", "The classroom was the loudest place on Earth.", "The classroom screamed with noise."], h: "A simile needs “like” or “as.”", y: "“Like a zoo” compares with “like.” Without “like” it would be a metaphor." },
+  { q: "Which one is a METAPHOR?", a: "Life is a rollercoaster.", w: ["Life is like a rollercoaster.", "Life laughed at all my plans.", "Life is the hardest thing in the universe."], h: "A metaphor says something IS something else, with no “like” or “as.”", y: "Life is called a rollercoaster directly." },
+  { q: "Which one uses INCLUSIVE language?", a: "Together, we can end hunger.", w: ["You can end hunger today.", "End hunger today.", "Can hunger ever really end?"], h: "Inclusive language uses “we” or “us.”", y: "“We” includes the writer and the reader. “You” would be direct address." },
+  { q: "Which one is an IMPERATIVE?", a: "Recycle your bottles.", w: ["You recycle your bottles.", "We recycle our bottles.", "Why not recycle your bottles?"], h: "An imperative starts with a command verb.", y: "“Recycle” at the start gives a command." },
+  { q: "Which one uses the RULE OF THREE?", a: "The hotel is quiet, clean and cheap.", w: ["The hotel is quiet. So very quiet.", "The hotel is quieter than a library.", "The hotel is the quietest place alive."], h: "Count the items: you need exactly three.", y: "Three qualities in a row: quiet, clean and cheap." },
+  { q: "Which one uses REPETITION?", a: "Save energy, save money, save the planet.", w: ["Save energy and money for the planet.", "Saving energy is like saving gold.", "Energy is a precious treasure."], h: "Which sentence uses the same word several times?", y: "“Save” is repeated three times." },
+  { q: "Which one uses STATISTICS?", a: "Nine out of ten families waste food.", w: ["Every family in the world wastes food.", "Families waste mountains of food.", "Food waste is a silent thief."], h: "Statistics are specific numbers, not exaggerations.", y: "“Nine out of ten” is a specific figure. “Every family in the world” is hyperbole." },
+  { q: "Which one uses EMOTIVE language?", a: "The abandoned puppy shivered, alone and frightened.", w: ["The puppy was thirty centimeters tall.", "The puppy was as small as a teacup.", "The puppy weighed a thousand tons."], h: "Which sentence is written to make you feel pity?", y: "“Abandoned,” “alone” and “frightened” create pity." },
+  { q: "Which one uses CONTRAST?", a: "The rich get richer while the poor get poorer.", w: ["The rich get richer and richer and richer.", "The rich are hungry wolves.", "The rich live like kings."], h: "Look for two opposites side by side.", y: "Rich and poor, richer and poorer, are opposites placed together." },
+  { q: "Which one uses ALLITERATION?", a: "Crunchy, creamy, chocolate cookies.", w: ["Cookies that taste like heaven.", "The best cookies on the planet.", "Cookies baked fresh each day."], h: "Listen for the same starting sound.", y: "The hard “c” sound repeats at the start of each word." },
+  { q: "Which one is IRONIC?", a: "The lifeguard had to be rescued from the pool.", w: ["The pool was cold, but the air was warm.", "The pool was as clear as glass.", "The pool was a sparkling mirror."], h: "Irony is the opposite of what we expect.", y: "A lifeguard should rescue others, not need rescuing." },
+  { q: "Which one is a RHETORICAL question?", a: "Who wants to live in a dirty world?", w: ["What time does the museum open?", "Visit the museum today.", "The museum opens at nine."], h: "A rhetorical question has an obvious answer and needs no reply.", y: "Nobody wants a dirty world: the answer is obvious. The museum question needs a real answer." }
+];
+
+/* ---------- STAGE 4: FIELD TEST (real texts; options exclude any second correct feature) ---------- */
+var FIELD = [
+  { id: "da", w: ["Inclusive language", "Statistics", "Personification"], h: "Who does “your” and “you” speak to?", y: "Kennedy speaks straight to his listeners with “you” and “your.” (The sentence is also an imperative: “ask.”)" },
+  { id: "il", w: ["Direct address", "Statistics", "Simile"], h: "Who does “us” include?", y: "“Let us” includes Kennedy and his audience in the same promise." },
+  { id: "rq", w: ["Imperative", "Statistics", "Personification"], h: "Does Henry expect an answer?", y: "The answer is obviously “no,” which pushes listeners toward fighting for liberty." },
+  { id: "im", w: ["Rhetorical question", "Statistics", "Simile"], h: "How does the slogan begin?", y: "“Dig” is a command verb telling people to grow their own food." },
+  { id: "rp", w: ["Statistics", "Simile", "Irony"], h: "Which words come back?", y: "“We shall fight” is repeated to sound determined and unbeatable." },
+  { id: "r3", w: ["Simile", "Statistics", "Irony"], h: "Count the phrases after “government.”", y: "Three phrases (of, by, for the people) make the idea of democracy complete and memorable." },
+  { id: "al", w: ["Rhetorical question", "Statistics", "Simile"], h: "Say “Keep Calm and Carry On” aloud.", y: "The repeated hard “c” sound makes the phrase catchy. (It is also an imperative.)" },
+  { id: "ct", w: ["Simile", "Statistics", "Rhetorical question"], h: "Look for opposite pairs.", y: "Best/worst and wisdom/foolishness are opposites placed side by side." },
+  { id: "st", w: ["Simile", "Rhetorical question", "Personification"], h: "Is there a fraction?", y: "“One-third of a nation” is a figure that makes the poverty sound measured and real. (Notice the rule of three too.)" },
+  { id: "ex", w: ["Simile", "Rhetorical question", "Personification"], h: "Whose name is at the start?", y: "The Surgeon General is the nation’s top doctor, so the warning carries official authority." },
+  { id: "sl", w: ["Statistics", "Rhetorical question", "Simile"], h: "A short, catchy campaign phrase is …?", y: "It is a short wartime slogan warning people not to gossip. (Listen for the alliteration too.)" },
+  { id: "em", w: ["Imperative", "Simile", "Rule of three"], h: "Which word carries strong feeling?", y: "“Infamy” means lasting shame and makes listeners feel outrage." },
+  { id: "hy", w: ["Statistics", "Simile", "Rhetorical question"], h: "Can one place really be the happiest on the whole planet?", y: "It is a deliberate exaggeration that makes the park sound magical." },
+  { id: "mt", w: ["Simile", "Statistics", "Rhetorical question"], h: "Is there a real metal curtain? Is there “like” or “as”?", y: "The division of Europe is called an iron curtain, with no “like” or “as.”" },
+  { id: "sm", w: ["Metaphor", "Statistics", "Irony"], h: "Find the word that joins the comparison.", y: "“As a cloud” compares the speaker to a cloud using “as.”" },
+  { id: "pf", w: ["Simile", "Statistics", "Rule of three"], h: "What does Death do here?", y: "Death “kindly stopped,” like a polite person, so Death is personified." },
+  { id: "ir", w: ["Simile", "Statistics", "Rule of three"], h: "Who should be allowed through the people’s entrance?", y: "The people’s own door is the one that is locked: the opposite of what we expect." },
+  { id: "au", w: ["Simile", "Statistics", "Personification"], h: "Whose famous words does the sign echo?", y: "The sign echoes Lincoln’s Gettysburg Address but swaps “the people” for “the Monopolists.”" }
+];
+
+
+  var DBY = {}; DEVICES.forEach(function (d) { DBY[d.id] = d; });
+  /* Build the three practice banks in one shape */
+  var BANKS = {
+    spot: { title: "Spot it", label: "2 · Spot it", qs: SPOT.map(function (x) { return { text: x.t, src: x.src, q: "Which device is in the highlighted words?", a: x.a, w: x.w, h: x.h, y: x.y }; }) },
+    twins: { title: "Twins", label: "3 · Twins", qs: TWINS.map(function (x) { return { text: "", src: "", q: x.q, a: x.a, w: x.w, h: x.h, y: x.y }; }) },
+    field: { title: "Field test", label: "4 · Field test", qs: FIELD.map(function (x) { var d = DBY[x.id]; return { text: d.real, src: d.src, real: true, q: "Which device does this real text use?", a: d.name, w: x.w, h: x.h, y: x.y }; }) }
+  };
+  var ORDER = ["spot", "twins", "field"];
+  var KEY = "onur-fieldguide:ib-p1-devices-v1";
+  var LETTERS = ["A", "B", "C", "D"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var S = null;
+
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) { var r = a.slice(); for (var i = r.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = r[i]; r[i] = r[j]; r[j] = t; } return r; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() { try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); return s && s.banks ? s : null; } catch (e) { return null; } }
+  function freshBank(n) { var q = []; for (var i = 0; i < n; i++) q.push(i); return { round: 1, queue: shuffle(q), pos: 0, next: [], misses: {}, done: {}, opts: null, answered: null, between: false }; }
+  function fresh(name) {
+    var banks = {}; ORDER.forEach(function (k) { banks[k] = freshBank(BANKS[k].qs.length); });
+    return { name: name || "", screen: "hub", card: 0, group: "All", seen: {}, cur: null, banks: banks, streak: 0, best: 0 };
+  }
+  function show(id) { ["s-start", "s-hub", "s-learn", "s-quiz", "s-report"].forEach(function (s) { $(s).hidden = s !== id; }); window.scrollTo(0, 0); }
+  function bankDone(k) { return Object.keys(S.banks[k].done).length === BANKS[k].qs.length; }
+  function learnCount() { return Object.keys(S.seen).length; }
+
+  /* ---------- START ---------- */
+  function renderStart() {
+    var saved = load();
+    if (saved) {
+      $("resume").hidden = false;
+      var n = ORDER.reduce(function (t, k) { return t + Object.keys(saved.banks[k].done).length; }, 0);
+      $("resume-text").textContent = n + " practice questions cleared.";
+      $("btn-resume").onclick = function () { S = saved; route(); };
+      $("btn-wipe").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} $("resume").hidden = true; };
+      if (saved.name) $("student-name").value = saved.name;
+    } else { $("resume").hidden = true; }
+    show("s-start");
+  }
+  $("btn-start").onclick = function () { S = fresh($("student-name").value.trim()); save(); route(); };
+
+  /* ---------- HUB ---------- */
+  function renderHub() {
+    $("hub-name").textContent = S.name ? "Explorer: " + S.name : "Explorer";
+    var tiles = $("tiles"); tiles.textContent = "";
+    var items = [
+      { k: "learn", n: "1", t: "Learn the devices", d: "18 device cards with real examples", done: learnCount(), total: DEVICES.length },
+      { k: "spot", n: "2", t: "Spot it", d: "Name the device in 54 practice sentences" },
+      { k: "twins", n: "3", t: "Twins", d: "Tell apart 12 pairs students often confuse" },
+      { k: "field", n: "4", t: "Field test", d: "Identify devices in 18 real texts" }
+    ];
+    items.forEach(function (it) {
+      var done = it.k === "learn" ? it.done : Object.keys(S.banks[it.k].done).length;
+      var total = it.k === "learn" ? it.total : BANKS[it.k].qs.length;
+      var b = document.createElement("button"); b.type = "button"; b.className = "tile" + (done === total ? " done" : "");
+      var num = document.createElement("span"); num.className = "num"; num.textContent = done === total ? "✓" : it.n;
+      var txt = document.createElement("span");
+      var h = document.createElement("b"); h.textContent = it.t;
+      var d = document.createElement("span"); d.className = "small muted"; d.textContent = it.d + " · " + done + "/" + total;
+      var bar = document.createElement("span"); bar.className = "bar"; var fill = document.createElement("i"); fill.style.width = (done / total * 100) + "%"; bar.appendChild(fill);
+      txt.appendChild(h); txt.appendChild(d); txt.appendChild(bar);
+      b.appendChild(num); b.appendChild(txt);
+      b.onclick = function () { if (it.k === "learn") { S.screen = "learn"; } else { S.screen = "quiz"; S.cur = it.k; } save(); route(); };
+      tiles.appendChild(b);
+    });
+    show("s-hub");
+  }
+  $("btn-to-report").onclick = function () { S.screen = "report"; save(); route(); };
+
+  /* ---------- LEARN ---------- */
+  var GROUPS = ["All"]; DEVICES.forEach(function (d) { if (GROUPS.indexOf(d.group) < 0) GROUPS.push(d.group); });
+  function cardList() { return DEVICES.filter(function (d) { return S.group === "All" || d.group === S.group; }); }
+  function renderLearn() {
+    var gc = $("groupchips"); gc.textContent = "";
+    GROUPS.forEach(function (g) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "gchip" + (S.group === g ? " on" : ""); b.textContent = g;
+      b.setAttribute("aria-pressed", S.group === g ? "true" : "false");
+      b.onclick = function () { S.group = g; S.card = 0; save(); renderLearn(); };
+      gc.appendChild(b);
+    });
+    var list = cardList(); if (S.card >= list.length) S.card = 0;
+    var d = list[S.card]; S.seen[d.id] = true; save();
+    $("sp-name").textContent = d.name;
+    $("sp-count").textContent = (S.card + 1) + " / " + list.length;
+    $("sp-group").textContent = d.group;
+    $("sp-def").textContent = d.def;
+    $("sp-spot").textContent = d.spot;
+    $("sp-does").textContent = d.does;
+    $("sp-real").textContent = d.real;
+    $("sp-src").textContent = d.src;
+    $("sp-frame").textContent = d.frame;
+    var dots = $("dots"); dots.textContent = "";
+    list.forEach(function (x, i) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "dot" + (S.seen[x.id] ? " seen" : "") + (i === S.card ? " now" : "");
+      b.setAttribute("aria-label", "Card " + (i + 1) + ": " + x.name);
+      b.onclick = function () { S.card = i; renderLearn(); };
+      dots.appendChild(b);
+    });
+    $("sp-prev").disabled = S.card === 0;
+    var last = S.card === list.length - 1;
+    $("sp-next").textContent = last ? "Done: back to expeditions" : "Next →";
+    show("s-learn");
+  }
+  $("sp-prev").onclick = function () { if (S.card > 0) { S.card -= 1; renderLearn(); } };
+  $("sp-next").onclick = function () {
+    var list = cardList();
+    if (S.card < list.length - 1) { S.card += 1; renderLearn(); }
+    else { S.screen = "hub"; S.card = 0; save(); route(); }
+  };
+  $("learn-back").onclick = function () { S.screen = "hub"; save(); route(); };
+
+  /* ---------- QUIZ (mastery loop) ---------- */
+  function paintText(el, text) {
+    el.textContent = "";
+    var parts = String(text).split(/(\[\[.*?\]\])/);
+    parts.forEach(function (p) {
+      if (/^\[\[.*\]\]$/.test(p)) { var m = document.createElement("mark"); m.textContent = p.slice(2, -2); el.appendChild(m); }
+      else if (p) el.appendChild(document.createTextNode(p));
+    });
+  }
+  function renderQuiz() {
+    var k = S.cur, B = BANKS[k], D = S.banks[k];
+    $("qcard").hidden = true; $("q-between").hidden = true; $("q-done").hidden = true;
+    show("s-quiz");
+    if (bankDone(k)) {
+      var first = Object.keys(D.done).filter(function (i) { return D.done[i] === "first"; }).length;
+      $("qd-h").textContent = B.title + ": " + first + " of " + B.qs.length + " first try";
+      $("qd-t").textContent = D.round === 1 ? "Perfect: every answer right first time." : "You needed " + D.round + " rounds. Missed devices are listed in your field report.";
+      $("q-done").hidden = false; return;
+    }
+    if (D.between) {
+      var n = D.next.length;
+      $("qb-h").textContent = n === 1 ? "1 question comes back" : n + " questions come back";
+      $("qb-t").textContent = "Round " + (D.round + 1) + " starts with only the ones you missed, in a new order.";
+      $("qb-go").textContent = "Start round " + (D.round + 1);
+      $("q-between").hidden = false; return;
+    }
+    var i = D.queue[D.pos], q = B.qs[i];
+    if (!D.opts) { D.opts = shuffle([q.a].concat(q.w)); save(); }
+    $("qcard").hidden = false;
+    $("q-stage").textContent = B.label + " · Round " + D.round;
+    $("q-count").textContent = "Question " + (D.pos + 1) + " of " + D.queue.length;
+    var board = $("q-board"); board.textContent = "";
+    B.qs.forEach(function (_, j) {
+      var s = document.createElement("i"); s.className = "sq";
+      if (D.done[j]) s.className += " " + D.done[j]; else if (D.misses[j]) s.className += " missed";
+      if (j === i) s.className += " now";
+      board.appendChild(s);
+    });
+    var m = D.misses[i] || 0;
+    $("q-retry").hidden = !m; $("q-retry").textContent = m === 1 ? "You missed this once" : "You missed this " + m + " times";
+    $("q-real").hidden = !q.real;
+    $("q-text").hidden = !q.text; paintText($("q-text"), q.text);
+    $("q-src").hidden = !q.src; $("q-src").textContent = q.real ? "Source: " + q.src : (q.src ? "Text type: " + q.src : "");
+    $("q-q").textContent = q.q;
+    var box = $("q-opts"); box.textContent = "";
+    D.opts.forEach(function (text, j) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var kk = document.createElement("span"); kk.className = "k"; kk.textContent = LETTERS[j];
+      var t = document.createElement("span"); t.className = "t"; t.textContent = text;
+      b.appendChild(kk); b.appendChild(t); b.onclick = function () { pick(j); };
+      box.appendChild(b);
+    });
+    $("q-fb").hidden = true; $("q-next").hidden = true;
+    $("q-streak").textContent = S.streak > 1 ? "Streak: " + S.streak + " in a row" : "";
+    if (D.answered) paint(false);
+  }
+  function pick(j) {
+    var k = S.cur, D = S.banks[k]; if (D.answered) return;
+    var i = D.queue[D.pos], ok = D.opts[j] === BANKS[k].qs[i].a;
+    D.answered = { pick: j, correct: ok };
+    if (ok) { D.done[i] = D.misses[i] ? "later" : "first"; S.streak += 1; if (S.streak > S.best) S.best = S.streak; }
+    else { D.misses[i] = (D.misses[i] || 0) + 1; D.next.push(i); S.streak = 0; }
+    save(); paint(true);
+  }
+  function paint(isFresh) {
+    var k = S.cur, D = S.banks[k], i = D.queue[D.pos], q = BANKS[k].qs[i], a = D.answered;
+    var reveal = !a.correct && (D.misses[i] || 0) >= 3;
+    $("q-opts").querySelectorAll(".opt").forEach(function (b, j) {
+      b.disabled = true;
+      if (j === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && D.opts[j] === q.a) b.classList.add("right");
+      else b.classList.add("dim");
+      if (isFresh && j === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("q-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h"; var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    if (a.correct) { fb.classList.add("good"); h.textContent = D.misses[i] ? "Got it this time." : "Correct!"; p.textContent = q.y; }
+    else if (reveal) { fb.classList.add("reveal"); h.textContent = "The answer is " + q.a; p.textContent = q.y; n.textContent = "It comes back in round " + (D.round + 1) + "."; }
+    else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + q.h; n.textContent = "It comes back in round " + (D.round + 1) + "."; }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n); fb.hidden = false;
+    var last = D.pos + 1 >= D.queue.length;
+    $("q-next").textContent = last ? (D.next.length ? "Finish round " + D.round : "Finish " + BANKS[k].title) : "Next question";
+    $("q-next").hidden = false;
+    $("q-streak").textContent = S.streak > 1 ? "Streak: " + S.streak + " in a row" : "";
+    if (isFresh) { $("q-next").focus({ preventScroll: true }); $("q-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  $("q-next").onclick = function () {
+    var D = S.banks[S.cur]; if (!D.answered) return;
+    D.pos += 1; D.opts = null; D.answered = null;
+    if (D.pos >= D.queue.length && D.next.length) D.between = true;
+    save(); renderQuiz(); $("q-q").focus({ preventScroll: true }); window.scrollTo(0, 0);
+  };
+  $("qb-go").onclick = function () {
+    var D = S.banks[S.cur]; D.between = false; D.round += 1; D.queue = shuffle(D.next); D.next = []; D.pos = 0; D.opts = null; D.answered = null;
+    save(); renderQuiz();
+  };
+  $("qd-go").onclick = function () { S.screen = "hub"; save(); route(); };
+  $("quiz-back").onclick = function () { S.screen = "hub"; save(); route(); };
+  document.addEventListener("keydown", function (e) {
+    if ($("s-quiz").hidden || !S || !S.cur) return;
+    var D = S.banks[S.cur]; if (!D || D.answered || !D.opts || e.target.tagName === "INPUT") return;
+    var idx = ["1", "2", "3", "4"].indexOf(e.key); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(String(e.key).toLowerCase());
+    if (idx >= 0 && idx < D.opts.length) { e.preventDefault(); pick(idx); }
+  });
+
+  /* ---------- REPORT ---------- */
+  function renderReport() {
+    var first = 0, total = 0, rounds = 0;
+    ORDER.forEach(function (k) { var D = S.banks[k]; total += BANKS[k].qs.length; rounds += D.round; first += Object.keys(D.done).filter(function (i) { return D.done[i] === "first"; }).length; });
+    var big = $("r-big"); big.textContent = ""; big.appendChild(document.createTextNode(first));
+    var sm = document.createElement("small"); sm.textContent = " / " + total; big.appendChild(sm);
+    var cleared = ORDER.reduce(function (t, k) { return t + Object.keys(S.banks[k].done).length; }, 0);
+    var stats = [[learnCount() + "/" + DEVICES.length, "cards read"], [cleared + "/" + total, "questions cleared"], [S.best, "best streak"]];
+    var box = $("r-stats"); box.textContent = "";
+    stats.forEach(function (s) { var d = document.createElement("div"); d.className = "stat"; var b = document.createElement("b"); b.textContent = s[0]; var t = document.createElement("span"); t.textContent = s[1]; d.appendChild(b); d.appendChild(t); box.appendChild(d); });
+    /* devices missed, counted across banks */
+    var miss = {};
+    ORDER.forEach(function (k) { var D = S.banks[k]; Object.keys(D.misses).forEach(function (i) { var a = BANKS[k].qs[i].a; var dev = DEVICES.filter(function (d) { return d.name === a; })[0]; var name = dev ? dev.name : a; miss[name] = (miss[name] || 0) + D.misses[i]; }); });
+    var ul = $("r-revise"); ul.textContent = "";
+    Object.keys(miss).sort(function (x, y) { return miss[y] - miss[x]; }).forEach(function (name) {
+      var dev = DEVICES.filter(function (d) { return d.name === name; })[0];
+      var li = document.createElement("li"); var q = document.createElement("b"); q.textContent = name + " (missed " + miss[name] + (miss[name] === 1 ? " time)" : " times)");
+      var a = document.createElement("span"); a.className = "a"; a.textContent = dev ? dev.spot : "";
+      li.appendChild(q); if (dev) li.appendChild(a); ul.appendChild(li);
+    });
+    $("r-revise-block").hidden = ul.children.length === 0;
+    var who = $("r-who"); who.textContent = "";
+    var n = document.createElement("span"); n.appendChild(document.createTextNode("Explorer: ")); var nb = document.createElement("b"); nb.textContent = S.name || "—"; n.appendChild(nb);
+    var dt = document.createElement("span"); dt.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(dt);
+    var cr = $("r-credits"); cr.textContent = "";
+    DEVICES.forEach(function (d) { var li = document.createElement("li"); li.textContent = d.name + ": " + d.src; cr.appendChild(li); });
+    show("s-report");
+  }
+  $("r-back").onclick = function () { S.screen = "hub"; save(); route(); };
+  $("r-again").onclick = function () { var name = S.name; try { localStorage.removeItem(KEY); } catch (e) {} S = null; renderStart(); $("student-name").value = name; };
+
+  function route() {
+    if (!S) return renderStart();
+    if (S.screen === "learn") renderLearn();
+    else if (S.screen === "quiz" && S.cur) renderQuiz();
+    else if (S.screen === "report") renderReport();
+    else renderHub();
+  }
+  renderStart();
+})();
+</script>
+</body>
+</html>
