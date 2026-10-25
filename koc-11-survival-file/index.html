@@ -1,0 +1,2835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Survival File</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;700&display=swap">
+<style>
+/* Look: a state-issued ration book in a gray dystopian city. Concrete background, ration-card paper,
+   propaganda red and ration-stamp mustard. Answers get APPROVED / DENIED stamps. */
+:root {
+  --paper: #D9D5CC;        /* concrete */
+  --grid: #CBC6BB;
+  --card: #F4EFE3;         /* ration-card paper */
+  --ink: #1D1F21;
+  --muted: #5E5A52;
+  --line: #D8D0BE;
+  --soft: #EAE3D3;
+  --cobalt: #B3261E;       /* propaganda red */
+  --marker: #D9A21B;       /* ration stamp mustard */
+  --marker-soft: #F5E5B8;
+  --marker-ink: #6A4A00;
+  --right: #2E6B4A; --right-soft: #DCEEE2;
+  --wrong: #B3261E; --wrong-soft: #F7DDD9;
+  --boss: #1D1F21; --boss-ink: #F4EFE3;
+  --shadow: 0 1px 0 rgba(29,31,33,.08), 0 8px 22px rgba(29,31,33,.14);
+  --f-display: "Big Shoulders Display", Impact, "Arial Narrow", sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", "Courier New", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #141516; --grid: #1C1D1F; --card: #222324; --ink: #EDE7DA; --muted: #A9A296; --line: #34332F; --soft: #2A2A28;
+    --cobalt: #FF6B5E; --marker: #E9B73C; --marker-soft: #3A2F12; --marker-ink: #F3D37E;
+    --right: #6BCB95; --right-soft: #16301F; --wrong: #FF8A7C; --wrong-soft: #3E1D1A;
+    --boss: #EDE7DA; --boss-ink: #141516;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.45);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #141516; --grid: #1C1D1F; --card: #222324; --ink: #EDE7DA; --muted: #A9A296; --line: #34332F; --soft: #2A2A28;
+  --cobalt: #FF6B5E; --marker: #E9B73C; --marker-soft: #3A2F12; --marker-ink: #F3D37E;
+  --right: #6BCB95; --right-soft: #16301F; --wrong: #FF8A7C; --wrong-soft: #3E1D1A;
+  --boss: #EDE7DA; --boss-ink: #141516;
+  --shadow: 0 1px 0 rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.45);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; min-height: 100vh;
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(0deg, transparent 0 3px, var(--grid) 3px 4px);
+  background-attachment: local;
+}
+.wrap { max-width: 740px; margin: 0 auto; padding-block: 14px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; line-height: 1.05; text-wrap: balance; font-weight: 800; letter-spacing: .01em; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #fff; border-radius: 6px; padding: 4px 6px; flex: none; box-shadow: var(--shadow); display: grid; place-items: center; }
+.logo img { width: 68px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-display); font-weight: 900; font-size: 1.35rem; line-height: 1.05; text-transform: uppercase; letter-spacing: .02em; }
+.top-sub { color: var(--muted); font-size: .85rem; font-family: var(--f-mono); }
+
+.card { background: var(--card); border-radius: 6px; box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 14px; border: 1px solid var(--line); border-top: 6px solid var(--ink); }
+
+.btn {
+  appearance: none; border: 2px solid var(--ink); border-radius: 4px; padding: 12px 20px; font-family: var(--f-display); font-weight: 800; font-size: 1.25rem;
+  letter-spacing: .03em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px;
+  background: var(--ink); color: var(--card); box-shadow: 4px 4px 0 var(--cobalt); transition: transform .08s, box-shadow .08s;
+}
+.btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--cobalt); }
+.btn-ghost { background: var(--card); color: var(--ink); box-shadow: 4px 4px 0 var(--line); }
+.btn-ghost:active { box-shadow: 2px 2px 0 var(--line); }
+.btn-marker { background: var(--marker); color: #241A00; border-color: #241A00; box-shadow: 4px 4px 0 var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+.hero { padding-block: 26px; gap: 16px; position: relative; overflow: hidden; }
+.eyebrow { font-family: var(--f-mono); font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cobalt); }
+.hero h1 { font-size: clamp(2.8rem, 13vw, 4.6rem); font-weight: 900; text-transform: uppercase; line-height: .92; }
+.hero h1 .strike { position: relative; display: inline-block; color: var(--muted); font-size: .55em; }
+.hero h1 .strike::after { content: ""; position: absolute; left: -4%; right: -4%; top: 50%; height: .14em; background: var(--wrong); transform: rotate(-4deg); }
+.hero h1 .fact { display: block; color: var(--ink); }
+.hero h1 .fact b { color: var(--cobalt); font-weight: 900; }
+.hero .sub { color: var(--muted); font-size: 1.05rem; max-width: 34em; }
+.claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.claim { border: 2px dashed var(--line); border-radius: 4px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; background: var(--soft); }
+.claim span { font-family: var(--f-mono); font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cobalt); }
+.claim b { font-weight: 700; font-size: .95rem; line-height: 1.3; }
+.field { display: flex; flex-direction: column; gap: 6px; max-width: 380px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input { font: inherit; font-size: 1.1rem; padding: 12px 14px; border-radius: 4px; border: 2px solid var(--line); background: var(--soft); color: var(--ink); }
+.field input:focus { border-color: var(--cobalt); outline: none; }
+.hero .btn { max-width: 380px; }
+
+.player { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; }
+.avatar { width: 50px; height: 50px; border-radius: 4px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 900; font-size: 1.6rem; color: var(--card); background: var(--ink); box-shadow: 3px 3px 0 var(--marker); }
+.player-name { font-family: var(--f-display); font-weight: 800; font-size: 1.35rem; line-height: 1.05; overflow-wrap: anywhere; text-transform: uppercase; }
+.rank { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--marker-ink); background: var(--marker-soft); padding: 2px 8px; border-radius: 3px; margin-top: 6px; }
+.totals { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-family: var(--f-mono); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.totals .stars-total { font-size: 1rem; }
+.totals .xp { font-size: .8rem; color: var(--muted); }
+.rank-bar { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 4px; }
+.rank-bar .track { height: 8px; background: var(--soft); border-radius: 2px; overflow: hidden; border: 1px solid var(--line); }
+.rank-bar .fill { height: 100%; background: var(--cobalt); transition: width .6s; }
+.rank-bar small { color: var(--muted); font-size: .8rem; }
+
+.map-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 10px; padding-inline: 2px; }
+.map-title h2 { font-size: 1.7rem; text-transform: uppercase; }
+.map-title small { color: var(--muted); font-family: var(--f-mono); font-size: .76rem; }
+.levels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 420px) { .levels { grid-template-columns: 1fr; } }
+.lvl {
+  appearance: none; text-align: left; cursor: pointer; background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--c); border-radius: 4px; padding: 14px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; position: relative; min-width: 0; transition: transform .1s;
+}
+.lvl:active { transform: translateY(2px); }
+@media (hover: hover) { .lvl:hover { transform: translateY(-2px); } }
+.lvl-head { display: flex; align-items: center; gap: 10px; }
+.lvl-icon { width: 44px; height: 44px; flex: none; border-radius: 4px; display: grid; place-items: center; font-size: 1.45rem; background: color-mix(in srgb, var(--c) 16%, transparent); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); }
+.lvl-num { font-family: var(--f-mono); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+.lvl-name { font-family: var(--f-display); font-weight: 800; font-size: 1.3rem; line-height: 1.02; text-transform: uppercase; }
+.lvl-topic { font-size: .85rem; color: var(--muted); line-height: 1.35; }
+.lvl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); }
+.dots { display: inline-flex; gap: 5px; align-items: center; }
+.dots i { width: 12px; height: 12px; border-radius: 2px; border: 2px solid var(--c, var(--cobalt)); display: inline-block; transform: rotate(45deg); }
+.dots i.on { background: var(--c, var(--cobalt)); }
+.lvl-status { font-family: var(--f-mono); font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 3px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+.lvl-status.go { background: color-mix(in srgb, var(--c) 16%, transparent); color: var(--ink); }
+.lvl.boss { grid-column: 1 / -1; background: var(--boss); color: var(--boss-ink); border-color: var(--boss); border-left-color: var(--marker); }
+.lvl.boss .lvl-icon { background: color-mix(in srgb, var(--marker) 25%, transparent); border-color: var(--marker); }
+.lvl.boss .lvl-num { color: var(--marker); }
+.lvl.boss .lvl-topic { color: color-mix(in srgb, var(--boss-ink) 75%, transparent); }
+.lvl.boss .lvl-foot { border-top-color: color-mix(in srgb, var(--boss-ink) 25%, transparent); }
+.lvl.boss .lvl-status { background: color-mix(in srgb, var(--boss-ink) 14%, transparent); color: var(--boss-ink); }
+.lvl.boss .dots i { border-color: var(--marker); }
+.lvl.boss .dots i.on { background: var(--marker); }
+.lvl.desk { background: repeating-linear-gradient(transparent 0 27px, color-mix(in srgb, var(--c) 14%, transparent) 27px 28px), var(--card); }
+.group-h { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 12px 2px 2px; border-bottom: 3px solid var(--ink); }
+.group-h h3 { font-size: 1.35rem; text-transform: uppercase; }
+.group-h small { color: var(--muted); font-family: var(--f-mono); font-size: .72rem; font-weight: 700; }
+.how p { display: flex; gap: 10px; }
+.how p b.k { font-family: var(--f-mono); flex: none; width: 1.6em; color: var(--cobalt); }
+.tiny-links { display: flex; justify-content: center; gap: 16px; font-size: .85rem; color: var(--muted); }
+.link { appearance: none; background: none; border: 0; padding: 4px; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.confirm { border-top-color: var(--wrong); }
+.confirm .btn-row .btn { flex: 1 1 140px; }
+
+.play-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.back { appearance: none; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); border-radius: 4px; padding: 8px 14px; font-weight: 700; cursor: pointer; min-height: 44px; }
+.chips { display: flex; gap: 8px; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 4px; padding: 6px 10px; font-family: var(--f-mono); font-weight: 700; font-size: .88rem; font-variant-numeric: tabular-nums; }
+.chip.cold { opacity: .55; }
+.chip.hot { animation: bump .45s; }
+@keyframes bump { 40% { transform: scale(1.18); } }
+.lvl-banner { display: flex; align-items: center; gap: 12px; }
+.lvl-banner .lvl-icon { width: 48px; height: 48px; }
+.lvl-banner .r { font-family: var(--f-mono); font-size: .74rem; color: var(--muted); font-weight: 700; letter-spacing: .03em; }
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(16px, 1fr)); gap: 4px; }
+.cell { aspect-ratio: 1; border-radius: 2px; background: var(--soft); border: 1px solid var(--line); }
+.cell.first { background: var(--marker); border-color: color-mix(in srgb, var(--marker) 60%, #000); }
+.cell.later { background: var(--c, var(--cobalt)); border-color: var(--c, var(--cobalt)); }
+.cell.missed { background: var(--wrong-soft); border: 2px solid var(--wrong); }
+.cell.now { outline: 2px solid var(--ink); outline-offset: 1px; }
+.cell.pop { animation: pop .45s ease-out; }
+@keyframes pop { 0% { transform: scale(.3); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.board-meta { display: flex; justify-content: space-between; gap: 8px; font-family: var(--f-mono); font-size: .74rem; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+
+.retry-tag { align-self: flex-start; font-family: var(--f-mono); font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 3px; background: var(--wrong-soft); color: var(--wrong); }
+.q-note { font-size: .9rem; color: var(--muted); font-weight: 700; margin-bottom: -4px; border-left: 4px solid var(--c, var(--cobalt)); padding-left: 10px; }
+.q-fig { border: 1px solid var(--line); border-radius: 4px; background: var(--soft); padding: 12px; overflow-x: auto; }
+.q-text { font-family: var(--f-body); font-weight: 700; font-size: clamp(1.15rem, 4.4vw, 1.4rem); line-height: 1.38; white-space: pre-line; }
+.q-text .hl { color: var(--cobalt); text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: .16em; text-underline-offset: .18em; font-weight: 800; }
+.q-text .gap { display: inline-block; min-width: 3.2em; border-bottom: 3px solid var(--c, var(--cobalt)); height: 1em; vertical-align: baseline; }
+
+.opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.opt {
+  appearance: none; text-align: left; border: 2px solid var(--line); background: var(--card); border-radius: 4px; padding: 11px 12px;
+  display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 58px; min-width: 0;
+  transition: transform .08s, border-color .15s, background .15s; font-weight: 700; font-size: 1.02rem;
+}
+.opt:active:not(:disabled) { transform: translateY(2px); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--c, var(--cobalt)); } }
+.opt .key { width: 32px; height: 32px; border-radius: 3px; display: grid; place-items: center; font-family: var(--f-mono); font-weight: 700; background: var(--soft); border: 1px solid var(--line); }
+.opt .txt { min-width: 0; overflow-wrap: anywhere; }
+.opt:disabled { cursor: default; }
+.opt.is-right { border-color: var(--right); background: var(--right-soft); }
+.opt.is-right .key { background: var(--right); color: var(--card); border-color: var(--right); }
+.opt.is-wrong { border-color: var(--wrong); background: var(--wrong-soft); }
+.opt.is-wrong .key { background: var(--wrong); color: var(--card); border-color: var(--wrong); }
+.opt.is-dim { opacity: .45; }
+.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+.feedback { border-radius: 4px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; border: 2px solid transparent; }
+.feedback.good { background: var(--right-soft); border-color: color-mix(in srgb, var(--right) 40%, transparent); }
+.feedback.bad { background: var(--wrong-soft); border-color: color-mix(in srgb, var(--wrong) 40%, transparent); }
+.feedback.reveal { background: var(--marker-soft); border-color: color-mix(in srgb, var(--marker) 70%, transparent); }
+.stamp { align-self: flex-start; font-family: var(--f-display); font-weight: 900; font-size: 1.15rem; letter-spacing: .14em; text-transform: uppercase; padding: 2px 12px; border: 3px solid currentColor; border-radius: 3px; transform: rotate(-3deg); }
+.feedback.good .stamp { color: var(--right); }
+.feedback.bad .stamp { color: var(--wrong); }
+.feedback.reveal .stamp { color: var(--marker-ink); }
+.stamp.thud { animation: thud .35s ease-out; }
+@keyframes thud { 0% { transform: rotate(-3deg) scale(1.8); opacity: 0; } 100% { transform: rotate(-3deg) scale(1); opacity: 1; } }
+.fb-head { font-family: var(--f-display); font-weight: 800; font-size: 1.35rem; text-transform: uppercase; }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.fb-xp { font-family: var(--f-mono); font-weight: 700; font-size: .85rem; color: var(--marker-ink); }
+.fb-answer { font-weight: 700; }
+
+.center { text-align: center; align-items: center; }
+.big-num { font-family: var(--f-display); font-weight: 900; font-size: clamp(3.4rem, 16vw, 5rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big-num small { font-size: .32em; color: var(--muted); font-weight: 700; font-family: var(--f-mono); }
+.mega-dots { display: flex; gap: 18px; justify-content: center; }
+.mega-dots i { width: 30px; height: 30px; border-radius: 3px; border: 4px solid var(--c, var(--cobalt)); display: inline-block; transform: rotate(45deg); }
+.mega-dots i.on { background: var(--c, var(--cobalt)); animation: dotpop .5s backwards; }
+@keyframes dotpop { 0% { transform: rotate(45deg) scale(0); } 70% { transform: rotate(45deg) scale(1.3); } 100% { transform: rotate(45deg) scale(1); } }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.stat { background: var(--soft); border: 1px solid var(--line); border-radius: 4px; padding: 10px; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.stat b { font-family: var(--f-mono); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .78rem; color: var(--muted); text-align: center; }
+.tricky { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; text-align: left; width: 100%; }
+.tricky li { border-left: 4px solid var(--wrong); background: var(--soft); border-radius: 0 4px 4px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.tricky .tq { font-weight: 700; white-space: pre-line; }
+.tricky .ta { color: var(--right); font-weight: 700; }
+.tricky .tm { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .92rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 12px; width: 100%; }
+.who b { color: var(--ink); }
+.rank-up { background: var(--marker-soft); color: var(--marker-ink); font-weight: 700; padding: 8px 14px; border-radius: 4px; }
+
+.q-lead { display: block; font-family: var(--f-body); font-size: 1rem; font-weight: 400; color: var(--ink); background: var(--soft); border: 1px dashed var(--line); border-radius: 4px; padding: 10px 12px; margin-bottom: 12px; line-height: 1.45; white-space: normal; }
+.q-text.typed { line-height: 2.15; }
+.tglue { white-space: nowrap; }
+.tgap { display: inline-flex; align-items: baseline; white-space: nowrap; vertical-align: baseline; background: var(--marker-soft); border-bottom: 3px solid var(--c, var(--cobalt)); border-radius: 3px 3px 0 0; padding-left: 6px; }
+.tgap .first { font-family: var(--f-body); font-weight: 700; color: var(--marker-ink); }
+.tgap input { font: inherit; font-family: var(--f-body); font-weight: 700; color: var(--ink); width: 7em; max-width: 68vw; padding: 0 6px 0 0; line-height: 1.45; border: 0; border-radius: 0; background: transparent; }
+.tgap:not(:has(.first)) input { padding-left: 0; }
+.tgap.wide input { width: 10em; }
+.tgap.xwide input { width: 15em; }
+.tgap input:focus { outline: none; }
+.tgap:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--cobalt)) 40%, transparent); }
+.tgap input:disabled { opacity: 1; -webkit-text-fill-color: currentColor; }
+.tgap.ok { background: var(--right-soft); border-bottom-color: var(--right); }
+.tgap.ok input, .tgap.ok .first { color: var(--right); }
+.tgap.no { background: var(--wrong-soft); border-bottom-color: var(--wrong); }
+.tgap.no input, .tgap.no .first { color: var(--wrong); }
+.check-row { display: flex; }
+.check-row .btn { flex: 1; }
+
+.passage { font-family: var(--f-body); font-size: .98rem; line-height: 1.6; }
+.passage p { margin: 0 0 .5em; font-style: italic; }
+.passage .ptitle { font-family: var(--f-mono); font-weight: 700; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; color: var(--cobalt); }
+.passage .cap { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); }
+.q-fig:has(.passage) { background: var(--card); border-left: 4px solid var(--cobalt); }
+
+/* Writing desk */
+.desk-q { font-family: var(--f-body); font-weight: 700; font-size: 1.12rem; line-height: 1.4; border-left: 5px solid var(--c, var(--cobalt)); padding: 4px 0 4px 12px; }
+.rules { display: flex; flex-wrap: wrap; gap: 6px; }
+.rules span { font-family: var(--f-mono); font-size: .72rem; font-weight: 700; padding: 3px 8px; border-radius: 3px; background: var(--soft); border: 1px solid var(--line); }
+.seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.seg button { appearance: none; border: 2px solid var(--line); background: var(--card); border-radius: 4px; padding: 10px 8px; cursor: pointer; font-weight: 700; font-size: .92rem; line-height: 1.2; min-height: 54px; }
+.seg button small { display: block; font-family: var(--f-mono); font-size: .66rem; color: var(--muted); font-weight: 500; margin-top: 2px; }
+.seg button[aria-pressed="true"] { border-color: var(--c, var(--cobalt)); background: color-mix(in srgb, var(--c, var(--cobalt)) 14%, var(--card)); }
+.bank { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 560px) { .bank { grid-template-columns: 1fr 1fr; } }
+.bank div { background: var(--soft); border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; }
+.bank h4 { margin: 0 0 6px; font-family: var(--f-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--cobalt); }
+.bank ul { margin: 0; padding-left: 18px; font-size: .9rem; line-height: 1.4; display: flex; flex-direction: column; gap: 4px; }
+.toggle { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-weight: 700; font-size: .95rem; }
+.toggle button { appearance: none; border: 2px solid var(--ink); border-radius: 4px; background: var(--card); padding: 6px 12px; font-family: var(--f-mono); font-weight: 700; font-size: .78rem; cursor: pointer; }
+.frames { font-size: .9rem; color: var(--muted); display: flex; flex-direction: column; gap: 3px; }
+.frames b { color: var(--ink); font-family: var(--f-mono); font-size: .74rem; letter-spacing: .04em; }
+.para-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.para-h h3 { font-size: 1.3rem; text-transform: uppercase; }
+.para-h span { font-family: var(--f-mono); font-size: .78rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+textarea { font: inherit; font-size: 1rem; line-height: 1.55; width: 100%; min-height: 220px; padding: 12px 14px; border-radius: 4px; border: 2px solid var(--line); background: var(--card); color: var(--ink); resize: vertical;
+  background-image: repeating-linear-gradient(transparent 0 24.8px, var(--line) 24.8px 25.8px); background-attachment: local; background-position-y: 11px; }
+textarea:focus { border-color: var(--c, var(--cobalt)); outline: none; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.checks li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: start; font-size: .93rem; }
+.checks li i { font-style: normal; width: 22px; height: 22px; border-radius: 3px; display: grid; place-items: center; font-weight: 700; font-size: .8rem; border: 2px solid var(--line); color: var(--muted); }
+.checks li.ok i { background: var(--right); border-color: var(--right); color: var(--card); }
+.checks li.ok { color: var(--ink); }
+.checks li:not(.ok) { color: var(--muted); }
+.total-bar { display: flex; flex-direction: column; gap: 4px; }
+.total-bar .track { height: 10px; background: var(--soft); border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
+.total-bar .fill { height: 100%; background: var(--marker); transition: width .3s; }
+.total-bar .fill.full { background: var(--right); }
+.total-bar small { font-family: var(--f-mono); font-size: .76rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+.done-banner { background: var(--right-soft); border: 2px solid var(--right); border-radius: 4px; padding: 12px 14px; font-weight: 700; }
+.copied { font-family: var(--f-mono); font-size: .8rem; color: var(--right); font-weight: 700; }
+
+.confetti { position: fixed; pointer-events: none; z-index: 50; width: 8px; height: 8px; border-radius: 1px; animation: fly .9s cubic-bezier(.2, .7, .4, 1) forwards; }
+@keyframes fly { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(200deg); opacity: 0; } }
+
+@media print {
+  body { background: #fff; }
+  .top, .play-top, .seg, .toggle, .bank, .frames, .rules, .btn-row, .checks, .total-bar, .copied, .done-banner { display: none !important; }
+  .card { box-shadow: none; border: 0; }
+  textarea { border: 1px solid #999; min-height: 0; height: auto; background: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cell.pop, .shake, .chip.hot, .mega-dots i.on, .tgap.shake, .stamp.thud { animation: none; }
+  .confetti { display: none; }
+  .btn, .opt, .lvl { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title" id="top-title"></span>
+      <span class="top-sub" id="top-sub"></span>
+    </div>
+  </header>
+
+  <section id="screen-welcome" class="card hero" hidden aria-labelledby="welcome-h">
+    <span class="eyebrow">Grade 11 · Common Exam 1 · Reading &amp; Writing</span>
+    <h1 id="welcome-h"><span class="strike">Utopia</span><span class="fact">Survival <b>File</b></span></h1>
+    <p class="sub">Get ready for the dystopia writing task: <b>1984</b> plus <b>one film clip</b>. Learn the evidence by heart, practice the three most likely questions, then write your two body paragraphs at the writing desk. Every missed question comes back until you get it right.</p>
+    <div class="claims" aria-hidden="true">
+      <div class="claim"><span>Book</span><b>1984 · Part One</b></div>
+      <div class="claim"><span>Clips</span><b>Children of Men · Equilibrium · Ready Player One</b></div>
+      <div class="claim"><span>Task</span><b>2 body paragraphs · 150+ words · no notes</b></div>
+    </div>
+    <div class="field">
+      <label for="student-name">Your name</label>
+      <input id="student-name" type="text" autocomplete="given-name" maxlength="30" placeholder="Type your name">
+    </div>
+    <button class="btn" id="btn-welcome" type="button">Open my file</button>
+  </section>
+
+  <section id="screen-map" hidden>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card player" id="player"></div>
+      <div class="map-title"><h2>Case files</h2><small id="map-count"></small></div>
+      <div class="levels" id="levels"></div>
+      <div class="card how" style="gap:8px">
+        <h3 style="font-size:1.35rem;text-transform:uppercase">How it works</h3>
+        <p><b class="k">01</b><span>Answer every question in a file. Missed questions come back in the next round until you get them right.</span></p>
+        <p><b class="k">02</b><span>Your first-try score fills the diamonds: 90% or more = 3, 70% or more = 2, finished = 1. Get 3 everywhere before November 3.</span></p>
+        <p><b class="k">03</b><span>At each writing desk, write both body paragraphs. The checklist turns green as your answer meets the exam requirements. Your writing is saved on this device.</span></p>
+        <p><b class="k">04</b><span>In the exam you get no notes, so practice with the memory bank hidden too.</span></p>
+      </div>
+      <div class="card confirm" id="confirm-reset" hidden>
+        <p><b>Reset all your diamonds, XP, progress and writing?</b> This can't be undone.</p>
+        <div class="btn-row">
+          <button class="btn" id="btn-reset-yes" type="button">Yes, reset</button>
+          <button class="btn btn-ghost" id="btn-reset-no" type="button">Keep my progress</button>
+        </div>
+      </div>
+      <div class="tiny-links">
+        <button class="link" id="btn-rename" type="button">Change name</button>
+        <button class="link" id="btn-reset" type="button">Reset all progress</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-play" hidden>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="play-top">
+        <button class="back" id="btn-back" type="button">← Case files</button>
+        <div class="chips">
+          <span class="chip" id="streak-chip" title="Correct answers in a row">🔥 <span id="streak-n">0</span></span>
+          <span class="chip" title="XP">XP <span id="xp-n">0</span></span>
+        </div>
+      </div>
+      <div class="card" id="play-card">
+        <div class="lvl-banner">
+          <div class="lvl-icon" id="play-icon" aria-hidden="true"></div>
+          <div style="min-width:0">
+            <div class="lvl-name" id="play-name"></div>
+            <div class="r" id="play-round"></div>
+          </div>
+        </div>
+        <div class="board" id="board" aria-hidden="true"></div>
+        <div class="board-meta"><span id="progress-line"></span><span id="q-count"></span></div>
+        <span class="retry-tag" id="retry-tag" hidden></span>
+        <p class="q-note" id="q-note"></p>
+        <div class="q-fig" id="q-fig" hidden></div>
+        <h2 class="q-text" id="q-text" tabindex="-1"></h2>
+        <div class="check-row" id="check-row" hidden><button class="btn" id="btn-tcheck" type="button">Check my answer</button></div>
+        <div class="opts" id="opts" role="group" aria-labelledby="q-text"></div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+        <button class="btn" id="btn-next" type="button" hidden>Next</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-between" class="card center" hidden aria-labelledby="between-h">
+    <span class="eyebrow" id="between-eyebrow"></span>
+    <h2 id="between-h" style="font-size:1.6rem;text-transform:uppercase"></h2>
+    <div class="big-num" id="between-big"></div>
+    <p id="between-text"></p>
+    <div class="board" id="board-between" aria-hidden="true" style="width:100%"></div>
+    <div class="legend">
+      <span><i style="background:var(--marker)"></i>Right first time</span>
+      <span><i id="legend-later" style="background:var(--cobalt)"></i>Cleared later</span>
+      <span><i style="background:var(--wrong-soft);box-shadow:inset 0 0 0 2px var(--wrong)"></i>Still to clear</span>
+    </div>
+    <button class="btn" id="btn-next-round" type="button" style="width:100%"></button>
+  </section>
+
+  <section id="screen-done" class="card center" hidden aria-labelledby="done-h">
+    <span class="eyebrow" id="done-eyebrow"></span>
+    <h2 id="done-h" style="font-size:2rem;text-transform:uppercase"></h2>
+    <div class="mega-dots" id="done-dots" aria-hidden="true"></div>
+    <div>
+      <div style="color:var(--muted)">First-try score</div>
+      <div class="big-num" id="done-big"></div>
+    </div>
+    <p class="rank-up" id="rank-up" hidden></p>
+    <div class="stats" id="done-stats"></div>
+    <div id="tricky-block" style="width:100%;display:flex;flex-direction:column;gap:10px">
+      <h3 style="font-size:1.3rem;text-align:left;text-transform:uppercase">Questions to revise</h3>
+      <ul class="tricky" id="tricky"></ul>
+    </div>
+    <div class="who" id="who"></div>
+    <div class="btn-row" style="width:100%">
+      <button class="btn btn-marker" id="btn-practice" type="button">Practice the tricky ones</button>
+      <button class="btn" id="btn-map" type="button">Back to the files</button>
+      <button class="btn btn-ghost" id="btn-replay" type="button">Play this file again</button>
+    </div>
+  </section>
+
+  <section id="screen-write" hidden>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="play-top">
+        <button class="back" id="btn-wback" type="button">← Case files</button>
+        <span class="chip" id="w-status">Draft</span>
+      </div>
+      <div class="card" id="w-card">
+        <div class="lvl-banner">
+          <div class="lvl-icon" id="w-icon" aria-hidden="true"></div>
+          <div style="min-width:0"><div class="lvl-name" id="w-name"></div><div class="r">WRITING DESK · EXAM PRACTICE</div></div>
+        </div>
+        <p class="desk-q" id="w-question"></p>
+        <div class="rules"><span>2 body paragraphs</span><span>150+ words in total</span><span>1984 + one clip</span><span>No notes in the exam</span><span>About 30 minutes</span></div>
+        <div>
+          <p style="font-weight:700;margin-bottom:8px">Which clip will you use in Body Paragraph 2?</p>
+          <div class="seg" id="w-clips" role="group" aria-label="Choose a clip"></div>
+        </div>
+        <div class="toggle"><span>Memory bank</span><button type="button" id="w-bank-toggle"></button></div>
+        <div class="bank" id="w-bank"></div>
+        <div class="frames" id="w-frames">
+          <span><b>T · TOPIC SENTENCE</b> In 1984, … because …</span>
+          <span><b>E · EVIDENCE</b> For example, when Winston … / The novel describes how …</span>
+          <span><b>A · ANALYSIS</b> This shows / suggests / reveals that …</span>
+          <span><b>E + A</b> Moreover, … This highlights …</span>
+          <span><b>L · LINK</b> Therefore, … (answer the question again)</span>
+          <span><b>PARAGRAPH 2</b> Similarly, in the opening of [clip], … · Like Winston, … · Both texts show that …</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="para-h"><h3>Body Paragraph 1 · 1984</h3><span id="w-c1">0 words</span></div>
+        <textarea id="w-p1" aria-label="Body paragraph 1 about 1984" placeholder="Start with your topic sentence about 1984…"></textarea>
+        <div class="para-h"><h3 id="w-p2h">Body Paragraph 2 · Clip</h3><span id="w-c2">0 words</span></div>
+        <textarea id="w-p2" aria-label="Body paragraph 2 about the film clip" placeholder="Similarly, in the opening of …"></textarea>
+        <div class="total-bar"><div class="track"><div class="fill" id="w-fill"></div></div><small id="w-total"></small></div>
+        <h3 style="font-size:1.25rem;text-transform:uppercase">Exam checklist</h3>
+        <ul class="checks" id="w-checks"></ul>
+        <div class="done-banner" id="w-done" hidden></div>
+        <div class="btn-row">
+          <button class="btn btn-marker" id="w-submit" type="button">File my answer</button>
+          <button class="btn btn-ghost" id="w-copy" type="button">Copy my answer</button>
+          <button class="btn btn-ghost" id="w-print" type="button">Print</button>
+        </div>
+        <span class="copied" id="w-copied" hidden>Copied. Paste it into a message to your teacher.</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script id="game-data" type="application/json">
+{
+ "id": "koc11-survival-v1",
+ "title": "Survival File · Grade 11",
+ "subtitle": "Common Exam 1 · Dystopia writing",
+ "bossCount": 30,
+ "bossPer": 2,
+ "figs": {
+  "extract": "<div class=\"passage\"><div class=\"ptitle\">Extract · 1984, Part One, Chapter 1<\/div><p>\"Winston made for the stairs. It was no use trying the lift. Even at the best of times it was seldom working, and at present the electric current was cut off during daylight hours. It was part of the economy drive in preparation for Hate Week. The flat was seven flights up, and Winston, who was thirty-nine and had a varicose ulcer above his right ankle, went slowly, resting several times on the way.\"<\/p><div class=\"cap\">The extract from your class worksheet<\/div><\/div>"
+ },
+ "levels": [
+  {
+   "key": "exam",
+   "name": "Know the Exam",
+   "icon": "📋",
+   "group": "Exam briefing",
+   "kind": "Rules",
+   "topic": "What the Nov 3 Reading & Writing task asks you to do",
+   "color": "#5B6770",
+   "questions": [
+    {
+     "q": "How many **body paragraphs** must you write?",
+     "answer": "Two",
+     "wrong": [
+      "One",
+      "Three",
+      "Four"
+     ],
+     "hint": "Read the announcement again.",
+     "why": "The task is a structured response with two body paragraphs."
+    },
+    {
+     "q": "What is the **minimum total length** of your answer?",
+     "answer": "150 words",
+     "wrong": [
+      "100 words",
+      "250 words",
+      "300 words"
+     ],
+     "hint": "It is less than an IELTS Task 2 essay.",
+     "why": "At least 150 words in total, so aim for about 80 to 110 words in each body paragraph."
+    },
+    {
+     "q": "Which texts must you refer to?",
+     "answer": "1984 and one film clip studied in class",
+     "wrong": [
+      "1984 only, with no film clips at all",
+      "One film clip only, with no reference to 1984",
+      "1984 and all three film clips studied in class"
+     ],
+     "hint": "One book + one clip.",
+     "why": "You must use 1984 and ONE of the clips: Children of Men, Equilibrium or Ready Player One."
+    },
+    {
+     "q": "Are you allowed to bring **notes** into the exam?",
+     "answer": "No, so you must remember the details",
+     "wrong": [
+      "Yes, one page of handwritten notes",
+      "Yes, but only short quotations",
+      "Only notes about the film clips"
+     ],
+     "hint": "Look at the Rules line.",
+     "why": "No notes are allowed. That is why this app trains you to remember precise details."
+    },
+    {
+     "q": "What should you do with the **short extract** you receive?",
+     "answer": "Use its details as evidence, in your own words",
+     "wrong": [
+      "Copy the whole extract into your answer",
+      "Ignore it and write only from memory",
+      "Summarize it as an introduction"
+     ],
+     "hint": "The class worksheet said: paraphrase it.",
+     "why": "Paraphrase the key details of the extract and use them as evidence, then explain what they show."
+    },
+    {
+     "q": "Which paragraph plan matches the class practice?",
+     "answer": "Paragraph 1: evidence from 1984 · Paragraph 2: evidence from the clip",
+     "wrong": [
+      "Paragraph 1: plot summary · Paragraph 2: your opinion",
+      "Paragraph 1: the clip · Paragraph 2: a conclusion",
+      "Paragraph 1: definitions · Paragraph 2: 1984 and the clip"
+     ],
+     "hint": "One text per paragraph.",
+     "why": "Body Paragraph 1 answers with 1984 evidence; Body Paragraph 2 answers with evidence from the clip."
+    },
+    {
+     "q": "What is the best order for the sentences in each body paragraph?",
+     "answer": "Topic sentence → Evidence → Analysis → Evidence → Analysis → Link",
+     "wrong": [
+      "Evidence → Evidence → Topic sentence → Link → Analysis → Analysis",
+      "Topic sentence → Analysis → Link → Evidence → Evidence → Analysis",
+      "Link → Evidence → Topic sentence → Analysis → Evidence → Analysis"
+     ],
+     "hint": "Start with your point, finish by linking back.",
+     "why": "Point first, then evidence followed by explanation (twice), then a sentence that links back to the question."
+    }
+   ]
+  },
+  {
+   "key": "mansions",
+   "name": "Victory Mansions",
+   "icon": "🏚️",
+   "group": "1984: the evidence",
+   "kind": "Setting",
+   "topic": "Winston's building, his flat and the city (Part One, Ch. 1–2)",
+   "color": "#9A3B2E",
+   "questions": [
+    {
+     "q": "In the extract, why does Winston take the **stairs**?",
+     "answer": "The lift rarely works, and the electricity is off during the day",
+     "wrong": [
+      "The lift is only for Inner Party members",
+      "He wants extra exercise for the Physical Jerks",
+      "A rocket bomb damaged the lift that morning"
+     ],
+     "hint": "Read the second and third sentences of the extract.",
+     "why": "The lift is seldom working, and the electric current is cut off during daylight hours.",
+     "fig": "extract"
+    },
+    {
+     "q": "Why is the electricity cut off during daylight hours?",
+     "answer": "It is part of an economy drive before Hate Week",
+     "wrong": [
+      "The Party is punishing the building for a crime",
+      "A bomb has destroyed the city's power station",
+      "All power is needed for the telescreens"
+     ],
+     "hint": "The extract gives the reason directly.",
+     "why": "It was part of the economy drive in preparation for Hate Week: the state is saving money.",
+     "fig": "extract"
+    },
+    {
+     "q": "How many flights up is Winston's flat?",
+     "answer": "Seven",
+     "wrong": [
+      "Three",
+      "Ten",
+      "Thirteen"
+     ],
+     "hint": "It's in the extract.",
+     "why": "The flat is seven flights up, a long climb without a lift.",
+     "fig": "extract"
+    },
+    {
+     "q": "Why does Winston climb slowly and rest several times?",
+     "answer": "He is thirty-nine and has a varicose ulcer above his ankle",
+     "wrong": [
+      "He is carrying heavy bags of food rations home",
+      "He has been drinking Victory Gin all afternoon",
+      "He wants to avoid Mrs Parsons on the stairs"
+     ],
+     "hint": "Look at his age and his leg.",
+     "why": "Winston is thirty-nine with a varicose ulcer above his right ankle, so the climb is painful.",
+     "fig": "extract"
+    },
+    {
+     "q": "What does the hallway of Victory Mansions **smell** of?",
+     "answer": "Boiled cabbage and old rag mats",
+     "wrong": [
+      "Victory Gin and cigarette smoke",
+      "Damp plaster and burnt bread",
+      "Sweat and gritty soap"
+     ],
+     "hint": "It is the first detail of the hallway in Chapter 1.",
+     "why": "\"The hallway smelt of boiled cabbage and old rag mats\" (Ch. 1): cheap food and worn-out things."
+    },
+    {
+     "q": "What hangs on the wall opposite the lift on every landing?",
+     "answer": "A poster of Big Brother's face whose eyes seem to follow you",
+     "wrong": [
+      "A list of building rules signed by the Party",
+      "A map showing the war with Eurasia",
+      "The three Party slogans in red letters"
+     ],
+     "hint": "BIG BROTHER IS WATCHING YOU.",
+     "why": "On each landing the poster of Big Brother gazes from the wall; its eyes seem to follow you."
+    },
+    {
+     "q": "Which detail shows that London is **falling apart**?",
+     "answer": "Old houses are held up with timber, with cardboard in the windows",
+     "wrong": [
+      "New flats are being built with glass walls and lifts",
+      "The streets are crowded with traders selling fresh food",
+      "Every building is freshly painted for Hate Week"
+     ],
+     "hint": "Winston looks out at rotting nineteenth-century houses.",
+     "why": "The houses are shored up with timber, windows patched with cardboard and roofs with corrugated iron (Ch. 1)."
+    },
+    {
+     "q": "Apart from the posters, what color does Winston see in the street?",
+     "answer": "No color at all: everything looks cold and gray",
+     "wrong": [
+      "Bright red flags on every building",
+      "Green trees and flowers in the parks",
+      "Golden sunlight on the rooftops"
+     ],
+     "hint": "Even though the sun is shining...",
+     "why": "\"there seemed to be no colour in anything, except the posters\" (Ch. 1). The city feels lifeless."
+    },
+    {
+     "q": "According to Chapter 2, what happens to Victory Mansions in winter?",
+     "answer": "The pipes burst in hard frost and the roof leaks in snow",
+     "wrong": [
+      "The heating runs at full power all night long",
+      "The windows freeze shut until the spring",
+      "The lift is closed so that heat can be saved"
+     ],
+     "hint": "The building was built around 1930 and is falling to pieces.",
+     "why": "The plaster flakes, the pipes burst in every hard frost and the roof leaks whenever there is snow (Ch. 2)."
+    },
+    {
+     "q": "How long can a simple repair, such as mending a window, be delayed?",
+     "answer": "Up to two years, because distant committees must approve it",
+     "wrong": [
+      "Two weeks, until a Party worker is free",
+      "Six months, until Hate Week is over",
+      "Forever, because repairs are against the law"
+     ],
+     "hint": "Repairs had to be sanctioned by remote committees.",
+     "why": "Committees could hold up even the mending of a window-pane for two years (Ch. 2)."
+    },
+    {
+     "q": "What is the one thing Winston **cannot** do with his telescreen?",
+     "answer": "Switch it off completely",
+     "wrong": [
+      "Turn the voice down",
+      "Hear what it is saying",
+      "Sit where it cannot see him"
+     ],
+     "hint": "He can make it quieter, but...",
+     "why": "The telescreen \"could be dimmed, but there was no way of shutting it off completely\" (Ch. 1)."
+    },
+    {
+     "q": "In which city does the novel begin?",
+     "answer": "London, chief city of Airstrip One in Oceania",
+     "wrong": [
+      "Paris, the capital city of Eurasia",
+      "New York, in the west of Oceania",
+      "Columbus, the fastest-growing city on Earth"
+     ],
+     "hint": "It used to be called England or Britain.",
+     "why": "Winston lives in London, chief city of Airstrip One, a province of Oceania."
+    }
+   ]
+  },
+  {
+   "key": "rations",
+   "name": "Rations & Shortages",
+   "icon": "🥫",
+   "group": "1984: the evidence",
+   "kind": "Resources",
+   "topic": "Food, gin, cigarettes, coupons and razor blades (Ch. 1–5)",
+   "color": "#B5651D",
+   "questions": [
+    {
+     "q": "What food is in Winston's kitchen when he gets home?",
+     "answer": "Only a hunk of dark bread, saved for breakfast",
+     "wrong": [
+      "A white loaf and a piece of cheese",
+      "A tin of stew from the canteen",
+      "Nothing at all, not even bread"
+     ],
+     "hint": "There is one thing, and he can't eat it yet.",
+     "why": "There was no food \"except a hunk of dark-coloured bread\" which had to be saved for tomorrow's breakfast (Ch. 1)."
+    },
+    {
+     "q": "Why did Winston miss lunch that day?",
+     "answer": "He left the Ministry early to come home",
+     "wrong": [
+      "The canteen had run out of stew",
+      "The Thought Police questioned him",
+      "Lunch is not given to the Outer Party"
+     ],
+     "hint": "He chose to go home at lunchtime.",
+     "why": "By leaving the Ministry at that time of day, he sacrificed his lunch in the canteen (Ch. 1)."
+    },
+    {
+     "q": "How is **Victory Gin** described?",
+     "answer": "It has a sickly, oily smell and burns like acid",
+     "wrong": [
+      "It is sweet and smooth, like fruit juice",
+      "It is weak and tastes mostly of water",
+      "It is rare and kept for the Inner Party"
+     ],
+     "hint": "Winston drinks it \"like a dose of medicine\".",
+     "why": "The gin has \"a sickly, oily smell\" and is like nitric acid (Ch. 1)."
+    },
+    {
+     "q": "What happens when Winston holds a Victory Cigarette upright?",
+     "answer": "The tobacco falls out onto the floor",
+     "wrong": [
+      "It breaks in half between his fingers",
+      "It burns his fingers straight away",
+      "It goes out because it is damp"
+     ],
+     "hint": "Even cigarettes are badly made.",
+     "why": "The tobacco falls out on to the floor (Ch. 1). Nothing in Oceania is made well."
+    },
+    {
+     "q": "The telescreen announces a change to the **chocolate ration**. What is it?",
+     "answer": "From thirty grammes to twenty: a reduction",
+     "wrong": [
+      "From twenty grammes to thirty: an increase",
+      "From forty grammes to thirty: a reduction",
+      "From ten grammes to twenty: an increase"
+     ],
+     "hint": "Winston expects bad news after a victory announcement.",
+     "why": "The chocolate ration \"would be reduced from thirty grammes to twenty\" (Ch. 2)."
+    },
+    {
+     "q": "In Chapter 5, how does the Ministry of Plenty describe the new chocolate ration?",
+     "answer": "As an increase, and people march to thank Big Brother",
+     "wrong": [
+      "As a reduction, with an apology to every citizen",
+      "As a short change that will end after Hate Week",
+      "As a punishment for workers who are disloyal"
+     ],
+     "hint": "The Party lies about the change.",
+     "why": "Demonstrations thank Big Brother for \"raising\" the ration to twenty grammes, the day after it was cut. The Party controls even the truth about food."
+    },
+    {
+     "q": "What is on the tray of the canteen lunch?",
+     "answer": "Pinkish-grey stew, bread, cheese, milkless coffee and a saccharine tablet",
+     "wrong": [
+      "Fresh meat, potatoes, salad and sweet tea with milk",
+      "Vegetable soup, white bread, an apple and real coffee",
+      "Rice, chicken, chocolate and a large mug of gin"
+     ],
+     "hint": "The coffee has no milk.",
+     "why": "The lunch is \"a metal pannikin of pinkish-grey stew\", a hunk of bread, a cube of cheese, milkless Victory Coffee and one saccharine tablet (Ch. 5)."
+    },
+    {
+     "q": "Which item can nobody find in the Party shops **at the moment**?",
+     "answer": "Razor blades",
+     "wrong": [
+      "Shoelaces",
+      "Buttons",
+      "Darning wool"
+     ],
+     "hint": "The others were missing at other times.",
+     "why": "\"Sometimes it was buttons, sometimes it was darning wool, sometimes it was shoelaces; at present it was razor blades\" (Ch. 5)."
+    },
+    {
+     "q": "Where can people get items that the Party shops cannot supply?",
+     "answer": "Secretly, on the \"free market\"",
+     "wrong": [
+      "At the Ministry of Plenty's office",
+      "From the Inner Party's own stores",
+      "By ordering through the telescreen"
+     ],
+     "hint": "Winston bought his diary there too.",
+     "why": "People scrounge things like razor blades and shoelaces on the 'free' market, which Party members are not supposed to use."
+    },
+    {
+     "q": "How many clothing coupons does an Outer Party member get each year?",
+     "answer": "3,000, and a pair of pyjamas costs 600",
+     "wrong": [
+      "600, and a winter coat costs 300",
+      "5,000, and a pair of shoes costs 600",
+      "3,000, and a new suit costs 300"
+     ],
+     "hint": "That is why Winston sleeps without pyjamas.",
+     "why": "An Outer Party member received only 3,000 clothing coupons a year, and pyjamas cost 600 (Ch. 3)."
+    },
+    {
+     "q": "What does Winston remember about food in his whole life?",
+     "answer": "There had never been quite enough to eat",
+     "wrong": [
+      "Food had always been plentiful but tasteless",
+      "Food had been good until the year before",
+      "Food was short only while the war lasted"
+     ],
+     "hint": "He cannot remember anything different.",
+     "why": "\"there had never been quite enough to eat\" (Ch. 5): hunger is normal in Oceania."
+    },
+    {
+     "q": "According to Winston, what is the only thing that is **cheap and plentiful**?",
+     "answer": "Synthetic gin",
+     "wrong": [
+      "Dark bread",
+      "Chocolate",
+      "Cigarettes"
+     ],
+     "hint": "It is the drink he gulps when he gets home.",
+     "why": "There was \"nothing cheap and plentiful except synthetic gin\" (Ch. 5)."
+    },
+    {
+     "q": "Why might the Party keep gin cheap and easy to get?",
+     "answer": "Numb, drunk citizens are less likely to question their lives",
+     "wrong": [
+      "Gin keeps workers healthy and full of energy",
+      "Citizens need gin to celebrate Party victories",
+      "Gin is cheaper to make than bread or milk"
+     ],
+     "hint": "Think about control, not health.",
+     "why": "Cheap gin numbs people's pain and anger, which helps keep them quiet and controlled."
+    }
+   ]
+  },
+  {
+   "key": "lost1984",
+   "name": "What Has Been Lost",
+   "icon": "👁️",
+   "group": "1984: the evidence",
+   "kind": "Humanity",
+   "topic": "Privacy, love, friendship, truth and trust",
+   "color": "#6B3FA0",
+   "questions": [
+    {
+     "q": "\"Nothing was your own except the few cubic centimetres inside your skull.\" What does this mean?",
+     "answer": "Only your private thoughts belong to you; everything else is watched",
+     "wrong": [
+      "People are not allowed to own furniture or clothes",
+      "Winston has a headache from drinking too much gin",
+      "The Party measures citizens' heads to test them"
+     ],
+     "hint": "The skull holds your thoughts.",
+     "why": "Winston means the Party sees and controls everything except what goes on inside his head (Ch. 2)."
+    },
+    {
+     "q": "Which part of human life does that line show has been lost?",
+     "answer": "Privacy",
+     "wrong": [
+      "Food",
+      "Electricity",
+      "Work"
+     ],
+     "hint": "Being watched at all times.",
+     "why": "The line is about privacy: being able to have a life no one else sees."
+    },
+    {
+     "q": "Winston says tragedy belonged to an old time when there was still...",
+     "answer": "privacy, love, and friendship",
+     "wrong": [
+      "food, money, and freedom",
+      "music, art, and religion",
+      "safety, peace, and hope"
+     ],
+     "hint": "He is thinking about his mother (Ch. 3).",
+     "why": "Tragedy belonged to \"a time when there was still privacy, love, and friendship\" and families stood by one another (Ch. 3)."
+    },
+    {
+     "q": "\"Today there were fear, hatred, and pain, but no dignity of emotion.\" What does Winston mean?",
+     "answer": "People still feel bad things, but deep, meaningful feelings are gone",
+     "wrong": [
+      "People no longer feel anything at all, good or bad",
+      "People feel happy because the Party protects them",
+      "People only feel afraid during the Two Minutes Hate"
+     ],
+     "hint": "Which feelings are left, and which are missing?",
+     "why": "Fear, hatred and pain remain, but the deep feelings that give life meaning, like love and loyalty, have gone (Ch. 3)."
+    },
+    {
+     "q": "\"You did not have friends nowadays, you had comrades.\" What has been lost?",
+     "answer": "True friendship and trust between people",
+     "wrong": [
+      "The right to work alongside other people",
+      "The words used inside the Ministry",
+      "The army that protects Oceania"
+     ],
+     "hint": "Comrades are political partners.",
+     "why": "People cannot trust each other, so real friendship has been replaced by Party 'comrades' (Ch. 5)."
+    },
+    {
+     "q": "Why are many adults afraid of their own children?",
+     "answer": "Children spy on their parents and report them to the Thought Police",
+     "wrong": [
+      "Children are violent because they never have enough food",
+      "Children are taken away to live in Party schools",
+      "Children carry real guns given to them by the army"
+     ],
+     "hint": "Think of the Parsons children and the Spies.",
+     "why": "Children in the Spies are trained to denounce their parents, so families no longer trust each other (Ch. 2)."
+    },
+    {
+     "q": "What could happen to Winston if his diary were found?",
+     "answer": "Death, or twenty-five years in a forced-labor camp",
+     "wrong": [
+      "A fine and the loss of his clothing coupons",
+      "A warning from his boss at the Ministry",
+      "Nothing, because he hides it from the telescreen"
+     ],
+     "hint": "The narrator says it is reasonably certain.",
+     "why": "Keeping a diary would probably be punished by death or twenty-five years in a forced-labour camp (Ch. 1)."
+    },
+    {
+     "q": "What has happened to the **past** in Oceania?",
+     "answer": "The Party changes the records, so no one can prove life was different",
+     "wrong": [
+      "The past is studied carefully in every school",
+      "The past is kept safely in the Ministry of Love",
+      "The past was better, and everyone remembers it"
+     ],
+     "hint": "Winston's job is to 'rectify' old newspapers.",
+     "why": "Records are rewritten again and again, so the truth about the past is lost (Ch. 3–4)."
+    },
+    {
+     "q": "Winston has no memory of a better life. Why does he still feel his life is wrong?",
+     "answer": "Something inside him feels that things were once different",
+     "wrong": [
+      "He has read old books that describe the past",
+      "His mother told him stories about the old days",
+      "The telescreen shows films of life before the war"
+     ],
+     "hint": "He calls it an \"ancestral memory\" (Ch. 5).",
+     "why": "He wonders why life would feel intolerable unless people had some ancestral memory that things had once been different."
+    },
+    {
+     "q": "Which word best describes how people relate to each other in Oceania?",
+     "answer": "Distrustful",
+     "wrong": [
+      "Loyal",
+      "Affectionate",
+      "Carefree"
+     ],
+     "hint": "Anyone could be a spy.",
+     "why": "Neighbors, colleagues and even children might report you, so people are distrustful of each other."
+    }
+   ]
+  },
+  {
+   "key": "com",
+   "name": "Children of Men",
+   "icon": "☕",
+   "group": "The film clips",
+   "kind": "First 5 min",
+   "topic": "The café, the news of Baby Diego, the bomb, the train",
+   "color": "#4A6B57",
+   "questions": [
+    {
+     "q": "Where and when does the film begin?",
+     "answer": "London, in the year 2027",
+     "wrong": [
+      "New York, in the year 2045",
+      "Libria, after the Third World War",
+      "London, in the year 1984"
+     ],
+     "hint": "The same city as 1984, but a different year.",
+     "why": "The film opens in London in 2027."
+    },
+    {
+     "q": "What are the people in the café watching?",
+     "answer": "A news report on a TV screen",
+     "wrong": [
+      "A football match on a big screen",
+      "A speech by the Prime Minister",
+      "A film about life before the war"
+     ],
+     "hint": "They are crowded around the screen in silence.",
+     "why": "A crowd watches a TV news report in the café."
+    },
+    {
+     "q": "What is the shocking news?",
+     "answer": "Baby Diego, the youngest person in the world, has been killed",
+     "wrong": [
+      "The last hospital in London has closed forever",
+      "A bomb has destroyed the Ministry of Energy",
+      "The government has banned coffee in the city"
+     ],
+     "hint": "It is about the youngest person alive.",
+     "why": "The news reports that \"Baby Diego\", the youngest person on Earth, has been killed."
+    },
+    {
+     "q": "How old was \"Baby Diego\"?",
+     "answer": "Eighteen",
+     "wrong": [
+      "Eight",
+      "Twenty-eight",
+      "One"
+     ],
+     "hint": "The news gives his age in years, months, days, hours and minutes.",
+     "why": "He was 18 years, 4 months, 20 days, 16 hours and 8 minutes old."
+    },
+    {
+     "q": "Why is the youngest person in the world eighteen years old?",
+     "answer": "No baby has been born for about eighteen years",
+     "wrong": [
+      "All children were sent away to the countryside",
+      "A war killed every child in the world",
+      "Babies are hidden from the government"
+     ],
+     "hint": "The office news calls it \"18 years of infertility\".",
+     "why": "Humanity has become infertile: no babies have been born for eighteen years, so the human race has no future."
+    },
+    {
+     "q": "How do most people in the café react to the news?",
+     "answer": "They stare at the screen in shock, and some cry",
+     "wrong": [
+      "They cheer, because the news is good",
+      "They ignore it and keep chatting",
+      "They run outside in a panic"
+     ],
+     "hint": "Diego was a celebrity because he was the youngest.",
+     "why": "The crowd is shocked and upset; people cry for a stranger."
+    },
+    {
+     "q": "How does **Theo** react to the news?",
+     "answer": "He pushes through the crowd, buys a coffee and leaves without emotion",
+     "wrong": [
+      "He cries with the crowd and stays to watch the whole report",
+      "He shouts at the TV and blames the government for the death",
+      "He calls his family at once to tell them the terrible news"
+     ],
+     "hint": "He seems not to care.",
+     "why": "Theo ignores the news, buys his coffee and walks out: he is numb to the world around him."
+    },
+    {
+     "q": "What does Theo add to his coffee outside?",
+     "answer": "Alcohol from a small flask",
+     "wrong": [
+      "Sugar from his pocket",
+      "Milk from a bottle",
+      "A pill from a small tin"
+     ],
+     "hint": "It is something to help him get through the day.",
+     "why": "He pours alcohol from a hip flask into his coffee."
+    },
+    {
+     "q": "What happens seconds after Theo leaves the café?",
+     "answer": "A bomb explodes inside the café",
+     "wrong": [
+      "Soldiers arrest the café owner",
+      "The power goes off across London",
+      "A crowd starts a protest outside"
+     ],
+     "hint": "He is lucky to be alive.",
+     "why": "The café explodes behind him: violence is part of everyday life."
+    },
+    {
+     "q": "On the train, a screen says \"The World Has Collapsed\". What message follows?",
+     "answer": "\"Only Britain Soldiers On\"",
+     "wrong": [
+      "\"Only Britain Has Food Left\"",
+      "\"Only London Is Still Safe\"",
+      "\"Only the Strong Will Survive\""
+     ],
+     "hint": "Britain claims to be the last country still standing.",
+     "why": "The propaganda says the world has collapsed and only Britain soldiers on."
+    },
+    {
+     "q": "Which resource do people in the opening still have, and which do they lack?",
+     "answer": "They can still buy coffee, but they have no safety",
+     "wrong": [
+      "They are safe, but have no food or drink at all",
+      "They have children, but no jobs or homes",
+      "They have electricity, but no news or TV"
+     ],
+     "hint": "Think about the café and the bomb.",
+     "why": "Small comforts like coffee still exist, but safety (and a future) does not."
+    }
+   ]
+  },
+  {
+   "key": "eq",
+   "name": "Equilibrium",
+   "icon": "💉",
+   "group": "The film clips",
+   "kind": "First 3 min",
+   "topic": "The opening narration: the war, Libria and the Clerics",
+   "color": "#3D5A80",
+   "questions": [
+    {
+     "q": "According to the opening narration, what broke out in the first years of the 21st century?",
+     "answer": "A third world war",
+     "wrong": [
+      "A flu that stopped all babies being born",
+      "A drought that destroyed the corn crops",
+      "Riots over internet bandwidth"
+     ],
+     "hint": "Don't mix up the three films.",
+     "why": "The narrator says a third world war broke out early in the 21st century."
+    },
+    {
+     "q": "What did the **survivors** believe?",
+     "answer": "Humanity could never survive a fourth world war",
+     "wrong": [
+      "Humanity would soon rebuild the old world",
+      "The war had been caused by a lack of food",
+      "The enemy would attack again within a year"
+     ],
+     "hint": "They are afraid of the next war.",
+     "why": "Those who survived knew mankind could never survive a fourth war."
+    },
+    {
+     "q": "What did the survivors decide was too dangerous to risk?",
+     "answer": "Their own \"volatile natures\": human emotions",
+     "wrong": [
+      "Their nuclear weapons and armies",
+      "Their old cities and buildings",
+      "Their computers and the internet"
+     ],
+     "hint": "Volatile means quick to explode or change.",
+     "why": "They decided their own \"volatile natures\", their emotions, could no longer be risked."
+    },
+    {
+     "q": "What new arm of the law did they create?",
+     "answer": "The Grammaton Clerics",
+     "wrong": [
+      "The Thought Police",
+      "The Sixers",
+      "The Fishes"
+     ],
+     "hint": "The other answers come from other stories.",
+     "why": "They created the Grammaton Cleric. (The Thought Police are from 1984.)"
+    },
+    {
+     "q": "What is the Clerics' task, according to the narration?",
+     "answer": "To find and destroy people's ability to feel",
+     "wrong": [
+      "To find and arrest people who steal food",
+      "To guard the borders against enemy armies",
+      "To find the last pregnant woman on Earth"
+     ],
+     "hint": "The narrator calls it the true source of man's inhumanity to man.",
+     "why": "Their task is to seek out and eradicate \"his ability to feel\"."
+    },
+    {
+     "q": "In the world of the film, what do the citizens of Libria take every day?",
+     "answer": "Prozium, a drug that suppresses emotion",
+     "wrong": [
+      "Victory Gin, to make the day look cheerful",
+      "Vitamins, because there is so little food",
+      "Nothing: all drugs are banned in Libria"
+     ],
+     "hint": "It keeps everyone calm and empty.",
+     "why": "Citizens take a daily dose of Prozium so that they feel nothing."
+    },
+    {
+     "q": "According to Libria's leaders, what was the real cause of war?",
+     "answer": "Human emotion",
+     "wrong": [
+      "Hunger",
+      "Religion",
+      "Technology"
+     ],
+     "hint": "That's why they remove it.",
+     "why": "They blame human feeling for war, so they try to remove feeling itself."
+    },
+    {
+     "q": "What important part of human life has been lost in Libria?",
+     "answer": "Emotion: love, joy and sadness",
+     "wrong": [
+      "Food and clean water",
+      "Homes and electricity",
+      "Work and money"
+     ],
+     "hint": "People are safe, but...",
+     "why": "People are safe from war, but they have lost the ability to feel, which makes them more like machines."
+    }
+   ]
+  },
+  {
+   "key": "rpo",
+   "name": "Ready Player One",
+   "icon": "🥽",
+   "group": "The film clips",
+   "kind": "First 5 min",
+   "topic": "The Stacks, Wade's story and the OASIS",
+   "color": "#2C7A7B",
+   "questions": [
+    {
+     "q": "Where and when is the film set?",
+     "answer": "Columbus, Ohio, in 2045",
+     "wrong": [
+      "London, in 2027",
+      "Columbus, Ohio, in 2027",
+      "Airstrip One, in 1984"
+     ],
+     "hint": "2027 is a trap: it's Wade's birth year.",
+     "why": "The film opens in Columbus, Ohio, in 2045."
+    },
+    {
+     "q": "What are **\"the Stacks\"**?",
+     "answer": "Trailers and mobile homes piled on top of each other",
+     "wrong": [
+      "Tall office towers owned by the OASIS company",
+      "Shelves of food rations in a warehouse",
+      "Rows of bunk beds in a homeless shelter"
+     ],
+     "hint": "Homes are built upward because there is no space.",
+     "why": "The Stacks are trailers stacked up like a tower, held together by metal frames: crowded, unsafe homes."
+    },
+    {
+     "q": "In which year was Wade born?",
+     "answer": "2027",
+     "wrong": [
+      "2045",
+      "2040",
+      "2025"
+     ],
+     "hint": "It is the same year Children of Men is set.",
+     "why": "Wade says, \"I was born in 2027\"."
+    },
+    {
+     "q": "Which two events happened before Wade was born?",
+     "answer": "The Corn Syrup Droughts and the Bandwidth Riots",
+     "wrong": [
+      "The Third World War and the Prozium riots",
+      "The oil wars and the great flood",
+      "The infertility crisis and the London bombs"
+     ],
+     "hint": "One is about food, one is about the internet.",
+     "why": "Wade was born after the Corn Syrup Droughts and the Bandwidth Riots."
+    },
+    {
+     "q": "Wade says people stopped trying to fix problems. What did they do instead?",
+     "answer": "They just tried to outlive them",
+     "wrong": [
+      "They asked the government for help",
+      "They moved away to other countries",
+      "They built new cities underground"
+     ],
+     "hint": "They gave up and only tried to survive.",
+     "why": "People \"stopped trying to fix problems and just tried to outlive them\"."
+    },
+    {
+     "q": "What happened to Wade's parents?",
+     "answer": "They did not survive those hard times, so he lives with his aunt",
+     "wrong": [
+      "They live inside the OASIS all day long",
+      "They work for a big company in another city",
+      "They moved to the countryside to farm"
+     ],
+     "hint": "He lives with Aunt Alice.",
+     "why": "His parents \"didn't make it through those times\", so he lives with his Aunt Alice."
+    },
+    {
+     "q": "How does Wade describe reality \"these days\"?",
+     "answer": "As \"a bummer\", so everyone looks for a way to escape",
+     "wrong": [
+      "As exciting, because Columbus is growing so fast",
+      "As dangerous, because bombs explode in cafés",
+      "As peaceful, because the riots have finally ended"
+     ],
+     "hint": "Bummer = something disappointing and depressing.",
+     "why": "\"These days, reality is a bummer. Everyone is looking for a way to escape.\""
+    },
+    {
+     "q": "What is the **OASIS**?",
+     "answer": "A virtual reality world created by James Halliday",
+     "wrong": [
+      "A government shelter for homeless families",
+      "A drug that makes people feel happy",
+      "A real island where rich people live"
+     ],
+     "hint": "You enter it with a visor and gloves.",
+     "why": "The OASIS is a virtual world, created by James Halliday, where people can do and be anything."
+    },
+    {
+     "q": "According to Wade, which things do people **not** do in the OASIS?",
+     "answer": "Eat, sleep and go to the bathroom",
+     "wrong": [
+      "Make friends and meet each other",
+      "Race, fight and collect coins",
+      "Surf, ski and climb mountains"
+     ],
+     "hint": "Everything else happens there.",
+     "why": "Except for eating, sleeping and bathroom breaks, people do everything in the OASIS."
+    },
+    {
+     "q": "Who is **Aech**?",
+     "answer": "Wade's best friend, whom he has never met in real life",
+     "wrong": [
+      "Wade's aunt, who owns their trailer",
+      "The man who created the OASIS",
+      "A neighbor who lives in the Stacks"
+     ],
+     "hint": "Real friendship has moved online.",
+     "why": "Aech is Wade's best friend, yet they have never met in the real world."
+    },
+    {
+     "q": "Which resource does almost everyone still have?",
+     "answer": "Access to technology: the OASIS",
+     "wrong": [
+      "Plenty of good, cheap food",
+      "Large, safe and quiet homes",
+      "Clean air and open spaces"
+     ],
+     "hint": "It's the one thing that isn't scarce.",
+     "why": "Homes and the real world are poor, but nearly everyone can still enter the OASIS."
+    }
+   ]
+  },
+  {
+   "key": "para",
+   "name": "Paraphrase Lab",
+   "icon": "🔁",
+   "group": "Language toolkit",
+   "kind": "Paraphrase",
+   "topic": "Turn the text's words into your own words",
+   "color": "#8C6D1F",
+   "questions": [
+    {
+     "q": "Best paraphrase: \"It was no use trying the lift. Even at the best of times it was seldom working\"",
+     "answer": "The lift almost never works, so there's no point trying it",
+     "wrong": [
+      "The lift works well, but only on the best days of the year",
+      "Winston is not allowed to use the lift during work hours",
+      "The lift was broken once, but it has now been repaired"
+     ],
+     "hint": "Seldom = rarely.",
+     "why": "\"Seldom working\" means it rarely works, so trying it is pointless.",
+     "fig": "extract"
+    },
+    {
+     "q": "Best paraphrase: \"at present the electric current was cut off during daylight hours\"",
+     "answer": "At the moment, there is no electricity during the day",
+     "wrong": [
+      "The electricity is always switched off at night",
+      "Power cuts happen only during Hate Week parties",
+      "People choose daylight instead of electric lamps"
+     ],
+     "hint": "At present = now.",
+     "why": "\"At present\" = currently; \"cut off during daylight hours\" = no power in the daytime.",
+     "fig": "extract"
+    },
+    {
+     "q": "Best paraphrase: \"It was part of the economy drive in preparation for Hate Week\"",
+     "answer": "It is one way the government is saving money before Hate Week",
+     "wrong": [
+      "It is a car journey organized for citizens before Hate Week",
+      "It is a punishment for people who missed Hate Week",
+      "It is a celebration of the economy during Hate Week"
+     ],
+     "hint": "Economy drive ≠ driving a car.",
+     "why": "An economy drive is a campaign to save money.",
+     "fig": "extract"
+    },
+    {
+     "q": "Best paraphrase: \"Winston ... went slowly, resting several times on the way\"",
+     "answer": "Winston climbs slowly and has to stop a few times",
+     "wrong": [
+      "Winston climbs quickly without stopping once",
+      "Winston waits several times for the lift to come",
+      "Winston rests at home several times a day"
+     ],
+     "hint": "Several times = more than twice.",
+     "why": "He has to stop and rest during the climb.",
+     "fig": "extract"
+    },
+    {
+     "q": "Best paraphrase: \"there was no food in the kitchen except a hunk of dark-coloured bread\"",
+     "answer": "The only food at home is a piece of dark bread",
+     "wrong": [
+      "The kitchen is full of bread but has nothing else",
+      "He has run out of bread and has nothing to eat",
+      "The bread in his kitchen is fresh and white"
+     ],
+     "hint": "Except = apart from.",
+     "why": "There is just one piece of dark bread."
+    },
+    {
+     "q": "Best paraphrase: \"nothing cheap and plentiful except synthetic gin\"",
+     "answer": "Artificial gin is the only thing that is cheap and easy to get",
+     "wrong": [
+      "Gin is expensive and very hard to find",
+      "Everything is cheap, especially gin",
+      "Real gin is cheaper than synthetic gin"
+     ],
+     "hint": "Synthetic = artificial, not natural.",
+     "why": "Only the fake gin is cheap and available in large amounts."
+    },
+    {
+     "q": "Best paraphrase: \"You did not have friends nowadays, you had comrades\"",
+     "answer": "These days, people have political partners, not real friends",
+     "wrong": [
+      "People nowadays have more friends than before",
+      "Comrades are friends who are especially close",
+      "Winston has no friends because he is shy"
+     ],
+     "hint": "Comrade is the Party's word.",
+     "why": "Friendship has been replaced by political 'comradeship'."
+    },
+    {
+     "q": "Best paraphrase: \"the pipes burst in every hard frost, the roof leaked whenever there was snow\"",
+     "answer": "In winter, the pipes break and the roof lets water in",
+     "wrong": [
+      "The building stays warm and dry in winter",
+      "The roof was repaired after the last snowstorm",
+      "The pipes only break when someone damages them"
+     ],
+     "hint": "Burst = break open; leaked = let water in.",
+     "why": "The building cannot protect people from the cold and wet."
+    },
+    {
+     "q": "Best paraphrase (Ready Player One): \"people stopped trying to fix problems and just tried to outlive them\"",
+     "answer": "People gave up solving problems and only tried to survive",
+     "wrong": [
+      "People fixed most problems and lived longer lives",
+      "People tried to fix problems but died too young",
+      "People asked the government to fix their problems"
+     ],
+     "hint": "Outlive = live longer than / get through.",
+     "why": "People no longer try to improve the world; they only try to get through it."
+    },
+    {
+     "q": "Best paraphrase (Equilibrium): \"our own volatile natures could simply no longer be risked\"",
+     "answer": "Human emotions were too unpredictable and dangerous to allow",
+     "wrong": [
+      "Nature and the environment were too damaged to use",
+      "People were too weak to fight in another war",
+      "Human bodies could no longer survive radiation"
+     ],
+     "hint": "Volatile = likely to change suddenly or explode.",
+     "why": "The survivors blamed unpredictable human feelings for war."
+    },
+    {
+     "q": "What is the best way to use the extract as evidence in the exam?",
+     "answer": "Put the key details into your own words, then explain what they show",
+     "wrong": [
+      "Copy the whole extract into your paragraph word for word",
+      "Summarize the whole novel instead of the extract",
+      "Name the page number of the extract and move on"
+     ],
+     "hint": "Paraphrase + analysis.",
+     "why": "Paraphrased evidence followed by analysis shows understanding and earns marks."
+    }
+   ]
+  },
+  {
+   "key": "vmc",
+   "name": "Survival Vocabulary",
+   "icon": "🔤",
+   "group": "Language toolkit",
+   "kind": "Multiple choice",
+   "topic": "12 high-scoring words for dystopia answers, in context",
+   "color": "#7A4E2D",
+   "questions": [
+    {
+     "q": "In Oceania, goods like razor blades are so ___ that people must buy them secretly.",
+     "answer": "scarce",
+     "wrong": [
+      "abundant",
+      "fragile",
+      "cheerful"
+     ],
+     "hint": "Hard to find.",
+     "why": "Scarce = in short supply, hard to get."
+    },
+    {
+     "q": "Every citizen receives a weekly ___ of chocolate and tobacco.",
+     "answer": "ration",
+     "wrong": [
+      "shortage",
+      "surplus",
+      "refund"
+     ],
+     "hint": "A fixed amount allowed.",
+     "why": "A ration is the fixed amount of food or goods each person is allowed."
+    },
+    {
+     "q": "There is a ___ of razor blades, so Winston has used the same blade for weeks.",
+     "answer": "shortage",
+     "wrong": [
+      "ration",
+      "supply",
+      "variety"
+     ],
+     "hint": "Not enough of something.",
+     "why": "A shortage = not enough of something."
+    },
+    {
+     "q": "Victory Mansions is a ___ building, with flaking plaster and a leaking roof.",
+     "answer": "decaying",
+     "wrong": [
+      "luxurious",
+      "modern",
+      "spacious"
+     ],
+     "hint": "Slowly falling apart.",
+     "why": "Decaying = slowly rotting or falling apart."
+    },
+    {
+     "q": "The gray streets and torn posters create a ___ atmosphere.",
+     "answer": "bleak",
+     "wrong": [
+      "festive",
+      "peaceful",
+      "lively"
+     ],
+     "hint": "Cold, empty and without hope.",
+     "why": "Bleak = cold, empty and depressing."
+    },
+    {
+     "q": "Citizens of Libria are ___ of their emotions by a daily drug.",
+     "answer": "deprived",
+     "wrong": [
+      "proud",
+      "fond",
+      "aware"
+     ],
+     "hint": "Something is taken away from them.",
+     "why": "Deprived of = having something important taken away."
+    },
+    {
+     "q": "Under the Party's ___ rule, citizens cannot speak or act freely.",
+     "answer": "oppressive",
+     "wrong": [
+      "generous",
+      "democratic",
+      "relaxed"
+     ],
+     "hint": "Cruel and controlling.",
+     "why": "Oppressive = controlling people cruelly and unfairly."
+    },
+    {
+     "q": "The telescreen is a tool of constant ___: it watches and listens all the time.",
+     "answer": "surveillance",
+     "wrong": [
+      "entertainment",
+      "education",
+      "transport"
+     ],
+     "hint": "Watching people closely.",
+     "why": "Surveillance = close watching of people."
+    },
+    {
+     "q": "Theo seems emotionally ___: he walks past the shocking news without reacting.",
+     "answer": "numb",
+     "wrong": [
+      "thrilled",
+      "curious",
+      "furious"
+     ],
+     "hint": "Unable to feel.",
+     "why": "Numb = unable to feel anything."
+    },
+    {
+     "q": "The OASIS is a form of ___: people use it to forget their real problems.",
+     "answer": "escapism",
+     "wrong": [
+      "education",
+      "exercise",
+      "employment"
+     ],
+     "hint": "Running away from reality.",
+     "why": "Escapism = activities that help you forget unpleasant reality."
+    },
+    {
+     "q": "Winston is so ___ for comfort that he gulps gin that burns like acid.",
+     "answer": "desperate",
+     "wrong": [
+      "careful",
+      "grateful",
+      "reluctant"
+     ],
+     "hint": "In great need, ready to try anything.",
+     "why": "Desperate = in such great need that you'll do anything."
+    },
+    {
+     "q": "In Children of Men, the ___ of society is shown by bombs, crying crowds and a world without babies.",
+     "answer": "collapse",
+     "wrong": [
+      "recovery",
+      "growth",
+      "celebration"
+     ],
+     "hint": "Falling down completely.",
+     "why": "Collapse = sudden, complete failure or breakdown."
+    }
+   ]
+  },
+  {
+   "key": "vfill",
+   "name": "Vocabulary: First Letter",
+   "icon": "✏️",
+   "group": "Language toolkit",
+   "kind": "Typing",
+   "topic": "Type the word; the first letter is given",
+   "color": "#A0522D",
+   "questions": [
+    {
+     "q": "Good food is {scarce} in Oceania, so people live on bread and stew.",
+     "type": "type",
+     "hint": "Hard to find.",
+     "why": "scarce: hard to find."
+    },
+    {
+     "q": "The Party reduced the chocolate {ration} from thirty grammes to twenty.",
+     "type": "type",
+     "hint": "A fixed amount each person gets.",
+     "why": "ration: a fixed amount each person gets."
+    },
+    {
+     "q": "Because of a {shortage} of razor blades, people beg each other for spare ones.",
+     "type": "type",
+     "hint": "Not enough of something.",
+     "why": "shortage: not enough of something."
+    },
+    {
+     "q": "Victory Mansions is old and {decaying}: plaster flakes from the walls.",
+     "type": "type",
+     "hint": "Slowly falling apart.",
+     "why": "decaying: slowly falling apart."
+    },
+    {
+     "q": "The opening of Ready Player One shows a {bleak} city of stacked trailers.",
+     "type": "type",
+     "hint": "Cold, empty, depressing.",
+     "why": "bleak: cold, empty, depressing."
+    },
+    {
+     "q": "Without children, the people in Children of Men are {deprived} of hope for the future.",
+     "type": "type",
+     "hint": "Had something taken away.",
+     "why": "deprived: had something important taken away."
+    },
+    {
+     "q": "Big Brother's {oppressive} government controls every part of daily life.",
+     "type": "type",
+     "hint": "Cruel and controlling.",
+     "why": "oppressive: cruel and controlling."
+    },
+    {
+     "q": "Telescreens and police patrols are forms of {surveillance}.",
+     "type": "type",
+     "hint": "Watching people closely.",
+     "why": "surveillance: watching people closely."
+    },
+    {
+     "q": "Prozium makes the citizens of Libria emotionally {numb}.",
+     "type": "type",
+     "hint": "Unable to feel.",
+     "why": "numb: unable to feel."
+    },
+    {
+     "q": "For Wade, the OASIS is a form of {escapism} from a world he hates.",
+     "type": "type",
+     "hint": "Running away from reality.",
+     "why": "escapism: running away from reality."
+    },
+    {
+     "q": "People become {desperate} when there is never quite enough to eat.",
+     "type": "type",
+     "hint": "In great need.",
+     "why": "desperate: in great need."
+    },
+    {
+     "q": "All three films show the {collapse} of normal society.",
+     "type": "type",
+     "hint": "Complete breakdown.",
+     "why": "collapse: complete breakdown."
+    }
+   ]
+  },
+  {
+   "key": "m1",
+   "name": "Question 1: Survival & Resources",
+   "icon": "🎒",
+   "group": "The 3 most probable questions",
+   "kind": "Plan it",
+   "topic": "How hard is survival, and what resources are left?",
+   "color": "#C0392B",
+   "note": "Question 1: In dystopian worlds, everyday survival is a struggle. How difficult is it for ordinary people to survive, and what resources do they still have access to?",
+   "questions": [
+    {
+     "q": "Which is the best **topic sentence** for Body Paragraph 1?",
+     "answer": "In 1984, survival is a daily struggle because even basic resources like food and electricity are scarce.",
+     "wrong": [
+      "1984 is a famous novel by George Orwell, and it was first published in the year 1949.",
+      "In 1984, Winston Smith lives in a building called Victory Mansions in the city of London.",
+      "In 1984, the government is very bad, and the people do not like Big Brother at all."
+     ],
+     "hint": "A topic sentence answers the question directly.",
+     "why": "It answers the question (survival is a struggle) and gives the reason (scarce resources)."
+    },
+    {
+     "q": "Which detail from the extract best shows that resources are scarce?",
+     "answer": "The electricity is cut off in the daytime, so Winston must climb seven flights of stairs",
+     "wrong": [
+      "Winston is thirty-nine years old and works at the Ministry of Truth",
+      "The poster of Big Brother has eyes that follow you around",
+      "Winston turns the telescreen down when he comes into his flat"
+     ],
+     "hint": "Which detail is about missing resources?",
+     "why": "No electricity and no lift = basic services have collapsed.",
+     "fig": "extract"
+    },
+    {
+     "q": "Which is the best **analysis** of that evidence?",
+     "answer": "This shows the state will not give citizens even basic comforts like light and a working lift.",
+     "wrong": [
+      "This shows that Winston is lazy and does not like using the lift at all.",
+      "This shows that Hate Week is a happy festival that everyone enjoys.",
+      "This shows that Victory Mansions is the best building in London."
+     ],
+     "hint": "Analysis explains what the evidence shows about the question.",
+     "why": "It links the detail to how hard survival is."
+    },
+    {
+     "q": "Which second piece of 1984 evidence fits Question 1 best?",
+     "answer": "The only food in Winston's kitchen is a hunk of dark bread saved for breakfast",
+     "wrong": [
+      "Winston buys a beautiful old diary with creamy paper",
+      "O'Brien looks at Winston during the Two Minutes Hate",
+      "The Ministry of Truth has three thousand rooms above ground"
+     ],
+     "hint": "Think food and resources.",
+     "why": "It shows food is so scarce that he must save his only bread."
+    },
+    {
+     "q": "For **Children of Men**, which evidence best answers \"what resources do they still have\"?",
+     "answer": "Theo can still buy a coffee, but the café is bombed seconds later",
+     "wrong": [
+      "Theo works at the Ministry of Energy in central London",
+      "The news about Diego is shown on a TV screen in the café",
+      "Theo wears a coat because the weather is cold and gray"
+     ],
+     "hint": "It shows what they have AND what they lack.",
+     "why": "Coffee (a small comfort) still exists, but safety does not."
+    },
+    {
+     "q": "For **Ready Player One**, which evidence best answers the question?",
+     "answer": "Homes are stacked trailers, but almost everyone can enter the OASIS",
+     "wrong": [
+      "Wade lives with his Aunt Alice in Columbus, Ohio",
+      "Wade's best friend in the OASIS is called Aech",
+      "James Halliday died and left a contest in the OASIS"
+     ],
+     "hint": "Poor homes vs. plentiful technology.",
+     "why": "Real resources (housing) are poor, but virtual escape is everywhere."
+    },
+    {
+     "q": "For **Equilibrium**, which point best answers the question?",
+     "answer": "People are safe from war, but feelings, art and music are taken away",
+     "wrong": [
+      "People have plenty of food, but no homes or electricity",
+      "People live in stacked trailers, but can enter the OASIS",
+      "People have lost their children, but can still buy coffee"
+     ],
+     "hint": "Physical safety vs. emotional resources.",
+     "why": "Citizens have order and safety, but no emotional resources."
+    },
+    {
+     "q": "Which word best begins Body Paragraph 2 to compare it with 1984?",
+     "answer": "Similarly,",
+     "wrong": [
+      "Firstly,",
+      "In conclusion,",
+      "For example,"
+     ],
+     "hint": "You are adding a second text that makes a similar point.",
+     "why": "\"Similarly\" signals a comparison with Paragraph 1."
+    },
+    {
+     "q": "Which is the best **link** sentence to end Body Paragraph 2?",
+     "answer": "Both texts show that people can survive physically, but they live without safety, comfort or hope.",
+     "wrong": [
+      "That is everything I know about the film and the book we studied.",
+      "In conclusion, dystopian stories are interesting to read and watch.",
+      "The film Children of Men was made in 2006 by Alfonso Cuarón."
+     ],
+     "hint": "Link back to the question and to both texts.",
+     "why": "It answers the question again and connects both texts."
+    },
+    {
+     "q": "A student writes: \"The lift was broken. The electricity was off. He walked up the stairs.\" What is missing?",
+     "answer": "Analysis: what this shows about survival in Oceania",
+     "wrong": [
+      "More details about the color of the hallway walls",
+      "A longer quotation copied from the novel",
+      "The student's opinion about Winston's age"
+     ],
+     "hint": "Retelling is not explaining.",
+     "why": "Evidence without analysis loses marks. Add \"This shows...\"."
+    }
+   ]
+  },
+  {
+   "key": "m2",
+   "name": "Question 2: What Has Been Lost",
+   "icon": "💔",
+   "group": "The 3 most probable questions",
+   "kind": "Plan it",
+   "topic": "Privacy, emotion, children, real connection",
+   "color": "#8E44AD",
+   "note": "Question 2: People in dystopian societies survive, but they pay a price. What important part of human life has been lost?",
+   "questions": [
+    {
+     "q": "Which is the best **topic sentence** for Body Paragraph 1?",
+     "answer": "In 1984, the collapse has destroyed privacy, so real love and friendship are no longer possible.",
+     "wrong": [
+      "In 1984, people lose many things, such as their keys, their money and their way home.",
+      "In 1984, the most important thing that is lost is the electricity during the day.",
+      "In 1984, Winston has lost his diary, which the Thought Police took from his flat."
+     ],
+     "hint": "An important part of HUMAN life, not a resource.",
+     "why": "Privacy, love and friendship are parts of human life; electricity is only a resource."
+    },
+    {
+     "q": "Which evidence best shows the loss of **privacy**?",
+     "answer": "The telescreen can be dimmed but never switched off",
+     "wrong": [
+      "The flat is seven flights up and the lift is broken",
+      "The chocolate ration is cut to twenty grammes",
+      "The gin has a sickly, oily smell"
+     ],
+     "hint": "Being watched and heard at home.",
+     "why": "Winston can never escape being watched and heard."
+    },
+    {
+     "q": "Which is the best analysis of \"Nothing was your own except the few cubic centimetres inside your skull\"?",
+     "answer": "This suggests the Party watches everything, so only Winston's thoughts are still private.",
+     "wrong": [
+      "This suggests Winston is very clever and has a large brain.",
+      "This suggests that people in Oceania own lots of things.",
+      "This suggests that Winston needs to see a doctor about his head."
+     ],
+     "hint": "Skull = mind = thoughts.",
+     "why": "Only his mind is his own; everything else belongs to the Party."
+    },
+    {
+     "q": "Which evidence best shows the loss of **love and friendship**?",
+     "answer": "Winston thinks people now have comrades instead of friends",
+     "wrong": [
+      "Winston climbs the stairs slowly because of his ulcer",
+      "Winston eats stew with Syme in the canteen at lunch",
+      "Winston goes to work at the Ministry of Truth every day"
+     ],
+     "hint": "Friend vs. comrade.",
+     "why": "\"You did not have friends nowadays, you had comrades\" (Ch. 5)."
+    },
+    {
+     "q": "For **Equilibrium**, what has been lost?",
+     "answer": "Emotion: the state sets out to destroy people's ability to feel",
+     "wrong": [
+      "Food: the war destroyed all the farms in Libria",
+      "Children: no babies have been born for eighteen years",
+      "Homes: people live in trailers stacked on top of each other"
+     ],
+     "hint": "The Clerics' task.",
+     "why": "Libria removes feeling itself."
+    },
+    {
+     "q": "For **Children of Men**, what has been lost?",
+     "answer": "Children, and with them, hope for the future",
+     "wrong": [
+      "Emotion, because everyone takes a daily drug",
+      "Electricity, because it is cut off during the day",
+      "The internet, because of the Bandwidth Riots"
+     ],
+     "hint": "The youngest person alive is eighteen.",
+     "why": "With no babies for eighteen years, humanity has no next generation."
+    },
+    {
+     "q": "For **Ready Player One**, what has been lost?",
+     "answer": "Real-life connection: people meet and make friends inside the OASIS",
+     "wrong": [
+      "Privacy: telescreens watch every home in Columbus",
+      "Emotion: a drug removes all of people's feelings",
+      "Safety: bombs explode in every café in the city"
+     ],
+     "hint": "Wade has never met his best friend.",
+     "why": "Friendships have moved from real life to a virtual world."
+    },
+    {
+     "q": "Which is the best analysis for the **Equilibrium** evidence?",
+     "answer": "This shows that people survive safely, but they live more like machines than humans.",
+     "wrong": [
+      "This shows that the Clerics are very good at fighting in the dark.",
+      "This shows that the war was short and did not hurt anyone.",
+      "This shows that the narrator has a deep and interesting voice."
+     ],
+     "hint": "What does losing emotion do to people?",
+     "why": "Without feelings, people are no longer fully human."
+    },
+    {
+     "q": "Which word best describes people who have lost their emotions and relationships?",
+     "answer": "Dehumanized",
+     "wrong": [
+      "Energized",
+      "Educated",
+      "Celebrated"
+     ],
+     "hint": "De- = removed; human.",
+     "why": "Dehumanized = with their human qualities taken away."
+    }
+   ]
+  },
+  {
+   "key": "m3",
+   "name": "Question 3: Escaping Reality",
+   "icon": "🚪",
+   "group": "The 3 most probable questions",
+   "kind": "Plan it",
+   "topic": "Gin, flasks, drugs and virtual worlds",
+   "color": "#D35400",
+   "note": "Question 3: Life in a dystopia is hard to bear. How do people cope with, or escape from, the harsh reality around them?",
+   "questions": [
+    {
+     "q": "Which is the best **topic sentence** for Body Paragraph 1?",
+     "answer": "In 1984, people cope with their harsh reality by numbing themselves with cheap gin.",
+     "wrong": [
+      "In 1984, people cope with their harsh reality by going on holiday to the countryside.",
+      "In 1984, gin is a kind of drink that smells like Chinese rice-spirit.",
+      "In 1984, people do not have any problems, so they do not need to cope."
+     ],
+     "hint": "Answer HOW people cope.",
+     "why": "It answers the question: they numb themselves with gin."
+    },
+    {
+     "q": "Which evidence best supports that topic sentence?",
+     "answer": "Winston gulps Victory Gin, and afterwards the world looks more cheerful",
+     "wrong": [
+      "Winston buys razor blades secretly on the free market when shops run out",
+      "Winston climbs seven flights of stairs because the lift is not working",
+      "Winston turns the telescreen down when he comes back into his flat"
+     ],
+     "hint": "Cause and effect of the gin.",
+     "why": "\"the world began to look more cheerful\" (Ch. 1): gin is his escape."
+    },
+    {
+     "q": "Which is the best **analysis** of that evidence?",
+     "answer": "This suggests gin gives Winston a short, false escape from his gray, hopeless life.",
+     "wrong": [
+      "This suggests Winston enjoys the taste of gin more than any other drink.",
+      "This suggests the Party wants its citizens to be healthy and strong.",
+      "This suggests that gin is very expensive and hard to buy."
+     ],
+     "hint": "The gin burns like acid, so he isn't drinking for the taste.",
+     "why": "He drinks something disgusting just to feel better for a moment."
+    },
+    {
+     "q": "Which second piece of 1984 evidence shows another way of coping?",
+     "answer": "Winston secretly starts a diary, though it could be punished by death",
+     "wrong": [
+      "Winston rests several times on the stairs because of his ankle",
+      "Winston turns the telescreen down so the voice is quieter",
+      "Winston looks out of the window at a torn poster in the wind"
+     ],
+     "hint": "A private act of escape.",
+     "why": "Writing his thoughts is a secret escape into his own mind."
+    },
+    {
+     "q": "In **Ready Player One**, how do people escape?",
+     "answer": "They spend almost all their time in the OASIS, a virtual world",
+     "wrong": [
+      "They take Prozium every day to stop feeling sad",
+      "They drink alcohol from small flasks in the street",
+      "They move to the countryside to grow their own food"
+     ],
+     "hint": "\"Everyone is looking for a way to escape.\"",
+     "why": "The OASIS is everyone's escape from the real world."
+    },
+    {
+     "q": "In **Children of Men**, how does Theo cope?",
+     "answer": "He switches off emotionally and adds alcohol to his coffee",
+     "wrong": [
+      "He joins a protest against the government",
+      "He logs into a virtual world to forget",
+      "He takes a drug that removes his feelings"
+     ],
+     "hint": "Remember the flask.",
+     "why": "Theo is numb to the news and drinks to get through the day."
+    },
+    {
+     "q": "In **Equilibrium**, how does society cope with the trauma of war?",
+     "answer": "By removing feelings altogether, using the Clerics and Prozium",
+     "wrong": [
+      "By escaping into a virtual world called the OASIS",
+      "By rationing chocolate and gin for every citizen",
+      "By moving everyone to live in the countryside"
+     ],
+     "hint": "Remove the feeling, remove the pain.",
+     "why": "Libria makes everyone emotionless so that no one can feel pain or anger."
+    },
+    {
+     "q": "Which is the best **comparison** sentence for Equilibrium?",
+     "answer": "Like Winston's gin, Prozium numbs reality, but in Libria it is forced on everyone by the state.",
+     "wrong": [
+      "Winston's gin and Prozium are both drinks that people buy in shops.",
+      "Winston likes his gin, but Preston does not like Prozium at all.",
+      "Gin is from a book and Prozium is from a film, so they are different."
+     ],
+     "hint": "Show a similarity AND a difference.",
+     "why": "It compares the two ways of numbing and adds a precise difference."
+    },
+    {
+     "q": "Which is the best **link** sentence to end Body Paragraph 2?",
+     "answer": "Both texts show that people survive by escaping reality, but this escape only keeps them trapped.",
+     "wrong": [
+      "Both texts are about the future, and both of them are very sad.",
+      "Both texts are set in London, and both have the same main character.",
+      "Both texts end happily when the people finally escape."
+     ],
+     "hint": "Link both texts back to the question.",
+     "why": "It answers the question and makes a thoughtful final point."
+    }
+   ]
+  }
+ ],
+ "missions": [
+  {
+   "key": "w1",
+   "name": "Writing Desk 1: Survival & Resources",
+   "icon": "📝",
+   "color": "#C0392B",
+   "question": "In dystopian worlds, everyday survival is a struggle. How difficult is it for ordinary people to survive, and what resources do they still have access to?",
+   "focus": [
+    "surviv",
+    "resource",
+    "scarce",
+    "struggl",
+    "shortage",
+    "ration"
+   ],
+   "focusLabel": "survive / survival / resources / scarce",
+   "bank1984": [
+    "Extract: lift seldom works; electricity cut off in daylight (economy drive for Hate Week)",
+    "Seven flights of stairs; Winston, 39, with a varicose ulcer, rests several times",
+    "Kitchen: only \"a hunk of dark-coloured bread\" saved for breakfast (Ch. 1)",
+    "Victory Gin: \"sickly, oily smell\"; Victory Cigarettes fall apart (Ch. 1)",
+    "Chocolate ration cut from thirty grammes to twenty (Ch. 2)",
+    "Razor blades impossible to find; only on the 'free market' (Ch. 5)",
+    "\"there had never been quite enough to eat\" (Ch. 5)"
+   ],
+   "banks": {
+    "com": [
+     "London, 2027: Theo can still buy coffee in a crowded café",
+     "Seconds later, a bomb explodes in the café",
+     "News: Baby Diego (18), youngest person on Earth, killed",
+     "No babies born for 18 years: no future",
+     "Train screen: \"The World Has Collapsed\" / \"Only Britain Soldiers On\""
+    ],
+    "eq": [
+     "Narration: a third world war early in the 21st century",
+     "Survivors: humanity could not survive a fourth war",
+     "Libria: safe from war, ordered, controlled",
+     "Clerics created to destroy people's ability to feel",
+     "Citizens take daily Prozium; art and music are banned"
+    ],
+    "rpo": [
+     "Columbus, Ohio, 2045: the Stacks (trailers piled on top of each other)",
+     "Wade born 2027, after the Corn Syrup Droughts and Bandwidth Riots",
+     "\"people stopped trying to fix problems and just tried to outlive them\"",
+     "Wade's parents didn't survive; he lives with Aunt Alice",
+     "Almost everyone has access to the OASIS (virtual world)"
+    ]
+   }
+  },
+  {
+   "key": "w2",
+   "name": "Writing Desk 2: What Has Been Lost",
+   "icon": "📝",
+   "color": "#8E44AD",
+   "question": "People in dystopian societies survive, but they pay a price. What important part of human life has been lost?",
+   "focus": [
+    "lost",
+    "loss",
+    "lose",
+    "destroy",
+    "taken away",
+    "deprived"
+   ],
+   "focusLabel": "lost / loss / destroyed / deprived",
+   "bank1984": [
+    "Telescreen: can be dimmed but never switched off (Ch. 1)",
+    "\"Nothing was your own except the few cubic centimetres inside your skull\" (Ch. 2)",
+    "Old time had \"privacy, love, and friendship\"; now fear, hatred and pain (Ch. 3)",
+    "\"You did not have friends nowadays, you had comrades\" (Ch. 5)",
+    "Children spy on parents for the Thought Police (Ch. 2)",
+    "A diary could mean death or 25 years in a labor camp (Ch. 1)"
+   ],
+   "banks": {
+    "com": [
+     "Baby Diego, the youngest person alive, killed at 18",
+     "No babies for 18 years: the human race is ending",
+     "Crowd in shock, some crying for a stranger",
+     "Theo shows no emotion; adds alcohol to his coffee",
+     "Lost: children, the future, hope"
+    ],
+    "eq": [
+     "Survivors blamed their \"volatile natures\"",
+     "Clerics' task: destroy \"his ability to feel\"",
+     "Daily Prozium keeps everyone emotionless",
+     "Safe from war, but no love, joy or sadness",
+     "Lost: emotion; people become machine-like"
+    ],
+    "rpo": [
+     "People \"stopped trying to fix problems\"",
+     "Everyone escapes into the OASIS",
+     "\"this is where we meet each other\": friends are made online",
+     "Aech: best friend Wade has never met in real life",
+     "Lost: real-world connection and hope"
+    ]
+   }
+  },
+  {
+   "key": "w3",
+   "name": "Writing Desk 3: Escaping Reality",
+   "icon": "📝",
+   "color": "#D35400",
+   "question": "Life in a dystopia is hard to bear. How do people cope with, or escape from, the harsh reality around them?",
+   "focus": [
+    "cope",
+    "coping",
+    "escape",
+    "numb",
+    "forget"
+   ],
+   "focusLabel": "cope / escape / numb",
+   "bank1984": [
+    "Winston gulps nearly a teacupful of Victory Gin on arriving home (Ch. 1)",
+    "Gin like nitric acid, but afterwards \"the world began to look more cheerful\" (Ch. 1)",
+    "\"nothing cheap and plentiful except synthetic gin\" (Ch. 5)",
+    "Secret diary: a private escape, punishable by death (Ch. 1)",
+    "Victory Cigarettes: he smokes even though they fall apart"
+   ],
+   "banks": {
+    "com": [
+     "Theo ignores the shocking news; no emotion",
+     "He pours alcohol from a flask into his coffee",
+     "The café explodes behind him: violence is normal",
+     "Coping = numbness and drink"
+    ],
+    "eq": [
+     "After WWIII, the survivors blamed emotion",
+     "Solution: remove feeling itself",
+     "Clerics destroy \"his ability to feel\"",
+     "Daily Prozium: forced numbness",
+     "Compare: Winston's gin is chosen; Prozium is forced"
+    ],
+    "rpo": [
+     "\"These days, reality is a bummer\"",
+     "Everyone looks for a way to escape",
+     "OASIS: surf in Hawaii, ski down the pyramids, climb Everest",
+     "People do everything there except eat, sleep and use the bathroom",
+     "The real Stacks stay poor because no one fixes them"
+    ]
+   }
+  }
+ ],
+ "extractPlain": "Winston made for the stairs. It was no use trying the lift. Even at the best of times it was seldom working, and at present the electric current was cut off during daylight hours. It was part of the economy drive in preparation for Hate Week. The flat was seven flights up, and Winston, who was thirty-nine and had a varicose ulcer above his right ankle, went slowly, resting several times on the way.",
+ "clips": {
+  "com": {
+   "name": "Children of Men",
+   "span": "first 5 minutes",
+   "words": [
+    "children of men",
+    "theo",
+    "diego",
+    "café",
+    "cafe"
+   ]
+  },
+  "eq": {
+   "name": "Equilibrium",
+   "span": "first 3 minutes",
+   "words": [
+    "equilibrium",
+    "libria",
+    "cleric",
+    "prozium"
+   ]
+  },
+  "rpo": {
+   "name": "Ready Player One",
+   "span": "first 5 minutes",
+   "words": [
+    "ready player one",
+    "wade",
+    "oasis",
+    "stacks"
+   ]
+  }
+ }
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("game-data").textContent);
+  var KEY = "onur-koc11-survival:" + DATA.id;
+  var LETTERS = ["A", "B", "C", "D"];
+  var CHEERS = ["Approved!", "Clearance granted!", "Ration earned!", "Survived!", "Evidence secured!", "Exactly right!", "Free thinker!", "Correct!"];
+  var MISSIONS = DATA.missions || [];
+  var MAXDOTS = (DATA.levels.length + MISSIONS.length + 1) * 3;
+  var RANKS = [
+    [0, "🥫", "Ration Holder"], [Math.round(MAXDOTS * 0.2), "🧱", "Survivor"], [Math.round(MAXDOTS * 0.45), "📻", "Truth Seeker"],
+    [Math.round(MAXDOTS * 0.7), "🗝️", "Resistance Member"], [Math.round(MAXDOTS * 0.9), "🕊️", "Free Thinker"]
+  ];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function parseGaps(text) {
+    var parts = [], re = /\{(=?)([^}]+)\}/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parts.push({ t: text.slice(last, m.index) });
+      var alts = m[2].split("|");
+      parts.push({ gap: true, letter: m[1] ? "" : alts[0].charAt(0), alts: alts });
+      last = re.lastIndex;
+    }
+    if (last < text.length) parts.push({ t: text.slice(last) });
+    return parts;
+  }
+  function tnorm(v) {
+    return String(v || "").toLowerCase().replace(/[‘’ʼ`´]/g, "'").replace(/[.,!?;:"“”]+/g, " ").replace(/-/g, " ").replace(/\s+/g, " ").trim();
+  }
+  function gapOk(p, v) {
+    var c = [tnorm(v)];
+    if (p.letter) c.push(tnorm(p.letter + v));
+    return p.alts.some(function (a) { return c.indexOf(tnorm(a)) >= 0; });
+  }
+
+  var Q = {}, LEVELS = [], BOSS = { key: "boss", name: "Exam Rehearsal", icon: "🏛️", topic: DATA.bossCount + " mixed questions from every file, like a real test", color: "#D9A21B", boss: true };
+  DATA.levels.forEach(function (lv, li) {
+    lv.ids = []; lv.num = li + 1;
+    lv.questions.forEach(function (q, qi) {
+      var id = lv.key + ":" + qi;
+      var item = { id: id, level: lv.key, levelName: lv.name, note: q.note || lv.note || "", type: q.type || "mcq", q: q.q, answer: q.answer, wrong: q.wrong,
+        hint: q.hint, why: q.why, lead: q.lead || "", fig: q.fig || "" };
+      if (item.type === "type") {
+        item.parts = parseGaps(q.q);
+        item.blank = item.parts.map(function (p) { return p.gap ? (p.letter ? p.letter + "_____" : "_______") : p.t; }).join("");
+        item.filled = item.parts.map(function (p) { return p.gap ? p.alts[0] : p.t; }).join("");
+      }
+      Q[id] = item; lv.ids.push(id);
+    });
+    LEVELS.push(lv);
+  });
+  MISSIONS.forEach(function (m, i) { m.desk = true; m.num = i + 1; m.group = "Writing desks"; m.topic = "Write both body paragraphs for Question " + (i + 1) + ", with a live exam checklist"; });
+  var ALL_LEVELS = LEVELS.concat(MISSIONS).concat([BOSS]);
+  function levelByKey(k) { for (var i = 0; i < ALL_LEVELS.length; i++) if (ALL_LEVELS[i].key === k) return ALL_LEVELS[i]; return null; }
+
+  var P = null, CUR = null;
+  function blank() { return { name: "", xp: 0, levels: {}, runs: {}, writing: {} }; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY); if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (!p || typeof p !== "object" || !p.levels || !p.runs) return null;
+      if (!p.writing) p.writing = {};
+      for (var k in p.runs) {
+        var r = p.runs[k];
+        if (!r || !Array.isArray(r.ids) || !r.ids.every(function (i) { return Q[i]; })) delete p.runs[k];
+      }
+      return p;
+    } catch (e) { return null; }
+  }
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) { var arr = a.slice(); for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
+  function count(obj, val) { var n = 0; for (var k in obj) if (!val || obj[k] === val) n++; return n; }
+  function show(screen) { ["welcome", "map", "play", "between", "done", "write"].forEach(function (n) { $("screen-" + n).hidden = n !== screen; }); }
+  function lvState(k) { if (!P.levels[k]) P.levels[k] = { stars: 0, best: 0, plays: 0 }; return P.levels[k]; }
+  function totalDots() { var n = 0; ALL_LEVELS.forEach(function (l) { n += (P.levels[l.key] && P.levels[l.key].stars) || 0; }); return n; }
+  function rankFor(d) { var r = RANKS[0]; RANKS.forEach(function (x) { if (d >= x[0]) r = x; }); return r; }
+  function nextRank(d) { for (var i = 0; i < RANKS.length; i++) if (RANKS[i][0] > d) return RANKS[i]; return null; }
+  function dotsEl(n, el) { el.textContent = ""; for (var i = 0; i < 3; i++) { var s = document.createElement("i"); if (i < n) s.className = "on"; el.appendChild(s); } }
+  function setColor(el, c) { el.style.setProperty("--c", c); }
+
+  function bossIds() {
+    var picked = [];
+    LEVELS.forEach(function (lv) { picked = picked.concat(shuffle(lv.ids).slice(0, DATA.bossPer || 1)); });
+    var rest = shuffle(Object.keys(Q).filter(function (id) { return picked.indexOf(id) < 0; }));
+    while (picked.length < DATA.bossCount && rest.length) picked.push(rest.shift());
+    return shuffle(picked).slice(0, Math.max(DATA.bossCount, 1));
+  }
+  function newRun(k, ids, practice) {
+    return { level: k, ids: ids.slice(), practice: !!practice, round: 1, queue: ids.slice(), pos: 0, next: [], wrong: {}, done: {},
+      opts: null, typed: null, answered: null, streak: 0, best: 0, xp: 0, screen: "play" };
+  }
+
+  function renderWelcome() { $("student-name").value = P.name || ""; show("welcome"); setTimeout(function () { try { $("student-name").focus(); } catch (e) {} }, 50); }
+  function submitName() {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); $("student-name").classList.add("shake"); setTimeout(function () { $("student-name").classList.remove("shake"); }, 400); return; }
+    P.name = n; save(); renderMap();
+  }
+  $("btn-welcome").onclick = submitName;
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") submitName(); });
+
+  function renderMap() {
+    CUR = null;
+    $("confirm-reset").hidden = true;
+    var dots = totalDots(), max = ALL_LEVELS.length * 3, rank = rankFor(dots), nr = nextRank(dots);
+    var pl = $("player"); pl.textContent = "";
+    var av = document.createElement("div"); av.className = "avatar"; av.textContent = (P.name || "?").charAt(0).toUpperCase();
+    var mid = document.createElement("div"); mid.style.minWidth = "0";
+    var nm = document.createElement("div"); nm.className = "player-name"; nm.textContent = P.name;
+    var rk = document.createElement("span"); rk.className = "rank"; rk.textContent = rank[1] + " " + rank[2];
+    mid.appendChild(nm); mid.appendChild(rk);
+    var tot = document.createElement("div"); tot.className = "totals";
+    var st = document.createElement("span"); st.className = "stars-total"; st.textContent = "◆ " + dots + " / " + max;
+    var xp = document.createElement("span"); xp.className = "xp"; xp.textContent = P.xp + " XP";
+    tot.appendChild(st); tot.appendChild(xp);
+    var bar = document.createElement("div"); bar.className = "rank-bar";
+    var track = document.createElement("div"); track.className = "track";
+    var fill = document.createElement("div"); fill.className = "fill";
+    var lo = rank[0], hi = nr ? nr[0] : max;
+    fill.style.width = (nr ? Math.round((dots - lo) / Math.max(1, hi - lo) * 100) : 100) + "%";
+    track.appendChild(fill);
+    var sm = document.createElement("small");
+    sm.textContent = nr ? (hi - dots) + " more " + (hi - dots === 1 ? "diamond" : "diamonds") + " to become " + nr[1] + " " + nr[2] : "Top rank: Free Thinker. Keep every diamond filled before the exam.";
+    bar.appendChild(track); bar.appendChild(sm);
+    pl.appendChild(av); pl.appendChild(mid); pl.appendChild(tot); pl.appendChild(bar);
+
+    var total = 0; LEVELS.forEach(function (l) { total += l.ids.length; });
+    $("map-count").textContent = LEVELS.length + " files · " + total + " questions · " + MISSIONS.length + " writing desks";
+
+    var box = $("levels"), lastGroup = null; box.textContent = "";
+    ALL_LEVELS.forEach(function (lv) {
+      var grp = lv.boss ? "Final challenge" : (lv.group || "");
+      if (grp && grp !== lastGroup) {
+        lastGroup = grp;
+        var gh = document.createElement("div"); gh.className = "group-h";
+        var gt = document.createElement("h3"); gt.textContent = grp;
+        var gs = document.createElement("small");
+        if (lv.desk) gs.textContent = MISSIONS.length + " desks";
+        else if (!lv.boss) { var gl = LEVELS.filter(function (l) { return l.group === grp; }), gq = 0; gl.forEach(function (l) { gq += l.ids.length; }); gs.textContent = gl.length + " files · " + gq + " Qs"; }
+        gh.appendChild(gt); gh.appendChild(gs); box.appendChild(gh);
+      }
+      var s = lvState(lv.key), run = P.runs[lv.key];
+      var b = document.createElement("button"); b.type = "button"; b.className = "lvl" + (lv.boss ? " boss" : "") + (lv.desk ? " desk" : "");
+      setColor(b, lv.color);
+      var head = document.createElement("div"); head.className = "lvl-head";
+      var ic = document.createElement("div"); ic.className = "lvl-icon"; ic.textContent = lv.icon; ic.setAttribute("aria-hidden", "true");
+      var tx = document.createElement("div"); tx.style.minWidth = "0";
+      var num = document.createElement("div"); num.className = "lvl-num";
+      num.textContent = lv.boss ? "Exam rehearsal" : lv.desk ? "Desk " + lv.num + " · Write" : "File " + (lv.num < 10 ? "0" : "") + lv.num + (lv.kind ? " · " + lv.kind : "");
+      var name = document.createElement("div"); name.className = "lvl-name"; name.textContent = lv.name;
+      tx.appendChild(num); tx.appendChild(name);
+      head.appendChild(ic); head.appendChild(tx);
+      var topic = document.createElement("div"); topic.className = "lvl-topic"; topic.textContent = lv.topic;
+      var foot = document.createElement("div"); foot.className = "lvl-foot";
+      var dEl = document.createElement("span"); dEl.className = "dots"; dotsEl(s.stars, dEl);
+      dEl.setAttribute("aria-label", s.stars + " of 3 diamonds");
+      var status = document.createElement("span"); status.className = "lvl-status";
+      if (lv.desk) {
+        var w = P.writing[lv.key];
+        if (s.stars === 3) status.textContent = "Filed ✓";
+        else if (w && ((w.p1 || "") + (w.p2 || "")).trim()) { status.textContent = "Continue · " + wc((w.p1 || "") + " " + (w.p2 || "")) + " words"; status.classList.add("go"); }
+        else { status.textContent = "Write"; status.classList.add("go"); }
+      } else if (run && run.screen !== "done") { status.textContent = "Continue · " + count(run.done) + "/" + run.ids.length; status.classList.add("go"); }
+      else if (s.plays) status.textContent = "Best " + s.best + "%";
+      else { status.textContent = lv.boss ? DATA.bossCount + " Qs" : lv.ids.length + " Qs"; status.classList.add("go"); }
+      foot.appendChild(dEl); foot.appendChild(status);
+      b.appendChild(head); b.appendChild(topic); b.appendChild(foot);
+      b.onclick = function () { lv.desk ? openDesk(lv.key) : openLevel(lv.key); };
+      box.appendChild(b);
+    });
+    show("map");
+  }
+  $("btn-rename").onclick = function () { renderWelcome(); };
+  $("btn-reset").onclick = function () { $("confirm-reset").hidden = false; $("confirm-reset").scrollIntoView({ block: "nearest" }); };
+  $("btn-reset-no").onclick = function () { $("confirm-reset").hidden = true; };
+  $("btn-reset-yes").onclick = function () { var name = P.name; P = blank(); P.name = name; save(); renderMap(); window.scrollTo(0, 0); };
+
+  function openLevel(k) {
+    var run = P.runs[k];
+    if (!run || run.screen === "done") { var lv = levelByKey(k); P.runs[k] = newRun(k, lv.boss ? bossIds() : lv.ids, false); save(); }
+    CUR = k; route(); window.scrollTo(0, 0);
+  }
+
+  function R() { return P.runs[CUR]; }
+  function currentQ() { var r = R(); return Q[r.queue[r.pos]]; }
+  function drawBoard(el, opts) {
+    var r = R(); el.textContent = "";
+    r.ids.forEach(function (id) {
+      var c = document.createElement("i"); c.className = "cell";
+      if (r.done[id]) c.className += " " + r.done[id]; else if (r.wrong[id]) c.className += " missed";
+      if (opts && opts.current === id) c.className += " now";
+      if (opts && opts.pop === id && !reduceMotion) c.className += " pop";
+      el.appendChild(c);
+    });
+  }
+  function richText(el, text) {
+    el.textContent = "";
+    String(text).split("**").forEach(function (part, i) {
+      if (i % 2 === 1) { var s = document.createElement("strong"); s.className = "hl"; s.textContent = part; el.appendChild(s); return; }
+      part.split("___").forEach(function (b, j) {
+        if (j > 0) { var g = document.createElement("span"); g.className = "gap"; g.setAttribute("aria-label", "blank"); el.appendChild(g); }
+        el.appendChild(document.createTextNode(b));
+      });
+    });
+  }
+  function updateChips(hot) {
+    var r = R();
+    $("streak-n").textContent = r.streak; $("streak-chip").classList.toggle("cold", r.streak === 0); $("xp-n").textContent = P.xp;
+    if (hot && !reduceMotion) { var c = $("streak-chip"); c.classList.remove("hot"); void c.offsetWidth; c.classList.add("hot"); }
+  }
+  function renderPlay() {
+    var r = R(), lv = levelByKey(CUR), q = currentQ();
+    setColor($("screen-play"), lv.boss ? "#B3261E" : lv.color);
+    $("play-icon").textContent = lv.icon;
+    $("play-name").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("play-round").textContent = "ROUND " + r.round + (CUR === "boss" ? " · FROM " + q.levelName.toUpperCase() : (r.round === 1 ? " · FIRST TRY" : " · CLEAR THE MISSED ONES"));
+    updateChips(false);
+    drawBoard($("board"), { current: q.id });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    $("q-count").textContent = "Q " + (r.pos + 1) + " / " + r.queue.length;
+    var misses = r.wrong[q.id] || 0;
+    $("retry-tag").hidden = misses === 0;
+    $("retry-tag").textContent = misses === 1 ? "Missed once. Try again!" : "Missed " + misses + " times. You can do it!";
+    $("q-note").textContent = q.note; $("q-note").hidden = !q.note;
+    var fig = $("q-fig");
+    if (q.fig && DATA.figs && DATA.figs[q.fig]) { fig.innerHTML = DATA.figs[q.fig]; fig.hidden = false; } else { fig.innerHTML = ""; fig.hidden = true; }
+    $("q-text").classList.toggle("typed", q.type === "type");
+    $("check-row").hidden = true;
+    if (q.type === "type") renderTyped(q); else richText($("q-text"), q.q);
+    $("feedback").hidden = true; $("btn-next").hidden = true;
+    if (q.type === "type") { $("opts").hidden = true; $("check-row").hidden = !!r.answered; }
+    else {
+      $("opts").hidden = false;
+      if (!r.opts) { r.opts = shuffle([q.answer].concat(q.wrong)); save(); }
+      var box = $("opts"); box.textContent = "";
+      var short = r.opts.every(function (t) { return t.length <= 12; });
+      box.className = "opts" + (short ? " two" : "");
+      r.opts.forEach(function (text, i) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+        var k = document.createElement("span"); k.className = "key"; k.textContent = LETTERS[i];
+        var t = document.createElement("span"); t.className = "txt"; t.textContent = text;
+        b.appendChild(k); b.appendChild(t);
+        b.onclick = function () { pick(i); };
+        box.appendChild(b);
+      });
+    }
+    if (r.answered) paintAnswer(false);
+    show("play");
+  }
+
+  function renderTyped(q) {
+    var r = R(), h = $("q-text"); h.textContent = "";
+    if (q.lead) { var l = document.createElement("span"); l.className = "q-lead"; l.textContent = q.lead; h.appendChild(l); }
+    var gi = 0, carry = "";
+    q.parts.forEach(function (p, pi) {
+      if (!p.gap) { h.appendChild(document.createTextNode(p.t.slice(carry.length))); carry = ""; return; }
+      var nxt = q.parts[pi + 1], tail = "";
+      if (nxt && !nxt.gap) { var mt = nxt.t.match(/^(\s?\([^)]{1,24}\))?[.,!?;:]*/); tail = mt ? mt[0] : ""; }
+      carry = tail;
+      var longest = 0; p.alts.forEach(function (a) { if (a.length > longest) longest = a.length; });
+      var w = document.createElement("span"); w.className = "tgap" + (longest > 20 ? " xwide" : longest > 10 ? " wide" : "");
+      if (p.letter) { var f = document.createElement("span"); f.className = "first"; f.textContent = p.letter; w.appendChild(f); }
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.spellcheck = false; inp.id = "gap-" + gi;
+      inp.setAttribute("autocomplete", "off"); inp.setAttribute("autocorrect", "off"); inp.setAttribute("autocapitalize", "off"); inp.setAttribute("enterkeyhint", "done");
+      inp.setAttribute("aria-label", p.letter ? "Missing word, starts with " + p.letter : "Missing words " + (gi + 1));
+      if (r.typed && r.typed[gi] != null) inp.value = r.typed[gi];
+      (function (idx) { inp.addEventListener("input", function () { var rr = R(); if (!rr.typed) rr.typed = []; rr.typed[idx] = inp.value; save(); }); })(gi);
+      inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); if (!R().answered) checkTyped(); } });
+      w.appendChild(inp);
+      if (tail) { var glue = document.createElement("span"); glue.className = "tglue"; glue.appendChild(w); glue.appendChild(document.createTextNode(tail)); h.appendChild(glue); }
+      else h.appendChild(w);
+      gi++;
+    });
+  }
+  function checkTyped() {
+    var r = R(), q = currentQ(); if (r.answered) return;
+    var inputs = $("q-text").querySelectorAll("input"), vals = [], empty = null;
+    inputs.forEach(function (inp) { vals.push(inp.value); if (!inp.value.trim() && !empty) empty = inp; });
+    if (empty) { empty.focus(); var g = empty.parentNode; if (!reduceMotion) { g.classList.remove("shake"); void g.offsetWidth; g.classList.add("shake"); } return; }
+    var gaps = q.parts.filter(function (p) { return p.gap; });
+    var oks = gaps.map(function (p, i) { return gapOk(p, vals[i]); });
+    r.typed = vals; r.oks = oks;
+    grade(oks.every(Boolean), -1, $("q-text"));
+  }
+  $("btn-tcheck").onclick = checkTyped;
+  function paintTyped(fresh) {
+    var r = R(); $("check-row").hidden = true;
+    $("q-text").querySelectorAll("input").forEach(function (inp, i) {
+      inp.value = (r.typed && r.typed[i]) || ""; inp.disabled = true;
+      var ok = r.oks ? r.oks[i] : r.answered.correct;
+      inp.parentNode.classList.add(ok ? "ok" : "no");
+      if (fresh && !ok && !reduceMotion) inp.parentNode.classList.add("shake");
+    });
+  }
+  function focusTyped() { var inp = $("q-text").querySelector("input:not([disabled])"); if (inp) { try { inp.focus({ preventScroll: true }); } catch (e) {} } }
+
+  function pick(i) { var r = R(); if (r.answered) return; grade(r.opts[i] === currentQ().answer, i, $("opts").children[i]); }
+  function grade(correct, pickIdx, srcEl) {
+    var r = R(), q = currentQ(), popId = null, gained = 0;
+    r.answered = { pick: pickIdx, correct: correct };
+    if (correct) {
+      r.done[q.id] = r.wrong[q.id] ? "later" : "first";
+      gained = r.wrong[q.id] ? 5 : 10;
+      r.streak += 1; if (r.streak > r.best) r.best = r.streak;
+      r.xp += gained; P.xp += gained; popId = q.id;
+      r.cheer = CHEERS[Math.floor(Math.random() * CHEERS.length)]; r.gained = gained;
+    } else { r.wrong[q.id] = (r.wrong[q.id] || 0) + 1; r.streak = 0; r.next.push(q.id); }
+    save();
+    drawBoard($("board"), { current: q.id, pop: popId });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    updateChips(correct); paintAnswer(true);
+    if (correct) confetti(srcEl);
+  }
+  function paintAnswer(fresh) {
+    var r = R(), q = currentQ(), a = r.answered;
+    var misses = r.wrong[q.id] || 0, reveal = !a.correct && misses >= 3;
+    if (q.type === "type") paintTyped(fresh);
+    else {
+      $("opts").querySelectorAll(".opt").forEach(function (b, i) {
+        b.disabled = true;
+        var isAnswer = r.opts[i] === q.answer;
+        if (i === a.pick) b.classList.add(a.correct ? "is-right" : "is-wrong");
+        else if (isAnswer && reveal) b.classList.add("is-right"); else b.classList.add("is-dim");
+        if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+      });
+    }
+    var fb = $("feedback"); fb.textContent = ""; fb.className = "feedback";
+    var stamp = document.createElement("span"); stamp.className = "stamp" + (fresh && !reduceMotion ? " thud" : "");
+    var head = document.createElement("div"); head.className = "fb-head";
+    var body = document.createElement("p"); var note = document.createElement("p"); note.className = "fb-note";
+    if (a.correct) {
+      fb.classList.add("good"); stamp.textContent = "Approved ✓"; head.textContent = r.cheer || "Correct!"; body.textContent = q.why;
+      var xp = document.createElement("p"); xp.className = "fb-xp"; xp.textContent = "+" + (r.gained || 10) + " XP" + (misses ? " · square cleared" : "");
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(xp);
+    } else if (reveal) {
+      fb.classList.add("reveal"); stamp.textContent = "For the record";
+      var ans = document.createElement("p"); ans.className = "fb-answer"; ans.textContent = "Answer: " + (q.type === "type" ? q.filled : q.answer);
+      body.textContent = q.why; note.textContent = "Remember it. This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(ans); fb.appendChild(body); fb.appendChild(note);
+    } else {
+      fb.classList.add("bad"); stamp.textContent = "Denied ✗"; head.textContent = "Check again."; body.textContent = "Hint: " + q.hint;
+      note.textContent = "This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(note);
+    }
+    fb.hidden = false;
+    var last = r.pos + 1 >= r.queue.length;
+    $("btn-next").textContent = last ? (r.next.length ? "Finish round " + r.round + " →" : "See my result →") : "Next question →";
+    $("btn-next").hidden = false;
+    if (fresh) { $("btn-next").focus({ preventScroll: true }); $("btn-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  function next() {
+    var r = R(); if (!r.answered) return;
+    r.pos += 1; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.cheer = null;
+    if (r.pos >= r.queue.length) { if (r.next.length) r.screen = "between"; else finishLevel(); }
+    save(); route();
+    if (r.screen === "play") {
+      var top = $("play-card").getBoundingClientRect().top;
+      if (top < 0) $("play-card").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+      if (currentQ().type === "type") focusTyped(); else $("q-text").focus({ preventScroll: true });
+    } else window.scrollTo(0, 0);
+  }
+  $("btn-next").onclick = next;
+  $("btn-back").onclick = function () { save(); renderMap(); window.scrollTo(0, 0); };
+
+  function renderBetween() {
+    var r = R(), lv = levelByKey(CUR), left = r.next.length, col = lv.boss ? "#B3261E" : lv.color;
+    setColor($("screen-between"), col); $("legend-later").style.background = col;
+    $("between-eyebrow").textContent = lv.name;
+    if (r.round === 1) {
+      $("between-h").textContent = "Round 1 done. Your first-try score:";
+      var big = $("between-big"); big.textContent = count(r.done, "first");
+      var sm = document.createElement("small"); sm.textContent = " / " + r.ids.length; big.appendChild(sm);
+    } else { $("between-h").textContent = "Round " + r.round + " done."; $("between-big").textContent = ""; }
+    $("between-text").textContent = (left === 1 ? "1 question comes" : left + " questions come") + " back now. Clear " + (left === 1 ? "it" : "them all") + " to fill the board.";
+    drawBoard($("board-between"));
+    $("btn-next-round").textContent = "Start round " + (r.round + 1) + " →";
+    show("between");
+  }
+  $("btn-next-round").onclick = function () {
+    var r = R(); r.round += 1; r.queue = shuffle(r.next); r.next = []; r.pos = 0; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.screen = "play";
+    save(); route(); window.scrollTo(0, 0); $("q-text").focus({ preventScroll: true });
+  };
+
+  function dotsFor(pct) { return pct >= 90 ? 3 : pct >= 70 ? 2 : 1; }
+  function finishLevel() {
+    var r = R(), first = count(r.done, "first"), pct = Math.round(first / r.ids.length * 100);
+    r.screen = "done"; r.pct = pct; r.earned = dotsFor(pct);
+    if (!r.practice) {
+      var s = lvState(CUR), before = totalDots();
+      s.plays += 1; if (pct > s.best) s.best = pct; if (r.earned > s.stars) s.stars = r.earned;
+      var rb = rankFor(before), ra = rankFor(totalDots());
+      r.rankUp = ra[2] !== rb[2] ? ra[1] + " New rank: " + ra[2] + "!" : "";
+    } else r.rankUp = "";
+  }
+  function renderDone() {
+    var r = R(), lv = levelByKey(CUR), total = r.ids.length, first = count(r.done, "first");
+    setColor($("screen-done"), lv.boss ? "#B3261E" : lv.color);
+    $("done-eyebrow").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("done-h").textContent = r.practice ? "Tricky ones cleared." : (r.earned === 3 ? "File complete: top marks!" : r.earned === 2 ? "Strong work." : "File cleared.");
+    var md = $("done-dots"); md.textContent = "";
+    for (var i = 0; i < 3; i++) { var s = document.createElement("i"); if (i < r.earned) { s.className = "on"; s.style.animationDelay = (0.15 + i * 0.22) + "s"; } md.appendChild(s); }
+    md.hidden = !!r.practice;
+    var big = $("done-big"); big.textContent = first;
+    var sm = document.createElement("small"); sm.textContent = " / " + total + "  (" + r.pct + "%)"; big.appendChild(sm);
+    $("rank-up").hidden = !r.rankUp; $("rank-up").textContent = r.rankUp || "";
+    var box = $("done-stats"); box.textContent = "";
+    [[r.round, r.round === 1 ? "round" : "rounds"], ["🔥 " + r.best, "best streak"], ["+" + r.xp, "XP earned"]].forEach(function (x) {
+      var d = document.createElement("div"); d.className = "stat";
+      var b = document.createElement("b"); b.textContent = x[0]; var t = document.createElement("span"); t.textContent = x[1];
+      d.appendChild(b); d.appendChild(t); box.appendChild(d);
+    });
+    var tricky = r.ids.filter(function (id) { return r.wrong[id]; }).sort(function (a, b) { return r.wrong[b] - r.wrong[a]; });
+    var ul = $("tricky"); ul.textContent = "";
+    tricky.forEach(function (id) {
+      var q = Q[id], li = document.createElement("li");
+      var tq = document.createElement("span"); tq.className = "tq"; tq.textContent = q.type === "type" ? q.blank : q.q.replace(/\*\*/g, "");
+      var ta = document.createElement("span"); ta.className = "ta"; ta.textContent = "✔ " + (q.type === "type" ? q.filled : q.answer);
+      var tm = document.createElement("span"); tm.className = "tm"; tm.textContent = (CUR === "boss" ? q.levelName + " · " : "") + "missed " + (r.wrong[id] === 1 ? "once" : r.wrong[id] + " times");
+      li.appendChild(tq); li.appendChild(ta); li.appendChild(tm); ul.appendChild(li);
+    });
+    $("tricky-block").hidden = tricky.length === 0; $("btn-practice").hidden = tricky.length === 0;
+    var who = $("who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = P.name || "—"; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("done");
+    if (!r.practice && r.earned === 3 && !r.celebrated) { r.celebrated = true; save(); setTimeout(function () { confetti(md, 50); }, 600); }
+  }
+  $("btn-practice").onclick = function () { var r = R(); var ids = r.ids.filter(function (id) { return r.wrong[id]; }); P.runs[CUR] = newRun(CUR, ids, true); save(); route(); window.scrollTo(0, 0); };
+  $("btn-replay").onclick = function () { var lv = levelByKey(CUR); P.runs[CUR] = newRun(CUR, lv.boss ? bossIds() : lv.ids, false); save(); route(); window.scrollTo(0, 0); };
+  $("btn-map").onclick = function () { renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- WRITING DESK ---------- */
+  var DESK = null;
+  function wc(t) { var m = String(t || "").trim().match(/[A-Za-z0-9À-ž'’-]+/g); return m ? m.length : 0; }
+  function low(t) { return String(t || "").toLowerCase(); }
+  function hasAny(t, arr) { t = low(t); return arr.some(function (w) { return t.indexOf(w) >= 0; }); }
+  function firstSentence(t) { var m = String(t || "").trim().match(/^[\s\S]*?[.!?](\s|$)/); return m ? m[0] : String(t || ""); }
+  function copiedRun(t) {
+    var src = tnorm(DATA.extractPlain).split(" "), mine = tnorm(t).split(" "), N = 9;
+    if (mine.length < N) return false;
+    var grams = {};
+    for (var i = 0; i + N <= src.length; i++) grams[src.slice(i, i + N).join(" ")] = 1;
+    for (var j = 0; j + N <= mine.length; j++) if (grams[mine.slice(j, j + N).join(" ")]) return true;
+    return false;
+  }
+  function wState() { if (!P.writing[DESK]) P.writing[DESK] = { clip: "", p1: "", p2: "", bank: true }; return P.writing[DESK]; }
+  function openDesk(k) { DESK = k; CUR = null; renderDesk(); window.scrollTo(0, 0); }
+  function renderDesk() {
+    var m = levelByKey(DESK), w = wState();
+    setColor($("screen-write"), m.color);
+    $("w-icon").textContent = m.icon; $("w-name").textContent = m.name; $("w-question").textContent = m.question;
+    var seg = $("w-clips"); seg.textContent = "";
+    Object.keys(DATA.clips).forEach(function (ck) {
+      var c = DATA.clips[ck], b = document.createElement("button"); b.type = "button";
+      b.setAttribute("aria-pressed", w.clip === ck ? "true" : "false");
+      b.textContent = c.name; var sm = document.createElement("small"); sm.textContent = c.span; b.appendChild(sm);
+      b.onclick = function () { wState().clip = ck; save(); renderDesk(); };
+      seg.appendChild(b);
+    });
+    $("w-p2h").textContent = "Body Paragraph 2 · " + (w.clip ? DATA.clips[w.clip].name : "Clip");
+    $("w-bank-toggle").textContent = w.bank ? "Hide (exam mode)" : "Show";
+    var bank = $("w-bank"); bank.textContent = ""; bank.hidden = !w.bank;
+    function col(title, items) {
+      var d = document.createElement("div"), h = document.createElement("h4"); h.textContent = title; d.appendChild(h);
+      var ul = document.createElement("ul"); items.forEach(function (it) { var li = document.createElement("li"); li.textContent = it; ul.appendChild(li); });
+      d.appendChild(ul); bank.appendChild(d);
+    }
+    col("1984 evidence", m.bank1984);
+    if (w.clip) col(DATA.clips[w.clip].name + " evidence", m.banks[w.clip]);
+    else col("Clip evidence", ["Choose a clip above to see its evidence."]);
+    if ($("w-p1").value !== w.p1) $("w-p1").value = w.p1;
+    if ($("w-p2").value !== w.p2) $("w-p2").value = w.p2;
+    liveCheck();
+    show("write");
+  }
+  function checksFor() {
+    var m = levelByKey(DESK), w = wState(), p1 = w.p1, p2 = w.p2;
+    var c1 = wc(p1), c2 = wc(p2), clip = w.clip ? DATA.clips[w.clip] : null;
+    var an = ["this shows", "this suggests", "this reveals", "this highlights", "this demonstrates", "this proves", "this means", "this emphasizes", "which shows", "which suggests", "which reveals"];
+    return [
+      [!!w.clip, "You have chosen one film clip for Body Paragraph 2"],
+      [c1 >= 75, "Body Paragraph 1 has at least 75 words (" + c1 + ")"],
+      [c2 >= 75, "Body Paragraph 2 has at least 75 words (" + c2 + ")"],
+      [c1 + c2 >= 150, "At least 150 words in total (" + (c1 + c2) + ")"],
+      [hasAny(p1, ["1984", "winston", "oceania", "the party", "big brother", "orwell"]), "Paragraph 1 is clearly about 1984 (names the novel or Winston)"],
+      [!!clip && hasAny(p2, clip.words), "Paragraph 2 names your clip or its characters"],
+      [hasAny(firstSentence(p1), m.focus), "Your first topic sentence answers the question (uses: " + m.focusLabel + ")"],
+      [hasAny(p1, an) && hasAny(p2, an), "Both paragraphs explain evidence (\"This shows / suggests / reveals…\")"],
+      [hasAny(p2, ["similarly", "likewise", "in the same way", "like winston", "both", "unlike", "whereas", "just as"]), "Paragraph 2 compares with 1984 (similarly / both / like / unlike)"],
+      [(p1 + p2).trim().length > 0 && !copiedRun(p1 + " " + p2), "You paraphrased the extract instead of copying long parts of it"]
+    ];
+  }
+  function liveCheck() {
+    var w = wState(), c1 = wc(w.p1), c2 = wc(w.p2), tot = c1 + c2, list = checksFor(), ok = 0;
+    $("w-c1").textContent = c1 + (c1 === 1 ? " word" : " words"); $("w-c2").textContent = c2 + (c2 === 1 ? " word" : " words");
+    $("w-fill").style.width = Math.min(100, Math.round(tot / 150 * 100)) + "%"; $("w-fill").classList.toggle("full", tot >= 150);
+    $("w-total").textContent = tot + " / 150 words";
+    var ul = $("w-checks"); ul.textContent = "";
+    list.forEach(function (c) {
+      var li = document.createElement("li"); if (c[0]) { li.className = "ok"; ok++; }
+      var i = document.createElement("i"); i.textContent = c[0] ? "✓" : "";
+      var s = document.createElement("span"); s.textContent = c[1];
+      li.appendChild(i); li.appendChild(s); ul.appendChild(li);
+    });
+    var filed = lvState(DESK).stars === 3;
+    $("w-status").textContent = filed ? "Filed ✓" : ok + " / " + list.length + " checks";
+    $("w-done").hidden = !filed;
+    $("w-done").textContent = filed ? "Answer filed. Now try it again with the memory bank hidden, or choose a different clip." : "";
+    return ok === list.length;
+  }
+  $("w-p1").addEventListener("input", function () { wState().p1 = $("w-p1").value; save(); liveCheck(); });
+  $("w-p2").addEventListener("input", function () { wState().p2 = $("w-p2").value; save(); liveCheck(); });
+  $("w-bank-toggle").onclick = function () { var w = wState(); w.bank = !w.bank; save(); renderDesk(); };
+  $("w-submit").onclick = function () {
+    if (!liveCheck()) {
+      var first = $("w-checks").querySelector("li:not(.ok)");
+      if (first) { first.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" }); if (!reduceMotion) { first.classList.remove("shake"); void first.offsetWidth; first.classList.add("shake"); } }
+      return;
+    }
+    var s = lvState(DESK), before = totalDots();
+    if (s.stars < 3) { s.stars = 3; s.plays += 1; s.best = 100; P.xp += 50; }
+    save(); liveCheck(); confetti($("w-submit"), 40);
+    var ra = rankFor(totalDots()), rb = rankFor(before);
+    if (ra[2] !== rb[2]) { $("w-done").textContent = ra[1] + " New rank: " + ra[2] + "! " + $("w-done").textContent; }
+  };
+  $("w-copy").onclick = function () {
+    var m = levelByKey(DESK), w = wState();
+    var txt = (P.name || "") + " · " + m.name + "\n" + m.question + "\nClip: " + (w.clip ? DATA.clips[w.clip].name : "-") + "\n\n" + w.p1.trim() + "\n\n" + w.p2.trim() + "\n\n(" + (wc(w.p1) + wc(w.p2)) + " words)";
+    function done() { $("w-copied").hidden = false; setTimeout(function () { $("w-copied").hidden = true; }, 2500); }
+    try { navigator.clipboard.writeText(txt).then(done, function () { fallback(); }); } catch (e) { fallback(); }
+    function fallback() { var ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); done(); } catch (e) {} ta.remove(); }
+  };
+  $("w-print").onclick = function () { window.print(); };
+  $("btn-wback").onclick = function () { DESK = null; renderMap(); window.scrollTo(0, 0); };
+
+  function confetti(el, n) {
+    if (reduceMotion || !el) return;
+    var rect = el.getBoundingClientRect(), x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+    var colors = ["#D9A21B", "#B3261E", "#2E6B4A", "#1D1F21", "#F4EFE3"]; n = n || 22;
+    for (var i = 0; i < n; i++) {
+      var c = document.createElement("i"); c.className = "confetti";
+      c.style.left = x + "px"; c.style.top = y + "px"; c.style.background = colors[i % colors.length];
+      var ang = Math.random() * Math.PI * 2, dist = 60 + Math.random() * 120;
+      c.style.setProperty("--dx", Math.cos(ang) * dist + "px"); c.style.setProperty("--dy", (Math.sin(ang) * dist - 50 + Math.random() * 100) + "px");
+      document.body.appendChild(c);
+      (function (node) { setTimeout(function () { node.remove(); }, 950); })(c);
+    }
+  }
+
+  function route() {
+    if (!P.name) return renderWelcome();
+    if (!CUR || !R()) return renderMap();
+    var r = R();
+    if (r.screen === "play") renderPlay(); else if (r.screen === "between") renderBetween(); else renderDone();
+  }
+  document.addEventListener("keydown", function (e) {
+    if ($("screen-play").hidden || !CUR) return;
+    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
+    var r = R(), q = currentQ(), k = e.key.toLowerCase();
+    if (q.type === "mcq") {
+      var idx = ["1", "2", "3", "4"].indexOf(k); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(k);
+      if (idx >= 0 && r.opts && idx < r.opts.length && !r.answered) { e.preventDefault(); pick(idx); return; }
+    }
+    if ((k === "enter" || k === "arrowright") && r.answered && e.target.tagName !== "BUTTON") { e.preventDefault(); next(); }
+  });
+
+  $("top-title").textContent = DATA.title;
+  $("top-sub").textContent = DATA.subtitle;
+  P = load() || blank();
+  route();
+})();
+</script>
+</body>
+</html>
