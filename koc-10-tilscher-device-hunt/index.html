@@ -173,6 +173,16 @@ button { font: inherit; color: inherit; }
 .pickbox.p1 { border-color: var(--board); }
 .pickbox.p2 { border-color: #8A4FBF; }
 .pickbox span { font-size: .88rem; }
+.wpanel { margin: 2px -8px 8px; padding: 14px 12px 16px; background: #FFFBEA; border: 3px solid var(--board); border-radius: 14px; display: flex; flex-direction: column; gap: 14px; }
+.wpanel.g2 { border-color: #8A4FBF; }
+.wp-h { font-family: var(--f-hand); font-size: 1.35rem; color: var(--board); }
+.wpanel.g2 .wp-h { color: #8A4FBF; }
+.devstrip { display: flex; flex-direction: column; gap: 6px; }
+.ds-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; background: #FFFFFF; border: 2px solid var(--board); border-radius: 10px; padding: 6px 10px; }
+.ds-row.g2 { border-color: #8A4FBF; }
+.ds-tag { font-size: .78rem; font-weight: 700; color: #FFFFFF; background: var(--board); border-radius: 999px; padding: 1px 9px; }
+.ds-row.g2 .ds-tag { background: #8A4FBF; }
+.ds-q { font-weight: 700; background: linear-gradient(transparent 8%, var(--yellow) 8%, var(--yellow) 92%, transparent 92%); box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: 0 2px; }
 .sep { font-family: var(--f-hand); font-size: 1.5rem; border-bottom: 3px solid var(--pink); padding-bottom: 2px; margin-top: 6px; }
 .slot { display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--rule); padding-left: 12px; }
 .slot.ok { border-left-color: var(--good); }
@@ -304,11 +314,6 @@ button { font: inherit; color: inherit; }
             <div class="pickbox p2"><b>Device 2</b><span id="pick2-t">Then tap a second line.</span></div>
           </div>
           <p class="small muted" id="pick-note">Tap a chosen line again to remove it.</p>
-          <div class="spots" id="spots2"></div>
-        </div>
-
-        <div class="card" id="desk" hidden>
-          <span class="label">Your paragraph, in the exam order</span>
           <div class="remind"><b>Reminders</b>
             <ul>
               <li>Duffy is a woman: write <b>she</b> or <b>Duffy</b>, never “he.”</li>
@@ -317,7 +322,12 @@ button { font: inherit; color: inherit; }
               <li>Each box gets a gold star when every part of its structure is there. The ticks check structure; the 💡 hints help with ideas.</li>
             </ul>
           </div>
-          <div id="slots" class="col"></div>
+          <div class="spots" id="spots2"></div>
+        </div>
+
+        <div class="card" id="desk" hidden>
+          <span class="label">Finish</span>
+          <p class="small muted">When every box is written, or when time is up, finish here to see your whole paragraph and a model for the same two devices.</p>
           <button class="btn btn-ink" id="btn-file" type="button" disabled>Finish my paragraph</button>
           <p class="small muted" id="file-note"></p>
         </div>
@@ -483,6 +493,10 @@ button { font: inherit; color: inherit; }
     SPOTS.forEach(function (s) {
       if (s.where !== last) { last = s.where; var h = document.createElement("div"); h.className = "group-h"; h.textContent = s.where; box.appendChild(h); }
       box.appendChild(spotButton(s, mode));
+      if (mode === 2 && S.d1 && S.d2) {
+        if (s.id === S.d1) box.appendChild(makePanel(1));
+        if (s.id === S.d2) box.appendChild(makePanel(2));
+      }
     });
   }
 
@@ -624,7 +638,11 @@ button { font: inherit; color: inherit; }
     else if (!S.d1) S.d1 = id;
     else if (!S.d2) S.d2 = id;
     else S.d2 = id;
+    /* Device 1 is always the line that comes first in the poem, so the boxes follow the poem */
+    if (S.d1 && S.d2 && SPOTS.indexOf(BY[S.d2]) < SPOTS.indexOf(BY[S.d1])) { var t = S.d1; S.d1 = S.d2; S.d2 = t; }
     S.filed = false; save(); renderL2();
+    var target = document.querySelector("#spots2 .wpanel");
+    if (target && S.d1 && S.d2) target.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
   }
   function renderL2() {
     $("intro").textContent = D.intro;
@@ -634,9 +652,10 @@ button { font: inherit; color: inherit; }
     $("pick2-t").textContent = b ? b.device + ": “" + b.quote + "”" : (a ? "Now tap a second line." : "Then tap a second line.");
     $("pick-note").textContent = a && b && a.device === b.device ? "Both lines use " + a.device.toLowerCase() + ". You can keep them, but two different devices usually make a stronger paragraph." : "Tap a chosen line again to remove it.";
     var ready = !!(a && b);
+    if (ready) $("pick-note").textContent = "Your writing boxes are open under each chosen line. Tap a chosen line again to remove it.";
     $("desk").hidden = !ready;
     $("filed").hidden = !(ready && S.filed);
-    if (ready) buildDesk();
+    if (ready) { $("spots2").querySelectorAll("textarea").forEach(function (ta) { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 4) + "px"; }); updateFile(); }
     if (ready && S.filed) renderFiled();
   }
 
@@ -726,10 +745,31 @@ button { font: inherit; color: inherit; }
     return p;
   }
   function slotOk(def) { var c = checksFor(def, S.boxes[def.key]); return c.length > 0 && c.every(function (x) { return x[0]; }); }
-  function buildDesk() {
-    var box = $("slots"); box.textContent = "";
-    slotDefs().forEach(function (def) {
-      if (def.sep) { var h = document.createElement("div"); h.className = "sep"; h.textContent = def.sep; box.appendChild(h); return; }
+  /* Reminder of the chosen device and words, shown at every writing step */
+  function devStrip(def) {
+    var s = def.spot, g = s.id === S.d1 ? 1 : 2;
+    var box = document.createElement("div"); box.className = "devstrip";
+    var row = document.createElement("div"); row.className = "ds-row g" + g;
+    var tag = document.createElement("span"); tag.className = "ds-tag"; tag.textContent = "Device " + g + ": " + s.device;
+    var q = document.createElement("span"); q.className = "ds-q"; q.textContent = "“" + s.quote + "”";
+    row.appendChild(tag); row.appendChild(q); box.appendChild(row);
+    return box;
+  }
+  function makePanel(g) {
+    var s = BY[g === 1 ? S.d1 : S.d2];
+    var wp = document.createElement("div"); wp.className = "wpanel g" + g;
+    var h = document.createElement("div"); h.className = "wp-h"; h.textContent = "✍️ Write here · Device " + g + ": " + s.device;
+    wp.appendChild(h);
+    var defs = slotDefs(), grp = 1;
+    defs.forEach(function (def) {
+      if (def.sep && /Device 2/.test(def.sep)) grp = 2;
+      if (grp !== g) return;
+      if (def.sep) { if (!/Furthermore/.test(def.sep)) return; var hs = document.createElement("div"); hs.className = "sep"; hs.textContent = "⑧ Start with “Furthermore,”"; wp.appendChild(hs); return; }
+      wp.appendChild(makeSlot(def));
+    });
+    return wp;
+  }
+  function makeSlot(def) {
       var slot = document.createElement("div"); slot.className = "slot";
       var head = document.createElement("div"); head.className = "slot-h";
       var num = document.createElement("span"); num.className = "num"; num.textContent = def.num;
@@ -752,17 +792,15 @@ button { font: inherit; color: inherit; }
       function grow() { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 4) + "px"; }
       ta.addEventListener("input", function () { grow(); S.boxes[def.key] = ta.value; S.filed = false; save(); paintChecks(); updateFile(); $("filed").hidden = true; });
       paintChecks();
-      slot.appendChild(head); slot.appendChild(frameNode(def.frame)); slot.appendChild(ta); slot.appendChild(ul); slot.appendChild(hb); slot.appendChild(hl);
-      box.appendChild(slot); grow();
-    });
-    updateFile();
+      slot.appendChild(head); slot.appendChild(devStrip(def)); slot.appendChild(frameNode(def.frame)); slot.appendChild(ta); slot.appendChild(ul); slot.appendChild(hb); slot.appendChild(hl);
+      return slot;
   }
   function updateFile() {
     var defs = slotDefs().filter(function (d) { return d.key; });
     var done = defs.filter(slotOk).length;
     var all = defs.every(function (d) { return (S.boxes[d.key] || "").trim(); });
     $("btn-file").disabled = false;
-    $("file-note").textContent = done + " of " + defs.length + " boxes have a gold star." + (all ? "" : " Write something in every box to finish.");
+    $("file-note").textContent = done + " of " + defs.length + " boxes have a gold star." + (all ? "" : " Some boxes are still empty, but you can finish now if time is short.");
   }
   function paragraph() {
     return slotDefs().filter(function (d) { return d.key; }).map(function (d) { return (S.boxes[d.key] || "").trim(); }).filter(Boolean).join(" ");
@@ -791,7 +829,7 @@ button { font: inherit; color: inherit; }
     $("improve").value = S.improve || "";
   }
   $("btn-file").onclick = function () { S.filed = true; save(); $("filed").hidden = false; renderFiled(); $("filed").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
-  $("btn-edit").onclick = function () { $("desk").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-edit").onclick = function () { var wp = document.querySelector("#spots2 .wpanel"); (wp || $("spots2")).scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
   $("btn-copy").onclick = function () {
     var t = paragraph();
     function done(ok) { $("copy-note").textContent = ok ? "Copied. You can paste it into your notes or send it to your teacher." : "Copying didn't work here. Select the text above and copy it."; }
