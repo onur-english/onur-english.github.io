@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>The Empty High Street · Device Hunt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&display=swap">
+<style>
+/* Layout: one phone-width column. A shopfront on a quiet high street: warm stone pavement, a red-and-cream striped awning,
+   a navy shop door for actions, price-tag yellow for clues still to find, a red CLOSED sign for alarms. DM Serif Display for signs. */
+:root {
+  --wall: #EEE8DE;
+  --card: #FFFFFF;
+  --ink: #1F2430;
+  --muted: #5B606C;
+  --rule: #DCD5C9;
+  --board: #1E3A5F;
+  --board-hover: #152B47;
+  --pink: #F3D3CC;
+  --yellow: #FFE8A8;
+  --lilac: #E3E8F4;
+  --mint: #D3ECDD;
+  --star: #D3930A;
+  --red: #B83A2E;
+  --red-soft: #FBE2DD;
+  --good: #1F6E48;
+  --good-soft: #DEF1E5;
+  --awning: #C8473A;
+  --f-hand: "DM Serif Display", "Georgia", serif;
+  --f-body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  --f-news: "Source Serif 4", "Georgia", "Times New Roman", serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--wall); }
+body {
+  margin: 0; color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; min-height: 100vh;
+  background:
+    linear-gradient(0deg, rgba(31,36,48,.045) 1px, transparent 1px) 0 0 / 100% 26px,
+    linear-gradient(90deg, rgba(31,36,48,.035) 1px, transparent 1px) 0 0 / 52px 52px,
+    radial-gradient(1000px 420px at 50% -8%, #F8F3EA 0%, transparent 70%),
+    var(--wall);
+}
+img { max-width: 100%; display: block; }
+.wrap { max-width: 680px; margin: 0 auto; padding: 14px 16px 64px; display: flex; flex-direction: column; gap: 16px; }
+.col { display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--board); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #FFFFFF; border-radius: 10px; padding: 4px 6px; flex: none; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.logo img { width: 70px; height: auto; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-hand); font-size: 1.45rem; line-height: 1; }
+.top-sub { color: var(--muted); font-size: .86rem; }
+
+.card { background: var(--card); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 0 rgba(30,42,51,.06), 0 10px 26px rgba(40,70,100,.10); }
+.label { font-family: var(--f-hand); font-size: 1.15rem; color: var(--board); letter-spacing: .02em; }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+
+.btn { appearance: none; border: 0; border-radius: 12px; padding: 13px 18px; font-weight: 700; font-size: 1rem; cursor: pointer; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-ink { background: var(--board); color: #FFFFFF; box-shadow: 0 3px 0 #0E1D33; }
+.btn-ink:hover { background: var(--board-hover); }
+.btn-ink:active { transform: translateY(2px); box-shadow: 0 1px 0 #0E1D33; }
+.btn-ink:disabled { background: #9AA7A2; box-shadow: none; cursor: not-allowed; }
+.btn-ghost { background: #FFFFFF; border: 2px solid var(--ink); color: var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Start: a shopfront with a striped awning and a CLOSED sign */
+.cover { position: relative; background: var(--board); color: #FFFFFF; border-radius: 12px; padding: 74px 22px 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 14px 30px rgba(20,30,60,.25); overflow: hidden; }
+.cover::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 48px; background: repeating-linear-gradient(90deg, var(--awning) 0 30px, #FBF4E6 30px 60px);
+  -webkit-mask: radial-gradient(circle 15px at 15px 33px, #000 14px, transparent 15px) 0 0 / 30px 48px repeat-x, linear-gradient(#000, #000) 0 0 / 100% 33px no-repeat;
+  mask: radial-gradient(circle 15px at 15px 33px, #000 14px, transparent 15px) 0 0 / 30px 48px repeat-x, linear-gradient(#000, #000) 0 0 / 100% 33px no-repeat; }
+.cover::after { content: "CLOSED"; position: absolute; right: 18px; top: 62px; background: #FBF4E6; color: var(--red); border: 2px solid var(--red); border-radius: 4px; padding: 2px 10px; font-family: var(--f-hand); font-size: 1.05rem; letter-spacing: .12em; transform: rotate(7deg); box-shadow: 0 3px 0 rgba(0,0,0,.2); }
+.cover h1 { font-family: var(--f-hand); font-weight: 400; font-size: clamp(2.4rem, 11vw, 3.3rem); line-height: 1.02; max-width: 10ch; }
+.cover .who-poet { font-size: 1rem; color: #F3D9A4; }
+.name-plate { align-self: flex-start; background: #FBF4E6; color: var(--ink); border-radius: 4px; padding: 2px 12px; font-family: var(--f-hand); font-size: 1.05rem; }
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.steps li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+.steps .n { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--board); color: #FFFFFF; font-family: var(--f-hand); font-size: 1.3rem; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input, textarea { font: inherit; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); width: 100%; }
+.field input:focus, textarea:focus { border-color: var(--board); outline: none; }
+.resume { border: 2px dashed var(--board); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Tabs */
+.tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; padding-block: 6px; background: rgba(214,226,236,.93); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.tab { appearance: none; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 0; cursor: pointer; min-width: 0; }
+.tab b { font-family: var(--f-hand); font-weight: 400; font-size: 1.2rem; }
+.tab span { font-size: .78rem; color: var(--muted); }
+.tab.on { background: var(--board); border-color: var(--board); color: #FFFFFF; }
+.tab.on span { color: #D3E3DC; }
+.tab:disabled { opacity: .55; cursor: not-allowed; }
+
+/* Poem */
+.poem-card { padding: 0; overflow: hidden; }
+.poem-card summary { cursor: pointer; padding: 14px 20px; font-family: var(--f-hand); font-size: 1.2rem; color: var(--board); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.poem-card summary::-webkit-details-marker { display: none; }
+.poem-card summary::after { content: "▾ hide"; font-family: var(--f-body); font-size: .8rem; color: var(--muted); }
+.poem-card:not([open]) summary::after { content: "▸ show"; }
+.article { border-top: 4px solid var(--awning); padding: 16px 20px 6px; font-family: var(--f-news); display: flex; flex-direction: column; gap: 10px; }
+.article .kicker { font-family: var(--f-body); font-size: .74rem; font-weight: 700; letter-spacing: .14em; color: var(--red); }
+.article .hed { font-family: var(--f-news); font-weight: 700; font-size: clamp(1.45rem, 6vw, 1.9rem); line-height: 1.18; }
+.article .dek { font-style: italic; font-size: 1.05rem; color: #3A3F4A; }
+.article .by { font-family: var(--f-body); font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: 6px; }
+.article .para { display: grid; grid-template-columns: 24px 1fr; gap: 8px; font-size: 1.04rem; line-height: 1.68; }
+.article .pn { font-family: var(--f-body); font-size: .74rem; color: var(--muted); padding-top: 5px; text-align: right; }
+.article .foot { font-family: var(--f-body); font-size: .8rem; font-style: italic; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 8px; }
+.article mark { background: linear-gradient(transparent 8%, var(--yellow) 8%, var(--yellow) 92%, transparent 92%); color: inherit; padding: 0 2px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.article mark sup { font-family: var(--f-body); font-size: .62em; font-weight: 700; background: var(--board); color: #FFFFFF; border-radius: 999px; padding: 0 5px; margin-left: 2px; }
+.spot .q { font-family: var(--f-news); }
+.poem-note { font-size: .8rem; color: var(--muted); padding: 8px 20px 14px; }
+
+.meter { height: 12px; border-radius: 999px; background: #E3EAF0; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--board), #2E7D63); transition: width .4s; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 16px; height: 12px; border-radius: 3px; display: inline-block; }
+
+/* Device spots */
+.group-h { font-family: var(--f-hand); font-size: 1.25rem; border-bottom: 3px solid var(--yellow); padding-bottom: 2px; margin-top: 4px; }
+.spots { display: flex; flex-direction: column; gap: 10px; }
+.spot { appearance: none; text-align: left; width: 100%; border: 2px solid var(--rule); background: var(--yellow); border-radius: 12px; padding: 12px 14px; cursor: pointer; display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; min-height: 56px; transition: transform .08s; }
+.spot:active { transform: translateY(2px); }
+.spot .no { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: #FFFFFF; font-family: var(--f-hand); font-size: 1.15rem; border: 2px solid var(--ink); }
+.spot .q { font-weight: 700; font-size: 1.02rem; }
+.spot .tag { display: block; font-family: var(--f-hand); font-size: 1.05rem; color: var(--good); }
+.spot.first { background: var(--mint); border-color: var(--good); }
+.spot.first .no { background: var(--star); color: #FFFFFF; border-color: var(--star); }
+.spot.later { background: #DCE8F7; border-color: #7A9CC6; }
+.spot.cold { background: var(--red-soft); border-color: var(--red); cursor: not-allowed; }
+.spot.cold .tag { color: var(--red); }
+.spot.pick1 { box-shadow: 0 0 0 4px var(--board); }
+.spot.pick2 { box-shadow: 0 0 0 4px #8A4FBF; }
+.spot .pk { font-family: var(--f-hand); font-size: 1rem; color: #FFFFFF; background: var(--board); border-radius: 6px; padding: 0 8px; margin-left: 6px; }
+.spot.pick2 .pk { background: #8A4FBF; }
+.sweep { border-top: 5px solid var(--red); }
+
+/* Sheet */
+.sheet-back { position: fixed; inset: 0; background: rgba(30,42,51,.5); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: #FFFFFF; width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; border-radius: 20px 20px 0 0; border-top: 6px solid var(--yellow); padding: 18px 16px calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 14px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.x { appearance: none; border: 2px solid var(--rule); background: transparent; border-radius: 999px; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; line-height: 1; flex: none; }
+.evidence { font-size: 1.15rem; font-weight: 700; background: linear-gradient(transparent 10%, var(--yellow) 10%, var(--yellow) 90%, transparent 90%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.st-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.st { font-size: .78rem; font-weight: 700; border-radius: 999px; padding: 2px 10px; border: 1px solid var(--rule); color: var(--muted); }
+.st.on { border-color: var(--board); color: var(--board); }
+.st.done { border-color: var(--good); color: var(--good); }
+.qh { font-size: 1.15rem; font-weight: 700; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 54px; }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--board); } }
+.opt .k { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-family: var(--f-hand); font-size: 1.15rem; background: var(--wall); }
+.opt .olab { color: var(--board); }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.right .k { background: var(--good); color: #FFFFFF; }
+.opt.wrong { border-color: var(--red); background: var(--red-soft); }
+.opt.wrong .k { background: var(--red); color: #FFFFFF; }
+.opt.dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.fb { border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--good-soft); }
+.fb.bad { background: var(--red-soft); }
+.fb.reveal { background: #FFF2C6; }
+.fb-h { font-family: var(--f-hand); font-size: 1.4rem; }
+.fb.good .fb-h { color: var(--good); }
+.fb.bad .fb-h { color: var(--red); }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.retry { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--red-soft); color: var(--red); }
+
+/* Writing desk */
+.intro { background: #F4F7FA; border: 1px dashed #AFC0CD; border-radius: 12px; padding: 12px 14px; font-style: italic; }
+.picks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.pickbox { border: 2px dashed var(--rule); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.pickbox b { font-family: var(--f-hand); font-weight: 400; font-size: 1.15rem; display: block; }
+.pickbox.p1 { border-color: var(--board); }
+.pickbox.p2 { border-color: #8A4FBF; }
+.pickbox span { font-size: .88rem; }
+.sep { font-family: var(--f-hand); font-size: 1.5rem; border-bottom: 3px solid var(--pink); padding-bottom: 2px; margin-top: 6px; }
+.slot { display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--rule); padding-left: 12px; }
+.slot.ok { border-left-color: var(--good); }
+.slot-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.slot-h b { font-family: var(--f-hand); font-weight: 400; font-size: 1.3rem; }
+.num { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--board); color: var(--board); display: grid; place-items: center; font-family: var(--f-hand); font-size: 1.2rem; flex: none; }
+.slot.ok .num { background: var(--star); border-color: var(--star); color: #FFFFFF; }
+.frame { margin: 0; padding: 8px 12px; background: #FFF7D6; border-left: 3px solid var(--star); border-radius: 0 8px 8px 0; font-size: .95rem; color: #3D3628; }
+.frame .blank { display: inline-block; min-width: 2.5em; border-bottom: 2px solid #8B7A3F; }
+.slot textarea { min-height: 84px; resize: vertical; line-height: 1.45; overflow: hidden; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; font-size: .88rem; }
+.checks li { display: flex; gap: 6px; align-items: baseline; color: var(--muted); }
+.checks li::before { content: "○"; font-weight: 700; flex: none; }
+.checks li.ok { color: var(--good); }
+.checks li.ok::before { content: "✓"; }
+.checks li.no { color: var(--red); }
+.checks li.no::before { content: "!"; }
+.hint-btn { appearance: none; align-self: flex-start; border: 2px solid var(--star); background: #FFF9E6; color: #6B4E00; border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: .85rem; cursor: pointer; }
+.hints { margin: 0; padding: 10px 12px 10px 28px; background: #FFF9E6; border-radius: 10px; font-size: .92rem; display: flex; flex-direction: column; gap: 4px; }
+.remind { background: var(--lilac); border-radius: 12px; padding: 12px 14px; font-size: .92rem; }
+.remind ul { margin: 6px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 3px; }
+.final { font-size: 1.04rem; line-height: 1.7; background: #F4F7FA; border-radius: 12px; padding: 14px; white-space: pre-wrap; }
+.model { line-height: 1.7; background: #F7FBF8; border-left: 4px solid var(--good); border-radius: 0 12px 12px 0; padding: 12px 14px; }
+.tick { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.tick label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.tick input { width: 22px; height: 22px; margin-top: 1px; flex: none; accent-color: var(--good); }
+
+/* Report */
+.big { font-family: var(--f-hand); font-size: clamp(2.8rem, 13vw, 3.8rem); line-height: 1; color: var(--board); }
+.big small { font-size: .45em; color: var(--muted); }
+.stars { font-size: 1.6rem; color: var(--star); letter-spacing: .1em; }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; }
+.who b { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title">Device Hunt</span>
+      <span class="top-sub">Koç Grade 9 · Behind the Headline</span>
+    </div>
+  </header>
+
+  <!-- START -->
+  <section id="s-start" hidden>
+    <div class="col">
+      <div class="cover">
+        <span class="name-plate">Grade 9 · Media Detectives</span>
+        <h1>The Empty High Street</h1>
+        <span class="who-poet">An opinion article by Clara Benton</span>
+      </div>
+      <div class="card">
+        <ol class="steps">
+          <li><span class="n">1</span><span><b>Find the devices.</b> Twelve phrases in the article are marked. Tap each one: name the device, then choose what it does to the reader. A wrong answer comes back in the next round.</span></li>
+          <li><span class="n">2</span><span><b>Write your paragraph.</b> Tap TWO devices in the article. Writing boxes appear in the order of your writing frame (steps 1 to 6). Each part is ticked when you write it, and the 💡 hints help you think.</span></li>
+        </ol>
+        <div class="resume" id="resume" hidden>
+          <p><b>You have work in progress.</b> <span id="resume-text"></span></p>
+          <div class="btn-row">
+            <button class="btn btn-ink" id="btn-resume" type="button">Continue</button>
+            <button class="btn btn-ghost" id="btn-wipe" type="button">Start over</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="student-name">Your name</label>
+          <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+        </div>
+        <button class="btn btn-ink" id="btn-start" type="button">Open the case file</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <section id="s-main" hidden>
+    <div class="col">
+      <nav class="tabs" aria-label="Levels">
+        <button class="tab" id="tab-1" type="button"><b>Level 1 · Find</b><span id="tab-1-s"></span></button>
+        <button class="tab" id="tab-2" type="button"><b>Level 2 · Write</b><span id="tab-2-s"></span></button>
+      </nav>
+
+      <details class="card poem-card" id="poem-card" open>
+        <summary>The whole article</summary>
+        <div class="article" id="article"></div>
+        <p class="poem-note">Read the whole article first. The numbered yellow phrases are your clues.</p>
+      </details>
+
+      <!-- LEVEL 1 -->
+      <div id="lv-1" class="col" hidden>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span class="label" id="round-label">Round 1</span>
+            <span class="small" id="found-count"></span>
+          </div>
+          <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+          <div class="legend">
+            <span><i style="background:var(--yellow)"></i>To find</span>
+            <span><i style="background:var(--mint)"></i>★ First try</span>
+            <span><i style="background:#DCE8F7"></i>Found later</span>
+            <span><i style="background:var(--red-soft)"></i>Try again next round</span>
+          </div>
+        </div>
+        <div class="card sweep" id="sweep-card" hidden>
+          <span class="label" style="color:var(--red)">Round complete</span>
+          <p id="sweep-text"></p>
+          <button class="btn btn-ink" id="btn-sweep" type="button"></button>
+        </div>
+        <div class="card" id="done1-card" hidden>
+          <span class="label" style="color:var(--good)">Every device found!</span>
+          <p>Level 2 is open. Now write your exam paragraph.</p>
+          <button class="btn btn-ink" id="btn-to-2" type="button">Go to Level 2: Write</button>
+        </div>
+        <div class="card"><div class="spots" id="spots1"></div></div>
+      </div>
+
+      <!-- LEVEL 2 -->
+      <div id="lv-2" class="col" hidden>
+        <div class="card">
+          <span class="label">The writing question</span>
+          <p class="intro" id="intro"></p>
+          <div class="remind"><b>Before you write: choose 2 devices that best answer the question. Choose smartly.</b>
+            <ul><li>Pick devices with a strong key word you can explain in step 3.</li>
+            <li>A strong pair: one device that makes online shopping look bad, and one that makes the reader feel something (guilt, sadness or fear).</li></ul>
+          </div>
+          <div class="picks">
+            <div class="pickbox p1"><b>Device 1</b><span id="pick1-t">Tap a phrase below.</span></div>
+            <div class="pickbox p2"><b>Device 2</b><span id="pick2-t">Then tap a second phrase.</span></div>
+          </div>
+          <p class="small muted" id="pick-note">Tap a chosen phrase again to remove it.</p>
+          <div class="spots" id="spots2"></div>
+        </div>
+
+        <div class="card" id="desk" hidden>
+          <span class="label">Your paragraph, step by step</span>
+          <div class="remind"><b>Reminders</b>
+            <ul>
+              <li>Clara Benton is a woman: write <b>she</b> or <b>Benton</b>, never “he.”</li>
+              <li>Copy the words exactly and put them inside quotation marks. Never write the word “quote.”</li>
+              <li>In step 3, zoom in on ONE word: what it is, what it means and what it is associated with.</li>
+              <li>In step 4, use the frame for YOUR device. If the source is not named, say so.</li>
+              <li>Never start a sentence with “To sum up,” “To conclude” or “All in all.”</li>
+              <li>Each box gets a gold star when every part of its structure is there. The ticks check structure; the 💡 hints help with ideas.</li>
+            </ul>
+          </div>
+          <div id="slots" class="col"></div>
+          <button class="btn btn-ink" id="btn-file" type="button" disabled>Finish my paragraph</button>
+          <p class="small muted" id="file-note"></p>
+        </div>
+
+        <div class="card" id="filed" hidden>
+          <span class="label" style="color:var(--good)">Your paragraph</span>
+          <div class="final" id="final"></div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btn-copy" type="button">Copy my paragraph</button>
+            <button class="btn btn-ghost" id="btn-edit" type="button">Edit my paragraph</button>
+          </div>
+          <p class="small muted" id="copy-note" role="status"></p>
+          <span class="label">Model paragraph for the same two devices</span>
+          <p class="model" id="model"></p>
+          <span class="label">Now check your own paragraph</span>
+          <ul class="tick" id="tick"></ul>
+          <div class="field">
+            <label for="improve">One thing I will improve next time</label>
+            <textarea id="improve" maxlength="300"></textarea>
+          </div>
+          <button class="btn btn-ink" id="btn-report" type="button">See my report</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="s-report" hidden>
+    <div class="card">
+      <span class="label">Report</span>
+      <h2 style="font-family:var(--f-hand);font-weight:400;font-size:2rem">The Empty High Street</h2>
+      <div>
+        <div class="muted">Devices found first try (Level 1)</div>
+        <div class="big" id="r-big"></div>
+        <div class="stars" id="r-stars" aria-hidden="true"></div>
+      </div>
+      <div id="r-revise-block"><span class="label">Devices to revise</span><ul id="r-revise" class="small" style="margin:6px 0 0;padding-left:20px"></ul></div>
+      <span class="label">My paragraph</span>
+      <div class="final" id="r-para"></div>
+      <div id="r-improve-block"><span class="label">I will improve</span><p id="r-improve"></p></div>
+      <div class="who" id="r-who"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="btn-back" type="button">Back to my work</button>
+        <button class="btn btn-ghost" id="btn-again" type="button">Start again</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="sheet-back" id="sheet-back" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
+    <div class="sheet-head"><span class="label" id="sheet-label"></span><button class="x" id="sheet-x" type="button" aria-label="Close">×</button></div>
+    <p class="evidence" id="sheet-ev"></p>
+    <div class="st-row" id="sheet-steps"></div>
+    <span class="retry" id="sheet-retry" hidden></span>
+    <h3 class="qh" id="sheet-q" tabindex="-1"></h3>
+    <div class="opts" id="sheet-opts" role="group" aria-labelledby="sheet-q"></div>
+    <div class="fb" id="sheet-fb" role="status" aria-live="polite" hidden></div>
+    <button class="btn btn-ink" id="sheet-next" type="button" hidden></button>
+  </div>
+</div>
+
+<script id="app-data" type="application/json">{"art": {"hed": "Click, Buy, Bury: Online Shopping Is Killing Our High Streets", "dek": "Every parcel on your doorstep comes with a hidden cost, and our town centers are the ones paying it.", "by": "By Clara Benton | The Hartwell Gazette | 23 October 2026", "paras": ["Walk down Hartwell High Street on a Saturday morning and listen. Twenty years ago, you would have heard the chatter of shoppers, the ring of shop bells and children laughing in the queue for ice cream. Today, all you will hear is the wind rattling the metal shutters of empty shops.", "Our high street is dying, and if we are honest, we are the ones holding the knife. Every time we tap “buy now” on a phone, another shop window goes dark.", "One recent study claims that nearly one in five shops in our town centers now stands empty. Walk past them and you will see the same sign again and again. Closed. Closed. Closed.", "One leading retail expert, whose name I cannot share, told me that “within ten years, many high streets will be nothing but parking lots and empty buildings.”", "Meanwhile, the online giants grow fatter every day. Their warehouses sit on the edge of town like huge gray fortresses, full of goods but empty of people.", "While a delivery van races past with a single parcel, the family bakery that has served this town for sixty years quietly closes its doors.", "Of course, online shopping fans will say it is cheaper and more convenient. But since when did convenience matter more than community?", "The good news is that the tide is turning. Across the country, thousands of people are already turning back to local shops, and the towns that support them are coming back to life.", "We can still save our high street. If we do nothing, our children will grow up in ghost towns. So next Saturday, leave your phone at home and walk into town. Your high street is waiting for you."], "foot": "This opinion piece was written for classroom practice. The writer, the publication, and the statistics and quotations it mentions are fictional."}, "spots": [{"id": "s1", "where": "Headline", "quote": "Click, Buy, Bury: Online Shopping Is Killing Our High Streets", "device": "Headline", "dAns": "Headline: the big title at the top, which uses ‘Killing’ to shock the reader at once.", "dWrong": ["Rhetorical question: the title asks the reader whether online shopping kills towns.", "Statistics and facts: the title gives the exact number of high streets that have closed.", "Expert opinion: the title quotes a named shopping expert’s warning about town centers."], "dHint": "Where does this text sit in the article? What is its job?", "dWhy": "This is the big title at the top. It uses the violent verb “Killing” and the rhyme-like run “Click, Buy, Bury” to grab attention. That is a headline.", "effect": "The verb “Killing” makes the reader see online shopping as a murderer before they have read any evidence at all.", "eWrong": ["The verb “Killing” makes the reader expect a calm, balanced report that gives both sides of the online shopping debate.", "The verb “Killing” makes the reader excited to buy more things online, because the headline sounds like an advert.", "The verb “Killing” makes the reader think the article is a true crime story about a real murder in Hartwell."], "eHint": "Think about how the reader sees online shopping before reading a single paragraph.", "words": [["Killing", "verb", "What could the verb “Killing” suggest? Who or what usually kills? Is it an accident or a crime?"], ["Bury", "verb", "What do we bury? What could “Bury” suggest about what happens to the high street after it dies?"]], "frameHint": "Headline frame: Benton uses the headline “___” to suggest ___. She also emphasizes ___.", "readerHint": "Feeling words: shocked, alarmed, angry. Why would a reader feel this before reading the article?", "m_ev": "When she introduces her topic in the headline, Benton states that “Online Shopping Is Killing Our High Streets.”", "m_tech": "Here, Benton uses the headline through the word “Killing.” Killing is something that ends a life forever. The word “Killing” means causing the death of a person, an animal or a plant. It is also commonly associated with violence, crime and murder.", "m_dev": "Benton uses the headline “Click, Buy, Bury: Online Shopping Is Killing Our High Streets” to suggest that online shopping is a violent criminal. She also emphasizes how quickly the damage happens, as one click leads straight to a burial.", "m_reader": "The reader realizes that the writer has already decided online shopping is guilty. The reader is shocked because the headline turns a normal habit into a murder.", "m_relate": "Therefore, the headline shows Benton’s bias, as online shopping is judged guilty before any evidence is given.", "unverified": false, "ctx": ["Click, Buy, Bury: Online Shopping Is Killing Our High Streets"]}, {"id": "s2", "where": "Paragraph 1", "quote": "the wind rattling the metal shutters of empty shops", "device": "Imagery", "dAns": "Imagery: we can hear the wind and see the cold metal shutters of the closed shops.", "dWrong": ["Simile: the wind is compared to a shopper using the word ‘like’ or ‘as’.", "Statistics and facts: the writer counts exactly how many shutters are on the street.", "Inclusive language: the phrase puts the writer and the reader in the same group."], "dHint": "Which of your senses helps you experience this street? What can you hear and see?", "dWhy": "We can hear the wind “rattling” and see the “metal shutters” of empty shops. That is imagery (evocative language).", "effect": "The sound of shutters rattling in the wind makes the high street feel lonely and lifeless, so the reader feels sad about the change.", "eWrong": ["The sound of shutters rattling in the wind makes the high street feel busy and exciting, so the reader wants to go shopping there.", "The sound of shutters rattling in the wind makes the reader think about the weather forecast, so the article seems like a weather report.", "The sound of shutters rattling in the wind makes the high street feel modern and successful, so the reader admires the new shops."], "eHint": "Compare this sound with the “chatter of shoppers” twenty years ago. How has the mood changed?", "words": [["rattling", "verb", "What could the verb “rattling” suggest? Something loose, old, cold and noisy, with nobody there?"], ["shutters", "noun", "What do shop shutters show? Is a shop with its shutters down open or closed?"]], "frameHint": "Imagery frame: Benton describes ___ (the street today) in great detail, using vivid words such as “___,” to suggest ___. She also highlights ___.", "readerHint": "Feeling words: sad, lonely, nostalgic (missing the past). Why would a reader feel this?", "m_ev": "When describing the high street today, Benton states that “all you will hear is the wind rattling the metal shutters of empty shops.”", "m_tech": "Here, Benton uses imagery through the word “shutters.” A shutter is something that is pulled down when a shop closes. The word “shutters” means covers, often made of metal or wood, that are pulled over a window or door to close or protect it. It is also commonly associated with closing time, darkness and empty buildings.", "m_dev": "Benton describes the empty high street in great detail, using vivid words such as “rattling” and “shutters,” to suggest that the town has lost its life. She also highlights the silence that has replaced the “chatter of shoppers.”", "m_reader": "The reader realizes how much the street has changed in twenty years. The reader is sad because the lively, happy town now sounds lonely and lifeless.", "m_relate": "Therefore, the imagery shows Benton’s bias, as only the saddest picture of the high street is shown and online shopping is blamed for it.", "unverified": false, "ctx": ["Walk down Hartwell High Street on a Saturday morning and listen. Twenty years ago, you would have heard the chatter of shoppers, the ring of shop bells and children laughing in the queue for ice cream. Today, all you will hear is the wind rattling the metal shutters of empty shops."]}, {"id": "s3", "where": "Paragraph 2", "quote": "Our high street is dying", "device": "Personification", "dAns": "Personification: the high street is given the human quality of dying, like a person.", "dWrong": ["Statistics and facts: the writer proves exactly how many high streets have died this year.", "Simile: the high street is compared to a patient using the word ‘like’.", "Bandwagon: everyone in the country is said to agree the street is dying."], "dHint": "Can a street really die? Who or what usually dies?", "dWhy": "Only living things can die, but here the high street is “dying.” A place is given a human quality. That is personification.", "effect": "Saying the high street is “dying” makes it seem like a person in pain, so the reader feels sorry for the town and wants to save it.", "eWrong": ["Saying the high street is “dying” makes it seem old-fashioned and boring, so the reader feels happy to see it disappear.", "Saying the high street is “dying” makes it seem like a hospital, so the reader thinks the whole article is about doctors and nurses.", "Saying the high street is “dying” makes it seem strong and healthy, so the reader feels sure the shops will be fine."], "eHint": "How do we feel about a person who is dying? Do we want to help them?", "words": [["dying", "verb", "What could the verb “dying” suggest? Slow? Painful? Close to the end? Can it still be saved?"], ["Our", "pronoun", "What could “Our” suggest about who the street belongs to? Does the reader own it too?"]], "frameHint": "Personification frame: Benton gives ___ (the high street) the human quality of ___ (what?) to suggest ___. She also emphasizes ___.", "readerHint": "Feeling words: sympathetic, sad, worried, guilty. Why would a reader feel this?", "m_ev": "When she introduces her argument, Benton states that “Our high street is dying.”", "m_tech": "Here, Benton uses personification through the word “dying.” Death is something that cannot be undone. The word “dying” means coming to the end of life. It is also commonly associated with illness, pain and loss.", "m_dev": "Benton gives the high street the human quality of dying to suggest that the town is suffering like a sick person. She also emphasizes that the end is close, so something must be done now.", "m_reader": "The reader realizes that the high street could soon be gone forever. The reader is sympathetic because a dying street sounds like a person in pain who needs help.", "m_relate": "Therefore, the personification shows Benton’s bias, as the high street is shown as a helpless victim and online shopping as the cause of its death.", "unverified": false, "ctx": ["Our high street is dying, and if we are honest, we are the ones holding the knife. Every time we tap “buy now” on a phone, another shop window goes dark."]}, {"id": "s4", "where": "Paragraph 2", "quote": "we are the ones holding the knife", "device": "Metaphor", "dAns": "Metaphor: shoppers are described as killers holding a knife, without ‘like’ or ‘as’.", "dWrong": ["Simile: shoppers are compared to busy kitchen cooks using the word ‘like’ or ‘as’.", "Expert opinion: a named police officer explains who is really holding the knife.", "Statistics and facts: the writer counts how many shoppers own a knife."], "dHint": "Are the shoppers really holding a knife? Is there a ‘like’ or ‘as’?", "dWhy": "Shoppers are not really holding a knife, but they are described as if they were killers. There is no “like” or “as.” That is a metaphor.", "effect": "Describing shoppers as “holding the knife” makes them seem like killers, so the reader feels guilty about every online order.", "eWrong": ["Describing shoppers as “holding the knife” makes them seem like chefs, so the reader starts thinking about cooking and favorite recipes.", "Describing shoppers as “holding the knife” makes them seem like heroes, so the reader feels proud of shopping online.", "Describing shoppers as “holding the knife” makes them seem like police, so the reader feels safe and protected."], "eHint": "Who holds the knife in a crime? How would you feel if you were told it was you?", "words": [["knife", "noun", "What could the noun “knife” suggest? A weapon? Violence? A crime?"], ["we", "pronoun", "Who is “we”? Does the reader become one of the people holding the knife?"]], "frameHint": "Metaphor frame: Benton compares ___ (shoppers) to ___ (who?) to suggest ___. She also emphasizes ___.", "readerHint": "Feeling words: guilty, uncomfortable, ashamed. Why would a reader feel this?", "m_ev": "When she explains who is to blame, Benton states that “we are the ones holding the knife.”", "m_tech": "Here, Benton uses a metaphor through the word “knife.” A knife is something that can cut and hurt. The word “knife” means a tool with a sharp blade that is used for cutting. It is also commonly associated with weapons, crime and violence.", "m_dev": "Benton compares online shoppers to killers holding a knife to suggest that every online order is an attack on the town. She also emphasizes that the shoppers themselves, not anyone else, are to blame.", "m_reader": "The reader realizes that the writer is blaming them personally. The reader is guilty because a normal online order has been turned into a crime.", "m_relate": "Therefore, the metaphor shows Benton’s bias, as ordinary shoppers are made to feel like criminals without any proof.", "unverified": false, "ctx": ["Our high street is dying, and if we are honest, we are the ones holding the knife. Every time we tap “buy now” on a phone, another shop window goes dark."]}, {"id": "s5", "where": "Paragraph 3", "quote": "One recent study claims that nearly one in five shops in our town centers now stands empty", "device": "Statistics and facts", "dAns": "Statistics and facts: ‘one in five’ is a number from a study that is never named.", "dWrong": ["Expert opinion: a named professor explains his own study about empty shops in detail.", "Hyperbole: the writer claims that every single shop on Earth is now empty.", "Juxtaposition: a busy shop and an empty shop are placed side by side here."], "dHint": "Look for a number. Who gave it? Can the reader find the study?", "dWhy": "“Nearly one in five” is a number, but “one recent study” is never named. That is a statistic the reader cannot check.", "effect": "The number makes the problem sound proven and serious, but the study is never named, so the reader cannot check it.", "eWrong": ["The number makes the problem sound tiny and rare, so the reader feels that almost every shop in town is doing very well.", "The number comes from a named, official report, so the reader can easily check for themselves that it is true.", "The number is clearly a joke, so the reader laughs and stops taking the rest of the article very seriously."], "eHint": "Which study is it? Could the reader check the number?", "words": [["empty", "adjective", "What could the adjective “empty” suggest? No people? No life? Something lost?"], ["claims", "verb", "What could the verb “claims” suggest? Is a claim the same as a proven fact?"]], "frameHint": "Statistics frame: Benton provides statistics about ___ to suggest ___. She also highlights ___. Then: However, the source is not named, so the numbers cannot be checked.", "readerHint": "Feeling words: worried, alarmed, but also suspicious. Why might a careful reader be suspicious?", "unverified": true, "m_ev": "When describing the town centers, Benton states that “nearly one in five shops in our town centers now stands empty.”", "m_tech": "Here, Benton uses statistics through the word “empty.” An empty shop is something that has no customers and no life. The word “empty” means containing nothing or no one. It is also commonly associated with loneliness, silence and loss.", "m_dev": "Benton provides statistics about empty shops to suggest that the problem is huge and proven. She also highlights how many shops have already been lost. However, the source is not named, so the numbers cannot be checked.", "m_reader": "The reader realizes that the number sounds official but has no clear source. The reader is worried because one in five sounds like a serious and growing problem.", "m_relate": "Therefore, the statistic shows Benton’s bias, as an unchecked number is used to make the problem seem certain.", "ctx": ["One recent study claims that nearly one in five shops in our town centers now stands empty. Walk past them and you will see the same sign again and again. Closed. Closed. Closed."]}, {"id": "s6", "where": "Paragraph 3", "quote": "Closed. Closed. Closed.", "device": "Repetition", "dAns": "Repetition: the word ‘Closed’ is said three times, like signs on door after door.", "dWrong": ["Rhetorical question: the writer asks the reader why the shops are closed.", "Statistics and facts: the writer counts exactly how many shops in the town are closed.", "Expert opinion: a named shop owner explains why her shop had to close."], "dHint": "Which word comes back again and again?", "dWhy": "The word “Closed” is said three times in three short sentences, like the same sign on shop after shop. That is repetition.", "effect": "Repeating “Closed” three times makes the reader feel the shops shutting one after another, so the loss seems endless and shocking.", "eWrong": ["Repeating “Closed” three times makes the reader feel the shops opening one after another, so the whole town seems busy and successful.", "Repeating “Closed” three times makes the reader think the writer has made a typing mistake, so the article seems careless.", "Repeating “Closed” three times makes the reader feel calm and sleepy, so the article seems relaxing and peaceful to read."], "eHint": "Read it aloud. How does it feel to hear the same sad word three times?", "words": [["Closed", "adjective", "What could the word “Closed” suggest? The end? A locked door? Something that will not open again?"]], "frameHint": "Repetition frame: Benton repeats “___” to suggest ___. She also highlights ___.", "readerHint": "Feeling words: shocked, sad, hopeless. Why would a reader feel this?", "m_ev": "When she describes the empty shops, Benton states that “you will see the same sign again and again. Closed. Closed. Closed.”", "m_tech": "Here, Benton uses repetition through the word “Closed.” A closed sign is something that tells customers they cannot come in. The word “closed” means not open, so a closed shop is not doing business. It is also commonly associated with endings, locked doors and failure.", "m_dev": "Benton repeats “Closed” three times to suggest that shops are shutting one after another. She also highlights how common empty shops have become on the high street.", "m_reader": "The reader realizes that the problem is not one shop but many. The reader is shocked because the repeated word sounds like a door slamming again and again.", "m_relate": "Therefore, the repetition shows Benton’s bias, as the closures are made to sound endless while no successful shops are mentioned.", "unverified": false, "ctx": ["One recent study claims that nearly one in five shops in our town centers now stands empty. Walk past them and you will see the same sign again and again. Closed. Closed. Closed."]}, {"id": "s7", "where": "Paragraph 4", "quote": "One leading retail expert, whose name I cannot share, told me", "device": "Expert opinion", "dAns": "Expert opinion: a shopping expert has inside knowledge, but the name is kept secret.", "dWrong": ["Statistics and facts: the expert gives the exact number of shops that will close next year.", "Bandwagon: every expert in the world is said to agree with the writer’s opinion.", "Inclusive language: the expert uses ‘we’ to include the reader in the group."], "dHint": "Who is speaking here? Do we know their name?", "dWhy": "A “retail expert” sounds like someone who knows a lot, but the name is kept secret. That is unverified expert opinion.", "effect": "An expert sounds trustworthy, but the name is hidden, so the reader cannot check whether the warning is true.", "eWrong": ["An expert sounds trustworthy, and their full name is given, so the reader can easily check the warning online.", "An expert sounds silly and unreliable, so the reader decides that nothing in the whole article can be believed.", "An expert sounds like an online shopping fan, so the reader thinks the writer secretly loves online shopping."], "eHint": "Can the reader find out who this expert is?", "words": [["expert", "noun", "What could the noun “expert” suggest? Someone the reader should trust? But do we know who it is?"], ["leading", "adjective", "What could “leading” suggest? Important? The best? Why would the writer add this word?"]], "frameHint": "Expert opinion frame: Benton refers to ___, an expert in ___, to suggest ___. She also emphasizes ___. Then: However, the expert is not named, so the reader cannot check the claim.", "readerHint": "Feeling words: worried, but also suspicious. Why might a careful reader doubt this warning?", "unverified": true, "m_ev": "When she looks to the future, Benton states that “One leading retail expert, whose name I cannot share, told me” that many high streets will become empty.", "m_tech": "Here, Benton uses unverified expert opinion through the word “expert.” An expert is someone who knows a great deal about one subject. The word “expert” means a person with a lot of special knowledge or skill in a particular area. It is also commonly associated with trust, research and authority.", "m_dev": "Benton refers to an unnamed retail expert, an expert in shopping and shops, to suggest that her warning is supported by a professional. She also emphasizes the frightening future of “parking lots and empty buildings.” However, the expert is not named, so the reader cannot check the claim.", "m_reader": "The reader realizes that the warning comes from someone they cannot identify. The reader is worried because an expert seems to be predicting the end of the high street.", "m_relate": "Therefore, the unverified expert opinion shows Benton’s bias, as a secret source is used to make her opinion sound like a proven fact.", "ctx": ["One leading retail expert, whose name I cannot share, told me that “within ten years, many high streets will be nothing but parking lots and empty buildings.”"]}, {"id": "s8", "where": "Paragraph 5", "quote": "the online giants grow fatter every day", "device": "Loaded language", "dAns": "Loaded language: ‘giants’ and ‘fatter’ carry a hidden judgment that the companies are greedy.", "dWrong": ["Statistics and facts: ‘fatter’ gives the exact profit that the online companies make every single day.", "Inclusive language: ‘giants’ puts the reader and the writer in the same group.", "Rhetorical question: the writer asks the companies how much fatter they will grow."], "dHint": "Could the writer have chosen more neutral words than “giants” and “fatter”?", "dWhy": "The writer could have said “large companies make more money,” but she chose “giants” and “grow fatter,” words that carry a judgment of greed. That is loaded language.", "effect": "Calling the companies “giants” that “grow fatter” makes them seem greedy and powerful, so the reader feels angry and distrustful.", "eWrong": ["Calling the companies “giants” that “grow fatter” makes them seem kind and generous, so the reader feels grateful to them for everything.", "Calling the companies “giants” that “grow fatter” makes them seem small and weak, so the reader feels sorry for them.", "Calling the companies “giants” that “grow fatter” makes them seem healthy and fit, so the reader admires their success."], "eHint": "Are “giants” and “fatter” positive or negative words here? How do they make you see the companies?", "words": [["fatter", "adjective", "What could “fatter” suggest about the companies? Taking more than they need? Greed?"], ["giants", "noun", "What could “giants” suggest? Huge? Frightening? Stronger than the small shops?"]], "frameHint": "Loaded language frame: Benton uses the word “___,” which has negative connotations of ___, to suggest ___. She also highlights ___.", "readerHint": "Feeling words: angry, distrustful, resentful. Why would a reader feel this?", "m_ev": "When she describes the big online companies, Benton states that “the online giants grow fatter every day.”", "m_tech": "Here, Benton uses loaded language through the word “fatter.” Getting fatter is something that happens when someone takes in more than they need. The word “fat” means having too much flesh on the body, and it can also mean very large in amount, as in “a fat profit.” It is also commonly associated with greed and excess.", "m_dev": "Benton uses the word “fatter,” which has negative connotations of greed, to suggest that the online companies take far more than they need. She also highlights how the companies grow stronger while the small shops grow weaker.", "m_reader": "The reader realizes that the writer sees the online companies as the enemy. The reader is angry because the companies seem to grow rich while the town suffers.", "m_relate": "Therefore, the loaded language shows Benton’s bias, as the companies are judged to be greedy without any evidence about them.", "unverified": false, "ctx": ["Meanwhile, the online giants grow fatter every day. Their warehouses sit on the edge of town like huge gray fortresses, full of goods but empty of people."]}, {"id": "s9", "where": "Paragraph 5", "quote": "like huge gray fortresses", "device": "Simile", "dAns": "Simile: the warehouses are compared to fortresses using the word ‘like’.", "dWrong": ["Metaphor: the warehouses are said to really be fortresses, with no ‘like’ or ‘as’.", "Personification: the warehouses are given the human ability to fight a war.", "Statistics and facts: the writer measures the exact size of every warehouse."], "dHint": "Look for the small word that joins the two things being compared.", "dWhy": "The warehouses are compared to “huge gray fortresses” with the word “like.” That is a simile.", "effect": "Comparing the warehouses to “fortresses” makes them seem cold and unfriendly, so the reader sees them as enemies of the town.", "eWrong": ["Comparing the warehouses to “fortresses” makes them seem warm and welcoming, so the reader wants to visit them soon.", "Comparing the warehouses to “fortresses” makes them seem like old castles, so the reader starts thinking about history lessons at school.", "Comparing the warehouses to “fortresses” makes them seem small and weak, so the reader feels sorry for the companies."], "eHint": "Who is a fortress built to keep out? How is it different from a friendly local shop?", "words": [["fortresses", "noun", "What could “fortresses” suggest? Walls? War? Keeping people out?"], ["gray", "adjective", "What could the color “gray” suggest? Cold? Dull? Lifeless?"]], "frameHint": "Simile frame: Benton compares ___ (the warehouses) to ___ (what?) to suggest ___. She also emphasizes ___.", "readerHint": "Feeling words: uneasy, threatened, distrustful. Why would a reader feel this?", "m_ev": "When describing the online companies’ warehouses, Benton states that they sit on the edge of town “like huge gray fortresses.”", "m_tech": "Here, Benton uses a simile through the word “fortresses.” A fortress is something that is built to keep people out. The word “fortress” means a large, strong building or group of buildings that can be defended from attack. It is also commonly associated with walls, soldiers and war.", "m_dev": "Benton compares the warehouses to huge gray fortresses to suggest that the online companies are cold enemies at war with the town. She also emphasizes that they are “full of goods but empty of people.”", "m_reader": "The reader realizes that the writer sees online shopping as an attack on the town. The reader is uneasy because the warehouses sound cold, powerful and threatening.", "m_relate": "Therefore, the simile shows Benton’s bias, as the online companies are presented as enemies rather than businesses.", "unverified": false, "ctx": ["Meanwhile, the online giants grow fatter every day. Their warehouses sit on the edge of town like huge gray fortresses, full of goods but empty of people."]}, {"id": "s10", "where": "Paragraph 6", "quote": "While a delivery van races past with a single parcel, the family bakery that has served this town for sixty years quietly closes its doors", "device": "Juxtaposition", "dAns": "Juxtaposition: a rushing delivery van is placed right next to an old bakery closing.", "dWrong": ["Statistics and facts: the writer counts exactly how many delivery vans pass the bakery each day.", "Expert opinion: a named baker explains why delivery vans are dangerous.", "Rhetorical question: the writer asks the reader why the bakery is closing."], "dHint": "Look at the word “While.” Which two very different things happen side by side?", "dWhy": "A van racing past with “a single parcel” is placed right next to a sixty-year-old family bakery closing. That is juxtaposition.", "effect": "Placing the speeding van next to the closing bakery shows an unfair contrast, so the reader feels sad and angry about what is being lost.", "eWrong": ["Placing the speeding van next to the closing bakery shows that both businesses are doing very well, so the reader feels happy for both of them.", "Placing the speeding van next to the closing bakery shows a road accident, so the reader worries about traffic safety in the town.", "Placing the speeding van next to the closing bakery shows a new delivery service, so the reader plans to order bread online."], "eHint": "Which one is fast and new? Which one is old and loved? Who wins?", "words": [["quietly", "adverb", "What could the adverb “quietly” suggest? Does anyone notice the bakery closing? Does anyone care?"], ["single", "adjective", "What could “a single parcel” suggest? Is one small parcel worth losing a sixty-year-old bakery?"]], "frameHint": "Juxtaposition frame: Benton places ___ next to ___ to suggest ___. She also demonstrates ___.", "readerHint": "Feeling words: sad, angry, nostalgic. Why would a reader feel this?", "m_ev": "While describing one moment on the high street, Benton states that “the family bakery that has served this town for sixty years quietly closes its doors.”", "m_tech": "Here, Benton uses juxtaposition through the word “quietly.” A family bakery is something that brings a community together every morning. The word “quietly” means without making much noise, or without attracting attention. It is also commonly associated with sadness, loneliness and being forgotten.", "m_dev": "Benton places a delivery van racing past with “a single parcel” next to a family bakery closing its doors to suggest that something small and fast is replacing something old and precious. She also demonstrates how unfairly the town is changing.", "m_reader": "The reader realizes that sixty years of history can end without anyone noticing. The reader is sad because the loved family bakery loses to one small parcel.", "m_relate": "Therefore, the juxtaposition shows Benton’s bias, as online shopping is shown only as fast and careless and the bakery only as a victim.", "unverified": false, "ctx": ["While a delivery van races past with a single parcel, the family bakery that has served this town for sixty years quietly closes its doors."]}, {"id": "s11", "where": "Paragraph 7", "quote": "since when did convenience matter more than community?", "device": "Rhetorical question", "dAns": "Rhetorical question: a question the writer expects the reader to answer in their head.", "dWrong": ["Statistics and facts: the question gives the exact date when online convenience first began.", "Expert opinion: a named community leader asks this question in a speech.", "Juxtaposition: a convenience store is placed right next to a community hall."], "dHint": "Look at the punctuation. Does the writer want a real answer?", "dWhy": "No answer is given and none is expected. The question pushes the reader to agree that community matters more. That is a rhetorical question.", "effect": "The question pushes the reader to agree that community matters more, so they feel that choosing convenience is selfish.", "eWrong": ["The question invites the reader to look up a date online, so they feel that the article is a history lesson.", "The question pushes the reader to agree that convenience matters more, so they feel happy to keep shopping online every day.", "The question shows that the writer is confused, so the reader feels that the article cannot be trusted at all."], "eHint": "What answer does the writer want you to give in your head?", "words": [["community", "noun", "What could “community” suggest? Neighbors? Friendship? People who care about each other?"], ["convenience", "noun", "What could “convenience” suggest here? Easy? Lazy? Is it presented as a good or a bad thing?"]], "frameHint": "Rhetorical question frame: Benton asks, “___?” to suggest ___. She also emphasizes ___.", "readerHint": "Feeling words: guilty, uncomfortable, thoughtful. Why would a reader feel this?", "m_ev": "When she answers the people who like online shopping, Benton asks, “since when did convenience matter more than community?”", "m_tech": "Here, Benton uses a rhetorical question through the word “community.” A community is something that people build together. The word “community” means all the people who live in a particular area or place. It is also commonly associated with neighbors, friendship and belonging.", "m_dev": "Benton asks, “since when did convenience matter more than community?” to suggest that shopping online is a selfish choice. She also emphasizes that the town’s people are more important than saving time or money.", "m_reader": "The reader realizes that the only acceptable answer is “never.” The reader is uncomfortable because choosing convenience now sounds selfish.", "m_relate": "Therefore, the rhetorical question shows Benton’s bias, as the reader is pushed to her opinion instead of weighing both sides.", "unverified": false, "ctx": ["Of course, online shopping fans will say it is cheaper and more convenient. But since when did convenience matter more than community?"]}, {"id": "s12", "where": "Paragraph 9", "quote": "If we do nothing, our children will grow up in ghost towns.", "device": "Fear appeal", "dAns": "Fear appeal: the writer warns of a frightening future if nobody acts now.", "dWrong": ["Statistics and facts: the writer gives the exact year the towns will become empty.", "Expert opinion: a named historian explains what ghost towns looked like.", "Juxtaposition: a happy child and a frightened child are placed side by side."], "dHint": "What does the writer warn will happen if nobody acts?", "dWhy": "The writer warns that “our children will grow up in ghost towns” if we “do nothing.” That is a fear appeal.", "effect": "The warning makes the reader anxious about their children’s future, so they feel they must act now to save the high street.", "eWrong": ["The warning makes the reader relaxed about the future, so they feel there is plenty of time left before anything really changes.", "The warning makes the reader excited about ghost stories, so they plan to read more scary books at the weekend.", "The warning makes the reader laugh at the writer, so they decide to ignore everything else in the article."], "eHint": "What is the reader afraid of after reading this warning?", "words": [["ghost", "noun", "What could “ghost” suggest? Fear? Death? Something that used to be alive?"], ["children", "noun", "Why does the writer mention “our children”? What do parents want for their children?"]], "frameHint": "Fear appeal frame: Benton warns that ___ to suggest ___. She also highlights ___.", "readerHint": "Feeling words: anxious, afraid, worried. Why would a reader feel this?", "m_ev": "When she ends her article, Benton states that “If we do nothing, our children will grow up in ghost towns.”", "m_tech": "Here, Benton uses fear appeal through the words “ghost towns.” A ghost is something that frightens people. The words “ghost town” mean a town that most or all of its people have left. They are also commonly associated with silence, emptiness and fear.", "m_dev": "Benton warns that “our children will grow up in ghost towns” to suggest that the damage will last for generations. She also highlights that the reader must act now, before it is too late.", "m_reader": "The reader realizes that the problem will affect their own family. The reader is anxious because the future sounds empty, silent and frightening.", "m_relate": "Therefore, the fear appeal shows Benton’s bias, as the reader is frightened into agreeing instead of being given balanced facts.", "unverified": false, "ctx": ["We can still save our high street. If we do nothing, our children will grow up in ghost towns. So next Saturday, leave your phone at home and walk into town. Your high street is waiting for you."]}], "question": "How does the writer use biased language to persuade the reader that online shopping is harmful to towns?", "author": "Benton", "authorFull": "Clara Benton", "pub": "The Hartwell Gazette", "pubDate": "October 2026", "point_model": "In the opinion article “Click, Buy, Bury: Online Shopping Is Killing Our High Streets,” published by The Hartwell Gazette in October 2026, Clara Benton presents a biased opinion towards online shopping, suggesting that it is destroying town centers, through the use of {d1} and {d2}.", "final_model": "Through the use of {d1} and {d2}, Benton portrays online shopping as a cruel destroyer of towns, which reveals her biased opinion towards online shopping."}</script>
+<script>
+(function () {
+  "use strict";
+  var D = JSON.parse(document.getElementById("app-data").textContent);
+  var SPOTS = D.spots, BY = {}; SPOTS.forEach(function (s, i) { s.n = i + 1; BY[s.id] = s; });
+  var KEY = "onur-koc9-highstreet-hunt-v1";
+  var LETTERS = ["A", "B", "C", "D"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var DEVRE = {
+    "Headline": /\bheadline\b/, "Imagery": /\bimagery\b|\bevocative\b/, "Personification": /\bpersonification\b/,
+    "Metaphor": /\bmetaphor\b/, "Statistics and facts": /\bstatistic/, "Repetition": /\brepetition\b/,
+    "Expert opinion": /\bexpert\b/, "Loaded language": /\bloaded\b/, "Simile": /\bsimile\b/,
+    "Juxtaposition": /\bjuxtaposition\b/, "Rhetorical question": /\brhetorical question\b/, "Fear appeal": /\bfear appeal\b/
+  };
+  var DEVLABEL = {
+    "Headline": "the headline", "Imagery": "imagery", "Personification": "personification", "Metaphor": "a metaphor",
+    "Statistics and facts": "statistics", "Repetition": "repetition", "Expert opinion": "unverified expert opinion",
+    "Loaded language": "loaded language", "Simile": "a simile", "Juxtaposition": "juxtaposition",
+    "Rhetorical question": "a rhetorical question", "Fear appeal": "fear appeal"
+  };
+  var DEVNAME = {
+    "Headline": "headline", "Imagery": "imagery", "Personification": "personification", "Metaphor": "metaphor",
+    "Statistics and facts": "statistic", "Repetition": "repetition", "Expert opinion": "unverified expert opinion",
+    "Loaded language": "loaded language", "Simile": "simile", "Juxtaposition": "juxtaposition",
+    "Rhetorical question": "rhetorical question", "Fear appeal": "fear appeal"
+  };
+  var EMPH = [/also emphasi[sz]es\b/, "She also emphasizes ___"], HIGH = [/also highlights\b/, "She also highlights ___"], DEMO = [/also demonstrates\b/, "She also demonstrates ___"];
+  var CMP = { text: "Benton compares ___ to ___ to suggest ___. She also emphasizes ___.", checks: [[/compares\b.+\bto\b.+\bto suggest\b/, "compares ___ to ___ to suggest ___"], EMPH] };
+  var FRAMES = {
+    "Headline": { text: "Benton uses the headline “___” to suggest ___. She also emphasizes ___.", checks: [[/uses the headline\b.+\bto suggest\b/, "uses the headline “___” to suggest ___"], EMPH] },
+    "Imagery": { text: "Benton describes ___ in great detail, using vivid words such as “___,” to suggest ___. She also highlights ___.", checks: [[/describes\b.+\bin great detail\b/, "describes ___ in great detail"], [/vivid words such as\b/, "using vivid words such as “___”"], [/\bto suggest\b/, "to suggest ___"], HIGH] },
+    "Personification": { text: "Benton gives ___ the human quality of ___ to suggest ___. She also emphasizes ___.", checks: [[/gives\b.+\bthe human quality of\b.+\bto suggest\b/, "gives ___ the human quality of ___ to suggest ___"], EMPH] },
+    "Metaphor": CMP, "Simile": CMP,
+    "Statistics and facts": { text: "Benton provides statistics about ___ to suggest ___. She also highlights ___.", checks: [[/provides statistics about\b.+\bto suggest\b/, "provides statistics about ___ to suggest ___"], HIGH] },
+    "Repetition": { text: "Benton repeats “___” to suggest ___. She also highlights ___.", checks: [[/repeats\b.+\bto suggest\b/, "repeats “___” to suggest ___"], HIGH] },
+    "Expert opinion": { text: "Benton refers to ___, an expert in ___, to suggest ___. She also emphasizes ___.", checks: [[/refers to\b.+\bexpert\b.+\bto suggest\b/, "refers to ___, an expert in ___, to suggest ___"], EMPH] },
+    "Loaded language": { text: "Benton uses the word “___,” which has negative connotations of ___, to suggest ___. She also highlights ___.", checks: [[/uses the word\b.+\bconnotations? of\b.+\bto suggest\b/, "uses the word “___,” which has negative connotations of ___, to suggest ___"], HIGH] },
+    "Juxtaposition": { text: "Benton places ___ next to ___ to suggest ___. She also demonstrates ___.", checks: [[/places\b.+\bnext to\b.+\bto suggest\b/, "places ___ next to ___ to suggest ___"], DEMO] },
+    "Rhetorical question": { text: "Benton asks, “___?” to suggest ___. She also emphasizes ___.", checks: [[/\basks\b.*\?.*\bto suggest\b/, "asks, “___?” to suggest ___"], EMPH] },
+    "Fear appeal": { text: "Benton warns that ___ to suggest ___. She also highlights ___.", checks: [[/warns that\b.+\bto suggest\b/, "warns that ___ to suggest ___"], HIGH] }
+  };
+
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) { var r = a.slice(); for (var i = r.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = r[i]; r[i] = r[j]; r[j] = t; } return r; }
+  var S = null;
+  function fresh(name) {
+    var st = { name: name, tab: 1, round: 1, spots: {}, cur: null, phase: null, opts: null, answered: null, d1: null, d2: null, boxes: {}, filed: false, ticks: {}, improve: "", report: false };
+    SPOTS.forEach(function (s) { st.spots[s.id] = { status: "open", misses: 0 }; });
+    return st;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() {
+    try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && s.spots && SPOTS.every(function (x) { return s.spots[x.id]; })) return s; } catch (e) {}
+    return null;
+  }
+  function show(id) { ["s-start", "s-main", "s-report"].forEach(function (x) { $(x).hidden = x !== id; }); }
+  function foundCount() { return SPOTS.filter(function (s) { var t = S.spots[s.id].status; return t === "first" || t === "later"; }).length; }
+  function firstCount() { return SPOTS.filter(function (s) { return S.spots[s.id].status === "first"; }).length; }
+  function lv1Done() { return foundCount() === SPOTS.length; }
+
+  /* ---------- START ---------- */
+  function renderStart() {
+    var saved = load();
+    $("resume").hidden = !saved;
+    if (saved) $("resume-text").textContent = (saved.name || "Someone") + ": " + SPOTS.filter(function (s) { var t = saved.spots[s.id].status; return t === "first" || t === "later"; }).length + " of " + SPOTS.length + " devices found.";
+    show("s-start");
+  }
+  $("btn-start").onclick = function () {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); return; }
+    S = fresh(n); save(); renderMain();
+  };
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") $("btn-start").click(); });
+  $("btn-resume").onclick = function () { S = load(); if (S) { if (S.report) renderReport(); else renderMain(); } };
+  $("btn-wipe").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} $("resume").hidden = true; };
+
+  /* ---------- MAIN ---------- */
+  function renderMain() {
+    S.report = false;
+    $("tab-1").classList.toggle("on", S.tab === 1);
+    $("tab-2").classList.toggle("on", S.tab === 2);
+    $("tab-2").disabled = !lv1Done();
+    $("tab-1-s").textContent = foundCount() + "/" + SPOTS.length + " found";
+    $("tab-2-s").textContent = lv1Done() ? (S.filed ? "paragraph done" : "open") : "locked";
+    $("lv-1").hidden = S.tab !== 1;
+    $("lv-2").hidden = S.tab !== 2;
+    if (S.tab === 1) renderL1(); else renderL2();
+    show("s-main");
+  }
+  $("tab-1").onclick = function () { S.tab = 1; save(); renderMain(); };
+  $("tab-2").onclick = function () { if (!lv1Done()) return; S.tab = 2; save(); renderMain(); };
+
+  function spotButton(s, mode) {
+    var st = S.spots[s.id];
+    var b = document.createElement("button"); b.type = "button"; b.className = "spot";
+    var no = document.createElement("span"); no.className = "no"; no.textContent = st.status === "first" ? "★" : s.n;
+    var body = document.createElement("span");
+    var q = document.createElement("span"); q.className = "q"; q.textContent = "“" + s.quote + "”";
+    body.appendChild(q);
+    var tag = document.createElement("span"); tag.className = "tag";
+    if (mode === 1) {
+      if (st.status === "first" || st.status === "later") { b.classList.add(st.status); tag.textContent = s.device; }
+      else if (st.status === "cold") { b.classList.add("cold"); tag.textContent = "Comes back next round"; }
+      if (tag.textContent) body.appendChild(tag);
+      b.setAttribute("aria-label", "Clue " + s.n + ": " + s.quote + (tag.textContent ? ". " + tag.textContent : ""));
+      b.onclick = function () {
+        if (st.status === "cold") return;
+        if (st.status === "first" || st.status === "later") openSheet(s.id, "solved"); else openSheet(s.id, "device");
+      };
+    } else {
+      b.classList.add("first"); no.textContent = s.n; tag.textContent = s.device; body.appendChild(tag);
+      if (S.d1 === s.id || S.d2 === s.id) {
+        b.classList.add(S.d1 === s.id ? "pick1" : "pick2");
+        var pk = document.createElement("span"); pk.className = "pk"; pk.textContent = S.d1 === s.id ? "Device 1" : "Device 2"; tag.appendChild(pk);
+      }
+      b.onclick = function () { pickDevice(s.id); };
+    }
+    b.appendChild(no); b.appendChild(body);
+    return b;
+  }
+  function renderSpots(box, mode) {
+    box.textContent = ""; var last = null;
+    SPOTS.forEach(function (s) {
+      if (s.where !== last) { last = s.where; var h = document.createElement("div"); h.className = "group-h"; h.textContent = s.where; box.appendChild(h); }
+      box.appendChild(spotButton(s, mode));
+    });
+  }
+
+  /* ---------- LEVEL 1 ---------- */
+  function renderL1() {
+    renderSpots($("spots1"), 1);
+    var n = foundCount();
+    $("found-count").textContent = n + " of " + SPOTS.length + " devices found · ★ " + firstCount();
+    $("meter").style.width = (n / SPOTS.length * 100) + "%";
+    $("round-label").textContent = "Round " + S.round;
+    var open = SPOTS.filter(function (s) { return S.spots[s.id].status === "open"; }).length;
+    var cold = SPOTS.filter(function (s) { return S.spots[s.id].status === "cold"; }).length;
+    $("sweep-card").hidden = !(open === 0 && cold > 0);
+    if (open === 0 && cold > 0) {
+      $("sweep-text").textContent = (cold === 1 ? "1 phrase comes" : cold + " phrases come") + " back in round " + (S.round + 1) + ", with the answers in a new order.";
+      $("btn-sweep").textContent = "Start round " + (S.round + 1);
+    }
+    $("done1-card").hidden = !lv1Done();
+  }
+  $("btn-sweep").onclick = function () {
+    SPOTS.forEach(function (s) { if (S.spots[s.id].status === "cold") S.spots[s.id].status = "open"; });
+    S.round += 1; save(); renderMain();
+  };
+  $("btn-to-2").onclick = function () { S.tab = 2; save(); renderMain(); window.scrollTo(0, 0); };
+
+  var lastFocus = null;
+  function openSheet(id, phase) {
+    lastFocus = document.activeElement;
+    var s = BY[id];
+    S.cur = id; S.phase = phase; S.answered = null;
+    S.opts = phase === "device" ? shuffle([s.dAns].concat(s.dWrong)) : null;
+    save(); renderSheet(); $("sheet-back").hidden = false; $("sheet-q").focus();
+  }
+  function closeSheet() {
+    if (S.answered) finishSpot();
+    S.cur = null; S.phase = null; S.opts = null; S.answered = null;
+    $("sheet-back").hidden = true; save(); renderMain();
+    if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  $("sheet-x").onclick = closeSheet;
+  $("sheet-back").addEventListener("click", function (e) { if (e.target === $("sheet-back")) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if ($("sheet-back").hidden) return;
+    if (e.key === "Escape") { closeSheet(); return; }
+    var idx = ["1", "2", "3", "4"].indexOf(e.key); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(e.key.toLowerCase());
+    if (idx >= 0 && S.opts && idx < S.opts.length && !S.answered) { e.preventDefault(); pick(idx); }
+  });
+  function fillOpt(el, text, labelled) {
+    el.textContent = "";
+    var m = labelled ? /^([^:]{2,32}): (.+)$/.exec(text) : null;
+    if (m) { var b = document.createElement("b"); b.className = "olab"; b.textContent = m[1] + ":"; el.appendChild(b); el.appendChild(document.createTextNode(" " + m[2])); }
+    else el.textContent = text;
+  }
+  function renderSheet() {
+    var s = BY[S.cur], st = S.spots[S.cur];
+    $("sheet-label").textContent = "Clue " + s.n + " · " + s.where;
+    $("sheet-ev").textContent = "“" + s.quote + "”";
+    var steps = $("sheet-steps"); steps.textContent = "";
+    [["device", "1 Name the device"], ["effect", "2 What it does"]].forEach(function (p) {
+      var x = document.createElement("span"); x.className = "st";
+      if (S.phase === p[0]) x.className += " on";
+      if ((p[0] === "device" && S.phase !== "device") || (p[0] === "effect" && S.phase === "solved")) x.className += " done";
+      x.textContent = p[1]; steps.appendChild(x);
+    });
+    $("sheet-retry").hidden = !st.misses || S.phase === "solved";
+    $("sheet-retry").textContent = st.misses === 1 ? "Missed once" : "Missed " + st.misses + " times";
+    var box = $("sheet-opts"); box.textContent = "";
+    $("sheet-fb").hidden = true; $("sheet-next").hidden = true;
+    if (S.phase === "solved") {
+      $("sheet-q").textContent = s.device;
+      var fb = $("sheet-fb"); fb.className = "fb good"; fb.textContent = "";
+      var p1 = document.createElement("p"); p1.textContent = s.dWhy;
+      var p2 = document.createElement("p"); p2.textContent = s.effect;
+      fb.appendChild(p1); fb.appendChild(p2); fb.hidden = false; return;
+    }
+    $("sheet-q").textContent = S.phase === "device" ? "Which device is this? Choose the statement that is true." : "It is " + s.device.toLowerCase() + ". What does it do to the reader?";
+    S.opts.forEach(function (text, i) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[i];
+      var t = document.createElement("span"); fillOpt(t, text, S.phase === "device");
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pick(i); };
+      box.appendChild(b);
+    });
+    if (S.answered) paint(false);
+  }
+  function correct(s) { return S.phase === "device" ? s.dAns : s.effect; }
+  function pick(i) {
+    if (S.answered) return;
+    var s = BY[S.cur], st = S.spots[S.cur];
+    var ok = S.opts[i] === correct(s);
+    S.answered = { pick: i, correct: ok };
+    if (!ok) st.misses += 1;
+    save(); paint(true);
+  }
+  function paint(freshPaint) {
+    var s = BY[S.cur], st = S.spots[S.cur], a = S.answered;
+    var reveal = !a.correct && st.misses >= 3, ans = correct(s);
+    $("sheet-opts").querySelectorAll(".opt").forEach(function (b, i) {
+      b.disabled = true;
+      if (i === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && S.opts[i] === ans) b.classList.add("right");
+      else b.classList.add("dim");
+      if (freshPaint && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("sheet-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h";
+    var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    var btn = $("sheet-next");
+    if (a.correct && S.phase === "device") { fb.classList.add("good"); h.textContent = "Yes! Now the effect."; p.textContent = s.dWhy; btn.textContent = "Next: what it does"; }
+    else if (a.correct) { fb.classList.add("good"); h.textContent = st.misses ? "Found it!" : "★ Gold star!"; p.textContent = s.effect; btn.textContent = "Back to the article"; }
+    else {
+      if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = ans; }
+      else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + (S.phase === "device" ? s.dHint : s.eHint); }
+      n.textContent = "This phrase comes back in round " + (S.round + 1) + ".";
+      btn.textContent = "Back to the article";
+    }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n);
+    fb.hidden = false; btn.hidden = false;
+    if (freshPaint) { btn.focus({ preventScroll: true }); btn.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  function finishSpot() {
+    var st = S.spots[S.cur];
+    if (!S.answered) return;
+    if (!S.answered.correct) st.status = "cold";
+    else if (S.phase === "effect") st.status = st.misses ? "later" : "first";
+  }
+  $("sheet-next").onclick = function () {
+    var s = BY[S.cur];
+    if (S.answered && S.answered.correct && S.phase === "device") {
+      S.phase = "effect"; S.answered = null; S.opts = shuffle([s.effect].concat(s.eWrong)); save(); renderSheet(); $("sheet-q").focus(); return;
+    }
+    closeSheet();
+  };
+
+  /* ---------- LEVEL 2 ---------- */
+  function pickDevice(id) {
+    if (S.d1 === id) { S.d1 = S.d2; S.d2 = null; }
+    else if (S.d2 === id) S.d2 = null;
+    else if (!S.d1) S.d1 = id;
+    else if (!S.d2) S.d2 = id;
+    else S.d2 = id;
+    S.filed = false; save(); renderL2();
+  }
+  function renderL2() {
+    $("intro").textContent = D.question;
+    renderSpots($("spots2"), 2);
+    var a = S.d1 && BY[S.d1], b = S.d2 && BY[S.d2];
+    $("pick1-t").textContent = a ? a.device + ": “" + a.quote + "”" : "Tap a phrase below.";
+    $("pick2-t").textContent = b ? b.device + ": “" + b.quote + "”" : (a ? "Now tap a second phrase." : "Then tap a second phrase.");
+    $("pick-note").textContent = a && b && a.device === b.device ? "Both phrases use " + a.device.toLowerCase() + ". You can keep them, but two different devices usually make a stronger paragraph." : "Tap a chosen phrase again to remove it.";
+    var ready = !!(a && b);
+    $("desk").hidden = !ready;
+    $("filed").hidden = !(ready && S.filed);
+    if (ready) buildDesk();
+    if (ready && S.filed) renderFiled();
+  }
+
+  function slotDefs() {
+    var a = BY[S.d1], b = BY[S.d2];
+    var defs = [{ key: "p", num: "1", title: "Point", spot: a, frame: "In the opinion article “___,” published by ___ in ___, Clara Benton presents a biased opinion towards ___, suggesting that ___, through the use of " + DEVLABEL[a.device] + " and " + DEVLABEL[b.device] + "." }];
+    [[a, "1"], [b, "2"]].forEach(function (pair, k) {
+      var s = pair[0], d = pair[1];
+      defs.push({ sep: "Device " + d + ": " + s.device + (k ? " · start with “Furthermore,”" : "") });
+      defs.push({ key: "e" + d, num: "2", title: "Evidence", spot: s, dev: d, frame: (k ? "Furthermore" : "First") + ", when / while ___, Benton states / describes ___ “___.”" });
+      defs.push({ key: "m" + d, num: "3", title: "Technique + word meaning", spot: s, dev: d, frame: "Here, Benton uses " + DEVLABEL[s.device] + " through the word “___.” ___ is something that ___. The word “___” means ___. It is also commonly associated with ___." });
+      defs.push({ key: "s" + d, num: "4", title: "So? Analyze · " + s.device, spot: s, dev: d, frame: FRAMES[s.device].text + (s.unverified ? " However, ___ is not named, so ___ cannot be checked." : "") });
+      defs.push({ key: "f" + d, num: "5", title: "Effect on the reader", spot: s, dev: d, frame: "The reader realizes ___. The reader is ___ because ___." });
+      if (!k) defs.push({ key: "r1", num: "6", title: "Relate (device 1)", spot: s, dev: d, frame: "Therefore, the " + DEVNAME[s.device] + " shows Benton’s bias, as ___." });
+    });
+    defs.push({ sep: "Finish: link both devices" });
+    defs.push({ key: "z", num: "6", title: "Relate (both devices)", spot: a, frame: "Through the use of " + DEVLABEL[a.device] + " and " + DEVLABEL[b.device] + ", Benton portrays ___ as ___, which reveals her biased opinion towards ___." });
+    return defs;
+  }
+  function norm(t) {
+    return " " + String(t || "").toLowerCase().replace(/[‘’ʼ`´]/g, "'").replace(/[“”]/g, '"')
+      .replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ").trim() + " ";
+  }
+  function quotes(t) {
+    var out = [], re = /["“”]([^"“”]+)["“”]/g, m; t = String(t || "");
+    while ((m = re.exec(t))) out.push(m[1]);
+    return out;
+  }
+  function ctxs(s) { return [s.quote].concat(s.ctx || []).map(function (q) { return norm(q); }); }
+  function inPoem(q, s) { var nq = norm(q); if (nq.trim().length < 2) return false; return ctxs(s).some(function (c) { return c.indexOf(nq) >= 0; }); }
+  function inSpot(q, s) { var nq = norm(q); if (nq.trim().length < 2) return false; return norm(s.quote).indexOf(nq) >= 0; }
+  function nWords(t) { var x = String(t || "").trim(); return x ? x.split(/\s+/).length : 0; }
+  function low(t) { return String(t || "").toLowerCase().replace(/[‘’]/g, "'").replace(/\s+/g, " ").trim(); }
+  function noHe(t) { return !/\bhe\b|\bhis\b|\bhim\b/.test(low(t)); }
+
+  function checksFor(def, text) {
+    var t = low(text), s = def.spot, c = [], k = def.key.charAt(0);
+    if (!t) return [];
+    if (def.key === "p") {
+      var a = BY[S.d1], b = BY[S.d2];
+      c.push([/^in the (opinion )?article\b/.test(t), "In the (opinion) article …"]);
+      c.push([norm(text).indexOf(norm(D.art.hed)) >= 0, "Gives the full title"]);
+      c.push([/published by\b/.test(t) && /hartwell gazette/.test(t), "published by The Hartwell Gazette in …"]);
+      c.push([/\bbenton\b/.test(t), "Names the writer (Clara Benton)"]);
+      c.push([/biased opinion towards?\b/.test(t), "presents a biased opinion towards …"]);
+      c.push([/suggesting that\b/.test(t), "suggesting that … (her claim)"]);
+      c.push([/through the use of\b/.test(t) && DEVRE[a.device].test(t) && DEVRE[b.device].test(t), "through the use of (device 1) and (device 2)"]);
+    } else if (k === "e") {
+      c.push([def.dev === "2" ? /^furthermore\b/.test(t) : /^first\b/.test(t), def.dev === "2" ? "Starts “Furthermore,”" : "Starts “First,”"]);
+      c.push([/\b(when|while)\b/.test(t), "when / while … (the context)"]);
+      c.push([/\bbenton\b/.test(t) && /\b(states|describes|writes|claims|warns|asks|argues)\b/.test(t), "Benton states / describes …"]);
+      var qs = quotes(text);
+      c.push([qs.length > 0, "Words from the article inside quotation marks"]);
+      c.push([qs.length > 0 && qs.every(function (q) { return inPoem(q, s); }), "Words copied exactly from this part of the article"]);
+      c.push([qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }), "Short quotation (15 words or fewer)"]);
+    } else if (k === "m") {
+      var wq = quotes(text);
+      c.push([/\bhere\b/.test(t) && /\buses\b/.test(t) && DEVRE[s.device].test(t), "Here, Benton uses " + DEVLABEL[s.device] + " through the word …"]);
+      c.push([wq.some(function (q) { return nWords(q) <= 3 && inSpot(q, s); }), "ONE key word from this phrase, in quotation marks"]);
+      c.push([/\bis (something|someone) (that|who)\b/.test(t), "___ is something that ___"]);
+      c.push([/\bmeans?\b/.test(t), "The word “___” means ___"]);
+      c.push([/associated with\b/.test(t), "It is also commonly associated with ___"]);
+    } else if (k === "s") {
+      FRAMES[s.device].checks.forEach(function (ch) { c.push([ch[0].test(t), ch[1]]); });
+      if (s.unverified) c.push([/\bhowever\b/.test(t) && /(not named|unnamed|cannot (be )?check|can't (be )?check)/.test(t), "However, … is not named, so … cannot be checked"]);
+      c.push([/\bbenton\b/.test(t), "Uses Benton’s name"]);
+    } else if (k === "f") {
+      c.push([/\bthe reader realizes\b/.test(t), "The reader realizes ___"]);
+      c.push([/\bthe reader is\b.+\bbecause\b/.test(t), "The reader is ___ because ___"]);
+      c.push([!/\b(is|feels?) (good|bad)\b/.test(t), "A clear feeling word (not just “good” or “bad”)"]);
+      c.push([!/read on|keep reading/.test(t), "Goes beyond “wants to keep reading”"]);
+    } else if (def.key === "r1") {
+      c.push([/^therefore\b/.test(t), "Starts “Therefore,”"]);
+      c.push([DEVRE[s.device].test(t), "Names the device (" + DEVNAME[s.device] + ")"]);
+      c.push([/\bbenton/.test(t) && /\bbias/.test(t), "shows Benton’s bias"]);
+      c.push([/\bas\b/.test(t) && nWords(text) >= 10, "as … (explains the bias)"]);
+    } else if (def.key === "z") {
+      var a2 = BY[S.d1], b2 = BY[S.d2];
+      c.push([/^through the use of\b/.test(t), "Starts “Through the use of”"]);
+      c.push([DEVRE[a2.device].test(t) && DEVRE[b2.device].test(t), "Names both devices"]);
+      c.push([/\bbenton portrays\b.+\bas\b/.test(t), "Benton portrays ___ as ___"]);
+      c.push([/biased opinion towards?\b/.test(t), "which reveals her biased opinion towards ___"]);
+    }
+    c.push([noHe(text), "Says “she” or “Benton” (never “he”)"]);
+    c.push([!/\bquot(e|es|ed|ing)\b/.test(t), "Does not use the word “quote”"]);
+    c.push([!/\b(to sum up|to conclude|all in all|in conclusion)\b/.test(t), "No “To sum up / To conclude / All in all”"]);
+    return c;
+  }
+  function hintsFor(def) {
+    var s = def.spot, k = def.key.charAt(0), a = BY[S.d1], b = BY[S.d2];
+    if (def.key === "p") return ["The question asks how Benton persuades the reader that online shopping is harmful. So: “a biased opinion towards online shopping.”", "After “suggesting that,” give her claim in your own words: what does she say online shopping is doing to towns?", "Publication and date: “published by The Hartwell Gazette in October 2026.”", "End with both devices: “…through the use of " + DEVLABEL[a.device] + " and " + DEVLABEL[b.device] + ".”"];
+    if (k === "e") return ["Give the context first: when / while … (What is Benton describing at this point? Where is it in the article?)", "Copy only the words you will explain: “" + s.quote + "”", "Copy the words exactly, inside quotation marks. Never write the word “quote.”"];
+    if (k === "m") return ["Start: “Here, Benton uses " + DEVLABEL[s.device] + " through the word “" + s.words[0][0] + ".”"].concat(s.words.map(function (w) { return w[2]; })).concat(["Then one simple idea: “A ___ is something that ___.”", "Then the dictionary meaning, and what the word is associated with (three ideas)."]);
+    if (k === "s") return [s.frameHint, "After “to suggest,” say what Benton wants the reader to believe about online shopping or the town."];
+    if (k === "f") return ["“The reader realizes …” What does the reader understand now? (Careful readers may also notice the bias!)", s.readerHint];
+    if (def.key === "r1") return ["Link back to bias: what does Benton show only one side of here?", "Start: “Therefore, the " + DEVNAME[s.device] + " shows Benton’s bias, as …”"];
+    if (def.key === "z") return ["Start: “Through the use of " + DEVLABEL[a.device] + " and " + DEVLABEL[b.device] + ", Benton portrays …”", "How does Benton portray online shopping? As a killer? As greedy? As a destroyer of towns?", "End: “…which reveals her biased opinion towards online shopping.”"];
+    return [];
+  }
+  function frameNode(text) {
+    var p = document.createElement("p"); p.className = "frame";
+    String(text).split("___").forEach(function (part, i) {
+      if (i) { var b = document.createElement("span"); b.className = "blank"; b.setAttribute("aria-label", "blank"); p.appendChild(b); }
+      p.appendChild(document.createTextNode(part));
+    });
+    return p;
+  }
+  function slotOk(def) { var c = checksFor(def, S.boxes[def.key]); return c.length > 0 && c.every(function (x) { return x[0]; }); }
+  function buildDesk() {
+    var box = $("slots"); box.textContent = "";
+    slotDefs().forEach(function (def) {
+      if (def.sep) { var h = document.createElement("div"); h.className = "sep"; h.textContent = def.sep; box.appendChild(h); return; }
+      var slot = document.createElement("div"); slot.className = "slot";
+      var head = document.createElement("div"); head.className = "slot-h";
+      var num = document.createElement("span"); num.className = "num"; num.textContent = def.num;
+      var tt = document.createElement("b"); tt.textContent = def.title;
+      head.appendChild(num); head.appendChild(tt);
+      var ta = document.createElement("textarea"); ta.rows = /^[ms]/.test(def.key) ? 4 : 3; ta.value = S.boxes[def.key] || "";
+      ta.setAttribute("aria-label", def.title); ta.spellcheck = true;
+      var ul = document.createElement("ul"); ul.className = "checks";
+      var hb = document.createElement("button"); hb.type = "button"; hb.className = "hint-btn"; hb.textContent = "💡 Hint";
+      var hl = document.createElement("ul"); hl.className = "hints"; hl.hidden = true;
+      hintsFor(def).forEach(function (h) { var li = document.createElement("li"); li.textContent = h; hl.appendChild(li); });
+      hb.onclick = function () { hl.hidden = !hl.hidden; hb.textContent = hl.hidden ? "💡 Hint" : "💡 Hide hint"; };
+      function paintChecks() {
+        ul.textContent = "";
+        var c = checksFor(def, ta.value);
+        if (!c.length) { var li0 = document.createElement("li"); li0.textContent = "Start writing: each part of the structure is ticked as you write it."; ul.appendChild(li0); }
+        c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : ""; li.textContent = x[1]; ul.appendChild(li); });
+        slot.classList.toggle("ok", c.length > 0 && c.every(function (x) { return x[0]; }));
+      }
+      function grow() { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 4) + "px"; }
+      ta.addEventListener("input", function () { grow(); S.boxes[def.key] = ta.value; S.filed = false; save(); paintChecks(); updateFile(); $("filed").hidden = true; });
+      paintChecks();
+      slot.appendChild(head); slot.appendChild(frameNode(def.frame)); slot.appendChild(ta); slot.appendChild(ul); slot.appendChild(hb); slot.appendChild(hl);
+      box.appendChild(slot); grow();
+    });
+    updateFile();
+  }
+  function updateFile() {
+    var defs = slotDefs().filter(function (d) { return d.key; });
+    var done = defs.filter(slotOk).length;
+    var all = defs.every(function (d) { return (S.boxes[d.key] || "").trim(); });
+    $("btn-file").disabled = !all;
+    $("file-note").textContent = done + " of " + defs.length + " boxes have a gold star." + (all ? "" : " Write something in every box to finish.");
+  }
+  function paragraph() {
+    return slotDefs().filter(function (d) { return d.key; }).map(function (d) { return (S.boxes[d.key] || "").trim(); }).filter(Boolean).join(" ");
+  }
+  function lowerFirst(t) { return t.charAt(0).toLowerCase() + t.slice(1); }
+  function modelPara() {
+    var a = BY[S.d1], b = BY[S.d2];
+    function fill(x) { return x.replace("{d1}", DEVLABEL[a.device]).replace("{d2}", DEVLABEL[b.device]); }
+    var out = [fill(D.point_model)];
+    [a, b].forEach(function (s, i) {
+      out.push((i ? "Furthermore, " : "First, ") + lowerFirst(s.m_ev));
+      out.push(s.m_tech, s.m_dev, s.m_reader);
+      if (!i) out.push(s.m_relate);
+    });
+    out.push(fill(D.final_model));
+    return out.join(" ");
+  }
+  var TICKS = ["My Point has the genre, title, publisher, writer, the biased opinion, her claim and both devices.", "Device 1 starts “First, when / while …” and device 2 starts “Furthermore, …”.", "My quotations are short, exact and inside quotation marks.", "In step 3 I named the device and gave one word’s meaning and what it is associated with.", "In step 4 I used the frame for my device (and said so when a source is not named).", "I said what the reader realizes and how the reader feels, with “because”.", "I linked device 1 to Benton’s bias, and finished with “Through the use of … and …, Benton portrays …”."];
+  function renderFiled() {
+    $("final").textContent = paragraph();
+    $("model").textContent = modelPara();
+    var ul = $("tick"); ul.textContent = "";
+    TICKS.forEach(function (t, i) {
+      var li = document.createElement("li"), lb = document.createElement("label"), cb = document.createElement("input"), sp = document.createElement("span");
+      cb.type = "checkbox"; cb.checked = !!S.ticks[i]; cb.onchange = function () { S.ticks[i] = cb.checked; save(); };
+      sp.textContent = t; lb.appendChild(cb); lb.appendChild(sp); li.appendChild(lb); ul.appendChild(li);
+    });
+    $("improve").value = S.improve || "";
+  }
+  $("btn-file").onclick = function () { S.filed = true; save(); $("filed").hidden = false; renderFiled(); $("filed").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-edit").onclick = function () { $("desk").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-copy").onclick = function () {
+    var t = paragraph();
+    function done(ok) { $("copy-note").textContent = ok ? "Copied. You can paste it into your notes or send it to your teacher." : "Copying didn't work here. Select the text above and copy it."; }
+    try { navigator.clipboard.writeText(t).then(function () { done(true); }, function () { done(false); }); } catch (e) { done(false); }
+  };
+  $("improve").addEventListener("input", function () { S.improve = $("improve").value; save(); });
+  $("btn-report").onclick = function () { S.report = true; save(); renderReport(); window.scrollTo(0, 0); };
+
+  /* ---------- REPORT ---------- */
+  function renderReport() {
+    var f = firstCount();
+    $("r-big").textContent = f; var sm = document.createElement("small"); sm.textContent = " / " + SPOTS.length; $("r-big").appendChild(sm);
+    $("r-stars").textContent = "★".repeat(f);
+    var rev = SPOTS.filter(function (s) { return S.spots[s.id].misses; });
+    $("r-revise-block").hidden = !rev.length;
+    var ul = $("r-revise"); ul.textContent = "";
+    rev.forEach(function (s) { var li = document.createElement("li"); li.textContent = "“" + s.quote + "”: " + s.device; ul.appendChild(li); });
+    $("r-para").textContent = paragraph() || "(not written yet)";
+    $("r-improve-block").hidden = !S.improve; $("r-improve").textContent = S.improve || "";
+    var who = $("r-who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = S.name; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("s-report");
+  }
+  $("btn-back").onclick = function () { S.report = false; save(); renderMain(); };
+  $("btn-again").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} S = null; $("student-name").value = ""; renderStart(); };
+
+  function renderArticle() {
+    var a = D.art, box = $("article"); box.textContent = "";
+    function marked(el, text, where) {
+      var ms = SPOTS.filter(function (s) { return s.where === where; }).map(function (s) { return { s: s, at: text.indexOf(s.quote) }; })
+        .filter(function (m) { return m.at >= 0; }).sort(function (x, y) { return x.at - y.at; });
+      var pos = 0;
+      ms.forEach(function (m) {
+        el.appendChild(document.createTextNode(text.slice(pos, m.at)));
+        var mk = document.createElement("mark"); mk.appendChild(document.createTextNode(m.s.quote));
+        var sp = document.createElement("sup"); sp.textContent = m.s.n; mk.appendChild(sp); el.appendChild(mk);
+        pos = m.at + m.s.quote.length;
+      });
+      el.appendChild(document.createTextNode(text.slice(pos)));
+    }
+    var k = document.createElement("p"); k.className = "kicker"; k.textContent = "OPINION"; box.appendChild(k);
+    var h = document.createElement("h2"); h.className = "hed"; marked(h, a.hed, "Headline"); box.appendChild(h);
+    var dk = document.createElement("p"); dk.className = "dek"; dk.textContent = a.dek; box.appendChild(dk);
+    var by = document.createElement("p"); by.className = "by"; by.textContent = a.by; box.appendChild(by);
+    a.paras.forEach(function (t, i) {
+      var p = document.createElement("p"); p.className = "para";
+      var n = document.createElement("span"); n.className = "pn"; n.textContent = "¶" + (i + 1);
+      var tx = document.createElement("span"); marked(tx, t, "Paragraph " + (i + 1));
+      p.appendChild(n); p.appendChild(tx); box.appendChild(p);
+    });
+    var f = document.createElement("p"); f.className = "foot"; f.textContent = a.foot; box.appendChild(f);
+  }
+  renderArticle();
+  renderStart();
+})();
+</script>
+</body>
+</html>
