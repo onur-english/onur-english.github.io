@@ -785,9 +785,9 @@ body { background: radial-gradient(900px 520px at 0% 0%, #EADFFF 0%, transparent
   function renderTabs() {
     var n = cracked();
     $("tab-1-s").textContent = n + "/" + CLUES.length + " clues";
-    $("tab-2-s").textContent = stage1Done() ? Object.keys(S.drill.done).length + "/" + DRILLS.length + " fixed" : "locked";
-    $("tab-3-s").textContent = !stage2Done() ? "locked" : (S.filed ? "filed" : "to write");
-    $("tab-2").disabled = !stage1Done(); $("tab-3").disabled = !stage2Done();
+    $("tab-2-s").textContent = Object.keys(S.drill.done).length + "/" + DRILLS.length + " fixed";
+    $("tab-3-s").textContent = (S.filed ? "filed" : "to write");
+    $("tab-2").disabled = false; $("tab-3").disabled = false;
     [1, 2, 3].forEach(function (i) {
       $("tab-" + i).classList.toggle("on", S.stage === i);
       $("tab-" + i).classList.toggle("done", (i === 1 && stage1Done()) || (i === 2 && stage2Done()) || (i === 3 && S.filed));
@@ -1178,7 +1178,7 @@ body { background: radial-gradient(900px 520px at 0% 0%, #EADFFF 0%, transparent
       $("slot-" + sl.k).classList.toggle("ok", ok);
       if (!ok) all = false;
     });
-    $("btn-file").disabled = !all;
+    $("btn-file").disabled = false;
     var left = SLOTS.filter(function (sl) { return !checksFor(sl.k, S.text[sl.k] || "").every(function (x) { return x[0]; }); }).length;
     $("file-note").textContent = all ? "All boxes are green. File your report." : left + (left === 1 ? " box still needs work." : " boxes still need work.");
   }

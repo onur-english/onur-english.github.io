@@ -794,9 +794,9 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
   function renderTabs() {
     var n = cracked();
     $("tab-1-s").textContent = n + "/" + CLUES.length + " clues";
-    $("tab-2-s").textContent = stage1Done() ? Object.keys(S.drill.done).length + "/" + DRILLS.length + " fixed" : "locked";
-    $("tab-3-s").textContent = !stage2Done() ? "locked" : (S.filed ? "submitted" : "to write");
-    $("tab-2").disabled = !stage1Done(); $("tab-3").disabled = !stage2Done();
+    $("tab-2-s").textContent = Object.keys(S.drill.done).length + "/" + DRILLS.length + " fixed";
+    $("tab-3-s").textContent = (S.filed ? "submitted" : "to write");
+    $("tab-2").disabled = false; $("tab-3").disabled = false;
     [1, 2, 3].forEach(function (i) {
       $("tab-" + i).classList.toggle("on", S.stage === i);
       $("tab-" + i).classList.toggle("done", (i === 1 && stage1Done()) || (i === 2 && stage2Done()) || (i === 3 && S.filed));
@@ -1228,7 +1228,7 @@ textarea { resize: vertical; min-height: 84px; line-height: 1.45; }
       $("slot-" + sl.k).classList.toggle("ok", ok);
       if (!ok) { all = false; left += 1; }
     });
-    $("btn-file").disabled = !all;
+    $("btn-file").disabled = false;
     $("file-note").textContent = all ? "All boxes are green. Submit your paragraph." : left + (left === 1 ? " box still needs work." : " boxes still need work.");
   }
   function paragraph() { if (S.pick.length < 2) return ""; return allSlots().map(function (sl) { return (S.text[sl.k] || "").trim(); }).filter(Boolean).join(" "); }

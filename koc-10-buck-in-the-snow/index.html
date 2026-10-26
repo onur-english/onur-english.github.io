@@ -258,7 +258,7 @@ mark.struct { background: rgba(255, 111, 111, .18); }
         <ul class="rules">
           <li><span class="ic"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 4v6l3 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span><span>Each lock has two dials. <b>Dial 1:</b> name the device by picking the statement that is true. <b>Dial 2:</b> choose why it works. Read every option carefully: they are all about the same words.</span></li>
           <li><span class="ic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2 2 17h16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 8v4M10 14.5v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span>A wrong answer trips the alarm. The guard re-locks that lock and brings it back in the next pass, with the answers moved around.</span></li>
-          <li><span class="ic"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span>Open every lock, then crack each vault's code. The exit only opens when all three vaults are open.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span>Open every lock, then crack each vault's code. Every vault and the exit are open from the start, so you can go straight to any part.</span></li>
           <li><span class="ic"><svg viewBox="0 0 16 22" aria-hidden="true"><path d="M10 0 1 13h6l-2 9 10-13H9l1-9z" fill="currentColor"/></svg></span><span>Your <b>first-try score</b> is your real score. Getting out is the goal.</span></li>
         </ul>
         <div class="resume" id="resume" hidden>
@@ -284,7 +284,7 @@ mark.struct { background: rgba(255, 111, 111, .18); }
       <div class="card">
         <div>
           <span class="eyebrow">The map</span>
-          <h2 style="font-size:1.35rem;margin-top:4px">Pick a vault. Open all three to reach the exit.</h2>
+          <h2 style="font-size:1.35rem;margin-top:4px">Pick any vault, in any order. The exit is open too.</h2>
         </div>
         <div class="map" id="map"></div>
         <div class="legend">
@@ -677,7 +677,7 @@ mark.struct { background: rgba(255, 111, 111, .18); }
     var map = $("map"); map.textContent = "";
     VAULTS.forEach(function (v) {
       var st = S.vaults[v.id];
-      var locked = v.id === "ex" && !vaultsOpen();
+      var locked = false;
       var b = document.createElement("button"); b.type = "button"; b.className = "door"; b.disabled = locked;
       var pending = v.steps.concat(v.code ? [v.code] : []).filter(function (id) { return S.misses[id] && !S.done[id]; }).length;
       if (st.open) b.className += " is-open"; else if (pending) b.className += " has-alarm";

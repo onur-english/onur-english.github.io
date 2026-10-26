@@ -439,16 +439,16 @@ button { font: inherit; color: inherit; }
     S.report = false;
     $("tab-1").classList.toggle("on", S.tab === 1);
     $("tab-2").classList.toggle("on", S.tab === 2);
-    $("tab-2").disabled = !lv1Done();
+    $("tab-2").disabled = false;
     $("tab-1-s").textContent = foundCount() + "/" + SPOTS.length + " found";
-    $("tab-2-s").textContent = lv1Done() ? (S.filed ? "paragraph done" : "open") : "locked";
+    $("tab-2-s").textContent = S.filed ? "paragraph done" : "open";
     $("lv-1").hidden = S.tab !== 1;
     $("lv-2").hidden = S.tab !== 2;
     if (S.tab === 1) renderL1(); else renderL2();
     show("s-main");
   }
   $("tab-1").onclick = function () { S.tab = 1; save(); renderMain(); };
-  $("tab-2").onclick = function () { if (!lv1Done()) return; S.tab = 2; save(); renderMain(); };
+  $("tab-2").onclick = function () { S.tab = 2; save(); renderMain(); };
 
   function spotButton(s, mode) {
     var st = S.spots[s.id];
@@ -761,7 +761,7 @@ button { font: inherit; color: inherit; }
     var defs = slotDefs().filter(function (d) { return d.key; });
     var done = defs.filter(slotOk).length;
     var all = defs.every(function (d) { return (S.boxes[d.key] || "").trim(); });
-    $("btn-file").disabled = !all;
+    $("btn-file").disabled = false;
     $("file-note").textContent = done + " of " + defs.length + " boxes have a gold star." + (all ? "" : " Write something in every box to finish.");
   }
   function paragraph() {
