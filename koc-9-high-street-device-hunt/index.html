@@ -136,6 +136,12 @@ button { font: inherit; color: inherit; }
 .starter-lab { font-size: .85rem; color: var(--muted); width: 100%; }
 .starter-chip { appearance: none; border: 2px solid var(--board); background: #FFFFFF; color: var(--board); border-radius: 999px; padding: 4px 12px; font-size: .9rem; font-weight: 700; cursor: pointer; min-height: 36px; }
 .starter-chip:hover { background: #EEF2F8; }
+.devstrip { display: flex; flex-direction: column; gap: 6px; }
+.ds-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; background: #FFFFFF; border: 2px solid var(--board); border-radius: 10px; padding: 6px 10px; }
+.ds-row.g2 { border-color: #7A3FB0; }
+.ds-tag { font-size: .78rem; font-weight: 700; letter-spacing: .02em; color: #FFFFFF; background: var(--board); border-radius: 999px; padding: 1px 9px; }
+.ds-row.g2 .ds-tag { background: #7A3FB0; }
+.ds-q { font-family: var(--f-news); font-size: 1rem; line-height: 1.4; background: linear-gradient(transparent 8%, var(--yellow) 8%, var(--yellow) 92%, transparent 92%); box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: 0 2px; }
 .poem-note { font-size: .8rem; color: var(--muted); padding: 8px 20px 14px; }
 
 .meter { height: 12px; border-radius: 999px; background: #E3EAF0; overflow: hidden; }
@@ -869,6 +875,19 @@ button { font: inherit; color: inherit; }
     return p;
   }
   function slotOk(def) { var c = checksFor(def, S.boxes[def.key]); return c.length > 0 && c.every(function (x) { return x[0]; }); }
+  /* Reminder of the chosen device(s) and words, shown at every writing step */
+  function devStrip(def) {
+    var both = def.key === "p" || def.key === "z";
+    var list = both ? [[BY[S.d1], 1], [BY[S.d2], 2]] : [[def.spot, def.spot.id === S.d1 ? 1 : 2]];
+    var box = document.createElement("div"); box.className = "devstrip";
+    list.forEach(function (x) {
+      var row = document.createElement("div"); row.className = "ds-row g" + x[1];
+      var tag = document.createElement("span"); tag.className = "ds-tag"; tag.textContent = (both ? "Device " + x[1] + ": " : "") + x[0].device;
+      var q = document.createElement("span"); q.className = "ds-q"; q.textContent = "“" + x[0].quote + "”";
+      row.appendChild(tag); row.appendChild(q); box.appendChild(row);
+    });
+    return box;
+  }
   function makeSlot(def) {
     var slot = document.createElement("div"); slot.className = "slot";
     var head = document.createElement("div"); head.className = "slot-h";
@@ -892,7 +911,7 @@ button { font: inherit; color: inherit; }
     function grow() { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 4) + "px"; }
     ta.addEventListener("input", function () { grow(); S.boxes[def.key] = ta.value; S.filed = false; save(); paintChecks(); updateFile(); $("filed").hidden = true; });
     paintChecks();
-    slot.appendChild(head); slot.appendChild(frameNode(def.frame));
+    slot.appendChild(head); slot.appendChild(devStrip(def)); slot.appendChild(frameNode(def.frame));
     if (def.starters) {
       var row = document.createElement("div"); row.className = "starter-row";
       var lab = document.createElement("span"); lab.className = "starter-lab"; lab.textContent = "Tap a verb to start:"; row.appendChild(lab);
