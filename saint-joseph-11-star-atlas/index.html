@@ -1,0 +1,4086 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Star Atlas · Grade 11 Revision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Star Atlas: a night-sky revision map. Each level is a star to light; three stars per level. */
+:root {
+  --sky: #EEF1FB; --sky2: #DCE2F7; --star: rgba(60, 72, 160, .35);
+  --card: #FFFFFF; --ink: #19204D; --muted: #555E8C; --line: #D9DEF2; --soft: #F3F5FD;
+  --accent: #4B5BD6; --btn: #4352CF; --btn-ink: #FFFFFF;
+  --gold: #E3A514; --gold-soft: #FCF1D3; --gold-ink: #6A4A00;
+  --right: #12855B; --right-soft: #DDF3EA; --wrong: #C63B3B; --wrong-soft: #FBE4E2;
+  --boss: #19204D; --boss-ink: #FFFFFF;
+  --shadow: 0 1px 0 rgba(25, 32, 77, .05), 0 10px 26px rgba(25, 32, 77, .10);
+  --f-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sky: #080D2A; --sky2: #141B4A; --star: rgba(255, 255, 255, .55);
+    --card: #111944; --ink: #EEF1FF; --muted: #A5ADD8; --line: #26306A; --soft: #172053;
+    --accent: #A3ACFF; --btn: #5565E6; --btn-ink: #FFFFFF;
+    --gold: #F5C451; --gold-soft: #3A3115; --gold-ink: #FFDB80;
+    --right: #4FD69E; --right-soft: #10372C; --wrong: #FF8C82; --wrong-soft: #421F27;
+    --boss: #F5C451; --boss-ink: #1A1400;
+    --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 10px 26px rgba(0, 0, 0, .4);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sky: #080D2A; --sky2: #141B4A; --star: rgba(255, 255, 255, .55);
+  --card: #111944; --ink: #EEF1FF; --muted: #A5ADD8; --line: #26306A; --soft: #172053;
+  --accent: #A3ACFF; --btn: #5565E6; --btn-ink: #FFFFFF;
+  --gold: #F5C451; --gold-soft: #3A3115; --gold-ink: #FFDB80;
+  --right: #4FD69E; --right-soft: #10372C; --wrong: #FF8C82; --wrong-soft: #421F27;
+  --boss: #F5C451; --boss-ink: #1A1400;
+  --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 10px 26px rgba(0, 0, 0, .4);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--sky); }
+body {
+  margin: 0; color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; min-height: 100vh;
+  background-color: var(--sky);
+  background-image:
+    radial-gradient(1.4px 1.4px at 22px 34px, var(--star) 98%, transparent),
+    radial-gradient(1px 1px at 118px 82px, var(--star) 98%, transparent),
+    radial-gradient(1.8px 1.8px at 196px 22px, var(--star) 98%, transparent),
+    radial-gradient(1px 1px at 64px 168px, var(--star) 98%, transparent),
+    radial-gradient(1.3px 1.3px at 160px 196px, var(--star) 98%, transparent),
+    radial-gradient(1px 1px at 230px 140px, var(--star) 98%, transparent),
+    linear-gradient(180deg, var(--sky2), var(--sky) 520px);
+  background-size: 250px 230px, 250px 230px, 250px 230px, 250px 230px, 250px 230px, 250px 230px, 100% 100%;
+  background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, no-repeat;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding-block: 14px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; line-height: 1.12; text-wrap: balance; font-weight: 800; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+/* Header */
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #fff; border-radius: 12px; padding: 4px 6px; flex: none; box-shadow: var(--shadow); display: grid; place-items: center; }
+.logo img { width: 68px; height: auto; display: block; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; line-height: 1.15; }
+.top-sub { color: var(--muted); font-size: .85rem; }
+
+.card { background: var(--card); border-radius: 18px; box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 14px; border: 1px solid var(--line); }
+
+/* Buttons */
+.btn {
+  appearance: none; border: 0; border-radius: 999px; padding: 12px 22px; font-family: var(--f-body); font-weight: 700; font-size: 1.05rem;
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px;
+  background: var(--btn); color: var(--btn-ink); box-shadow: 0 4px 0 color-mix(in srgb, var(--btn) 60%, #000), 0 8px 20px color-mix(in srgb, var(--btn) 30%, transparent);
+  transition: transform .08s, box-shadow .08s;
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--btn) 60%, #000); }
+.btn-ghost { background: var(--card); color: var(--ink); border: 2px solid var(--line); box-shadow: 0 3px 0 var(--line); }
+.btn-ghost:active { box-shadow: 0 0 0 var(--line); }
+.btn-gold { background: var(--gold); color: #251A00; box-shadow: 0 4px 0 color-mix(in srgb, var(--gold) 55%, #000); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Welcome */
+.hero { padding-block: 26px; gap: 16px; position: relative; overflow: hidden; }
+.hero-sky { position: absolute; right: -6px; top: -18px; width: 150px; height: auto; opacity: .9; pointer-events: none; }
+.eyebrow { font-family: var(--f-mono); font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.hero h1 { font-size: clamp(2.6rem, 12vw, 4rem); letter-spacing: -.01em; position: relative; }
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero .sub { color: var(--muted); font-size: 1.05rem; max-width: 34em; position: relative; }
+.chips-row { display: flex; flex-wrap: wrap; gap: 8px; position: relative; }
+.pill { font-family: var(--f-mono); font-size: .75rem; font-weight: 700; letter-spacing: .05em; padding: 5px 10px; border-radius: 999px; background: var(--soft); border: 1px solid var(--line); }
+.field { display: flex; flex-direction: column; gap: 6px; max-width: 380px; position: relative; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input { font: inherit; font-size: 1.1rem; padding: 12px 16px; border-radius: 12px; border: 2px solid var(--line); background: var(--soft); color: var(--ink); }
+.field input:focus { border-color: var(--accent); outline: none; }
+.hero .btn { max-width: 380px; position: relative; }
+
+/* Player strip */
+.player { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; }
+.avatar { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-display); font-weight: 900; font-size: 1.4rem; color: #251A00; background: var(--gold); box-shadow: 0 0 0 4px color-mix(in srgb, var(--gold) 30%, transparent); }
+.player-name { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; line-height: 1.1; overflow-wrap: anywhere; }
+.rank { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: .74rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--gold-ink); background: var(--gold-soft); padding: 2px 9px; border-radius: 999px; margin-top: 6px; }
+.totals { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-family: var(--f-mono); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.totals .stars-total { font-size: 1.05rem; }
+.totals .xp { font-size: .82rem; color: var(--muted); }
+.rank-bar { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 4px; }
+.rank-bar .track { height: 8px; background: var(--soft); border-radius: 999px; overflow: hidden; border: 1px solid var(--line); }
+.rank-bar .fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--gold)); transition: width .6s; }
+.rank-bar small { color: var(--muted); font-size: .8rem; }
+
+/* Map */
+.map-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 10px; padding-inline: 2px; }
+.map-title h2 { font-size: 1.5rem; }
+.map-title small { color: var(--muted); font-family: var(--f-mono); font-size: .76rem; }
+.levels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 440px) { .levels { grid-template-columns: 1fr; } }
+.lvl {
+  appearance: none; text-align: left; cursor: pointer; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; position: relative; min-width: 0; transition: transform .1s, border-color .15s;
+  border-top: 4px solid var(--c);
+}
+.lvl:active { transform: translateY(2px); }
+@media (hover: hover) { .lvl:hover { border-color: var(--c); transform: translateY(-2px); } }
+.lvl-head { display: flex; align-items: center; gap: 10px; }
+.lvl-icon { width: 44px; height: 44px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 1.35rem; background: color-mix(in srgb, var(--c) 18%, transparent); border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); }
+.lvl-num { font-family: var(--f-mono); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: color-mix(in srgb, var(--c) 70%, var(--ink)); }
+.lvl-name { font-family: var(--f-display); font-weight: 800; font-size: 1.08rem; line-height: 1.15; }
+.lvl-topic { font-size: .86rem; color: var(--muted); line-height: 1.35; }
+.lvl-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); }
+.dots { display: inline-flex; gap: 4px; align-items: center; }
+.dots i { width: 17px; height: 17px; display: inline-block; background: var(--line); clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.dots i.on { background: var(--gold); }
+.lvl-status { font-family: var(--f-mono); font-size: .72rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+.lvl-status.go { background: color-mix(in srgb, var(--c) 18%, transparent); color: var(--ink); }
+.lvl.boss { grid-column: 1 / -1; background: var(--boss); color: var(--boss-ink); border-color: var(--boss); }
+.lvl.boss .lvl-icon { background: color-mix(in srgb, var(--boss-ink) 14%, transparent); border-color: color-mix(in srgb, var(--boss-ink) 40%, transparent); }
+.lvl.boss .lvl-num { color: color-mix(in srgb, var(--boss-ink) 75%, transparent); }
+.lvl.boss .lvl-topic { color: color-mix(in srgb, var(--boss-ink) 80%, transparent); }
+.lvl.boss .lvl-foot { border-top-color: color-mix(in srgb, var(--boss-ink) 25%, transparent); }
+.lvl.boss .lvl-status { background: color-mix(in srgb, var(--boss-ink) 14%, transparent); color: var(--boss-ink); }
+.lvl.boss .dots i { background: color-mix(in srgb, var(--boss-ink) 25%, transparent); }
+.lvl.boss .dots i.on { background: var(--boss-ink); }
+.group-h { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 14px 2px 2px; }
+.group-h h3 { font-size: 1.2rem; }
+.group-h small { color: var(--muted); font-family: var(--f-mono); font-size: .74rem; font-weight: 700; white-space: nowrap; }
+.notes { grid-column: 1 / -1; background: var(--soft); border: 1px solid var(--line); border-radius: 14px; padding: 0; }
+.notes summary { cursor: pointer; list-style: none; padding: 12px 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; min-height: 48px; }
+.notes summary::-webkit-details-marker { display: none; }
+.notes summary::after { content: "＋"; margin-left: auto; font-family: var(--f-mono); color: var(--accent); }
+.notes[open] summary::after { content: "－"; }
+.notes .nbody { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 12px; }
+.note h4 { margin: 0 0 4px; font-family: var(--f-display); font-size: 1rem; }
+.note p { font-size: .95rem; }
+.note ul { margin: 6px 0 0; padding-left: 18px; font-size: .92rem; color: var(--muted); }
+.note li { font-style: italic; }
+.how p { display: flex; gap: 10px; }
+.how p b.k { font-family: var(--f-mono); flex: none; width: 1.6em; color: var(--gold-ink); }
+.tiny-links { display: flex; justify-content: center; gap: 16px; font-size: .85rem; color: var(--muted); }
+.link { appearance: none; background: none; border: 0; padding: 4px; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.confirm { border: 2px solid var(--wrong); }
+.confirm .btn-row .btn { flex: 1 1 140px; }
+
+/* Play */
+.play-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.back { appearance: none; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); border-radius: 999px; padding: 8px 16px; font-weight: 700; cursor: pointer; min-height: 44px; }
+.chips { display: flex; gap: 8px; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 999px; padding: 6px 12px; font-family: var(--f-mono); font-weight: 700; font-size: .88rem; font-variant-numeric: tabular-nums; }
+.chip.cold { opacity: .55; }
+.chip.hot { animation: bump .45s; }
+@keyframes bump { 40% { transform: scale(1.18); } }
+.lvl-banner { display: flex; align-items: center; gap: 12px; }
+.lvl-banner .lvl-icon { width: 48px; height: 48px; }
+.lvl-banner .r { font-family: var(--f-mono); font-size: .74rem; color: var(--muted); font-weight: 700; letter-spacing: .03em; }
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(16px, 1fr)); gap: 4px; }
+.cell { aspect-ratio: 1; border-radius: 50%; background: var(--soft); border: 1px solid var(--line); }
+.cell.first { background: var(--gold); border-color: color-mix(in srgb, var(--gold) 60%, #000); box-shadow: 0 0 6px color-mix(in srgb, var(--gold) 70%, transparent); }
+.cell.later { background: var(--c, var(--accent)); border-color: var(--c, var(--accent)); }
+.cell.missed { background: var(--wrong-soft); border: 2px solid var(--wrong); }
+.cell.now { outline: 2px solid var(--ink); outline-offset: 1px; }
+.cell.pop { animation: pop .45s ease-out; }
+@keyframes pop { 0% { transform: scale(.3); } 70% { transform: scale(1.35); } 100% { transform: scale(1); } }
+.board-meta { display: flex; justify-content: space-between; gap: 8px; font-family: var(--f-mono); font-size: .74rem; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+.retry-tag { align-self: flex-start; font-family: var(--f-mono); font-size: .74rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--wrong-soft); color: var(--wrong); }
+.q-note { font-size: .9rem; color: var(--muted); font-weight: 700; margin-bottom: -4px; }
+.q-text { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.2rem, 4.6vw, 1.45rem); line-height: 1.38; white-space: pre-line; }
+.q-text .hl { background: linear-gradient(transparent 58%, color-mix(in srgb, var(--gold) 55%, transparent) 58%); padding: 0 3px; color: inherit; font-weight: 800; }
+.q-text .gap { display: inline-block; min-width: 3.2em; border-bottom: 3px solid var(--c, var(--accent)); height: 1em; vertical-align: baseline; }
+
+.opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.opt {
+  appearance: none; text-align: left; border: 2px solid var(--line); background: var(--card); border-radius: 14px; padding: 11px 12px;
+  display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 58px; min-width: 0;
+  transition: transform .08s, border-color .15s, background .15s; font-weight: 700; font-size: 1.03rem;
+}
+.opt:active:not(:disabled) { transform: translateY(2px); }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--c, var(--accent)); } }
+.opt .key { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-mono); font-weight: 700; background: var(--soft); border: 1px solid var(--line); }
+.opt .txt { min-width: 0; overflow-wrap: anywhere; }
+.opt:disabled { cursor: default; }
+.opt.is-right { border-color: var(--right); background: var(--right-soft); }
+.opt.is-right .key { background: var(--right); color: var(--card); border-color: var(--right); }
+.opt.is-wrong { border-color: var(--wrong); background: var(--wrong-soft); }
+.opt.is-wrong .key { background: var(--wrong); color: var(--card); border-color: var(--wrong); }
+.opt.is-dim { opacity: .45; }
+.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+.feedback { border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; border: 2px solid transparent; }
+.feedback.good { background: var(--right-soft); border-color: color-mix(in srgb, var(--right) 40%, transparent); }
+.feedback.bad { background: var(--wrong-soft); border-color: color-mix(in srgb, var(--wrong) 40%, transparent); }
+.feedback.reveal { background: var(--gold-soft); border-color: color-mix(in srgb, var(--gold) 70%, transparent); }
+.stamp { align-self: flex-start; font-family: var(--f-mono); font-weight: 700; font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; padding: 2px 12px; border: 2.5px solid currentColor; border-radius: 999px; }
+.feedback.good .stamp { color: var(--right); }
+.feedback.bad .stamp { color: var(--wrong); }
+.feedback.reveal .stamp { color: var(--gold-ink); }
+.stamp.thud { animation: thud .35s ease-out; }
+@keyframes thud { 0% { transform: scale(1.7); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.fb-head { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.fb-xp { font-family: var(--f-mono); font-weight: 700; font-size: .85rem; color: var(--gold-ink); }
+.fb-answer { font-weight: 700; }
+
+/* Between + results */
+.center { text-align: center; align-items: center; }
+.big-num { font-family: var(--f-display); font-weight: 900; font-size: clamp(3rem, 15vw, 4.4rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.big-num small { font-size: .36em; color: var(--muted); font-weight: 700; font-family: var(--f-mono); }
+.mega-dots { display: flex; gap: 14px; justify-content: center; }
+.mega-dots i { width: 46px; height: 46px; display: inline-block; background: var(--line); clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.mega-dots i.on { background: var(--gold); animation: dotpop .5s backwards; }
+@keyframes dotpop { 0% { transform: scale(0) rotate(-40deg); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.stat { background: var(--soft); border: 1px solid var(--line); border-radius: 14px; padding: 10px; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.stat b { font-family: var(--f-mono); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .78rem; color: var(--muted); text-align: center; }
+.tricky { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; text-align: left; width: 100%; }
+.tricky li { border-left: 4px solid var(--wrong); background: var(--soft); border-radius: 0 12px 12px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.tricky .tq { font-weight: 700; white-space: pre-line; }
+.tricky .ta { color: var(--right); font-weight: 700; }
+.tricky .tm { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .92rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 12px; width: 100%; }
+.who b { color: var(--ink); }
+.rank-up { background: var(--gold-soft); color: var(--gold-ink); font-weight: 700; padding: 8px 14px; border-radius: 999px; }
+
+/* Typed gaps */
+.q-lead { display: block; font-family: var(--f-body); font-size: 1.02rem; font-weight: 400; color: var(--ink); background: var(--soft); border: 1px dashed var(--line); border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; line-height: 1.45; white-space: normal; }
+.q-text.typed { line-height: 2.15; }
+.tglue { white-space: nowrap; }
+.tgap { display: inline-flex; align-items: baseline; white-space: nowrap; vertical-align: baseline; background: var(--gold-soft); border-bottom: 3px solid var(--c, var(--accent)); border-radius: 8px 8px 0 0; padding-left: 6px; }
+.tgap .first { font-family: var(--f-body); font-weight: 700; color: var(--gold-ink); }
+.tgap input { font: inherit; font-family: var(--f-body); font-weight: 700; color: var(--ink); width: 7em; max-width: 68vw; padding: 0 6px 0 0; line-height: 1.45; border: 0; border-radius: 0; background: transparent; }
+.tgap:not(:has(.first)) input { padding-left: 0; }
+.tgap.wide input { width: 10em; }
+.tgap.xwide input { width: 15em; }
+.tgap input:focus, .tgap textarea:focus { outline: none; }
+.tgap.full { display: flex; width: 100%; white-space: normal; margin-top: 6px; border-radius: 10px 10px 0 0; }
+.tgap textarea { font: inherit; font-family: var(--f-body); font-weight: 700; color: var(--ink); width: 100%; line-height: 1.45; border: 0; background: transparent; resize: vertical; padding: 6px 6px 6px 0; }
+.tgap textarea:disabled { opacity: 1; -webkit-text-fill-color: currentColor; }
+.tgap:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--accent)) 45%, transparent); }
+.tgap input:disabled { opacity: 1; -webkit-text-fill-color: currentColor; }
+.tgap.ok { background: var(--right-soft); border-bottom-color: var(--right); }
+.tgap.ok input, .tgap.ok .first, .tgap.ok textarea { color: var(--right); }
+.tgap.no { background: var(--wrong-soft); border-bottom-color: var(--wrong); }
+.tgap.no input, .tgap.no .first, .tgap.no textarea { color: var(--wrong); }
+.check-row { display: flex; }
+.check-row .btn { flex: 1; }
+
+.confetti { position: fixed; pointer-events: none; z-index: 50; width: 9px; height: 9px; clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: fly .9s cubic-bezier(.2, .7, .4, 1) forwards; }
+@keyframes fly { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(180deg); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cell.pop, .shake, .chip.hot, .mega-dots i.on, .tgap.shake, .stamp.thud { animation: none; }
+  .confetti { display: none; }
+  .btn, .opt, .lvl { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCACnAPADASIAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAQFAQMGBwII/8QARBAAAQMDAQUDBwoEBAcBAAAAAQACAwQFEQYSITFBUQcTYRQWIlVxgZMVMjNCUlaRobHRI2LB4SRDU4I0NUZUcnPC8P/EABkBAQADAQEAAAAAAAAAAAAAAAACAwQBBf/EACURAQACAQQBBAMBAQAAAAAAAAABAhEDEiExQQQTIjIzUYFCcf/aAAwDAQACEQMRAD8A9mREQEREBERAREQEREBERAREQEREBERARFrnmipoXzTPbHGwbTnOOAAgxUVEVJTvnmeGRsGSSqmj7+61pqJwWQxH0Y+h6Hx5n3Dqquoqqu91sLmNcyN7v8JC4cBzmeP0C6mmp46WnZDGPRaOJ4k8yVXW26eOk5jbHPbciIrEBERAREQEREBERAREQEREBERAREQEREBERAREQERfL3tjYXvcGtaMkk4ACDEsrIYnSyvDGMGXOccABchcLj8sPNROTFaqf02scMGYj6zh06DnxWa+4P1BPhoLbZGfRadxqXD6x/k6DmtlDSNvFyERGaOieHSnlJLyb7G8T4rJfUnUt7dP60VpFI3WW1ho5GxOr6lmzPUgEMP+Wzk3+p8VbrCytURERiFEzmciIi64IiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIsE4GSgOcGtLnEAAZJPJclcLg7UEphiJFrYd54eVEf/A/P2L7udwdfZXUtO4i3MOJZAf8AiCPqj+Xqea+ZHRU1O6SQtjiibkngGgLD6jX/AMVadLT8y01ckrBFTUjQaupd3cAxub1cfBo3rp7XbobVb4qODJbGN7jxe48XHxJVTpeikmDr1VxlstS3ZgY7jFDy954n3LoldoaWyuZ7V6t904ERFoVCIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgLlrtczeJZLdRSFtKw7NTOw/SdWNP6n3LTqPUXfzG1UM2ztejNM08uYB/qtFHG2mgbDGwBrRgALD6j1GPjVp0tL/UpsUbIo2xxtDWNGA0DcAoTafzhvQtzd9DRkSVjhwe7i2P+pWbpWSUtMyOlb3lZUu7qmj6vPM+A4ldHYbPHZLVHRsd3km980p4yPO9zj71D0+lundPUJat8RhYgADAGAFlEXosgiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiIC47WOrYrdAaSmkBlflu47z1A8Op9ymaw1PTWK2Pe+T0n5axjTh0h6DoOpXhtZdZ7lXSVVS7akcdwHBo5AeCza2pMRtr2v0tPPMuvttSdoyzHIkPpHoc/kuupJO8IGRjkvNqCvGAJM93jBAPNdTaa/Ye2N8hBHzHfaXlzEtvbqrFHB8oy3m5StieAYqSJ+4xszvcR1d+i6L5Ztv/AHkX4rmoazvGDLg4/it4LDxYw+4LXT1O2MRDNbRzOZl0LbrQvOGVLHHwyVvimjnbtRPDgDjIXC0cEup7mYaNxgtVM7FTUR+iZ3f6bD06ld1DDHTwtiiYGMYMNa0bgFt0rWvGZjCi9YrOIlsREVqsREQEREBERAREQEWHOaxpc4gAbyTyVNNrHTcE/cS3yhbJnBaZ27igukWqnqYKuETU00c0buD43BwPvCiS3+zwTPhludJHIw7LmOmaC09CEFgi+I5GTRtkje17HDLXNOQQoD9R2SKV0Ul1o2yNdsuaZmgg9EFkirZNQ2aKR0cl1pGvYcOaZmggqVS11JWwGelqYp4gSC+N4cMjxCCQirYtR2WeZsMV1o3yOOy1rZmkk9F8nU1iBIN4osjd9O1dxJlaKnvdyraRvd0dsqatxbnMQAHszyUinv8AZ6uQR090pJXng1kzSf1U9RmJdiXh+oLDqu+Vz6ystdQX8GtA9Fg5ADoqbzO1G07ZtFTkfyr9ErRW1TKGjlqZA5zYml2GgknwVHsR+18a89YfnqW23C2gOrqKWnGQMvGN6sqOdxe17t5ZxaOYUjU1Tc73c3TvpKswsOfoXYJ5nhw5ewKBbyWyNe1khxyawlefeOeGqs8cuwtk2THKxzi1xI2Sc4UwQVOpK91ooHuipWH/AB1S36g/02n7R/JVFqgrLrUC32zaimd9NI5hAgZ9o559F6VaqS2WKhZb6V7GNi+dl2XOdzLj1Kt9Pobp3W6V62rt4jtLoqKmt1HFSUkLYYIm7LGNG4BSFgOBbtAgg78qO+40cZw6pjGf5l6fTCkotbJ4pCAyRrieQO9fJq6cEjvmZG7ig3IvhkjJRljw4DduKxJPFEQ18jWkjIBKDYi1sqIZHbLJGuPQFfE1ZT0/00zGe0pkb0WqOphlAMcjXZGdxXyKymJwJmH2FBvRazPE1geZGhpOAc7ivkVdOTgTMz7UHjXaFqmu1DrCPStDUPgomTtgl2DgyvJGc+AzwXq1LpmzUlpba47dTmlDNgsdGDtdSep8V4Lc4pLF2sSGry0MuQl2nc2OdkH8Cv0cCC3IOQd4Vt+IjCFe5eDMulT2ado1TQ08rzbO9G1C52QY3bx7xnj4LoO1XTovl3tLbTTw+WVUM0m0G4MwaA4Anmei5TtNa669p09HSDvJXd1AA3fl2P7r1O4Qmm1ppOnccujp5mE+yMBSmcYnyjEdw4fst1661zt05eZCyBztmB8m7uXZ+Yegz+BXYXez22XtUssjqKBxko53vzGMOc3GCepGSue7V+z8y95qW0RfxGjaq4WD5w+2PHr+KhdnWpqvUGrrPBW+nLQUU8QlJ3vacYz4jCTEWjdBzHxlB7aaanp9WUjoYY4zLShz9hoG0dojJ8V7Jp+lp6WwUMVPBHFH5Ow7LGgDJaMleP8AbgCNVUBxuNHx/wB5XslkcHWGgcCCDTR7/wDaFG30hKPtLk6C026Ptar3sooGltujkbiMbnF2C4dD4rzntEp4IO1ERQwxxsc6Aua1oAJJGdy9RoSH9q902TnYtkIdjkS47l5h2mgu7US0OLSe4AcOI8VLT+38cv06jtjstro7HR3GkpoaasFQIw6FoYXtIJOcccYC6XstuFfctEU01we+R7XuZHI/i5g4b+fT3LzXW8NxsWtKQ6immvdtGJIROcBzPrDA3ZH57l7daKihqrTSz20MFI+MGIMGAG9MclG3FIh2Psmqs1HUS0mnq6ogeWSRwlzXA8Ctl5ukNotstXK4DYadkE8Sqerrpavs9nrXnMklK5+SFntaOYWxHl5tTazvrD3r66aSIbnb8jfyKiULZqjuzBkyF+y0B2NrdwUR9f5TbzAfQPeB+A0DgPBdZaNPvobTbLrO7ZfPWNAjx9XfgnxXlRuvOO3oTtrC30ffTQVD6CuaWyOdskvGHAj6p9nJXuoKSmlu9seGDFS8tlLTjvANnAOOKh610u6sabvbmf4qMfxY2/5rRzH8w/NVdlvZudRa4JXHvIJuJHzgcftvWuJnTn27deGfEX+df6tdS3p0dQbdSlrIoAA9oONo4yG+zgrW2abo46Nj66FlVVSNBkfIM4J5AcgFyF3a+HWVVFNkNfM17fFrgMH+i9EkMz6MmlcwSlvoF4JbnxU9L5alpt4Q1PjSsQp6e01Fvv8AH5M0ut7mFwBOe5fwwM78H8lAu4bSXyYQfwhJC17g04Bdl2/HVZotS19dOynY2NkzpCz0gC0EEg8N/JR9Tvey/NBI30zMnhvy5R1bVnSma/tLTraNSNzqLTBHBbKdsbA0OYHHHMkbyVC1M1raSCoAxLHOwNeOIBO8Kxt3/Lab/wBTf0VPqirilshfA9r9iojaSOR2lff8c/8AFVPvD5trwIK+ta3vJoY/QJ3keiTgKLZW0Na5tTXbM7nMBHebxk7ycdVv0zPHDR1s8xwxpaXHHLC1V2l358rss7Gtf6fk8nzN/wBkj5v6LPWL7K2rzjwtnbutErGmtJpruKijkYKFzCTEDua/h6PgeYVRX93T1ddTwtMbNv5rSQBlozhYtN+mgrRRzxubIJRE9jjvDs4x4+1aL098d6rWtcWFzm4OM49ELmpeLaeY45dpWYvif06q408Js08Xdt2GQktbjgQN2FRWYNqq+m74iXYYXDaOcHA34Uur08I6OaUXOtJbG47yzB3f+KrtLzOkucQcd/dE/kFZqfkohT6Wbdbdn1u1jGyV8hpa6IYjqGDOR0cOYWi3U2vrZbmW4m01ndN2I6uSR7XY5Etxvx7VOn1dVwzyRDS94kDHFoeyJuHeI3r488qz7p3r4Tf3W3M4wzcZQ9KdnUFlucl7ulV8o3eVxeZi3DGE8S0dfFfV9sWqK7VlDd6KW3Mht+2IY5NvLw4YO1jh7lK88qz7p3r4Tf3WPPKs+6d6+E390zOcnDp2hzoQJWt2i30gN4zz9y4e0dnTbF2gvvtvkjZQSRPzT79pj3ch4Ky88qz7p3r4Tf3WPPKt+6V6+G391yMw7wxrvQtNrOhiHfeTVlPnuZsZGDxa4dFR2Ww9pNloWWyG6Wt9NGNmOSZrnOY3w3fqr3zyrvujefht/dPPKu+6N5+G3913M4w5x2m6a038hRVE9RVOrbjWv7yqqnjBeeQA5NHILhNQ9mepr/qZ97krbbG8uaWMaH4Abwyuu88q77o3n4bf3Qaxrz/0jefht/dImYnJMRMYY1LpCTWGl4qK6PhhuEXpsmgBLGP4c9+COKh6C01qPScTqCurKOpt2S5uyXB8Z8M8ld2jUFXc6zuJrBcKFuyXd7UNaG+zcVF1xqCGy2aXadhzm7wDvI5D3nd7MqFr7a8pRXdPDhu0XVEFfcora2dzaYH03N34b1x4/phWNLrfT81h+QWx1T6fuTG6RzsO2epOMBeSzTz11bJPIdqSVxc48h/Zer9nehAY4rtc4iI9z4IHj555PcOnQe9Y43zbjy2WrSteW2j0BTz00dXTW6fDhtRsq6rHsJaG59y6Gsst6mordSxsoyylIkftPI2n79w3cN6trjen0FT3LbXW1I2QduCPab7FG85pvUNz+CrdlI4UbrzyuKU1Bp2eVNY2XHpBjshc3No/utVQ3eheyOFz9ueI8j1b7eimecsvqK5/C/us+csvqK5/CH7qc7bdoxFo6fWotNQ32Jj2ymnq4h/DmaM7uhHMKNRDU9BAKeWmpqvZ3CVk2zn2gjct/nLL6iufwR+6z5ySepLn8H+65iuc+XfljCssulbhTXVldVTQMa2Rz+7YC5xyScE7hxKXvT95utyNS1tIGhoY0GR3zQc9PFWnnHJ6lufwf7oNRv8AU1y+Ao+3p7dvhLffOUfudTNpRTRx0TGBmwCJXZAxjoo0lguxsLKBraTvHSd7I4vOAQdwG7grPzhf6nuXwU84Xep7l8BdmtZ7RibQr7bYbrFQVVBVGmZHUscDJG4kg43biFIom6it9OKd9NT1WyMCVkuyD44I3KT8vu9UXH4KyL8fVVw+CkVrEREE2tPaFb9OTuu5u9xdF3wJcyGPeA7GNonmcfgodZp+91l0fWO8jDXOBLdt28AY6K6+XT6quHwU+XXeqrh8FJ06TGHYvaJykVTa6W1ujZHD5Q9uy5pedkZ478Ln7JYr3a64TSikkZjZ3PcC0fhvVx8uu9VV/wAFfUd5fJKxgtla3aONp0eAPFSmtbTEz4Ri1oiYjys0WUViAsLKIMIsogwiyiDCLKINFXVR0VLJUSnDWDPiegC8A1vqCe/3t0Eb9qONx2sHcXc/cBu/Fdv2naudAW2qhdmVxLfR+1zPu4e32KB2fdnzazu7pc480wO0xjh9OfH+Ufms95m9tsNOnEUrvlt7O+z5k7YrtdIswAh0MTx9KeTiPs9Bz4r1gAAYCNaGtDWgADcAFlXVrFYxCi95tOZERFJEREQEREBERAREQEREBERAREQEREBERAREQEREBUuqL5HY7TJMX4leCI+vt/8A3PCuHvaxhe4hrWjJJ5BcGbZNrjUBq59plppXbLeXekch/UqF5nGI7TpEZzPSi0foyXUdzdfLu13k216EZ/zMfV9nU8yvWWMbGwMY0Na0YAAwAFiKKOCJkUTGsjYA1rWjAAX2lKRWMF7zaRERTQEREBERAREQEREBERAREQEREBERAREQEREBERAREQVl2p5riG29jzHDJvnkB37P2R4nqp1PTxUsDIII2xxxjDWtG4BETBltREQEREBERAREQEREBERAREQEREBERAREQf/Z"></div>
+    <div class="top-text">
+      <span class="top-title" id="top-title"></span>
+      <span class="top-sub" id="top-sub"></span>
+    </div>
+  </header>
+
+  <!-- WELCOME -->
+  <section id="screen-welcome" class="card hero" hidden aria-labelledby="welcome-h">
+    <svg class="hero-sky" viewBox="0 0 210 150" aria-hidden="true">
+      <g stroke="var(--accent)" stroke-width="1.2" stroke-opacity=".55" fill="none">
+        <path d="M18 112 L62 80 L104 92 L146 46 L190 30"/><path d="M104 92 L128 128"/><path d="M146 46 L170 84"/>
+      </g>
+      <g fill="var(--gold)">
+        <circle cx="18" cy="112" r="3.2"/><circle cx="62" cy="80" r="4"/><circle cx="104" cy="92" r="3.4"/><circle cx="146" cy="46" r="5"/>
+        <circle cx="190" cy="30" r="3.6"/><circle cx="128" cy="128" r="3"/><circle cx="170" cy="84" r="3.2"/>
+      </g>
+    </svg>
+    <span class="eyebrow">Grade 11 · Exam revision</span>
+    <h1 id="welcome-h">Star <em>Atlas</em></h1>
+    <p class="sub">Everything from Weekend Homework 1, 2, 4 and 5: collocations, prefixes, word forms, academic words, sentence types, sentence errors and subject–verb agreement. Light all the stars before the exam. Missed questions come back until you get them right.</p>
+    <div class="chips-row" aria-hidden="true">
+      <span class="pill">Vocabulary</span><span class="pill">Use of English</span><span class="pill">Mock exam</span>
+    </div>
+    <div class="field">
+      <label for="student-name">Your name</label>
+      <input id="student-name" type="text" autocomplete="given-name" maxlength="30" placeholder="Type your name">
+    </div>
+    <button class="btn" id="btn-welcome" type="button">Open the star map</button>
+  </section>
+
+  <!-- MAP -->
+  <section id="screen-map" hidden>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card player" id="player"></div>
+      <div class="map-title"><h2>Star map</h2><small id="map-count"></small></div>
+      <div class="levels" id="levels"></div>
+      <div class="card how" style="gap:8px">
+        <h3 style="font-size:1.1rem">How it works</h3>
+        <p><b class="k">01</b><span>Every level is open. Start anywhere. Each group has study notes: tap them to revise the rules first.</span></p>
+        <p><b class="k">02</b><span>Answer every question. Missed questions come back in the next round until you get them right.</span></p>
+        <p><b class="k">03</b><span>In typing questions, check your spelling. Capital letters don't matter. Short forms like <b>doesn't</b> and long forms like <b>does not</b> are both fine.</span></p>
+        <p><b class="k">04</b><span>Your first-try score lights the stars: 90% or more = 3 stars, 70% or more = 2 stars, finished = 1 star. Light 3 stars everywhere before the exam.</span></p>
+      </div>
+      <div class="card confirm" id="confirm-reset" hidden>
+        <p><b>Reset all your stars, XP and progress?</b> This can't be undone.</p>
+        <div class="btn-row">
+          <button class="btn" id="btn-reset-yes" type="button">Yes, reset</button>
+          <button class="btn btn-ghost" id="btn-reset-no" type="button">Keep my progress</button>
+        </div>
+      </div>
+      <div class="tiny-links">
+        <button class="link" id="btn-rename" type="button">Change name</button>
+        <button class="link" id="btn-reset" type="button">Reset all progress</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="screen-play" hidden>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="play-top">
+        <button class="back" id="btn-back" type="button">← Star map</button>
+        <div class="chips">
+          <span class="chip" id="streak-chip" title="Correct answers in a row">🔥 <span id="streak-n">0</span></span>
+          <span class="chip" title="XP">XP <span id="xp-n">0</span></span>
+        </div>
+      </div>
+      <div class="card" id="play-card">
+        <div class="lvl-banner">
+          <div class="lvl-icon" id="play-icon" aria-hidden="true"></div>
+          <div style="min-width:0">
+            <div class="lvl-name" id="play-name"></div>
+            <div class="r" id="play-round"></div>
+          </div>
+        </div>
+        <div class="board" id="board" aria-hidden="true"></div>
+        <div class="board-meta"><span id="progress-line"></span><span id="q-count"></span></div>
+        <span class="retry-tag" id="retry-tag" hidden></span>
+        <p class="q-note" id="q-note"></p>
+        <h2 class="q-text" id="q-text" tabindex="-1"></h2>
+        <div class="check-row" id="check-row" hidden><button class="btn" id="btn-tcheck" type="button">Check my answer</button></div>
+        <div class="opts" id="opts" role="group" aria-labelledby="q-text"></div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+        <button class="btn" id="btn-next" type="button" hidden>Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BETWEEN ROUNDS -->
+  <section id="screen-between" class="card center" hidden aria-labelledby="between-h">
+    <span class="eyebrow" id="between-eyebrow"></span>
+    <h2 id="between-h"></h2>
+    <div class="big-num" id="between-big"></div>
+    <p id="between-text"></p>
+    <div class="board" id="board-between" aria-hidden="true" style="width:100%"></div>
+    <div class="legend">
+      <span><i style="background:var(--gold)"></i>Right first time</span>
+      <span><i id="legend-later" style="background:var(--accent)"></i>Cleared later</span>
+      <span><i style="background:var(--wrong-soft);box-shadow:inset 0 0 0 2px var(--wrong)"></i>Still to clear</span>
+    </div>
+    <button class="btn" id="btn-next-round" type="button" style="width:100%"></button>
+  </section>
+
+  <!-- LEVEL COMPLETE -->
+  <section id="screen-done" class="card center" hidden aria-labelledby="done-h">
+    <span class="eyebrow" id="done-eyebrow"></span>
+    <h2 id="done-h" style="font-size:1.8rem"></h2>
+    <div class="mega-dots" id="done-dots" aria-hidden="true"></div>
+    <div>
+      <div style="color:var(--muted)">First-try score</div>
+      <div class="big-num" id="done-big"></div>
+    </div>
+    <p class="rank-up" id="rank-up" hidden></p>
+    <div class="stats" id="done-stats"></div>
+    <div id="tricky-block" style="width:100%;display:flex;flex-direction:column;gap:10px">
+      <h3 style="font-size:1.15rem;text-align:left">Questions to revise</h3>
+      <ul class="tricky" id="tricky"></ul>
+    </div>
+    <div class="who" id="who"></div>
+    <div class="btn-row" style="width:100%">
+      <button class="btn btn-gold" id="btn-practice" type="button">Practice the tricky ones</button>
+      <button class="btn" id="btn-map" type="button">Back to the star map</button>
+      <button class="btn btn-ghost" id="btn-replay" type="button">Play this level again</button>
+    </div>
+  </section>
+</div>
+
+<script id="game-data" type="application/json">
+{
+"id": "sj11-hw1-5-star-atlas-v1",
+"title": "Star Atlas · Grade 11 Revision",
+"subtitle": "Weekend Homework 1, 2, 4 & 5 · Vocabulary and Use of English",
+"bossCount": 32,
+"bossPer": 1,
+"levels": [
+{
+"key": "make-mc",
+"group": "Make collocations · HW 1",
+"kind": "Choose",
+"name": "Make & Co.",
+"icon": "🪐",
+"color": "#7C8CFF",
+"topic": "make a habit of, make room for, lodge a complaint, coin a phrase…",
+"note": "Choose the best answer.",
+"questions": [
+{
+"q": "My grandfather has made a ___ of walking five kilometers every morning.",
+"answer": "habit",
+"wrong": [
+"pattern",
+"manner",
+"fashion"
+],
+"hint": "Which word means something you do regularly, almost without thinking?",
+"why": "make a habit of + -ing = start doing something regularly. 'He has made a habit of walking every morning.'"
+},
+{
+"q": "People who criticize everyone in public soon make a lot of ___.",
+"answer": "enemies",
+"wrong": [
+"hostility",
+"rivalries",
+"quarrels"
+],
+"hint": "Who are the people who dislike you and want to hurt you?",
+"why": "make enemies = cause people to dislike you. The opposite collocation is 'make friends'."
+},
+{
+"q": "The climbers made several ___ to reach the summit before the storm forced them back.",
+"answer": "attempts",
+"wrong": [
+"trials",
+"ventures",
+"pursuits"
+],
+"hint": "The word means 'tries'.",
+"why": "make an attempt / make several attempts (to do something) = try to do something."
+},
+{
+"q": "Thanks to her hard work, she made a ___ of the family bakery.",
+"answer": "success",
+"wrong": [
+"victory",
+"benefit",
+"profit"
+],
+"hint": "The bakery did very well. What do we call a very good result?",
+"why": "make a success of something = make something go very well. 'They made a success of their restaurant.'"
+},
+{
+"q": "The party was boring, so I made an early ___ just after ten o'clock.",
+"answer": "escape",
+"wrong": [
+"leave",
+"absence",
+"outing"
+],
+"hint": "You got away from the party before it ended.",
+"why": "make an early escape = leave an event early, usually because you are bored or tired."
+},
+{
+"q": "Scientists have made an important ___ about how bees find flowers.",
+"answer": "discovery",
+"wrong": [
+"invention",
+"exploration",
+"inspection"
+],
+"hint": "They found out something new that nobody knew before.",
+"why": "make a discovery = find out something new. An invention is a new machine or object, so it does not fit 'about how bees find flowers'."
+},
+{
+"q": "Before you pay the bill, check that you have made all the ___ correctly.",
+"answer": "calculations",
+"wrong": [
+"mathematics",
+"numbers",
+"accounts"
+],
+"hint": "This is the work you do when you add, subtract and multiply.",
+"why": "make a calculation / make calculations = work out numbers."
+},
+{
+"q": "Can everyone move along the bench to make ___ for one more person?",
+"answer": "room",
+"wrong": [
+"area",
+"gap",
+"seat"
+],
+"hint": "This word means 'space'.",
+"why": "make room for somebody/something = create space for them. 'Move the sofa to make room for the piano.'"
+},
+{
+"q": "I made her ___ at a conference in Ankara, and we have been friends ever since.",
+"answer": "acquaintance",
+"wrong": [
+"friendship",
+"familiarity",
+"company"
+],
+"hint": "The phrase means 'got to know her'.",
+"why": "make somebody's acquaintance = meet somebody and get to know them. It is a formal phrase."
+},
+{
+"q": "We loved the flat, so we decided to make an ___ on it before anyone else did.",
+"answer": "offer",
+"wrong": [
+"order",
+"estimate",
+"auction"
+],
+"hint": "You tell the seller how much money you will pay.",
+"why": "make an offer on something = say how much you are willing to pay for it, usually a house or flat."
+},
+{
+"q": "As nobody else has any ideas, I'd like to ___ a proposal: let's move the trip to Friday.",
+"answer": "make",
+"wrong": [
+"do",
+"take",
+"have"
+],
+"hint": "Which verb goes with 'proposal'?",
+"why": "make a proposal = make a formal suggestion. We say 'make a proposal', never 'do a proposal'."
+},
+{
+"q": "Local people made a ___ against the plan to build a casino in the park.",
+"answer": "stand",
+"wrong": [
+"stay",
+"pose",
+"place"
+],
+"hint": "They protested and refused to accept the plan.",
+"why": "make a stand against something = protest strongly about it and refuse to accept it."
+},
+{
+"q": "Wear a smart jacket to the interview if you want to create a good ___.",
+"answer": "impression",
+"wrong": [
+"expression",
+"imagination",
+"appearance"
+],
+"hint": "This is the opinion people form about you when they first meet you.",
+"why": "create a good/bad impression (= make an impression) = make people think well or badly of you."
+},
+{
+"q": "Candles and soft music help to create a relaxing ___ in the restaurant.",
+"answer": "atmosphere",
+"wrong": [
+"temperature",
+"weather",
+"attitude"
+],
+"hint": "This is the feeling or mood of a place.",
+"why": "create an atmosphere = give a place a particular feeling or mood: a romantic, relaxing or friendly atmosphere."
+},
+{
+"q": "The students ___ a protest outside the town hall against higher bus fares.",
+"answer": "staged",
+"wrong": [
+"coined",
+"rustled",
+"turned"
+],
+"hint": "This verb is also used for putting on a play in a theater.",
+"why": "stage a protest = organize and hold a formal protest (= make a formal protest)."
+},
+{
+"q": "Several guests ___ a complaint about the noise from the next room.",
+"answer": "lodged",
+"wrong": [
+"staged",
+"coined",
+"rustled"
+],
+"hint": "This is the formal verb that goes with 'complaint'.",
+"why": "lodge a complaint = make a formal complaint. 'Several people have lodged a complaint about the receptionist.'"
+},
+{
+"q": "There was nothing in the fridge, but Dad managed to rustle ___ a meal in ten minutes.",
+"answer": "up",
+"wrong": [
+"out",
+"off",
+"in"
+],
+"hint": "The phrasal verb means 'make a meal very quickly'.",
+"why": "rustle up a meal = make a meal very quickly, often from whatever food you can find."
+},
+{
+"q": "After three difficult years, the café finally ___ a profit last month.",
+"answer": "turned",
+"wrong": [
+"rolled",
+"spun",
+"twisted"
+],
+"hint": "It is a common verb that also means 'rotate'.",
+"why": "turn a profit = make a profit. 'This month our company should turn a profit for the first time.'"
+},
+{
+"q": "Nobody is sure who first ___ the word 'selfie'.",
+"answer": "coined",
+"wrong": [
+"turned",
+"lodged",
+"staged"
+],
+"hint": "This verb means 'invented a new word or phrase'.",
+"why": "coin a word / coin a phrase = invent a new word or phrase. 'I wonder who coined the term blogging.'"
+}
+]
+},
+{
+"key": "make-ty",
+"group": "Make collocations · HW 1",
+"kind": "Type",
+"name": "Make & Co. · Spell it",
+"icon": "✍️",
+"color": "#7C8CFF",
+"topic": "The homework gap-fill plus new sentences, first letter given",
+"note": "Type the missing word. The first letter is given.",
+"questions": [
+{
+"type": "type",
+"q": "Try to make a {habit} of noticing good collocations in any text you read.",
+"hint": "Something you do regularly.",
+"why": "make a habit of + -ing = start doing something regularly."
+},
+{
+"type": "type",
+"q": "A railway official asked us to move our luggage to make {room} for the boy's bike.",
+"hint": "This word means 'space'.",
+"why": "make room for = create space for."
+},
+{
+"type": "type",
+"q": "The new CEO has made a lot of {enemies} by being so autocratic.",
+"hint": "People who dislike you.",
+"why": "make enemies = cause people to dislike you."
+},
+{
+"type": "type",
+"q": "If Pauline makes a {success} of this project, she'll probably get promoted.",
+"hint": "A very good result.",
+"why": "make a success of something = make it go very well."
+},
+{
+"type": "type",
+"q": "The old gentleman said he was delighted to make my {acquaintance}.",
+"hint": "A formal way of saying 'meet me and get to know me'.",
+"why": "make somebody's acquaintance = meet and get to know somebody."
+},
+{
+"type": "type",
+"q": "Do you think you'll make an {offer} on the flat you viewed yesterday?",
+"hint": "You tell the seller what price you will pay.",
+"why": "make an offer on a house or flat = say how much you will pay for it."
+},
+{
+"type": "type",
+"q": "Every young scientist dreams of making a {discovery} that will change the world.",
+"hint": "Finding out something new.",
+"why": "make a discovery = find out something new."
+},
+{
+"type": "type",
+"q": "Rachel made no {attempt|attempts} to contact me when she was over here last year.",
+"hint": "This word means 'try'.",
+"why": "make no attempt to do something = not even try to do it."
+},
+{
+"type": "type",
+"q": "We tried to make a {stand} against the new housing development, but to no avail.",
+"hint": "The phrase means 'protest about'.",
+"why": "make a stand against something = protest about it and refuse to accept it."
+},
+{
+"type": "type",
+"q": "The {calculations} that you made contained a few inaccuracies.",
+"hint": "The adding and multiplying you did with numbers.",
+"why": "make calculations = work out numbers."
+},
+{
+"type": "type",
+"q": "The protesters {staged} a peaceful sit-in outside the ministry.",
+"hint": "The verb also used for plays in a theater.",
+"why": "stage a protest / a sit-in = organize and hold one."
+},
+{
+"type": "type",
+"q": "If you are unhappy with the service, you can {lodge} a formal complaint at reception.",
+"hint": "The formal verb that goes with 'complaint'.",
+"why": "lodge a complaint = make a formal complaint."
+},
+{
+"type": "type",
+"q": "Ten minutes after we got home, my brother had {rustled} up a delicious pasta dinner.",
+"hint": "The phrasal verb means 'made very quickly'. Check the tense.",
+"why": "rustle up a meal = make a meal very quickly. Past perfect: had rustled up."
+},
+{
+"type": "type",
+"q": "The start-up is expected to {turn} a profit for the first time next year.",
+"hint": "A verb that also means 'rotate'.",
+"why": "turn a profit = make a profit."
+},
+{
+"type": "type",
+"q": "The journalist who {coined} the phrase never imagined it would become so popular.",
+"hint": "The verb means 'invented a new word or phrase'. Past tense.",
+"why": "coin a phrase = invent a new phrase."
+},
+{
+"type": "type",
+"q": "The new manager wanted to create a good {impression} on her first day.",
+"hint": "What people think of you when they first meet you.",
+"why": "create a good impression = make people think well of you."
+},
+{
+"type": "type",
+"q": "Warm lights and wooden furniture create a cozy {atmosphere} in the café.",
+"hint": "The mood or feeling of a place.",
+"why": "create an atmosphere = give a place a particular mood."
+},
+{
+"type": "type",
+"q": "I'm too tired to stay. Let's make an early {escape} before the speeches start.",
+"hint": "Leaving early because you want to get away.",
+"why": "make an early escape = leave an event early."
+},
+{
+"type": "type",
+"q": "At the meeting, the chairman made an interesting {proposal}.",
+"hint": "A formal suggestion.",
+"why": "make a proposal = make a formal suggestion."
+}
+]
+},
+{
+"key": "prefix-mc",
+"group": "Prefixes & word forms · HW 2 & 4",
+"kind": "Choose",
+"name": "Not, Un-, Ir-",
+"icon": "🚫",
+"color": "#FF8FB1",
+"topic": "in- / im- / il- / ir- / un- / dis- / mis-: pick the right prefix",
+"note": "Choose the best answer.",
+"questions": [
+{
+"q": "The hospital's equipment was ___, so patients had to wait for hours.",
+"answer": "inadequate",
+"wrong": [
+"unadequate",
+"disadequate",
+"imadequate"
+],
+"hint": "adequate starts with a vowel; the usual prefix is in-.",
+"why": "inadequate = not good enough. adequate → inadequate."
+},
+{
+"q": "In some villages, many older adults are ___ because they never went to school.",
+"answer": "illiterate",
+"wrong": [
+"unliterate",
+"inliterate",
+"disliterate"
+],
+"hint": "Words that start with l usually take il-.",
+"why": "illiterate = unable to read or write. Before l, in- becomes il-: legal → illegal, literate → illiterate."
+},
+{
+"q": "Do not eat those berries; they are ___ and may make you sick.",
+"answer": "inedible",
+"wrong": [
+"unedible",
+"disedible",
+"imedible"
+],
+"hint": "edible starts with a vowel; think of in-.",
+"why": "inedible = cannot be eaten. edible → inedible."
+},
+{
+"q": "Cutting down the ancient forest caused ___ damage that can never be undone.",
+"answer": "irreversible",
+"wrong": [
+"unreversible",
+"inreversible",
+"disreversible"
+],
+"hint": "Words that start with r usually take ir-.",
+"why": "irreversible = cannot be changed back. Before r, in- becomes ir-: relevant → irrelevant, reversible → irreversible."
+},
+{
+"q": "I can't lend him my car again; he is completely ___.",
+"answer": "unreliable",
+"wrong": [
+"irreliable",
+"inreliable",
+"disreliable"
+],
+"hint": "This one takes the very common prefix un-.",
+"why": "unreliable = you cannot trust or depend on him. reliable → unreliable."
+},
+{
+"q": "Selling copies of the film without permission is an ___ business.",
+"answer": "illegitimate",
+"wrong": [
+"unlegitimate",
+"inlegitimate",
+"dislegitimate"
+],
+"hint": "legitimate starts with l.",
+"why": "illegitimate = not allowed or accepted by law or rules. legitimate → illegitimate."
+},
+{
+"q": "The ___ shopkeeper sold me a broken phone and refused to give my money back.",
+"answer": "dishonest",
+"wrong": [
+"unhonest",
+"inhonest",
+"imhonest"
+],
+"hint": "This one takes dis-.",
+"why": "dishonest = not honest; a dishonest person cheats others. honest → dishonest."
+},
+{
+"q": "My inbox is full of ___ emails advertising things I never asked for.",
+"answer": "unsolicited",
+"wrong": [
+"insolicited",
+"dissolicited",
+"nonsolicited"
+],
+"hint": "This one takes un-.",
+"why": "unsolicited = sent without being asked for. solicited → unsolicited."
+},
+{
+"q": "The value of a good friendship is ___; no number can describe it.",
+"answer": "immeasurable",
+"wrong": [
+"inmeasurable",
+"dismeasurable",
+"irmeasurable"
+],
+"hint": "Words that start with m usually take im-.",
+"why": "immeasurable = too big to be measured. Before m, b and p, in- becomes im-: possible → impossible."
+},
+{
+"q": "His essay was ___, with several spelling and grammar mistakes.",
+"answer": "imperfect",
+"wrong": [
+"unperfect",
+"inperfect",
+"disperfect"
+],
+"hint": "Words that start with p usually take im-.",
+"why": "imperfect = not completely correct. perfect → imperfect."
+},
+{
+"q": "The song is about ___ love: he adores her, but she does not love him back.",
+"answer": "unrequited",
+"wrong": [
+"irrequited",
+"disrequited",
+"inrequited"
+],
+"hint": "This one takes un-, even though it starts with r.",
+"why": "unrequited love = love that is not returned. requited → unrequited."
+},
+{
+"q": "The spy was ___ to his country and sold its secrets to the enemy.",
+"answer": "disloyal",
+"wrong": [
+"unloyal",
+"inloyal",
+"illoyal"
+],
+"hint": "This one takes dis-, even though it starts with l.",
+"why": "disloyal = not loyal; a disloyal person betrays friends or country. loyal → disloyal."
+},
+{
+"q": "The new medicine was ___, so doctors stopped prescribing it.",
+"answer": "ineffective",
+"wrong": [
+"uneffective",
+"diseffective",
+"imeffective"
+],
+"hint": "effective starts with a vowel; think of in-.",
+"why": "ineffective = does not produce the intended result. effective → ineffective."
+},
+{
+"q": "Please don't include ___ details in your answer; stick to the question.",
+"answer": "irrelevant",
+"wrong": [
+"unrelevant",
+"inrelevant",
+"disrelevant"
+],
+"hint": "relevant starts with r.",
+"why": "irrelevant = having little connection with the topic. relevant → irrelevant."
+},
+{
+"q": "The doctor's handwriting was so ___ that nobody could read the prescription.",
+"answer": "illegible",
+"wrong": [
+"unlegible",
+"inlegible",
+"dislegible"
+],
+"hint": "legible starts with l.",
+"why": "illegible = impossible to read. legible → illegible."
+},
+{
+"q": "It is ___ to finish this whole project in one afternoon.",
+"answer": "impossible",
+"wrong": [
+"unpossible",
+"inpossible",
+"dispossible"
+],
+"hint": "possible starts with p.",
+"why": "impossible = cannot be done. Before p, in- becomes im-."
+},
+{
+"q": "I ___ the instructions and did the wrong exercise.",
+"answer": "misunderstood",
+"wrong": [
+"disunderstood",
+"ununderstood",
+"inunderstood"
+],
+"hint": "Which prefix means 'wrongly'?",
+"why": "mis- means 'wrongly': misunderstand, misinterpret, misspell."
+}
+]
+},
+{
+"key": "prefix-ty",
+"group": "Prefixes & word forms · HW 2 & 4",
+"kind": "Type",
+"name": "Not, Un-, Ir- · Spell it",
+"icon": "✍️",
+"color": "#FF8FB1",
+"topic": "Add the prefix to the word in brackets",
+"note": "Type the word in brackets with the correct negative prefix.",
+"questions": [
+{
+"type": "type",
+"q": "The school still has {=inadequate} (adequate) resources to support students with special needs.",
+"hint": "Add the prefix that means 'not'. adequate starts with a vowel.",
+"why": "adequate → inadequate (not good enough)."
+},
+{
+"type": "type",
+"q": "Free evening classes help {=illiterate} (literate) adults learn to read and write.",
+"hint": "Before l, the prefix is il-.",
+"why": "literate → illiterate."
+},
+{
+"type": "type",
+"q": "The bread had gone green and was completely {=inedible} (edible).",
+"hint": "edible starts with a vowel.",
+"why": "edible → inedible (cannot be eaten)."
+},
+{
+"type": "type",
+"q": "Scientists warn that some damage to coral reefs may be {=irreversible} (reversible).",
+"hint": "Before r, the prefix is often ir-.",
+"why": "reversible → irreversible (cannot be changed back)."
+},
+{
+"type": "type",
+"q": "The old bus is so {=unreliable} (reliable) that I am often late for school.",
+"hint": "The most common negative prefix.",
+"why": "reliable → unreliable."
+},
+{
+"type": "type",
+"q": "The court ruled that the contract was {=illegitimate} (legitimate).",
+"hint": "Before l, the prefix is il-.",
+"why": "legitimate → illegitimate (not allowed or accepted)."
+},
+{
+"type": "type",
+"q": "It was {=dishonest} (honest) of him to copy his friend's homework and call it his own.",
+"hint": "This adjective takes dis-.",
+"why": "honest → dishonest."
+},
+{
+"type": "type",
+"q": "I received several {=unsolicited} (solicited) messages advertising products I had never searched for.",
+"hint": "This one takes un-.",
+"why": "solicited → unsolicited (not asked for)."
+},
+{
+"type": "type",
+"q": "The support my teachers gave me was of {=immeasurable} (measurable) value.",
+"hint": "Before m, the prefix is im-.",
+"why": "measurable → immeasurable (too big to be measured)."
+},
+{
+"type": "type",
+"q": "The novel explores the emotional effects of {=unrequited} (requited) love.",
+"hint": "This one takes un-.",
+"why": "requited → unrequited (love that is not returned)."
+},
+{
+"type": "type",
+"q": "The campaign was {=ineffective} (effective) because it failed to change people's behavior.",
+"hint": "effective starts with a vowel.",
+"why": "effective → ineffective."
+},
+{
+"type": "type",
+"q": "His comments about football were {=irrelevant} (relevant) to a discussion about climate change.",
+"hint": "Before r, the prefix is ir-.",
+"why": "relevant → irrelevant."
+},
+{
+"type": "type",
+"q": "The general was accused of being {=disloyal} (loyal) to the king.",
+"hint": "This one takes dis-.",
+"why": "loyal → disloyal."
+},
+{
+"type": "type",
+"q": "Even an {=imperfect} (perfect) plan is better than no plan at all.",
+"hint": "Before p, the prefix is im-.",
+"why": "perfect → imperfect."
+},
+{
+"type": "type",
+"q": "The doctor's handwriting was so {=illegible} (legible) that the pharmacist had to phone him.",
+"hint": "Before l, the prefix is il-.",
+"why": "legible → illegible."
+},
+{
+"type": "type",
+"q": "Many readers {=misinterpret} (interpret) the ending of the story.",
+"hint": "Which prefix means 'wrongly'?",
+"why": "interpret → misinterpret (understand wrongly)."
+}
+]
+},
+{
+"key": "form-mc",
+"group": "Prefixes & word forms · HW 2 & 4",
+"kind": "Choose",
+"name": "Word Families",
+"icon": "🧬",
+"color": "#FF8FB1",
+"topic": "noun, verb, adjective or adverb? The HW 4 paragraph and the HW 2 chart",
+"note": "Choose the best answer.",
+"questions": [
+{
+"q": "Recent advances in technology have been ___ beneficial to many industries.",
+"answer": "incredibly",
+"wrong": [
+"incredible",
+"incredulous",
+"incredibility"
+],
+"hint": "The gap describes the adjective 'beneficial'. Which word class describes an adjective?",
+"why": "An adverb describes an adjective: incredibly beneficial. incredible (adj) → incredibly (adv)."
+},
+{
+"q": "The healthcare sector has seen significant ___ thanks to new diagnostic tools.",
+"answer": "improvements",
+"wrong": [
+"improving",
+"improved",
+"improves"
+],
+"hint": "After the adjective 'significant' you need a noun.",
+"why": "Adjective + noun: significant improvements. improve (v) → improvement (n)."
+},
+{
+"q": "Some new technologies are criticized for being ___, so users cannot depend on them.",
+"answer": "unreliable",
+"wrong": [
+"reliant",
+"reliance",
+"reliably"
+],
+"hint": "You need a negative adjective: users cannot depend on them.",
+"why": "rely (v) → reliable (adj) → unreliable (negative adj)."
+},
+{
+"q": "Devices can be dangerous when ___ testing is performed.",
+"answer": "inadequate",
+"wrong": [
+"adequate",
+"adequately",
+"adequacy"
+],
+"hint": "Think about meaning: dangerous because the testing is not good enough.",
+"why": "The sentence needs a negative adjective before the noun 'testing': inadequate testing."
+},
+{
+"q": "There is growing ___ of the dangers of relying too much on machines.",
+"answer": "awareness",
+"wrong": [
+"aware",
+"unaware",
+"awarely"
+],
+"hint": "After 'growing' (an adjective) you need a noun.",
+"why": "aware (adj) → awareness (n). 'There is growing awareness of the problem.'"
+},
+{
+"q": "Many experts stress the ___ of keeping a balance between people and machines.",
+"answer": "significance",
+"wrong": [
+"significant",
+"signify",
+"significantly"
+],
+"hint": "After 'the' and before 'of', you need a noun.",
+"why": "significant (adj) → significance (n): the significance of something = its importance."
+},
+{
+"q": "Despite these challenges, the overall trend is towards ___ innovation.",
+"answer": "continued",
+"wrong": [
+"continue",
+"continuity",
+"continuously"
+],
+"hint": "The gap describes the noun 'innovation', so you need an adjective.",
+"why": "continue (v) → continued (adj) = still happening. continued innovation."
+},
+{
+"q": "The ___ minds behind these inventions are confident about the future.",
+"answer": "creative",
+"wrong": [
+"creation",
+"creator",
+"creatively"
+],
+"hint": "The gap describes the noun 'minds'.",
+"why": "create (v) → creative (adj): creative minds."
+},
+{
+"q": "With the right ___, the benefits will outweigh the risks.",
+"answer": "regulation",
+"wrong": [
+"regulate",
+"regulatory",
+"regularly"
+],
+"hint": "After 'the right' you need a noun.",
+"why": "regulate (v) → regulation (n): the right regulation(s)."
+},
+{
+"q": "The benefits outweigh the risks. As a result, the scientists remain ___ about the future.",
+"answer": "hopeful",
+"wrong": [
+"hopeless",
+"hopefully",
+"hope"
+],
+"hint": "After 'remain' you need an adjective. Is their feeling positive or negative?",
+"why": "hope (n/v) → hopeful (adj) = positive about the future. 'As a result' shows the feeling is positive."
+},
+{
+"q": "The hotel is ___ located next to the metro station.",
+"answer": "conveniently",
+"wrong": [
+"convenient",
+"convenience",
+"inconvenient"
+],
+"hint": "The gap describes the verb 'located'.",
+"why": "convenient (adj) → conveniently (adv): conveniently located."
+},
+{
+"q": "Is this information ___? I want to use it in my essay.",
+"answer": "accurate",
+"wrong": [
+"accuracy",
+"accurately",
+"inaccuracy"
+],
+"hint": "After 'Is this information', you need an adjective.",
+"why": "accuracy (n) → accurate (adj) → accurately (adv)."
+},
+{
+"q": "The town became ___ after the new port brought trade and jobs.",
+"answer": "prosperous",
+"wrong": [
+"prosperity",
+"prosper",
+"prosperously"
+],
+"hint": "After 'became' you need an adjective.",
+"why": "prosper (v) → prosperous (adj) → prosperity (n)."
+},
+{
+"q": "The ___ of her results impressed the teachers: she scored well in every test.",
+"answer": "consistency",
+"wrong": [
+"consistent",
+"consistently",
+"consist"
+],
+"hint": "After 'the' and before 'of', you need a noun.",
+"why": "consistently (adv) → consistent (adj) → consistency (n)."
+},
+{
+"q": "Recycling is one way to live more ___.",
+"answer": "sustainably",
+"wrong": [
+"sustainable",
+"sustain",
+"sustainability"
+],
+"hint": "The gap describes the verb 'live'.",
+"why": "sustain (v) → sustainable (adj) → sustainably (adv) → sustainability (n)."
+},
+{
+"q": "Her generous ___ to the charity helped build a new school.",
+"answer": "contribution",
+"wrong": [
+"contribute",
+"contributory",
+"contributing"
+],
+"hint": "After 'her generous' you need a noun.",
+"why": "contribute (v) → contribution (n) → contributory (adj)."
+},
+{
+"q": "Children's ___ skills grow very quickly in their first five years.",
+"answer": "developmental",
+"wrong": [
+"develop",
+"developmentally",
+"developed"
+],
+"hint": "The gap describes the noun 'skills'. Which adjective is in the word family chart?",
+"why": "develop (v) → development (n) → developmental (adj) → developmentally (adv)."
+}
+]
+},
+{
+"key": "form-ty",
+"group": "Prefixes & word forms · HW 2 & 4",
+"kind": "Type",
+"name": "Word Families · Spell it",
+"icon": "✍️",
+"color": "#FF8FB1",
+"topic": "Change the word in brackets so it fits the gap",
+"note": "Change the word in brackets so it fits the sentence.",
+"questions": [
+{
+"type": "type",
+"q": "Recent advances in technology have been {=incredibly} (incredible) beneficial to various industries.",
+"hint": "You need an adverb to describe 'beneficial'.",
+"why": "incredible → incredibly."
+},
+{
+"type": "type",
+"q": "The healthcare sector has seen significant {=improvement|improvements} (improve) with new diagnostic tools.",
+"hint": "After 'significant' you need a noun.",
+"why": "improve → improvement(s)."
+},
+{
+"type": "type",
+"q": "Some new technologies have been criticized for being {=unreliable} (rely) or too costly for smaller businesses to adopt.",
+"hint": "You need a negative adjective.",
+"why": "rely → reliable → unreliable."
+},
+{
+"type": "type",
+"q": "The safety of certain devices has been questioned, especially when {=inadequate} (adequate) testing is performed.",
+"hint": "The testing is not good enough. Add a negative prefix.",
+"why": "adequate → inadequate."
+},
+{
+"type": "type",
+"q": "There is also a growing {=awareness} (aware) about the potential dangers of over-reliance on automated systems.",
+"hint": "After 'a growing' you need a noun.",
+"why": "aware → awareness."
+},
+{
+"type": "type",
+"q": "Many experts stress the {=significance} (significant) of keeping a balance between human and machine input.",
+"hint": "After 'the' you need a noun.",
+"why": "significant → significance."
+},
+{
+"type": "type",
+"q": "Despite these challenges, the overall trend is towards {=continued|continuous|continual} (continue) innovation.",
+"hint": "You need an adjective before 'innovation'.",
+"why": "continue → continued (also continuous / continual)."
+},
+{
+"type": "type",
+"q": "The {=creative} (create) minds behind these advancements believe the benefits will far outweigh the risks.",
+"hint": "You need an adjective before 'minds'.",
+"why": "create → creative."
+},
+{
+"type": "type",
+"q": "They believe that with the right {=regulation|regulations} (regulate), the benefits will far outweigh the risks.",
+"hint": "After 'the right' you need a noun.",
+"why": "regulate → regulation(s)."
+},
+{
+"type": "type",
+"q": "As a result, they remain {=hopeful} (hope) for the future.",
+"hint": "After 'remain' you need an adjective.",
+"why": "hope → hopeful."
+},
+{
+"type": "type",
+"q": "Please check the {=accuracy} (accurate) of your answers before you hand in the test.",
+"hint": "After 'the' you need a noun.",
+"why": "accurate → accuracy."
+},
+{
+"type": "type",
+"q": "The scientist measured the temperature {=accurately} (accuracy) every hour.",
+"hint": "You need an adverb to describe 'measured'.",
+"why": "accuracy → accurate → accurately."
+},
+{
+"type": "type",
+"q": "Good athletes train {=consistently} (consistent) all year round.",
+"hint": "You need an adverb to describe 'train'.",
+"why": "consistent → consistently."
+},
+{
+"type": "type",
+"q": "Many people {=associate} (association) summer with long holidays by the sea.",
+"hint": "You need a verb after the subject 'Many people'.",
+"why": "association → associate (associate X with Y)."
+},
+{
+"type": "type",
+"q": "The students formed an {=association} (associate) to raise money for the library.",
+"hint": "After 'an' you need a noun.",
+"why": "associate → association."
+},
+{
+"type": "type",
+"q": "A red traffic light {=signifies} (significance) that drivers must stop.",
+"hint": "You need a verb in the present simple. The subject is singular.",
+"why": "significance → signify → signifies."
+},
+{
+"type": "type",
+"q": "Prices have risen {=significantly} (significant) since last year.",
+"hint": "You need an adverb to describe 'risen'.",
+"why": "significant → significantly."
+},
+{
+"type": "type",
+"q": "Small businesses are more likely to {=prosper} (prosperity) when they have access to financial support.",
+"hint": "After 'to' you need a verb.",
+"why": "prosperity → prosper."
+},
+{
+"type": "type",
+"q": "The town became {=prosperous} (prosper) after the new port opened.",
+"hint": "After 'became' you need an adjective.",
+"why": "prosper → prosperous."
+},
+{
+"type": "type",
+"q": "For your {=convenience} (convenient), the shop is open twenty-four hours a day.",
+"hint": "After 'your' you need a noun.",
+"why": "convenient → convenience."
+},
+{
+"type": "type",
+"q": "Many companies are trying to make their products more {=sustainable} (sustain).",
+"hint": "After 'more' you need an adjective here.",
+"why": "sustain → sustainable."
+},
+{
+"type": "type",
+"q": "{=Sustainability} (sustain) is now a key goal for many governments.",
+"hint": "The gap is the subject of the sentence, so you need a noun.",
+"why": "sustain → sustainable → sustainability."
+},
+{
+"type": "type",
+"q": "Everyone was asked to {=contribute} (contribution) ideas for the class trip.",
+"hint": "After 'to' you need a verb.",
+"why": "contribution → contribute."
+},
+{
+"type": "type",
+"q": "Researchers tested the {=effectiveness} (effective) of the new vaccine.",
+"hint": "After 'the' you need a noun.",
+"why": "effective → effectiveness."
+},
+{
+"type": "type",
+"q": "The new method taught grammar more {=effectively} (effective) than the old one.",
+"hint": "You need an adverb to describe 'taught'.",
+"why": "effective → effectively."
+},
+{
+"type": "type",
+"q": "The city's economic {=development} (develop) has been very rapid.",
+"hint": "After 'economic' you need a noun.",
+"why": "develop → development."
+}
+]
+},
+{
+"key": "acad-mc",
+"group": "Academic vocabulary · HW 2 & 4",
+"kind": "Choose",
+"name": "Academic Words",
+"icon": "🎓",
+"color": "#5FD4C4",
+"topic": "crucial, feasible, haphazard, prosperity, unsolicited, unrequited…",
+"note": "Choose the best answer.",
+"questions": [
+{
+"q": "Teachers play a ___ role in helping students develop critical-thinking skills.",
+"answer": "crucial",
+"wrong": [
+"haphazard",
+"feasible",
+"convenient"
+],
+"hint": "The word means 'extremely important'.",
+"why": "crucial = extremely important (= pivotal). It collocates with 'role': play a crucial role."
+},
+{
+"q": "Online banking is ___ because you can pay your bills from home at any time.",
+"answer": "convenient",
+"wrong": [
+"substantial",
+"haphazard",
+"crucial"
+],
+"hint": "The word means 'easy and suitable, saving time'.",
+"why": "convenient = easy to use and suitable for your needs."
+},
+{
+"q": "Trust is an essential ___ of a successful working relationship.",
+"answer": "component",
+"wrong": [
+"threat",
+"prosperity",
+"struggle"
+],
+"hint": "The word means 'one of the parts that something is made of'.",
+"why": "component = one of several parts of which something is made."
+},
+{
+"q": "Many small businesses ___ to stay open when energy prices rise sharply.",
+"answer": "struggle",
+"wrong": [
+"prosper",
+"emigrate",
+"reveal"
+],
+"hint": "The word means 'try very hard when something is difficult'.",
+"why": "struggle to do something = try very hard to do it when it is difficult."
+},
+{
+"q": "Her grandparents ___ to Canada in search of a better life.",
+"answer": "emigrated",
+"wrong": [
+"prospered",
+"revealed",
+"associated"
+],
+"hint": "They left their own country to live in another one.",
+"why": "emigrate (to) = leave your country to live permanently in another country."
+},
+{
+"q": "The results were unreliable because the data were collected in a ___ way.",
+"answer": "haphazard",
+"wrong": [
+"feasible",
+"crucial",
+"substantial"
+],
+"hint": "The word means 'with no plan or order'.",
+"why": "haphazard = with no particular order or plan; not organized well."
+},
+{
+"q": "Many people ___ the smell of fresh bread with their childhood.",
+"answer": "associate",
+"wrong": [
+"reveal",
+"pose",
+"sustain"
+],
+"hint": "The verb is followed by 'with'.",
+"why": "associate X with Y = connect X and Y in your mind."
+},
+{
+"q": "The investigation ___ that the company had hidden the problem for years.",
+"answer": "revealed",
+"wrong": [
+"emigrated",
+"posed",
+"associated"
+],
+"hint": "The word means 'showed something that was secret'.",
+"why": "reveal = make known something that was hidden or secret."
+},
+{
+"q": "Rising sea levels ___ a serious threat to coastal communities.",
+"answer": "pose",
+"wrong": [
+"reveal",
+"struggle",
+"prosper"
+],
+"hint": "Which verb collocates with 'threat'?",
+"why": "pose a threat / pose a challenge = create a danger or a problem."
+},
+{
+"q": "The council believes that building more cycle lanes is a ___ solution to traffic problems.",
+"answer": "feasible",
+"wrong": [
+"haphazard",
+"unsolicited",
+"unrequited"
+],
+"hint": "The word means 'possible and likely to work'.",
+"why": "feasible = possible and likely to be achieved (= practicable)."
+},
+{
+"q": "The new railway project requires a ___ amount of public investment.",
+"answer": "substantial",
+"wrong": [
+"feasible",
+"haphazard",
+"convenient"
+],
+"hint": "The word means 'large in size or amount'.",
+"why": "substantial = considerable in size. A substantial amount / increase / impact."
+},
+{
+"q": "Despite extra funding, the school still has ___ resources to support students with special needs.",
+"answer": "inadequate",
+"wrong": [
+"substantial",
+"unrequited",
+"haphazard"
+],
+"hint": "'Despite extra funding' tells you the resources are still not enough.",
+"why": "inadequate = not enough in quantity or quality (= insufficient)."
+},
+{
+"q": "The extinction of a species is ___: once it is gone, it cannot come back.",
+"answer": "irreversible",
+"wrong": [
+"unsolicited",
+"feasible",
+"convenient"
+],
+"hint": "The word means 'impossible to undo'.",
+"why": "irreversible = impossible to change back or undo."
+},
+{
+"q": "I deleted the ___ text messages from companies trying to sell me loans.",
+"answer": "unsolicited",
+"wrong": [
+"unrequited",
+"irreversible",
+"substantial"
+],
+"hint": "Nobody asked these companies to send the messages.",
+"why": "unsolicited = sent without being asked for."
+},
+{
+"q": "The song tells the sad story of an ___ love between a poet and a princess who ignores him.",
+"answer": "unrequited",
+"wrong": [
+"unsolicited",
+"irreversible",
+"ineffective"
+],
+"hint": "His love is not returned.",
+"why": "unrequited love = love that is not returned by the other person."
+},
+{
+"q": "The anti-smoking campaign was ___: the number of smokers did not change at all.",
+"answer": "ineffective",
+"wrong": [
+"feasible",
+"unsolicited",
+"substantial"
+],
+"hint": "The campaign had no result.",
+"why": "ineffective = not producing any effect."
+},
+{
+"q": "Investment in education can improve a nation's long-term economic ___.",
+"answer": "prosperity",
+"wrong": [
+"component",
+"threat",
+"struggle"
+],
+"hint": "The word means 'success, especially in making money'.",
+"why": "prosperity = the state of being successful, especially in making money (= affluence)."
+},
+{
+"q": "It is hard to ___ a healthy diet when you are always busy.",
+"answer": "sustain",
+"wrong": [
+"emigrate",
+"associate",
+"reveal"
+],
+"hint": "The word means 'keep going over time'.",
+"why": "sustain = keep something going over a period of time."
+},
+{
+"q": "Air pollution is a growing ___ to the health of people in big cities.",
+"answer": "threat",
+"wrong": [
+"component",
+"prosperity",
+"convenience"
+],
+"hint": "The word means 'danger' or 'harm'.",
+"why": "a threat to something = a danger to it. pose a threat to = be a danger to."
+},
+{
+"q": "Farmers in the valley ___ after the new irrigation system was built.",
+"answer": "prospered",
+"wrong": [
+"emigrated",
+"revealed",
+"posed"
+],
+"hint": "The new system helped them. What happened to their business?",
+"why": "prosper = be successful, especially financially."
+}
+]
+},
+{
+"key": "acad-ty",
+"group": "Academic vocabulary · HW 2 & 4",
+"kind": "Type",
+"name": "Academic Words · Spell it",
+"icon": "✍️",
+"color": "#5FD4C4",
+"topic": "The HW 2 and HW 4 gap-fills, first letter given",
+"note": "Type the missing word. The first letter is given.",
+"questions": [
+{
+"type": "type",
+"q": "Despite extra funding, the school still has {inadequate|insufficient} resources to support students with special needs.",
+"hint": "Not enough in quantity or quality.",
+"why": "inadequate = insufficient, not enough."
+},
+{
+"type": "type",
+"q": "The destruction of ancient forests can cause {irreversible|irreparable} environmental damage.",
+"hint": "Impossible to undo.",
+"why": "irreversible / irreparable = impossible to undo or repair."
+},
+{
+"type": "type",
+"q": "I received several {unsolicited} messages advertising products I had never searched for.",
+"hint": "Sent without being requested.",
+"why": "unsolicited = not asked for."
+},
+{
+"type": "type",
+"q": "The novel explores the emotional effects of {unrequited} love.",
+"hint": "Love that is not returned.",
+"why": "unrequited love = love that is not returned."
+},
+{
+"type": "type",
+"q": "The campaign was {ineffective} because it failed to change people's behavior.",
+"hint": "Not having any effect.",
+"why": "ineffective = not producing the intended result."
+},
+{
+"type": "type",
+"q": "Researchers often {associate} a lack of sleep {with} poor concentration.",
+"hint": "A verb and its preposition: connect X ___ Y.",
+"why": "associate X with Y = connect X and Y in your mind."
+},
+{
+"type": "type",
+"q": "Investment in education can improve a nation's long-term economic {prosperity}.",
+"hint": "Success, especially in making money.",
+"why": "prosperity = success and wealth."
+},
+{
+"type": "type",
+"q": "Many small businesses find it difficult to {sustain} growth during a financial crisis.",
+"hint": "Keep going over time.",
+"why": "sustain = keep something going."
+},
+{
+"type": "type",
+"q": "Teachers play a {crucial|critical} role in helping students develop critical-thinking skills.",
+"hint": "Extremely important, pivotal.",
+"why": "crucial = extremely important."
+},
+{
+"type": "type",
+"q": "Trust is an essential {component} of a successful working relationship.",
+"hint": "One of several parts of something.",
+"why": "component = one of the parts something is made of."
+},
+{
+"type": "type",
+"q": "Some students {struggle} to manage their time effectively during exams.",
+"hint": "Try very hard when it is difficult.",
+"why": "struggle to do something."
+},
+{
+"type": "type",
+"q": "The research produced unreliable results because the data were collected in a {haphazard} way.",
+"hint": "With no order or plan.",
+"why": "haphazard = not organized well."
+},
+{
+"type": "type",
+"q": "The city council believes that building more cycle lanes is a {feasible} solution to traffic problems.",
+"hint": "Possible and likely to work.",
+"why": "feasible = practicable, likely to be achieved."
+},
+{
+"type": "type",
+"q": "The new railway project requires a {substantial|significant} amount of public investment.",
+"hint": "Considerable in size.",
+"why": "substantial = considerable, large."
+},
+{
+"type": "type",
+"q": "Rising sea levels pose a {threat} to coastal communities.",
+"hint": "Harm or danger.",
+"why": "pose a threat to = be a danger to."
+},
+{
+"type": "type",
+"q": "Education plays a {crucial|critical} role in reducing social inequality.",
+"hint": "Extremely important.",
+"why": "play a crucial role in something."
+},
+{
+"type": "type",
+"q": "Rapid urbanization can {pose} considerable challenges for public transport systems.",
+"hint": "The verb that collocates with 'challenges' and 'threat'.",
+"why": "pose a challenge / pose a threat = create a problem or danger."
+},
+{
+"type": "type",
+"q": "Access to reliable information is an essential {component} of effective decision-making.",
+"hint": "A part of something.",
+"why": "component = one part of a whole."
+},
+{
+"type": "type",
+"q": "Many low-income families {struggle} to meet their basic needs as the cost of living continues to rise.",
+"hint": "Try very hard in a difficult situation.",
+"why": "struggle to meet their needs."
+},
+{
+"type": "type",
+"q": "Governments should consider whether large infrastructure projects are financially {feasible} before approving them.",
+"hint": "Possible and practical.",
+"why": "financially feasible = possible to pay for."
+},
+{
+"type": "type",
+"q": "Excessive use of fossil fuels is closely {associated} with environmental degradation.",
+"hint": "be closely ___ with = connected with.",
+"why": "be closely associated with = be strongly connected with."
+},
+{
+"type": "type",
+"q": "The introduction of new technology has had a {substantial|significant} impact on the way people communicate.",
+"hint": "Large, considerable.",
+"why": "have a substantial / significant impact on."
+},
+{
+"type": "type",
+"q": "Small businesses are more likely to {prosper} when they have access to financial support and skilled workers.",
+"hint": "Be successful.",
+"why": "prosper = succeed, especially financially."
+},
+{
+"type": "type",
+"q": "There has been a {substantial|significant} increase in the number of people working remotely.",
+"hint": "Large, considerable.",
+"why": "a substantial increase."
+},
+{
+"type": "type",
+"q": "My cousin plans to {emigrate} to Australia after university.",
+"hint": "Leave your country to live in another one.",
+"why": "emigrate to a country."
+},
+{
+"type": "type",
+"q": "The class survey {revealed} that most of us walk to school.",
+"hint": "Showed something that was not known before.",
+"why": "reveal = make something known."
+},
+{
+"type": "type",
+"q": "It is more {convenient} to pay by card than to carry cash.",
+"hint": "Easy and suitable.",
+"why": "convenient = easy and suitable."
+}
+]
+},
+{
+"key": "coll-mc",
+"group": "Academic vocabulary · HW 2 & 4",
+"kind": "Choose",
+"name": "Word Partners",
+"icon": "🤝",
+"color": "#5FD4C4",
+"topic": "play a crucial role, pose a threat, face considerable challenges…",
+"note": "Choose the best answer.",
+"questions": [
+{
+"q": "Parents ___ a crucial role in their children's education.",
+"answer": "play",
+"wrong": [
+"make",
+"do",
+"give"
+],
+"hint": "Which verb goes with 'role'?",
+"why": "play a crucial role (in something) = be very important in something."
+},
+{
+"q": "Plastic waste ___ a serious threat to marine life.",
+"answer": "poses",
+"wrong": [
+"makes",
+"does",
+"takes"
+],
+"hint": "Which verb goes with 'threat'?",
+"why": "pose a threat (to) = be a danger to."
+},
+{
+"q": "Social media can ___ a significant impact on teenagers' self-esteem.",
+"answer": "have",
+"wrong": [
+"do",
+"take",
+"give"
+],
+"hint": "Which verb goes with 'impact'?",
+"why": "have a significant impact on something."
+},
+{
+"q": "Many countries are working hard to ___ sustainable development.",
+"answer": "achieve",
+"wrong": [
+"perform",
+"commit",
+"fulfill"
+],
+"hint": "Which verb means 'succeed in reaching a goal'?",
+"why": "achieve sustainable development = succeed in developing without harming the future."
+},
+{
+"q": "Lack of sleep is closely associated ___ poor concentration.",
+"answer": "with",
+"wrong": [
+"to",
+"by",
+"for"
+],
+"hint": "associate X ___ Y",
+"why": "be closely associated with something."
+},
+{
+"q": "Reliable news websites ___ accurate information to their readers.",
+"answer": "provide",
+"wrong": [
+"make",
+"do",
+"bring"
+],
+"hint": "Which verb means 'give or supply'?",
+"why": "provide accurate information (to somebody)."
+},
+{
+"q": "Tourism ___ to economic growth in many coastal towns.",
+"answer": "contributes",
+"wrong": [
+"attributes",
+"distributes",
+"constitutes"
+],
+"hint": "Which verb is followed by 'to' and means 'helps to cause'?",
+"why": "contribute to economic growth = help the economy grow."
+},
+{
+"q": "Small farmers ___ considerable challenges when the weather is erratic.",
+"answer": "face",
+"wrong": [
+"pose",
+"play",
+"make"
+],
+"hint": "The farmers have to deal with the challenges. They do not create them.",
+"why": "face considerable challenges = have to deal with big problems. (pose a challenge = create a problem.)"
+},
+{
+"q": "Teachers should ___ students with clear and regular feedback.",
+"answer": "provide",
+"wrong": [
+"offer",
+"tell",
+"show"
+],
+"hint": "Which verb is used in the pattern 'verb + somebody + with + something'?",
+"why": "provide somebody with something. (offer somebody something — no 'with'.)"
+},
+{
+"q": "Climate change ___ a threat to food supplies around the world.",
+"answer": "poses",
+"wrong": [
+"plays",
+"achieves",
+"contributes"
+],
+"hint": "Which verb goes with 'threat'?",
+"why": "pose a threat to something."
+}
+]
+},
+{
+"key": "coll-ty",
+"group": "Academic vocabulary · HW 2 & 4",
+"kind": "Type",
+"name": "Word Partners · Spell it",
+"icon": "✍️",
+"color": "#5FD4C4",
+"topic": "The eight academic collocations, first letter given",
+"note": "Type the missing word. The first letter is given.",
+"questions": [
+{
+"type": "type",
+"q": "Volunteers {play} a crucial role in helping new families settle into the neighborhood.",
+"hint": "___ a crucial role",
+"why": "play a crucial role."
+},
+{
+"type": "type",
+"q": "Microplastics may {pose} a threat to human health.",
+"hint": "___ a threat",
+"why": "pose a threat to."
+},
+{
+"type": "type",
+"q": "The new law will {have} a significant impact on small shops.",
+"hint": "___ a significant impact",
+"why": "have a significant impact on."
+},
+{
+"type": "type",
+"q": "The country hopes to {achieve} sustainable development by investing in solar power.",
+"hint": "___ sustainable development",
+"why": "achieve sustainable development."
+},
+{
+"type": "type",
+"q": "A diet high in sugar is closely {associated} with tooth decay.",
+"hint": "be closely ___ with",
+"why": "be closely associated with."
+},
+{
+"type": "type",
+"q": "Libraries {provide} accurate information free of charge.",
+"hint": "___ accurate information",
+"why": "provide accurate information."
+},
+{
+"type": "type",
+"q": "Small businesses {contribute} to economic growth by creating jobs.",
+"hint": "___ to economic growth",
+"why": "contribute to economic growth."
+},
+{
+"type": "type",
+"q": "Hospitals {face} considerable challenges during the winter months.",
+"hint": "___ considerable challenges",
+"why": "face considerable challenges."
+},
+{
+"type": "type",
+"q": "Lack of exercise is closely associated {with} poor health.",
+"hint": "associated ___",
+"why": "associated with."
+}
+]
+},
+{
+"key": "new-mc",
+"group": "New words & rewrites · HW 1 & 4",
+"kind": "Choose",
+"name": "Eight New Words",
+"icon": "✨",
+"color": "#F5C451",
+"topic": "exert an influence, erratic, forage, deleterious, vital, unsettling, devise, overlook",
+"note": "Choose the best answer.",
+"questions": [
+{
+"q": "Smoking has a ___ effect on the lungs, slowly damaging them over many years.",
+"answer": "deleterious",
+"wrong": [
+"vital",
+"erratic",
+"unsettling"
+],
+"hint": "The word means 'harmful'.",
+"why": "deleterious = harmful. a deleterious effect on; deleterious to health."
+},
+{
+"q": "Clean water is ___ for survival; without it, people die within days.",
+"answer": "vital",
+"wrong": [
+"erratic",
+"deleterious",
+"unsettling"
+],
+"hint": "The word means 'absolutely necessary'.",
+"why": "vital = absolutely necessary, extremely important. It is vital that / it is vital to."
+},
+{
+"q": "His ___ driving, speeding up and slowing down for no reason, frightened the passengers.",
+"answer": "erratic",
+"wrong": [
+"vital",
+"deleterious",
+"unsettled"
+],
+"hint": "The word means 'unpredictable, changing suddenly'.",
+"why": "erratic = not regular; changing suddenly and unpredictably. erratic behavior, erratic weather patterns."
+},
+{
+"q": "In winter, squirrels ___ for the nuts that they buried in the autumn.",
+"answer": "forage",
+"wrong": [
+"devise",
+"overlook",
+"exert"
+],
+"hint": "The word means 'search for food'.",
+"why": "forage (for food) = search for food. forage through / in."
+},
+{
+"q": "The engineers ___ a clever way to bring clean water to the village.",
+"answer": "devised",
+"wrong": [
+"foraged",
+"overlooked",
+"exerted"
+],
+"hint": "The word means 'invented a plan or method'.",
+"why": "devise a strategy / plan / method / scheme = think of and plan it."
+},
+{
+"q": "It is easy to ___ small spelling mistakes when you check your own work.",
+"answer": "overlook",
+"wrong": [
+"devise",
+"forage",
+"exert"
+],
+"hint": "The word means 'fail to notice'.",
+"why": "overlook = fail to notice or consider something. overlook a detail / a fact."
+},
+{
+"q": "Celebrities can ___ a strong influence on what young people buy.",
+"answer": "exert",
+"wrong": [
+"forage",
+"devise",
+"overlook"
+],
+"hint": "Which verb goes with 'influence'?",
+"why": "exert a strong / considerable / profound influence on somebody or something."
+},
+{
+"q": "Walking alone through the empty, silent hospital at night was deeply ___.",
+"answer": "unsettling",
+"wrong": [
+"erratic",
+"vital",
+"deleterious"
+],
+"hint": "The word means 'making you feel nervous and worried'.",
+"why": "unsettling = making you feel anxious or uncomfortable. deeply unsettling."
+},
+{
+"q": "The heart is a ___ important organ.",
+"answer": "vitally",
+"wrong": [
+"vital",
+"vitality",
+"vitalize"
+],
+"hint": "The gap describes the adjective 'important'. You need an adverb.",
+"why": "vital (adj) → vitally (adv): vitally important."
+},
+{
+"q": "Her grandmother was the most ___ person in her early life.",
+"answer": "influential",
+"wrong": [
+"influence",
+"influenced",
+"influencing"
+],
+"hint": "After 'the most' you need an adjective that means 'having a lot of influence'.",
+"why": "influence (n/v) → influential (adj)."
+},
+{
+"q": "The old machine was behaving ___, turning on and off every few minutes.",
+"answer": "erratically",
+"wrong": [
+"erratic",
+"erraticness",
+"erratical"
+],
+"hint": "The gap describes the verb 'behaving'. You need an adverb.",
+"why": "erratic (adj) → erratically (adv)."
+},
+{
+"q": "A phone is a useful ___, but it can also be a distraction.",
+"answer": "device",
+"wrong": [
+"devise",
+"devisal",
+"devising"
+],
+"hint": "You need the noun for a gadget, not the verb.",
+"why": "Careful: devise (v) = invent a plan; device (n) = a gadget or machine."
+},
+{
+"q": "The hikers were ___ by the strange noises coming from the forest.",
+"answer": "unsettled",
+"wrong": [
+"unsettling",
+"unsettle",
+"unsettlement"
+],
+"hint": "The hikers had the feeling. -ed adjectives describe how a person feels.",
+"why": "unsettled = feeling nervous (the person). unsettling = causing that feeling (the thing)."
+},
+{
+"q": "The beauty of this small museum is often ___ by tourists in a hurry.",
+"answer": "overlooked",
+"wrong": [
+"overlooking",
+"overlook",
+"overlooks"
+],
+"hint": "This is a passive sentence: is + often + past participle.",
+"why": "Passive: is overlooked. 'The significance of this reminder should not be overlooked.'"
+},
+{
+"q": "Gorillas spend much of the day ___ for leaves and fruit.",
+"answer": "foraging",
+"wrong": [
+"forage",
+"forager",
+"forages"
+],
+"hint": "After 'spend time' we use the -ing form.",
+"why": "spend time + -ing: spend the day foraging. forage (v) → foraging (n/-ing)."
+},
+{
+"q": "Too much sugar is ___ to health.",
+"answer": "deleterious",
+"wrong": [
+"deleteriously",
+"deletion",
+"delete"
+],
+"hint": "After 'is' you need an adjective.",
+"why": "deleterious to health. (delete and deletion are a different word family.)"
+}
+]
+},
+{
+"key": "new-ty",
+"group": "New words & rewrites · HW 1 & 4",
+"kind": "Type",
+"name": "Eight New Words · Spell it",
+"icon": "✍️",
+"color": "#F5C451",
+"topic": "The HW 4 gap-fill plus new sentences and word forms",
+"note": "Type the missing word. The first letter is given.",
+"questions": [
+{
+"type": "type",
+"q": "Prolonged exposure to air pollution is now known to have a {deleterious} impact on children's lung development.",
+"hint": "Harmful.",
+"why": "a deleterious impact on."
+},
+{
+"type": "type",
+"q": "Urban foxes have adapted remarkably well, {foraging} in trash cans rather than hunting for prey.",
+"hint": "Searching for food. Use the -ing form.",
+"why": "forage → foraging."
+},
+{
+"type": "type",
+"q": "A team of researchers has {devised} an innovative method for measuring microplastics in drinking water.",
+"hint": "Invented a method. Present perfect: has + past participle.",
+"why": "devise a method → has devised."
+},
+{
+"type": "type",
+"q": "Investors were alarmed by the {erratic} fluctuations of the currency, which rose and fell sharply within a single week.",
+"hint": "Unpredictable.",
+"why": "erratic fluctuations."
+},
+{
+"type": "type",
+"q": "Social media influencers now {exert} a considerable {influence} on the purchasing decisions of teenagers.",
+"hint": "A verb + noun collocation.",
+"why": "exert a considerable influence on."
+},
+{
+"type": "type",
+"q": "Policymakers often {overlook} the needs of rural communities when allocating infrastructure funding.",
+"hint": "Fail to notice or consider.",
+"why": "overlook the needs of."
+},
+{
+"type": "type",
+"q": "Many readers found the novel's depiction of a surveillance state deeply {unsettling}, precisely because it seemed so plausible.",
+"hint": "Making you feel uncomfortable. -ing adjective.",
+"why": "deeply unsettling."
+},
+{
+"type": "type",
+"q": "It is {vitally} important that early-years education is properly funded.",
+"hint": "An adverb before 'important'.",
+"why": "vital → vitally important."
+},
+{
+"type": "type",
+"q": "Regular exercise is {vital} for maintaining overall health.",
+"hint": "Absolutely necessary.",
+"why": "vital for."
+},
+{
+"type": "type",
+"q": "Her teachers {exerted} a strong {influence} on her decision to become a doctor.",
+"hint": "Past tense verb + noun.",
+"why": "exert a strong influence on → exerted."
+},
+{
+"type": "type",
+"q": "The bus service runs so {erratically} that nobody knows when the next bus will come.",
+"hint": "An adverb describing 'runs'.",
+"why": "erratic → erratically."
+},
+{
+"type": "type",
+"q": "In winter, deer have to {forage} widely for whatever they can eat.",
+"hint": "Search for food.",
+"why": "forage for food."
+},
+{
+"type": "type",
+"q": "The significance of this reminder should not be {overlooked}.",
+"hint": "Passive: be + past participle.",
+"why": "should not be overlooked."
+},
+{
+"type": "type",
+"q": "The coach {devised} a new training plan for the season.",
+"hint": "Invented a plan. Past tense.",
+"why": "devise a plan → devised."
+},
+{
+"type": "type",
+"q": "Eating junk food every day can have {deleterious} effects on your health.",
+"hint": "Harmful.",
+"why": "deleterious effects on."
+},
+{
+"type": "type",
+"q": "The news left the whole town feeling {unsettled}.",
+"hint": "How the people felt. -ed adjective.",
+"why": "unsettle (v) → unsettled (adj)."
+},
+{
+"type": "type",
+"q": "She is one of the most {influential} writers of her generation.",
+"hint": "An adjective from 'influence'.",
+"why": "influence → influential."
+}
+]
+},
+{
+"key": "kwt",
+"group": "New words & rewrites · HW 1 & 4",
+"kind": "Type",
+"name": "Same Meaning, New Words",
+"icon": "🔁",
+"color": "#F5C451",
+"topic": "Rewrite using the word in capitals (HW 1 ex. 2 and HW 4 ex. 6)",
+"note": "Complete the second sentence so it means the same as the first. Use the word in capitals.",
+"questions": [
+{
+"type": "type",
+"q": "At the meeting the chairman {=made a rather interesting|made quite an interesting|made a very interesting|made an interesting} proposal.",
+"hint": "Use the collocation 'make a proposal'. Keep the adjective 'interesting'.",
+"why": "proposed something interesting → made a rather interesting proposal.",
+"lead": "At the meeting the chairman proposed something rather interesting. (PROPOSAL)"
+},
+{
+"type": "type",
+"q": "I hope we can {=make an early escape|make our escape soon|make an escape soon|make our escape|make an escape} as I'm terribly tired.",
+"hint": "Use 'make an early escape'.",
+"why": "leave soon → make an early escape.",
+"lead": "I hope we can leave soon as I'm terribly tired. (ESCAPE)"
+},
+{
+"type": "type",
+"q": "I'm reading a fascinating book about how new words and phrases {=are coined|have been coined|were coined|get coined} to express new social and technical needs.",
+"hint": "Use the passive of 'coin': words are ___.",
+"why": "the invention of new words → how new words are coined.",
+"lead": "I'm reading a fascinating book about the invention of new words and phrases to express new social and technical needs. (COINED)"
+},
+{
+"type": "type",
+"q": "We changed the layout of the hall to {=create a more relaxed atmosphere|create a relaxed atmosphere|make a more relaxed atmosphere|give it a more relaxed atmosphere|create a more relaxing atmosphere|create a relaxing atmosphere} for the yoga class.",
+"hint": "Use 'create a ... atmosphere'.",
+"why": "make it more relaxed → create a more relaxed atmosphere.",
+"lead": "We changed the layout of the hall to make it more relaxed for the yoga class. (ATMOSPHERE)"
+},
+{
+"type": "type",
+"q": "I {=made several attempts|made a few attempts|made many attempts|made numerous attempts} to phone the company at the weekend.",
+"hint": "Use 'make an attempt' in the plural.",
+"why": "tried several times → made several attempts.",
+"lead": "I tried to phone the company several times at the weekend. (ATTEMPTS)"
+},
+{
+"type": "type",
+"q": "Kim {=made a very positive contribution|made a positive contribution|made a really positive contribution|made a very positive contribution} to the discussion.",
+"hint": "contributed (verb) → a contribution (noun). Which verb goes with it? The adverb 'positively' becomes an adjective.",
+"why": "contributed very positively → made a very positive contribution.",
+"lead": "Kim contributed very positively to the discussion. (CONTRIBUTION)"
+},
+{
+"type": "type",
+"q": "The service was poor, but I wouldn't go so far as to {=lodge a formal complaint|lodge a complaint}.",
+"hint": "formally complain → lodge a ___ complaint.",
+"why": "formally complain → lodge a formal complaint.",
+"lead": "The service was poor, but I wouldn't go so far as to formally complain. (LODGE)"
+},
+{
+"type": "type",
+"q": "I first {=made Roger's acquaintance|made the acquaintance of Roger} on a train.",
+"hint": "got talking to Roger → made ___ acquaintance.",
+"why": "got to know Roger → made Roger's acquaintance.",
+"lead": "I first got talking to Roger on a train. (ACQUAINTANCE)"
+},
+{
+"type": "type",
+"q": "Parents {=exert a major influence|exert a strong influence|exert a considerable influence|exert a great influence|exert a significant influence|exert a profound influence|exert a big influence|exert a huge influence|exert major influence|exert a great deal of influence} on their children's attitudes towards money.",
+"hint": "play a major part → exert a ___ influence.",
+"why": "play a major part in → exert a major influence on.",
+"lead": "Parents play a major part in shaping their children's attitudes towards money. (EXERT)"
+},
+{
+"type": "type",
+"q": "The hidden costs of fast fashion {=are overlooked|are often overlooked|get overlooked|have been overlooked} by many people.",
+"hint": "Make the sentence passive: be + overlooked.",
+"why": "Many people fail to notice X → X is overlooked by many people.",
+"lead": "Many people fail to notice the hidden costs of fast fashion. (OVERLOOKED)"
+},
+{
+"type": "type",
+"q": "Sleep deprivation can {=have a seriously deleterious effect|have a seriously deleterious impact|have a serious deleterious effect|have a very deleterious effect|have a deleterious effect|have a deleterious impact|have a highly deleterious effect|have an extremely deleterious effect} on cognitive performance.",
+"hint": "seriously damage → have a seriously ___ effect on.",
+"why": "seriously damage → have a seriously deleterious effect on.",
+"lead": "Sleep deprivation can seriously damage cognitive performance. (DELETERIOUS)"
+},
+{
+"type": "type",
+"q": "The government {=devised a plan|devised a scheme|has devised a plan|devised a strategy} to reduce traffic congestion.",
+"hint": "came up with → devised.",
+"why": "come up with a plan = devise a plan.",
+"lead": "The government came up with a plan to reduce traffic congestion. (DEVISED)"
+},
+{
+"type": "type",
+"q": "International cooperation {=is vital for tackling|is vital to tackling|is vital in tackling|is vital to tackle|will be vital for tackling|will be vital to tackling|will be vital in tackling|will be vital to tackle} climate change.",
+"hint": "Without X, Y is impossible → X is vital ___ Y.",
+"why": "impossible without cooperation → cooperation is vital for tackling.",
+"lead": "Without international cooperation, tackling climate change will be impossible. (VITAL)"
+},
+{
+"type": "type",
+"q": "Economic growth has been {=very erratic|highly erratic|extremely erratic|really erratic|erratic} in recent years.",
+"hint": "very unpredictable → very ___",
+"why": "unpredictable = erratic.",
+"lead": "Economic growth has been very unpredictable in recent years. (ERRATIC)"
+},
+{
+"type": "type",
+"q": "The rapid pace of technological change {=is unsettling|is deeply unsettling|is very unsettling|can be unsettling} for many people.",
+"hint": "disturbing → unsettling.",
+"why": "find something disturbing → something is unsettling for people.",
+"lead": "Many people find the rapid pace of technological change disturbing. (UNSETTLING)"
+},
+{
+"type": "type",
+"q": "In winter, deer have to {=forage widely for|forage far and wide for|forage for|forage around for|forage everywhere for} whatever they can eat.",
+"hint": "search widely for food → forage ___ for.",
+"why": "search for food = forage for.",
+"lead": "In winter, deer have to search widely for whatever they can eat. (FORAGE)"
+}
+]
+},
+{
+"key": "types",
+"group": "Sentences · HW 1 & 2",
+"kind": "Type",
+"name": "Sentence Types",
+"icon": "🌌",
+"color": "#B79CFF",
+"topic": "simple, compound, complex or compound-complex?",
+"note": "Read the sentence. Type its type.",
+"questions": [
+{
+"type": "type",
+"q": "This is a {=simple|simple sentence} sentence.",
+"hint": "Count the clauses. How many subject + verb pairs are there?",
+"why": "One independent clause (subject: the Australian government; verb: introduced) and nothing else → simple.",
+"lead": "The Australian government introduced an official carbon tax on 1 July 2012."
+},
+{
+"type": "type",
+"q": "This is a {=complex|complex sentence} sentence.",
+"hint": "'As' begins a clause that cannot stand alone.",
+"why": "Dependent clause (As the government recognized…) + one independent clause (it introduced…) → complex.",
+"lead": "As the Australian government recognized the necessity to significantly reduce greenhouse gas emissions, it introduced an official carbon tax on 1 July 2012."
+},
+{
+"type": "type",
+"q": "This is a {=compound|compound sentence} sentence.",
+"hint": "'but' joins two clauses that could each stand alone.",
+"why": "Two independent clauses joined by the coordinating conjunction 'but', and no dependent clause → compound.",
+"lead": "The Australian government introduced an official carbon tax on 1 July 2012, but this was met with opposition from the general public."
+},
+{
+"type": "type",
+"q": "This is a {=compound-complex|compound complex|compound-complex sentence|compound complex sentence} sentence.",
+"hint": "There is an 'As' clause AND a 'but' clause.",
+"why": "One dependent clause (As…) + two independent clauses joined by 'but' → compound-complex.",
+"lead": "As the Australian government recognized the necessity to significantly reduce greenhouse gas emissions, it introduced an official carbon tax on 1 July 2012, but this was met with opposition from the general public."
+},
+{
+"type": "type",
+"q": "This is a {=complex|complex sentence} sentence.",
+"hint": "'because' starts a clause that cannot stand alone.",
+"why": "Independent clause (We won the game) + dependent clause (because we worked together) → complex.",
+"lead": "We won the game because we worked together as a team."
+},
+{
+"type": "type",
+"q": "This is a {=compound-complex|compound complex|compound-complex sentence|compound complex sentence} sentence.",
+"hint": "Look for 'While' and for 'and'.",
+"why": "Dependent clause (While the first study was too general) + two independent clauses joined by 'and' → compound-complex.",
+"lead": "While the first study was too general, the second study was too narrow, and it was conducted without ethics approval."
+},
+{
+"type": "type",
+"q": "This is a {=compound-complex|compound complex|compound-complex sentence|compound complex sentence} sentence.",
+"hint": "'so' joins two independent clauses. Is there also a clause starting with 'that'?",
+"why": "Two independent clauses joined by 'so' + one dependent (relative) clause 'that was due on Tuesday' → compound-complex.",
+"lead": "David was confused about the assignment that was due on Tuesday, so he asked his tutor for help."
+},
+{
+"type": "type",
+"q": "This is a {=compound|compound sentence} sentence.",
+"hint": "Two complete sentences are joined by 'and'.",
+"why": "Two independent clauses + coordinating conjunction 'and' → compound.",
+"lead": "My sister plays the violin, and my brother plays the drums."
+},
+{
+"type": "type",
+"q": "This is a {=complex|complex sentence} sentence.",
+"hint": "'Although' starts a clause that cannot stand alone.",
+"why": "Dependent clause (Although it was raining) + independent clause (we went for a walk) → complex.",
+"lead": "Although it was raining, we went for a walk."
+},
+{
+"type": "type",
+"q": "This is a {=simple|simple sentence} sentence.",
+"hint": "Long sentences can still have only one clause.",
+"why": "Only one subject + verb pair (the students … laughed) → simple. Length does not decide the type; clauses do.",
+"lead": "The students in the back row laughed loudly at the joke."
+},
+{
+"type": "type",
+"q": "This is a {=compound|compound sentence} sentence.",
+"hint": "'but' joins two clauses that could each be a sentence.",
+"why": "Two independent clauses + 'but' → compound.",
+"lead": "I wanted to buy the jacket, but it was too expensive."
+},
+{
+"type": "type",
+"q": "This is a {=compound-complex|compound complex|compound-complex sentence|compound complex sentence} sentence.",
+"hint": "Look for 'When' and for 'and'.",
+"why": "Dependent clause (When the bell rang) + two independent clauses joined by 'and' → compound-complex.",
+"lead": "When the bell rang, the students left the classroom, and the teacher locked the door."
+},
+{
+"type": "type",
+"q": "This is a {=complex|complex sentence} sentence.",
+"hint": "'which opened last year' cannot stand alone.",
+"why": "Independent clause (The museum attracts thousands of visitors) + dependent relative clause (which opened last year) → complex.",
+"lead": "The museum, which opened last year, attracts thousands of visitors."
+},
+{
+"type": "type",
+"q": "This is a {=simple|simple sentence} sentence.",
+"hint": "Two subjects and two verbs, but do they make two separate clauses?",
+"why": "One clause with a compound subject (Ali and Deniz) and a compound verb (studied and passed) → simple.",
+"lead": "Ali and Deniz studied hard and passed the exam."
+},
+{
+"type": "type",
+"q": "This is a {=compound|compound sentence} sentence.",
+"hint": "'or' joins two complete sentences.",
+"why": "Two independent clauses + 'or' → compound.",
+"lead": "You can take the bus, or you can walk to school."
+},
+{
+"type": "type",
+"q": "This is a {=complex|complex sentence} sentence.",
+"hint": "'If' starts a clause that cannot stand alone.",
+"why": "Dependent clause (If you finish early) + independent clause (you can leave) → complex.",
+"lead": "If you finish your test early, you can leave the room."
+}
+]
+},
+{
+"key": "clauses",
+"group": "Sentences · HW 1 & 2",
+"kind": "Type",
+"name": "Clauses & Conjunctions",
+"icon": "🔗",
+"color": "#B79CFF",
+"topic": "independent or dependent? coordinating or subordinating?",
+"note": "Type the missing word.",
+"questions": [
+{
+"type": "type",
+"q": "A clause that can stand alone as a complete sentence is an {=independent|main|independent clause|main clause} clause.",
+"hint": "Think: can it stand alone?",
+"why": "independent (main) clause = has a subject and verb and makes sense on its own."
+},
+{
+"type": "type",
+"q": "A clause that cannot stand alone, such as 'because we worked together', is a {=dependent|subordinate|dependent clause|subordinate clause} clause.",
+"hint": "It depends on another clause.",
+"why": "dependent (subordinate) clause = has a subject and verb but does not express a complete thought."
+},
+{
+"type": "type",
+"q": "In this sentence, 'because' is a {=subordinating|subordinating conjunction} conjunction.",
+"hint": "It starts a dependent clause.",
+"why": "Subordinating conjunctions (because, although, when, while, if, as, since, unless) start dependent clauses.",
+"lead": "We won the game because we worked together as a team."
+},
+{
+"type": "type",
+"q": "In this sentence, 'but' is a {=coordinating|coordinating conjunction} conjunction.",
+"hint": "It joins two equal, independent clauses.",
+"why": "Coordinating conjunctions join two independent clauses. Remember FANBOYS: for, and, nor, but, or, yet, so.",
+"lead": "The government introduced a carbon tax, but this was met with opposition from the public."
+},
+{
+"type": "type",
+"q": "The seven coordinating conjunctions spell the word {=FANBOYS}: for, and, nor, but, or, yet, so.",
+"hint": "F-A-N-B-O-Y-S",
+"why": "FANBOYS = for, and, nor, but, or, yet, so."
+},
+{
+"type": "type",
+"q": "In this sentence, 'Although' is a {=subordinating|subordinating conjunction} conjunction.",
+"hint": "Does the clause it starts stand alone?",
+"why": "Although starts a dependent clause, so it is a subordinating conjunction.",
+"lead": "Although the test was hard, most students passed."
+},
+{
+"type": "type",
+"q": "In this sentence, 'so' is a {=coordinating|coordinating conjunction} conjunction.",
+"hint": "Is 'so' one of the FANBOYS?",
+"why": "so is one of the FANBOYS, so it is a coordinating conjunction.",
+"lead": "David was confused about the assignment, so he asked his tutor for help."
+},
+{
+"type": "type",
+"q": "In this sentence, 'that was due on Tuesday' is a {=dependent|subordinate|dependent clause|subordinate clause|relative|relative clause|adjective clause} clause.",
+"hint": "Can 'that was due on Tuesday' stand alone?",
+"why": "It gives extra information about 'the assignment' and cannot stand alone: a dependent (relative) clause.",
+"lead": "David was confused about the assignment that was due on Tuesday."
+},
+{
+"type": "type",
+"q": "In this sentence, 'When the bell rang' is a {=dependent|subordinate|dependent clause|subordinate clause|adverb|adverbial|adverb clause|adverbial clause} clause.",
+"hint": "Can 'When the bell rang' stand alone as a sentence?",
+"why": "It tells us when and cannot stand alone: a dependent (adverbial) clause.",
+"lead": "When the bell rang, the students left the classroom."
+},
+{
+"type": "type",
+"q": "This sentence has {=two|2} independent clauses.",
+"hint": "Ignore the 'While' clause. Count the clauses that can stand alone.",
+"why": "the second study was too narrow / it was conducted without ethics approval → two independent clauses.",
+"lead": "While the first study was too general, the second study was too narrow, and it was conducted without ethics approval."
+},
+{
+"type": "type",
+"q": "In this sentence, the two independent clauses are joined by a {=semicolon} instead of a conjunction.",
+"hint": "Which punctuation mark sits between 'banks' and 'they'?",
+"why": "A semicolon (;) can join two independent clauses without a conjunction.",
+"lead": "Astute depositors could see what was happening to the value of the land that was supporting the assets of the banks; they moved quickly to remove their deposits for cash."
+},
+{
+"type": "type",
+"q": "A sentence with two independent clauses and at least one dependent clause is a {=compound-complex|compound complex|compound-complex sentence|compound complex sentence} sentence.",
+"hint": "compound + complex",
+"why": "compound (2+ independent) + complex (1+ dependent) = compound-complex."
+}
+]
+},
+{
+"key": "errors",
+"group": "Sentences · HW 1 & 2",
+"kind": "Type",
+"name": "Spot the Error",
+"icon": "🔍",
+"color": "#B79CFF",
+"topic": "run-on, comma splice or fragment?",
+"note": "Read the sentence. Type the error: run-on, comma splice or fragment.",
+"questions": [
+{
+"type": "type",
+"q": "Type of sentence error: {=comma splice|comma splice sentence|a comma splice}",
+"hint": "Two complete sentences are joined by a comma only.",
+"why": "A comma alone joins two complete sentences → comma splice.",
+"lead": "Later-born children produce more personal pronouns, they develop more advanced conversational skills than the first-born child."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=comma splice|comma splice sentence|a comma splice}",
+"hint": "Look at what joins the two complete sentences.",
+"why": "Two independent clauses joined only by a comma → comma splice.",
+"lead": "Glasgow was the second city in the world to have an underground railway system, London was the first."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=run-on|run on|run-on sentence|run on sentence|fused sentence}",
+"hint": "Where does the first sentence end? Is there any punctuation there?",
+"why": "'…a changing climate' + 'these issues are not…' with no punctuation and no conjunction → run-on.",
+"lead": "Poverty, famine and major public health problems around the developing world are important indicators of a changing climate these issues are not being addressed globally."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=fragment|sentence fragment|a fragment|a sentence fragment}",
+"hint": "Is this a complete thought?",
+"why": "It starts with 'Because' and has no main clause → fragment (not a complete thought).",
+"lead": "Because the definition of what is beautiful varies from individual to individual."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=fragment|sentence fragment|a fragment|a sentence fragment}",
+"hint": "Is there a full verb?",
+"why": "'crying' alone is not a full verb; it needs 'is' or 'was' → fragment (missing verb).",
+"lead": "The baby crying for food."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=run-on|run on|run-on sentence|run on sentence|fused sentence}",
+"hint": "Find the place where one sentence runs into the next.",
+"why": "'…on Tuesday night' + 'it destroyed…' with no punctuation → run-on.",
+"lead": "A storm ravaged several districts of the state on Tuesday night it destroyed thousands of huts and standing crops."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=run-on|run on|run-on sentence|run on sentence|fused sentence}",
+"hint": "There is no punctuation between the two sentences.",
+"why": "Two sentences stuck together with nothing between them → run-on.",
+"lead": "Children aren't born with social morals they develop them over time."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=comma splice|comma splice sentence|a comma splice}",
+"hint": "A comma is between two complete sentences.",
+"why": "Comma only between two independent clauses → comma splice.",
+"lead": "The library was closed, we studied in the café instead."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=run-on|run on|run-on sentence|run on sentence|fused sentence}",
+"hint": "Is there any punctuation between 'died' and 'I'?",
+"why": "No punctuation and no conjunction → run-on.",
+"lead": "My phone battery died I couldn't call my parents."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=fragment|sentence fragment|a fragment|a sentence fragment}",
+"hint": "Does it express a complete thought?",
+"why": "'Even though…' needs a main clause → fragment.",
+"lead": "Even though they perform similar tasks."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=fragment|sentence fragment|a fragment|a sentence fragment}",
+"hint": "Is the subject clear? Is the thought complete?",
+"why": "It is missing a subject and is not a complete thought → fragment.",
+"lead": "Which is the first stage of sleep."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=comma splice|comma splice sentence|a comma splice}",
+"hint": "'however' is not a conjunction like 'and' or 'but'.",
+"why": "'however' cannot join two sentences with just a comma → comma splice. Use: The exam was difficult; however, most students passed.",
+"lead": "The exam was difficult, however most students passed."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=fragment|sentence fragment|a fragment|a sentence fragment}",
+"hint": "Who is running? Is there a main verb?",
+"why": "No subject and no full verb → fragment.",
+"lead": "Running across the field with a kite in his hand."
+},
+{
+"type": "type",
+"q": "Type of sentence error: {=run-on|run on|run-on sentence|run on sentence|fused sentence}",
+"hint": "Two sentences with nothing between them.",
+"why": "No punctuation and no conjunction between 'reading' and 'I' → run-on.",
+"lead": "I love reading I read every night before bed."
+}
+]
+},
+{
+"key": "fix",
+"group": "Sentences · HW 1 & 2",
+"kind": "Type",
+"name": "Fix the Sentence",
+"icon": "🛠️",
+"color": "#B79CFF",
+"topic": "Add the word that makes the sentence correct",
+"note": "Fix the sentence error. Type the missing word.",
+"questions": [
+{
+"type": "type",
+"q": "Later-born children produce more personal pronouns, {=and|so} they develop more advanced conversational skills than the first-born child.",
+"hint": "A comma splice needs a coordinating conjunction after the comma.",
+"why": "comma + coordinating conjunction (and) fixes a comma splice."
+},
+{
+"type": "type",
+"q": "Glasgow was the second city in the world to have an underground railway system, {=but|while|whereas|and|although} London was the first.",
+"hint": "Add a conjunction after the comma. The two ideas contrast.",
+"why": "comma + but (or while / whereas) fixes the comma splice."
+},
+{
+"type": "type",
+"q": "Poverty, famine and major public health problems are important indicators of a changing climate, {=but|yet} these issues are not being addressed globally.",
+"hint": "Add a comma and a conjunction. The two ideas contrast.",
+"why": "A run-on is fixed with a comma + coordinating conjunction: , but / , yet."
+},
+{
+"type": "type",
+"q": "The baby {=is|was} crying for food.",
+"hint": "The fragment is missing part of the verb.",
+"why": "crying needs the helping verb is or was: The baby is crying for food."
+},
+{
+"type": "type",
+"q": "A storm ravaged several districts of the state on Tuesday night {=and} destroyed thousands of huts and standing crops.",
+"hint": "Join the two verbs with a conjunction.",
+"why": "One subject with two verbs: ravaged … and destroyed."
+},
+{
+"type": "type",
+"q": "Children aren't born with social morals, {=but|but instead} they develop them over time.",
+"hint": "Add a coordinating conjunction after the comma.",
+"why": "comma + but fixes the run-on."
+},
+{
+"type": "type",
+"q": "The library was closed, {=so} we studied in the café instead.",
+"hint": "Which FANBOYS conjunction shows a result?",
+"why": "comma + so (result) fixes the comma splice."
+},
+{
+"type": "type",
+"q": "My phone battery died, {=so|and} I couldn't call my parents.",
+"hint": "Which conjunction shows a result?",
+"why": "comma + so fixes the run-on."
+},
+{
+"type": "type",
+"q": "The exam was difficult; {=however}, most students passed.",
+"hint": "The linking word is followed by a comma.",
+"why": "semicolon + however + comma is the correct pattern."
+},
+{
+"type": "type",
+"q": "{=Although|Even though|Though} they perform similar tasks, the two machines work in very different ways.",
+"hint": "The fragment 'Even though they perform similar tasks' now has a main clause. Which word starts it?",
+"why": "Dependent clause + comma + main clause = a complete complex sentence."
+},
+{
+"type": "type",
+"q": "The boy {=was|is} running across the field with a kite in his hand.",
+"hint": "Add a subject and a helping verb.",
+"why": "The fragment needs a subject (The boy) and a full verb (was running)."
+},
+{
+"type": "type",
+"q": "I love reading, {=so|and} I read every night before bed.",
+"hint": "Add a coordinating conjunction after the comma.",
+"why": "comma + so fixes the run-on."
+},
+{
+"type": "type",
+"q": "A comma alone cannot join two complete sentences. You need a comma and a {=coordinating conjunction|conjunction|coordinating|fanboys conjunction}.",
+"hint": "FANBOYS words are this type.",
+"why": "comma + coordinating conjunction (for, and, nor, but, or, yet, so)."
+},
+{
+"type": "type",
+"q": "You can also join two complete sentences with a {=semicolon}.",
+"hint": "This punctuation mark looks like a comma with a dot above it.",
+"why": "A semicolon (;) can join two independent clauses."
+}
+]
+},
+{
+"key": "sva-hw",
+"group": "Subject–verb agreement · HW 5",
+"kind": "Type",
+"name": "Agreement · Homework",
+"icon": "⚖️",
+"color": "#FF9F6B",
+"topic": "The HW 5 exercises 1 and 2 sentences",
+"note": "Write the correct form of the verb. Watch the time expressions.",
+"questions": [
+{
+"type": "type",
+"q": "Only one of the students {=was} studying algebra when the bell rang. (BE)",
+"hint": "The subject is 'one', and 'when the bell rang' is past.",
+"why": "one (singular) + past continuous → was studying."
+},
+{
+"type": "type",
+"q": "All of the salesmen, including Mr. Stone, {=have been} in the meeting room since 9 o'clock. (BE)",
+"hint": "'All of the salesmen' is plural. 'since 9 o'clock' needs the present perfect.",
+"why": "Ignore 'including Mr. Stone'. salesmen (plural) + since → have been."
+},
+{
+"type": "type",
+"q": "Either Julia or her friends {=are} planning to attend the party tonight. (BE)",
+"hint": "With either … or, the verb agrees with the nearer subject.",
+"why": "nearer subject 'her friends' (plural) → are."
+},
+{
+"type": "type",
+"q": "Neither the students nor the instructor {=wants} to miss class as exam week is coming up soon. (WANT)",
+"hint": "With neither … nor, look at the nearer subject.",
+"why": "nearer subject 'the instructor' (singular) → wants."
+},
+{
+"type": "type",
+"q": "Attention, please! Here into the main ring of the circus {=come|are coming} the trained tigers. (COME)",
+"hint": "The subject comes after the verb. What is it?",
+"why": "The real subject is 'the trained tigers' (plural) → come."
+},
+{
+"type": "type",
+"q": "Your friendship over the years and your support {=have} meant a great deal to us.",
+"hint": "Two subjects joined by 'and'.",
+"why": "X and Y = plural → have meant."
+},
+{
+"type": "type",
+"q": "The main source of income for Trinidad {=is|was} oil and pitch.",
+"hint": "What is the head noun of the subject?",
+"why": "The subject is 'source' (singular) → is."
+},
+{
+"type": "type",
+"q": "The chances of your being promoted {=are} excellent.",
+"hint": "What is the head noun: 'chances' or 'being promoted'?",
+"why": "The subject is 'chances' (plural) → are."
+},
+{
+"type": "type",
+"q": "Neither the professor nor his assistants {=were|are} able to explain the eerie glow in the lab.",
+"hint": "neither … nor: nearer subject.",
+"why": "nearer subject 'his assistants' (plural) → were / are."
+},
+{
+"type": "type",
+"q": "Discovered in the soil of our city garden {=was} a button from the Civil War.",
+"hint": "The subject comes after the verb.",
+"why": "The real subject is 'a button' (singular) → was."
+},
+{
+"type": "type",
+"q": "One of the main reasons for elephant poaching {=is} the profit from selling ivory.",
+"hint": "The subject is 'one'.",
+"why": "one of the … reasons → singular → is."
+},
+{
+"type": "type",
+"q": "The presence of certain bacteria in our bodies {=is} one of the factors that {=determine} our health. (determine)",
+"hint": "First gap: the head noun is 'presence'. Second gap: 'that' refers to 'the factors'.",
+"why": "presence (singular) → is; that = the factors (plural) → determine."
+},
+{
+"type": "type",
+"q": "The proportion of young people who own a car {=has} fallen since 2010.",
+"hint": "The head noun is 'proportion'. 'since 2010' needs the present perfect.",
+"why": "proportion (singular) + since → has fallen."
+},
+{
+"type": "type",
+"q": "A number of universities now {=offer} degrees entirely online. (offer)",
+"hint": "'A number of' means 'many'.",
+"why": "a number of + plural noun → plural verb: offer. (But 'The number of' + singular verb.)"
+},
+{
+"type": "type",
+"q": "Each of the three graphs {=demonstrates|demonstrated|shows} a different trend. (demonstrate)",
+"hint": "The subject is 'each'.",
+"why": "each (singular) → demonstrates."
+}
+]
+},
+{
+"key": "sva-rules",
+"group": "Subject–verb agreement · HW 5",
+"kind": "Type",
+"name": "Agreement · Rule by Rule",
+"icon": "📏",
+"color": "#FF9F6B",
+"topic": "each, none, some, there, neither…nor, news, a number of / the number of",
+"note": "Write the correct form of the verb in brackets.",
+"questions": [
+{
+"type": "type",
+"q": "The level of pollution in our cities {=is} rising every year. (be)",
+"hint": "Ignore 'of pollution in our cities'. What is the head noun?",
+"why": "head noun 'level' (singular) → is."
+},
+{
+"type": "type",
+"q": "The keys to the classroom {=are} on the teacher's desk. (be)",
+"hint": "The head noun is 'keys'.",
+"why": "keys (plural) → are. Ignore 'to the classroom'."
+},
+{
+"type": "type",
+"q": "Everyone in the two classes {=has} finished the test. (have)",
+"hint": "everyone, everybody, nobody, something … are singular.",
+"why": "everyone (singular) → has."
+},
+{
+"type": "type",
+"q": "Each of the players {=was|is} given a new shirt before the match. (be)",
+"hint": "The subject is 'each', not 'players'.",
+"why": "each (singular) → was."
+},
+{
+"type": "type",
+"q": "Several of the answers {=are|were} wrong. (be)",
+"hint": "both, few, many, several are plural.",
+"why": "several (plural) → are."
+},
+{
+"type": "type",
+"q": "Some of the milk {=has|had} gone bad. (have)",
+"hint": "some + of: look at the noun after 'of'. Is 'milk' countable?",
+"why": "milk is uncountable → singular: has."
+},
+{
+"type": "type",
+"q": "Some of the students {=have|had} already left. (have)",
+"hint": "some + of: look at the noun after 'of'.",
+"why": "students (plural) → have."
+},
+{
+"type": "type",
+"q": "None of the information {=was|is} useful. (be)",
+"hint": "none + of: look at the noun after 'of'.",
+"why": "information is uncountable → singular: was."
+},
+{
+"type": "type",
+"q": "There {=are|were} three reasons for this decision. (be)",
+"hint": "After 'There', the verb agrees with the noun that follows.",
+"why": "three reasons (plural) → are."
+},
+{
+"type": "type",
+"q": "Mathematics {=is} my favorite subject. (be)",
+"hint": "Subjects like economics, physics and mathematics look plural.",
+"why": "Plural-looking subjects are singular → is."
+},
+{
+"type": "type",
+"q": "The news about the earthquake {=was|is} shocking. (be)",
+"hint": "'news' looks plural.",
+"why": "news is singular → was."
+},
+{
+"type": "type",
+"q": "Swimming in the sea {=is} good exercise. (be)",
+"hint": "The subject is a gerund (-ing form).",
+"why": "A gerund subject is singular → is."
+},
+{
+"type": "type",
+"q": "'Great Expectations' {=is} a novel by Charles Dickens. (be)",
+"hint": "A title is one thing.",
+"why": "Titles are singular → is."
+},
+{
+"type": "type",
+"q": "The number of students in the school {=has|had} increased this year. (have)",
+"hint": "'The number of' is not the same as 'A number of'.",
+"why": "The number (singular) → has. A number of students (plural) → have."
+},
+{
+"type": "type",
+"q": "Measles {=is} a contagious childhood disease. (be)",
+"hint": "Disease names like measles look plural.",
+"why": "measles is singular → is."
+},
+{
+"type": "type",
+"q": "Both my brother and my sister {=live|lived} in Istanbul. (live)",
+"hint": "both … and is plural.",
+"why": "both (plural) → live."
+},
+{
+"type": "type",
+"q": "Neither of the answers {=is|was} correct. (be)",
+"hint": "neither (of) is singular.",
+"why": "neither of + plural noun → singular verb: is."
+},
+{
+"type": "type",
+"q": "Either the manager or her assistants {=are|were} going to meet you at the airport. (be)",
+"hint": "either … or: nearer subject.",
+"why": "nearer subject 'her assistants' (plural) → are."
+},
+{
+"type": "type",
+"q": "Here {=are} my car keys. (be)",
+"hint": "The subject comes after the verb.",
+"why": "subject 'my car keys' (plural) → are."
+},
+{
+"type": "type",
+"q": "Out of the boat {=jumps|jumped} the fish. (jump)",
+"hint": "The subject comes after the verb.",
+"why": "subject 'the fish' (singular here) → jumps."
+}
+]
+},
+{
+"key": "sva-fix",
+"group": "Subject–verb agreement · HW 5",
+"kind": "Type",
+"name": "Agreement · Find & Fix",
+"icon": "🧭",
+"color": "#FF9F6B",
+"topic": "HW 5 exercises 3 and 4 plus new sentences",
+"note": "Correct the verb. If there is no mistake, write correct.",
+"questions": [
+{
+"type": "type",
+"q": "Correct verb: {=were|were opened}",
+"hint": "The subject comes after the verb. What is it?",
+"why": "The subject is 'other possibilities' (plural) → were opened.",
+"lead": "Not until my interview with Dr. Chang was other possibilities opened to me."
+},
+{
+"type": "type",
+"q": "Correct verb: {=have|have made}",
+"hint": "Three subjects are joined by 'and'.",
+"why": "X, Y and Z = plural → have made.",
+"lead": "Batik cloth from Bali, blue and white ceramics from Cambodia, and a bocce ball from Turin has made Hannah's room the talk of the dorm."
+},
+{
+"type": "type",
+"q": "Correct verb: {=has|has voted}",
+"hint": "Ignore the words between the commas. What is the head noun?",
+"why": "head noun 'board' (one group) → has voted.",
+"lead": "The board of directors, ignoring the wishes of the neighborhood, have voted to allow further development."
+},
+{
+"type": "type",
+"q": "Correct verb: {=correct|it is correct|correct sentence|no mistake|is}",
+"hint": "Is 'measles' singular or plural?",
+"why": "Correct: measles is singular.",
+"lead": "Measles is a contagious childhood disease."
+},
+{
+"type": "type",
+"q": "Correct verb: {=correct|it is correct|correct sentence|no mistake|has}",
+"hint": "'who' refers to 'the only one'.",
+"why": "Correct: 'who' refers to 'the only one' (singular) → has.",
+"lead": "Leah is the only one of the many applicants who has the ability to step into this job."
+},
+{
+"type": "type",
+"q": "Correct verb: {=were}",
+"hint": "either … or: nearer subject.",
+"why": "nearer subject 'his companions' (plural) → were.",
+"lead": "Either the explorer or his companions was responsible for discovering the hidden entrance to the ancient temple."
+},
+{
+"type": "type",
+"q": "Correct verb: {=correct|it is correct|correct sentence|no mistake|is}",
+"hint": "neither (of) is singular.",
+"why": "Correct: neither of + plural noun takes a singular verb.",
+"lead": "Neither of the students is able to provide a convincing explanation for the unexpected results of the experiment."
+},
+{
+"type": "type",
+"q": "Correct verb: {=is}",
+"hint": "either (of) is singular.",
+"why": "either of the countries → singular → is.",
+"lead": "Either of the countries are capable of implementing effective measures to address climate change."
+},
+{
+"type": "type",
+"q": "Correct verb: {=correct|it is correct|correct sentence|no mistake|was}",
+"hint": "none + of: is 'chicken' (the food) countable?",
+"why": "Correct: chicken (the meat) is uncountable → was.",
+"lead": "None of the chicken was properly cooked, so it could not be served to the guests."
+},
+{
+"type": "type",
+"q": "Correct verb: {=correct|it is correct|correct sentence|no mistake|were}",
+"hint": "none + of: 'chickens' is plural.",
+"why": "Correct: chickens (plural) → were.",
+"lead": "None of the chickens were properly fed, which raised serious concerns about the welfare of the animals on the farm."
+},
+{
+"type": "type",
+"q": "Correct verb: {=has|has changed|had changed}",
+"hint": "'The number of' is singular.",
+"why": "the number → has changed.",
+"lead": "The line graph illustrates how the number of international students in three countries have changed between 2005 and 2025."
+},
+{
+"type": "type",
+"q": "Correct verb: {=rise|rose}",
+"hint": "The head noun is 'figures', not 'country'.",
+"why": "figures (plural) → rise.",
+"lead": "Overall, the figures for each country rises steadily."
+},
+{
+"type": "type",
+"q": "Correct verb: {=was}",
+"hint": "The head noun is 'percentage'.",
+"why": "percentage (singular) → was.",
+"lead": "The percentage of students from Asia were highest in Australia."
+},
+{
+"type": "type",
+"q": "Correct verb: {=shows|showed}",
+"hint": "neither … nor: nearer subject.",
+"why": "nearer subject 'the UK' (singular) → shows.",
+"lead": "Neither Canada nor the UK show a decline after 2015."
+},
+{
+"type": "type",
+"q": "Correct verb: {=were}",
+"hint": "After 'There', look at the noun that follows.",
+"why": "sharp increases (plural) → were.",
+"lead": "There was also sharp increases in the final five years."
+},
+{
+"type": "type",
+"q": "Correct verb: {=attracts|attracted|had attracted|was attracting}",
+"hint": "The subject is 'each'.",
+"why": "each (singular) → attracts / attracted.",
+"lead": "By 2025, each of the countries attract more than 100,000 students."
+},
+{
+"type": "type",
+"q": "Correct verb: {=is|is visiting}",
+"hint": "Ignore 'together with her students'.",
+"why": "head noun 'the teacher' (singular) → is visiting.",
+"lead": "The teacher, together with her students, are visiting the museum today."
+},
+{
+"type": "type",
+"q": "Correct verb: {=are}",
+"hint": "After 'There', look at the noun that follows.",
+"why": "many reasons (plural) → are.",
+"lead": "There is many reasons to learn a second language."
+},
+{
+"type": "type",
+"q": "Correct verb: {=is}",
+"hint": "Subjects like economics look plural.",
+"why": "economics is singular → is.",
+"lead": "Economics are a difficult subject for many students."
+},
+{
+"type": "type",
+"q": "Correct verb: {=loves}",
+"hint": "everybody is singular.",
+"why": "everybody → loves.",
+"lead": "Everybody in my family love chocolate."
+},
+{
+"type": "type",
+"q": "Correct verb: {=were}",
+"hint": "The head noun is 'results'.",
+"why": "results (plural) → were.",
+"lead": "The results of the survey was surprising."
+},
+{
+"type": "type",
+"q": "Correct verb: {=have|have asked}",
+"hint": "'A number of' means 'many'.",
+"why": "a number of + plural noun → have asked.",
+"lead": "A number of students has asked for extra lessons."
+},
+{
+"type": "type",
+"q": "Correct verb: {=has}",
+"hint": "The subject is 'each'.",
+"why": "each (singular) → has.",
+"lead": "Each of the students have a locker."
+},
+{
+"type": "type",
+"q": "Correct verb: {=is}",
+"hint": "some + of: is 'furniture' countable?",
+"why": "furniture is uncountable → is.",
+"lead": "Some of the furniture are broken."
+},
+{
+"type": "type",
+"q": "Correct verb: {=are}",
+"hint": "The subject comes after the verb.",
+"why": "the books (plural) → are.",
+"lead": "Here is the books you ordered."
+},
+{
+"type": "type",
+"q": "Correct verb: {=knows}",
+"hint": "neither … nor: nearer subject.",
+"why": "nearer subject 'my brother' (singular) → knows.",
+"lead": "Neither my parents nor my brother know the answer."
+},
+{
+"type": "type",
+"q": "Correct verb: {=correct|it is correct|correct sentence|no mistake|is}",
+"hint": "The head noun is 'quality'.",
+"why": "Correct: quality (singular) → is.",
+"lead": "The quality of the photos is excellent."
+}
+]
+}
+],
+"notes": {
+"Make collocations · HW 1": [
+{
+"h": "What is a collocation?",
+"p": "A collocation is a pair or group of words that English speakers always use together. We say make a mistake, not do a mistake. There is no logical rule, so you must learn each one as a chunk.",
+"ex": []
+},
+{
+"h": "Collocations with make",
+"p": "make a habit of + -ing · make enemies · make an attempt / several attempts · make a success of · make an early escape · make a discovery · make a calculation · make room for · make somebody's acquaintance · make an offer on · make a proposal · make a stand against",
+"ex": [
+"She has made a habit of reading before bed.",
+"Move the sofa to make room for the piano."
+]
+},
+{
+"h": "Stronger verbs that replace make",
+"p": "create a good / bad impression (= make an impression) · create a relaxing atmosphere · stage a protest (= make a formal protest) · lodge a complaint (= make a formal complaint) · rustle up a meal (= make a meal very quickly) · turn a profit (= make a profit) · coin a phrase / a word (= invent a new phrase)",
+"ex": [
+"Several guests lodged a complaint about the noise.",
+"Who coined the word 'selfie'?"
+]
+}
+],
+"Prefixes & word forms · HW 2 & 4": [
+{
+"h": "Negative prefixes",
+"p": "un-, in-, dis- and non- all mean 'not'. in- changes before some letters: im- before m, p and b (impossible, imperfect, immeasurable); il- before l (illegal, illiterate, illegible); ir- before r (irrelevant, irreversible). Some words break the pattern, so learn them: unreliable, unrequited, unsolicited, dishonest, disloyal. mis- means 'wrongly' (misunderstand, misinterpret).",
+"ex": [
+"The damage is irreversible.",
+"Don't include irrelevant details."
+]
+},
+{
+"h": "Which word class do I need?",
+"p": "Look at the words around the gap. After a/the/an adjective → noun (significant improvement). Before a noun → adjective (creative minds). Describing a verb or an adjective → adverb, usually -ly (incredibly beneficial, measured accurately). After be, become, remain, seem → adjective (they remain hopeful). After to or a modal → verb (likely to prosper).",
+"ex": [
+"the significance of (noun)",
+"conveniently located (adverb)"
+]
+},
+{
+"h": "Word family chart from HW 2",
+"p": "accuracy – accurate – accurately · consistency – consistent – consistently · association – associate – associated · significance – signify – significant – significantly · prosperity – prosper – prosperous · convenience – convenient – conveniently · sustainability – sustain – sustainable – sustainably · contribution – contribute – contributory · effectiveness – effective – effectively · development – develop – developmental – developmentally",
+"ex": []
+}
+],
+"Academic vocabulary · HW 2 & 4": [
+{
+"h": "HW 2 vocabulary chart",
+"p": "crucial (extremely important) · convenient (easy and suitable) · component (one part of something) · prosper (be successful) · emigrate (leave your country to live in another) · struggle (try very hard when it is difficult) · haphazard (with no plan or order) · associate X with Y (connect them in your mind) · reveal (show something hidden) · pose (create a threat or a problem) · feasible (possible and practical) · substantial (large, considerable)",
+"ex": [
+"Many families struggle to pay their bills.",
+"Is the plan financially feasible?"
+]
+},
+{
+"h": "HW 4 words with first letters",
+"p": "inadequate (not enough) · irreversible (cannot be undone) · unsolicited (not asked for) · unrequited (love that is not returned) · ineffective (has no effect) · prosperity (success and wealth) · sustain (keep going) · threat (danger)",
+"ex": []
+},
+{
+"h": "The eight academic collocations",
+"p": "play a crucial role · pose a threat · have a significant impact · achieve sustainable development · be closely associated with · provide accurate information · contribute to economic growth · face considerable challenges. Careful: you pose a threat (you create it), but you face a challenge (you have to deal with it).",
+"ex": [
+"Rising sea levels pose a threat to coastal towns.",
+"Farmers face considerable challenges."
+]
+}
+],
+"New words & rewrites · HW 1 & 4": [
+{
+"h": "The eight new words (HW 4)",
+"p": "exert an influence on (have an effect on) · erratic (unpredictable) · forage (search for food) · deleterious (harmful) · vital (absolutely necessary) · unsettling (making you nervous) · devise (invent a plan or method) · overlook (fail to notice)",
+"ex": [
+"Celebrities exert a strong influence on teenagers.",
+"Excessive screen time has deleterious effects on health."
+]
+},
+{
+"h": "Their word families and partners",
+"p": "influence → influential · erratic → erratically · forage → forager, foraging; forage for food · deleterious → deleteriously; a deleterious effect on, deleterious to health · vital → vitally, vitality; vitally important, it is vital that / to · unsettling → unsettle, unsettled; deeply unsettling · devise a strategy / plan / method (careful: device is the noun for a gadget) · overlook → overlooked; easily overlooked, overlook a detail",
+"ex": [
+"The hikers were unsettled (how they felt) by the unsettling noises (what caused it)."
+]
+},
+{
+"h": "How to rewrite with a key word",
+"p": "1) Read both sentences. 2) Find the part of the first sentence the key word replaces. 3) Use the key word's collocation: proposed → made a proposal; tried several times → made several attempts; came up with a plan → devised a plan. 4) Keep the meaning and the tense the same.",
+"ex": [
+"Kim contributed very positively → Kim made a very positive contribution."
+]
+}
+],
+"Sentences · HW 1 & 2": [
+{
+"h": "Clauses",
+"p": "A clause has a subject and a verb. An independent (main) clause can stand alone as a sentence: we won the game. A dependent (subordinate) clause cannot stand alone: because we worked together. Dependent clauses start with subordinating conjunctions (because, although, while, when, as, if, since, unless) or relative words (who, which, that).",
+"ex": []
+},
+{
+"h": "Four sentence types",
+"p": "Simple = one independent clause. Compound = two or more independent clauses joined by a coordinating conjunction (FANBOYS: for, and, nor, but, or, yet, so) or a semicolon. Complex = one independent clause + at least one dependent clause. Compound-complex = two or more independent clauses + at least one dependent clause.",
+"ex": [
+"Simple: Ali and Deniz studied hard and passed.",
+"Compound-complex: When the bell rang, the students left, and the teacher locked the door."
+]
+},
+{
+"h": "Three sentence errors",
+"p": "Run-on: two sentences stuck together with no punctuation (The weather was poor schools were closed). Comma splice: two sentences joined with only a comma (Cod stocks declined, the industry collapsed). Fragment: a piece of a sentence with no subject, no full verb or no complete thought (The baby crying for food. / Because the definition varies.).",
+"ex": []
+},
+{
+"h": "Four ways to fix them",
+"p": "1) Full stop: two sentences. 2) Comma + coordinating conjunction: , and / , but / , so. 3) Semicolon: The exam was difficult; most students passed. 4) Make one clause dependent: Although the exam was difficult, most students passed. Remember: however is not a conjunction; use ; however, or . However,",
+"ex": []
+}
+],
+"Subject–verb agreement · HW 5": [
+{
+"h": "Find the head noun",
+"p": "Ignore the words between the subject and the verb. The level of pollution in cities is rising (level → is). The teacher, together with her students, is visiting (teacher → is).",
+"ex": []
+},
+{
+"h": "or / nor / either…or / neither…nor",
+"p": "The verb agrees with the nearer subject. Neither the teacher nor the students were ready. Either the students or the teacher is supposed to handle the schedule.",
+"ex": []
+},
+{
+"h": "Always singular / always plural",
+"p": "Singular: each, either, neither, everyone, everybody, nobody, something (Each of the countries has its own policy). Plural: both, few, many, several (Several of the figures are estimates). Plural-looking but singular: news, economics, mathematics, measles, titles, gerunds (Economics is popular; Swimming is good exercise).",
+"ex": []
+},
+{
+"h": "It depends on the noun after 'of'",
+"p": "all, any, more, most, none, some: look at the noun after of. Some of the data is missing (uncountable). Some of the results are missing (plural). A number of students have asked (= many students, plural) but The number of students has increased (singular).",
+"ex": []
+},
+{
+"h": "Subject after the verb",
+"p": "After there, here, in questions and after fronted phrases, find the real subject after the verb. There are several reasons. Here are my car keys. Out of the boat jumps the fish. Discovered in the garden was a button.",
+"ex": []
+},
+{
+"h": "Watch the time expression",
+"p": "since / for → present perfect (have been, has fallen). when the bell rang → past (was studying). tonight / soon → present continuous or future.",
+"ex": [
+"All of the salesmen have been in the meeting room since 9 o'clock."
+]
+}
+]
+}
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("game-data").textContent);
+  var KEY = "onur-sj11:" + DATA.id;
+  var LETTERS = ["A", "B", "C", "D"];
+  var CHEERS = ["Stellar!", "Perfect!", "Correct!", "Exactly right!", "Spot on!", "Shining!", "Exam-ready answer!", "Brilliant!"];
+  var MAXSTARS = (DATA.levels.length + 1) * 3;
+  var RANKS = [
+    [0, "🔭", "Stargazer"], [Math.round(MAXSTARS * 0.2), "🧭", "Navigator"], [Math.round(MAXSTARS * 0.45), "🌠", "Astronomer"],
+    [Math.round(MAXSTARS * 0.7), "✨", "Constellation Maker"], [Math.round(MAXSTARS * 0.9), "🌟", "North Star"]
+  ];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- typed gaps ---------- */
+  // {word|alt} = gap with first letter shown; {=words|alt} = gap with no letter.
+  function parseGaps(text) {
+    var parts = [], re = /\{(=?)([^}]+)\}/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parts.push({ t: text.slice(last, m.index) });
+      var alts = m[2].split("|");
+      parts.push({ gap: true, letter: m[1] ? "" : alts[0].charAt(0), alts: alts });
+      last = re.lastIndex;
+    }
+    if (last < text.length) parts.push({ t: text.slice(last) });
+    return parts;
+  }
+  function tnorm(v) {
+    var s = " " + String(v || "").toLowerCase().replace(/[‘’ʼ`´]/g, "'").replace(/[.,!?;:"“”]+/g, " ").replace(/[-–—]/g, " ").replace(/\s+/g, " ").trim() + " ";
+    s = s.replace(/ won't /g, " will not ").replace(/ can't /g, " cannot ").replace(/ can not /g, " cannot ").replace(/ couldn't /g, " could not ")
+      .replace(/n't /g, " not ").replace(/'ve /g, " have ").replace(/'re /g, " are ").replace(/'m /g, " am ").replace(/'ll /g, " will ");
+    return s.replace(/\s+/g, " ").trim();
+  }
+  function gapOk(p, v) {
+    var c = [tnorm(v)];
+    if (p.letter) c.push(tnorm(p.letter + v));
+    return p.alts.some(function (a) { return c.indexOf(tnorm(a)) >= 0; });
+  }
+
+  /* ---------- question index ---------- */
+  var Q = {}, LEVELS = [], BOSS = { key: "boss", name: "Mock Exam", icon: "🌟", topic: "Exam rehearsal: " + DATA.bossCount + " mixed questions from every level", color: "#F5C451", boss: true };
+  DATA.levels.forEach(function (lv, li) {
+    lv.ids = [];
+    lv.num = li + 1;
+    lv.questions.forEach(function (q, qi) {
+      var id = lv.key + ":" + qi;
+      var item = { id: id, level: lv.key, levelName: lv.name, note: q.note || lv.note || "", type: q.type || "mcq", q: q.q, answer: q.answer, wrong: q.wrong,
+        hint: q.hint, why: q.why, lead: q.lead || "" };
+      if (item.type === "type") {
+        item.parts = parseGaps(q.q);
+        item.blank = item.parts.map(function (p) { return p.gap ? (p.letter ? p.letter + "_____" : "_______") : p.t; }).join("");
+        item.filled = item.parts.map(function (p) { return p.gap ? p.alts[0] : p.t; }).join("");
+      }
+      Q[id] = item;
+      lv.ids.push(id);
+    });
+    LEVELS.push(lv);
+  });
+  var ALL_LEVELS = LEVELS.concat([BOSS]);
+  function levelByKey(k) { for (var i = 0; i < ALL_LEVELS.length; i++) if (ALL_LEVELS[i].key === k) return ALL_LEVELS[i]; return null; }
+
+  /* ---------- state ---------- */
+  var P = null, CUR = null;
+  function blank() { return { name: "", xp: 0, levels: {}, runs: {} }; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY); if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (!p || typeof p !== "object" || !p.levels || !p.runs) return null;
+      for (var k in p.runs) {
+        var r = p.runs[k];
+        if (!r || !Array.isArray(r.ids) || !r.ids.every(function (i) { return Q[i]; })) delete p.runs[k];
+      }
+      return p;
+    } catch (e) { return null; }
+  }
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) {
+    var arr = a.slice();
+    for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    return arr;
+  }
+  function count(obj, val) { var n = 0; for (var k in obj) if (!val || obj[k] === val) n++; return n; }
+  function show(screen) {
+    ["welcome", "map", "play", "between", "done"].forEach(function (n) { $("screen-" + n).hidden = n !== screen; });
+  }
+  function lvState(k) { if (!P.levels[k]) P.levels[k] = { stars: 0, best: 0, plays: 0 }; return P.levels[k]; }
+  function totalStars() { var n = 0; ALL_LEVELS.forEach(function (l) { n += (P.levels[l.key] && P.levels[l.key].stars) || 0; }); return n; }
+  function rankFor(d) { var r = RANKS[0]; RANKS.forEach(function (x) { if (d >= x[0]) r = x; }); return r; }
+  function nextRank(d) { for (var i = 0; i < RANKS.length; i++) if (RANKS[i][0] > d) return RANKS[i]; return null; }
+  function starsEl(n, el) {
+    el.textContent = "";
+    for (var i = 0; i < 3; i++) { var s = document.createElement("i"); if (i < n) s.className = "on"; el.appendChild(s); }
+  }
+  function setColor(el, c) { el.style.setProperty("--c", c); }
+
+  function bossIds() {
+    var picked = [];
+    LEVELS.forEach(function (lv) { picked = picked.concat(shuffle(lv.ids).slice(0, DATA.bossPer || 1)); });
+    var rest = shuffle(Object.keys(Q).filter(function (id) { return picked.indexOf(id) < 0; }));
+    while (picked.length < DATA.bossCount && rest.length) picked.push(rest.shift());
+    return shuffle(picked);
+  }
+  function newRun(k, ids, practice) {
+    return { level: k, ids: ids.slice(), practice: !!practice, round: 1, queue: ids.slice(), pos: 0, next: [], wrong: {}, done: {},
+      opts: null, typed: null, answered: null, streak: 0, best: 0, xp: 0, screen: "play" };
+  }
+
+  /* ---------- WELCOME ---------- */
+  function renderWelcome() {
+    $("student-name").value = P.name || "";
+    show("welcome");
+    setTimeout(function () { try { $("student-name").focus(); } catch (e) {} }, 50);
+  }
+  function submitName() {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); $("student-name").classList.add("shake"); setTimeout(function () { $("student-name").classList.remove("shake"); }, 400); return; }
+    P.name = n; save(); renderMap();
+  }
+  $("btn-welcome").onclick = submitName;
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") submitName(); });
+
+  /* ---------- MAP ---------- */
+  function notesEl(grp) {
+    var list = DATA.notes && DATA.notes[grp]; if (!list || !list.length) return null;
+    var d = document.createElement("details"); d.className = "notes";
+    var s = document.createElement("summary"); s.textContent = "📖 Study notes"; d.appendChild(s);
+    var body = document.createElement("div"); body.className = "nbody";
+    list.forEach(function (n) {
+      var box = document.createElement("div"); box.className = "note";
+      var h = document.createElement("h4"); h.textContent = n.h; box.appendChild(h);
+      var p = document.createElement("p"); p.textContent = n.p; box.appendChild(p);
+      if (n.ex && n.ex.length) {
+        var ul = document.createElement("ul");
+        n.ex.forEach(function (x) { var li = document.createElement("li"); li.textContent = x; ul.appendChild(li); });
+        box.appendChild(ul);
+      }
+      body.appendChild(box);
+    });
+    d.appendChild(body);
+    return d;
+  }
+  function renderMap() {
+    CUR = null;
+    $("confirm-reset").hidden = true;
+    var stars = totalStars(), max = ALL_LEVELS.length * 3, rank = rankFor(stars), nr = nextRank(stars);
+    var pl = $("player"); pl.textContent = "";
+    var av = document.createElement("div"); av.className = "avatar"; av.textContent = (P.name || "?").charAt(0).toUpperCase();
+    var mid = document.createElement("div"); mid.style.minWidth = "0";
+    var nm = document.createElement("div"); nm.className = "player-name"; nm.textContent = P.name;
+    var rk = document.createElement("span"); rk.className = "rank"; rk.textContent = rank[1] + " " + rank[2];
+    mid.appendChild(nm); mid.appendChild(rk);
+    var tot = document.createElement("div"); tot.className = "totals";
+    var st = document.createElement("span"); st.className = "stars-total"; st.textContent = "★ " + stars + " / " + max;
+    var xp = document.createElement("span"); xp.className = "xp"; xp.textContent = P.xp + " XP";
+    tot.appendChild(st); tot.appendChild(xp);
+    var bar = document.createElement("div"); bar.className = "rank-bar";
+    var track = document.createElement("div"); track.className = "track";
+    var fill = document.createElement("div"); fill.className = "fill";
+    var lo = rank[0], hi = nr ? nr[0] : max;
+    fill.style.width = (nr ? Math.round((stars - lo) / (hi - lo) * 100) : 100) + "%";
+    track.appendChild(fill);
+    var sm = document.createElement("small");
+    sm.textContent = nr ? (hi - stars) + " more " + (hi - stars === 1 ? "star" : "stars") + " to become " + nr[1] + " " + nr[2] : "Top rank reached: North Star. Keep every star lit before the exam.";
+    bar.appendChild(track); bar.appendChild(sm);
+    pl.appendChild(av); pl.appendChild(mid); pl.appendChild(tot); pl.appendChild(bar);
+
+    var total = 0; LEVELS.forEach(function (l) { total += l.ids.length; });
+    $("map-count").textContent = LEVELS.length + " levels · " + total + " questions + mock exam";
+
+    var box = $("levels"), lastGroup = null; box.textContent = "";
+    ALL_LEVELS.forEach(function (lv) {
+      var grp = lv.boss ? "Final challenge" : (lv.group || "");
+      if (grp && grp !== lastGroup) {
+        lastGroup = grp;
+        var gh = document.createElement("div"); gh.className = "group-h";
+        var gt = document.createElement("h3"); gt.textContent = grp;
+        var gs = document.createElement("small");
+        if (!lv.boss) { var gl = LEVELS.filter(function (l) { return l.group === grp; }), gq = 0; gl.forEach(function (l) { gq += l.ids.length; }); gs.textContent = gl.length + " levels · " + gq + " Qs"; }
+        gh.appendChild(gt); gh.appendChild(gs); box.appendChild(gh);
+        var ne = notesEl(grp); if (ne) box.appendChild(ne);
+      }
+      var s = lvState(lv.key), run = P.runs[lv.key];
+      var b = document.createElement("button"); b.type = "button"; b.className = "lvl" + (lv.boss ? " boss" : "");
+      setColor(b, lv.color);
+      var head = document.createElement("div"); head.className = "lvl-head";
+      var ic = document.createElement("div"); ic.className = "lvl-icon"; ic.textContent = lv.icon; ic.setAttribute("aria-hidden", "true");
+      var tx = document.createElement("div"); tx.style.minWidth = "0";
+      var num = document.createElement("div"); num.className = "lvl-num"; num.textContent = lv.boss ? "Exam rehearsal" : "Level " + lv.num + (lv.kind ? " · " + lv.kind : "");
+      var name = document.createElement("div"); name.className = "lvl-name"; name.textContent = lv.name;
+      tx.appendChild(num); tx.appendChild(name);
+      head.appendChild(ic); head.appendChild(tx);
+      var topic = document.createElement("div"); topic.className = "lvl-topic"; topic.textContent = lv.topic;
+      var foot = document.createElement("div"); foot.className = "lvl-foot";
+      var dEl = document.createElement("span"); dEl.className = "dots"; starsEl(s.stars, dEl);
+      dEl.setAttribute("aria-label", s.stars + " of 3 stars");
+      var status = document.createElement("span"); status.className = "lvl-status";
+      if (run && run.screen !== "done") { status.textContent = "Continue · " + count(run.done) + "/" + run.ids.length; status.classList.add("go"); }
+      else if (s.plays) status.textContent = "Best " + s.best + "%";
+      else { status.textContent = lv.boss ? DATA.bossCount + " Qs" : lv.ids.length + " Qs"; status.classList.add("go"); }
+      foot.appendChild(dEl); foot.appendChild(status);
+      b.appendChild(head); b.appendChild(topic); b.appendChild(foot);
+      b.onclick = function () { openLevel(lv.key); };
+      box.appendChild(b);
+    });
+    show("map");
+  }
+  $("btn-rename").onclick = function () { renderWelcome(); };
+  $("btn-reset").onclick = function () { $("confirm-reset").hidden = false; $("confirm-reset").scrollIntoView({ block: "nearest" }); };
+  $("btn-reset-no").onclick = function () { $("confirm-reset").hidden = true; };
+  $("btn-reset-yes").onclick = function () { var name = P.name; P = blank(); P.name = name; save(); renderMap(); window.scrollTo(0, 0); };
+
+  function openLevel(k) {
+    var run = P.runs[k];
+    if (!run || run.screen === "done") {
+      var lv = levelByKey(k);
+      P.runs[k] = newRun(k, lv.boss ? bossIds() : lv.ids, false);
+      save();
+    }
+    CUR = k; route(); window.scrollTo(0, 0);
+  }
+
+  /* ---------- PLAY ---------- */
+  function R() { return P.runs[CUR]; }
+  function currentQ() { var r = R(); return Q[r.queue[r.pos]]; }
+  function drawBoard(el, opts) {
+    var r = R(); el.textContent = "";
+    r.ids.forEach(function (id) {
+      var c = document.createElement("i"); c.className = "cell";
+      if (r.done[id]) c.className += " " + r.done[id];
+      else if (r.wrong[id]) c.className += " missed";
+      if (opts && opts.current === id) c.className += " now";
+      if (opts && opts.pop === id && !reduceMotion) c.className += " pop";
+      el.appendChild(c);
+    });
+  }
+  function richText(el, text) {
+    el.textContent = "";
+    var parts = String(text).split("**");
+    parts.forEach(function (part, i) {
+      if (i % 2 === 1) { var s = document.createElement("strong"); s.className = "hl"; s.textContent = part; el.appendChild(s); return; }
+      var bits = part.split("___");
+      bits.forEach(function (b, j) {
+        if (j > 0) { var g = document.createElement("span"); g.className = "gap"; g.setAttribute("aria-label", "blank"); el.appendChild(g); }
+        el.appendChild(document.createTextNode(b));
+      });
+    });
+  }
+  function updateChips(hot) {
+    var r = R();
+    $("streak-n").textContent = r.streak;
+    $("streak-chip").classList.toggle("cold", r.streak === 0);
+    $("xp-n").textContent = P.xp;
+    if (hot && !reduceMotion) { var c = $("streak-chip"); c.classList.remove("hot"); void c.offsetWidth; c.classList.add("hot"); }
+  }
+  function renderPlay() {
+    var r = R(), lv = levelByKey(CUR), q = currentQ();
+    setColor($("screen-play"), lv.boss ? "#7C8CFF" : lv.color);
+    $("play-icon").textContent = lv.icon;
+    $("play-name").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("play-round").textContent = "ROUND " + r.round + (CUR === "boss" ? " · FROM " + q.levelName.toUpperCase() : (r.round === 1 ? " · FIRST TRY" : " · CLEAR THE MISSED ONES"));
+    updateChips(false);
+    drawBoard($("board"), { current: q.id });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    $("q-count").textContent = "Q " + (r.pos + 1) + " / " + r.queue.length;
+    var misses = r.wrong[q.id] || 0;
+    $("retry-tag").hidden = misses === 0;
+    $("retry-tag").textContent = misses === 1 ? "Missed once. Try again!" : "Missed " + misses + " times. You can do it!";
+    $("q-note").textContent = q.note;
+    $("q-note").hidden = !q.note;
+    $("q-text").classList.toggle("typed", q.type === "type");
+    $("check-row").hidden = true;
+    if (q.type === "type") renderTyped(q); else richText($("q-text"), q.q);
+    $("feedback").hidden = true; $("btn-next").hidden = true;
+
+    if (q.type === "type") {
+      $("opts").hidden = true; $("check-row").hidden = !!r.answered;
+    } else {
+      $("opts").hidden = false;
+      if (!r.opts) { r.opts = shuffle([q.answer].concat(q.wrong)); save(); }
+      var box = $("opts"); box.textContent = "";
+      var short = r.opts.every(function (t) { return t.length <= 9; });
+      box.className = "opts" + (short ? " two" : "");
+      r.opts.forEach(function (text, i) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+        var k = document.createElement("span"); k.className = "key"; k.textContent = LETTERS[i];
+        var t = document.createElement("span"); t.className = "txt"; t.textContent = text;
+        b.appendChild(k); b.appendChild(t);
+        b.onclick = function () { pick(i, b); };
+        box.appendChild(b);
+      });
+    }
+    if (r.answered) paintAnswer(false);
+    show("play");
+  }
+
+  /* typed */
+  function renderTyped(q) {
+    var r = R(), h = $("q-text"); h.textContent = "";
+    if (q.lead) { var l = document.createElement("span"); l.className = "q-lead"; l.textContent = q.lead; h.appendChild(l); }
+    var gi = 0, carry = "";
+    q.parts.forEach(function (p, pi) {
+      if (!p.gap) { h.appendChild(document.createTextNode(p.t.slice(carry.length))); carry = ""; return; }
+      var nxt = q.parts[pi + 1], tail = "";
+      if (nxt && !nxt.gap) { var mt = nxt.t.match(/^(\s?\([^)]{1,24}\))?[.,!?;:]*/); tail = mt ? mt[0] : ""; }
+      carry = tail;
+      var longest = 0; p.alts.forEach(function (a) { if (a.length > longest) longest = a.length; });
+      var isFull = longest > 28;
+      var w = document.createElement("span"); w.className = "tgap" + (isFull ? " full" : longest > 20 ? " xwide" : longest > 10 ? " wide" : "");
+      if (p.letter) { var f = document.createElement("span"); f.className = "first"; f.textContent = p.letter; w.appendChild(f); }
+      var inp = document.createElement(isFull ? "textarea" : "input");
+      if (isFull) inp.rows = 2; else inp.type = "text";
+      inp.spellcheck = false; inp.id = "gap-" + gi;
+      inp.setAttribute("autocomplete", "off"); inp.setAttribute("autocorrect", "off"); inp.setAttribute("autocapitalize", "off");
+      inp.setAttribute("enterkeyhint", "done");
+      inp.setAttribute("aria-label", p.letter ? "Missing word, starts with " + p.letter : "Missing words " + (gi + 1));
+      if (r.typed && r.typed[gi] != null) inp.value = r.typed[gi];
+      (function (idx) {
+        inp.addEventListener("input", function () { var rr = R(); if (!rr.typed) rr.typed = []; rr.typed[idx] = inp.value; save(); });
+      })(gi);
+      inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); if (!R().answered) checkTyped(); } });
+      w.appendChild(inp);
+      if (tail) { var glue = document.createElement("span"); glue.className = "tglue"; glue.appendChild(w); glue.appendChild(document.createTextNode(tail)); h.appendChild(glue); }
+      else h.appendChild(w);
+      gi++;
+    });
+  }
+  function checkTyped() {
+    var r = R(), q = currentQ(); if (r.answered) return;
+    var inputs = $("q-text").querySelectorAll("input, textarea"), vals = [], empty = null;
+    inputs.forEach(function (inp) { vals.push(inp.value); if (!inp.value.trim() && !empty) empty = inp; });
+    if (empty) {
+      empty.focus();
+      var g = empty.parentNode;
+      if (!reduceMotion) { g.classList.remove("shake"); void g.offsetWidth; g.classList.add("shake"); }
+      return;
+    }
+    var gaps = q.parts.filter(function (p) { return p.gap; });
+    var oks = gaps.map(function (p, i) { return gapOk(p, vals[i]); });
+    r.typed = vals; r.oks = oks;
+    grade(oks.every(Boolean), -1, $("q-text"));
+  }
+  $("btn-tcheck").onclick = checkTyped;
+  function paintTyped(fresh) {
+    var r = R();
+    $("check-row").hidden = true;
+    $("q-text").querySelectorAll("input, textarea").forEach(function (inp, i) {
+      inp.value = (r.typed && r.typed[i]) || ""; inp.disabled = true;
+      var ok = r.oks ? r.oks[i] : r.answered.correct;
+      inp.parentNode.classList.add(ok ? "ok" : "no");
+      if (fresh && !ok && !reduceMotion) inp.parentNode.classList.add("shake");
+    });
+  }
+  function focusTyped() {
+    var inp = $("q-text").querySelector("input:not([disabled]), textarea:not([disabled])");
+    if (inp) { try { inp.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  function pick(i) {
+    var r = R(); if (r.answered) return;
+    grade(r.opts[i] === currentQ().answer, i, $("opts").children[i]);
+  }
+  function grade(correct, pickIdx, srcEl) {
+    var r = R(), q = currentQ(), popId = null, gained = 0;
+    r.answered = { pick: pickIdx, correct: correct };
+    if (correct) {
+      r.done[q.id] = r.wrong[q.id] ? "later" : "first";
+      gained = r.wrong[q.id] ? 5 : 10;
+      r.streak += 1; if (r.streak > r.best) r.best = r.streak;
+      r.xp += gained; P.xp += gained;
+      popId = q.id;
+      r.cheer = CHEERS[Math.floor(Math.random() * CHEERS.length)];
+      r.gained = gained;
+    } else {
+      r.wrong[q.id] = (r.wrong[q.id] || 0) + 1;
+      r.streak = 0;
+      r.next.push(q.id);
+    }
+    save();
+    drawBoard($("board"), { current: q.id, pop: popId });
+    $("progress-line").textContent = count(r.done) + " of " + r.ids.length + " cleared";
+    updateChips(correct);
+    paintAnswer(true);
+    if (correct) confetti(srcEl);
+  }
+
+  function paintAnswer(fresh) {
+    var r = R(), q = currentQ(), a = r.answered;
+    var misses = r.wrong[q.id] || 0;
+    var reveal = !a.correct && misses >= 2;
+    if (q.type === "type") {
+      paintTyped(fresh);
+    } else {
+      var buttons = $("opts").querySelectorAll(".opt");
+      buttons.forEach(function (b, i) {
+        b.disabled = true;
+        var isAnswer = r.opts[i] === q.answer;
+        if (i === a.pick) b.classList.add(a.correct ? "is-right" : "is-wrong");
+        else if (isAnswer && reveal) b.classList.add("is-right");
+        else b.classList.add("is-dim");
+        if (fresh && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+      });
+    }
+    var fb = $("feedback"); fb.textContent = ""; fb.className = "feedback";
+    var stamp = document.createElement("span"); stamp.className = "stamp" + (fresh && !reduceMotion ? " thud" : "");
+    var head = document.createElement("div"); head.className = "fb-head";
+    var body = document.createElement("p");
+    var note = document.createElement("p"); note.className = "fb-note";
+    if (a.correct) {
+      fb.classList.add("good");
+      stamp.textContent = "Correct ✓";
+      head.textContent = r.cheer || "Correct!";
+      body.textContent = q.why;
+      var xp = document.createElement("p"); xp.className = "fb-xp"; xp.textContent = "+" + (r.gained || 10) + " XP" + (misses ? " · star cleared" : "");
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(xp);
+    } else if (reveal) {
+      fb.classList.add("reveal");
+      stamp.textContent = "The answer";
+      var ans = document.createElement("p"); ans.className = "fb-answer";
+      ans.textContent = "Answer: " + (q.type === "type" ? q.filled : q.answer);
+      body.textContent = q.why;
+      note.textContent = "Remember it. This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(ans); fb.appendChild(body); fb.appendChild(note);
+    } else {
+      fb.classList.add("bad");
+      stamp.textContent = "Not yet ✗";
+      head.textContent = "Check again.";
+      body.textContent = "Hint: " + q.hint;
+      note.textContent = "This question comes back in round " + (r.round + 1) + ".";
+      fb.appendChild(stamp); fb.appendChild(head); fb.appendChild(body); fb.appendChild(note);
+    }
+    fb.hidden = false;
+    var last = r.pos + 1 >= r.queue.length;
+    $("btn-next").textContent = last ? (r.next.length ? "Finish round " + r.round + " →" : "See my result →") : "Next question →";
+    $("btn-next").hidden = false;
+    if (fresh) {
+      $("btn-next").focus({ preventScroll: true });
+      $("btn-next").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+    }
+  }
+
+  function next() {
+    var r = R(); if (!r.answered) return;
+    r.pos += 1; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.cheer = null;
+    if (r.pos >= r.queue.length) {
+      if (r.next.length) r.screen = "between";
+      else finishLevel();
+    }
+    save(); route();
+    if (r.screen === "play") {
+      var top = $("play-card").getBoundingClientRect().top;
+      if (top < 0) $("play-card").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+      if (currentQ().type === "type") focusTyped(); else $("q-text").focus({ preventScroll: true });
+    } else window.scrollTo(0, 0);
+  }
+  $("btn-next").onclick = next;
+  $("btn-back").onclick = function () { save(); renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- BETWEEN ROUNDS ---------- */
+  function renderBetween() {
+    var r = R(), lv = levelByKey(CUR), left = r.next.length, col = lv.boss ? "#7C8CFF" : lv.color;
+    setColor($("screen-between"), col);
+    $("legend-later").style.background = col;
+    $("between-eyebrow").textContent = lv.name;
+    if (r.round === 1) {
+      var first = count(r.done, "first");
+      $("between-h").textContent = "Round 1 done. Your first-try score:";
+      var big = $("between-big"); big.textContent = first;
+      var sm = document.createElement("small"); sm.textContent = " / " + r.ids.length; big.appendChild(sm);
+    } else {
+      $("between-h").textContent = "Round " + r.round + " done.";
+      $("between-big").textContent = "";
+    }
+    $("between-text").textContent = (left === 1 ? "1 question comes" : left + " questions come") + " back now. Clear " + (left === 1 ? "it" : "them all") + " to light up the board.";
+    drawBoard($("board-between"));
+    $("btn-next-round").textContent = "Start round " + (r.round + 1) + " →";
+    show("between");
+  }
+  $("btn-next-round").onclick = function () {
+    var r = R();
+    r.round += 1; r.queue = shuffle(r.next); r.next = []; r.pos = 0; r.opts = null; r.typed = null; r.oks = null; r.answered = null; r.screen = "play";
+    save(); route(); window.scrollTo(0, 0); $("q-text").focus({ preventScroll: true });
+  };
+
+  /* ---------- LEVEL COMPLETE ---------- */
+  function starsFor(pct) { return pct >= 90 ? 3 : pct >= 70 ? 2 : 1; }
+  function finishLevel() {
+    var r = R(), first = count(r.done, "first"), pct = Math.round(first / r.ids.length * 100);
+    r.screen = "done"; r.pct = pct; r.earned = starsFor(pct);
+    if (!r.practice) {
+      var s = lvState(CUR), before = totalStars();
+      s.plays += 1;
+      if (pct > s.best) s.best = pct;
+      if (r.earned > s.stars) s.stars = r.earned;
+      var rb = rankFor(before), ra = rankFor(totalStars());
+      r.rankUp = ra[2] !== rb[2] ? ra[1] + " New rank: " + ra[2] + "!" : "";
+    } else r.rankUp = "";
+  }
+  function renderDone() {
+    var r = R(), lv = levelByKey(CUR), total = r.ids.length, first = count(r.done, "first");
+    setColor($("screen-done"), lv.boss ? "#7C8CFF" : lv.color);
+    $("done-eyebrow").textContent = lv.name + (r.practice ? " · Tricky ones" : "");
+    $("done-h").textContent = r.practice ? "Tricky ones cleared." : (r.earned === 3 ? "Three stars!" : r.earned === 2 ? "Strong work." : "Level cleared.");
+    var md = $("done-dots"); md.textContent = "";
+    for (var i = 0; i < 3; i++) {
+      var s = document.createElement("i");
+      if (i < r.earned) { s.className = "on"; s.style.animationDelay = (0.15 + i * 0.22) + "s"; }
+      md.appendChild(s);
+    }
+    md.hidden = !!r.practice;
+    var big = $("done-big"); big.textContent = first;
+    var sm = document.createElement("small"); sm.textContent = " / " + total + "  (" + r.pct + "%)"; big.appendChild(sm);
+    $("rank-up").hidden = !r.rankUp; $("rank-up").textContent = r.rankUp || "";
+    var stats = [[r.round, r.round === 1 ? "round" : "rounds"], ["🔥 " + r.best, "best streak"], ["+" + r.xp, "XP earned"]];
+    var box = $("done-stats"); box.textContent = "";
+    stats.forEach(function (x) {
+      var d = document.createElement("div"); d.className = "stat";
+      var b = document.createElement("b"); b.textContent = x[0];
+      var t = document.createElement("span"); t.textContent = x[1];
+      d.appendChild(b); d.appendChild(t); box.appendChild(d);
+    });
+    var tricky = r.ids.filter(function (id) { return r.wrong[id]; }).sort(function (a, b) { return r.wrong[b] - r.wrong[a]; });
+    var ul = $("tricky"); ul.textContent = "";
+    tricky.forEach(function (id) {
+      var q = Q[id], li = document.createElement("li");
+      var tq = document.createElement("span"); tq.className = "tq";
+      tq.textContent = q.type === "type" ? (q.lead ? q.lead + "  →  " : "") + q.blank : q.q.replace(/\*\*/g, "");
+      var ta = document.createElement("span"); ta.className = "ta";
+      ta.textContent = "✔ " + (q.type === "type" ? q.filled : q.answer);
+      var tm = document.createElement("span"); tm.className = "tm";
+      tm.textContent = (CUR === "boss" ? q.levelName + " · " : "") + "missed " + (r.wrong[id] === 1 ? "once" : r.wrong[id] + " times");
+      li.appendChild(tq); li.appendChild(ta); li.appendChild(tm); ul.appendChild(li);
+    });
+    $("tricky-block").hidden = tricky.length === 0;
+    $("btn-practice").hidden = tricky.length === 0;
+    var who = $("who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = P.name || "—"; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("done");
+    if (!r.practice && r.earned === 3 && !r.celebrated) { r.celebrated = true; save(); setTimeout(function () { confetti(md, 50); }, 600); }
+  }
+  $("btn-practice").onclick = function () {
+    var r = R(); var ids = r.ids.filter(function (id) { return r.wrong[id]; });
+    P.runs[CUR] = newRun(CUR, ids, true); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-replay").onclick = function () {
+    var lv = levelByKey(CUR);
+    P.runs[CUR] = newRun(CUR, lv.boss ? bossIds() : lv.ids, false); save(); route(); window.scrollTo(0, 0);
+  };
+  $("btn-map").onclick = function () { renderMap(); window.scrollTo(0, 0); };
+
+  /* ---------- confetti ---------- */
+  function confetti(el, n) {
+    if (reduceMotion || !el) return;
+    var rect = el.getBoundingClientRect();
+    var x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+    var colors = ["#F5C451", "#7C8CFF", "#5FD4C4", "#FF8FB1", "#B79CFF"];
+    n = n || 22;
+    for (var i = 0; i < n; i++) {
+      var c = document.createElement("i"); c.className = "confetti";
+      c.style.left = x + "px"; c.style.top = y + "px";
+      c.style.background = colors[i % colors.length];
+      var ang = Math.random() * Math.PI * 2, dist = 60 + Math.random() * 120;
+      c.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+      c.style.setProperty("--dy", (Math.sin(ang) * dist - 50 + Math.random() * 100) + "px");
+      document.body.appendChild(c);
+      (function (node) { setTimeout(function () { node.remove(); }, 950); })(c);
+    }
+  }
+
+  /* ---------- router + keys ---------- */
+  function route() {
+    if (!P.name) return renderWelcome();
+    if (!CUR || !R()) return renderMap();
+    var r = R();
+    if (r.screen === "play") renderPlay();
+    else if (r.screen === "between") renderBetween();
+    else renderDone();
+  }
+  document.addEventListener("keydown", function (e) {
+    if ($("screen-play").hidden || !CUR) return;
+    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
+    var r = R(), q = currentQ(), k = e.key.toLowerCase();
+    if (q.type === "mcq") {
+      var idx = ["1", "2", "3", "4"].indexOf(k); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(k);
+      if (idx >= 0 && r.opts && idx < r.opts.length && !r.answered) { e.preventDefault(); pick(idx); return; }
+    }
+    if ((k === "enter" || k === "arrowright") && r.answered && e.target.tagName !== "BUTTON") { e.preventDefault(); next(); }
+  });
+
+  $("top-title").textContent = DATA.title;
+  $("top-sub").textContent = DATA.subtitle;
+  P = load() || blank();
+  route();
+})();
+</script>
+</body>
+</html>
