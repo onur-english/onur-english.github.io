@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Me History · Device Hunt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Alfa+Slab+One&display=swap">
+<style>
+/* Layout: one phone-width column. "Checking out" an old school history book: cream archive paper, a red cloth
+   textbook cover with gold lettering, library date stamps, sunrise-yellow highlights and deep Caribbean teal for actions. */
+:root {
+  --wall: #F3ECDF;
+  --card: #FFFDF8;
+  --ink: #1C1A17;
+  --muted: #5E584E;
+  --rule: #E2D8C6;
+  --board: #0E5E63;
+  --board-hover: #0A4A4E;
+  --pink: #F4C7A1;
+  --yellow: #FFD86B;
+  --lilac: #E3EEEE;
+  --mint: #CFEBD8;
+  --star: #D99A00;
+  --red: #B3261E;
+  --red-soft: #F9E0DA;
+  --good: #1E7347;
+  --good-soft: #DDF1E4;
+  --cloth: #7A2A1F;
+  --gold: #E8C26A;
+  --f-hand: "Alfa Slab One", "Rockwell", "Georgia", serif;
+  --f-body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--wall); }
+body {
+  margin: 0; color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; min-height: 100vh;
+  background:
+    linear-gradient(90deg, transparent 0 22px, rgba(179,38,30,.18) 22px 24px, transparent 24px),
+    repeating-linear-gradient(transparent 0 31px, rgba(14,94,99,.08) 31px 32px),
+    var(--wall);
+}
+img { max-width: 100%; display: block; }
+.wrap { max-width: 680px; margin: 0 auto; padding: 14px 16px 64px; display: flex; flex-direction: column; gap: 16px; }
+.col { display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--board); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #FFFFFF; border-radius: 10px; padding: 4px 6px; flex: none; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.logo img { width: 70px; height: auto; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-hand); font-size: 1.45rem; line-height: 1; }
+.top-sub { color: var(--muted); font-size: .86rem; }
+
+.card { background: var(--card); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 0 rgba(30,42,51,.06), 0 10px 26px rgba(40,70,100,.10); }
+.label { font-family: var(--f-hand); font-size: 1.15rem; color: var(--board); letter-spacing: .02em; }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+
+.btn { appearance: none; border: 0; border-radius: 12px; padding: 13px 18px; font-weight: 700; font-size: 1rem; cursor: pointer; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-ink { background: var(--board); color: #FFFFFF; box-shadow: 0 3px 0 #0F2B23; }
+.btn-ink:hover { background: var(--board-hover); }
+.btn-ink:active { transform: translateY(2px); box-shadow: 0 1px 0 #0F2B23; }
+.btn-ink:disabled { background: #9AA7A2; box-shadow: none; cursor: not-allowed; }
+.btn-ghost { background: #FFFFFF; border: 2px solid var(--ink); color: var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Start: a red cloth history textbook */
+.cover { position: relative; background: var(--cloth); color: #FBF3E2; border-radius: 6px 16px 16px 6px; padding: 30px 24px 26px 38px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 16px 30px rgba(80,20,10,.28); overflow: hidden; }
+.cover::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: repeating-linear-gradient(180deg, #5E1F16 0 6px, #6C251B 6px 12px); }
+.cover::after { content: ""; position: absolute; inset: 10px 10px 10px 26px; border: 2px solid rgba(232,194,106,.55); border-radius: 4px 10px 10px 4px; pointer-events: none; }
+.cover > * { position: relative; z-index: 1; }
+.cover h1 { font-family: var(--f-hand); font-weight: 400; font-size: clamp(2.2rem, 10vw, 3.1rem); line-height: 1.02; max-width: 11ch; color: var(--gold); }
+.cover h1 em { font-style: normal; color: #FFFFFF; background: linear-gradient(transparent 58%, rgba(255,216,107,.45) 58%); }
+.cover .who-poet { font-family: var(--f-body); font-weight: 700; font-size: 1.1rem; letter-spacing: .08em; text-transform: uppercase; color: #F6DFA8; }
+.name-plate { align-self: flex-start; background: #FBF3E2; color: var(--cloth); border: 2px dashed var(--cloth); border-radius: 4px; padding: 2px 12px; font-family: var(--f-body); font-weight: 700; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; transform: rotate(-2deg); }
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.steps li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+.steps .n { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--board); color: #FFFFFF; font-family: var(--f-hand); font-size: 1.3rem; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input, textarea { font: inherit; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); width: 100%; }
+.field input:focus, textarea:focus { border-color: var(--board); outline: none; }
+.resume { border: 2px dashed var(--board); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Tabs */
+.tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; padding-block: 6px; background: rgba(243,236,223,.94); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.tab { appearance: none; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 0; cursor: pointer; min-width: 0; }
+.tab b { font-family: var(--f-hand); font-weight: 400; font-size: 1.2rem; }
+.tab span { font-size: .78rem; color: var(--muted); }
+.tab.on { background: var(--board); border-color: var(--board); color: #FFFFFF; }
+.tab.on span { color: #D3E3DC; }
+.tab:disabled { opacity: .55; cursor: not-allowed; }
+
+/* Poem */
+.poem-card { padding: 0; overflow: hidden; }
+.poem-card summary { cursor: pointer; padding: 14px 20px; font-family: var(--f-hand); font-size: 1.2rem; color: var(--board); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.poem-card summary::-webkit-details-marker { display: none; }
+.poem-card summary::after { content: "▾ hide"; font-family: var(--f-body); font-size: .8rem; color: var(--muted); }
+.poem-card:not([open]) summary::after { content: "▸ show"; }
+.poem-img { border-top: 1px solid var(--rule); background: #F3F3F3; }
+.poem-img img { width: 100%; height: auto; }
+.poem-note { font-size: .8rem; color: var(--muted); padding: 8px 20px 14px; }
+
+.meter { height: 12px; border-radius: 999px; background: #E3EAF0; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--board), #2E7D63); transition: width .4s; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 16px; height: 12px; border-radius: 3px; display: inline-block; }
+
+/* Device spots */
+.group-h { font-family: var(--f-hand); font-size: 1.1rem; border-bottom: 3px solid var(--yellow); padding-bottom: 2px; margin-top: 4px; }
+.spots { display: flex; flex-direction: column; gap: 10px; }
+.spot { appearance: none; text-align: left; width: 100%; border: 2px solid var(--rule); background: var(--yellow); border-radius: 12px; padding: 12px 14px; cursor: pointer; display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; min-height: 56px; transition: transform .08s; }
+.spot:active { transform: translateY(2px); }
+.spot .no { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: #FFFFFF; font-family: var(--f-hand); font-size: 1.15rem; border: 2px solid var(--ink); }
+.spot .q { font-weight: 700; font-size: 1.02rem; }
+.spot .tag { display: block; font-family: var(--f-hand); font-size: 1.05rem; color: var(--good); }
+.spot.first { background: var(--mint); border-color: var(--good); }
+.spot.first .no { background: var(--star); color: #FFFFFF; border-color: var(--star); }
+.spot.later { background: #DCE8F7; border-color: #7A9CC6; }
+.spot.cold { background: var(--red-soft); border-color: var(--red); cursor: not-allowed; }
+.spot.cold .tag { color: var(--red); }
+.spot.pick1 { box-shadow: 0 0 0 4px var(--board); }
+.spot.pick2 { box-shadow: 0 0 0 4px #8A4FBF; }
+.spot .pk { font-family: var(--f-hand); font-size: 1rem; color: #FFFFFF; background: var(--board); border-radius: 6px; padding: 0 8px; margin-left: 6px; }
+.spot.pick2 .pk { background: #8A4FBF; }
+.sweep { border-top: 5px solid var(--red); }
+
+/* Sheet */
+.sheet-back { position: fixed; inset: 0; background: rgba(30,42,51,.5); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: #FFFFFF; width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; border-radius: 20px 20px 0 0; border-top: 6px solid var(--yellow); padding: 18px 16px calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 14px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.x { appearance: none; border: 2px solid var(--rule); background: transparent; border-radius: 999px; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; line-height: 1; flex: none; }
+.evidence { font-size: 1.15rem; font-weight: 700; background: linear-gradient(transparent 10%, var(--yellow) 10%, var(--yellow) 90%, transparent 90%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.st-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.st { font-size: .78rem; font-weight: 700; border-radius: 999px; padding: 2px 10px; border: 1px solid var(--rule); color: var(--muted); }
+.st.on { border-color: var(--board); color: var(--board); }
+.st.done { border-color: var(--good); color: var(--good); }
+.qh { font-size: 1.15rem; font-weight: 700; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 54px; }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--board); } }
+.opt .k { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-family: var(--f-hand); font-size: 1.15rem; background: var(--wall); }
+.opt .olab { color: var(--board); }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.right .k { background: var(--good); color: #FFFFFF; }
+.opt.wrong { border-color: var(--red); background: var(--red-soft); }
+.opt.wrong .k { background: var(--red); color: #FFFFFF; }
+.opt.dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.fb { border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--good-soft); }
+.fb.bad { background: var(--red-soft); }
+.fb.reveal { background: #FFF2C6; }
+.fb-h { font-family: var(--f-hand); font-size: 1.4rem; }
+.fb.good .fb-h { color: var(--good); }
+.fb.bad .fb-h { color: var(--red); }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.retry { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--red-soft); color: var(--red); }
+
+/* Writing desk */
+.intro { background: #F4F7FA; border: 1px dashed #AFC0CD; border-radius: 12px; padding: 12px 14px; font-style: italic; }
+.picks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.pickbox { border: 2px dashed var(--rule); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.pickbox b { font-family: var(--f-hand); font-weight: 400; font-size: 1.15rem; display: block; }
+.pickbox.p1 { border-color: var(--board); }
+.pickbox.p2 { border-color: #8A4FBF; }
+.pickbox span { font-size: .88rem; }
+.wpanel { margin: 2px -8px 8px; padding: 14px 12px 16px; background: #FFFBEA; border: 3px solid var(--board); border-radius: 14px; display: flex; flex-direction: column; gap: 14px; }
+.wpanel.g2 { border-color: #8A4FBF; }
+.wp-h { font-family: var(--f-hand); font-size: 1.35rem; color: var(--board); }
+.wpanel.g2 .wp-h { color: #8A4FBF; }
+.devstrip { display: flex; flex-direction: column; gap: 6px; }
+.ds-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; background: #FFFFFF; border: 2px solid var(--board); border-radius: 10px; padding: 6px 10px; }
+.ds-row.g2 { border-color: #8A4FBF; }
+.ds-tag { font-size: .78rem; font-weight: 700; color: #FFFFFF; background: var(--board); border-radius: 999px; padding: 1px 9px; }
+.ds-row.g2 .ds-tag { background: #8A4FBF; }
+.ds-q { font-weight: 700; background: linear-gradient(transparent 8%, var(--yellow) 8%, var(--yellow) 92%, transparent 92%); box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: 0 2px; }
+.sep { font-family: var(--f-hand); font-size: 1.2rem; border-bottom: 3px solid var(--pink); padding-bottom: 2px; margin-top: 6px; }
+.slot { display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--rule); padding-left: 12px; }
+.slot.ok { border-left-color: var(--good); }
+.slot-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.slot-h b { font-family: var(--f-hand); font-weight: 400; font-size: 1.12rem; }
+.num { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--board); color: var(--board); display: grid; place-items: center; font-family: var(--f-hand); font-size: 1.2rem; flex: none; }
+.slot.ok .num { background: var(--star); border-color: var(--star); color: #FFFFFF; }
+.frame { margin: 0; padding: 8px 12px; background: #FFF7D6; border-left: 3px solid var(--star); border-radius: 0 8px 8px 0; font-size: .95rem; color: #3D3628; }
+.frame .blank { display: inline-block; min-width: 2.5em; border-bottom: 2px solid #8B7A3F; }
+.slot textarea { min-height: 84px; resize: vertical; line-height: 1.45; overflow: hidden; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; font-size: .88rem; }
+.checks li { display: flex; gap: 6px; align-items: baseline; color: var(--muted); }
+.checks li::before { content: "○"; font-weight: 700; flex: none; }
+.checks li.ok { color: var(--good); }
+.checks li.ok::before { content: "✓"; }
+.checks li.no { color: var(--red); }
+.checks li.no::before { content: "!"; }
+.hint-btn { appearance: none; align-self: flex-start; border: 2px solid var(--star); background: #FFF9E6; color: #6B4E00; border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: .85rem; cursor: pointer; }
+.hints { margin: 0; padding: 10px 12px 10px 28px; background: #FFF9E6; border-radius: 10px; font-size: .92rem; display: flex; flex-direction: column; gap: 4px; }
+.remind { background: var(--lilac); border-radius: 12px; padding: 12px 14px; font-size: .92rem; }
+.remind ul { margin: 6px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 3px; }
+.final { font-size: 1.04rem; line-height: 1.7; background: #F4F7FA; border-radius: 12px; padding: 14px; white-space: pre-wrap; }
+.model { line-height: 1.7; background: #F7FBF8; border-left: 4px solid var(--good); border-radius: 0 12px 12px 0; padding: 12px 14px; }
+.tick { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.tick label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.tick input { width: 22px; height: 22px; margin-top: 1px; flex: none; accent-color: var(--good); }
+
+/* Report */
+.big { font-family: var(--f-hand); font-size: clamp(2.8rem, 13vw, 3.8rem); line-height: 1; color: var(--board); }
+.big small { font-size: .45em; color: var(--muted); }
+.stars { font-size: 1.6rem; color: var(--star); letter-spacing: .1em; }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; }
+.who b { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title">Device Hunt</span>
+      <span class="top-sub">Koç Grade 10 · Unseen poem practice</span>
+    </div>
+  </header>
+
+  <!-- START -->
+  <section id="s-start" hidden>
+    <div class="col">
+      <div class="cover">
+        <span class="name-plate">Grade 10 · Poetry · Checked out</span>
+        <h1>Checking Out <em>Me History</em></h1>
+        <span class="who-poet">John Agard</span>
+      </div>
+      <div class="card">
+        <ol class="steps">
+          <li><span class="n">1</span><span><b>Find the devices.</b> Eight phrases from the poem are marked. Tap each one: name the device, then choose what it does to the reader. A wrong answer comes back in the next round.</span></li>
+          <li><span class="n">2</span><span><b>Write your paragraph.</b> Read the introduction, then tap TWO phrases. Writing boxes open right under each phrase, in the exam order. Each part of the structure is ticked when you write it, and the 💡 hints help you think. Both levels are open from the start.</span></li>
+        </ol>
+        <div class="resume" id="resume" hidden>
+          <p><b>You have work in progress.</b> <span id="resume-text"></span></p>
+          <div class="btn-row">
+            <button class="btn btn-ink" id="btn-resume" type="button">Continue</button>
+            <button class="btn btn-ghost" id="btn-wipe" type="button">Start over</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="student-name">Your name</label>
+          <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+        </div>
+        <button class="btn btn-ink" id="btn-start" type="button">Check out the poem</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <section id="s-main" hidden>
+    <div class="col">
+      <nav class="tabs" aria-label="Levels">
+        <button class="tab" id="tab-1" type="button"><b>Level 1 · Find</b><span id="tab-1-s"></span></button>
+        <button class="tab" id="tab-2" type="button"><b>Level 2 · Write</b><span id="tab-2-s"></span></button>
+      </nav>
+
+      <details class="card poem-card" id="poem-card" open>
+        <summary>The whole poem</summary>
+        <div class="poem-img"><p style="padding:16px 20px;margin:0">The full poem will appear here.</p></div>
+        <p class="poem-note">Read the whole poem first. Then work with the marked phrases below.</p>
+      </details>
+
+      <!-- LEVEL 1 -->
+      <div id="lv-1" class="col" hidden>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span class="label" id="round-label">Round 1</span>
+            <span class="small" id="found-count"></span>
+          </div>
+          <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+          <div class="legend">
+            <span><i style="background:var(--yellow)"></i>To find</span>
+            <span><i style="background:var(--mint)"></i>★ First try</span>
+            <span><i style="background:#DCE8F7"></i>Found later</span>
+            <span><i style="background:var(--red-soft)"></i>Try again next round</span>
+          </div>
+        </div>
+        <div class="card sweep" id="sweep-card" hidden>
+          <span class="label" style="color:var(--red)">Round complete</span>
+          <p id="sweep-text"></p>
+          <button class="btn btn-ink" id="btn-sweep" type="button"></button>
+        </div>
+        <div class="card" id="done1-card" hidden>
+          <span class="label" style="color:var(--good)">Every device found!</span>
+          <p>Level 2 is open. Now write your exam paragraph.</p>
+          <button class="btn btn-ink" id="btn-to-2" type="button">Go to Level 2: Write</button>
+        </div>
+        <div class="card"><div class="spots" id="spots1"></div></div>
+      </div>
+
+      <!-- LEVEL 2 -->
+      <div id="lv-2" class="col" hidden>
+        <div class="card">
+          <span class="label">The introduction (in the exam, it is given)</span>
+          <p class="intro" id="intro"></p>
+          <div class="remind"><b>① Choose 2 devices that directly connect to the thesis in the introduction. Choose smartly.</b>
+            <ul><li>The thesis is the last sentence: a history chosen by the powerful can hide people's identity, and people must discover their own history for themselves.</li>
+            <li>A strong pair: one device about the history he WAS taught (the opening, Dick Whittington) and one about a hero he was NOT taught (Toussaint, Nanny or Mary Seacole).</li></ul>
+          </div>
+          <div class="picks">
+            <div class="pickbox p1"><b>Device 1</b><span id="pick1-t">Tap a phrase below.</span></div>
+            <div class="pickbox p2"><b>Device 2</b><span id="pick2-t">Then tap a second phrase.</span></div>
+          </div>
+          <p class="small muted" id="pick-note">Tap a chosen phrase again to remove it.</p>
+          <div class="remind"><b>Reminders</b>
+            <ul>
+              <li>Agard is a man: write <b>he</b> or <b>Agard</b>, never “she.”</li><li>Copy his spelling exactly: “Dem tell me,” “de beacon,” not “They tell me.”</li>
+              <li>Copy quotations exactly and put them inside quotation marks.</li>
+              <li>In step 4, zoom in on ONE word. What could it suggest?</li>
+              <li>Each box gets a gold star when every part of its structure is there. The ticks check structure; the 💡 hints help with ideas.</li>
+            </ul>
+          </div>
+          <div class="spots" id="spots2"></div>
+        </div>
+
+        <div class="card" id="desk" hidden>
+          <span class="label">Finish</span>
+          <p class="small muted">When every box is written, or when time is up, finish here to see your whole paragraph and a model for the same two devices.</p>
+          <button class="btn btn-ink" id="btn-file" type="button" disabled>Finish my paragraph</button>
+          <p class="small muted" id="file-note"></p>
+        </div>
+
+        <div class="card" id="filed" hidden>
+          <span class="label" style="color:var(--good)">Your paragraph</span>
+          <div class="final" id="final"></div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btn-copy" type="button">Copy my paragraph</button>
+            <button class="btn btn-ghost" id="btn-edit" type="button">Edit my paragraph</button>
+          </div>
+          <p class="small muted" id="copy-note" role="status"></p>
+          <span class="label">Model paragraph for the same two devices</span>
+          <p class="model" id="model"></p>
+          <span class="label">Now check your own paragraph</span>
+          <ul class="tick" id="tick"></ul>
+          <div class="field">
+            <label for="improve">One thing I will improve next time</label>
+            <textarea id="improve" maxlength="300"></textarea>
+          </div>
+          <button class="btn btn-ink" id="btn-report" type="button">See my report</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="s-report" hidden>
+    <div class="card">
+      <span class="label">Report</span>
+      <h2 style="font-family:var(--f-hand);font-weight:400;font-size:1.7rem">Checking Out Me History</h2>
+      <div>
+        <div class="muted">Devices found first try (Level 1)</div>
+        <div class="big" id="r-big"></div>
+        <div class="stars" id="r-stars" aria-hidden="true"></div>
+      </div>
+      <div id="r-revise-block"><span class="label">Devices to revise</span><ul id="r-revise" class="small" style="margin:6px 0 0;padding-left:20px"></ul></div>
+      <span class="label">My paragraph</span>
+      <div class="final" id="r-para"></div>
+      <div id="r-improve-block"><span class="label">I will improve</span><p id="r-improve"></p></div>
+      <div class="who" id="r-who"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="btn-back" type="button">Back to my work</button>
+        <button class="btn btn-ghost" id="btn-again" type="button">Start again</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="sheet-back" id="sheet-back" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
+    <div class="sheet-head"><span class="label" id="sheet-label"></span><button class="x" id="sheet-x" type="button" aria-label="Close">×</button></div>
+    <p class="evidence" id="sheet-ev"></p>
+    <div class="st-row" id="sheet-steps"></div>
+    <span class="retry" id="sheet-retry" hidden></span>
+    <h3 class="qh" id="sheet-q" tabindex="-1"></h3>
+    <div class="opts" id="sheet-opts" role="group" aria-labelledby="sheet-q"></div>
+    <div class="fb" id="sheet-fb" role="status" aria-live="polite" hidden></div>
+    <button class="btn btn-ink" id="sheet-next" type="button" hidden></button>
+  </div>
+</div>
+
+<script id="app-data" type="application/json">{"spots": [{"id": "s1", "where": "The opening", "quote": "Dem tell me", "ctx": [], "device": "Repetition", "dAns": "Repetition: ‘Dem tell me’ comes back again and again all through the poem.", "dWrong": ["Metaphor: the teachers are called ‘Dem’, a kind of wall, without ‘like’ or ‘as’.", "Imagery: the line describes what the classroom looked and sounded like.", "Juxtaposition: two famous heroes are placed side by side in the first line."], "dHint": "Look through the whole poem. How many times can you find these three words?", "dWhy": "“Dem tell me” opens the poem and returns again and again. That is repetition.", "effect": "Repeating “Dem tell me” sounds like a frustrated chant, so the reader feels how history was forced on the speaker.", "eWrong": ["Repeating “Dem tell me” sounds like a happy song, so the reader feels how much the speaker loved school.", "Repeating “Dem tell me” sounds like a polite question, so the reader feels the speaker is asking for help.", "Repeating “Dem tell me” sounds like a quiet whisper, so the reader feels the speaker is telling a secret."], "eHint": "Who is “Dem”? Did the speaker choose what to learn?", "words": [["Dem", "pronoun", "Who could “Dem” (them) be? Teachers? The British school system? What does it suggest that they are never named?"], ["tell", "verb", "What could “tell” suggest? Is the speaker allowed to ask questions, or only to listen?"]], "frameHint": "Repetition frame: Agard repeats the words “Dem tell me” many times to emphasize ___ (what?). He suggests ___.", "readerHint": "Feeling words: frustrated, angry, sympathetic. Why?", "message": "a history that was forced on the speaker by others", "m_ev": "Agard states, “Dem tell me.”", "m_word": "“Dem” is a pronoun that suggests a powerful group, such as teachers or the British school system, who are never named.", "m_dev": "Agard repeats the words “Dem tell me” many times to emphasize that the speaker was given no choice about what he learned. He suggests that the school system controlled which history he was allowed to know.", "m_reader": "The reader is frustrated because the speaker is only allowed to listen. They also realize that history can be chosen by the people in power."}, {"id": "s2", "where": "The opening", "quote": "Bandage up me eye with me own history", "ctx": [], "device": "Metaphor", "dAns": "Metaphor: his own history is called a bandage over his eye, without ‘like’ or ‘as’.", "dWrong": ["Simile: the speaker's eye is compared to a history book using the word ‘like’.", "Repetition: the word ‘eye’ is repeated in every line of the opening.", "Juxtaposition: a doctor is placed next to a teacher to show two jobs."], "dHint": "Is there a real bandage? Is there a ‘like’ or ‘as’?", "dWhy": "History is described as a bandage covering his eye, with no “like” or “as.” That is a metaphor.", "effect": "The bandage metaphor makes the reader see that the speaker was blinded on purpose, kept from seeing who he really is.", "eWrong": ["The bandage metaphor makes the reader see that the speaker was badly hurt in a fight at school.", "The bandage metaphor makes the reader see that the speaker's history lessons helped to heal him.", "The bandage metaphor makes the reader see that the speaker needs glasses to read his history book."], "eHint": "What happens to your sight when a bandage covers your eye?", "words": [["Bandage", "verb", "A bandage usually helps a wound. What could it suggest here, when it covers the eye? Hiding? Blinding?"], ["eye", "noun", "What could the “eye” stand for? Seeing the truth? Understanding?"]], "frameHint": "Metaphor frame: Agard compares ___ (the history he was taught) to ___ (what?) to suggest ___. He also emphasizes ___.", "readerHint": "Feeling words: angry, sympathetic, shocked. Why?", "message": "colonial education as something that blinded the speaker to his own identity", "m_ev": "Agard states, “Bandage up me eye with me own history.”", "m_word": "“Bandage” is a verb that suggests covering something up so that it cannot be seen.", "m_dev": "Agard compares the history he was taught to a bandage over his eye to suggest that his education stopped him from seeing the truth. He also emphasizes that his own history was hidden from him on purpose.", "m_reader": "The reader is angry because the speaker was kept in the dark about his own past. They also realize that what we learn at school shapes how we see ourselves."}, {"id": "s3", "where": "Toussaint L'Ouverture", "quote": "dem tell me bout Dick Whittington and he cat", "ctx": ["no dem never tell me bout dat"], "device": "Juxtaposition", "dAns": "Juxtaposition: a children's story is placed next to Toussaint, a real hero who was never taught.", "dWrong": ["Imagery: the line describes in detail what Dick Whittington's cat looked like.", "Metaphor: the cat is called Toussaint L'Ouverture, without using ‘like’ or ‘as’.", "Repetition: the name Dick Whittington is repeated in every stanza of the poem."], "dHint": "Dick Whittington and his cat are from an English folk tale. Who comes in the very next lines?", "dWhy": "A folk tale about a man and his cat sits right next to Toussaint L'Ouverture, a real leader of a revolution. Placing them side by side is juxtaposition.", "effect": "Placing a cat story next to a revolutionary hero makes British lessons seem silly and unfair, so the reader questions what schools teach.", "eWrong": ["Placing a cat story next to a revolutionary hero makes British lessons seem serious and fair, so the reader trusts what schools teach.", "Placing a cat story next to a revolutionary hero makes the reader laugh at Toussaint, so the hero seems unimportant.", "Placing a cat story next to a revolutionary hero makes the reader want to buy a cat, so the poem seems about pets."], "eHint": "Which is more important to learn: a story about a cat, or a man who led a revolution?", "words": [["cat", "noun", "Why might Agard mention a “cat”? What could it suggest about the history he was taught? Childish? Unimportant?"], ["never", "adverb", "“no dem never tell me bout dat.” What could “never” suggest? Not even once?"]], "frameHint": "Juxtaposition frame: Agard places ___ (Dick Whittington and his cat) next to ___ (who?) to suggest ___. He emphasizes ___.", "readerHint": "Feeling words: surprised, angry, frustrated. Why?", "message": "British school history as unfair because it ignores Black heroes", "m_ev": "Agard states, “dem tell me bout Dick Whittington and he cat,” but “no dem never tell me bout” Toussaint L'Ouverture.", "m_word": "“Cat” is a noun that suggests the history he was taught was childish and unimportant.", "m_dev": "Agard places a folk tale about Dick Whittington and his cat next to the revolutionary hero Toussaint L'Ouverture to suggest that his school chose trivial stories over real Black history. He emphasizes how unfair and one-sided his education was.", "m_reader": "The reader is surprised because a story about a cat was taught instead of a revolution. They also realize that the history taught in schools can leave out whole peoples."}, {"id": "s4", "where": "Toussaint L'Ouverture", "quote": "Toussaint de beacon / of de Haitian Revolution", "ctx": [], "device": "Metaphor", "dAns": "Metaphor: Toussaint is called a beacon, a guiding light, without ‘like’ or ‘as’.", "dWrong": ["Simile: Toussaint is compared to a lighthouse using the word ‘like’.", "Imagery: the line describes the sound of the guns in the Haitian Revolution.", "Repetition: the word ‘beacon’ is repeated at the end of every line."], "dHint": "A beacon is a light or fire that guides people. Is Toussaint really a light?", "dWhy": "Toussaint is described as a beacon, a guiding light, with no “like” or “as.” That is a metaphor.", "effect": "Calling Toussaint a beacon makes him seem bright and inspiring, so the reader sees him as a hero who guided others to freedom.", "eWrong": ["Calling Toussaint a beacon makes him seem dangerous and cruel, so the reader sees him as a villain who burned the land.", "Calling Toussaint a beacon makes him seem small and weak, so the reader sees him as a man nobody followed.", "Calling Toussaint a beacon makes him seem like a sailor, so the reader thinks he worked on ships at sea."], "eHint": "What does a beacon do for people who are lost in the dark?", "words": [["beacon", "noun", "What could “beacon” suggest? A light in the darkness? Hope? Showing others the way?"], ["Revolution", "noun", "What could “Revolution” suggest? Fighting back? Big change? Freedom?"]], "frameHint": "Metaphor frame: Agard compares ___ (Toussaint) to ___ (what?) to suggest ___. He also emphasizes ___.", "readerHint": "Feeling words: inspired, proud, amazed. Why?", "message": "Black heroes as inspiring leaders who deserve to be remembered", "m_ev": "Agard states, “Toussaint de beacon / of de Haitian Revolution.”", "m_word": "“Beacon” is a noun that suggests a bright light that guides people through darkness.", "m_dev": "Agard compares Toussaint to a beacon to suggest that he was a guiding light who led enslaved people towards freedom. He also emphasizes how important Toussaint was, even though schools ignored him.", "m_reader": "The reader is inspired because Toussaint is shown as a shining hero. They also realize that an important leader was left out of the speaker's education."}, {"id": "s5", "where": "Nanny de maroon", "quote": "see-far woman / of mountain dream", "ctx": [], "device": "Imagery", "dAns": "Imagery: we can picture Nanny looking far out from the mountains, full of dreams.", "dWrong": ["Simile: Nanny is compared to a mountain using the word ‘like’.", "Repetition: the word ‘woman’ is repeated at the start of every stanza.", "Juxtaposition: Nanny is placed next to Napoleon to show two armies."], "dHint": "Which picture forms in your mind? Where is Nanny, and what is she doing?", "dWhy": "“See-far woman” and “mountain dream” help us picture Nanny high in the mountains, looking far ahead. That is imagery.", "effect": "The mountain image makes Nanny seem wise and far-sighted, so the reader sees her as a leader who could see a free future.", "eWrong": ["The mountain image makes Nanny seem lost and confused, so the reader sees her as someone who could not find her way.", "The mountain image makes Nanny seem sleepy and lazy, so the reader sees her as someone who only dreamed all day.", "The mountain image makes Nanny seem cold and lonely, so the reader sees her as someone who hated other people."], "eHint": "What can you see from the top of a mountain? What could “see-far” mean for a leader?", "words": [["see-far", "adjective", "What could “see-far” suggest? Seeing far across the land? Seeing far into the future?"], ["dream", "noun", "What could “dream” suggest? Hope? A plan for freedom?"]], "frameHint": "Imagery frame: Agard gives a detailed description of ___ (Nanny in the mountains) to suggest ___. He portrays ___.", "readerHint": "Feeling words: impressed, inspired, hopeful. Why?", "message": "Black women as wise, brave leaders of the fight for freedom", "m_ev": "Agard states that Nanny is a “see-far woman / of mountain dream.”", "m_word": "“See-far” is an adjective that suggests Nanny could see far into the future.", "m_dev": "Agard gives a detailed description of Nanny in the mountains to suggest that she was a wise and visionary leader. He portrays her as a woman with a dream of freedom.", "m_reader": "The reader is impressed because Nanny seems strong and wise. They also realize that brave women were missing from the speaker's history lessons."}, {"id": "s6", "where": "Nanny de maroon", "quote": "hopeful stream / to freedom river", "ctx": [], "device": "Metaphor", "dAns": "Metaphor: Nanny's struggle is called a stream that flows to a freedom river.", "dWrong": ["Simile: the river is compared to Nanny using the word ‘like’ or ‘as’.", "Repetition: the word ‘river’ is repeated in every line of the stanza.", "Hyperbole: the river is said to be the longest river in the whole world."], "dHint": "Is there a real stream and river here? What do they stand for?", "dWhy": "The fight for freedom is described as a hopeful stream flowing into a freedom river, with no “like” or “as.” That is a metaphor.", "effect": "The flowing water makes the struggle seem natural and unstoppable, so the reader feels hope that freedom will come.", "eWrong": ["The flowing water makes the struggle seem weak and slow, so the reader feels that freedom will never come.", "The flowing water makes the struggle seem cold and dangerous, so the reader feels afraid of drowning.", "The flowing water makes the struggle seem like a holiday, so the reader feels relaxed and sleepy."], "eHint": "A small stream joins a big river. Can you stop a river from flowing?", "words": [["hopeful", "adjective", "What could “hopeful” suggest about Nanny's struggle?"], ["freedom", "noun", "What could a “freedom river” suggest? Where does the stream of struggle end?"]], "frameHint": "Metaphor frame: Agard compares ___ (Nanny's struggle) to ___ (what?) to suggest ___. He also emphasizes ___.", "readerHint": "Feeling words: hopeful, inspired, moved. Why?", "message": "the fight for freedom as hopeful and unstoppable", "m_ev": "Agard states, “hopeful stream / to freedom river.”", "m_word": "“Hopeful” is an adjective that suggests Nanny believed freedom would come.", "m_dev": "Agard compares Nanny's struggle to a stream flowing into a river to suggest that the fight for freedom keeps moving forward and cannot be stopped. He also emphasizes how much hope Nanny gave her people.", "m_reader": "The reader is hopeful because the water keeps flowing towards freedom. They also understand that Nanny's struggle led somewhere important."}, {"id": "s7", "where": "Mary Seacole", "quote": "a healing star / among the wounded", "ctx": [], "device": "Metaphor", "dAns": "Metaphor: Mary Seacole is called a healing star, without ‘like’ or ‘as’.", "dWrong": ["Simile: Mary Seacole is compared to a doctor using the word ‘like’.", "Imagery: the line describes the sound of soldiers marching to war.", "Juxtaposition: a star is placed next to the moon to show day and night."], "dHint": "Is Mary Seacole really a star? Is there a ‘like’ or ‘as’?", "dWhy": "Mary Seacole is described as a star that heals, with no “like” or “as.” That is a metaphor.", "effect": "Calling her a healing star makes Mary Seacole seem bright and precious, so the reader sees her as a heroine who deserves fame.", "eWrong": ["Calling her a healing star makes Mary Seacole seem distant and cold, so the reader sees her as someone who did not care.", "Calling her a healing star makes Mary Seacole seem like a film actress, so the reader thinks she was in movies.", "Calling her a healing star makes Mary Seacole seem tiny and weak, so the reader sees her as unimportant."], "eHint": "Stars shine in the dark. What does a “healing” star bring to wounded soldiers?", "words": [["healing", "adjective", "What could “healing” suggest about Mary Seacole's work in the war?"], ["star", "noun", "What could “star” suggest? Light in the darkness? Someone famous who should be celebrated?"]], "frameHint": "Metaphor frame: Agard compares ___ (Mary Seacole) to ___ (what?) to suggest ___. He also emphasizes ___.", "readerHint": "Feeling words: admiring, moved, proud. Why?", "message": "forgotten Black heroes as people who deserve to be celebrated", "m_ev": "Agard states that Mary Seacole was “a healing star / among the wounded.”", "m_word": "“Star” is a noun that suggests a bright light in the darkness and someone who deserves to be famous.", "m_dev": "Agard compares Mary Seacole to a healing star to suggest that she brought light and hope to wounded soldiers. He also emphasizes that she deserves to be as famous as the heroes the speaker was taught about.", "m_reader": "The reader is moved because Mary Seacole helped people who were suffering. They also realize that her bravery was left out of the speaker's lessons."}, {"id": "s8", "where": "Mary Seacole", "quote": "a yellow sunrise / to the dying", "ctx": [], "device": "Imagery", "dAns": "Imagery: we can see a warm yellow sunrise, a bright picture of hope for dying soldiers.", "dWrong": ["Simile: the soldiers are compared to the sun using the word ‘like’.", "Repetition: the word ‘yellow’ is repeated in every line about Mary Seacole.", "Hyperbole: Mary Seacole is said to make the sun rise every morning by herself."], "dHint": "Which color do you see? What picture forms in your mind?", "dWhy": "“A yellow sunrise” is a clear picture of color and light. That is imagery.", "effect": "The warm sunrise makes the reader feel the comfort and hope Mary Seacole brought, even to soldiers who were dying.", "eWrong": ["The warm sunrise makes the reader feel the heat and danger of the battle, as if the soldiers were burning.", "The warm sunrise makes the reader feel sleepy and lazy, as if the soldiers were resting on a beach.", "The warm sunrise makes the reader feel that the war was over, as if nobody was hurt at all."], "eHint": "A sunrise is the start of a new day. What could it mean to a dying soldier?", "words": [["sunrise", "noun", "What could “sunrise” suggest? A new beginning? Hope after a dark night?"], ["yellow", "adjective", "What could “yellow” suggest? Warmth? Light? Comfort?"]], "frameHint": "Imagery frame: Agard gives a detailed description of ___ (what Mary Seacole was to the soldiers) to suggest ___. He portrays ___.", "readerHint": "Feeling words: moved, comforted, admiring. Why?", "message": "Mary Seacole as a source of hope and comfort", "m_ev": "Agard states that Mary Seacole was “a yellow sunrise / to the dying.”", "m_word": "“Sunrise” is a noun that suggests hope and a new beginning after darkness.", "m_dev": "Agard gives a detailed description of Mary Seacole as a sunrise to suggest that she brought warmth and hope to soldiers in their last moments. He portrays her as a comforting light in a terrible war.", "m_reader": "The reader is moved because she comforted soldiers even as they died. They also realize how much kindness and courage history books had ignored."}], "intro": "John Agard was born in Guyana, a former British colony, and moved to Britain in 1977. His poem “Checking Out Me History” is written in a Caribbean voice and compares the British history the speaker was taught at school with the Black heroes he was never told about, such as Toussaint L'Ouverture, Nanny de maroon and Mary Seacole. Agard uses vivid language in “Checking Out Me History” to show that a history chosen by the powerful can hide people's identity, and that people must discover their own history for themselves."}</script>
+<script>
+(function () {
+  "use strict";
+  var D = JSON.parse(document.getElementById("app-data").textContent);
+  var SPOTS = D.spots, BY = {}; SPOTS.forEach(function (s, i) { s.n = i + 1; BY[s.id] = s; });
+  var KEY = "onur-koc10-agard-hunt-v1";
+  var LETTERS = ["A", "B", "C", "D"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var DEVRE = { Simile: /\bsimile\b/, Metaphor: /\bmetaphor\b/, Imagery: /\bimagery\b/, Personification: /\bpersonification\b/, Juxtaposition: /\bjuxtaposition\b|\bcontrast\b/, Repetition: /\brepetition\b/ };
+  var DEVLABEL = { Simile: "a simile", Metaphor: "a metaphor", Imagery: "imagery", Personification: "personification", Juxtaposition: "juxtaposition", Repetition: "repetition" };
+  var FRAMES = {
+    Simile: { text: "Agard compares ___ to ___ to suggest ___. He also emphasizes ___.", checks: [[/compares\b.+\bto\b.+\bto suggest\b/, "compares ___ to ___ to suggest ___"], [/also emphasi[sz]es\b/, "He also emphasizes ___"]] },
+    Metaphor: { text: "Agard compares ___ to ___ to suggest ___. He also emphasizes ___.", checks: [[/compares\b.+\bto\b.+\bto suggest\b/, "compares ___ to ___ to suggest ___"], [/also emphasi[sz]es\b/, "He also emphasizes ___"]] },
+    Repetition: { text: "Agard repeats the words “___” ___ times to emphasize ___. He suggests ___.", checks: [[/repeats\b.+\bto emphasi[sz]e\b/, "repeats the words “___” … to emphasize ___"], [/\bsuggests\b/, "He suggests ___"]] },
+    Imagery: { text: "Agard gives a detailed description of ___ to suggest ___. He portrays ___.", checks: [[/detailed description of\b.+\bto suggest\b/, "gives a detailed description of ___ to suggest ___"], [/\bportrays\b/, "He portrays ___"]] },
+    Juxtaposition: { text: "Agard places ___ next to ___ to suggest ___. He emphasizes ___.", checks: [[/places\b.+\bnext to\b.+\bto suggest\b/, "places ___ next to ___ to suggest ___"], [/\bemphasi[sz]es\b/, "He emphasizes ___"]] },
+    Personification: { text: "Agard gives ___ the human quality of ___ to suggest ___. He demonstrates ___.", checks: [[/gives\b.+\bthe human quality of\b.+\bto suggest\b/, "gives ___ the human quality of ___ to suggest ___"], [/\bdemonstrates\b/, "He demonstrates ___"]] }
+  };
+
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) { var r = a.slice(); for (var i = r.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = r[i]; r[i] = r[j]; r[j] = t; } return r; }
+  var S = null;
+  function fresh(name) {
+    var st = { name: name, tab: 1, round: 1, spots: {}, cur: null, phase: null, opts: null, answered: null, d1: null, d2: null, boxes: {}, filed: false, ticks: {}, improve: "", report: false };
+    SPOTS.forEach(function (s) { st.spots[s.id] = { status: "open", misses: 0 }; });
+    return st;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() {
+    try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && s.spots && SPOTS.every(function (x) { return s.spots[x.id]; })) return s; } catch (e) {}
+    return null;
+  }
+  function show(id) { ["s-start", "s-main", "s-report"].forEach(function (x) { $(x).hidden = x !== id; }); }
+  function foundCount() { return SPOTS.filter(function (s) { var t = S.spots[s.id].status; return t === "first" || t === "later"; }).length; }
+  function firstCount() { return SPOTS.filter(function (s) { return S.spots[s.id].status === "first"; }).length; }
+  function lv1Done() { return foundCount() === SPOTS.length; }
+
+  /* ---------- START ---------- */
+  function renderStart() {
+    var saved = load();
+    $("resume").hidden = !saved;
+    if (saved) $("resume-text").textContent = (saved.name || "Someone") + ": " + SPOTS.filter(function (s) { var t = saved.spots[s.id].status; return t === "first" || t === "later"; }).length + " of " + SPOTS.length + " devices found.";
+    show("s-start");
+  }
+  $("btn-start").onclick = function () {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); return; }
+    S = fresh(n); save(); renderMain();
+  };
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") $("btn-start").click(); });
+  $("btn-resume").onclick = function () { S = load(); if (S) { if (S.report) renderReport(); else renderMain(); } };
+  $("btn-wipe").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} $("resume").hidden = true; };
+
+  /* ---------- MAIN ---------- */
+  function renderMain() {
+    S.report = false;
+    $("tab-1").classList.toggle("on", S.tab === 1);
+    $("tab-2").classList.toggle("on", S.tab === 2);
+    $("tab-2").disabled = false;
+    $("tab-1-s").textContent = foundCount() + "/" + SPOTS.length + " found";
+    $("tab-2-s").textContent = S.filed ? "paragraph done" : "open";
+    $("lv-1").hidden = S.tab !== 1;
+    $("lv-2").hidden = S.tab !== 2;
+    if (S.tab === 1) renderL1(); else renderL2();
+    show("s-main");
+  }
+  $("tab-1").onclick = function () { S.tab = 1; save(); renderMain(); };
+  $("tab-2").onclick = function () { S.tab = 2; save(); renderMain(); };
+
+  function spotButton(s, mode) {
+    var st = S.spots[s.id];
+    var b = document.createElement("button"); b.type = "button"; b.className = "spot";
+    var no = document.createElement("span"); no.className = "no"; no.textContent = st.status === "first" ? "★" : s.n;
+    var body = document.createElement("span");
+    var q = document.createElement("span"); q.className = "q"; q.textContent = "“" + s.quote + "”";
+    body.appendChild(q);
+    var tag = document.createElement("span"); tag.className = "tag";
+    if (mode === 1) {
+      if (st.status === "first" || st.status === "later") { b.classList.add(st.status); tag.textContent = s.device; }
+      else if (st.status === "cold") { b.classList.add("cold"); tag.textContent = "Comes back next round"; }
+      if (tag.textContent) body.appendChild(tag);
+      b.setAttribute("aria-label", "Phrase " + s.n + ": " + s.quote + (tag.textContent ? ". " + tag.textContent : ""));
+      b.onclick = function () {
+        if (st.status === "cold") return;
+        if (st.status === "first" || st.status === "later") openSheet(s.id, "solved"); else openSheet(s.id, "device");
+      };
+    } else {
+      b.classList.add("first"); no.textContent = s.n; tag.textContent = s.device; body.appendChild(tag);
+      if (S.d1 === s.id || S.d2 === s.id) {
+        b.classList.add(S.d1 === s.id ? "pick1" : "pick2");
+        var pk = document.createElement("span"); pk.className = "pk"; pk.textContent = S.d1 === s.id ? "Device 1" : "Device 2"; tag.appendChild(pk);
+      }
+      b.onclick = function () { pickDevice(s.id); };
+    }
+    b.appendChild(no); b.appendChild(body);
+    return b;
+  }
+  function renderSpots(box, mode) {
+    box.textContent = ""; var last = null;
+    SPOTS.forEach(function (s) {
+      if (s.where !== last) { last = s.where; var h = document.createElement("div"); h.className = "group-h"; h.textContent = s.where; box.appendChild(h); }
+      box.appendChild(spotButton(s, mode));
+      if (mode === 2 && S.d1 && S.d2) {
+        if (s.id === S.d1) box.appendChild(makePanel(1));
+        if (s.id === S.d2) box.appendChild(makePanel(2));
+      }
+    });
+  }
+
+  /* ---------- LEVEL 1 ---------- */
+  function renderL1() {
+    renderSpots($("spots1"), 1);
+    var n = foundCount();
+    $("found-count").textContent = n + " of " + SPOTS.length + " devices found · ★ " + firstCount();
+    $("meter").style.width = (n / SPOTS.length * 100) + "%";
+    $("round-label").textContent = "Round " + S.round;
+    var open = SPOTS.filter(function (s) { return S.spots[s.id].status === "open"; }).length;
+    var cold = SPOTS.filter(function (s) { return S.spots[s.id].status === "cold"; }).length;
+    $("sweep-card").hidden = !(open === 0 && cold > 0);
+    if (open === 0 && cold > 0) {
+      $("sweep-text").textContent = (cold === 1 ? "1 phrase comes" : cold + " phrases come") + " back in round " + (S.round + 1) + ", with the answers in a new order.";
+      $("btn-sweep").textContent = "Start round " + (S.round + 1);
+    }
+    $("done1-card").hidden = !lv1Done();
+  }
+  $("btn-sweep").onclick = function () {
+    SPOTS.forEach(function (s) { if (S.spots[s.id].status === "cold") S.spots[s.id].status = "open"; });
+    S.round += 1; save(); renderMain();
+  };
+  $("btn-to-2").onclick = function () { S.tab = 2; save(); renderMain(); window.scrollTo(0, 0); };
+
+  var lastFocus = null;
+  function openSheet(id, phase) {
+    lastFocus = document.activeElement;
+    var s = BY[id];
+    S.cur = id; S.phase = phase; S.answered = null;
+    S.opts = phase === "device" ? shuffle([s.dAns].concat(s.dWrong)) : null;
+    save(); renderSheet(); $("sheet-back").hidden = false; $("sheet-q").focus();
+  }
+  function closeSheet() {
+    if (S.answered) finishSpot();
+    S.cur = null; S.phase = null; S.opts = null; S.answered = null;
+    $("sheet-back").hidden = true; save(); renderMain();
+    if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  $("sheet-x").onclick = closeSheet;
+  $("sheet-back").addEventListener("click", function (e) { if (e.target === $("sheet-back")) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if ($("sheet-back").hidden) return;
+    if (e.key === "Escape") { closeSheet(); return; }
+    var idx = ["1", "2", "3", "4"].indexOf(e.key); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(e.key.toLowerCase());
+    if (idx >= 0 && S.opts && idx < S.opts.length && !S.answered) { e.preventDefault(); pick(idx); }
+  });
+  function fillOpt(el, text, labelled) {
+    el.textContent = "";
+    var m = labelled ? /^([^:]{2,32}): (.+)$/.exec(text) : null;
+    if (m) { var b = document.createElement("b"); b.className = "olab"; b.textContent = m[1] + ":"; el.appendChild(b); el.appendChild(document.createTextNode(" " + m[2])); }
+    else el.textContent = text;
+  }
+  function renderSheet() {
+    var s = BY[S.cur], st = S.spots[S.cur];
+    $("sheet-label").textContent = "Phrase " + s.n + " · " + s.where;
+    $("sheet-ev").textContent = "“" + s.quote + "”";
+    var steps = $("sheet-steps"); steps.textContent = "";
+    [["device", "1 Name the device"], ["effect", "2 What it does"]].forEach(function (p) {
+      var x = document.createElement("span"); x.className = "st";
+      if (S.phase === p[0]) x.className += " on";
+      if ((p[0] === "device" && S.phase !== "device") || (p[0] === "effect" && S.phase === "solved")) x.className += " done";
+      x.textContent = p[1]; steps.appendChild(x);
+    });
+    $("sheet-retry").hidden = !st.misses || S.phase === "solved";
+    $("sheet-retry").textContent = st.misses === 1 ? "Missed once" : "Missed " + st.misses + " times";
+    var box = $("sheet-opts"); box.textContent = "";
+    $("sheet-fb").hidden = true; $("sheet-next").hidden = true;
+    if (S.phase === "solved") {
+      $("sheet-q").textContent = s.device;
+      var fb = $("sheet-fb"); fb.className = "fb good"; fb.textContent = "";
+      var p1 = document.createElement("p"); p1.textContent = s.dWhy;
+      var p2 = document.createElement("p"); p2.textContent = s.effect;
+      fb.appendChild(p1); fb.appendChild(p2); fb.hidden = false; return;
+    }
+    $("sheet-q").textContent = S.phase === "device" ? "Which device is this? Choose the statement that is true." : "It is " + s.device.toLowerCase() + ". What does it do to the reader?";
+    S.opts.forEach(function (text, i) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[i];
+      var t = document.createElement("span"); fillOpt(t, text, S.phase === "device");
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pick(i); };
+      box.appendChild(b);
+    });
+    if (S.answered) paint(false);
+  }
+  function correct(s) { return S.phase === "device" ? s.dAns : s.effect; }
+  function pick(i) {
+    if (S.answered) return;
+    var s = BY[S.cur], st = S.spots[S.cur];
+    var ok = S.opts[i] === correct(s);
+    S.answered = { pick: i, correct: ok };
+    if (!ok) st.misses += 1;
+    save(); paint(true);
+  }
+  function paint(freshPaint) {
+    var s = BY[S.cur], st = S.spots[S.cur], a = S.answered;
+    var reveal = !a.correct && st.misses >= 3, ans = correct(s);
+    $("sheet-opts").querySelectorAll(".opt").forEach(function (b, i) {
+      b.disabled = true;
+      if (i === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && S.opts[i] === ans) b.classList.add("right");
+      else b.classList.add("dim");
+      if (freshPaint && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("sheet-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h";
+    var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    var btn = $("sheet-next");
+    if (a.correct && S.phase === "device") { fb.classList.add("good"); h.textContent = "Yes! Now the effect."; p.textContent = s.dWhy; btn.textContent = "Next: what it does"; }
+    else if (a.correct) { fb.classList.add("good"); h.textContent = st.misses ? "Found it!" : "★ Gold star!"; p.textContent = s.effect; btn.textContent = "Back to the poem"; }
+    else {
+      if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = ans; }
+      else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + (S.phase === "device" ? s.dHint : s.eHint); }
+      n.textContent = "This phrase comes back in round " + (S.round + 1) + ".";
+      btn.textContent = "Back to the poem";
+    }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n);
+    fb.hidden = false; btn.hidden = false;
+    if (freshPaint) { btn.focus({ preventScroll: true }); btn.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  function finishSpot() {
+    var st = S.spots[S.cur];
+    if (!S.answered) return;
+    if (!S.answered.correct) st.status = "cold";
+    else if (S.phase === "effect") st.status = st.misses ? "later" : "first";
+  }
+  $("sheet-next").onclick = function () {
+    var s = BY[S.cur];
+    if (S.answered && S.answered.correct && S.phase === "device") {
+      S.phase = "effect"; S.answered = null; S.opts = shuffle([s.effect].concat(s.eWrong)); save(); renderSheet(); $("sheet-q").focus(); return;
+    }
+    closeSheet();
+  };
+
+  /* ---------- LEVEL 2 ---------- */
+  function pickDevice(id) {
+    if (S.d1 === id) { S.d1 = S.d2; S.d2 = null; }
+    else if (S.d2 === id) S.d2 = null;
+    else if (!S.d1) S.d1 = id;
+    else if (!S.d2) S.d2 = id;
+    else S.d2 = id;
+    /* Device 1 is always the line that comes first in the poem, so the boxes follow the poem */
+    if (S.d1 && S.d2 && SPOTS.indexOf(BY[S.d2]) < SPOTS.indexOf(BY[S.d1])) { var t = S.d1; S.d1 = S.d2; S.d2 = t; }
+    S.filed = false; save(); renderL2();
+    var target = document.querySelector("#spots2 .wpanel");
+    if (target && S.d1 && S.d2) target.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+  }
+  function renderL2() {
+    $("intro").textContent = D.intro;
+    renderSpots($("spots2"), 2);
+    var a = S.d1 && BY[S.d1], b = S.d2 && BY[S.d2];
+    $("pick1-t").textContent = a ? a.device + ": “" + a.quote + "”" : "Tap a phrase below.";
+    $("pick2-t").textContent = b ? b.device + ": “" + b.quote + "”" : (a ? "Now tap a second phrase." : "Then tap a second phrase.");
+    $("pick-note").textContent = a && b && a.device === b.device ? "Both phrases use " + a.device.toLowerCase() + ". You can keep them, but two different devices usually make a stronger paragraph." : "Tap a chosen phrase again to remove it.";
+    var ready = !!(a && b);
+    if (ready) $("pick-note").textContent = "Your writing boxes are open under each chosen phrase. Tap a chosen phrase again to remove it.";
+    $("desk").hidden = !ready;
+    $("filed").hidden = !(ready && S.filed);
+    if (ready) { $("spots2").querySelectorAll("textarea").forEach(function (ta) { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 4) + "px"; }); updateFile(); }
+    if (ready && S.filed) renderFiled();
+  }
+
+  function slotDefs() {
+    var a = BY[S.d1], b = BY[S.d2];
+    var defs = [{ sep: "Device 1: " + a.device }, { key: "t", num: "2", title: "Topic sentence", spot: a, frame: "In the poem, Agard presents (message of device 1) through the use of (device 1)." }];
+    [[a, "1"], [b, "2"]].forEach(function (pair, k) {
+      var s = pair[0], d = pair[1];
+      if (k === 1) defs.push({ sep: "⑧ Furthermore… Device 2: " + s.device });
+      defs.push({ key: "e" + d, num: k ? "8" : "3", title: k ? "Furthermore + evidence" : "Evidence", spot: s, dev: d, frame: (k ? "Furthermore, " : "") + "Agard states “___.”" });
+      defs.push({ key: "w" + d, num: "4", title: "One word", spot: s, dev: d, frame: "(“word”) is ___. (1 sentence)" });
+      defs.push({ key: "d" + d, num: "5", title: s.device, spot: s, dev: d, frame: FRAMES[s.device].text });
+      defs.push({ key: "r" + d, num: "6", title: "The reader", spot: s, dev: d, frame: "The reader is ___ because ___. They also realize / notice / understand ___." });
+      defs.push({ key: "l" + d, num: "7", title: "Link", spot: s, dev: d, frame: "Through the use of (device " + d + "), Agard presents (message of device " + d + ")." });
+    });
+    return defs;
+  }
+  function norm(t) {
+    return " " + String(t || "").toLowerCase().replace(/[‘’ʼ`´]/g, "'").replace(/[“”]/g, '"').replace(/sweetshop/g, "sweet shop").replace(/\bcolored\b/g, "coloured")
+      .replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ").trim() + " ";
+  }
+  function quotes(t) {
+    var out = [], re = /["“”]([^"“”]+)["“”]/g, m; t = String(t || "");
+    while ((m = re.exec(t))) out.push(m[1]);
+    return out;
+  }
+  function ctxs(s) { return [s.quote].concat(s.ctx || []).map(function (q) { return norm(q.replace(/\//g, " ")); }); }
+  function inPoem(q, s) { var nq = norm(q); if (nq.trim().length < 2) return false; return ctxs(s).some(function (c) { return c.indexOf(nq) >= 0; }); }
+  function nWords(t) { var x = String(t || "").trim(); return x ? x.split(/\s+/).length : 0; }
+  function nSentences(t) { return String(t || "").split(/[.!?]+(?:["”’)]*)(?:\s|$)/).filter(function (x) { return x.trim().length > 2; }).length; }
+  function low(t) { return String(t || "").toLowerCase().replace(/[‘’]/g, "'").replace(/\s+/g, " ").trim(); }
+  function noShe(t) { return !/\bshe (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places)\b/.test(low(t)); }
+
+  function checksFor(def, text) {
+    var t = low(text), s = def.spot, c = [];
+    if (!t) return [];
+    if (def.key === "t") {
+      c.push([/^in the poem/.test(t), "Starts “In the poem,”"]);
+      c.push([/\bagard\b/.test(t) && /\bpresents\b/.test(t), "Agard presents …"]);
+      c.push([/through the use of\b/.test(t), "through the use of …"]);
+      c.push([DEVRE[s.device].test(t), "Names device 1 (" + s.device.toLowerCase() + ")"]);
+      c.push([nWords(text) >= 12, "Says the message, not just the device"]);
+    } else if (def.key[0] === "e") {
+      if (def.dev === "2") c.push([/^furthermore\b/.test(t), "Starts “Furthermore,”"]);
+      c.push([/\bagard\b/.test(t) && /\b(states|writes|describes|says)\b/.test(t), "Agard states …"]);
+      var qs = quotes(text);
+      c.push([qs.length > 0, "Quotation inside quotation marks"]);
+      c.push([qs.length > 0 && qs.every(function (q) { return inPoem(q, s); }), "Words copied exactly from this phrase"]);
+      c.push([qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }), "Short quotation (15 words or fewer)"]);
+    } else if (def.key[0] === "w") {
+      var wq = quotes(text);
+      c.push([wq.length > 0 && wq.some(function (q) { return nWords(q) <= 3 && inPoem(q, s); }), "ONE word from your quotation, in quotation marks"]);
+      c.push([/["”]\s*is\b/.test(text.replace(/[“”]/g, '"')) || /\bis an? (adjective|verb|noun|adverb)\b/.test(t), "(“word”) is …"]);
+      c.push([nSentences(text) === 1, "Just 1 sentence"]);
+    } else if (def.key[0] === "d") {
+      FRAMES[s.device].checks.forEach(function (ch) { c.push([ch[0].test(t), ch[1]]); });
+      c.push([/\bagard\b/.test(t), "Uses Agard's name"]);
+      c.push([noShe(text), "Agard is “he” (not “she … emphasizes”)"]);
+    } else if (def.key[0] === "r") {
+      c.push([/\bthe reader is\b.+\bbecause\b/.test(t), "The reader is ___ because ___"]);
+      c.push([/\bthey also (realize|realise|notice|understand)\b/.test(t), "They also realize / notice / understand ___"]);
+      c.push([!/\bfeels? (good|bad)\b|\bis (good|bad)\b/.test(t), "A clear feeling word (not just “good” or “bad”)"]);
+    } else if (def.key[0] === "l") {
+      c.push([/^through the use of\b/.test(t), "Starts “Through the use of”"]);
+      c.push([DEVRE[s.device].test(t), "Names the device (" + s.device.toLowerCase() + ")"]);
+      c.push([/\bagard presents\b/.test(t), "Agard presents (message)"]);
+      c.push([nWords(text) >= 10, "Gives the message"]);
+    }
+    return c;
+  }
+  function hintsFor(def) {
+    var s = def.spot, k = def.key[0];
+    if (def.key === "t") return ["Look at the thesis: what does the poem show about history, power and identity?", "What does your first device show? Try: “" + s.message + ".”", "Name device 1 at the end: “…through the use of " + DEVLABEL[s.device] + ".”"];
+    if (k === "e") return ["Copy only the words you will explain: “" + s.quote + ".”", "Put the words inside quotation marks and copy them exactly.", def.dev === "2" ? "Start with “Furthermore,” to show this is your second device." : "Start: “Agard states, …” and copy his spelling exactly."];
+    if (k === "w") return s.words.map(function (w) { return w[2]; }).concat(["Name the word class: “… is an adjective that suggests …”"]);
+    if (k === "d") return [s.frameHint, "After “to suggest,” say what it shows about history, power or identity."];
+    if (k === "r") return [s.readerHint, "Then: “They also realize …” What does the reader understand about history and who chooses it?"];
+    if (k === "l") return ["What message does this device present? Try: “" + s.message + ".”", "Start: “Through the use of " + DEVLABEL[s.device] + ", Agard presents …”"];
+    return [];
+  }
+  function frameNode(text) {
+    var p = document.createElement("p"); p.className = "frame";
+    String(text).split("___").forEach(function (part, i) {
+      if (i) { var b = document.createElement("span"); b.className = "blank"; b.setAttribute("aria-label", "blank"); p.appendChild(b); }
+      p.appendChild(document.createTextNode(part));
+    });
+    return p;
+  }
+  function slotOk(def) { var c = checksFor(def, S.boxes[def.key]); return c.length > 0 && c.every(function (x) { return x[0]; }); }
+  /* Reminder of the chosen device and words, shown at every writing step */
+  function devStrip(def) {
+    var s = def.spot, g = s.id === S.d1 ? 1 : 2;
+    var box = document.createElement("div"); box.className = "devstrip";
+    var row = document.createElement("div"); row.className = "ds-row g" + g;
+    var tag = document.createElement("span"); tag.className = "ds-tag"; tag.textContent = "Device " + g + ": " + s.device;
+    var q = document.createElement("span"); q.className = "ds-q"; q.textContent = "“" + s.quote + "”";
+    row.appendChild(tag); row.appendChild(q); box.appendChild(row);
+    return box;
+  }
+  function makePanel(g) {
+    var s = BY[g === 1 ? S.d1 : S.d2];
+    var wp = document.createElement("div"); wp.className = "wpanel g" + g;
+    var h = document.createElement("div"); h.className = "wp-h"; h.textContent = "✍️ Write here · Device " + g + ": " + s.device;
+    wp.appendChild(h);
+    var defs = slotDefs(), grp = 1;
+    defs.forEach(function (def) {
+      if (def.sep && /Device 2/.test(def.sep)) grp = 2;
+      if (grp !== g) return;
+      if (def.sep) { if (!/Furthermore/.test(def.sep)) return; var hs = document.createElement("div"); hs.className = "sep"; hs.textContent = "⑧ Start with “Furthermore,”"; wp.appendChild(hs); return; }
+      wp.appendChild(makeSlot(def));
+    });
+    return wp;
+  }
+  function makeSlot(def) {
+      var slot = document.createElement("div"); slot.className = "slot";
+      var head = document.createElement("div"); head.className = "slot-h";
+      var num = document.createElement("span"); num.className = "num"; num.textContent = def.num;
+      var tt = document.createElement("b"); tt.textContent = def.title;
+      head.appendChild(num); head.appendChild(tt);
+      var ta = document.createElement("textarea"); ta.rows = def.key[0] === "w" ? 2 : 3; ta.value = S.boxes[def.key] || "";
+      ta.setAttribute("aria-label", def.title); ta.spellcheck = true;
+      var ul = document.createElement("ul"); ul.className = "checks";
+      var hb = document.createElement("button"); hb.type = "button"; hb.className = "hint-btn"; hb.textContent = "💡 Hint";
+      var hl = document.createElement("ul"); hl.className = "hints"; hl.hidden = true;
+      hintsFor(def).forEach(function (h) { var li = document.createElement("li"); li.textContent = h; hl.appendChild(li); });
+      hb.onclick = function () { hl.hidden = !hl.hidden; hb.textContent = hl.hidden ? "💡 Hint" : "💡 Hide hint"; };
+      function paintChecks() {
+        ul.textContent = "";
+        var c = checksFor(def, ta.value);
+        if (!c.length) { var li0 = document.createElement("li"); li0.textContent = "Start writing: each part of the structure is ticked as you write it."; ul.appendChild(li0); }
+        c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : ""; li.textContent = x[1]; ul.appendChild(li); });
+        slot.classList.toggle("ok", c.length > 0 && c.every(function (x) { return x[0]; }));
+      }
+      function grow() { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 4) + "px"; }
+      ta.addEventListener("input", function () { grow(); S.boxes[def.key] = ta.value; S.filed = false; save(); paintChecks(); updateFile(); $("filed").hidden = true; });
+      paintChecks();
+      slot.appendChild(head); slot.appendChild(devStrip(def)); slot.appendChild(frameNode(def.frame)); slot.appendChild(ta); slot.appendChild(ul); slot.appendChild(hb); slot.appendChild(hl);
+      return slot;
+  }
+  function updateFile() {
+    var defs = slotDefs().filter(function (d) { return d.key; });
+    var done = defs.filter(slotOk).length;
+    var all = defs.every(function (d) { return (S.boxes[d.key] || "").trim(); });
+    $("btn-file").disabled = false;
+    $("file-note").textContent = done + " of " + defs.length + " boxes have a gold star." + (all ? "" : " Some boxes are still empty, but you can finish now if time is short.");
+  }
+  function paragraph() {
+    return slotDefs().filter(function (d) { return d.key; }).map(function (d) { return (S.boxes[d.key] || "").trim(); }).filter(Boolean).join(" ");
+  }
+  function lowerFirst(t) { return t.charAt(0).toLowerCase() + t.slice(1); }
+  function modelPara() {
+    var a = BY[S.d1], b = BY[S.d2];
+    var out = ["In the poem, Agard presents " + a.message + " through the use of " + DEVLABEL[a.device] + "."];
+    [a, b].forEach(function (s, i) {
+      out.push(i ? "Furthermore, " + lowerFirst(s.m_ev) : s.m_ev);
+      out.push(s.m_word, s.m_dev, s.m_reader);
+      out.push("Through the use of " + DEVLABEL[s.device] + ", Agard presents " + s.message + ".");
+    });
+    return out.join(" ");
+  }
+  var TICKS = ["My topic sentence starts “In the poem, Agard presents …” and names device 1.", "Each quotation is short, exact and inside quotation marks.", "In step 4 I zoomed in on ONE word and said what it suggests.", "I used the right frame for each device.", "I explained how the reader feels, and why.", "Device 2 starts with “Furthermore,”.", "Each device ends with “Through the use of …, Agard presents …”."];
+  function renderFiled() {
+    $("final").textContent = paragraph();
+    $("model").textContent = modelPara();
+    var ul = $("tick"); ul.textContent = "";
+    TICKS.forEach(function (t, i) {
+      var li = document.createElement("li"), lb = document.createElement("label"), cb = document.createElement("input"), sp = document.createElement("span");
+      cb.type = "checkbox"; cb.checked = !!S.ticks[i]; cb.onchange = function () { S.ticks[i] = cb.checked; save(); };
+      sp.textContent = t; lb.appendChild(cb); lb.appendChild(sp); li.appendChild(lb); ul.appendChild(li);
+    });
+    $("improve").value = S.improve || "";
+  }
+  $("btn-file").onclick = function () { S.filed = true; save(); $("filed").hidden = false; renderFiled(); $("filed").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-edit").onclick = function () { var wp = document.querySelector("#spots2 .wpanel"); (wp || $("spots2")).scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-copy").onclick = function () {
+    var t = paragraph();
+    function done(ok) { $("copy-note").textContent = ok ? "Copied. You can paste it into your notes or send it to your teacher." : "Copying didn't work here. Select the text above and copy it."; }
+    try { navigator.clipboard.writeText(t).then(function () { done(true); }, function () { done(false); }); } catch (e) { done(false); }
+  };
+  $("improve").addEventListener("input", function () { S.improve = $("improve").value; save(); });
+  $("btn-report").onclick = function () { S.report = true; save(); renderReport(); window.scrollTo(0, 0); };
+
+  /* ---------- REPORT ---------- */
+  function renderReport() {
+    var f = firstCount();
+    $("r-big").textContent = f; var sm = document.createElement("small"); sm.textContent = " / " + SPOTS.length; $("r-big").appendChild(sm);
+    $("r-stars").textContent = "★".repeat(f);
+    var rev = SPOTS.filter(function (s) { return S.spots[s.id].misses; });
+    $("r-revise-block").hidden = !rev.length;
+    var ul = $("r-revise"); ul.textContent = "";
+    rev.forEach(function (s) { var li = document.createElement("li"); li.textContent = "“" + s.quote + "”: " + s.device; ul.appendChild(li); });
+    $("r-para").textContent = paragraph() || "(not written yet)";
+    $("r-improve-block").hidden = !S.improve; $("r-improve").textContent = S.improve || "";
+    var who = $("r-who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = S.name; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("s-report");
+  }
+  $("btn-back").onclick = function () { S.report = false; save(); renderMain(); };
+  $("btn-again").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} S = null; $("student-name").value = ""; renderStart(); };
+
+  renderStart();
+})();
+</script>
+</body>
+</html>
