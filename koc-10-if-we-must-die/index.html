@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>If We Must Die · Device Hunt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;0,6..96,800;1,6..96,600&display=swap">
+<style>
+/* Layout: one phone-width column. Harlem, 1919-1922: an Art Deco broadside. Ivory paper with faint deco fans,
+   a black-and-gold sunburst cover, indigo for actions, brick red for warnings. The poem is the playing field: devices are highlighted in the lines. */
+:root {
+  --wall: #F1ECE2;
+  --card: #FFFFFF;
+  --ink: #17161C;
+  --muted: #5A5763;
+  --rule: #DED7CA;
+  --board: #2B2D5C;
+  --board-hover: #1F2147;
+  --pink: #E9CFA3;
+  --yellow: #F7DC8B;
+  --lilac: #E6E6F2;
+  --mint: #D3ECDB;
+  --star: #B8892B;
+  --red: #9E2B25;
+  --red-soft: #F6E0DC;
+  --good: #1E7347;
+  --good-soft: #DDF1E4;
+  --sky: #8A6A1F;
+  --gold: #D4AF55;
+  --f-hand: "Bodoni Moda", "Didot", Georgia, "Times New Roman", serif;
+  --f-body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--wall); }
+body {
+  margin: 0; color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; min-height: 100vh;
+  background:
+    radial-gradient(circle at 50% 100%, transparent 0 18px, rgba(184,137,43,.10) 18px 19px, transparent 19px 30px, rgba(184,137,43,.08) 30px 31px, transparent 31px) 0 0 / 64px 40px,
+    linear-gradient(180deg, rgba(43,45,92,.10), transparent 420px),
+    var(--wall);
+}
+img { max-width: 100%; display: block; }
+.wrap { max-width: 680px; margin: 0 auto; padding: 14px 16px 64px; display: flex; flex-direction: column; gap: 16px; }
+.col { display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--board); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #FFFFFF; border-radius: 10px; padding: 4px 6px; flex: none; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.logo img { width: 70px; height: auto; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-hand); font-size: 1.45rem; line-height: 1; }
+.top-sub { color: var(--muted); font-size: .86rem; }
+
+.card { background: var(--card); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 0 rgba(30,42,51,.06), 0 10px 26px rgba(40,70,100,.10); }
+.label { font-family: var(--f-hand); font-size: 1.15rem; color: var(--board); letter-spacing: .02em; }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+
+.btn { appearance: none; border: 0; border-radius: 12px; padding: 13px 18px; font-weight: 700; font-size: 1rem; cursor: pointer; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-ink { background: var(--board); color: #FFFFFF; box-shadow: 0 3px 0 #0F2B23; }
+.btn-ink:hover { background: var(--board-hover); }
+.btn-ink:active { transform: translateY(2px); box-shadow: 0 1px 0 #0F2B23; }
+.btn-ink:disabled { background: #9AA7A2; box-shadow: none; cursor: not-allowed; }
+.btn-ghost { background: #FFFFFF; border: 2px solid var(--ink); color: var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Start: a black-and-gold Art Deco broadside */
+.cover { position: relative; background: #121218; color: #F6EFD9; border-radius: 6px; padding: 30px 24px 26px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 16px 32px rgba(20,18,30,.35); overflow: hidden; border: 3px solid var(--gold); outline: 1px solid var(--gold); outline-offset: -10px; }
+.cover::before { content: ""; position: absolute; left: 50%; bottom: -160px; width: 420px; height: 320px; transform: translateX(-50%); pointer-events: none;
+  background: repeating-conic-gradient(from 270deg at 50% 100%, rgba(212,175,85,.28) 0deg 4deg, transparent 4deg 12deg); -webkit-mask: linear-gradient(transparent, #000 60%); mask: linear-gradient(transparent, #000 60%); }
+.cover::after { content: ""; position: absolute; left: 24px; right: 24px; top: 18px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.cover > * { position: relative; z-index: 1; }
+.cover h1 { font-family: var(--f-hand); font-weight: 800; font-size: clamp(2.5rem, 12vw, 3.5rem); line-height: 1; letter-spacing: .01em; color: #FFFFFF; }
+.cover h1 em { color: var(--gold); font-style: italic; font-weight: 600; }
+.cover .who-poet { font-family: var(--f-body); font-weight: 700; font-size: .95rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+.name-plate { align-self: flex-start; background: transparent; color: var(--gold); border: 1px solid var(--gold); border-radius: 2px; padding: 3px 12px; font-weight: 700; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; }
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.steps li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+.steps .n { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--board); color: #FFFFFF; font-family: var(--f-hand); font-size: 1.3rem; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input, textarea { font: inherit; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); width: 100%; }
+.field input:focus, textarea:focus { border-color: var(--board); outline: none; }
+.resume { border: 2px dashed var(--board); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Tabs */
+.tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; padding-block: 6px; background: rgba(241,236,226,.94); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.tab { appearance: none; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 0; cursor: pointer; min-width: 0; }
+.tab b { font-family: var(--f-hand); font-weight: 400; font-size: 1.2rem; }
+.tab span { font-size: .78rem; color: var(--muted); }
+.tab.on { background: var(--board); border-color: var(--board); color: #FFFFFF; }
+.tab.on span { color: #D3E3DC; }
+.tab:disabled { opacity: .55; cursor: not-allowed; }
+
+/* Poem */
+.poem-card { padding: 0; overflow: hidden; }
+.poem-card summary { cursor: pointer; padding: 14px 20px; font-family: var(--f-hand); font-size: 1.2rem; color: var(--board); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.poem-card summary::-webkit-details-marker { display: none; }
+.poem-card summary::after { content: "▾ hide"; font-family: var(--f-body); font-size: .8rem; color: var(--muted); }
+.poem-card:not([open]) summary::after { content: "▸ show"; }
+.poem-img { border-top: 1px solid var(--rule); background: #F3F3F3; }
+.poem-img img { width: 100%; height: auto; }
+.poem-note { font-size: .8rem; color: var(--muted); padding: 8px 20px 14px; }
+
+.meter { height: 12px; border-radius: 999px; background: #E3EAF0; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--board), #2E7D63); transition: width .4s; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 16px; height: 12px; border-radius: 3px; display: inline-block; }
+
+
+/* Poem with highlighted devices */
+.poemtxt { font-family: var(--f-hand); font-size: 1.07rem; line-height: 1.95; }
+.poemtxt .ptitle { font-weight: 800; font-size: 1.3rem; line-height: 1.25; }
+.poemtxt .psub { font-style: italic; font-weight: 600; color: var(--muted); font-size: .9em; }
+.poemtxt .pby { font-family: var(--f-body); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--sky); margin: 2px 0 10px; }
+.poemtxt .pl { display: grid; grid-template-columns: 1.9em 1fr; align-items: baseline; }
+.poemtxt .ln { font-family: var(--f-body); font-size: .72rem; color: var(--muted); text-align: right; padding-right: .8em; }
+.poemtxt .pgap { height: .5em; }
+.poemtxt .psrc { font-family: var(--f-body); font-size: .78rem; color: var(--muted); margin-top: 12px; line-height: 1.4; }
+.mk { display: inline; cursor: pointer; padding: 1px 3px; border-radius: 4px;
+  background: linear-gradient(transparent 6%, var(--yellow) 6%, var(--yellow) 94%, transparent 94%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.mk sup { font-family: var(--f-body); font-size: .6em; font-weight: 700; background: var(--ink); color: #FFFFFF; border-radius: 999px; padding: 0 5px; margin-left: 2px; vertical-align: super; }
+.mk .tg { font-family: var(--f-body); font-size: .68em; font-weight: 700; color: var(--good); margin-left: 4px; white-space: nowrap; }
+.mk.first { background: linear-gradient(transparent 6%, var(--mint) 6%, var(--mint) 94%, transparent 94%); }
+.mk.first sup { background: var(--star); }
+.mk.later { background: linear-gradient(transparent 6%, #D8E6F4 6%, #D8E6F4 94%, transparent 94%); }
+.mk.cold { background: linear-gradient(transparent 6%, var(--red-soft) 6%, var(--red-soft) 94%, transparent 94%); cursor: not-allowed; }
+.mk.cold .tg { color: var(--red); }
+.mk.pick1 { outline: 3px solid var(--board); outline-offset: 1px; }
+.mk.pick2 { outline: 3px solid #8A4FBF; outline-offset: 1px; }
+.mk.pick1 .tg { color: var(--board); }
+.mk.pick2 .tg { color: #8A4FBF; }
+.poemtxt .wpanel { font-family: var(--f-body); font-size: 1rem; line-height: 1.5; margin: 8px -8px 12px; }
+
+/* Device spots */
+.group-h { font-family: var(--f-hand); font-size: 1.25rem; border-bottom: 3px solid var(--yellow); padding-bottom: 2px; margin-top: 4px; }
+.spots { display: flex; flex-direction: column; gap: 10px; }
+.spot { appearance: none; text-align: left; width: 100%; border: 2px solid var(--rule); background: var(--yellow); border-radius: 12px; padding: 12px 14px; cursor: pointer; display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; min-height: 56px; transition: transform .08s; }
+.spot:active { transform: translateY(2px); }
+.spot .no { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: #FFFFFF; font-family: var(--f-hand); font-size: 1.15rem; border: 2px solid var(--ink); }
+.spot .q { font-weight: 700; font-size: 1.02rem; }
+.spot .tag { display: block; font-family: var(--f-hand); font-size: 1.05rem; color: var(--good); }
+.spot.first { background: var(--mint); border-color: var(--good); }
+.spot.first .no { background: var(--star); color: #FFFFFF; border-color: var(--star); }
+.spot.later { background: #DCE8F7; border-color: #7A9CC6; }
+.spot.cold { background: var(--red-soft); border-color: var(--red); cursor: not-allowed; }
+.spot.cold .tag { color: var(--red); }
+.spot.pick1 { box-shadow: 0 0 0 4px var(--board); }
+.spot.pick2 { box-shadow: 0 0 0 4px #8A4FBF; }
+.spot .pk { font-family: var(--f-hand); font-size: 1rem; color: #FFFFFF; background: var(--board); border-radius: 6px; padding: 0 8px; margin-left: 6px; }
+.spot.pick2 .pk { background: #8A4FBF; }
+.sweep { border-top: 5px solid var(--red); }
+
+/* Sheet */
+.sheet-back { position: fixed; inset: 0; background: rgba(30,42,51,.5); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: #FFFFFF; width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; border-radius: 20px 20px 0 0; border-top: 6px solid var(--yellow); padding: 18px 16px calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 14px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.x { appearance: none; border: 2px solid var(--rule); background: transparent; border-radius: 999px; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; line-height: 1; flex: none; }
+.evidence { font-size: 1.15rem; font-weight: 700; background: linear-gradient(transparent 10%, var(--yellow) 10%, var(--yellow) 90%, transparent 90%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.st-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.st { font-size: .78rem; font-weight: 700; border-radius: 999px; padding: 2px 10px; border: 1px solid var(--rule); color: var(--muted); }
+.st.on { border-color: var(--board); color: var(--board); }
+.st.done { border-color: var(--good); color: var(--good); }
+.qh { font-size: 1.15rem; font-weight: 700; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 54px; }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--board); } }
+.opt .k { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-family: var(--f-hand); font-size: 1.15rem; background: var(--wall); }
+.opt .olab { color: var(--board); }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.right .k { background: var(--good); color: #FFFFFF; }
+.opt.wrong { border-color: var(--red); background: var(--red-soft); }
+.opt.wrong .k { background: var(--red); color: #FFFFFF; }
+.opt.dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.fb { border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--good-soft); }
+.fb.bad { background: var(--red-soft); }
+.fb.reveal { background: #FFF2C6; }
+.fb-h { font-family: var(--f-hand); font-size: 1.4rem; }
+.fb.good .fb-h { color: var(--good); }
+.fb.bad .fb-h { color: var(--red); }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.retry { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--red-soft); color: var(--red); }
+
+/* Writing desk */
+.intro { background: #F4F7FA; border: 1px dashed #AFC0CD; border-radius: 12px; padding: 12px 14px; font-style: italic; }
+.picks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.pickbox { border: 2px dashed var(--rule); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.pickbox b { font-family: var(--f-hand); font-weight: 400; font-size: 1.15rem; display: block; }
+.pickbox.p1 { border-color: var(--board); }
+.pickbox.p2 { border-color: #8A4FBF; }
+.pickbox span { font-size: .88rem; }
+.wpanel { margin: 2px -8px 8px; padding: 14px 12px 16px; background: #FFFBEA; border: 3px solid var(--board); border-radius: 14px; display: flex; flex-direction: column; gap: 14px; }
+.wpanel.g2 { border-color: #8A4FBF; }
+.wp-h { font-family: var(--f-hand); font-size: 1.35rem; color: var(--board); }
+.wpanel.g2 .wp-h { color: #8A4FBF; }
+.devstrip { display: flex; flex-direction: column; gap: 6px; }
+.ds-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; background: #FFFFFF; border: 2px solid var(--board); border-radius: 10px; padding: 6px 10px; }
+.ds-row.g2 { border-color: #8A4FBF; }
+.ds-tag { font-size: .78rem; font-weight: 700; color: #FFFFFF; background: var(--board); border-radius: 999px; padding: 1px 9px; }
+.ds-row.g2 .ds-tag { background: #8A4FBF; }
+.ds-q { font-weight: 700; background: linear-gradient(transparent 8%, var(--yellow) 8%, var(--yellow) 92%, transparent 92%); box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: 0 2px; }
+.sep { font-family: var(--f-hand); font-size: 1.5rem; border-bottom: 3px solid var(--pink); padding-bottom: 2px; margin-top: 6px; }
+.slot { display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--rule); padding-left: 12px; }
+.slot.ok { border-left-color: var(--good); }
+.slot-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.slot-h b { font-family: var(--f-hand); font-weight: 400; font-size: 1.3rem; }
+.num { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--board); color: var(--board); display: grid; place-items: center; font-family: var(--f-hand); font-size: 1.2rem; flex: none; }
+.slot.ok .num { background: var(--star); border-color: var(--star); color: #FFFFFF; }
+.frame { margin: 0; padding: 8px 12px; background: #FFF7D6; border-left: 3px solid var(--star); border-radius: 0 8px 8px 0; font-size: .95rem; color: #3D3628; }
+.frame .blank { display: inline-block; min-width: 2.5em; border-bottom: 2px solid #8B7A3F; }
+.slot textarea { min-height: 84px; resize: vertical; line-height: 1.45; overflow: hidden; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; font-size: .88rem; }
+.checks li { display: flex; gap: 6px; align-items: baseline; color: var(--muted); }
+.checks li::before { content: "○"; font-weight: 700; flex: none; }
+.checks li.ok { color: var(--good); }
+.checks li.ok::before { content: "✓"; }
+.checks li.no { color: var(--red); }
+.checks li.no::before { content: "!"; }
+.hint-btn { appearance: none; align-self: flex-start; border: 2px solid var(--star); background: #FFF9E6; color: #6B4E00; border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: .85rem; cursor: pointer; }
+.hints { margin: 0; padding: 10px 12px 10px 28px; background: #FFF9E6; border-radius: 10px; font-size: .92rem; display: flex; flex-direction: column; gap: 4px; }
+.remind { background: var(--lilac); border-radius: 12px; padding: 12px 14px; font-size: .92rem; }
+.remind ul { margin: 6px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 3px; }
+.final { font-size: 1.04rem; line-height: 1.7; background: #F4F7FA; border-radius: 12px; padding: 14px; white-space: pre-wrap; }
+.model { line-height: 1.7; background: #F7FBF8; border-left: 4px solid var(--good); border-radius: 0 12px 12px 0; padding: 12px 14px; }
+.tick { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.tick label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.tick input { width: 22px; height: 22px; margin-top: 1px; flex: none; accent-color: var(--good); }
+
+/* Report */
+.big { font-family: var(--f-hand); font-size: clamp(2.8rem, 13vw, 3.8rem); line-height: 1; color: var(--board); }
+.big small { font-size: .45em; color: var(--muted); }
+.stars { font-size: 1.6rem; color: var(--star); letter-spacing: .1em; }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; }
+.who b { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title">Device Hunt</span>
+      <span class="top-sub">Koç Grade 10 · Unseen poem practice</span>
+    </div>
+  </header>
+
+  <!-- START -->
+  <section id="s-start" hidden>
+    <div class="col">
+      <div class="cover">
+        <span class="name-plate">Grade 10 · Poetry · 1919</span>
+        <h1>If We <em>Must Die</em></h1>
+        <span class="who-poet">Claude McKay</span>
+      </div>
+      <div class="card">
+        <ol class="steps">
+          <li><span class="n">1</span><span><b>Find the devices.</b> Seven phrases in the poem are highlighted. Tap each one: name the device, then choose what it does to the reader. A wrong answer comes back in the next round.</span></li>
+          <li><span class="n">2</span><span><b>Write your paragraph.</b> Read the introduction, then tap TWO highlighted phrases in the poem. Writing boxes open right under each phrase, in the exam order. Each part of the structure is ticked when you write it, and the 💡 hints help you think. Both levels are open from the start.</span></li>
+        </ol>
+        <div class="resume" id="resume" hidden>
+          <p><b>You have work in progress.</b> <span id="resume-text"></span></p>
+          <div class="btn-row">
+            <button class="btn btn-ink" id="btn-resume" type="button">Continue</button>
+            <button class="btn btn-ghost" id="btn-wipe" type="button">Start over</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="student-name">Your name</label>
+          <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+        </div>
+        <button class="btn btn-ink" id="btn-start" type="button">Start the device hunt</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <section id="s-main" hidden>
+    <div class="col">
+      <nav class="tabs" aria-label="Levels">
+        <button class="tab" id="tab-1" type="button"><b>Level 1 · Find</b><span id="tab-1-s"></span></button>
+        <button class="tab" id="tab-2" type="button"><b>Level 2 · Write</b><span id="tab-2-s"></span></button>
+      </nav>
+
+      <!-- LEVEL 1 -->
+      <div id="lv-1" class="col" hidden>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span class="label" id="round-label">Round 1</span>
+            <span class="small" id="found-count"></span>
+          </div>
+          <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+          <div class="legend">
+            <span><i style="background:var(--yellow)"></i>To find</span>
+            <span><i style="background:var(--mint)"></i>★ First try</span>
+            <span><i style="background:#D8E6F4"></i>Found later</span>
+            <span><i style="background:var(--red-soft)"></i>Try again next round</span>
+          </div>
+        </div>
+        <div class="card sweep" id="sweep-card" hidden>
+          <span class="label" style="color:var(--red)">Round complete</span>
+          <p id="sweep-text"></p>
+          <button class="btn btn-ink" id="btn-sweep" type="button"></button>
+        </div>
+        <div class="card" id="done1-card" hidden>
+          <span class="label" style="color:var(--good)">Every device found!</span>
+          <p>Level 2 is open. Now write your exam paragraph.</p>
+          <button class="btn btn-ink" id="btn-to-2" type="button">Go to Level 2: Write</button>
+        </div>
+        <div class="card"><div class="poemtxt" id="poem1"></div></div>
+      </div>
+
+      <!-- LEVEL 2 -->
+      <div id="lv-2" class="col" hidden>
+        <div class="card">
+          <span class="label">The introduction (in the exam, it is given)</span>
+          <p class="intro" id="intro"></p>
+          <div class="remind"><b>① Choose 2 devices that directly connect to the thesis in the introduction. Choose smartly.</b>
+            <ul><li>The thesis is the last sentence: racist violence treats people as less than human, and resisting it with courage and dignity is the only honorable choice.</li>
+            <li>A strong pair: one device about how the attackers treat people (lines 1–8) and one about the courage to fight back (lines 9–14).</li></ul>
+          </div>
+          <div class="picks">
+            <div class="pickbox p1"><b>Device 1</b><span id="pick1-t">Tap a highlighted phrase in the poem.</span></div>
+            <div class="pickbox p2"><b>Device 2</b><span id="pick2-t">Then tap a second phrase.</span></div>
+          </div>
+          <p class="small muted" id="pick-note">Tap a chosen phrase again to remove it.</p>
+          <div class="remind"><b>Reminders</b>
+            <ul>
+              <li>McKay is a man: write <b>he</b> or <b>McKay</b>, never “she.”</li>
+              <li>Copy quotations exactly and put them inside quotation marks.</li>
+              <li>In step 4, zoom in on ONE word. What could it suggest?</li>
+              <li>Each box gets a gold star when every part of its structure is there. The ticks check structure; the 💡 hints help with ideas.</li>
+            </ul>
+          </div>
+          <div class="poemtxt" id="poem2"></div>
+        </div>
+
+        <div class="card" id="desk" hidden>
+          <span class="label">Finish</span>
+          <p class="small muted">When every box is written, or when time is up, finish here to see your whole paragraph and a model for the same two devices.</p>
+          <button class="btn btn-ink" id="btn-file" type="button" disabled>Finish my paragraph</button>
+          <p class="small muted" id="file-note"></p>
+        </div>
+
+        <div class="card" id="filed" hidden>
+          <span class="label" style="color:var(--good)">Your paragraph</span>
+          <div class="final" id="final"></div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btn-copy" type="button">Copy my paragraph</button>
+            <button class="btn btn-ghost" id="btn-edit" type="button">Edit my paragraph</button>
+          </div>
+          <p class="small muted" id="copy-note" role="status"></p>
+          <span class="label">Model paragraph for the same two devices</span>
+          <p class="model" id="model"></p>
+          <span class="label">Now check your own paragraph</span>
+          <ul class="tick" id="tick"></ul>
+          <div class="field">
+            <label for="improve">One thing I will improve next time</label>
+            <textarea id="improve" maxlength="300"></textarea>
+          </div>
+          <button class="btn btn-ink" id="btn-report" type="button">See my report</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="s-report" hidden>
+    <div class="card">
+      <span class="label">Report</span>
+      <h2 style="font-family:var(--f-hand);font-weight:800;font-size:1.8rem">If We Must Die</h2>
+      <div>
+        <div class="muted">Devices found first try (Level 1)</div>
+        <div class="big" id="r-big"></div>
+        <div class="stars" id="r-stars" aria-hidden="true"></div>
+      </div>
+      <div id="r-revise-block"><span class="label">Devices to revise</span><ul id="r-revise" class="small" style="margin:6px 0 0;padding-left:20px"></ul></div>
+      <span class="label">My paragraph</span>
+      <div class="final" id="r-para"></div>
+      <div id="r-improve-block"><span class="label">I will improve</span><p id="r-improve"></p></div>
+      <div class="who" id="r-who"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="btn-back" type="button">Back to my work</button>
+        <button class="btn btn-ghost" id="btn-again" type="button">Start again</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="sheet-back" id="sheet-back" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
+    <div class="sheet-head"><span class="label" id="sheet-label"></span><button class="x" id="sheet-x" type="button" aria-label="Close">×</button></div>
+    <p class="evidence" id="sheet-ev"></p>
+    <div class="st-row" id="sheet-steps"></div>
+    <span class="retry" id="sheet-retry" hidden></span>
+    <h3 class="qh" id="sheet-q" tabindex="-1"></h3>
+    <div class="opts" id="sheet-opts" role="group" aria-labelledby="sheet-q"></div>
+    <div class="fb" id="sheet-fb" role="status" aria-live="polite" hidden></div>
+    <button class="btn btn-ink" id="sheet-next" type="button" hidden></button>
+  </div>
+</div>
+
+<script id="app-data" type="application/json">{"spots": [{"id": "s1", "where": "Lines 1-8", "marks": [[1, "If we must die", 0], [5, "If we must die", 0]], "after": 8, "quote": "If we must die", "ctx": ["If we must die, let it not be like hogs", "If we must die, O let us nobly die"], "device": "Repetition", "dAns": "Repetition: ‘If we must die’ opens line 1 and comes back at the start of line 5.", "dWrong": ["Simile: dying is compared to sleeping using the word ‘like’ or ‘as’.", "Hyperbole: the speaker claims that every person on Earth will die tomorrow.", "Imagery: the line describes the colors of the sky over the battlefield."], "dHint": "Look at the first words of line 1 and line 5.", "dWhy": "“If we must die” begins line 1 and is repeated at the start of line 5. That is repetition.", "effect": "Repeating “If we must die” sounds like a serious call to action, so the reader feels the danger and the speaker's courage.", "eWrong": ["Repeating “If we must die” sounds like a calm bedtime story, so the reader feels sleepy and relaxed.", "Repeating “If we must die” sounds like a joke being told twice, so the reader laughs at the speaker.", "Repeating “If we must die” sounds like the speaker has forgotten his words, so the reader feels confused."], "eHint": "Is the speaker afraid of death, or ready to face it with honor?", "words": [["must", "verb", "What could “must” suggest? That death may be impossible to avoid? That the danger is real?"], ["die", "verb", "What could “die” suggest about how serious the situation is for the speaker's people?"]], "frameHint": "Repetition frame: McKay repeats the words “If we must die” ___ times to emphasize ___. He suggests ___.", "readerHint": "Feeling words: tense, moved, inspired, worried. Why?", "message": "a people facing deadly violence who choose to die with honor", "m_ev": "McKay states, “If we must die.”", "m_word": "“Must” is a verb that suggests death may be impossible to avoid.", "m_dev": "McKay repeats the words “If we must die” two times to emphasize how real the danger is for his people. He suggests that, even facing death, they can still choose how to act.", "m_reader": "The reader is moved because the speaker faces death with courage. They also realize that the people in the poem are in terrible danger."}, {"id": "s2", "where": "Lines 1-8", "marks": [[1, "let it not be like hogs", 0]], "after": 4, "quote": "let it not be like hogs", "ctx": ["If we must die, let it not be like hogs", "let it not be like hogs / Hunted and penned in an inglorious spot"], "device": "Simile", "dAns": "Simile: dying helplessly is compared to the death of hogs, using the word ‘like’.", "dWrong": ["Metaphor: the speaker is called a hog, without using ‘like’ or ‘as’.", "Repetition: the word ‘hogs’ is repeated at the end of every line.", "Juxtaposition: a hog is placed next to a horse to show two farm animals."], "dHint": "Look for the small word that joins the two things being compared.", "dWhy": "A helpless death is compared to hogs being “Hunted and penned” with the word “like.” That is a simile.", "effect": "The hog comparison shows how the attackers treat Black people like animals, so the reader feels angry at this cruelty.", "eWrong": ["The hog comparison shows how much the speaker loves farm life, so the reader feels calm and peaceful.", "The hog comparison shows that the speaker is hungry and wants food, so the reader feels sorry he is poor.", "The hog comparison shows that the attackers are kind farmers, so the reader feels that everyone is safe."], "eHint": "How are hogs treated before they are killed? Who is being treated like this?", "words": [["hogs", "noun", "What could “hogs” suggest? Animals kept for slaughter? Being treated as worthless?"], ["penned", "verb", "Line 2: “Hunted and penned.” What could “penned” suggest? Trapped? No way to escape?"]], "frameHint": "Simile frame: McKay compares ___ (a helpless death) to ___ (what?) to suggest ___. He also emphasizes ___.", "readerHint": "Feeling words: angry, disgusted, sympathetic. Why?", "message": "racist violence as something that treats people like animals", "m_ev": "McKay states, “let it not be like hogs / Hunted and penned in an inglorious spot.”", "m_word": "“Hogs” is a noun that suggests animals kept only to be killed.", "m_dev": "McKay compares a helpless death to the death of hogs to suggest that the attackers treat Black people as if they were animals. He also emphasizes that the speaker refuses to accept this humiliation.", "m_reader": "The reader is angry because people are being hunted like animals. They also realize how cruel and dehumanizing racist violence is."}, {"id": "s3", "where": "Lines 1-8", "marks": [[3, "the mad and hungry dogs", 0]], "after": 4, "quote": "the mad and hungry dogs", "ctx": ["While round us bark the mad and hungry dogs"], "device": "Metaphor", "dAns": "Metaphor: the attackers are called mad and hungry dogs, without ‘like’ or ‘as’.", "dWrong": ["Simile: the attackers are compared to wolves using the word ‘like’.", "Imagery: the line describes the smell of the farm where the dogs live.", "Hyperbole: the dogs are said to be the biggest animals in the world."], "dHint": "Are these real dogs? Who is “barking” round the speaker's people?", "dWhy": "The attackers are described as “mad and hungry dogs” with no “like” or “as.” That is a metaphor.", "effect": "Calling the attackers mad, hungry dogs makes them seem wild and dangerous, so the reader feels the fear of being surrounded.", "eWrong": ["Calling the attackers mad, hungry dogs makes them seem friendly and playful, so the reader feels safe with them.", "Calling the attackers mad, hungry dogs makes them seem tired and weak, so the reader feels sorry for them.", "Calling the attackers mad, hungry dogs makes them seem like loyal pets, so the reader wants to keep one."], "eHint": "What do mad, hungry dogs do? How would you feel if they surrounded you?", "words": [["mad", "adjective", "What could “mad” suggest about the attackers? Out of control? Without reason?"], ["hungry", "adjective", "What could “hungry” suggest? Eager to attack? Wanting to hurt people?"]], "frameHint": "Metaphor frame: McKay compares ___ (the attackers) to ___ (what?) to suggest ___. He also emphasizes ___.", "readerHint": "Feeling words: frightened, tense, angry. Why?", "message": "racist attackers as wild, cruel and out of control", "m_ev": "McKay states, “While round us bark the mad and hungry dogs.”", "m_word": "“Mad” is an adjective that suggests the attackers are wild and out of control.", "m_dev": "McKay compares the attackers to mad and hungry dogs to suggest that they are violent and without reason. He also emphasizes how trapped and surrounded the speaker's people are.", "m_reader": "The reader is frightened because the attackers are all around, barking and hungry. They also realize that the people in the poem have nowhere to run."}, {"id": "s4", "where": "Lines 1-8", "marks": [[7, "the monsters we defy", 0]], "after": 8, "quote": "the monsters we defy", "ctx": ["then even the monsters we defy / Shall be constrained to honor us though dead"], "device": "Metaphor", "dAns": "Metaphor: the attackers are called monsters, without using ‘like’ or ‘as’.", "dWrong": ["Simile: the attackers are compared to giants using the word ‘as’.", "Repetition: the word ‘monsters’ is repeated in every line of the poem.", "Imagery: the line describes the colors of a children's monster book."], "dHint": "Are the attackers real monsters? Is there a ‘like’ or ‘as’?", "dWhy": "The attackers are described as “monsters” with no “like” or “as.” That is a metaphor.", "effect": "Calling the attackers monsters shows how inhuman their violence is, so the reader respects the people who stand up to them.", "eWrong": ["Calling the attackers monsters shows how funny their behavior is, so the reader laughs at the whole situation.", "Calling the attackers monsters shows how kind they really are, so the reader trusts them completely.", "Calling the attackers monsters shows that the poem is a fairy tale, so the reader thinks none of it is real."], "eHint": "What is a monster? What does it take to “defy” one?", "words": [["monsters", "noun", "What could “monsters” suggest about the attackers? Inhuman? Terrifying?"], ["defy", "verb", "What could “defy” suggest about the speaker's people? Brave? Refusing to give in?"]], "frameHint": "Metaphor frame: McKay compares ___ (the attackers) to ___ (what?) to suggest ___. He also emphasizes ___.", "readerHint": "Feeling words: inspired, proud, shocked. Why?", "message": "standing up to injustice as brave and honorable", "m_ev": "McKay states that “even the monsters we defy / Shall be constrained to honor us though dead.”", "m_word": "“Defy” is a verb that suggests bravely refusing to obey.", "m_dev": "McKay compares the attackers to monsters to suggest that their violence is inhuman and terrifying. He also emphasizes that even these monsters will be forced to respect people who stand up to them.", "m_reader": "The reader is inspired because the speaker's people refuse to be afraid. They also realize that courage can earn respect even from enemies."}, {"id": "s5", "where": "Lines 9-14", "marks": [[11, "their thousand blows", 0]], "after": 11, "quote": "their thousand blows", "ctx": ["And for their thousand blows deal one death-blow"], "device": "Hyperbole", "dAns": "Hyperbole: ‘thousand blows’ exaggerates how many times the attackers strike.", "dWrong": ["Simile: the blows are compared to rain using the word ‘like’.", "Repetition: the word ‘thousand’ is repeated in every line of the poem.", "Personification: the blows are given the human ability to speak."], "dHint": "Did the attackers really strike exactly a thousand times?", "dWhy": "“Their thousand blows” is a huge exaggeration of how many attacks there are. That is hyperbole.", "effect": "The exaggerated “thousand blows” shows how badly outnumbered the speaker's people are, so their single fight-back seems very brave.", "eWrong": ["The exaggerated “thousand blows” shows how gentle the attackers are, so the speaker's people seem completely safe.", "The exaggerated “thousand blows” shows the speaker counting carefully, so the poem seems like a math lesson.", "The exaggerated “thousand blows” shows the attackers are tired, so the speaker's people seem to be winning easily."], "eHint": "A thousand blows against one death-blow. Who has more power? Who shows more courage?", "words": [["thousand", "adjective", "What could “thousand” suggest? Too many to count? Being completely outnumbered?"], ["blows", "noun", "What could “blows” suggest about the violence the speaker's people face?"]], "frameHint": "Hyperbole frame: McKay exaggerates the meaning of ___ (their blows) to suggest ___. He highlights ___.", "readerHint": "Feeling words: worried, admiring, tense. Why?", "message": "resistance as brave even when the odds are impossible", "m_ev": "McKay states, “And for their thousand blows deal one death-blow!”", "m_word": "“Thousand” is an adjective that suggests the attacks are too many to count.", "m_dev": "McKay exaggerates the meaning of the attackers' blows to suggest that his people are completely outnumbered. He highlights how brave it is to strike back even once.", "m_reader": "The reader is worried because the attackers are so many. They also realize how much courage it takes to fight back against impossible odds."}, {"id": "s6", "where": "Lines 9-14", "marks": [[12, "before us lies the open grave", 0]], "after": 12, "quote": "before us lies the open grave", "ctx": ["What though before us lies the open grave"], "device": "Imagery", "dAns": "Imagery: we can picture an open grave waiting right in front of the speaker's people.", "dWrong": ["Simile: the grave is compared to a door using the word ‘like’.", "Repetition: the word ‘grave’ is repeated in every line of the poem.", "Hyperbole: the grave is said to be as big as the whole country."], "dHint": "What picture forms in your mind? Where is the grave?", "dWhy": "“Before us lies the open grave” creates a clear, frightening picture of death waiting ahead. That is imagery.", "effect": "The open grave makes death feel close and real, so the reader admires the speaker for not giving up.", "eWrong": ["The open grave makes death feel far away and unreal, so the reader thinks there is no danger at all.", "The open grave makes the reader think of a garden being dug, so the poem seems peaceful.", "The open grave makes the reader think the speaker has already died, so the poem seems to be over."], "eHint": "How close is the grave? Does the speaker still go forward?", "words": [["open", "adjective", "What could “open” suggest about the grave? Ready? Waiting? Death is very close?"], ["grave", "noun", "What could “grave” suggest about what the speaker's people are facing?"]], "frameHint": "Imagery frame: McKay gives a detailed description of ___ (the open grave) to suggest ___. He portrays ___.", "readerHint": "Feeling words: tense, afraid, admiring. Why?", "message": "the courage of people who face death without giving up", "m_ev": "McKay states, “What though before us lies the open grave?”", "m_word": "“Open” is an adjective that suggests the grave is ready and death is very close.", "m_dev": "McKay gives a detailed description of an open grave to suggest that death is waiting right in front of his people. He portrays them as brave enough to keep going anyway.", "m_reader": "The reader is tense because death feels so close. They also realize that the speaker's people would rather die fighting than live in fear."}, {"id": "s7", "where": "Lines 9-14", "marks": [[14, "dying, but fighting back", 0]], "after": 14, "quote": "dying, but fighting back", "ctx": ["Pressed to the wall, dying, but fighting back"], "device": "Juxtaposition", "dAns": "Juxtaposition: ‘dying’ is placed right next to ‘fighting back’, two opposite ideas.", "dWrong": ["Simile: the wall is compared to a soldier using the word ‘like’.", "Repetition: the word ‘back’ is repeated at the start of every line.", "Imagery: the line describes the smell of the wall in great detail."], "dHint": "Which two opposite ideas sit side by side in the last line?", "dWhy": "“Dying” and “fighting back” are opposites placed side by side, joined by “but.” That is juxtaposition.", "effect": "Placing dying next to fighting back shows that the speaker's people never give up, so the poem ends with defiance and pride.", "eWrong": ["Placing dying next to fighting back shows that the speaker's people have surrendered, so the poem ends in defeat.", "Placing dying next to fighting back shows that the fight is a game, so the poem ends with a joke.", "Placing dying next to fighting back shows that everyone has gone home, so the poem ends peacefully."], "eHint": "What is surprising about someone who is dying but still fighting?", "words": [["fighting", "verb", "What could “fighting” suggest, even while “dying”? Never giving up? Defiance?"], ["dying", "verb", "What could “dying” suggest about how hopeless the situation looks?"]], "frameHint": "Juxtaposition frame: McKay places ___ (dying) next to ___ (what?) to suggest ___. He emphasizes ___.", "readerHint": "Feeling words: inspired, proud, moved. Why?", "message": "resistance to racism as brave and defiant to the very end", "m_ev": "McKay states that they are “Pressed to the wall, dying, but fighting back!”", "m_word": "“Fighting” is a verb that suggests refusing to give up.", "m_dev": "McKay places dying next to fighting back to suggest that his people will resist until the very end. He emphasizes their courage and pride in the face of death.", "m_reader": "The reader is inspired because the poem ends with defiance, not defeat. They also realize that standing up to injustice can matter even when it seems hopeless."}], "intro": "Claude McKay was born in Jamaica in 1889 and became an important poet of the Harlem Renaissance in the United States. His sonnet “If We Must Die” was first published in July 1919, a year of violent race riots across America. The speaker calls on his people to face their attackers with courage, even if they are outnumbered and death is certain. McKay uses vivid language in “If We Must Die” to show that racist violence treats people as less than human, and that resisting it with courage and dignity is the only honorable choice.", "title": "If We Must Die", "sub": "", "lines": ["If we must die, let it not be like hogs", "Hunted and penned in an inglorious spot,", "While round us bark the mad and hungry dogs,", "Making their mock at our accursèd lot.", "If we must die, O let us nobly die,", "So that our precious blood may not be shed", "In vain; then even the monsters we defy", "Shall be constrained to honor us though dead!", "O kinsmen! we must meet the common foe!", "Though far outnumbered let us show us brave,", "And for their thousand blows deal one death-blow!", "What though before us lies the open grave?", "Like men we’ll face the murderous, cowardly pack,", "Pressed to the wall, dying, but fighting back!"], "source": "Claude McKay, Harlem Shadows (1922). First published in the Liberator, July 1919.", "gaps": []}</script>
+<script>
+(function () {
+  "use strict";
+  var D = JSON.parse(document.getElementById("app-data").textContent);
+  var SPOTS = D.spots, BY = {}; SPOTS.forEach(function (s, i) { s.n = i + 1; BY[s.id] = s; });
+  var KEY = "onur-koc10-mckay-hunt-v1";
+  var LETTERS = ["A", "B", "C", "D"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var DEVRE = { Simile: /\bsimile\b/, Metaphor: /\bmetaphor\b/, Imagery: /\bimagery\b/, Personification: /\bpersonification\b/, Juxtaposition: /\bjuxtaposition\b|\bcontrast\b/, Repetition: /\brepetition\b/, Hyperbole: /\bhyperbole\b|\bexaggerat/ };
+  var DEVLABEL = { Simile: "a simile", Metaphor: "a metaphor", Imagery: "imagery", Personification: "personification", Juxtaposition: "juxtaposition", Repetition: "repetition", Hyperbole: "hyperbole" };
+  var FRAMES = {
+    Simile: { text: "McKay compares ___ to ___ to suggest ___. He also emphasizes ___.", checks: [[/compares\b.+\bto\b.+\bto suggest\b/, "compares ___ to ___ to suggest ___"], [/also emphasi[sz]es\b/, "He also emphasizes ___"]] },
+    Metaphor: { text: "McKay compares ___ to ___ to suggest ___. He also emphasizes ___.", checks: [[/compares\b.+\bto\b.+\bto suggest\b/, "compares ___ to ___ to suggest ___"], [/also emphasi[sz]es\b/, "He also emphasizes ___"]] },
+    Repetition: { text: "McKay repeats the words “___” ___ times to emphasize ___. He suggests ___.", checks: [[/repeats\b.+\bto emphasi[sz]e\b/, "repeats the words “___” … to emphasize ___"], [/\bsuggests\b/, "He suggests ___"]] },
+    Imagery: { text: "McKay gives a detailed description of ___ to suggest ___. He portrays ___.", checks: [[/detailed description of\b.+\bto suggest\b/, "gives a detailed description of ___ to suggest ___"], [/\bportrays\b/, "He portrays ___"]] },
+    Juxtaposition: { text: "McKay places ___ next to ___ to suggest ___. He emphasizes ___.", checks: [[/places\b.+\bnext to\b.+\bto suggest\b/, "places ___ next to ___ to suggest ___"], [/\bemphasi[sz]es\b/, "He emphasizes ___"]] },
+    Personification: { text: "McKay gives ___ the human quality of ___ to suggest ___. He demonstrates ___.", checks: [[/gives\b.+\bthe human quality of\b.+\bto suggest\b/, "gives ___ the human quality of ___ to suggest ___"], [/\bdemonstrates\b/, "He demonstrates ___"]] },
+    Hyperbole: { text: "McKay exaggerates the meaning of ___ to suggest ___. He highlights ___.", checks: [[/exaggerates\b.+\bto suggest\b/, "exaggerates the meaning of ___ to suggest ___"], [/\bhighlights\b/, "He highlights ___"]] }
+  };
+
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) { var r = a.slice(); for (var i = r.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = r[i]; r[i] = r[j]; r[j] = t; } return r; }
+  var S = null;
+  function fresh(name) {
+    var st = { name: name, tab: 1, round: 1, spots: {}, cur: null, phase: null, opts: null, answered: null, d1: null, d2: null, boxes: {}, filed: false, ticks: {}, improve: "", report: false };
+    SPOTS.forEach(function (s) { st.spots[s.id] = { status: "open", misses: 0 }; });
+    return st;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() {
+    try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && s.spots && SPOTS.every(function (x) { return s.spots[x.id]; })) return s; } catch (e) {}
+    return null;
+  }
+  function show(id) { ["s-start", "s-main", "s-report"].forEach(function (x) { $(x).hidden = x !== id; }); }
+  function foundCount() { return SPOTS.filter(function (s) { var t = S.spots[s.id].status; return t === "first" || t === "later"; }).length; }
+  function firstCount() { return SPOTS.filter(function (s) { return S.spots[s.id].status === "first"; }).length; }
+  function lv1Done() { return foundCount() === SPOTS.length; }
+
+  /* ---------- START ---------- */
+  function renderStart() {
+    var saved = load();
+    $("resume").hidden = !saved;
+    if (saved) $("resume-text").textContent = (saved.name || "Someone") + ": " + SPOTS.filter(function (s) { var t = saved.spots[s.id].status; return t === "first" || t === "later"; }).length + " of " + SPOTS.length + " devices found.";
+    show("s-start");
+  }
+  $("btn-start").onclick = function () {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); return; }
+    S = fresh(n); save(); renderMain();
+  };
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") $("btn-start").click(); });
+  $("btn-resume").onclick = function () { S = load(); if (S) { if (S.report) renderReport(); else renderMain(); } };
+  $("btn-wipe").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} $("resume").hidden = true; };
+
+  /* ---------- MAIN ---------- */
+  function renderMain() {
+    S.report = false;
+    $("tab-1").classList.toggle("on", S.tab === 1);
+    $("tab-2").classList.toggle("on", S.tab === 2);
+    $("tab-2").disabled = false;
+    $("tab-1-s").textContent = foundCount() + "/" + SPOTS.length + " found";
+    $("tab-2-s").textContent = S.filed ? "paragraph done" : "open";
+    $("lv-1").hidden = S.tab !== 1;
+    $("lv-2").hidden = S.tab !== 2;
+    if (S.tab === 1) renderL1(); else renderL2();
+    show("s-main");
+  }
+  $("tab-1").onclick = function () { S.tab = 1; save(); renderMain(); };
+  $("tab-2").onclick = function () { S.tab = 2; save(); renderMain(); };
+
+  function markButton(s, text, mode, last) {
+    var st = S.spots[s.id];
+    var b = document.createElement("span"); b.className = "mk"; b.setAttribute("role", "button"); b.tabIndex = 0;
+    b.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); b.click(); } });
+    b.appendChild(document.createTextNode(text));
+    var sup = document.createElement("sup"); sup.textContent = st.status === "first" && mode === 1 ? "★" : s.n; b.appendChild(sup);
+    var tag = document.createElement("span"); tag.className = "tg";
+    if (mode === 1) {
+      if (st.status === "first" || st.status === "later") { b.classList.add(st.status); tag.textContent = s.device; }
+      else if (st.status === "cold") { b.classList.add("cold"); tag.textContent = "next round"; }
+      b.onclick = function () {
+        if (st.status === "cold") return;
+        if (st.status === "first" || st.status === "later") openSheet(s.id, "solved"); else openSheet(s.id, "device");
+      };
+    } else {
+      b.classList.add("first"); tag.textContent = s.device;
+      if (S.d1 === s.id) { b.classList.add("pick1"); tag.textContent = "Device 1: " + s.device; }
+      if (S.d2 === s.id) { b.classList.add("pick2"); tag.textContent = "Device 2: " + s.device; }
+      b.onclick = function () { pickDevice(s.id); };
+    }
+    if (last && tag.textContent) b.appendChild(tag);
+    b.setAttribute("aria-label", "Phrase " + s.n + ": " + s.quote + (tag.textContent ? ". " + tag.textContent : ""));
+    return b;
+  }
+  function renderPoem(box, mode) {
+    box.textContent = "";
+    var t = document.createElement("div"); t.className = "ptitle"; t.textContent = D.title + (D.sub ? " " : "");
+    var sb = document.createElement("span"); sb.className = "psub"; sb.textContent = D.sub; t.appendChild(sb); box.appendChild(t);
+    var by = document.createElement("div"); by.className = "pby"; by.textContent = "Claude McKay"; box.appendChild(by);
+    D.lines.forEach(function (line, i) {
+      var n = i + 1, marks = [];
+      SPOTS.forEach(function (s) {
+        s.marks.forEach(function (m, mi) {
+          if (m[0] !== n) return;
+          var idx = -1, from = 0;
+          for (var k = 0; k <= m[2]; k++) { idx = line.indexOf(m[1], from); from = idx + 1; }
+          if (idx >= 0) marks.push({ start: idx, end: idx + m[1].length, s: s, last: mi === s.marks.length - 1 });
+        });
+      });
+      marks.sort(function (x, y) { return x.start - y.start; });
+      var row = document.createElement("div"); row.className = "pl";
+      var ln = document.createElement("span"); ln.className = "ln"; ln.textContent = n;
+      var tx = document.createElement("span"); var pos = 0;
+      marks.forEach(function (mk) {
+        if (mk.start > pos) tx.appendChild(document.createTextNode(line.slice(pos, mk.start)));
+        tx.appendChild(markButton(mk.s, line.slice(mk.start, mk.end), mode, mk.last));
+        pos = mk.end;
+      });
+      if (pos < line.length) tx.appendChild(document.createTextNode(line.slice(pos)));
+      row.appendChild(ln); row.appendChild(tx); box.appendChild(row);
+      if (mode === 2 && S.d1 && S.d2) {
+        if (BY[S.d1].after === n) box.appendChild(makePanel(1));
+        if (BY[S.d2].after === n) box.appendChild(makePanel(2));
+      }
+      if (D.gaps ? D.gaps.indexOf(n) >= 0 : (n % 2 === 0 && n < D.lines.length)) { var g = document.createElement("div"); g.className = "pgap"; box.appendChild(g); }
+    });
+    var src = document.createElement("div"); src.className = "psrc"; src.textContent = D.source; box.appendChild(src);
+  }
+
+  /* ---------- LEVEL 1 ---------- */
+  function renderL1() {
+    renderPoem($("poem1"), 1);
+    var n = foundCount();
+    $("found-count").textContent = n + " of " + SPOTS.length + " devices found · ★ " + firstCount();
+    $("meter").style.width = (n / SPOTS.length * 100) + "%";
+    $("round-label").textContent = "Round " + S.round;
+    var open = SPOTS.filter(function (s) { return S.spots[s.id].status === "open"; }).length;
+    var cold = SPOTS.filter(function (s) { return S.spots[s.id].status === "cold"; }).length;
+    $("sweep-card").hidden = !(open === 0 && cold > 0);
+    if (open === 0 && cold > 0) {
+      $("sweep-text").textContent = (cold === 1 ? "1 phrase comes" : cold + " phrases come") + " back in round " + (S.round + 1) + ", with the answers in a new order.";
+      $("btn-sweep").textContent = "Start round " + (S.round + 1);
+    }
+    $("done1-card").hidden = !lv1Done();
+  }
+  $("btn-sweep").onclick = function () {
+    SPOTS.forEach(function (s) { if (S.spots[s.id].status === "cold") S.spots[s.id].status = "open"; });
+    S.round += 1; save(); renderMain();
+  };
+  $("btn-to-2").onclick = function () { S.tab = 2; save(); renderMain(); window.scrollTo(0, 0); };
+
+  var lastFocus = null;
+  function openSheet(id, phase) {
+    lastFocus = document.activeElement;
+    var s = BY[id];
+    S.cur = id; S.phase = phase; S.answered = null;
+    S.opts = phase === "device" ? shuffle([s.dAns].concat(s.dWrong)) : null;
+    save(); renderSheet(); $("sheet-back").hidden = false; $("sheet-q").focus();
+  }
+  function closeSheet() {
+    if (S.answered) finishSpot();
+    S.cur = null; S.phase = null; S.opts = null; S.answered = null;
+    $("sheet-back").hidden = true; save(); renderMain();
+    if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  $("sheet-x").onclick = closeSheet;
+  $("sheet-back").addEventListener("click", function (e) { if (e.target === $("sheet-back")) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if ($("sheet-back").hidden) return;
+    if (e.key === "Escape") { closeSheet(); return; }
+    var idx = ["1", "2", "3", "4"].indexOf(e.key); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(e.key.toLowerCase());
+    if (idx >= 0 && S.opts && idx < S.opts.length && !S.answered) { e.preventDefault(); pick(idx); }
+  });
+  function fillOpt(el, text, labelled) {
+    el.textContent = "";
+    var m = labelled ? /^([^:]{2,32}): (.+)$/.exec(text) : null;
+    if (m) { var b = document.createElement("b"); b.className = "olab"; b.textContent = m[1] + ":"; el.appendChild(b); el.appendChild(document.createTextNode(" " + m[2])); }
+    else el.textContent = text;
+  }
+  function renderSheet() {
+    var s = BY[S.cur], st = S.spots[S.cur];
+    $("sheet-label").textContent = "Phrase " + s.n + " · line " + s.marks[0][0];
+    $("sheet-ev").textContent = "“" + s.quote + "”";
+    var steps = $("sheet-steps"); steps.textContent = "";
+    [["device", "1 Name the device"], ["effect", "2 What it does"]].forEach(function (p) {
+      var x = document.createElement("span"); x.className = "st";
+      if (S.phase === p[0]) x.className += " on";
+      if ((p[0] === "device" && S.phase !== "device") || (p[0] === "effect" && S.phase === "solved")) x.className += " done";
+      x.textContent = p[1]; steps.appendChild(x);
+    });
+    $("sheet-retry").hidden = !st.misses || S.phase === "solved";
+    $("sheet-retry").textContent = st.misses === 1 ? "Missed once" : "Missed " + st.misses + " times";
+    var box = $("sheet-opts"); box.textContent = "";
+    $("sheet-fb").hidden = true; $("sheet-next").hidden = true;
+    if (S.phase === "solved") {
+      $("sheet-q").textContent = s.device;
+      var fb = $("sheet-fb"); fb.className = "fb good"; fb.textContent = "";
+      var p1 = document.createElement("p"); p1.textContent = s.dWhy;
+      var p2 = document.createElement("p"); p2.textContent = s.effect;
+      fb.appendChild(p1); fb.appendChild(p2); fb.hidden = false; return;
+    }
+    $("sheet-q").textContent = S.phase === "device" ? "Which device is this? Choose the statement that is true." : "It is " + s.device.toLowerCase() + ". What does it do to the reader?";
+    S.opts.forEach(function (text, i) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[i];
+      var t = document.createElement("span"); fillOpt(t, text, S.phase === "device");
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pick(i); };
+      box.appendChild(b);
+    });
+    if (S.answered) paint(false);
+  }
+  function correct(s) { return S.phase === "device" ? s.dAns : s.effect; }
+  function pick(i) {
+    if (S.answered) return;
+    var s = BY[S.cur], st = S.spots[S.cur];
+    var ok = S.opts[i] === correct(s);
+    S.answered = { pick: i, correct: ok };
+    if (!ok) st.misses += 1;
+    save(); paint(true);
+  }
+  function paint(freshPaint) {
+    var s = BY[S.cur], st = S.spots[S.cur], a = S.answered;
+    var reveal = !a.correct && st.misses >= 3, ans = correct(s);
+    $("sheet-opts").querySelectorAll(".opt").forEach(function (b, i) {
+      b.disabled = true;
+      if (i === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (reveal && S.opts[i] === ans) b.classList.add("right");
+      else b.classList.add("dim");
+      if (freshPaint && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("sheet-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h";
+    var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    var btn = $("sheet-next");
+    if (a.correct && S.phase === "device") { fb.classList.add("good"); h.textContent = "Yes! Now the effect."; p.textContent = s.dWhy; btn.textContent = "Next: what it does"; }
+    else if (a.correct) { fb.classList.add("good"); h.textContent = st.misses ? "Found it!" : "★ Gold star!"; p.textContent = s.effect; btn.textContent = "Back to the poem"; }
+    else {
+      if (reveal) { fb.classList.add("reveal"); h.textContent = "Here is the answer"; p.textContent = ans; }
+      else { fb.classList.add("bad"); h.textContent = "Not yet"; p.textContent = "Hint: " + (S.phase === "device" ? s.dHint : s.eHint); }
+      n.textContent = "This phrase comes back in round " + (S.round + 1) + ".";
+      btn.textContent = "Back to the poem";
+    }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n);
+    fb.hidden = false; btn.hidden = false;
+    if (freshPaint) { btn.focus({ preventScroll: true }); btn.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  function finishSpot() {
+    var st = S.spots[S.cur];
+    if (!S.answered) return;
+    if (!S.answered.correct) st.status = "cold";
+    else if (S.phase === "effect") st.status = st.misses ? "later" : "first";
+  }
+  $("sheet-next").onclick = function () {
+    var s = BY[S.cur];
+    if (S.answered && S.answered.correct && S.phase === "device") {
+      S.phase = "effect"; S.answered = null; S.opts = shuffle([s.effect].concat(s.eWrong)); save(); renderSheet(); $("sheet-q").focus(); return;
+    }
+    closeSheet();
+  };
+
+  /* ---------- LEVEL 2 ---------- */
+  function pickDevice(id) {
+    if (S.d1 === id) { S.d1 = S.d2; S.d2 = null; }
+    else if (S.d2 === id) S.d2 = null;
+    else if (!S.d1) S.d1 = id;
+    else if (!S.d2) S.d2 = id;
+    else S.d2 = id;
+    /* Device 1 is always the phrase that comes first in the poem, so the boxes follow the poem */
+    if (S.d1 && S.d2 && ((BY[S.d2].after || 0) * 100 + SPOTS.indexOf(BY[S.d2])) < ((BY[S.d1].after || 0) * 100 + SPOTS.indexOf(BY[S.d1]))) { var t = S.d1; S.d1 = S.d2; S.d2 = t; }
+    S.filed = false; save(); renderL2();
+    var target = document.querySelector("#poem2 .wpanel");
+    if (target && S.d1 && S.d2) target.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+  }
+  function renderL2() {
+    $("intro").textContent = D.intro;
+    renderPoem($("poem2"), 2);
+    var a = S.d1 && BY[S.d1], b = S.d2 && BY[S.d2];
+    $("pick1-t").textContent = a ? a.device + ": “" + a.quote + "”" : "Tap a highlighted phrase in the poem.";
+    $("pick2-t").textContent = b ? b.device + ": “" + b.quote + "”" : (a ? "Now tap a second phrase." : "Then tap a second phrase.");
+    $("pick-note").textContent = a && b && a.device === b.device ? "Both phrases use " + a.device.toLowerCase() + ". You can keep them, but two different devices usually make a stronger paragraph." : "Tap a chosen phrase again to remove it.";
+    var ready = !!(a && b);
+    if (ready) $("pick-note").textContent = "Your writing boxes are open in the poem, right under each chosen phrase. Tap a chosen phrase again to remove it.";
+    $("desk").hidden = !ready;
+    $("filed").hidden = !(ready && S.filed);
+    if (ready) { $("poem2").querySelectorAll("textarea").forEach(function (ta) { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 4) + "px"; }); updateFile(); }
+    if (ready && S.filed) renderFiled();
+  }
+
+  function slotDefs() {
+    var a = BY[S.d1], b = BY[S.d2];
+    var defs = [{ sep: "Device 1: " + a.device }, { key: "t", num: "2", title: "Topic sentence", spot: a, frame: "In the poem, McKay presents (message of device 1) through the use of (device 1)." }];
+    [[a, "1"], [b, "2"]].forEach(function (pair, k) {
+      var s = pair[0], d = pair[1];
+      if (k === 1) defs.push({ sep: "⑧ Furthermore… Device 2: " + s.device });
+      defs.push({ key: "e" + d, num: k ? "8" : "3", title: k ? "Furthermore + evidence" : "Evidence", spot: s, dev: d, frame: (k ? "Furthermore, " : "") + "McKay states “___.”" });
+      defs.push({ key: "w" + d, num: "4", title: "One word", spot: s, dev: d, frame: "(“word”) is ___. (1 sentence)" });
+      defs.push({ key: "d" + d, num: "5", title: s.device, spot: s, dev: d, frame: FRAMES[s.device].text });
+      defs.push({ key: "r" + d, num: "6", title: "The reader", spot: s, dev: d, frame: "The reader is ___ because ___. They also realize / notice / understand ___." });
+      defs.push({ key: "l" + d, num: "7", title: "Link", spot: s, dev: d, frame: "Through the use of (device " + d + "), McKay presents (message of device " + d + ")." });
+    });
+    return defs;
+  }
+  function norm(t) {
+    return " " + String(t || "").toLowerCase().replace(/[‘’ʼ`´]/g, "'").replace(/[“”]/g, '"').replace(/sweetshop/g, "sweet shop").replace(/\bcolored\b/g, "coloured")
+      .replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ").trim() + " ";
+  }
+  function quotes(t) {
+    var out = [], re = /["“”]([^"“”]+)["“”]/g, m; t = String(t || "");
+    while ((m = re.exec(t))) out.push(m[1]);
+    return out;
+  }
+  function ctxs(s) { return [s.quote].concat(s.ctx || []).map(function (q) { return norm(q.replace(/\//g, " ")); }); }
+  function inPoem(q, s) { var nq = norm(q); if (nq.trim().length < 2) return false; return ctxs(s).some(function (c) { return c.indexOf(nq) >= 0; }); }
+  function nWords(t) { var x = String(t || "").trim(); return x ? x.split(/\s+/).length : 0; }
+  function nSentences(t) { return String(t || "").split(/[.!?]+(?:["”’)]*)(?:\s|$)/).filter(function (x) { return x.trim().length > 2; }).length; }
+  function low(t) { return String(t || "").toLowerCase().replace(/[‘’]/g, "'").replace(/\s+/g, " ").trim(); }
+  function noShe(t) { return !/\bshe (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates)\b/.test(low(t)); }
+
+  function checksFor(def, text) {
+    var t = low(text), s = def.spot, c = [];
+    if (!t) return [];
+    if (def.key === "t") {
+      c.push([/^in the poem/.test(t), "Starts “In the poem,”"]);
+      c.push([/\bmckay\b/.test(t) && /\bpresents\b/.test(t), "McKay presents …"]);
+      c.push([/through the use of\b/.test(t), "through the use of …"]);
+      c.push([DEVRE[s.device].test(t), "Names device 1 (" + s.device.toLowerCase() + ")"]);
+      c.push([nWords(text) >= 12, "Says the message, not just the device"]);
+    } else if (def.key[0] === "e") {
+      if (def.dev === "2") c.push([/^furthermore\b/.test(t), "Starts “Furthermore,”"]);
+      c.push([/\bmckay\b/.test(t) && /\b(states|writes|describes|says)\b/.test(t), "McKay states …"]);
+      var qs = quotes(text);
+      c.push([qs.length > 0, "Quotation inside quotation marks"]);
+      c.push([qs.length > 0 && qs.every(function (q) { return inPoem(q, s); }), "Words copied exactly from this line"]);
+      c.push([qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }), "Short quotation (15 words or fewer)"]);
+    } else if (def.key[0] === "w") {
+      var wq = quotes(text);
+      c.push([wq.length > 0 && wq.some(function (q) { return nWords(q) <= 3 && inPoem(q, s); }), "ONE word from your quotation, in quotation marks"]);
+      c.push([/["”]\s*is\b/.test(text.replace(/[“”]/g, '"')) || /\bis an? (adjective|verb|noun|adverb)\b/.test(t), "(“word”) is …"]);
+      c.push([nSentences(text) === 1, "Just 1 sentence"]);
+    } else if (def.key[0] === "d") {
+      FRAMES[s.device].checks.forEach(function (ch) { c.push([ch[0].test(t), ch[1]]); });
+      c.push([/\bmckay\b/.test(t), "Uses McKay's name"]);
+      c.push([noShe(text), "McKay is “he” (not “she”)"]);
+    } else if (def.key[0] === "r") {
+      c.push([/\bthe reader is\b.+\bbecause\b/.test(t), "The reader is ___ because ___"]);
+      c.push([/\bthey also (realize|realise|notice|understand)\b/.test(t), "They also realize / notice / understand ___"]);
+      c.push([!/\bfeels? (good|bad)\b|\bis (good|bad)\b/.test(t), "A clear feeling word (not just “good” or “bad”)"]);
+    } else if (def.key[0] === "l") {
+      c.push([/^through the use of\b/.test(t), "Starts “Through the use of”"]);
+      c.push([DEVRE[s.device].test(t), "Names the device (" + s.device.toLowerCase() + ")"]);
+      c.push([/\bmckay presents\b/.test(t), "McKay presents (message)"]);
+      c.push([nWords(text) >= 10, "Gives the message"]);
+    }
+    return c;
+  }
+  function hintsFor(def) {
+    var s = def.spot, k = def.key[0];
+    if (def.key === "t") return ["Look at the thesis: what does the poem show about racist violence and the courage to resist it?", "What does your first device show? Try: “" + s.message + ".”", "Name device 1 at the end: “…through the use of " + DEVLABEL[s.device] + ".”"];
+    if (k === "e") return ["Copy only the words you will explain: “" + s.quote + ".”", "Put the words inside quotation marks and copy them exactly.", def.dev === "2" ? "Start with “Furthermore,” to show this is your second device." : "Start: “McKay states, …”"];
+    if (k === "w") return s.words.map(function (w) { return w[2]; }).concat(["Name the word class: “… is an adjective that suggests …”"]);
+    if (k === "d") return [s.frameHint, "After “to suggest,” say what it shows about racism, violence or courage."];
+    if (k === "r") return [s.readerHint, "Then: “They also realize …” What does the reader understand about racism and resistance?"];
+    if (k === "l") return ["What message does this device present? Try: “" + s.message + ".”", "Start: “Through the use of " + DEVLABEL[s.device] + ", McKay presents …”"];
+    return [];
+  }
+  function frameNode(text) {
+    var p = document.createElement("p"); p.className = "frame";
+    String(text).split("___").forEach(function (part, i) {
+      if (i) { var b = document.createElement("span"); b.className = "blank"; b.setAttribute("aria-label", "blank"); p.appendChild(b); }
+      p.appendChild(document.createTextNode(part));
+    });
+    return p;
+  }
+  function slotOk(def) { var c = checksFor(def, S.boxes[def.key]); return c.length > 0 && c.every(function (x) { return x[0]; }); }
+  /* Reminder of the chosen device and words, shown at every writing step */
+  function devStrip(def) {
+    var s = def.spot, g = s.id === S.d1 ? 1 : 2;
+    var box = document.createElement("div"); box.className = "devstrip";
+    var row = document.createElement("div"); row.className = "ds-row g" + g;
+    var tag = document.createElement("span"); tag.className = "ds-tag"; tag.textContent = "Device " + g + ": " + s.device;
+    var q = document.createElement("span"); q.className = "ds-q"; q.textContent = "“" + s.quote + "”";
+    row.appendChild(tag); row.appendChild(q); box.appendChild(row);
+    return box;
+  }
+  function makePanel(g) {
+    var s = BY[g === 1 ? S.d1 : S.d2];
+    var wp = document.createElement("div"); wp.className = "wpanel g" + g;
+    var h = document.createElement("div"); h.className = "wp-h"; h.textContent = "✍️ Write here · Device " + g + ": " + s.device;
+    wp.appendChild(h);
+    var defs = slotDefs(), grp = 1;
+    defs.forEach(function (def) {
+      if (def.sep && /Device 2/.test(def.sep)) grp = 2;
+      if (grp !== g) return;
+      if (def.sep) { if (!/Furthermore/.test(def.sep)) return; var hs = document.createElement("div"); hs.className = "sep"; hs.textContent = "⑧ Start with “Furthermore,”"; wp.appendChild(hs); return; }
+      wp.appendChild(makeSlot(def));
+    });
+    return wp;
+  }
+  function makeSlot(def) {
+      var slot = document.createElement("div"); slot.className = "slot";
+      var head = document.createElement("div"); head.className = "slot-h";
+      var num = document.createElement("span"); num.className = "num"; num.textContent = def.num;
+      var tt = document.createElement("b"); tt.textContent = def.title;
+      head.appendChild(num); head.appendChild(tt);
+      var ta = document.createElement("textarea"); ta.rows = def.key[0] === "w" ? 2 : 3; ta.value = S.boxes[def.key] || "";
+      ta.setAttribute("aria-label", def.title); ta.spellcheck = true;
+      var ul = document.createElement("ul"); ul.className = "checks";
+      var hb = document.createElement("button"); hb.type = "button"; hb.className = "hint-btn"; hb.textContent = "💡 Hint";
+      var hl = document.createElement("ul"); hl.className = "hints"; hl.hidden = true;
+      hintsFor(def).forEach(function (h) { var li = document.createElement("li"); li.textContent = h; hl.appendChild(li); });
+      hb.onclick = function () { hl.hidden = !hl.hidden; hb.textContent = hl.hidden ? "💡 Hint" : "💡 Hide hint"; };
+      function paintChecks() {
+        ul.textContent = "";
+        var c = checksFor(def, ta.value);
+        if (!c.length) { var li0 = document.createElement("li"); li0.textContent = "Start writing: each part of the structure is ticked as you write it."; ul.appendChild(li0); }
+        c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : ""; li.textContent = x[1]; ul.appendChild(li); });
+        slot.classList.toggle("ok", c.length > 0 && c.every(function (x) { return x[0]; }));
+      }
+      function grow() { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 4) + "px"; }
+      ta.addEventListener("input", function () { grow(); S.boxes[def.key] = ta.value; S.filed = false; save(); paintChecks(); updateFile(); $("filed").hidden = true; });
+      paintChecks();
+      slot.appendChild(head); slot.appendChild(devStrip(def)); slot.appendChild(frameNode(def.frame)); slot.appendChild(ta); slot.appendChild(ul); slot.appendChild(hb); slot.appendChild(hl);
+      return slot;
+  }
+  function updateFile() {
+    var defs = slotDefs().filter(function (d) { return d.key; });
+    var done = defs.filter(slotOk).length;
+    var all = defs.every(function (d) { return (S.boxes[d.key] || "").trim(); });
+    $("btn-file").disabled = false;
+    $("file-note").textContent = done + " of " + defs.length + " boxes have a gold star." + (all ? "" : " Some boxes are still empty, but you can finish now if time is short.");
+  }
+  function paragraph() {
+    return slotDefs().filter(function (d) { return d.key; }).map(function (d) { return (S.boxes[d.key] || "").trim(); }).filter(Boolean).join(" ");
+  }
+  function lowerFirst(t) { return t.charAt(0).toLowerCase() + t.slice(1); }
+  function modelPara() {
+    var a = BY[S.d1], b = BY[S.d2];
+    var out = ["In the poem, McKay presents " + a.message + " through the use of " + DEVLABEL[a.device] + "."];
+    [a, b].forEach(function (s, i) {
+      out.push(i ? "Furthermore, " + lowerFirst(s.m_ev) : s.m_ev);
+      out.push(s.m_word, s.m_dev, s.m_reader);
+      out.push("Through the use of " + DEVLABEL[s.device] + ", McKay presents " + s.message + ".");
+    });
+    return out.join(" ");
+  }
+  var TICKS = ["My topic sentence starts “In the poem, McKay presents …” and names device 1.", "Each quotation is short, exact and inside quotation marks.", "In step 4 I zoomed in on ONE word and said what it suggests.", "I used the right frame for each device.", "I explained how the reader feels, and why.", "Device 2 starts with “Furthermore,”.", "Each device ends with “Through the use of …, McKay presents …”."];
+  function renderFiled() {
+    $("final").textContent = paragraph();
+    $("model").textContent = modelPara();
+    var ul = $("tick"); ul.textContent = "";
+    TICKS.forEach(function (t, i) {
+      var li = document.createElement("li"), lb = document.createElement("label"), cb = document.createElement("input"), sp = document.createElement("span");
+      cb.type = "checkbox"; cb.checked = !!S.ticks[i]; cb.onchange = function () { S.ticks[i] = cb.checked; save(); };
+      sp.textContent = t; lb.appendChild(cb); lb.appendChild(sp); li.appendChild(lb); ul.appendChild(li);
+    });
+    $("improve").value = S.improve || "";
+  }
+  $("btn-file").onclick = function () { S.filed = true; save(); $("filed").hidden = false; renderFiled(); $("filed").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-edit").onclick = function () { var wp = document.querySelector("#poem2 .wpanel"); (wp || $("poem2")).scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-copy").onclick = function () {
+    var t = paragraph();
+    function done(ok) { $("copy-note").textContent = ok ? "Copied. You can paste it into your notes or send it to your teacher." : "Copying didn't work here. Select the text above and copy it."; }
+    try { navigator.clipboard.writeText(t).then(function () { done(true); }, function () { done(false); }); } catch (e) { done(false); }
+  };
+  $("improve").addEventListener("input", function () { S.improve = $("improve").value; save(); });
+  $("btn-report").onclick = function () { S.report = true; save(); renderReport(); window.scrollTo(0, 0); };
+
+  /* ---------- REPORT ---------- */
+  function renderReport() {
+    var f = firstCount();
+    $("r-big").textContent = f; var sm = document.createElement("small"); sm.textContent = " / " + SPOTS.length; $("r-big").appendChild(sm);
+    $("r-stars").textContent = "★".repeat(f);
+    var rev = SPOTS.filter(function (s) { return S.spots[s.id].misses; });
+    $("r-revise-block").hidden = !rev.length;
+    var ul = $("r-revise"); ul.textContent = "";
+    rev.forEach(function (s) { var li = document.createElement("li"); li.textContent = "“" + s.quote + "”: " + s.device; ul.appendChild(li); });
+    $("r-para").textContent = paragraph() || "(not written yet)";
+    $("r-improve-block").hidden = !S.improve; $("r-improve").textContent = S.improve || "";
+    var who = $("r-who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = S.name; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("s-report");
+  }
+  $("btn-back").onclick = function () { S.report = false; save(); renderMain(); };
+  $("btn-again").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} S = null; $("student-name").value = ""; renderStart(); };
+
+  renderStart();
+})();
+</script>
+</body>
+</html>
