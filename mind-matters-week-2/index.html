@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mind Matters · Vocabulary Week 2</title>
+<meta name="theme-color" content="#F1EEF8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#271B3A; --ink2:#5B4F70; --mist:#F1EEF8; --paper:#FFFFFF; --line:#DCD6EA;
+  --orchid:#A4418F; --lagoon:#0F7F7B; --sky:#2F6CC8; --marigold:#C98A12; --fern:#4E8A2E; --rose:#C9405F;
+  --ok:#1E8A55; --okbg:#E3F5EA; --no:#C23B3B; --nobg:#FBE6E6;
+  --hue:var(--orchid);
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Lexend", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--mist);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;-webkit-text-size-adjust:100%;min-height:100vh}
+[hidden]{display:none!important}
+img{max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding:max(16px,env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom))}
+
+/* ---------- home ---------- */
+.brand{display:flex;justify-content:space-between;align-items:center;margin:4px 0 18px}
+.brand img{height:34px;width:auto;background:#fff;border-radius:8px;padding:3px 6px}
+.reset{background:none;border:0;color:var(--ink2);font-size:14px;text-decoration:underline;text-underline-offset:3px;padding:6px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(44px,13vw,64px);line-height:.92;letter-spacing:-.02em;margin:0}
+.lede{color:var(--ink2);margin:10px 0 0;max-width:34ch}
+.ringbox{display:grid;place-items:center;margin:26px 0 8px;position:relative}
+.ring{width:min(78vw,300px);aspect-ratio:1;border-radius:50%;position:relative;display:grid;place-items:center}
+.ring svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring .core{width:62%;aspect-ratio:1;border-radius:50%;background:var(--paper);display:grid;place-items:center;text-align:center;box-shadow:0 1px 0 var(--line) inset}
+.core b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(40px,12vw,58px);line-height:1}
+.core span{font-size:13px;color:var(--ink2);display:block;margin-top:4px;line-height:1.3}
+.ringnote{font-size:14px;color:var(--ink2);text-align:center;margin:6px 0 20px}
+.levels{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.lvl{width:100%;display:grid;grid-template-columns:14px 1fr auto;gap:14px;align-items:center;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.lvl:active{transform:scale(.99)}
+.dot{width:14px;height:14px;border-radius:50%;background:var(--c)}
+.lvl h2{font-family:var(--display);font-weight:700;font-size:20px;margin:0;line-height:1.15}
+.lvl p{margin:2px 0 0;font-size:14px;color:var(--ink2);line-height:1.35}
+.lvl .bar{height:5px;border-radius:3px;background:var(--mist);margin-top:9px;overflow:hidden}
+.lvl .bar i{display:block;height:100%;background:var(--c);width:0}
+.count{font-family:var(--display);font-weight:700;font-size:15px;color:var(--ink2);white-space:nowrap}
+.count.done{color:var(--c)}
+.mix{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mix p,.mix .count{color:#CFC6E3}
+.mix .dot{background:conic-gradient(var(--orchid),var(--lagoon),var(--sky),var(--marigold),var(--fern),var(--rose),var(--orchid))}
+
+/* ---------- quiz ---------- */
+.top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.back{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px}
+.top .where{font-size:14px;color:var(--ink2);margin-left:auto;text-align:right;line-height:1.3}
+.qhead{font-family:var(--display);font-weight:800;font-size:28px;line-height:1.05;margin:8px 0 12px;color:var(--hue)}
+.track{height:8px;background:var(--paper);border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.track i{display:block;height:100%;background:var(--hue);width:0;transition:width .3s}
+.card{background:var(--paper);border-radius:20px;padding:20px 18px;margin-top:16px;border:1px solid var(--line);border-top:6px solid var(--hue)}
+.ask{font-size:14px;color:var(--ink2);margin:0 0 10px}
+.sent{font-size:20px;line-height:1.55;margin:0;font-weight:500}
+.gap{display:inline-block;min-width:4.2em;border-bottom:3px solid var(--hue);color:transparent;line-height:1.2}
+.gap.filled{color:var(--ok);border-color:var(--ok);font-weight:600;min-width:0}
+.hl{background:color-mix(in srgb,var(--hue) 16%,#fff);color:var(--ink);font-weight:600;padding:0 4px;border-radius:5px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.opts{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.opt{display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:center;width:100%;text-align:left;background:var(--mist);border:2px solid transparent;border-radius:14px;padding:12px 14px;font-size:17px;line-height:1.35}
+.opt .k{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--paper);font-family:var(--display);font-weight:700;font-size:15px;color:var(--ink2)}
+.opt:not(:disabled):hover{border-color:var(--hue)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--okbg);border-color:var(--ok)}
+.opt.right .k{background:var(--ok);color:#fff}
+.opt.wrong{background:var(--nobg);border-color:var(--no)}
+.opt.wrong .k{background:var(--no);color:#fff}
+.opt.dim{opacity:.55}
+.fb{margin-top:16px;border-radius:14px;padding:14px 16px;font-size:16px}
+.fb.ok{background:var(--okbg)}
+.fb.no{background:var(--nobg)}
+.fb strong{display:block;font-family:var(--display);font-size:19px;margin-bottom:2px}
+.fb.ok strong{color:var(--ok)} .fb.no strong{color:var(--no)}
+.next{display:block;width:100%;margin-top:14px;background:var(--ink);color:#fff;border:0;border-radius:14px;padding:15px;font-family:var(--display);font-weight:700;font-size:18px}
+.streak{font-size:14px;color:var(--ink2);margin-top:12px;text-align:center;min-height:1.5em}
+
+/* ---------- round end ---------- */
+.end{text-align:center;padding-top:20px}
+.end .big{font-family:var(--display);font-weight:800;font-size:clamp(40px,12vw,56px);line-height:1;color:var(--hue);margin:16px 0 6px}
+.end p{color:var(--ink2);margin:6px auto;max-width:32ch}
+.stars{font-size:40px;letter-spacing:6px;margin:14px 0 0;color:var(--marigold)}
+.stars .off{color:var(--line)}
+.missed{text-align:left;list-style:disc;padding-left:36px !important;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px 16px;margin:18px 0 0}
+.missed li{margin:4px 0}
+.btnrow{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.ghost{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="home">
+  <div class="brand"><img src="data:image/jpeg;base64,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" alt="Onur English"><button class="reset" id="resetBtn" type="button">Start again</button></div>
+  <h1>Mind<br>Matters</h1>
+  <p class="lede">Week 2 vocabulary. Every word appears in two sentences. Miss one, and it comes back until you get it right.</p>
+  <div class="ringbox">
+    <div class="ring" id="ring" role="img"></div>
+  </div>
+  <p class="ringnote">Each color in the ring is one level. Fill them all.</p>
+  <ul class="levels" id="levels"></ul>
+</section>
+
+<section id="quiz" hidden>
+  <div class="top"><button class="back" id="backBtn" type="button">Levels</button><div class="where" id="where"></div></div>
+  <div class="qhead" id="qhead"></div>
+  <div class="track"><i id="trackFill"></i></div>
+  <div class="card">
+    <p class="ask" id="ask"></p>
+    <p class="sent" id="sent"></p>
+    <div class="opts" id="opts"></div>
+    <div id="fb" hidden></div>
+    <button class="next" id="nextBtn" type="button" hidden>Next question</button>
+  </div>
+  <div class="streak" id="streak" aria-live="polite"></div>
+</section>
+
+<section id="end" hidden>
+  <div class="end" id="endBox"></div>
+</section>
+
+</div>
+<script>
+const DATA = {"title": "Mind Matters", "levels": [{"key": "mind", "name": "Mind & Mood", "sub": "Feelings, stress and mental health", "qs": [{"id": "q1", "w": "emotional", "k": "gap", "t": "Mira cried at the end of the film. The story of the lost dog finding its family was very _____.", "o": ["emotional", "boring", "crowded", "careless"], "n": "emotional = full of strong feelings, or making people feel them"}, {"id": "q2", "w": "emotional", "k": "mean", "t": "After his grandfather's funeral, Ali felt very **emotional** and could not stop crying.", "o": ["having very strong feelings", "tired and very sleepy", "bored and uninterested", "calm and relaxed inside"], "n": "emotional = having or showing strong feelings"}, {"id": "q3", "w": "depression", "k": "gap", "t": "Her doctor explained that _____ is a serious illness, not just a bad day, and that it can last for months.", "o": ["depression", "toothache", "laziness", "shyness"], "n": "depression = an illness that makes a person feel very sad and empty for a long time"}, {"id": "q4", "w": "depression", "k": "mean", "t": "People with **depression** may feel sad and empty for weeks, even when good things happen.", "o": ["an illness that causes long-lasting sadness", "a short feeling of surprise or shock", "a sudden pain in the stomach", "a strong wish to win every game"], "n": "depression = a mental illness with long-lasting sadness"}, {"id": "q5", "w": "mood", "k": "gap", "t": "Kerem got a good grade, so he was in a great _____ all afternoon.", "o": ["mood", "size", "color", "height"], "n": "be in a good / great / bad mood"}, {"id": "q6", "w": "mood", "k": "mean", "t": "Bright sunlight can improve your **mood** on a cold winter day.", "o": ["the way you feel at a particular time", "the speed you walk at during the day", "the number of hours you sleep", "the color your skin turns in the sun"], "n": "mood = how you feel at a particular time"}, {"id": "q7", "w": "the blues", "k": "gap", "t": "When it rains all week, I sometimes get _____ and just want to stay in bed.", "o": ["the blues", "the giggles", "the record", "the joke"], "n": "get the blues / have the blues = feel sad"}, {"id": "q8", "w": "the blues", "k": "mean", "t": "Grandma says music is the best cure for **the blues**.", "o": ["a feeling of sadness", "a fear of the dark", "a pain in the ears", "a love of the sea"], "n": "the blues = a feeling of sadness"}, {"id": "q9", "w": "psychologist", "k": "gap", "t": "Deniz felt worried all the time, so she started talking to a _____ about her thoughts and feelings every week.", "o": ["psychologist", "photographer", "accountant", "librarian"], "n": "psychologist = an expert in how people think, feel and behave"}, {"id": "q10", "w": "psychologist", "k": "mean", "t": "The school **psychologist** helps students who feel stressed before exams.", "o": ["an expert in how people think and feel", "a doctor who fixes broken bones", "a teacher who marks exam papers", "a worker who cleans the classrooms"], "n": "psychologist = an expert who studies the mind and helps people with their feelings"}, {"id": "q11", "w": "psychiatry", "k": "gap", "t": "Dr. Aksoy is a medical doctor who works in _____; she treats patients with serious mental illnesses.", "o": ["psychiatry", "dentistry", "geography", "chemistry"], "n": "psychiatry = the part of medicine that treats mental illness"}, {"id": "q12", "w": "psychiatry", "k": "mean", "t": "Many hospitals have a **psychiatry** department for people with mental health problems.", "o": ["the medical treatment of mental illness", "the medical care of teeth and gums", "the scientific study of rocks", "the medical care of farm animals"], "n": "psychiatry = the medical study and treatment of mental illness"}, {"id": "q13", "w": "disorder", "k": "gap", "t": "Not sleeping well for many months can be a sign of a sleep _____, so you should see a doctor.", "o": ["disorder", "contest", "costume", "holiday"], "n": "disorder = an illness that stops the body or mind working normally"}, {"id": "q14", "w": "disorder", "k": "mean", "t": "Anxiety is a common **disorder**, and doctors can treat it.", "o": ["an illness of the body or mind", "a list of jobs for the day", "a game that is played in teams", "a rule that is made by a school"], "n": "disorder = an illness or condition of the body or mind"}, {"id": "q15", "w": "stressor", "k": "gap", "t": "Exams, homework and too little sleep are common _____ for teenagers.", "o": ["stressors", "hobbies", "rewards", "holidays"], "n": "stressor = something that causes stress"}, {"id": "q16", "w": "stressor", "k": "mean", "t": "Moving to a new city can be a big **stressor** for children.", "o": ["something that causes worry and pressure", "something that makes you laugh a lot", "something that helps you sleep well", "something you buy as a present"], "n": "stressor = something that causes stress"}, {"id": "q17", "w": "exhaustion", "k": "gap", "t": "After running the marathon, the athlete fell to the ground from _____.", "o": ["exhaustion", "boredom", "curiosity", "politeness"], "n": "exhaustion = extreme tiredness"}, {"id": "q18", "w": "exhaustion", "k": "mean", "t": "The doctor said his **exhaustion** came from working fourteen hours a day.", "o": ["extreme tiredness", "great happiness", "strong hunger", "deep anger"], "n": "exhaustion = extreme tiredness"}, {"id": "q19", "w": "out of whack", "k": "gap", "t": "I've been traveling between time zones, and now my sleep is completely _____; I wake up at 3 a.m.", "o": ["out of whack", "out of print", "out of fashion", "out of stock"], "n": "out of whack = not working in the normal way"}, {"id": "q20", "w": "out of whack", "k": "mean", "t": "Too much sugar can throw your energy levels **out of whack**.", "o": ["not working in the normal way", "much stronger than before", "safe and well protected", "easy to measure and count"], "n": "out of whack = not working normally; out of balance"}]}, {"key": "meds", "name": "Medicine Cabinet", "sub": "Food, medicine and what goes into your body", "qs": [{"id": "q21", "w": "appetite", "k": "gap", "t": "When Emre is ill, he loses his _____ and doesn't want to eat anything.", "o": ["appetite", "eyesight", "hearing", "memory"], "n": "appetite = the wish to eat food"}, {"id": "q22", "w": "appetite", "k": "mean", "t": "Swimming always gives me a big **appetite**.", "o": ["a wish to eat food", "a pain in the arms", "a fear of deep water", "a need for sleep"], "n": "appetite = the desire to eat"}, {"id": "q23", "w": "medicine", "k": "gap", "t": "Take this _____ twice a day with food, and your cough should get better.", "o": ["medicine", "ticket", "recipe", "message"], "n": "medicine = something you take to treat an illness"}, {"id": "q24", "w": "medicine", "k": "mean", "t": "She studied **medicine** for six years before she became a doctor.", "o": ["the science of treating illness", "the history of ancient cities", "the art of cooking good meals", "the study of computer games"], "n": "medicine can also mean the science of treating illness"}, {"id": "q25", "w": "treatment", "k": "gap", "t": "The hospital offers free _____ for children with asthma.", "o": ["treatment", "homework", "furniture", "shopping"], "n": "treatment = medical care for an illness or injury"}, {"id": "q26", "w": "treatment", "k": "mean", "t": "The new **treatment** helped her recover in only two weeks.", "o": ["medical care for an illness", "a holiday by the sea", "a party for her friends", "a test at her school"], "n": "treatment = medical care"}, {"id": "q27", "w": "prescribe", "k": "gap", "t": "The doctor decided to _____ some antibiotics for my ear infection.", "o": ["prescribe", "subscribe", "discover", "borrow"], "n": "prescribe = officially tell a patient which medicine to take"}, {"id": "q28", "w": "prescribe", "k": "mean", "t": "Doctors should not **prescribe** strong medicine unless it is really needed.", "o": ["tell a patient which medicine to take", "sell medicines to people in a shop", "make new medicines in a laboratory", "throw away old, unused medicines"], "n": "A doctor prescribes medicine; a pharmacist sells it"}, {"id": "q29", "w": "placebo", "k": "gap", "t": "In the experiment, half the patients got the real pill and half got a _____ made only of sugar.", "o": ["placebo", "vitamin", "vaccine", "bandage"], "n": "placebo = a fake pill with no real medicine in it"}, {"id": "q30", "w": "placebo", "k": "mean", "t": "He felt better after taking the pill, but it was only a **placebo**.", "o": ["a fake pill with no real medicine in it", "a very strong pill for bad pain", "a pill that makes you very sleepy", "a pill that is too old to use"], "n": "placebo = a fake treatment; people sometimes feel better just because they believe in it"}, {"id": "q31", "w": "elixir", "k": "gap", "t": "In the old story, the wizard drank a magic _____ that kept him young forever.", "o": ["elixir", "blanket", "lantern", "helmet"], "n": "elixir = a magic drink believed to cure problems or give long life"}, {"id": "q32", "w": "elixir", "k": "mean", "t": "Some people think green tea is an **elixir** for good health.", "o": ["a magic drink that cures problems", "a cold drink served at parties", "a bitter drink that hurts the stomach", "a sweet drink made for babies"], "n": "elixir = a (magic) drink believed to cure problems"}, {"id": "q33", "w": "stimulant", "k": "gap", "t": "Coffee is a _____: it makes your brain more active and keeps you awake.", "o": ["stimulant", "painkiller", "vegetable", "sweetener"], "n": "stimulant = something that makes your body or brain more active"}, {"id": "q34", "w": "stimulant", "k": "mean", "t": "Energy drinks contain **stimulants**, so they are not good before bedtime.", "o": ["things that make the body and brain more active", "things that help you fall asleep quickly", "things that make food taste salty", "things that keep your teeth clean"], "n": "stimulant = a substance that makes you more active and awake"}, {"id": "q35", "w": "caffeine", "k": "gap", "t": "Tea, coffee and cola all contain _____, which can stop you from sleeping.", "o": ["caffeine", "calcium", "protein", "fiber"], "n": "caffeine = the substance in coffee and tea that keeps you awake"}, {"id": "q36", "w": "caffeine", "k": "mean", "t": "I try not to drink too much **caffeine** after lunch.", "o": ["a substance in coffee and tea that keeps you awake", "a type of sugar that is found in fruit", "a vitamin that is found in green vegetables", "a kind of salt that is used in cooking"], "n": "caffeine = a stimulant found in coffee, tea and cola"}, {"id": "q37", "w": "additive", "k": "gap", "t": "This juice has no artificial colors or other _____; it is just pressed oranges.", "o": ["additives", "customers", "machines", "holidays"], "n": "additive = something added to food to change it or keep it fresh"}, {"id": "q38", "w": "additive", "k": "mean", "t": "Some food **additives** help food stay fresh for longer.", "o": ["things added to food to change or keep it", "people who taste food as their job", "plates that are used for serving food", "farms where fruit and vegetables grow"], "n": "additive = a substance added to food"}, {"id": "q39", "w": "nutrient", "k": "gap", "t": "Spinach is full of iron and other important _____ that your body needs.", "o": ["nutrients", "accidents", "instruments", "opinions"], "n": "nutrient = something in food that living things need to grow and stay healthy"}, {"id": "q40", "w": "nutrient", "k": "mean", "t": "Plants take **nutrients** from the soil through their roots.", "o": ["things living things need to grow", "small insects that live in soil", "stones that make the soil hard", "chemicals that kill weeds"], "n": "nutrient = a substance needed for growth and health"}]}, {"key": "brain", "name": "Brain & Body", "sub": "How your body uses energy and works", "qs": [{"id": "q41", "w": "neurons", "k": "gap", "t": "Messages travel through your brain along billions of tiny _____.", "o": ["neurons", "muscles", "bones", "teeth"], "n": "neurons = nerve cells that carry messages in the brain and body"}, {"id": "q42", "w": "neurons", "k": "mean", "t": "When you learn something new, your brain builds new connections between **neurons**.", "o": ["cells that carry messages in the brain", "cells that carry oxygen in the blood", "small bones inside the ear", "thin hairs inside the nose"], "n": "neuron = a nerve cell that carries messages"}, {"id": "q43", "w": "function", "k": "gap", "t": "Without enough sleep, your brain cannot _____ properly, and you make more mistakes.", "o": ["function", "apologize", "celebrate", "decorate"], "n": "function (verb) = work"}, {"id": "q44", "w": "function", "k": "mean", "t": "The main **function** of the heart is to pump blood around the body.", "o": ["the job or purpose something has", "the color or shape something has", "the price that something costs", "the age that something reaches"], "n": "function (noun) = the job or purpose of something"}, {"id": "q45", "w": "fuel", "k": "gap", "t": "Breakfast is _____ for your body; it gives you the energy to start the day.", "o": ["fuel", "waste", "noise", "dust"], "n": "fuel = something that gives energy"}, {"id": "q46", "w": "fuel", "k": "mean", "t": "Pasta and rice **fuel** athletes before a long race.", "o": ["give energy to", "make sleepy", "slow down", "make heavy"], "n": "fuel (verb) = give energy to"}, {"id": "q47", "w": "regulate", "k": "gap", "t": "Your body sweats to _____ its temperature on hot days.", "o": ["regulate", "imagine", "remember", "forgive"], "n": "regulate = control something so it stays at the right level"}, {"id": "q48", "w": "regulate", "k": "mean", "t": "The government plans to **regulate** how much sugar can go into school snacks.", "o": ["control with rules", "advertise on TV", "secretly increase", "completely forget"], "n": "regulate = control, often with rules"}, {"id": "q49", "w": "affect", "k": "gap", "t": "Lack of sleep can _____ your memory and make it harder to learn.", "o": ["affect", "effect", "afford", "accept"], "n": "affect is the verb (it affects you); effect is usually the noun (it has an effect on you)"}, {"id": "q50", "w": "affect", "k": "mean", "t": "The cold weather **affected** the farmers' crops badly.", "o": ["had an influence on", "was paid for by", "was planted next to", "was hidden from"], "n": "affect = have an influence on; change"}, {"id": "q51", "w": "consume", "k": "gap", "t": "Teenagers who _____ a lot of sugary drinks often have trouble sleeping.", "o": ["consume", "collect", "recycle", "design"], "n": "consume = eat, drink or use"}, {"id": "q52", "w": "consume", "k": "mean", "t": "Our family **consumes** about two liters of milk every week.", "o": ["eats or drinks", "sells or trades", "throws away", "carries home"], "n": "consume = eat, drink or use up"}, {"id": "q53", "w": "moderation", "k": "gap", "t": "Chocolate is fine if you eat it in _____, maybe one small piece after lunch.", "o": ["moderation", "danger", "darkness", "silence"], "n": "in moderation = in small, sensible amounts"}, {"id": "q54", "w": "moderation", "k": "mean", "t": "Doctors say coffee is safe for most adults in **moderation**.", "o": ["in small, sensible amounts", "in very large amounts", "only late at night", "only with lots of sugar"], "n": "in moderation = not too much"}, {"id": "q55", "w": "lean", "k": "gap", "t": "Chicken and fish are _____ sources of protein because they have very little fat.", "o": ["lean", "greasy", "spicy", "frozen"], "n": "lean meat / lean protein = with very little fat"}, {"id": "q56", "w": "lean", "k": "mean", "t": "Choose **lean** meat for a healthier sandwich.", "o": ["having very little fat", "cooked for a long time", "cut into thin pieces", "full of salt"], "n": "lean (of meat) = having very little fat"}, {"id": "q57", "w": "inclined", "k": "gap", "t": "When I'm tired, I'm more _____ to eat junk food instead of a proper meal.", "o": ["inclined", "amazed", "ashamed", "allowed"], "n": "be inclined to do something = want to do it or be likely to do it"}, {"id": "q58", "w": "inclined", "k": "mean", "t": "After the long day, nobody felt **inclined** to cook dinner.", "o": ["wanting or likely to do something", "able to do something very well", "afraid of doing something", "paid money to do something"], "n": "inclined = wanting or likely to do something"}, {"id": "q59", "w": "acceptable", "k": "gap", "t": "Using your phone during the exam is not _____; the teacher will take it away.", "o": ["acceptable", "available", "comfortable", "expensive"], "n": "acceptable = allowed or good enough"}, {"id": "q60", "w": "acceptable", "k": "mean", "t": "Is it **acceptable** to wear trainers to a wedding?", "o": ["allowed or good enough", "very cheap to buy", "too difficult to do", "very popular now"], "n": "acceptable = allowed; good enough"}]}, {"key": "court", "name": "In the Courtroom", "sub": "Crime, trials and changing people's minds", "qs": [{"id": "q61", "w": "crime", "k": "gap", "t": "Stealing a bicycle is a _____, and the thief can be punished by the law.", "o": ["crime", "hobby", "habit", "mistake"], "n": "crime = an illegal action"}, {"id": "q62", "w": "crime", "k": "mean", "t": "The police are working hard to reduce **crime** in the city center.", "o": ["illegal actions", "heavy traffic", "loud music", "empty shops"], "n": "crime = illegal actions"}, {"id": "q63", "w": "courtroom", "k": "gap", "t": "Everyone stood up when the judge walked into the _____.", "o": ["courtroom", "classroom", "bathroom", "storeroom"], "n": "courtroom = the room where a judge hears a legal case"}, {"id": "q64", "w": "courtroom", "k": "mean", "t": "Cameras are not allowed in the **courtroom** during the trial.", "o": ["the room where a judge hears a case", "the room where prisoners sleep", "the room where police officers eat", "the room where lawyers study"], "n": "courtroom = the room where a trial happens"}, {"id": "q65", "w": "witness", "k": "gap", "t": "In court, the _____ promised to tell the truth about what she saw on the night of the robbery.", "o": ["witness", "judge", "lawyer", "guard"], "n": "witness = a person who saw something happen"}, {"id": "q66", "w": "witness", "k": "mean", "t": "Police are looking for **witnesses** to the car accident.", "o": ["people who saw something happen", "people who caused the accident", "people who repair broken cars", "people who drive ambulances"], "n": "witness = someone who sees an event, often a crime"}, {"id": "q67", "w": "defense lawyer", "k": "gap", "t": "The man said he was innocent, so his _____ tried to prove it in court.", "o": ["defense lawyer", "bank manager", "tour guide", "head chef"], "n": "defense lawyer = the lawyer who speaks for the person accused of a crime"}, {"id": "q68", "w": "defense lawyer", "k": "mean", "t": "The **defense lawyer** asked the judge to look at new evidence.", "o": ["the lawyer who speaks for the accused person", "the lawyer who tries to prove the person is guilty", "the police officer who arrests the criminal", "the reporter who writes about the trial"], "n": "The defense lawyer defends the accused person"}, {"id": "q69", "w": "advocate", "k": "gap", "t": "Our science teacher is a strong _____ of healthy school lunches and talks about it at every meeting.", "o": ["advocate", "neighbor", "visitor", "waiter"], "n": "advocate (noun) = a person who publicly supports an idea"}, {"id": "q70", "w": "advocate", "k": "mean", "t": "She **advocates** more green spaces for children in the city.", "o": ["publicly supports", "secretly destroys", "quickly measures", "carefully paints"], "n": "advocate (verb) = publicly support"}, {"id": "q71", "w": "sway", "k": "gap", "t": "The lawyer used emotional stories to _____ the jury and change their opinion.", "o": ["sway", "bore", "feed", "count"], "n": "sway = influence someone so they change their opinion"}, {"id": "q72", "w": "sway", "k": "mean", "t": "Don't let advertisements **sway** your choice of phone.", "o": ["influence or change", "repair or clean", "hide or lose", "pay for or buy"], "n": "sway = influence"}, {"id": "q73", "w": "insist", "k": "gap", "t": "My mom always _____ that I wear a helmet when I ride my bike; she won't let me leave without one.", "o": ["insists", "regrets", "pretends", "wonders"], "n": "insist = say firmly that something must happen or is true"}, {"id": "q74", "w": "insist", "k": "mean", "t": "Even after the test, Bora **insisted** that his answer was correct.", "o": ["said firmly and would not change his mind", "said quietly that he was not really sure", "forgot completely what he had written", "agreed that he had made a mistake"], "n": "insist = say firmly and keep saying it"}, {"id": "q75", "w": "assumption", "k": "gap", "t": "Don't make an _____ about someone just because of the clothes they wear.", "o": ["assumption", "appointment", "apology", "application"], "n": "make an assumption = believe something without proof"}, {"id": "q76", "w": "assumption", "k": "mean", "t": "The detective's first **assumption** was wrong: the gardener was innocent.", "o": ["something you believe without proof", "something you see with your own eyes", "something you write in a report", "something you pay for later"], "n": "assumption = something you think is true without proof"}, {"id": "q77", "w": "predict", "k": "gap", "t": "Scientists use computers to _____ the weather for the next few days.", "o": ["predict", "protect", "produce", "prevent"], "n": "predict = say what will happen in the future"}, {"id": "q78", "w": "predict", "k": "mean", "t": "Nobody could **predict** who would win the final match.", "o": ["say what will happen before it happens", "remember what happened in the past", "change what is happening right now", "watch something as it happens on TV"], "n": "predict = say what will happen"}, {"id": "q79", "w": "sidetrack", "k": "gap", "t": "I meant to study, but my phone _____ me for two hours.", "o": ["sidetracked", "supported", "rewarded", "prepared"], "n": "sidetrack = take someone's attention away from the main thing"}, {"id": "q80", "w": "sidetrack", "k": "mean", "t": "Let's not get **sidetracked**; we need to finish this project today.", "o": ["distracted from the main job", "too tired to keep on working", "lost on the way back home", "angry with one another again"], "n": "get sidetracked = get distracted"}]}, {"key": "watch", "name": "Watching & Privacy", "sub": "Technology that watches, checks and predicts", "qs": [{"id": "q81", "w": "detect", "k": "gap", "t": "Smoke alarms can _____ smoke and warn people about a fire.", "o": ["detect", "delete", "deliver", "decorate"], "n": "detect = notice or discover something"}, {"id": "q82", "w": "detect", "k": "mean", "t": "The app can **detect** changes in your voice that show you are tired.", "o": ["notice or discover", "record and save", "make louder", "hide or remove"], "n": "detect = notice or find"}, {"id": "q83", "w": "monitor", "k": "gap", "t": "Nurses _____ the patient's heart rate all night to make sure it stays normal.", "o": ["monitor", "ignore", "borrow", "invent"], "n": "monitor = watch and check something over time"}, {"id": "q84", "w": "monitor", "k": "mean", "t": "Parents can use some apps to **monitor** how much time their children spend online.", "o": ["watch and check over time", "pay for every single month", "stop and block completely", "share with all their friends"], "n": "monitor = keep watching and checking"}, {"id": "q85", "w": "privacy", "k": "gap", "t": "I lock my diary because I want some _____; my diary is only for me.", "o": ["privacy", "noise", "exercise", "advice"], "n": "privacy = keeping your personal life to yourself"}, {"id": "q86", "w": "privacy", "k": "mean", "t": "Some people worry that smart speakers are bad for their **privacy**.", "o": ["the right to keep your personal life to yourself", "the right to speak freely in public places", "the money that you keep in the bank", "the time that you spend with your friends"], "n": "privacy = the right to keep personal things private"}, {"id": "q87", "w": "spying", "k": "gap", "t": "My little brother was _____ on me through the door to hear my phone call.", "o": ["spying", "relying", "counting", "insisting"], "n": "spy on someone = secretly watch or listen to them"}, {"id": "q88", "w": "spying", "k": "mean", "t": "The company was accused of **spying** on its workers' emails.", "o": ["secretly watching or reading", "openly praising and thanking", "quickly answering and sorting", "politely refusing to open"], "n": "spying = secretly watching or listening"}, {"id": "q89", "w": "continuously", "k": "gap", "t": "The machine checks the air _____, 24 hours a day, without stopping.", "o": ["continuously", "occasionally", "rarely", "briefly"], "n": "continuously = without stopping"}, {"id": "q90", "w": "continuously", "k": "mean", "t": "The river has flowed **continuously** for thousands of years.", "o": ["without stopping", "only in summer", "very slowly", "in the wrong direction"], "n": "continuously = without a break"}, {"id": "q91", "w": "widespread", "k": "gap", "t": "Phone use among teenagers is _____; almost every student in our school has one.", "o": ["widespread", "rare", "unusual", "forbidden"], "n": "widespread = happening in many places or among many people"}, {"id": "q92", "w": "widespread", "k": "mean", "t": "There was **widespread** excitement when the town got its first cinema.", "o": ["felt by many people in many places", "felt by only one or two people", "felt only in the early morning", "felt only by very young children"], "n": "widespread = common among many people"}, {"id": "q93", "w": "universal", "k": "gap", "t": "Music is often called a _____ language because people all over the world can enjoy it.", "o": ["universal", "private", "foreign", "secret"], "n": "universal = for everyone, everywhere"}, {"id": "q94", "w": "universal", "k": "mean", "t": "The wish to be loved is **universal**.", "o": ["shared by everyone everywhere", "found only in rich countries", "felt only by small children", "very rare and unusual"], "n": "universal = true for or shared by everyone"}, {"id": "q95", "w": "specially", "k": "gap", "t": "This cake was made _____ for your birthday, so please take the first piece!", "o": ["specially", "hardly", "nearly", "barely"], "n": "specially = for one particular purpose or person"}, {"id": "q96", "w": "specially", "k": "mean", "t": "These dogs are **specially** trained to help blind people.", "o": ["for one particular purpose", "without any real purpose", "in a careless way", "for a very short time"], "n": "specially = for a particular purpose"}]}, {"key": "friends", "name": "Friends & Feelings", "sub": "Company, comfort and songs that move us", "qs": [{"id": "q97", "w": "companionship", "k": "gap", "t": "My grandfather lives alone, so his cat gives him _____ and he never feels lonely.", "o": ["companionship", "competition", "permission", "pollution"], "n": "companionship = having someone to spend time with"}, {"id": "q98", "w": "companionship", "k": "mean", "t": "Many older people get a dog for **companionship**.", "o": ["having a friend to spend time with", "keeping the house safe from thieves", "getting more exercise every day", "winning prizes at animal shows"], "n": "companionship = friendly company"}, {"id": "q99", "w": "comfort", "k": "gap", "t": "When Ela failed her test, her best friend hugged her and tried to _____ her.", "o": ["comfort", "blame", "ignore", "punish"], "n": "comfort (verb) = make someone feel less sad or worried"}, {"id": "q100", "w": "comfort", "k": "mean", "t": "Hot soup is a great **comfort** on a cold, rainy evening.", "o": ["something that makes you feel better", "something that makes you feel sick", "something that costs far too much", "something that is hard to find"], "n": "comfort (noun) = something that makes you feel better"}, {"id": "q101", "w": "embrace", "k": "gap", "t": "At the airport, the two sisters ran to _____ each other after five years apart.", "o": ["embrace", "avoid", "replace", "compare"], "n": "embrace = hug"}, {"id": "q102", "w": "embrace", "k": "mean", "t": "Our new teacher **embraced** the idea of using tablets in class.", "o": ["accepted happily", "refused angrily", "forgot quickly", "explained badly"], "n": "embrace an idea = accept it happily"}, {"id": "q103", "w": "kin", "k": "gap", "t": "Family gatherings are a chance to see your _____: cousins, aunts, uncles and grandparents.", "o": ["kin", "pets", "rivals", "teachers"], "n": "kin = family members; relatives"}, {"id": "q104", "w": "kin", "k": "mean", "t": "Dogs often treat the people they live with like **kin**.", "o": ["family members", "total strangers", "angry enemies", "next-door neighbors"], "n": "kin = family"}, {"id": "q105", "w": "trusty", "k": "gap", "t": "Dad calls his old car \"my _____ friend\" because it has never let him down in twenty years.", "o": ["trusty", "useless", "fragile", "broken"], "n": "trusty = reliable; you can always depend on it"}, {"id": "q106", "w": "trusty", "k": "mean", "t": "Leo took his **trusty** flashlight on every camping trip.", "o": ["reliable and always useful", "new and very expensive", "old and often broken", "heavy and hard to carry"], "n": "trusty = reliable"}, {"id": "q107", "w": "veterinarian", "k": "gap", "t": "Our dog hurt its leg, so we took it to the _____.", "o": ["veterinarian", "dentist", "hairdresser", "electrician"], "n": "veterinarian (vet) = a doctor for animals"}, {"id": "q108", "w": "veterinarian", "k": "mean", "t": "Sena wants to be a **veterinarian** because she loves animals.", "o": ["a doctor for animals", "a teacher of children", "a worker on a farm", "a seller of pets"], "n": "veterinarian = an animal doctor"}, {"id": "q109", "w": "evoke", "k": "gap", "t": "The smell of fresh bread always _____ memories of my grandmother's kitchen.", "o": ["evokes", "erases", "avoids", "delays"], "n": "evoke = bring a feeling or memory into your mind"}, {"id": "q110", "w": "evoke", "k": "mean", "t": "Sad songs can **evoke** strong feelings, even in people who rarely cry.", "o": ["bring a feeling or memory into your mind", "stop you from feeling anything at all", "make you fall asleep very quickly", "help you sing more loudly and clearly"], "n": "evoke = call up a feeling or memory"}, {"id": "q111", "w": "relate", "k": "gap", "t": "I can _____ to the main character because she is also the youngest in a big family.", "o": ["relate", "apologize", "object", "reply"], "n": "relate to someone = understand them and feel connected to them"}, {"id": "q112", "w": "relate", "k": "mean", "t": "Many teenagers **relate** to songs about friendship and growing up.", "o": ["understand and feel connected", "feel bored and tired listening", "laugh loudly and make fun", "refuse to listen at all"], "n": "relate to = feel connected to"}, {"id": "q113", "w": "anthem", "k": "gap", "t": "The players stood still while the band played the national _____ before the match.", "o": ["anthem", "flag", "holiday", "park"], "n": "national anthem = a country's official song"}, {"id": "q114", "w": "anthem", "k": "mean", "t": "That song became the **anthem** of our summer camp; everyone sang it every night.", "o": ["a song that is special to a group", "a rule that everyone must follow", "a game played around a campfire", "a story told before bedtime"], "n": "anthem = a song that is special to a group"}]}]};
+const HUES = {mind:"--orchid",meds:"--lagoon",brain:"--sky",court:"--marigold",watch:"--fern",friends:"--rose"};
+const KEY = "onur-mindmatters-w2:";
+const store = {
+  get(k,d){try{const v=localStorage.getItem(KEY+k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v))}catch(e){}}
+};
+let mastered = store.get("mastered",{});   // id -> true
+let best = store.get("best",{});           // level key -> stars
+const $ = id => document.getElementById(id);
+const ALL = DATA.levels.flatMap(L => L.qs.map(q => Object.assign({lvl:L.key}, q)));
+const TOTAL = ALL.length;
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const shuffle = a => {a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---------- home ---------- */
+function drawRing(){
+  const r=46, C=2*Math.PI*r, gap=1.2, n=DATA.levels.length;
+  const segLen = C/n;
+  let svg = `<svg viewBox="0 0 100 100" aria-hidden="true">`;
+  DATA.levels.forEach((L,i)=>{
+    const done = L.qs.filter(q=>mastered[q.id]).length/L.qs.length;
+    const col = cssv(HUES[L.key]);
+    const start = i*segLen + gap/2, len = segLen-gap;
+    svg += `<circle cx="50" cy="50" r="${r}" fill="none" stroke="${col}" stroke-opacity=".16" stroke-width="7" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-start}"/>`;
+    if(done>0) svg += `<circle cx="50" cy="50" r="${r}" fill="none" stroke="${col}" stroke-width="7" stroke-linecap="butt" stroke-dasharray="${len*done} ${C-len*done}" stroke-dashoffset="${-start}"/>`;
+  });
+  svg += `</svg>`;
+  const m = ALL.filter(q=>mastered[q.id]).length;
+  $("ring").innerHTML = svg + `<div class="core"><div><b>${m}</b><span>of ${TOTAL} questions<br>answered right</span></div></div>`;
+  $("ring").setAttribute("aria-label", `${m} of ${TOTAL} questions answered correctly`);
+}
+function drawLevels(){
+  const ul=$("levels"); ul.innerHTML="";
+  DATA.levels.forEach(L=>{
+    const m=L.qs.filter(q=>mastered[q.id]).length, n=L.qs.length;
+    const words=[...new Set(L.qs.map(q=>q.w))].length;
+    const li=document.createElement("li");
+    li.innerHTML=`<button class="lvl" type="button" style="--c:var(${HUES[L.key]})">
+      <span class="dot"></span>
+      <span><h2>${esc(L.name)}</h2><p>${esc(L.sub)} · ${words} words</p><div class="bar"><i style="width:${m/n*100}%"></i></div></span>
+      <span class="count ${m===n?"done":""}">${m===n?"Done":m+" / "+n}</span></button>`;
+    li.firstChild.onclick=()=>startLevel(L.key);
+    ul.appendChild(li);
+  });
+  const li=document.createElement("li");
+  li.innerHTML=`<button class="lvl mix" type="button"><span class="dot"></span><span><h2>Final mix</h2><p>30 questions from every level, in random order</p></span><span class="count">Go</span></button>`;
+  li.firstChild.onclick=()=>startLevel("mix");
+  ul.appendChild(li);
+}
+function showHome(){
+  $("quiz").hidden=true;$("end").hidden=true;$("home").hidden=false;
+  drawRing();drawLevels();window.scrollTo(0,0);
+}
+
+/* ---------- play ---------- */
+let S=null;
+function startLevel(key){
+  let qs, name, hue;
+  if(key==="mix"){ qs=shuffle(ALL).slice(0,30); name="Final mix"; hue="--ink"; }
+  else { const L=DATA.levels.find(l=>l.key===key); qs=shuffle(L.qs.map(q=>Object.assign({lvl:key},q))); name=L.name; hue=HUES[key]; }
+  S={key,name,hue,round:1,queue:qs,i:0,miss:[],firstTotal:qs.length,firstRight:0,streak:0,bestStreak:0};
+  document.documentElement.style.setProperty("--hue",`var(${hue})`);
+  prepRound();
+  $("home").hidden=true;$("end").hidden=true;$("quiz").hidden=false;
+  showQ();
+}
+function prepRound(){
+  // balanced answer positions for this round: A, B, C and D used about equally
+  const n=S.queue.length; let pos=[];
+  while(pos.length<n) pos=pos.concat(shuffle([0,1,2,3]));
+  pos=shuffle(pos.slice(0,n));
+  S.queue=S.queue.map((q,i)=>{
+    const others=shuffle(q.o.slice(1)); const opts=others.slice(); opts.splice(pos[i],0,q.o[0]);
+    return Object.assign({},q,{opts,ans:pos[i]});
+  });
+}
+function sentenceHTML(q,filled){
+  if(q.k==="gap"){
+    const [a,b]=q.t.split("_____");
+    const fill = filled ? `<span class="gap filled">${esc(q.o[0])}</span>` : `<span class="gap" aria-label="blank">______</span>`;
+    return esc(a)+fill+esc(b);
+  }
+  return esc(q.t).replace(/\*\*(.+?)\*\*/,'<span class="hl">$1</span>');
+}
+function showQ(){
+  const q=S.queue[S.i];
+  $("qhead").textContent=S.name;
+  $("where").innerHTML=`Round ${S.round}<br>${S.i+1} of ${S.queue.length}`;
+  $("trackFill").style.width=(S.i/S.queue.length*100)+"%";
+  $("ask").textContent = q.k==="gap" ? "Choose the word that fits the sentence." : "What does the highlighted word mean in this sentence?";
+  $("sent").innerHTML=sentenceHTML(q,false);
+  const box=$("opts"); box.innerHTML="";
+  q.opts.forEach((o,j)=>{
+    const b=document.createElement("button");
+    b.type="button"; b.className="opt";
+    b.innerHTML=`<span class="k">${"ABCD"[j]}</span><span>${esc(o)}</span>`;
+    b.onclick=()=>answer(j);
+    box.appendChild(b);
+  });
+  $("fb").hidden=true; $("nextBtn").hidden=true;
+  window.scrollTo(0,0);
+}
+function answer(j){
+  const q=S.queue[S.i]; if(S.locked) return; S.locked=true;
+  const btns=[...$("opts").children];
+  btns.forEach((b,k)=>{b.disabled=true; if(k===q.ans) b.classList.add("right"); else if(k===j) b.classList.add("wrong"); else b.classList.add("dim");});
+  const ok = j===q.ans;
+  if(q.k==="gap") $("sent").innerHTML=sentenceHTML(q,true);
+  const fb=$("fb"); fb.hidden=false;
+  if(ok){
+    mastered[q.id]=true; store.set("mastered",mastered);
+    if(S.round===1) S.firstRight++;
+    S.streak++; S.bestStreak=Math.max(S.bestStreak,S.streak);
+    fb.className="fb ok"; fb.innerHTML=`<strong>Correct!</strong>${esc(q.n)}`;
+  } else {
+    S.miss.push(q); S.streak=0;
+    fb.className="fb no"; fb.innerHTML=`<strong>Not quite. The answer is “${esc(q.opts[q.ans])}”.</strong>${esc(q.n)}<br>This one will come back in the next round.`;
+  }
+  $("streak").textContent = S.streak>=3 ? `${S.streak} in a row!` : "";
+  const nb=$("nextBtn"); nb.hidden=false;
+  nb.textContent = S.i+1<S.queue.length ? "Next question" : "See my results";
+  nb.focus({preventScroll:true});
+}
+$("nextBtn").onclick=()=>{
+  S.locked=false; S.i++;
+  if(S.i<S.queue.length) showQ(); else endRound();
+};
+function endRound(){
+  $("trackFill").style.width="100%";
+  const box=$("endBox");
+  if(S.miss.length){
+    const words=[...new Set(S.miss.map(q=>q.w))];
+    box.innerHTML=`<div class="big">Round ${S.round} done</div>
+      <p>You got ${S.queue.length-S.miss.length} of ${S.queue.length} right. These words need another try:</p>
+      <ul class="missed">${words.map(w=>`<li>${esc(w)}</li>`).join("")}</ul>
+      <div class="btnrow"><button class="next" id="again" type="button">Start round ${S.round+1} (${S.miss.length} questions)</button>
+      <button class="next ghost" id="toHome" type="button">Back to levels</button></div>`;
+    $("again").onclick=()=>{S.round++;S.queue=shuffle(S.miss);S.miss=[];S.i=0;prepRound();$("end").hidden=true;$("quiz").hidden=false;showQ();};
+  } else {
+    const pct=S.firstRight/S.firstTotal;
+    const stars = pct>=.9?3:pct>=.7?2:1;
+    if(S.key!=="mix"){ best[S.key]=Math.max(best[S.key]||0,stars); store.set("best",best); }
+    box.innerHTML=`<div class="stars" aria-label="${stars} of 3 stars">${"★".repeat(stars)}<span class="off">${"★".repeat(3-stars)}</span></div>
+      <div class="big">${S.round===1?"Perfect round!":"Level mastered!"}</div>
+      <p>First try: ${S.firstRight} of ${S.firstTotal} right${S.round>1?`. You fixed every mistake in ${S.round} rounds.`:"."}</p>
+      <p>Best streak: ${S.bestStreak} in a row.</p>
+      <div class="btnrow"><button class="next" id="toHome" type="button">Back to levels</button>
+      <button class="next ghost" id="replay" type="button">Play this level again</button></div>`;
+    $("replay").onclick=()=>startLevel(S.key);
+  }
+  $("toHome").onclick=showHome;
+  $("quiz").hidden=true;$("end").hidden=false;window.scrollTo(0,0);
+}
+$("backBtn").onclick=()=>{S=null;showHome();};
+$("resetBtn").onclick=()=>{ if(confirm("Clear all your progress and start again?")){mastered={};best={};store.set("mastered",mastered);store.set("best",best);showHome();} };
+document.addEventListener("keydown",e=>{
+  if($("quiz").hidden||!S) return;
+  const k=e.key.toUpperCase(); const idx="ABCD1234".indexOf(k);
+  if(idx>=0 && !S.locked){ answer(idx%4); }
+  else if(e.key==="Enter" && S.locked && document.activeElement!==$("nextBtn")){ $("nextBtn").click(); }
+});
+showHome();
+</script>
+</body>
+</html>
