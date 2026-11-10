@@ -239,6 +239,9 @@ button { font: inherit; color: inherit; }
 .cc-idea { background: #D6E6FF; } .cc-ev { background: #CDEFD6; } .cc-choice { background: #FFDDB8; } .cc-an { background: #E6D6FA; }
 .cc-reader { background: transparent !important; border-bottom: 2px dotted #7C7C86; border-radius: 0 !important; }
 .cc-miss { color: var(--red); font-weight: 700; font-style: italic; }
+.st-ok { font-weight: 700; }
+.st-bad { font-weight: 700; color: #FFFFFF; background: var(--red); border-radius: 4px; padding: 0 3px; }
+.st-note { display: inline-block; color: var(--red); font-weight: 700; font-size: .86rem; background: var(--red-soft); border-radius: 6px; padding: 0 6px; margin: 0 2px; }
 .legend-cc { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: .8rem; }
 .legend-cc span { display: inline-flex; align-items: center; gap: 5px; }
 .legend-cc i { width: 18px; height: 12px; border-radius: 3px; display: inline-block; }
@@ -433,6 +436,7 @@ button { font: inherit; color: inherit; }
           <div class="card">
             <span class="label">Your paragraph, color-coded</span>
             <div class="legend-cc" id="exam-legend"></div>
+            <p class="small" id="exam-starts"></p>
             <div class="final cc" id="exam-cc"></div>
           </div>
           <div class="card">
@@ -1008,7 +1012,83 @@ button { font: inherit; color: inherit; }
     });
   }
   var FRAMEALL = Object.keys(FRAMES).map(function (k) { return FRAMES[k].checks[0][0]; });
-  function sentences(text) { return (String(text).match(/[^.!?]+[.!?]+["”’)]*\s*|[^.!?]+$/g) || []).filter(function (x) { return x.trim(); }); }
+  /* Sentence splitter that never splits inside a quotation ("I skin my knees. I bleed." stays in one sentence) */
+  function sentences(text) {
+    var t = String(text), out = [], start = 0, inq = false, i = 0;
+    while (i < t.length) {
+      var ch = t[i];
+      if (ch === "“") inq = true; else if (ch === "”") inq = false; else if (ch === '"') inq = !inq;
+      if (/[.!?]/.test(ch)) {
+        var j = i; while (j + 1 < t.length && /[.!?]/.test(t[j + 1])) j++;
+        var k = j + 1;
+        while (k < t.length && /["”’)]/.test(t[k])) { if (t[k] === "”") inq = false; else if (t[k] === '"') inq = !inq; k++; }
+        if (!inq && (k >= t.length || /\s/.test(t[k]))) { while (k < t.length && /\s/.test(t[k])) k++; out.push(t.slice(start, k)); start = k; }
+        i = k; continue;
+      }
+      i++;
+    }
+    if (start < t.length) out.push(t.slice(start));
+    return out.filter(function (x) { return x.trim(); });
+  }
+  /* The 15 sentence beginnings of the exam structure, in order */
+  var SUR = "Collins", PRON = /He also/.test(FRAMES.Simile.text) ? "He" : "She";
+  function starterSlots() {
+    var n = SUR.toLowerCase(), say = "(states|writes|says|describes)";
+    var one = [
+      [/^the (adjective|noun|verb|adverb|pronoun)\b/, "The adjective / noun / verb “___” is …", "an"],
+      [new RegExp("^" + n + " (compares|repeats|gives|places|exaggerates|asks)\\b"), SUR + " compares / repeats / gives / places …", "choice"],
+      [/^(he|she) (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights)\b/, PRON + " also emphasizes / suggests / portrays …", "choice"],
+      [/^the reader is\b/, "The reader is ___ because …", "reader"],
+      [/^they also (realize|realise|notice|understand)\b/, "They also realize / notice / understand …", "reader"],
+      [/^through the use of\b/, "Through the use of …, " + SUR + " presents …", "idea"]];
+    return [[new RegExp("^in the poem,? " + n + " presents\\b"), "In the poem, " + SUR + " presents …", "idea"],
+            [new RegExp("^" + n + ",? " + say + "\\b"), SUR + " states “___.”", "ev"]].concat(one)
+      .concat([[new RegExp("^furthermore,? " + n + ",? " + say + "\\b"), "Furthermore, " + SUR + " states “___.”", "ev"]]).concat(one);
+  }
+  function startKey(sent) { return low(String(sent).replace(/[“”]/g, '"')); }
+  /* Align the student's sentences with the 15 beginnings (longest common subsequence), so one missing or extra sentence does not turn everything red */
+  function alignStarts(S_, T) {
+    var m = S_.length, n = T.length, L = [], i, j;
+    var hit = S_.map(function (x) { var k = startKey(x); return T.map(function (t) { return t[0].test(k); }); });
+    for (i = 0; i <= m; i++) { L.push([]); for (j = 0; j <= n; j++) L[i].push(0); }
+    for (i = m - 1; i >= 0; i--) for (j = n - 1; j >= 0; j--) L[i][j] = hit[i][j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+    var pairs = []; i = 0; j = 0;
+    while (i < m && j < n) { if (hit[i][j] && L[i][j] === L[i + 1][j + 1] + 1) { pairs.push([i, j]); i++; j++; } else if (L[i + 1][j] >= L[i][j + 1]) i++; else j++; }
+    return pairs;
+  }
+  function splitStart(sent, nw) {
+    var m = /^(\s*)([\s\S]*)$/.exec(sent), words = m[2].split(/(\s+)/), head = "", c = 0, k = 0;
+    while (k < words.length && c < nw) { head += words[k]; if (words[k].trim()) c++; k++; }
+    return [m[1], head, words.slice(k).join("")];
+  }
+  function renderExamCC(el, text) {
+    el.textContent = "";
+    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T), ok = pairs.length, pi = 0, pj = 0;
+    function sentNode(str, cat, good, expect) {
+      var sp = document.createElement("span"); if (cat) sp.className = "c cc-" + cat;
+      var nw = good ? good : 3, parts = splitStart(str, nw);
+      var b = document.createElement("b"); b.className = good ? "st-ok" : "st-bad"; b.textContent = parts[1];
+      sp.appendChild(document.createTextNode(parts[0])); sp.appendChild(b); sp.appendChild(document.createTextNode(parts[2]));
+      el.appendChild(sp);
+      if (!good) { var nt = document.createElement("span"); nt.className = "st-note"; nt.textContent = expect ? "⚠ Start with: " + expect : "⚠ This beginning is not in the structure"; el.appendChild(nt); el.appendChild(document.createTextNode(" ")); }
+    }
+    function missNode(label) { var sp = document.createElement("span"); sp.className = "cc-miss"; sp.textContent = "[missing: " + label + "] "; el.appendChild(sp); }
+    function gap(i1, j1) {
+      while (pi < i1 || pj < j1) {
+        if (pi < i1 && pj < j1) { sentNode(S_[pi], catOf(S_[pi]) || T[pj][2], 0, T[pj][1]); pi++; pj++; }
+        else if (pi < i1) { sentNode(S_[pi], catOf(S_[pi]), 0, ""); pi++; }
+        else { missNode(T[pj][1]); pj++; }
+      }
+    }
+    pairs.forEach(function (p) {
+      gap(p[0], p[1]);
+      var mt = T[p[1]][0].exec(startKey(S_[p[0]]));
+      sentNode(S_[p[0]], T[p[1]][2], mt[0].split(/\s+/).length, "");
+      pi = p[0] + 1; pj = p[1] + 1;
+    });
+    gap(S_.length, T.length);
+    return [ok, T.length];
+  }
   function catOf(sent) {
     var t = low(sent.replace(/[“”]/g, '"')).replace(/^furthermore,?\s*/, "");
     if (/^(in the poem|through the use of)\b/.test(t)) return "idea";
@@ -1169,7 +1249,9 @@ button { font: inherit; color: inherit; }
     c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : "no"; li.textContent = x[1]; ul.appendChild(li); });
     var qs = quotes(ex.text), unknown = qs.filter(function (q) { return !SPOTS.some(function (s) { return inPoem(q, s); }); });
     $("exam-qnote").textContent = unknown.length ? "Check these quotations against the poem yourself (the app only knows the lines with highlighted devices): " + unknown.map(function (q) { return "“" + q + "”"; }).join(", ") : "";
-    legendCC($("exam-legend")); renderCCText($("exam-cc"), ex.text || "(nothing written)");
+    legendCC($("exam-legend"));
+    var stc = renderExamCC($("exam-cc"), ex.text || "");
+    $("exam-starts").textContent = "Sentence beginnings: " + stc[0] + " of " + stc[1] + " correct. Bold = correct beginning. Red = wrong or missing beginning, with the words you should start with.";
     var used = SPOTS.filter(function (s) { return qs.some(function (q) { return inPoem(q, s); }); });
     var a, b;
     if (used.length >= 2) { a = used[0]; b = used[1]; $("exam-model-h").textContent = "Model paragraph for the same two devices"; }
