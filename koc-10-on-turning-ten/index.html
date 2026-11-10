@@ -264,15 +264,66 @@ button { font: inherit; color: inherit; }
 .eb-warn { font-size: .84rem; font-weight: 700; color: #7A1F17; background: var(--red-soft); border-radius: 8px; padding: 4px 8px; }
 .eb-nudge { font-size: .84rem; font-weight: 700; color: var(--board); }
 @media (prefers-reduced-motion: reduce) { .eb-pop, .eb-tip.flash { animation: none; } }
-/* Big coach pop-up: appears while writing, holds, then fades slowly. Never blocks typing. */
-.big-pop { position: fixed; left: 50%; top: 15%; transform: translateX(-50%) scale(.96); width: min(92vw, 520px); z-index: 80; pointer-events: none; text-align: center;
-  background: var(--board); color: #FFFFFF; border-radius: 20px; padding: 20px 18px 18px; box-shadow: 0 20px 44px rgba(0,0,0,.38); opacity: 0; transition: opacity .25s, transform .25s; }
-.big-pop.on { opacity: .97; transform: translateX(-50%) scale(1); }
+/* Coach pop-up v3 (O. H., 2026-11-10): sits just above the line being written, stays 30 seconds, then fades. Tap × to close. */
+.big-pop { position: fixed; left: 16px; top: 30%; width: min(calc(100vw - 32px), 560px); z-index: 80; pointer-events: none; text-align: left;
+  background: var(--board); color: #FFFFFF; border-radius: 16px; padding: 12px 44px 13px 15px; box-shadow: 0 14px 32px rgba(0,0,0,.36);
+  opacity: 0; transform: translateY(6px); transition: opacity .25s, transform .25s; }
+.big-pop.on { opacity: .97; transform: none; }
 .big-pop.out { opacity: 0; transition: opacity 2.6s ease-in; }
-.big-pop b { display: block; font-family: var(--f-body); font-size: clamp(1.5rem, 6.6vw, 2.05rem); font-weight: 800; line-height: 1.14; letter-spacing: .01em; text-transform: uppercase; }
-.big-pop span { display: block; margin-top: 10px; font-size: 1.1rem; font-weight: 700; line-height: 1.3; }
-.big-pop.red { background: var(--red); }
-.big-pop.time { background: #FFE28C; color: #1B1D21; }
+.big-pop b { display: block; font-family: var(--f-body); font-size: clamp(1.12rem, 4.9vw, 1.45rem); font-weight: 800; line-height: 1.18; text-transform: uppercase; letter-spacing: .01em; }
+.big-pop span { display: block; margin-top: 6px; font-size: 1rem; font-weight: 700; line-height: 1.32; }
+.big-pop::after { content: ""; position: absolute; left: 26px; bottom: -9px; border: 10px solid transparent; border-bottom: 0; border-top-color: inherit; }
+.big-pop.below::after { bottom: auto; top: -9px; border-top: 0; border-bottom: 10px solid; border-bottom-color: inherit; }
+.big-pop { border-color: var(--board); }
+.big-pop.red { background: #D7001F; border-color: #D7001F; }
+.big-pop.amber { background: #FFB020; border-color: #FFB020; color: #1B1D21; }
+.big-pop.time { background: #FFE600; border-color: #FFE600; color: #1B1D21; }
+.big-pop .bp-x { position: absolute; right: 6px; top: 6px; width: 34px; height: 34px; border-radius: 50%; border: 0; pointer-events: auto; cursor: pointer;
+  background: rgba(255,255,255,.22); color: inherit; font-size: 1.3rem; line-height: 1; display: grid; place-items: center; }
+.big-pop.amber .bp-x, .big-pop.time .bp-x { background: rgba(0,0,0,.12); }
+@media (prefers-reduced-motion: reduce) { .big-pop, .big-pop.out { transition: none; } }
+/* Device picture (O. H., 2026-11-10): an animated drawing of the phrase the student is quoting, with what it means. Stays in the exam bar. */
+.eb-pic { display: flex; gap: 8px; align-items: center; background: #FFFDF6; border: 2px solid var(--board); border-radius: 12px; padding: 5px 30px 5px 5px; position: relative; }
+.eb-pic svg { width: 116px; height: 72px; flex: none; border-radius: 8px; display: block; }
+.eb-pic .pc { font-size: .76rem; line-height: 1.25; min-width: 0; }
+.eb-pic .pc i { font-style: normal; display: block; margin-top: 1px; }
+.eb-pic .pc b { color: var(--board); }
+.eb-pic-lab { display: block; font-size: .68rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--board); }
+.eb-pic .px { position: absolute; right: 2px; top: 2px; width: 26px; height: 26px; border-radius: 50%; border: 0; background: rgba(0,0,0,.07); cursor: pointer; font-size: 1.1rem; line-height: 1; color: var(--ink); }
+.eb-pic.flash { animation: picin .5s; }
+@keyframes picin { from { transform: scale(.96); opacity: .3; } to { transform: none; opacity: 1; } }
+.pic .em { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+.pic .tx { font-family: var(--f-body); }
+.pic * { transform-box: fill-box; transform-origin: var(--o, 50% 50%); }
+@keyframes sw { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+@keyframes bob { 50% { transform: translateY(-4px); } }
+@keyframes pul { 50% { transform: scale(1.14); } }
+@keyframes pul2 { 0%, 100% { transform: scale(.7); } 60% { transform: scale(1.7); } }
+@keyframes fade { 50% { opacity: .15; } }
+@keyframes flk { 0%, 100% { opacity: 1; } 20% { opacity: .55; } 40% { opacity: .9; } 60% { opacity: .4; } 80% { opacity: .85; } }
+@keyframes mv { to { transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--r, 0deg)) scale(var(--s, 1)); } }
+@keyframes lin { 0% { transform: translate(var(--fx, 0px), var(--fy, 0px)); opacity: 0; } 12%, 85% { opacity: 1; } 100% { transform: translate(var(--dx, 0px), var(--dy, 0px)); opacity: 0; } }
+@keyframes shk { 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin2 { 0%, 20% { transform: rotate(0); } 45%, 90% { transform: rotate(80deg); } 100% { transform: rotate(0); } }
+@keyframes ech { 0% { opacity: 0; transform: scale(.6); } 12%, 88% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes drn { 0%, 15% { transform: scaleX(1); } 85%, 100% { transform: scaleX(0); } }
+.pic .sw { transform-origin: var(--o, 50% 100%); animation: sw var(--t, 2.4s) ease-in-out var(--d, 0s) infinite; }
+.pic .bob { animation: bob var(--t, 1.8s) ease-in-out var(--d, 0s) infinite; }
+.pic .pul { animation: pul var(--t, 1.6s) ease-in-out var(--d, 0s) infinite; }
+.pic .pul2 { animation: pul2 var(--t, 3s) ease-in-out var(--d, 0s) infinite; }
+.pic .fade { animation: fade var(--t, 2.4s) ease-in-out var(--d, 0s) infinite; }
+.pic .flk { animation: flk var(--t, 1.3s) linear var(--d, 0s) infinite; }
+.pic .mv { animation: mv var(--t, 3s) ease-in-out var(--d, 0s) infinite alternate; }
+.pic .mv.flk { animation: mv var(--t, 3s) ease-in-out var(--d, 0s) infinite alternate, flk 1.3s linear infinite; }
+.pic .lin { animation: lin var(--t, 2s) linear var(--d, 0s) infinite; }
+.pic .shk { animation: shk .4s linear var(--d, 0s) infinite; }
+.pic .spin { animation: spin var(--t, 4s) linear var(--d, 0s) infinite; }
+.pic .spin2 { transform-origin: var(--o, 50% 100%); animation: spin2 var(--t, 3s) ease-in var(--d, 0s) infinite; }
+.pic .ech { opacity: 0; animation: ech var(--t, 4s) ease-out var(--d, 0s) infinite; }
+.pic .ech.shk { animation: ech var(--t, 4s) ease-out var(--d, 0s) infinite, shk .4s linear infinite; }
+.pic .drn { transform-origin: 0% 50%; animation: drn var(--t, 2.6s) ease-in var(--d, 0s) infinite; }
+@media (prefers-reduced-motion: reduce) { .pic * { animation: none !important; opacity: 1 !important; } }
 .timer { font-family: var(--f-hand); font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
 .timer.low { color: var(--red); }
 #exam-text { min-height: 320px; line-height: 1.55; }
@@ -450,6 +501,7 @@ button { font: inherit; color: inherit; }
               <span class="eb-score"><span class="eb-l">Structure score</span><span class="eb-pts"><span id="exam-pts">0</span><small> / 100</small><span class="eb-level" id="exam-level">Start</span></span><span class="eb-pop" id="exam-pop" hidden></span></span>
             </div>
             <div class="meter" aria-hidden="true"><i id="exam-meter"></i></div>
+            <div class="eb-pic" id="exam-pic" hidden><svg class="pic" viewBox="0 0 160 100" aria-hidden="true"></svg><div class="pc"><span class="eb-pic-lab">Picture it</span><i><b>You see:</b> <span id="pic-see"></span></i><i><b>It means:</b> <span id="pic-mean"></span></i></div><button class="px" type="button" aria-label="Hide the picture">×</button></div>
             <p class="eb-tip" id="exam-tip" role="status" aria-live="polite"></p>
             <p class="eb-warn" id="exam-warn" role="status" aria-live="polite" hidden></p>
             <p class="eb-nudge" id="exam-nudge" hidden></p>
@@ -534,7 +586,7 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
-<div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span></div>
+<div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span><button class="bp-x" type="button" aria-label="Close">×</button></div>
 <div class="sheet-back" id="sheet-back" hidden>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
     <div class="sheet-head"><span class="label" id="sheet-label"></span><button class="x" id="sheet-x" type="button" aria-label="Close">×</button></div>
@@ -548,6 +600,7 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 
+<script id="pic-data" type="application/json">{"s1": ["<defs><linearGradient id=\"pg9\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#FFF1E0\"/><stop offset=\"1\" stop-color=\"#FFD6B0\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg9)\"/><text x=\"80\" y=\"52\" font-size=\"50\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em shk\">🤒<\/text><text x=\"80\" y=\"92\" font-size=\"8\" font-weight=\"800\" fill=\"#7A3B10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">coming down with something<\/text>", "A child feeling suddenly sick, as if catching a cold.", "Turning ten feels like an illness: sadness arrives without warning."], "s2": ["<defs><linearGradient id=\"pg10\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#FDE7EC\"/><stop offset=\"1\" stop-color=\"#F8C9D4\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg10)\"/><text x=\"80\" y=\"50\" font-size=\"64\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🤍<\/text><circle cx=\"66\" cy=\"40\" r=\"4\" fill=\"#E0263B\" class=\"ech\" style=\"--d:0s\"/><circle cx=\"92\" cy=\"46\" r=\"4\" fill=\"#E0263B\" class=\"ech\" style=\"--d:0.5s\"/><circle cx=\"78\" cy=\"60\" r=\"4\" fill=\"#E0263B\" class=\"ech\" style=\"--d:1s\"/><circle cx=\"88\" cy=\"30\" r=\"3\" fill=\"#E0263B\" class=\"ech\" style=\"--d:1.5s\"/><text x=\"80\" y=\"92\" font-size=\"9\" font-weight=\"800\" fill=\"#8A1028\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">measles of the spirit<\/text>", "Red measles spots appearing, not on skin but on the spirit.", "Growing up is an illness of the feelings: it hurts inside the way childhood illnesses hurt."], "s3": ["<rect width=\"160\" height=\"100\" fill=\"#EAF4FF\"/><text x=\"48\" y=\"50\" font-size=\"52\" font-weight=\"800\" fill=\"#2E7DB8\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx bob\">1<\/text><text x=\"112\" y=\"50\" font-size=\"52\" font-weight=\"800\" fill=\"#B4470C\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx pul\" style=\"--t:2s\">2<\/text><text x=\"48\" y=\"90\" font-size=\"9\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">simple<\/text><text x=\"112\" y=\"90\" font-size=\"9\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">complex<\/text>", "The simple number one next to the more complicated number two.", "A tiny change in age once felt huge: every early year felt new and precious."], "s4": ["<defs><linearGradient id=\"pg11\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#FFE7B8\"/><stop offset=\"1\" stop-color=\"#C98A4A\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg11)\"/><rect x=\"96\" y=\"40\" width=\"54\" height=\"50\" rx=\"0\" fill=\"#8B5A2B\"/><path d=\"M92 40 L123 18 L154 40Z\" stroke=\"none\" fill=\"#6B3F1C\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M10 0 L100 60 M30 0 L110 70 M50 0 L120 80\" stroke=\"#FFF4C8\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"fade\"/><text x=\"44\" y=\"88\" font-size=\"10\" font-weight=\"800\" fill=\"#4A2A0C\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">so solemnly<\/text>", "Late-afternoon light falling slowly and seriously on a tree house.", "Even the light seems serious now: growing up changes how the child sees the world."], "s5": ["<rect width=\"160\" height=\"100\" fill=\"#EAF2FF\"/><text x=\"104\" y=\"56\" font-size=\"42\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🚲<\/text><rect x=\"10\" y=\"46\" width=\"60\" height=\"4\" rx=\"2\" fill=\"#1F3C88\" class=\"drn\"/><rect x=\"18\" y=\"58\" width=\"52\" height=\"4\" rx=\"2\" fill=\"#1F3C88\" class=\"drn\" style=\"--d:0.3s\"/><rect x=\"26\" y=\"70\" width=\"44\" height=\"4\" rx=\"2\" fill=\"#1F3C88\" class=\"drn\" style=\"--d:0.6s\"/><text x=\"80\" y=\"92\" font-size=\"9\" font-weight=\"800\" fill=\"#1F3C88\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">speed drained out<\/text>", "A dark blue bike, its speed lines draining away.", "The bike lost its magic: the energy and excitement of early childhood drain out."], "s6": ["<defs><linearGradient id=\"pg12\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#0E1630\"/><stop offset=\"1\" stop-color=\"#2B3A6B\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg12)\"/><text x=\"30\" y=\"24\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🪐<\/text><text x=\"130\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em fade\">⭐<\/text><text x=\"110\" y=\"80\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌍<\/text><text x=\"30\" y=\"70\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em mv\" style=\"--dx:80px;--dy:-20px;--t:3.5s\">👟<\/text>", "A child in sneakers walking through the whole universe.", "Exaggeration: life suddenly feels huge and serious to a child about to grow up."], "s7": ["<rect width=\"160\" height=\"100\" fill=\"#F2F2F2\"/><text x=\"36\" y=\"50\" font-size=\"40\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em shk\">⏰<\/text><text x=\"108\" y=\"30\" font-size=\"15\" font-weight=\"800\" fill=\"#B4470C\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0s\">time to…<\/text><text x=\"108\" y=\"54\" font-size=\"15\" font-weight=\"800\" fill=\"#B4470C\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.8s\">time to…<\/text><text x=\"108\" y=\"78\" font-size=\"15\" font-weight=\"800\" fill=\"#B4470C\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:1.6s\">time to…<\/text>", "A clock ticking, and “time to” said again and again.", "The repeated “time to” sounds like a countdown: growing up cannot be stopped."], "s8": ["<rect width=\"160\" height=\"100\" fill=\"#FFF6CC\"/><rect x=\"80\" y=\"0\" width=\"80\" height=\"100\" rx=\"0\" fill=\"#FDE2E2\"/><text x=\"40\" y=\"48\" font-size=\"38\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">🌟<\/text><text x=\"40\" y=\"88\" font-size=\"9\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">then: shine<\/text><text x=\"120\" y=\"48\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">🩸<\/text><text x=\"120\" y=\"88\" font-size=\"9\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">now: bleed<\/text><path d=\"M80 6V94\" stroke=\"#FFFFFF\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"4 4\"/><circle cx=\"80\" cy=\"50\" r=\"9\" fill=\"#FFFFFF\"/><text x=\"80\" y=\"50\" font-size=\"8\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">vs<\/text>", "Then: if cut, he would shine. Now: he skins his knees and bleeds.", "Shining vs bleeding: childhood felt magical and safe; now he learns that life hurts."]}</script>
 <script id="app-data" type="application/json">{"spots": [{"id": "s1", "where": "Lines 1–16 · Turning ten", "side": "B", "quote": "makes me feel / like I'm coming down with something", "device": "Simile", "ctx": ["The whole idea of it makes me feel / like I'm coming down with something,"], "dAns": "Simile: the feeling about turning ten is compared to getting ill, using the word ‘like.’", "dWrong": ["Metaphor: the speaker says he is a disease, without using ‘like’ or ‘as.’", "Personification: the illness is given the human ability to talk.", "Juxtaposition: a birthday party is placed next to a hospital."], "dHint": "Find the word “like.” What is the feeling compared to?", "dWhy": "His feeling about turning ten is compared to coming down with an illness, using “like.” That is a simile.", "effect": "The reader sees that the speaker feels turning ten is unpleasant and worrying, like the start of an illness, instead of a happy birthday.", "eWrong": ["The reader learns that the speaker really has a fever and must stay home from school.", "The reader sees that the speaker is excited about his birthday party.", "The reader sees that the speaker is pretending to be ill to skip a test."], "eHint": "How do you feel when you are “coming down with something”? Is a birthday supposed to feel like that?", "words": [["something", "pronoun", "What could the vague word “something” suggest? Is the speaker unsure what is wrong?"], ["coming", "verb", "What could “coming down with” suggest? Something slowly arriving that you cannot stop?"]], "frameHint": "Simile frame: Collins compares ___ (turning ten) to ___ (getting ill) to suggest ___. He also emphasizes ___.", "readerHint": "How does this opening make you feel? Amused? Surprised? Sympathetic?", "message": "the speaker's unexpected sadness about growing older", "m_ev": "Collins states, “makes me feel / like I'm coming down with something.”", "m_word": "The pronoun “something” is significant because it suggests the speaker cannot name what is wrong, only that he feels unwell.", "m_dev": "Collins compares turning ten to getting ill to suggest that growing up feels unpleasant and worrying to the speaker. He also emphasizes that a birthday can bring sadness instead of joy.", "m_reader": "The reader is amused because a ten-year-old speaks so seriously. They also realize that growing up can feel like a loss."}, {"id": "s2", "where": "Lines 1–16 · Turning ten", "side": "B", "quote": "a kind of measles of the spirit", "device": "Metaphor", "ctx": ["a kind of measles of the spirit, / a mumps of the psyche, / a disfiguring chicken pox of the soul."], "dAns": "Metaphor: his sadness is called ‘measles of the spirit,’ without using ‘like’ or ‘as.’", "dWrong": ["Simile: his spirit is compared to measles using the word ‘like.’", "Hyperbole: the speaker exaggerates how many children have measles.", "Imagery: a detailed description of a doctor's office."], "dHint": "Can a spirit really catch measles? What is his sadness being compared to?", "dWhy": "A spirit cannot catch measles. His sadness is called a childhood illness of the spirit, without “like” or “as.” That is a metaphor.", "effect": "The reader sees that the speaker feels sick on the inside, as if growing up is an illness of his feelings, not his body.", "eWrong": ["The reader learns that the speaker caught measles on his birthday.", "The reader sees that the speaker is studying medicine at school.", "The reader sees that the speaker feels completely healthy and happy."], "eHint": "Measles, mumps and chicken pox are childhood illnesses. Why might he use them to describe how he feels inside?", "words": [["measles", "noun", "What could “measles” suggest? A childhood illness that almost everyone catches?"], ["spirit", "noun", "What could “spirit” suggest? His feelings, his inner self, not his body?"]], "frameHint": "Metaphor frame: Collins compares ___ (his sadness) to ___ (measles) to suggest ___. He also emphasizes ___.", "readerHint": "How do you feel about this comparison? Amused? Sympathetic? Thoughtful?", "message": "how growing up hurts the speaker's feelings like a childhood illness", "m_ev": "Collins states, “a kind of measles of the spirit.”", "m_word": "The noun “spirit” is significant because it suggests the illness is inside his feelings, not his body.", "m_dev": "Collins compares the speaker's sadness to measles to suggest that growing up feels like an illness of the spirit. He also emphasizes that the pain of leaving childhood is real, even if it cannot be seen.", "m_reader": "The reader is amused because childhood illnesses are used in such a clever way. They also realize that the speaker's sadness is deep and real."}, {"id": "s3", "where": "Lines 1–16 · Turning ten", "side": "A", "quote": "the perfect simplicity of being one / and the beautiful complexity introduced by two", "device": "Juxtaposition", "ctx": ["the perfect simplicity of being one / and the beautiful complexity introduced by two."], "dAns": "Juxtaposition: the ‘perfect simplicity’ of age one is placed next to the ‘beautiful complexity’ of age two.", "dWrong": ["Simile: one is compared to two using the word ‘like.’", "Personification: the numbers are given the human ability to speak.", "Hyperbole: the speaker exaggerates how old he is."], "dHint": "Look at “simplicity” and “complexity.” Are they similar or opposite?", "dWhy": "“Simplicity” and “complexity,” age one and age two, are opposites placed side by side. That is juxtaposition.", "effect": "The reader smiles at a young child treating ages one and two like great eras of life, and sees how much each year meant to him.", "eWrong": ["The reader learns how to do simple and complex math problems.", "The reader sees that the speaker hated being one and two years old.", "The reader sees that the speaker cannot remember anything about being small."], "eHint": "Why would a child describe being one and two in such grand words? What does it show about his memories?", "words": [["perfect", "adjective", "What could “perfect” suggest about how he remembers being one?"], ["beautiful", "adjective", "What could “beautiful” suggest about how he sees growing up so far?"], ["simplicity", "noun", "What could “simplicity” suggest about early childhood?"]], "frameHint": "Juxtaposition frame: Collins places ___ (the simplicity of being one) next to ___ (the complexity of being two) to suggest ___. He emphasizes ___.", "readerHint": "How does this make you feel? Amused? Nostalgic? Charmed?", "message": "how precious every year of early childhood feels to the speaker", "m_ev": "Collins states, “the perfect simplicity of being one / and the beautiful complexity introduced by two.”", "m_word": "The adjective “perfect” is significant because it suggests the speaker remembers his earliest years as ideal and untroubled.", "m_dev": "Collins places the simplicity of being one next to the complexity of being two to suggest how much each year of childhood meant to the speaker. He emphasizes how precious and full of change those early years were.", "m_reader": "The reader is amused because the child talks about ages one and two like great periods of history. They also realize how much he treasures his childhood."}, {"id": "s4", "where": "Lines 17–27 · The beginning of sadness", "side": "B", "quote": "Back then it never fell so solemnly", "device": "Personification", "ctx": ["watching the late afternoon light. / Back then it never fell so solemnly / against the side of my tree house,"], "dAns": "Personification: the afternoon light is given the human quality of being solemn and serious.", "dWrong": ["Simile: the light is compared to a tree house using the word ‘like.’", "Repetition: the word ‘light’ is repeated in every line.", "Hyperbole: the speaker exaggerates how big the tree house is."], "dHint": "What does “it” mean here? Look at the line before. Can light really be “solemn”?", "dWhy": "Light cannot feel serious; people do. The afternoon light is given the human quality of solemnity. That is personification.", "effect": "The reader feels the speaker's new seriousness: even the light seems sad and heavy now, because he sees the world differently.", "eWrong": ["The reader sees that the tree house is falling down because of the sun.", "The reader learns what time of day the speaker comes home from school.", "The reader sees that the light is bright, happy and playful."], "eHint": "Has the light really changed, or has the speaker changed? How does his mood color what he sees?", "words": [["solemnly", "adverb", "What could “solemnly” suggest? Serious, sad, almost like a funeral?"], ["fell", "verb", "What could “fell” suggest? Something dropping, ending, going down?"]], "frameHint": "Personification frame: Collins gives ___ (the afternoon light) the human quality of ___ (being solemn) to suggest ___. He demonstrates ___.", "readerHint": "How does this image make you feel? Wistful? Sad? Thoughtful?", "message": "how growing up changes the way the speaker sees the world", "m_ev": "Collins states, “Back then it never fell so solemnly.”", "m_word": "The adverb “solemnly” is significant because it suggests the light now seems serious and sad, almost like a funeral.", "m_dev": "Collins gives the afternoon light the human quality of being solemn to suggest that the world now looks sadder to the speaker. He demonstrates that it is the speaker, not the light, that has changed.", "m_reader": "The reader is touched because even sunlight seems sad to the child. They also realize that growing up changes how we see everything around us."}, {"id": "s5", "where": "Lines 17–27 · The beginning of sadness", "side": "B", "quote": "all the dark blue speed drained out of it", "device": "Metaphor", "ctx": ["and my bicycle never leaned against the garage / as it does today, / all the dark blue speed drained out of it."], "dAns": "Metaphor: the bicycle's speed is described as a liquid that has drained out, without using ‘like’ or ‘as.’", "dWrong": ["Simile: the bicycle is compared to a river using the word ‘like.’", "Hyperbole: the speaker exaggerates how fast he can ride.", "Repetition: the word ‘blue’ is repeated in every line."], "dHint": "Can speed really drain out of something, like water? What is speed being compared to?", "dWhy": "Speed cannot really drain. It is described as a liquid flowing out of the bike, without “like” or “as.” That is a metaphor.", "effect": "The reader sees the bicycle, once full of exciting speed, now standing still and lifeless, just like the speaker's lost childhood energy.", "eWrong": ["The reader learns that the bicycle has a broken tire and is leaking oil.", "The reader sees that the speaker has painted his bicycle a new color.", "The reader sees that the bicycle is faster than ever."], "eHint": "The bicycle has not changed. What has happened to the speaker's excitement?", "words": [["drained", "verb", "What could “drained” suggest? Energy and excitement slowly flowing away?"], ["speed", "noun", "What could “speed” suggest? Freedom, fun, the energy of childhood?"]], "frameHint": "Metaphor frame: Collins compares ___ (the bicycle's speed) to ___ (a liquid that drains away) to suggest ___. He also emphasizes ___.", "readerHint": "How does this image make you feel? Sad? Nostalgic? Sympathetic?", "message": "the loss of the excitement and energy of early childhood", "m_ev": "Collins states, “all the dark blue speed drained out of it.”", "m_word": "The verb “drained” is significant because it suggests the excitement of childhood is slowly flowing away.", "m_dev": "Collins compares the bicycle's speed to a liquid that has drained away to suggest that the speaker has lost the energy and excitement of early childhood. He also emphasizes how lifeless ordinary objects now seem.", "m_reader": "The reader is saddened because the once-exciting bicycle now seems lifeless. They also realize that the change is inside the speaker, not the bike."}, {"id": "s6", "where": "Lines 17–27 · The beginning of sadness", "side": "A", "quote": "as I walk through the universe in my sneakers", "device": "Hyperbole", "ctx": ["This is the beginning of sadness, I say to myself, / as I walk through the universe in my sneakers."], "dAns": "Hyperbole: the speaker exaggerates, saying he walks ‘through the universe’ in his sneakers.", "dWrong": ["Imagery: a detailed description of a new pair of sneakers in a shop.", "Personification: the sneakers are given the human ability to walk.", "Repetition: the word ‘universe’ is repeated in every line."], "dHint": "Can anyone really walk through the whole universe? What is the speaker doing?", "dWhy": "No one walks through the universe in sneakers. It is a huge exaggeration of how big his world feels. That is hyperbole.", "effect": "The reader smiles at the mix of something enormous and something ordinary, and sees how big and serious life feels to a ten-year-old.", "eWrong": ["The reader learns that the speaker wants to become an astronaut.", "The reader sees that the speaker got new sneakers for his birthday.", "The reader sees that the speaker feels small and unimportant."], "eHint": "“Universe” and “sneakers”: one is huge, one is everyday. Why put them together?", "words": [["universe", "noun", "What could “universe” suggest? How huge and important his life feels to him?"], ["sneakers", "noun", "What could “sneakers” suggest? He is still a child, doing ordinary things?"]], "frameHint": "Hyperbole frame: Collins exaggerates the meaning of ___ (the speaker's walk) to suggest ___. He highlights ___.", "readerHint": "How does this line make you feel? Amused? Charmed? Sympathetic?", "message": "how huge and serious life feels to a child on the edge of growing up", "m_ev": "Collins states, “as I walk through the universe in my sneakers.”", "m_word": "The noun “sneakers” is significant because it suggests the speaker is still an ordinary child, even while he feels so serious.", "m_dev": "Collins exaggerates the meaning of the speaker's walk to suggest how enormous and important his world feels to him. He highlights the funny gap between his grand feelings and his everyday life.", "m_reader": "The reader is amused because a child in sneakers speaks about the universe. They also realize that growing up feels huge to someone young."}, {"id": "s7", "where": "Lines 17–27 · The beginning of sadness", "side": "B", "quote": "time to say good-bye … time to turn the first big number", "device": "Repetition", "ctx": ["It is time to say good-bye to my imaginary friends, / time to turn the first big number."], "dAns": "Repetition: the words ‘time to’ begin two phrases, one after the other.", "dWrong": ["Juxtaposition: friends are placed next to enemies to show a contrast.", "Metaphor: the speaker calls himself a clock, without using ‘like’ or ‘as.’", "Imagery: a detailed description of a birthday cake."], "dHint": "Which two words come twice in lines 26 and 27?", "dWhy": "“Time to” is repeated at the start of two phrases. That is repetition.", "effect": "The reader feels that growing up cannot be stopped: the repeated “time to” sounds like a clock telling the speaker he must move on.", "eWrong": ["The reader sees that the speaker is late for school.", "The reader sees that the speaker is excited to make new imaginary friends.", "The reader learns how to tell the time on a clock."], "eHint": "Why does “time to” sound like an order? Who decides when it is time?", "words": [["imaginary", "adjective", "What could “imaginary” suggest about the speaker's childhood world?"], ["time", "noun", "What could “time” suggest? A clock that cannot be stopped? An order to grow up?"]], "frameHint": "Repetition frame: Collins repeats the words “time to” ___ times to emphasize ___. He suggests ___.", "readerHint": "How do you feel about the speaker saying good-bye to his imaginary friends? Sad? Nostalgic? Sympathetic?", "message": "the feeling that growing up cannot be stopped", "m_ev": "Collins states, “It is time to say good-bye to my imaginary friends.”", "m_word": "The adjective “imaginary” is significant because it suggests the magical world of childhood that the speaker must now leave.", "m_dev": "Collins repeats the words “time to” two times to emphasize that the speaker has no choice about growing up. He suggests that time itself is ordering him to move on.", "m_reader": "The reader is saddened because saying good-bye to imaginary friends means the end of childhood magic. They also realize that everyone has to grow up."}, {"id": "s8", "where": "Lines 28–32 · Light and blood", "side": "B", "quote": "If you cut me I could shine. … I skin my knees. I bleed.", "device": "Juxtaposition", "ctx": ["there was nothing under my skin but light. / If you cut me I could shine.", "But now when I fall upon the sidewalks of life, / I skin my knees. I bleed."], "dAns": "Juxtaposition: the child who could ‘shine’ is placed next to the older boy who ‘bleeds.’", "dWrong": ["Simile: shining is compared to bleeding using the word ‘like.’", "Hyperbole: the speaker exaggerates how many times he has fallen.", "Personification: the sidewalk is given the human ability to cut."], "dHint": "Compare line 30 with line 32. What happened when he was cut before, and what happens now?", "dWhy": "“If you cut me I could shine” is placed against “I skin my knees. I bleed.” Magic and pain side by side: that is juxtaposition.", "effect": "The reader feels the shock of the ending: the magical child who was full of light now feels real pain, so his innocence has been lost.", "eWrong": ["The reader learns that the speaker needs a bandage after falling off his bike.", "The reader sees that the speaker is still a magical child who cannot be hurt.", "The reader sees that the speaker enjoys falling over."], "eHint": "Light and blood: which one belongs to childhood, and which one to growing up?", "words": [["shine", "verb", "What could “shine” suggest? Light, magic, innocence?"], ["bleed", "verb", "What could “bleed” suggest? Real pain? Being an ordinary, breakable human?"]], "frameHint": "Juxtaposition frame: Collins places ___ (shining) next to ___ (bleeding) to suggest ___. He emphasizes ___.", "readerHint": "How does the ending make you feel? Sad? Surprised? Moved?", "message": "the loss of childhood innocence and the discovery that life can hurt", "m_ev": "Collins states, “If you cut me I could shine” and “I skin my knees. I bleed.”", "m_word": "The verb “bleed” is significant because it suggests the speaker can now be hurt, like everyone else.", "m_dev": "Collins places the child who could shine next to the boy who bleeds to suggest that growing up means losing innocence. He emphasizes the painful moment when a child discovers that life can hurt.", "m_reader": "The reader is moved because the poem ends with real pain instead of magic. They also realize that everyone loses this kind of innocence."}], "intro": "Billy Collins's poem “On Turning Ten” appeared in his 1995 collection The Art of Drowning. The speaker, about to turn ten, looks back on the magic of his early childhood and feels that it is slipping away. Collins uses humor and vivid comparisons in “On Turning Ten” to show that growing up means losing the magic and innocence of childhood and discovering that life can hurt.", "sides": {"A": "the magic of early childhood", "B": "the sadness of growing up"}, "hot": {"s1": [[0.424, 0.0166, 0.2647, 0.0182], [0.0608, 0.0406, 0.687, 0.0183]], "s2": [[0.0608, 0.1368, 0.5456, 0.0183]], "s3": [[0.0608, 0.272, 0.6208, 0.0182], [0.1395, 0.296, 0.7084, 0.0183], [0.0877, 0.3201, 0.0912, 0.0182]], "s4": [[0.254, 0.5514, 0.4312, 0.0183]], "s5": [[0.0608, 0.6716, 0.7192, 0.0183]], "s6": [[0.0608, 0.7587, 0.8462, 0.0182]], "s7": [[0.1306, 0.7828, 0.1324, 0.0182], [0.0608, 0.8308, 0.1288, 0.0183]], "s8": [[0.0608, 0.9179, 0.4884, 0.0183], [0.0608, 0.966, 0.4329, 0.0182]]}}</script>
 <script>
 (function () {
@@ -1283,7 +1336,7 @@ button { font: inherit; color: inherit; }
   setInterval(tick, 1000);
   $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: ["", "", "", ""] }; save(); renderMain(); window.scrollTo(0, 0); $("plan-0").focus({ preventScroll: true }); };
   [0, 1, 2, 3].forEach(function (i) { $("plan-" + i).addEventListener("input", function () { if (!S.exam) return; S.exam.plan = S.exam.plan || ["", "", "", ""]; S.exam.plan[i] = $("plan-" + i).value; save(); }); });
-  $("exam-text").addEventListener("input", function () { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; liveSoon(); });
+  $("exam-text").addEventListener("input", function (e) { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; liveSoon(e); });
   ["keyup", "click", "focus"].forEach(function (ev) { $("exam-text").addEventListener(ev, liveSoon); });
   $("btn-exam-fix").onclick = function () { var ex = S.exam; if (!ex) return; ex.done = false; ex.fix = true; save(); renderMain(); window.scrollTo(0, 0); $("exam-text").focus({ preventScroll: true }); };
 
@@ -1326,17 +1379,244 @@ button { font: inherit; color: inherit; }
     also: ["What does the reader understand now?", "Link it to the big idea of the poem."],
     link: ["What is the message?", "State it clearly and specifically. No new idea."]
   };
-  var popT1 = null, popT2 = null, popSeen = {}, liveTyped = false;
+  /* ===== Coach pop-ups v3 (O. H., 2026-11-10): specific to the student's OWN quote, word and message;
+     they stay 30 seconds and sit just above the line being written. ===== */
+  var CO = { unit: "poem", wordMode: "class", linkHead: "Your message, once more", roles: { topic: "topic", ev: "ev", word: "word", dev: "frame", dev2: "more", reader: "reader", also: "realize", link: "link", ev2: "ev2" }, msg: [/presents (.+?),? through the use of/i] };
+  var popT1 = null, popT2 = null, popSeen = {}, liveTyped = false, popAt = 0, popQ = null, popQT = null, idleT = null;
+  window.__coachLog = [];
   function bigPop(head, sub, kind) {
-    var p = $("big-pop"); p.firstChild.textContent = head; p.lastChild.textContent = sub || "";
-    p.className = "big-pop" + (kind ? " " + kind : ""); p.hidden = false; void p.offsetWidth; p.classList.add("on");
-    clearTimeout(popT1); clearTimeout(popT2);
-    popT1 = setTimeout(function () { p.classList.add("out"); popT2 = setTimeout(function () { p.hidden = true; p.className = "big-pop"; }, 2700); }, 4200);
+    window.__coachLog.push((kind ? kind + ": " : "") + head + " / " + (sub || ""));
+    var p = $("big-pop"), now = Date.now();
+    if (!p.hidden && now - popAt < 6000) {   /* let the student read the last one for at least 6 seconds */
+      popQ = [head, sub, kind]; clearTimeout(popQT);
+      popQT = setTimeout(function () { var q = popQ; popQ = null; if (q) showPop(q[0], q[1], q[2]); }, 6000 - (now - popAt));
+      return;
+    }
+    showPop(head, sub, kind);
   }
+  function showPop(head, sub, kind) {
+    var p = $("big-pop"); p.querySelector("b").textContent = head; p.querySelector("span").textContent = sub || "";
+    p.className = "big-pop" + (kind ? " " + kind : ""); p.hidden = false; placePop(); void p.offsetWidth; p.classList.add("on"); popAt = Date.now();
+    clearTimeout(popT1); clearTimeout(popT2);
+    popT1 = setTimeout(hidePop, 30000);
+  }
+  function hidePop() { var p = $("big-pop"); p.classList.add("out"); clearTimeout(popT2); popT2 = setTimeout(function () { p.hidden = true; p.className = "big-pop"; }, 2700); }
+  $("big-pop").querySelector(".bp-x").addEventListener("mousedown", function (e) { e.preventDefault(); });
+  $("big-pop").querySelector(".bp-x").addEventListener("click", function () { clearTimeout(popT1); var p = $("big-pop"); p.hidden = true; p.className = "big-pop"; });
   function popOnce(key, head, sub, kind) { if (popSeen[key]) return false; popSeen[key] = 1; bigPop(head, sub, kind); return true; }
+  /* where is the caret on screen? (a hidden copy of the textarea) */
+  function caretBox(ta) {
+    var m = $("caret-mirror");
+    if (!m) { m = document.createElement("div"); m.id = "caret-mirror"; m.setAttribute("aria-hidden", "true"); document.body.appendChild(m); }
+    var cs = getComputedStyle(ta);
+    ["boxSizing", "width", "paddingTop", "paddingRight", "paddingBottom", "paddingLeft", "borderTopWidth", "borderRightWidth", "borderBottomWidth", "borderLeftWidth", "borderStyle",
+     "fontFamily", "fontSize", "fontWeight", "fontStyle", "letterSpacing", "lineHeight", "textTransform", "wordSpacing", "textIndent"].forEach(function (k) { m.style[k] = cs[k]; });
+    m.style.position = "absolute"; m.style.visibility = "hidden"; m.style.whiteSpace = "pre-wrap"; m.style.overflowWrap = "break-word"; m.style.left = "-9999px"; m.style.top = "0"; m.style.height = "auto";
+    var pos = typeof ta.selectionStart === "number" ? ta.selectionStart : ta.value.length;
+    m.textContent = ta.value.slice(0, pos); var sp = document.createElement("span"); sp.textContent = "​"; m.appendChild(sp);
+    var r = ta.getBoundingClientRect(), lh = parseFloat(cs.lineHeight) || 26;
+    var y = r.top + sp.offsetTop + (parseFloat(cs.borderTopWidth) || 0) - ta.scrollTop;
+    y = Math.max(r.top, Math.min(y, r.bottom - lh));
+    return { top: y, bottom: y + lh, left: r.left, width: r.width };
+  }
+  function placePop() {
+    var p = $("big-pop"); if (p.hidden) return;
+    var ta = $("exam-text"), vv = window.visualViewport, vTop = vv ? vv.offsetTop : 0, vH = vv ? vv.height : window.innerHeight;
+    var tr = ta.getBoundingClientRect(), h = p.offsetHeight, top, below = false;
+    if (tr.width) {
+      p.style.left = Math.max(8, tr.left) + "px"; p.style.width = Math.min(tr.width, window.innerWidth - 16) + "px";
+      var c = document.activeElement === ta ? caretBox(ta) : { top: Math.max(tr.top, vTop + 40) + 30, bottom: Math.max(tr.top, vTop + 40) + 56 };
+      top = c.top - h - 12;
+      if (top < vTop + 6) { top = c.bottom + 12; below = true; }
+      if (top + h > vTop + vH - 6) top = Math.max(vTop + 6, vTop + vH - h - 6);
+    } else { p.style.left = "16px"; top = vTop + vH * 0.3; }
+    p.style.top = Math.round(top) + "px"; p.classList.toggle("below", below);
+  }
+  window.addEventListener("scroll", placePop, { passive: true }); window.addEventListener("resize", placePop);
+  if (window.visualViewport) { window.visualViewport.addEventListener("scroll", placePop); window.visualViewport.addEventListener("resize", placePop); }
+  ["keyup", "click"].forEach(function (ev) { $("exam-text").addEventListener(ev, function () { setTimeout(placePop, 30); }); });
+  /* ---- reading the student's own paragraph ---- */
+  var CSTOP = /^(the|and|but|with|that|this|from|into|onto|your|their|they|them|then|than|have|were|what|when|where|which|while|will|would|there|been|being|only|just|like|more|most|very|also|over|such|each|every|after|before|about|because|could|should|does|did|for|you|our|his|her|she|him|its|was|are|not|all|any|one|out|has|had|who|how|why|can|may|now|own|too|reader|realize|realizes|suggests|suggest|emphasizes|emphasize|presents|states|claims|significant|shows|show|through|poem|article|uses|words|word|meaning|means)$/;
+  function cw(t) { return (String(t || "").toLowerCase().replace(/[‘’]/g, "'").match(/[a-z']+/g) || []).map(function (w) { return w.replace(/'s$/, ""); }).filter(function (w) { return w.length > 3 && !CSTOP.test(w); }); }
+  function stem(w) { return w.replace(/(ing|ed|es|s|ly)$/, ""); }
+  function overlap(a, b) { var B = {}; b.forEach(function (w) { B[stem(w)] = 1; }); return a.filter(function (w) { return B[stem(w)]; }).length; }
+  function cq(t) { var out = [], re = /[“"]([^”"]+)[”"]/g, m; t = String(t || ""); while ((m = re.exec(t))) out.push(m[1]); return out; }
+  function cn(t) { return " " + String(t || "").toLowerCase().replace(/[‘’]/g, "'").replace(/\//g, " ").replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ").trim() + " "; }
+  function short(q, n) { var w = String(q).replace(/\s*\/\s*/g, " / ").trim().split(/\s+/); return w.length > (n || 7) ? w.slice(0, (n || 7) - 1).join(" ") + " …" : w.join(" "); }
+  function spotFor(q) {
+    var nq = cn(q), qw = cw(q); if (nq.trim().length < 3) return null;
+    for (var i = 0; i < SPOTS.length; i++) {
+      var s = SPOTS[i], cs = [s.quote].concat(s.ctx || []).map(cn);
+      if (nq.indexOf(cn(s.quote)) >= 0 || (cs.some(function (c) { return c.indexOf(nq) >= 0; }) && overlap(qw, cw(s.quote)))) return s;
+    }
+    return null;
+  }
+  var DQ = {
+    "Metaphor": "What is compared to what? What do the two things share?",
+    "Simile": "What is compared to what, with “like” or “as”? What do the two things share?",
+    "Personification": "Which human action is given to a thing? Why THAT action?",
+    "Repetition": "Which words come back? What grows stronger each time they return?",
+    "Juxtaposition": "Which two opposites sit side by side? What does the contrast reveal?",
+    "Imagery": "Which sense does it use? What exact picture do you see?",
+    "Hyperbole": "What is exaggerated? What real feeling is behind the exaggeration?",
+    "Rhetorical question": "What answer does the question expect? Why ask instead of tell?",
+    "Statistics and data": "What does the number make the reader believe? Can it be checked?",
+    "Expert opinion": "Who is the expert? Is the expert named? Why use an expert here?",
+    "Bandwagon": "How many people? Why does a crowd make the claim feel right?",
+    "Emotive language": "Which words carry the strongest feeling? Which feeling exactly?",
+    "Headline": "What does the headline make the reader expect before reading a word?",
+    "Fear appeal": "What is the reader made afraid of? Is the danger proven?",
+    "Tone": "Which words create the tone? Whom is it aimed at?",
+    "Selective detail": "What is focused on, and what is left out?",
+    "Inclusive language": "Who is “we”? Why pull the reader in?"
+  };
+  var FVERB = { "Metaphor": /\bcompares\b/, "Simile": /\bcompares\b/, "Repetition": /\brepeats\b/, "Juxtaposition": /\bplaces\b.*\bnext to\b/, "Imagery": /\bdetailed description\b/,
+    "Personification": /\bhuman quality\b/, "Hyperbole": /\bexaggerates\b/, "Rhetorical question": /\basks\b/, "Statistics and data": /\bstatistics?\b/, "Expert opinion": /\brefers to\b/,
+    "Bandwagon": /\bhow many\b/, "Emotive language": /\bemotional words?\b/, "Headline": /\bheadline\b/ };
+  var CLASSQ = { adjective: "An adjective describes a noun. Which noun does it describe?", noun: "A noun names a person, place, thing or idea. Does it name something?",
+    verb: "A verb is an action or a state. Is something happening?", adverb: "An adverb tells how, when or how often. Does it describe an action?" };
+  var CEMPTY = /to (grab|get|catch) (the reader'?s? |our )?attention|to make (it|the poem|the article) (more )?(interesting|effective|powerful|vivid)|keep reading|read on|paints? a picture|helps? (the reader|us) (to )?(imagine|visuali[sz]e)/;
+  var GENX = /\b(people|persons?|everyone|everybody|someone|society|world|life|lives|today|nowadays|general|always|everything|things|situations?|problems?|humans?|many)\b/g;
+  /* stepping out of the quote = talking about people/life in general with no link to the quote, the word or the message */
+  function steppedOut(part, ctxw) {
+    var g = (low(part).match(GENX) || []).length; if (g < 3) return false;
+    var own = cw(part).filter(function (w) { return !/^(people|persons?|everyone|everybody|someone|society|world|life|lives|today|nowadays|general|always|everything|things|situations?|problems?|humans?|many)$/.test(w); });
+    return !overlap(own, ctxw);
+  }
+  var GENERAL = /\b(life|feelings?|emotions?|society|people|nature|love|things?|world)\b/;
+  function frameText(d) { var f = FRAMES[d]; return f ? String(f.text).split(/\.\s/)[0].replace(/\.$/, "") + "." : ""; }
+  function bySlot(done, T) { var m = {}; alignStarts(done, T).forEach(function (p) { m[p[1]] = done[p[0]]; }); return m; }
+  function topicMsg(s0) { if (!s0) return ""; for (var i = 0; i < CO.msg.length; i++) { var m = CO.msg[i].exec(s0); if (m) return m[1].trim(); } return ""; }
+  function coachPop(done, cur, j, T) {
+    var lc = low(unq(cur)), sid = done.length + ":";
+    var sl = bySlot(done, T), role = j >= 0 ? CO.roles[KINDS[j]] : "", sec2 = j >= 8;
+    var evS = j === (sec2 ? 8 : 1) ? cur : sl[sec2 ? 8 : 1], qs = cq(evS).filter(function (q) { return nWords(q) >= 1; }), q = qs.join(" / ");
+    var spot = q ? spotFor(qs[0]) || (qs[1] && spotFor(qs[1])) : null;
+    var wS = j === (sec2 ? 9 : 2) ? cur : sl[sec2 ? 9 : 2], wq = cq(wS).filter(function (x) { return nWords(x) <= 3; }), w = wq.length ? wq[wq.length - 1].replace(/[,.;:!?]+$/, "") : "";
+    var msg = topicMsg(j === 0 ? cur : sl[0]), qS = q ? "“" + short(q) + "”" : "your quote", wS_ = w ? "“" + w + "”" : "your word", msgS = msg ? "“" + short(msg, 9) + "”" : "your message";
+    var U = CO.unit;
+    /* red: weak analysis anywhere */
+    var vg = vagueWords(cur);
+    if (vg.length && popOnce(sid + "v:" + vg[0], "Too general: “" + vg[0] + "”", q && role !== "topic" ? "What EXACTLY do the words " + qS + " show? Name it." : "Say exactly what you mean.", "red")) return;
+    if (CEMPTY.test(lc) && popOnce(sid + "e", "That could be about any " + U, q ? "What do the words " + qS + " show in THIS " + U + "?" : "What does it show in THIS " + U + "?", "red")) return;
+    if (/\bthe reader (is|feels) (sad|happy|good|bad|nice)\b/.test(lc) && popOnce(sid + "f", "Which feeling exactly?", "Not just “sad” or “happy.” Which precise feeling do the words " + qS + " cause?", "red")) return;
+    if (!role) return;
+    var nw = nWords(cur);
+    if (role === "topic") {
+      if (popOnce(sid + "t0", "What exactly does the " + U + " show?", "The message, not just the topic: who, what happens, and what it means. Never a general idea like “life” or “feelings.”")) return;
+      if (msg) {
+        var mw = cw(msg).length;
+        if (mw < 3 && popOnce(sid + "t1", "Be more specific", "“" + msg + "” is too short to be a message. Add WHO and WHAT exactly.", "amber")) return;
+        if (mw < 6 && GENERAL.test(low(msg)) && popOnce(sid + "t2", "Still too general", "“" + short(msg, 9) + "”: which " + (GENERAL.exec(low(msg)) || [""])[0] + "? Whose? Say exactly what the " + U + " shows about it.", "amber")) return;
+      }
+      return;
+    }
+    if (role === "ev" || role === "ev2") {
+      var closed = cq(cur).length > 0;
+      if (!closed) { popOnce(sid + "e0", role === "ev2" ? "Device 2: a different part of the " + U : "Choose words you can analyze", role === "ev2" ? "A different device. Before you copy: can you name it AND explain one word in it?" : "Before you copy: can you name the device AND explain one word in it?"); return; }
+      if (qs.some(function (x) { return nWords(x) > 15; }) && popOnce(sid + "e1", "Too many words to analyze", "Keep only the words that hold the device: the words you will really explain.", "amber")) return;
+      var other = sec2 ? cq(sl[1])[0] : null;
+      if (sec2 && other && spot && spotFor(other) === spot && popOnce(sid + "e2", "Same part as device 1", "Choose a device from a different part of the " + U + ".", "amber")) return;
+      if (spot) { popOnce(sid + "e3", "Can you analyze " + qS + "?", DQ[spot.device] || "What does the device in these words do?"); return; }
+      popOnce(sid + "e4", "Is there a clear device in " + qS + "?", "If you can't say what is compared, repeated, contrasted or exaggerated, choose stronger words.", "amber");
+      return;
+    }
+    if (role === "word") {
+      if (!w) { popOnce(sid + "w0", "Pick ONE word from " + qS, "The word that does the most work. Can you explain it two ways?"); return; }
+      if (q && cn(q).indexOf(cn(w)) < 0 && popOnce(sid + "w1", wS_ + " is not in your quote", "Choose ONE word from " + qS + ".", "red")) return;
+      if (CO.wordMode === "class") {
+        var cl = /\bthe (adjective|noun|verb|adverb)\b/.exec(lc), known = null;
+        if (spot) (spot.words || []).forEach(function (x) { if (low(x[0]) === low(w)) known = x[1]; });
+        if (cl && known && known !== cl[1] && CLASSQ[cl[1]] && popOnce(sid + "w2", "Is " + wS_ + " really " + (/^[aeiou]/.test(cl[1]) ? "an " : "a ") + cl[1] + "?", CLASSQ[cl[1]], "amber")) return;
+        popOnce(sid + "w3", "What does " + wS_ + " mean literally?", "Start from its dictionary meaning. Then: how does that meaning connect to " + msgS + "?");
+      } else {
+        if (/\bwhich means\b|\bmeaning\b/.test(lc)) popOnce(sid + "w3", "What does " + wS_ + " mean literally?", "Only the dictionary meaning here, not the writer's opinion. Next sentence: connect it to " + msgS + ".");
+        else popOnce(sid + "w4", "Why " + wS_ + "?", "Is it the word that carries the device in " + qS + "? Think: what does it mean literally?");
+      }
+      return;
+    }
+    var qw = cw(q).concat(cw(w));
+    if (role === "frame") {
+      if (popOnce(sid + "f0", "Stay inside " + qS, "Every idea must come from these words. What does " + wS_ + " show about " + msgS + "?")) return;
+      if (spot && FVERB[spot.device] && nw >= 5) {
+        var any = Object.keys(FVERB).some(function (d) { return FVERB[d].test(lc); });
+        if (any && !FVERB[spot.device].test(lc) && popOnce(sid + "f1", "Does your frame fit " + qS + "?", "This frame is for another device. For " + spot.device.toLowerCase() + ": " + frameText(spot.device), "amber")) return;
+      }
+      var ctxw = qw.concat(cw(msg), cw(wS)), after = (/\bto (suggest|emphasi[sz]e|make)\b([\s\S]*)$/.exec(lc) || [])[2] || "";
+      if (q && nWords(after) >= 6 && steppedOut(after, ctxw) && popOnce(sid + "f2", "You stepped out of the quote", "Come back to " + wS_ + ": what do THESE words show? Stay specific.", "amber")) return;
+      return;
+    }
+    if (role === "more") {
+      var used = {}; cw(w).forEach(function (x) { used[stem(x)] = 1; });
+      var w2 = cw(q).filter(function (x) { return !used[stem(x)]; }).sort(function (a, b) { return b.length - a.length; })[0];
+      if (q && nw >= 8 && steppedOut(cur, qw.concat(cw(msg))) && popOnce(sid + "m2", "You stepped out of the quote", "Come back to " + qS + ": what else do THESE words show?", "amber")) return;
+      if (popOnce(sid + "m0", "Go deeper into " + qS, w2 ? "A NEW idea: what else does it show? Look at “" + w2 + "”." : "A NEW idea: what else do these words show?")) return;
+      var prev = sl[sec2 ? 10 : 3];
+      if (prev && nw >= 9) { var cc = cw(cur), ov = overlap(cc, cw(prev)); if (cc.length >= 4 && ov / cc.length >= 0.6 && popOnce(sid + "m1", "Same idea again?", "You are repeating your last sentence. Say something new about " + (w2 ? "“" + w2 + "”" : qS) + ".", "amber")) return; }
+      return;
+    }
+    if (role === "reader") {
+      if (popOnce(sid + "r0", "Which feeling, caused by which words?", "Choose a precise feeling. After “because,” point to " + (w ? wS_ : qS) + ".")) return;
+      var bc = (/\bbecause\b([\s\S]*)$/.exec(lc) || [])[1] || "";
+      var secw = qw.concat(cw(msg), cw(wS));
+      if (q && nWords(bc) >= 6 && steppedOut(bc, secw) && popOnce(sid + "r1", "Link the feeling to the words", "Which word in " + qS + " causes this feeling? Name it.", "amber")) return;
+      return;
+    }
+    if (role === "realize") { if (nw >= 8 && steppedOut(cur, qw.concat(cw(msg))) && popOnce(sid + "z1", "Too general", "Not people in general: what does the reader understand about " + msgS + "?", "amber")) return; popOnce(sid + "z0", "What does the reader understand now?", msg ? "Connect it to your big idea: " + msgS + "." : "Connect it to the big idea of the " + U + "."); return; }
+    if (role === "link") { popOnce(sid + "l0", CO.linkHead, msg ? "Your message: " + msgS + ". Say it again precisely. No new idea." : "Say your message precisely. No new idea."); return; }
+  }
+  window.__coachTest = function (done, cur, keep) {
+    var T = starterSlots(), pr = alignStarts(done, T), next = pr.length ? pr[pr.length - 1][1] + 1 : 0, k = startKey(cur), j = -1, x;
+    if (next < T.length && T[next][0].test(k)) j = next; else { for (x = next; x < T.length && j < 0; x++) if (T[x][0].test(k)) j = x; for (x = 0; x < next && j < 0; x++) if (T[x][0].test(k)) j = x; }
+    if (!keep) popSeen = {}; window.__coachLog.length = 0; coachPop(done, cur, j, T); return window.__coachLog.slice();
+  };
+  if (typeof modelFor === "function") window.__modelFor = function (a, b) { return modelFor(BY[a], BY[b]); };
+  /* ===== Device picture (O. H., 2026-11-10): when the student types a quote that matches a marked phrase,
+     an animated drawing of it appears in the exam bar and stays while they write about it. ===== */
+  var PICS = (function () { try { return JSON.parse(document.getElementById("pic-data").textContent); } catch (e) { return {}; } })();
+  var picId = null, picHidden = {};
+  window.__picLog = [];
+  function picSpotFor(p) {
+    if (nWords(p) < 2) return null;
+    var np = cn(p), pw = cw(p), best = null;
+    SPOTS.forEach(function (s) { if (!best && PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0)) best = s; });
+    if (best) return best;
+    SPOTS.forEach(function (s) {
+      if (best || !PICS[s.id]) return;
+      if ([s.quote].concat(s.ctx || []).map(cn).some(function (c) { return c.indexOf(np) >= 0; }) && overlap(pw, cw(s.quote))) best = s;
+    });
+    return best;
+  }
+  function picUpdate(before, firstLen) {
+    var box = $("exam-pic");
+    if (!String(before).trim()) { box.hidden = true; picId = null; popSeen = {}; return; }
+    var t = before.slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
+    while ((m = re.exec(t))) segs.push(m[1]);
+    var s = null; for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
+    if (s) showPic(s);   /* no match: keep the last picture on screen */
+  }
+  function showPic(s) {
+    var box = $("exam-pic"); if (picId === s.id) return;
+    picId = s.id; window.__picLog.push(s.id);
+    if (picHidden[s.id]) { box.hidden = true; return; }
+    var P = PICS[s.id]; box.querySelector("svg").innerHTML = P[0]; $("pic-see").textContent = P[1]; $("pic-mean").textContent = P[2];
+    box.hidden = false; box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
+    if (typeof placeBar === "function") placeBar();
+  }
+  $("exam-pic").querySelector(".px").addEventListener("click", function () { if (picId) picHidden[picId] = 1; $("exam-pic").hidden = true; if (typeof placeBar === "function") placeBar(); });
+  /* stuck for a minute? */
+  function idleCheck() {
+    clearTimeout(idleT);
+    idleT = setTimeout(function () {
+      if (!S || !S.exam || !S.exam.started || S.exam.done) return;
+      var ta = $("exam-text"), text = ta.value; if (!text.trim() || document.activeElement !== ta) return;
+      var T = starterSlots(), done = sentences(text), sl = bySlot(done, T), sec2 = !!sl[8], q = cq(sl[sec2 ? 8 : 1]).join(" / ");
+      popOnce("idle:" + done.length, "Stuck?", q ? "Reread “" + short(q) + "”. Which ONE word surprises you most? Start there." : "Reread the " + CO.unit + ". Look for a comparison, a repeat or a contrast.", "amber");
+    }, 60000);
+  }
   var EMPTY = /\b(make(s)? (it|the poem|the reader)? ?(more )?(interesting|want to read on|keep reading)|grabs? (the reader's |our |the )?attention|paints? a picture|helps? (the reader|us) (to )?(imagine|visuali[sz]e|understand)( better| more)?\s*[.!?]?$|make(s)? (it|the poem) (more )?(effective|powerful|vivid|flow))/;
   var lastPts = null, lastTip = "", liveT = null;
-  function liveSoon() { liveTyped = true; clearTimeout(liveT); liveT = setTimeout(liveUpdate, 120); }
+  function liveSoon(e) { if (e && e.type === "input") liveTyped = true; clearTimeout(liveT); liveT = setTimeout(liveUpdate, 120); }
   function liveUpdate() {
     if (!S || !S.exam || !S.exam.started || S.exam.done) return;
     var ta = $("exam-text"), text = ta.value, R = examPoints(text), T = R.T;
@@ -1366,14 +1646,12 @@ button { font: inherit; color: inherit; }
     }
     var tp = $("exam-tip"); tp.textContent = tip; tp.hidden = !tip; tp.classList.remove("bad");
     $("exam-warn").hidden = true;
-    /* big pop-ups: only while typing, only about the quality of the analysis */
+    placePop();
+    picUpdate(before, done.length ? done[0].length : before.length);
     var typed = liveTyped; liveTyped = false;
     if (!typed || !cur) return;
-    var sid = done.length + ":", lc = low(unq(cur)), vg = vagueWords(cur), em = lc.match(EMPTY);
-    if (vg.length && popOnce(sid + "v:" + vg[0], "Too general: “" + vg[0] + "”", "Say exactly what you mean.", "red")) return;
-    if (em && popOnce(sid + "e", "That could be about any poem", "What does it show in THIS poem?", "red")) return;
-    if (/\bthe reader (is|feels) (sad|happy|good|bad|nice)\b/.test(lc) && popOnce(sid + "f", "Which feeling exactly?", "Not just “sad” or “happy.” Find the precise word, then say why.", "red")) return;
-    if (j >= 0 && nWords(cur) <= 12) { var tp_ = TIPS[KINDS[j]]; popOnce(sid + "k" + j, tp_[0], tp_[1], ""); }
+    idleCheck();
+    coachPop(done, cur, typeof j === "number" ? j : -1, T);
   }
   $("btn-exam-finish").onclick = function () { finishExam(false); };
   $("btn-exam-again").onclick = function () { S.exam = null; save(); $("exam-text").value = ""; renderMain(); window.scrollTo(0, 0); };
