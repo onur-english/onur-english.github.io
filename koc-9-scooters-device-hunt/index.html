@@ -1,0 +1,1552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Sidewalk Racetracks · Device Hunt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&display=swap">
+<style>
+/* Layout: one phone-width column. Street level: pale concrete page, an asphalt cover with painted lane lines,
+   deep rental-scooter green for actions, hi-vis lime and road-sign orange as accents. Barlow Condensed for display. */
+:root {
+  --wall: #EEF0EB;
+  --card: #FFFFFF;
+  --ink: #1B2024;
+  --muted: #59626A;
+  --rule: #D6DBD2;
+  --board: #17603A;
+  --board-hover: #0F4A2B;
+  --pink: #FAD9BF;
+  --yellow: #FFE680;
+  --lilac: #E3EEE4;
+  --mint: #D2EFD8;
+  --star: #E08A00;
+  --red: #B3261E;
+  --red-soft: #FBE1DE;
+  --good: #1B6B3F;
+  --good-soft: #DBF1E2;
+  --awning: #F28C28;
+  --d2: #B4470C;
+  --f-hand: "Barlow Condensed", "Arial Narrow", "Trebuchet MS", sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  --f-news: "Source Serif 4", "Georgia", "Times New Roman", serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--wall); }
+body {
+  margin: 0; color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; -webkit-text-size-adjust: 100%; min-height: 100vh;
+  background:
+    repeating-linear-gradient(90deg, rgba(27,32,36,.035) 0 2px, transparent 2px 120px),
+    linear-gradient(180deg, rgba(23,96,58,.12), transparent 420px),
+    var(--wall);
+}
+img { max-width: 100%; display: block; }
+.wrap { max-width: 680px; margin: 0 auto; padding: 14px 16px 64px; display: flex; flex-direction: column; gap: 16px; }
+.col { display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--board); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.logo { background: #FFFFFF; border-radius: 10px; padding: 4px 6px; flex: none; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.logo img { width: 70px; height: auto; }
+.top-text { min-width: 0; display: flex; flex-direction: column; }
+.top-title { font-family: var(--f-hand); font-size: 1.45rem; line-height: 1; }
+.top-sub { color: var(--muted); font-size: .86rem; }
+
+.card { background: var(--card); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 0 rgba(30,42,51,.06), 0 10px 26px rgba(40,70,100,.10); }
+.label { font-family: var(--f-hand); font-size: 1.15rem; color: var(--board); letter-spacing: .02em; }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+
+.btn { appearance: none; border: 0; border-radius: 12px; padding: 13px 18px; font-weight: 700; font-size: 1rem; cursor: pointer; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-ink { background: var(--board); color: #FFFFFF; box-shadow: 0 3px 0 #0A3520; }
+.btn-ink:hover { background: var(--board-hover); }
+.btn-ink:active { transform: translateY(2px); box-shadow: 0 1px 0 #0A3520; }
+.btn-ink:disabled { background: #9AA7A2; box-shadow: none; cursor: not-allowed; }
+.btn-ghost { background: #FFFFFF; border: 2px solid var(--ink); color: var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row .btn { flex: 1 1 200px; }
+
+/* Start: asphalt with a dashed lane line and a hi-vis wheel */
+.cover { position: relative; background: linear-gradient(180deg, #2A2F33 0%, #1C2023 100%); color: #FFFFFF; border-radius: 18px; padding: 30px 22px 54px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 14px 30px rgba(27,32,36,.32); overflow: hidden; }
+.cover::before { content: ""; position: absolute; right: -34px; top: -34px; width: 150px; height: 150px; border-radius: 50%; border: 16px solid #B6F23A; box-shadow: inset 0 0 0 10px #2A2F33, inset 0 0 0 14px rgba(182,242,58,.5); opacity: .92; }
+.cover::after { content: ""; position: absolute; left: 0; right: 0; bottom: 20px; height: 8px; background: repeating-linear-gradient(90deg, #FFD23F 0 46px, transparent 46px 78px); }
+.cover > * { position: relative; z-index: 1; }
+.cover h1 { font-family: var(--f-hand); font-weight: 700; text-transform: uppercase; letter-spacing: .01em; font-size: clamp(2.2rem, 10.5vw, 3.4rem); line-height: .98; max-width: 100%; overflow-wrap: anywhere; }
+.cover .who-poet { font-size: 1rem; color: #E6F7C2; }
+.name-plate { align-self: flex-start; background: #B6F23A; color: #1B2024; border-radius: 4px; padding: 2px 10px; font-family: var(--f-hand); font-weight: 700; font-size: 1rem; letter-spacing: .06em; text-transform: uppercase; }
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.steps li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+.steps .n { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--board); color: #FFFFFF; font-family: var(--f-hand); font-size: 1.3rem; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 700; font-size: .95rem; }
+.field input, textarea { font: inherit; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); width: 100%; }
+.field input:focus, textarea:focus { border-color: var(--board); outline: none; }
+.resume { border: 2px dashed var(--board); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Tabs */
+.tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; padding-block: 6px; background: rgba(238,240,235,.94); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.tab { appearance: none; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 0; cursor: pointer; min-width: 0; }
+.tab b { font-family: var(--f-hand); font-weight: 600; font-size: 1.12rem; white-space: nowrap; }
+.tab span { font-size: .7rem; color: var(--muted); text-align: center; line-height: 1.2; }
+.tab.on { background: var(--board); border-color: var(--board); color: #FFFFFF; }
+.tab.on span { color: #D5F0DC; }
+.tab:disabled { opacity: .55; cursor: not-allowed; }
+
+/* Poem */
+.poem-card { padding: 0; overflow: hidden; }
+.poem-card summary { cursor: pointer; padding: 14px 20px; font-family: var(--f-hand); font-size: 1.2rem; color: var(--board); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.poem-card summary::-webkit-details-marker { display: none; }
+.poem-card summary::after { content: "▾ hide"; font-family: var(--f-body); font-size: .8rem; color: var(--muted); }
+.poem-card:not([open]) summary::after { content: "▸ show"; }
+.article { border-top: 4px solid var(--awning); padding: 16px 20px 6px; font-family: var(--f-news); display: flex; flex-direction: column; gap: 10px; }
+.article .kicker { font-family: var(--f-body); font-size: .74rem; font-weight: 700; letter-spacing: .14em; color: var(--red); }
+.article .hed { font-family: var(--f-news); font-weight: 700; font-size: clamp(1.45rem, 6vw, 1.9rem); line-height: 1.18; }
+.article .dek { font-style: italic; font-size: 1.05rem; color: #3A3F4A; }
+.article .by { font-family: var(--f-body); font-size: .82rem; color: var(--muted); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: 6px; }
+.article .para { display: grid; grid-template-columns: 24px 1fr; gap: 8px; font-size: 1.04rem; line-height: 1.68; }
+.article .pn { font-family: var(--f-body); font-size: .74rem; color: var(--muted); padding-top: 5px; text-align: right; }
+.article .foot { font-family: var(--f-body); font-size: .8rem; font-style: italic; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 8px; }
+.article mark { background: linear-gradient(transparent 8%, var(--yellow) 8%, var(--yellow) 92%, transparent 92%); color: inherit; padding: 0 2px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.article mark sup { font-family: var(--f-body); font-size: .62em; font-weight: 700; background: var(--board); color: #FFFFFF; border-radius: 999px; padding: 0 5px; margin-left: 2px; }
+.spot .q { font-family: var(--f-news); }
+.art2-card { padding-bottom: 8px; }
+.art2-card .article { border-top: 0; padding: 0; }
+.mk { appearance: none; border: 0; display: inline; font: inherit; color: inherit; text-align: left; cursor: pointer; padding: 0 2px; border-radius: 3px; background: linear-gradient(transparent 6%, var(--yellow) 6%, var(--yellow) 94%, transparent 94%); box-decoration-break: clone; -webkit-box-decoration-break: clone; line-height: inherit; }
+.mk:hover { background: linear-gradient(transparent 6%, #FFD86B 6%, #FFD86B 94%, transparent 94%); }
+.mk sup { font-family: var(--f-body); font-size: .6em; font-weight: 700; background: var(--board); color: #FFFFFF; border-radius: 999px; padding: 1px 6px; margin-left: 3px; white-space: nowrap; }
+.mk.pick1 { background: var(--board); color: #FFFFFF; }
+.mk.pick2 { background: var(--d2); color: #FFFFFF; }
+.mk.pick1 sup { background: #FFFFFF; color: var(--board); }
+.mk.pick2 sup { background: #FFFFFF; color: var(--d2); }
+.wpanel { font-family: var(--f-body); font-size: 1rem; line-height: 1.5; margin: 6px -20px; padding: 14px 16px 16px; background: #FBF7EE; border-top: 4px solid var(--board); border-bottom: 4px solid var(--board); display: flex; flex-direction: column; gap: 14px; box-shadow: inset 0 6px 10px -8px rgba(0,0,0,.25), inset 0 -6px 10px -8px rgba(0,0,0,.25); }
+.wpanel.g2 { border-color: var(--d2); }
+.wp-h { font-family: var(--f-hand); font-size: 1.3rem; color: var(--board); }
+.wpanel.g2 .wp-h { color: var(--d2); }
+.wpanel .sep { font-size: 1.2rem; margin-top: 2px; }
+.starter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.starter-lab { font-size: .85rem; color: var(--muted); width: 100%; }
+.starter-chip { appearance: none; border: 2px solid var(--board); background: #FFFFFF; color: var(--board); border-radius: 999px; padding: 4px 12px; font-size: .9rem; font-weight: 700; cursor: pointer; min-height: 36px; }
+.starter-chip:hover { background: #EEF2F8; }
+.devstrip { display: flex; flex-direction: column; gap: 6px; }
+.ds-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; background: #FFFFFF; border: 2px solid var(--board); border-radius: 10px; padding: 6px 10px; }
+.ds-row.g2 { border-color: var(--d2); }
+.ds-tag { font-size: .78rem; font-weight: 700; letter-spacing: .02em; color: #FFFFFF; background: var(--board); border-radius: 999px; padding: 1px 9px; }
+.ds-row.g2 .ds-tag { background: var(--d2); }
+.ds-q { font-family: var(--f-news); font-size: 1rem; line-height: 1.4; background: linear-gradient(transparent 8%, var(--yellow) 8%, var(--yellow) 92%, transparent 92%); box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: 0 2px; }
+.poem-note { font-size: .8rem; color: var(--muted); padding: 8px 20px 14px; }
+
+.meter { height: 12px; border-radius: 999px; background: #E3EAF0; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--board), #6DBE45 60%, #FFD23F); transition: width .4s; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 16px; height: 12px; border-radius: 3px; display: inline-block; }
+
+/* Device spots */
+.group-h { font-family: var(--f-hand); font-size: 1.25rem; border-bottom: 3px solid var(--yellow); padding-bottom: 2px; margin-top: 4px; }
+.spots { display: flex; flex-direction: column; gap: 10px; }
+.spot { appearance: none; text-align: left; width: 100%; border: 2px solid var(--rule); background: var(--yellow); border-radius: 12px; padding: 12px 14px; cursor: pointer; display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; min-height: 56px; transition: transform .08s; }
+.spot:active { transform: translateY(2px); }
+.spot .no { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: #FFFFFF; font-family: var(--f-hand); font-size: 1.15rem; border: 2px solid var(--ink); }
+.spot .q { font-weight: 700; font-size: 1.02rem; }
+.spot .tag { display: block; font-family: var(--f-hand); font-size: 1.05rem; color: var(--good); }
+.spot.first { background: var(--mint); border-color: var(--good); }
+.spot.first .no { background: var(--star); color: #FFFFFF; border-color: var(--star); }
+.spot.later { background: #DCE8F7; border-color: #7A9CC6; }
+.spot.cold { background: var(--red-soft); border-color: var(--red); cursor: not-allowed; }
+.spot.cold .tag { color: var(--red); }
+.spot.pick1 { box-shadow: 0 0 0 4px var(--board); }
+.spot.pick2 { box-shadow: 0 0 0 4px var(--d2); }
+.spot .pk { font-family: var(--f-hand); font-size: 1rem; color: #FFFFFF; background: var(--board); border-radius: 6px; padding: 0 8px; margin-left: 6px; }
+.spot.pick2 .pk { background: var(--d2); }
+.sweep { border-top: 5px solid var(--red); }
+
+/* Sheet */
+.sheet-back { position: fixed; inset: 0; background: rgba(30,42,51,.5); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: #FFFFFF; width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; border-radius: 20px 20px 0 0; border-top: 6px solid var(--yellow); padding: 18px 16px calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 14px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.x { appearance: none; border: 2px solid var(--rule); background: transparent; border-radius: 999px; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; line-height: 1; flex: none; }
+.evidence { font-size: 1.15rem; font-weight: 700; background: linear-gradient(transparent 10%, var(--yellow) 10%, var(--yellow) 90%, transparent 90%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.st-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.st { font-size: .78rem; font-weight: 700; border-radius: 999px; padding: 2px 10px; border: 1px solid var(--rule); color: var(--muted); }
+.st.on { border-color: var(--board); color: var(--board); }
+.st.done { border-color: var(--good); color: var(--good); }
+.qh { font-size: 1.15rem; font-weight: 700; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; cursor: pointer; min-height: 54px; }
+@media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--board); } }
+.opt .k { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-family: var(--f-hand); font-size: 1.15rem; background: var(--wall); }
+.opt .olab { color: var(--board); }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.right .k { background: var(--good); color: #FFFFFF; }
+.opt.wrong { border-color: var(--red); background: var(--red-soft); }
+.opt.wrong .k { background: var(--red); color: #FFFFFF; }
+.opt.dim { opacity: .5; }
+.opt.shake { animation: shake .35s; }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.fb { border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--good-soft); }
+.fb.bad { background: var(--red-soft); }
+.fb.reveal { background: #FFF2C6; }
+.fb-h { font-family: var(--f-hand); font-size: 1.4rem; }
+.fb.good .fb-h { color: var(--good); }
+.fb.bad .fb-h { color: var(--red); }
+.fb-note { font-size: .88rem; color: var(--muted); }
+.retry { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--red-soft); color: var(--red); }
+
+/* Writing desk */
+.intro { background: #F4F7FA; border: 1px dashed #AFC0CD; border-radius: 12px; padding: 12px 14px; font-style: italic; }
+.picks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.pickbox { border: 2px dashed var(--rule); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.pickbox b { font-family: var(--f-hand); font-weight: 600; font-size: 1.15rem; display: block; }
+.pickbox.p1 { border-color: var(--board); }
+.pickbox.p2 { border-color: var(--d2); }
+.pickbox span { font-size: .88rem; }
+.sep { font-family: var(--f-hand); font-size: 1.5rem; border-bottom: 3px solid var(--pink); padding-bottom: 2px; margin-top: 6px; }
+.slot { display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--rule); padding-left: 12px; }
+.slot.ok { border-left-color: var(--good); }
+.slot-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.slot-h b { font-family: var(--f-hand); font-weight: 600; font-size: 1.3rem; }
+.num { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--board); color: var(--board); display: grid; place-items: center; font-family: var(--f-hand); font-size: 1.2rem; flex: none; }
+.slot.ok .num { background: var(--star); border-color: var(--star); color: #FFFFFF; }
+.frame { margin: 0; padding: 8px 12px; background: #FFF7D6; border-left: 3px solid var(--star); border-radius: 0 8px 8px 0; font-size: .95rem; color: #3D3628; }
+.frame .blank { display: inline-block; min-width: 2.5em; border-bottom: 2px solid #8B7A3F; }
+.slot textarea { min-height: 84px; resize: vertical; line-height: 1.45; overflow: hidden; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; font-size: .88rem; }
+.checks li { display: flex; gap: 6px; align-items: baseline; color: var(--muted); }
+.checks li::before { content: "○"; font-weight: 700; flex: none; }
+.checks li.ok { color: var(--good); }
+.checks li.ok::before { content: "✓"; }
+.checks li.no { color: var(--red); }
+.checks li.no::before { content: "!"; }
+.hint-btn { appearance: none; align-self: flex-start; border: 2px solid var(--star); background: #FFF9E6; color: #6B4E00; border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: .85rem; cursor: pointer; }
+.hints { margin: 0; padding: 10px 12px 10px 28px; background: #FFF9E6; border-radius: 10px; font-size: .92rem; display: flex; flex-direction: column; gap: 4px; }
+.remind { background: var(--lilac); border-radius: 12px; padding: 12px 14px; font-size: .92rem; }
+.remind ul { margin: 6px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 3px; }
+.final { font-size: 1.04rem; line-height: 1.7; background: #F4F7FA; border-radius: 12px; padding: 14px; white-space: pre-wrap; }
+.model { line-height: 1.7; background: #F7FBF8; border-left: 4px solid var(--good); border-radius: 0 12px 12px 0; padding: 12px 14px; }
+.tick { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.tick label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.tick input { width: 22px; height: 22px; margin-top: 1px; flex: none; accent-color: var(--good); }
+
+/* Report */
+.big { font-family: var(--f-hand); font-size: clamp(2.8rem, 13vw, 3.8rem); line-height: 1; color: var(--board); }
+.big small { font-size: .45em; color: var(--muted); }
+.stars { font-size: 1.6rem; color: var(--star); letter-spacing: .1em; }
+.who { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .95rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; }
+.who b { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+
+.top-title, .label, .wp-h, .group-h, .sep, .fb-h, .spot .tag, .num, .steps .n { font-weight: 600; }
+.label { font-size: 1.25rem; letter-spacing: .03em; text-transform: uppercase; }
+/* v2: Spot it, exam mode, color-coding, word bank, pair coaching */
+.spotart { cursor: pointer; -webkit-tap-highlight-color: rgba(0,0,0,.06); }
+.spotart .hs.got, .spotart .hs.got2 { background: linear-gradient(transparent 6%, var(--yellow) 6%, var(--yellow) 94%, transparent 94%); box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: 0 2px; border-radius: 3px; }
+.spotart .hs.got2 { background: linear-gradient(transparent 6%, #CFE0F5 6%, #CFE0F5 94%, transparent 94%); }
+.spotart .hs sup { font-family: var(--f-body); font-size: .6em; font-weight: 700; background: var(--board); color: #FFFFFF; border-radius: 999px; padding: 1px 6px; margin-left: 3px; white-space: nowrap; }
+.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: max-content; max-width: min(92vw, 520px); background: #1B2024; color: #FFFFFF; border-radius: 12px; padding: 10px 14px; font-size: .92rem; z-index: 30; box-shadow: 0 8px 20px rgba(0,0,0,.25); }
+.devopts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.devopt { appearance: none; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 12px 8px; font-weight: 700; cursor: pointer; min-height: 50px; }
+.devopt.right { border-color: var(--good); background: var(--good-soft); }
+.devopt.wrong { border-color: var(--red); background: var(--red-soft); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips-h { font-size: .82rem; color: var(--muted); margin-bottom: 4px; }
+.chip { appearance: none; border: 1.5px solid var(--board); background: #FFFFFF; color: var(--board); border-radius: 999px; padding: 4px 11px; font-size: .86rem; font-weight: 700; cursor: pointer; min-height: 32px; }
+.coach { background: #FFF2C6; border-left: 4px solid var(--star); border-radius: 0 12px 12px 0; padding: 10px 12px; font-size: .93rem; }
+.cc span.c { padding: 1px 2px; border-radius: 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.cc-point { background: #D6E6FF; } .cc-ev { background: #CDEFD6; } .cc-tech { background: #FFDDB8; } .cc-relate { background: #E6D6FA; }
+.cc-reader { background: transparent !important; border-bottom: 2px dotted #7C7C86; border-radius: 0 !important; }
+.cc-miss { color: var(--red); font-weight: 700; font-style: italic; }
+.st-ok { font-weight: 700; }
+.st-bad { font-weight: 700; color: #FFFFFF; background: var(--red); border-radius: 4px; padding: 0 3px; }
+.st-note { display: inline-block; color: var(--red); font-weight: 700; font-size: .86rem; background: var(--red-soft); border-radius: 6px; padding: 0 6px; margin: 0 2px; }
+.legend-cc { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: .8rem; }
+.legend-cc span { display: inline-flex; align-items: center; gap: 5px; }
+.legend-cc i { width: 18px; height: 12px; border-radius: 3px; display: inline-block; }
+.exam-bar { position: sticky; top: calc(64px + env(safe-area-inset-top, 0px)); z-index: 4; display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; border: 2px solid var(--board); }
+.eb-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
+.eb-row > span { display: flex; flex-direction: column; }
+.eb-l { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.eb-score { align-items: flex-end; position: relative; }
+.eb-pts { font-family: var(--f-hand); font-weight: 700; font-size: 1.8rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.eb-pts small { font-size: .6em; color: var(--muted); }
+.eb-level { font-size: .74rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; background: var(--lilac); margin-left: 6px; font-family: var(--f-body); vertical-align: middle; }
+.eb-level.gold { background: #FFE28C; } .eb-level.silver { background: #E3E6EA; } .eb-level.bronze { background: #F2D0B0; } .eb-level.ready { background: var(--good); color: #FFFFFF; }
+.eb-pop { position: absolute; right: 100%; top: 16px; margin-right: 8px; white-space: nowrap; font-size: 1.1rem; font-weight: 700; color: var(--good); animation: pop 1.2s forwards; pointer-events: none; }
+@keyframes pop { from { opacity: 1; transform: translateY(6px); } to { opacity: 0; transform: translateY(-14px); } }
+.timer { font-family: var(--f-hand); font-weight: 700; font-size: 1.8rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.timer.low { color: var(--red); }
+.eb-tip { font-size: .86rem; line-height: 1.35; background: #FFF9E6; border-left: 4px solid var(--star); border-radius: 0 8px 8px 0; padding: 6px 8px; }
+.eb-tip.bad { background: var(--red-soft); border-left-color: var(--red); color: #7A1F17; font-weight: 700; }
+.eb-tip.flash { animation: flash .5s; }
+@keyframes flash { from { transform: scale(1.03); } to { transform: scale(1); } }
+.eb-warn { font-size: .84rem; font-weight: 700; color: #7A1F17; background: var(--red-soft); border-radius: 8px; padding: 4px 8px; }
+.eb-nudge { font-size: .84rem; font-weight: 700; color: var(--board); }
+#exam-text { min-height: 340px; line-height: 1.55; }
+@media (prefers-reduced-motion: reduce) { .eb-pop, .eb-tip.flash { animation: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <div class="top-text">
+      <span class="top-title">Device Hunt</span>
+      <span class="top-sub">Koç Grade 9 · Behind the Headline</span>
+    </div>
+  </header>
+
+  <!-- START -->
+  <section id="s-start" hidden>
+    <div class="col">
+      <div class="cover">
+        <span class="name-plate">Grade 9 · Media Detectives</span>
+        <h1>Sidewalk Racetracks</h1>
+        <span class="who-poet">An opinion article by Daniel Marsh</span>
+      </div>
+      <div class="card">
+        <ol class="steps">
+          <li><span class="n">1</span><span><b>Find the devices.</b> Eleven phrases in the article are marked. Tap each one: name the device, then choose what it does to the reader. If you are wrong, you see the right answer and the phrase comes back in the next round.</span></li>
+          <li><span class="n">2</span><span><b>Spot them yourself.</b> The article again with no highlights, like in the exam. Tap the words where you see a device, then name it.</span></li>
+          <li><span class="n">3</span><span><b>Write your paragraph.</b> Tap TWO devices in the article. Writing boxes open right under each one, in the order of your writing frame (steps 1 to 7), with ticks and 💡 hints.</span></li>
+          <li><span class="n">4</span><span><b>Exam practice.</b> 40 minutes, no highlights and no hints. A live structure score goes up as you write, and a coach line warns you about mistakes. Then see a color-coded check and a model.</span></li>
+        </ol>
+        <p class="small muted">Nothing is locked: you can open any part at any time.</p>
+        <div class="resume" id="resume" hidden>
+          <p><b>You have work in progress.</b> <span id="resume-text"></span></p>
+          <div class="btn-row">
+            <button class="btn btn-ink" id="btn-resume" type="button">Continue</button>
+            <button class="btn btn-ghost" id="btn-wipe" type="button">Start over</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="student-name">Your name</label>
+          <input id="student-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name">
+        </div>
+        <button class="btn btn-ink" id="btn-start" type="button">Start</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <section id="s-main" hidden>
+    <div class="col">
+      <nav class="tabs" aria-label="Levels">
+        <button class="tab" id="tab-1" type="button"><b>1 · Find</b><span id="tab-1-s"></span></button>
+        <button class="tab" id="tab-2" type="button"><b>2 · Spot</b><span id="tab-2-s"></span></button>
+        <button class="tab" id="tab-3" type="button"><b>3 · Write</b><span id="tab-3-s"></span></button>
+        <button class="tab" id="tab-4" type="button"><b>4 · Exam</b><span id="tab-4-s"></span></button>
+      </nav>
+
+      <!-- 1 · FIND -->
+      <div id="lv-1" class="col" hidden>
+        <details class="card poem-card" id="poem-card" open>
+          <summary>The whole article</summary>
+          <div class="article" id="article"></div>
+          <p class="poem-note">Read the whole article first. The numbered yellow phrases are your clues.</p>
+        </details>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span class="label" id="round-label">Round 1</span>
+            <span class="small" id="found-count"></span>
+          </div>
+          <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+          <div class="legend">
+            <span><i style="background:var(--yellow)"></i>To find</span>
+            <span><i style="background:var(--mint)"></i>★ First try</span>
+            <span><i style="background:#DCE8F7"></i>Found later</span>
+            <span><i style="background:var(--red-soft)"></i>Try again next round</span>
+          </div>
+        </div>
+        <div class="card sweep" id="sweep-card" hidden>
+          <span class="label" style="color:var(--red)">Round complete</span>
+          <p id="sweep-text"></p>
+          <button class="btn btn-ink" id="btn-sweep" type="button"></button>
+        </div>
+        <div class="card" id="done1-card" hidden>
+          <span class="label" style="color:var(--good)">Every device found!</span>
+          <p>Now try to spot them without the highlights.</p>
+          <button class="btn btn-ink" id="btn-to-2" type="button">Go to 2 · Spot</button>
+        </div>
+        <div class="card"><div class="spots" id="spots1"></div></div>
+      </div>
+
+      <!-- 2 · SPOT -->
+      <div id="lv-2" class="col" hidden>
+        <div class="card">
+          <span class="label">Spot it: no highlights</span>
+          <p class="small">In the exam nothing is highlighted. Tap the words in the article where you think there is a device. If you are right, name the device.</p>
+          <div class="meter" aria-hidden="true"><i id="meter2"></i></div>
+          <p class="small" id="spot-count"></p>
+        </div>
+        <div class="card art2-card"><div class="article spotart" id="spotart"></div></div>
+        <div class="card" id="spot-done" hidden><span class="label" style="color:var(--good)">You spotted every device!</span><p>Now write your paragraph in 3 · Write, or try the 40-minute exam in 4 · Exam.</p></div>
+        <button class="btn btn-ghost" id="btn-spot-help" type="button">I'm stuck: show me one</button>
+      </div>
+
+      <!-- 3 · WRITE -->
+      <div id="lv-3" class="col" hidden>
+        <div class="card">
+          <span class="label">The writing question</span>
+          <p class="intro" id="intro"></p>
+          <div class="remind"><b>Before you write: choose 2 devices that best answer the question. Choose smartly.</b>
+            <ul><li>Pick devices with a strong key word you can explain in step 3.</li>
+            <li>A strong pair shows two sides: one device about how fast, careless and dangerous the scooters are, and one about the people who are hurt and the people who support the writer.</li></ul>
+          </div>
+          <div class="remind"><b>Reminders</b>
+            <ul>
+              <li>Daniel Marsh is a man: write <b>he</b> or <b>Marsh</b>, never “she.”</li>
+              <li>Evidence: “First, Marsh claims that …” (or warns that / states that / describes … as / asks), then copy the words exactly inside quotation marks. Never write the word “quote.”</li>
+              <li>In step 3, give the meaning of ONE word in ONE sentence.</li>
+              <li>In step 4, use the frame for YOUR device, then write “Marsh highlights …”.</li>
+              <li>Step 5: “The reader is … because ….” first, then “The reader realizes ….”</li>
+              <li>Step 6 for BOTH devices: “Therefore, the (device) shows Marsh’s bias towards ….”</li>
+              <li>Never start a sentence with “To sum up,” “To conclude” or “All in all.”</li>
+              <li>Each box gets a gold star when every part of its structure is there. The ticks check structure; the 💡 hints help with ideas.</li>
+            </ul>
+          </div>
+          <div class="picks">
+            <div class="pickbox p1"><b>Device 1</b><span id="pick1-t">Tap a phrase below.</span></div>
+            <div class="pickbox p2"><b>Device 2</b><span id="pick2-t">Then tap a second phrase.</span></div>
+          </div>
+          <p class="small muted" id="pick-note">Tap a chosen phrase again to remove it.</p>
+          <p class="coach" id="coach" hidden></p>
+        </div>
+
+        <div class="card art2-card">
+          <span class="label">The article · tap a yellow phrase to write about it</span>
+          <div class="article" id="art2"></div>
+        </div>
+
+        <div class="card" id="desk" hidden>
+          <span class="label">Finish</span>
+          <p class="small muted">When every box is written, or when time is up, finish here to see your whole paragraph color-coded and a model for the same two devices.</p>
+          <button class="btn btn-ink" id="btn-file" type="button">Finish my paragraph</button>
+          <p class="small muted" id="file-note"></p>
+        </div>
+
+        <div class="card" id="filed" hidden>
+          <span class="label" style="color:var(--good)">Your paragraph, color-coded</span>
+          <div class="legend-cc" id="final-legend"></div>
+          <div class="final cc" id="final"></div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btn-copy" type="button">Copy my paragraph</button>
+            <button class="btn btn-ghost" id="btn-edit" type="button">Edit my paragraph</button>
+          </div>
+          <p class="small muted" id="copy-note" role="status"></p>
+          <span class="label">Model paragraph for the same two devices</span>
+          <p class="model" id="model"></p>
+          <span class="label">Now check your own paragraph</span>
+          <ul class="tick" id="tick"></ul>
+          <div class="field">
+            <label for="improve">One thing I will improve next time</label>
+            <textarea id="improve" maxlength="300"></textarea>
+          </div>
+          <button class="btn btn-ink" id="btn-report" type="button">See my report</button>
+        </div>
+      </div>
+
+      <!-- 4 · EXAM -->
+      <div id="lv-4" class="col" hidden>
+        <div class="card" id="exam-start-card">
+          <span class="label">Exam practice · 40 minutes</span>
+          <p>Like the real exam, the article has no highlights and there are no hints. Read the question, choose TWO devices yourself and write ONE paragraph in your exam structure (steps 1 to 7).</p>
+          <p>Your <b>structure score</b> (out of 100) goes up live as you write. The coach line under it tells you what each sentence needs and turns red when something is wrong.</p>
+          <p class="small muted">The timer keeps running if you leave the page. When time is up, your paragraph is checked automatically.</p>
+          <button class="btn btn-ink" id="btn-exam-start" type="button">Start the 40-minute exam</button>
+        </div>
+        <div id="exam-live" class="col" hidden>
+          <div class="card exam-bar">
+            <div class="eb-row">
+              <span><span class="eb-l" id="exam-timer-l">Time left</span><span class="timer" id="exam-timer" role="timer" aria-live="off">40:00</span></span>
+              <span class="eb-score"><span class="eb-l">Structure score</span><span class="eb-pts"><span id="exam-pts">0</span><small> / 100</small><span class="eb-level" id="exam-level">Start</span></span><span class="eb-pop" id="exam-pop" hidden></span></span>
+            </div>
+            <div class="meter" aria-hidden="true"><i id="exam-meter"></i></div>
+            <p class="eb-tip" id="exam-tip" role="status" aria-live="polite"></p>
+            <p class="eb-warn" id="exam-warn" role="status" aria-live="polite" hidden></p>
+            <p class="eb-nudge" id="exam-nudge" hidden></p>
+          </div>
+          <div class="card"><span class="label">The writing question</span><p class="intro" id="exam-q"></p></div>
+          <details class="card poem-card" open><summary>The article</summary><div class="article" id="examart"></div></details>
+          <div class="card">
+            <span class="label">Plan first (about 2 minutes)</span>
+            <p class="small muted">Choose your two devices and the words you will copy before you write. The plan is not marked.</p>
+            <div class="field"><label for="plan-0">Device 1</label><input id="plan-0" type="text" maxlength="40" placeholder="e.g. metaphor"></div>
+            <div class="field"><label for="plan-1">Words I will copy for device 1</label><input id="plan-1" type="text" maxlength="120"></div>
+            <div class="field"><label for="plan-2">Device 2</label><input id="plan-2" type="text" maxlength="40" placeholder="e.g. repetition"></div>
+            <div class="field"><label for="plan-3">Words I will copy for device 2</label><input id="plan-3" type="text" maxlength="120"></div>
+          </div>
+          <div class="card">
+            <label class="label" for="exam-text">Your paragraph</label>
+            <textarea id="exam-text" spellcheck="true" placeholder="In the article “…,” published by …"></textarea>
+            <p class="small muted" id="exam-wc">0 words</p>
+            <button class="btn btn-ink" id="btn-exam-finish" type="button">I have finished</button>
+          </div>
+        </div>
+        <div id="exam-result" class="col" hidden>
+          <div class="card">
+            <span class="label" style="color:var(--good)">Exam result</span>
+            <p id="exam-sum"></p>
+            <div class="big" id="exam-big"></div>
+            <ul class="checks" id="exam-parts"></ul>
+            <p class="small muted">This score checks your structure. Your teacher marks your ideas.</p>
+            <span class="label">Structure checklist</span>
+            <ul class="checks" id="exam-checks"></ul>
+            <p class="small muted" id="exam-qnote"></p>
+          </div>
+          <div class="card">
+            <span class="label">Your paragraph, color-coded</span>
+            <div class="legend-cc" id="exam-legend"></div>
+            <p class="small" id="exam-starts"></p>
+            <div class="final cc" id="exam-cc"></div>
+          </div>
+          <div class="card">
+            <span class="label" id="exam-model-h">Model paragraph</span>
+            <p class="model" id="exam-model"></p>
+          </div>
+          <div class="btn-row"><button class="btn btn-ink" id="btn-exam-fix" type="button">Fix it: improve my paragraph</button>
+          <button class="btn btn-ghost" id="btn-exam-again" type="button">Start a new exam</button></div>
+          <button class="btn btn-ghost" id="btn-exam-report" type="button">See my report</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="s-report" hidden>
+    <div class="card">
+      <span class="label">Report</span>
+      <h2 style="font-family:var(--f-hand);font-weight:600;font-size:2rem">Sidewalk Racetracks</h2>
+      <div>
+        <div class="muted">Devices found first try (1 · Find)</div>
+        <div class="big" id="r-big"></div>
+        <div class="stars" id="r-stars" aria-hidden="true"></div>
+        <div class="small" id="r-extra" style="margin-top:6px"></div>
+      </div>
+      <div id="r-revise-block"><span class="label">Devices to revise</span><ul id="r-revise" class="small" style="margin:6px 0 0;padding-left:20px"></ul></div>
+      <span class="label">My paragraph (3 · Write)</span>
+      <div class="final" id="r-para"></div>
+      <div id="r-exam-block"><span class="label">My exam paragraph</span><div class="final" id="r-exam"></div></div>
+      <div id="r-improve-block"><span class="label">I will improve</span><p id="r-improve"></p></div>
+      <div class="who" id="r-who"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="btn-back" type="button">Back to my work</button>
+        <button class="btn btn-ghost" id="btn-again" type="button">Start again</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="sheet-back" id="spot-back" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="spot-q">
+    <div class="sheet-head"><span class="label" id="spot-label"></span><button class="x" id="spot-x" type="button" aria-label="Close">×</button></div>
+    <p class="evidence" id="spot-ev"></p>
+    <h3 class="qh" id="spot-q" tabindex="-1">You found a device! Which one is it?</h3>
+    <div class="devopts" id="spot-opts"></div>
+    <div class="fb" id="spot-fb" role="status" aria-live="polite" hidden></div>
+    <button class="btn btn-ink" id="spot-next" type="button" hidden>Back to the article</button>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="sheet-back" id="sheet-back" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
+    <div class="sheet-head"><span class="label" id="sheet-label"></span><button class="x" id="sheet-x" type="button" aria-label="Close">×</button></div>
+    <p class="evidence" id="sheet-ev"></p>
+    <div class="st-row" id="sheet-steps"></div>
+    <span class="retry" id="sheet-retry" hidden></span>
+    <h3 class="qh" id="sheet-q" tabindex="-1"></h3>
+    <div class="opts" id="sheet-opts" role="group" aria-labelledby="sheet-q"></div>
+    <div class="fb" id="sheet-fb" role="status" aria-live="polite" hidden></div>
+    <button class="btn btn-ink" id="sheet-next" type="button" hidden></button>
+  </div>
+</div>
+
+<script id="app-data" type="application/json">{"key": "onur-koc9-scooters-hunt-v2", "name": "Sidewalk Racetracks", "art": {"hed": "Rental Scooters Have Turned Our Sidewalks into Racetracks", "dek": "They were sold to us as clean, modern transport. Instead, they have made walking in our own city a daily danger.", "by": "By Daniel Marsh | The Riverton Post | 9 November 2026", "paras": ["Walk down any street in the city center on a Saturday afternoon and you will see them: bright green scooters flying past strollers, shopping bags and walking sticks, their riders bent low over the handlebars with headphones in their ears. Nobody rings a bell. Nobody slows down.", "Three years ago, the rental companies promised us a cleaner, quieter city. What they gave us instead was a swarm of electric mosquitoes that nobody can swat away.", "The numbers are alarming. According to one recent survey, seven out of ten people in the city no longer feel safe on the sidewalk. Seven out of ten.", "A doctor at a busy city hospital told me that her emergency room now treats scooter injuries every single weekend. “These machines are sending us broken wrists and broken teeth faster than we can fix them,” she said.", "Think about who pays the price. An elderly woman steps carefully out of the bakery with her cane, while a teenager shoots past her at full speed, laughing into his phone.", "And when the ride is over, the scooters are simply dropped wherever they stop. They lie across our sidewalks like fallen soldiers after a battle, blocking wheelchairs and strollers.", "The companies say that scooters reduce traffic. Perhaps. But it now takes a miracle to cross Market Square without being hit. Thousands of residents have already signed a petition to ban them, and more join every day.", "These reckless machines have brought nothing but chaos and fear to streets that used to be peaceful.", "Our sidewalks belong to people, not to profit. It is time to take them back, before a child pays the price for our silence."], "foot": "This opinion piece was written for classroom practice. The writer, the publication, and the survey, doctor and petition it mentions are fictional."}, "spots": [{"id": "s1", "where": "Headline", "side": "A", "device": "Metaphor", "quote": "Turned Our Sidewalks into Racetracks", "dAns": "Metaphor: the sidewalks are called racetracks, with no ‘like’ or ‘as’.", "dWrong": ["Simile: the sidewalks are compared to racetracks using the word ‘like’.", "Statistics and data: the title counts how many scooters race in the city.", "Expert opinion: a racing driver explains why the sidewalks are unsafe."], "dHint": "Are the sidewalks really racetracks? Is there a ‘like’ or an ‘as’?", "dWhy": "The sidewalks are not really racetracks, and there is no “like” or “as.” The headline says they have become racetracks. That is a metaphor.", "effect": "Calling sidewalks “racetracks” makes scooters seem fast and dangerous, so the reader sees walkers as being at risk.", "eWrong": ["Calling sidewalks “racetracks” makes scooters seem exciting and fun, so the reader wants to rent one this very weekend.", "Calling sidewalks “racetracks” makes the reader think the article is a sports report about a new city race.", "Calling sidewalks “racetracks” makes scooters seem slow and harmless, so the reader stops worrying about them."], "eHint": "What happens on a racetrack? Would you want to walk on one?", "words": [["Racetracks", "noun", "What could “Racetracks” suggest? Speed? Competition? No place for walkers?"], ["Turned", "verb", "What could the verb “Turned” suggest? A complete change? Something lost?"]], "frameHint": "Metaphor frame: Marsh compares ___ (the sidewalks) to ___ (what?) to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: alarmed, worried, unsafe. Why would a reader feel this before reading the article?", "m_ev": "Marsh claims that rental scooters have “Turned Our Sidewalks into Racetracks.”", "m_tech": "Here, Marsh uses a metaphor through the word “Racetracks,” which means tracks where cars, bikes or horses race against each other at high speed.", "m_dev": "Marsh compares the sidewalks to racetracks to suggest that scooters move far too fast for a place where people walk. Marsh highlights how completely the sidewalks have changed with the verb “Turned.”", "m_reader": "The reader is alarmed because a racetrack is no place for people on foot. The reader realizes that the writer has judged the scooters as dangerous before giving any evidence.", "m_relate": "Therefore, the metaphor shows Marsh’s bias towards rental scooters.", "unverified": false, "ctx": ["Rental Scooters Have Turned Our Sidewalks into Racetracks"]}, {"id": "s2", "where": "Paragraph 1", "side": "A", "device": "Imagery", "quote": "bright green scooters flying past strollers, shopping bags and walking sticks", "dAns": "Imagery: we can picture the green scooters rushing past strollers and walking sticks.", "dWrong": ["Bandwagon: the writer says that most people in the city now ride bright green scooters.", "Repetition: the word ‘scooters’ is used three times in this one short part of the sentence.", "Expert opinion: a traffic officer describes what he sees on a busy Saturday afternoon."], "dHint": "Can you see a picture in your mind? Which details create it?", "dWhy": "“Bright green,” “flying past” and the list of strollers, shopping bags and walking sticks help us see the scene. That is imagery.", "effect": "The detailed picture puts fast scooters beside babies and old people, so the reader feels how unsafe the sidewalk is.", "eWrong": ["The detailed picture makes the street look bright and cheerful, so the reader feels that scooters improve the city.", "The detailed picture shows that shoppers carry too many bags, so the reader blames them for the crowded sidewalk.", "The detailed picture proves with numbers how fast scooters go, so the reader trusts the writer’s careful research."], "eHint": "Who uses strollers and walking sticks? How fast can they move?", "words": [["flying", "verb", "What could the verb “flying” suggest? Great speed? No control?"], ["strollers", "noun", "Who is inside a stroller? What could that suggest about who is in danger?"]], "frameHint": "Imagery frame: Marsh gives a detailed description of ___ to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: anxious, uneasy, protective. Who does the reader worry about?", "m_ev": "Marsh describes “bright green scooters flying past strollers, shopping bags and walking sticks.”", "m_tech": "Here, Marsh uses imagery through the word “flying,” which means moving through the air very fast.", "m_dev": "Marsh gives a detailed description of scooters rushing past strollers and walking sticks to suggest that the fastest machines share the sidewalk with the weakest people. Marsh highlights the riders’ speed with the verb “flying.”", "m_reader": "The reader is anxious because babies and elderly people seem to be in the path of the scooters. The reader realizes that an ordinary Saturday walk is shown as a dangerous event.", "m_relate": "Therefore, the imagery shows Marsh’s bias towards rental scooters.", "unverified": false, "ctx": ["Walk down any street in the city center on a Saturday afternoon and you will see them: bright green scooters flying past strollers, shopping bags and walking sticks, their riders bent low over the handlebars with headphones in their ears. Nobody rings a bell. Nobody slows down."]}, {"id": "s3", "where": "Paragraph 1", "side": "A", "device": "Repetition", "quote": "Nobody rings a bell. Nobody slows down.", "dAns": "Repetition: the word ‘Nobody’ begins two short sentences, one after the other.", "dWrong": ["Simile: the riders are compared to nobody at all, using the word ‘as’ two times.", "Hyperbole: the writer claims that no scooter in the world has ever had a bell.", "Juxtaposition: a loud bell and a silent street are placed side by side here."], "dHint": "Read the two sentences aloud. Which word do you hear twice?", "dWhy": "“Nobody” starts both sentences. Using the same word again on purpose is repetition.", "effect": "Repeating “Nobody” makes every rider sound careless, so the reader feels that no one on a scooter can be trusted.", "eWrong": ["Repeating “Nobody” makes the street sound calm and empty, so the reader feels that the sidewalks are peaceful.", "Repeating “Nobody” shows that the writer has run out of ideas, so the reader stops reading the article here.", "Repeating “Nobody” makes the riders sound polite and quiet, so the reader starts to respect them a little bit more."], "eHint": "Does “Nobody” mean some riders or all riders? Is that fair?", "words": [["Nobody", "pronoun", "What could “Nobody” suggest? Not one single rider? Is that likely to be true?"], ["slows", "verb", "What could “slows down” suggest about what riders should do near walkers?"]], "frameHint": "Repetition frame: Marsh repeats the words “___” more than once to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: annoyed, angry, frustrated. What should the riders be doing?", "m_ev": "Marsh states, “Nobody rings a bell. Nobody slows down.”", "m_tech": "Here, Marsh uses repetition through the word “Nobody,” which means not one single person.", "m_dev": "Marsh repeats the word “Nobody” more than once to suggest that every single rider ignores the people around them. Marsh highlights how careless the riders are by giving each failure a short sentence of its own.", "m_reader": "The reader is angry because the riders seem to care only about themselves. The reader realizes that the writer blames all riders, not only the careless ones.", "m_relate": "Therefore, the repetition shows Marsh’s bias towards rental scooters.", "unverified": false, "ctx": ["Walk down any street in the city center on a Saturday afternoon and you will see them: bright green scooters flying past strollers, shopping bags and walking sticks, their riders bent low over the handlebars with headphones in their ears. Nobody rings a bell. Nobody slows down."]}, {"id": "s4", "where": "Paragraph 2", "side": "A", "device": "Metaphor", "quote": "a swarm of electric mosquitoes", "dAns": "Metaphor: the scooters are called a swarm of mosquitoes, with no ‘like’ or ‘as’.", "dWrong": ["Simile: the scooters are compared to mosquitoes by using the word ‘like’ here.", "Statistics and data: the writer counts the exact number of scooters in the city.", "Imagery: we can hear the real mosquitoes that live near the city’s river in summer."], "dHint": "Are the scooters really insects? Is there a ‘like’ or an ‘as’?", "dWhy": "The scooters are not really mosquitoes, and there is no “like” or “as.” They are called “a swarm of electric mosquitoes.” That is a metaphor.", "effect": "Calling scooters “mosquitoes” makes them seem like annoying pests, so the reader wants the city to get rid of them.", "eWrong": ["Calling scooters “mosquitoes” makes them seem small and gentle, so the reader thinks they cannot hurt anybody at all.", "Calling scooters “mosquitoes” makes the reader think the article is about insects and summer illnesses.", "Calling scooters “mosquitoes” makes them seem rare and special, so the reader wants the city to protect them."], "eHint": "How do people feel about mosquitoes? What do they do to them?", "words": [["swarm", "noun", "What could “swarm” suggest? A huge number? Out of control?"], ["mosquitoes", "noun", "What could “mosquitoes” suggest? Annoying? Harmful? To be got rid of?"]], "frameHint": "Metaphor frame: Marsh compares ___ (the scooters) to ___ (what?) to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: irritated, annoyed, hostile. How do people feel about mosquitoes?", "m_ev": "Marsh describes the scooters as “a swarm of electric mosquitoes.”", "m_tech": "Here, Marsh uses a metaphor through the word “swarm,” which means a large group of insects moving together.", "m_dev": "Marsh compares the scooters to a swarm of mosquitoes to suggest that they are pests that annoy and harm the people of the city. Marsh highlights how many scooters there are with the noun “swarm.”", "m_reader": "The reader is irritated because mosquitoes are insects that everyone wants to get rid of. The reader realizes that the writer sees no value at all in the scooters.", "m_relate": "Therefore, the metaphor shows Marsh’s bias towards rental scooters.", "unverified": false, "ctx": ["Three years ago, the rental companies promised us a cleaner, quieter city. What they gave us instead was a swarm of electric mosquitoes that nobody can swat away."]}, {"id": "s5", "where": "Paragraph 3", "side": "B", "device": "Statistics and data", "unverified": true, "quote": "seven out of ten people in the city no longer feel safe on the sidewalk", "dAns": "Statistics and data: ‘seven out of ten’ is a number from a survey that is never named.", "dWrong": ["Expert opinion: a named professor explains her survey of the city in great detail.", "Hyperbole: the writer claims that every person in the country is afraid of scooters.", "Metaphor: the people of the city are called numbers, with no ‘like’ or ‘as’ used here."], "dHint": "Look for a number. Who collected it? Can the reader find the survey?", "dWhy": "“Seven out of ten” is a number, but “one recent survey” is never named. That is a statistic the reader cannot check.", "effect": "The number makes the fear sound common and proven, but the survey is never named, so the reader cannot check it.", "eWrong": ["The number makes the fear sound rare and unimportant, so the reader feels that scooters are not a real problem at all.", "The number comes from a named, official report, so the reader can easily check for themselves that it is true.", "The number is clearly meant as a joke, so the reader laughs and stops taking the rest of the article seriously."], "eHint": "Which survey is it? Who answered it? Could the reader check?", "words": [["safe", "adjective", "What could “safe” suggest? What have people lost?"], ["sidewalk", "noun", "Who is the sidewalk for? What could that suggest about the scooters?"]], "frameHint": "Statistics frame: Marsh provides statistics about ___ to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: shocked, worried, but also suspicious. Why might a careful reader be suspicious?", "m_ev": "Marsh claims that “seven out of ten people in the city no longer feel safe on the sidewalk.”", "m_tech": "Here, Marsh uses statistics through the word “safe,” which means protected from danger or harm.", "m_dev": "Marsh provides statistics about how people feel on the sidewalk to suggest that most of the city is afraid of scooters. Marsh highlights the size of the problem with the number seven out of ten.", "m_reader": "The reader is shocked because most people in the city seem to be afraid of walking. The reader realizes that the survey is never named, so the number cannot be checked.", "m_relate": "Therefore, the statistic shows Marsh’s bias towards rental scooters.", "ctx": ["The numbers are alarming. According to one recent survey, seven out of ten people in the city no longer feel safe on the sidewalk. Seven out of ten."]}, {"id": "s6", "where": "Paragraph 4", "side": "B", "device": "Expert opinion", "unverified": true, "quote": "A doctor at a busy city hospital", "dAns": "Expert opinion: a doctor has medical knowledge, but her name is never given.", "dWrong": ["Statistics and data: the doctor gives the exact number of injuries each weekend.", "Bandwagon: the writer says that every doctor in the city now rides a scooter.", "Simile: the doctor is compared to a busy hospital by using the word ‘like’."], "dHint": "Whose opinion is this? What is her job? Do we learn her name?", "dWhy": "A doctor knows about injuries, so her words sound trustworthy. But she is not named, so nobody can check what she said.", "effect": "A doctor sounds trustworthy, so the reader believes scooters cause many injuries, even though she is never named.", "eWrong": ["A doctor sounds trustworthy, so the reader believes hospitals are closing, even though that is never mentioned here.", "A doctor sounds unsure of her facts, so the reader decides that scooter injuries are probably not very common.", "A doctor sounds proud of her hospital, so the reader feels that scooter injuries are fixed quickly and easily."], "eHint": "Why do readers trust doctors? Can they check this one?", "words": [["doctor", "noun", "What could “doctor” suggest? Knowledge? Someone we trust?"], ["busy", "adjective", "What could “busy” suggest about the hospital? Many patients? Many injuries?"]], "frameHint": "Expert opinion frame: Marsh refers to ___ who is an expert in ___ to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: convinced, concerned, but also doubtful. Who is this doctor?", "m_ev": "Marsh refers to “A doctor at a busy city hospital” whose emergency room treats scooter injuries “every single weekend.”", "m_tech": "Here, Marsh uses expert opinion through the word “doctor,” which means a person who is trained to treat people who are ill or hurt.", "m_dev": "Marsh refers to an unnamed doctor who is an expert in treating injuries to suggest that medical science supports his opinion. Marsh highlights the doctor’s words about “broken wrists and broken teeth.”", "m_reader": "The reader is concerned because a doctor seems to confirm that scooters injure people every weekend. The reader realizes that the doctor is never named, so nobody can check what was said.", "m_relate": "Therefore, the expert opinion shows Marsh’s bias towards rental scooters.", "ctx": ["A doctor at a busy city hospital told me that her emergency room now treats scooter injuries every single weekend. “These machines are sending us broken wrists and broken teeth faster than we can fix them,” she said."]}, {"id": "s7", "where": "Paragraph 5", "side": "B", "device": "Juxtaposition", "quote": "An elderly woman steps carefully out of the bakery with her cane, while a teenager shoots past her at full speed", "dAns": "Juxtaposition: a slow, careful old woman is placed next to a fast, careless teenager.", "dWrong": ["Repetition: the word ‘woman’ is used again and again to keep her in the reader’s mind.", "Statistics and data: the writer measures the exact speed of the teenager’s rental scooter.", "Expert opinion: a baker explains what he sees outside his shop every single afternoon."], "dHint": "How many people are in this sentence? How are they different?", "dWhy": "The careful elderly woman and the speeding teenager are put side by side so we notice the difference. That is juxtaposition.", "effect": "Placing the careful old woman beside the speeding teenager makes riders seem selfish, so the reader takes her side.", "eWrong": ["Placing the careful old woman beside the speeding teenager makes her seem far too slow, so the reader blames her.", "Placing the careful old woman beside the speeding teenager makes the bakery seem busy, so the reader wants bread.", "Placing the careful old woman beside the speeding teenager makes them seem like friends, so the reader smiles."], "eHint": "Which of the two people does the writer want you to care about?", "words": [["carefully", "adverb", "What could the adverb “carefully” suggest about the woman? Slow? Weak? Trying to stay safe?"], ["shoots", "verb", "What could the verb “shoots” suggest? Speed? Danger? Like a bullet?"]], "frameHint": "Juxtaposition frame: Marsh places ___ next to ___ to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: protective, angry, sympathetic. Who could get hurt?", "m_ev": "Marsh describes an elderly woman who “steps carefully out of the bakery with her cane” as “a teenager shoots past her at full speed.”", "m_tech": "Here, Marsh uses juxtaposition through the word “shoots,” which means moves suddenly and very quickly in one direction.", "m_dev": "Marsh places a careful elderly woman next to a speeding teenager to suggest that scooter riders put the weakest people in danger. Marsh highlights the rider’s carelessness with the detail that the teenager is “laughing into his phone.”", "m_reader": "The reader is protective because the elderly woman could easily be knocked over. The reader realizes that the writer shows only the worst kind of rider.", "m_relate": "Therefore, the juxtaposition shows Marsh’s bias towards rental scooters.", "unverified": false, "ctx": ["Think about who pays the price. An elderly woman steps carefully out of the bakery with her cane, while a teenager shoots past her at full speed, laughing into his phone."]}, {"id": "s8", "where": "Paragraph 6", "side": "A", "device": "Simile", "quote": "like fallen soldiers after a battle", "dAns": "Simile: the dropped scooters are compared to fallen soldiers using the word ‘like’.", "dWrong": ["Metaphor: the scooters are said to be real soldiers, with no ‘like’ or ‘as’ used here.", "Bandwagon: the writer says that most soldiers in the city now use rental scooters.", "Statistics and data: the writer counts how many scooters were left on the sidewalk."], "dHint": "Look for the small word that joins the two things being compared.", "dWhy": "The scooters lying on the sidewalk are compared to “fallen soldiers after a battle” with the word “like.” That is a simile.", "effect": "Comparing dropped scooters to “fallen soldiers” makes the street look like a war zone, so the reader sees a city in chaos.", "eWrong": ["Comparing dropped scooters to “fallen soldiers” makes the scooters seem brave, so the reader starts to admire them.", "Comparing dropped scooters to “fallen soldiers” makes the reader think the article is a history of a famous old war.", "Comparing dropped scooters to “fallen soldiers” makes the street look neat, so the reader thinks the city is clean and tidy."], "eHint": "What does a place look like after a battle? Is it calm and tidy?", "words": [["fallen", "adjective", "What could “fallen” suggest? Dropped? Left behind? Finished?"], ["battle", "noun", "What could “battle” suggest about the city’s streets? Fighting? Danger? Chaos?"]], "frameHint": "Simile frame: Marsh compares ___ (the dropped scooters) to ___ to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: disturbed, annoyed, uneasy. What has the street become?", "m_ev": "Marsh claims that the scooters lie across the sidewalks “like fallen soldiers after a battle.”", "m_tech": "Here, Marsh uses a simile through the word “battle,” which means a fight between two armies in a war.", "m_dev": "Marsh compares the dropped scooters to fallen soldiers to suggest that the sidewalks have become a messy and dangerous war zone. Marsh highlights the people who suffer most, as the scooters are “blocking wheelchairs and strollers.”", "m_reader": "The reader is disturbed because a quiet street is made to look like a battlefield. The reader realizes that the writer turns a problem of tidiness into a picture of war.", "m_relate": "Therefore, the simile shows Marsh’s bias towards rental scooters.", "unverified": false, "ctx": ["And when the ride is over, the scooters are simply dropped wherever they stop. They lie across our sidewalks like fallen soldiers after a battle, blocking wheelchairs and strollers."]}, {"id": "s9", "where": "Paragraph 7", "side": "A", "device": "Hyperbole", "quote": "it now takes a miracle to cross Market Square without being hit", "dAns": "Hyperbole: needing ‘a miracle’ to cross a square is a huge exaggeration.", "dWrong": ["Simile: crossing the square is compared to a miracle using the word ‘like’.", "Expert opinion: a priest explains how miracles happen in Market Square.", "Repetition: the word ‘miracle’ is used many times so that we remember it."], "dHint": "Is this literally true? Do people really need a miracle?", "dWhy": "People cross the square safely every day, so “it now takes a miracle” is far bigger than the truth. That is hyperbole.", "effect": "Saying it “takes a miracle” makes being hit seem almost certain, so the reader feels the danger is bigger than it is.", "eWrong": ["Saying it “takes a miracle” makes the square seem holy, so the reader feels calm and wants to visit it very soon.", "Saying it “takes a miracle” makes scooters seem magical, so the reader feels excited about riding one in the square today.", "Saying it “takes a miracle” gives an exact number of accidents, so the reader trusts the writer’s careful research."], "eHint": "How often does a miracle happen? So how often is crossing safe?", "words": [["miracle", "noun", "What could “miracle” suggest? Almost impossible? Only luck can save you?"], ["hit", "verb", "What could “hit” suggest? Violence? Injury?"]], "frameHint": "Hyperbole frame: Marsh exaggerates the meaning of ___ to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: frightened, tense, but maybe doubtful. Is it really that dangerous?", "m_ev": "Marsh claims that “it now takes a miracle to cross Market Square without being hit.”", "m_tech": "Here, Marsh uses hyperbole through the word “miracle,” which means an amazing event that seems impossible to explain.", "m_dev": "Marsh exaggerates the meaning of crossing a square to suggest that being hit by a scooter is almost certain. Marsh highlights the violence of the scooters with the verb “hit.”", "m_reader": "The reader is frightened because a simple walk across the square is made to sound deadly. The reader realizes that people cross the square safely every day, so the danger is exaggerated.", "m_relate": "Therefore, the hyperbole shows Marsh’s bias towards rental scooters.", "unverified": false, "ctx": ["The companies say that scooters reduce traffic. Perhaps. But it now takes a miracle to cross Market Square without being hit. Thousands of residents have already signed a petition to ban them, and more join every day."]}, {"id": "s10", "where": "Paragraph 7", "side": "B", "device": "Bandwagon", "quote": "Thousands of residents have already signed a petition to ban them, and more join every day", "dAns": "Bandwagon: thousands are said to have joined already, so we should join too.", "dWrong": ["Expert opinion: a named lawyer explains how the petition was written and sent.", "Simile: the residents are compared to a petition by using the word ‘like’ here.", "Imagery: we can see and hear the pen as each resident slowly signs the paper."], "dHint": "How many people have already acted? What should the reader do next?", "dWhy": "The writer says “Thousands” have “already” signed and “more join every day,” so the reader feels they should follow the crowd. That is bandwagon.", "effect": "Saying thousands have “already” signed makes the reader feel left out, so they want to join the people against scooters.", "eWrong": ["Saying thousands have “already” signed makes the reader feel it is too late, so they decide to do nothing about scooters.", "Saying thousands have “already” signed makes the reader feel bored, so they stop caring about the petition and the city.", "Saying thousands have “already” signed makes the reader feel that scooters are popular, so they think scooters should stay."], "eHint": "How does it feel when everyone else has already joined?", "words": [["Thousands", "noun", "What could “Thousands” suggest? A huge crowd? Everyone agrees?"], ["already", "adverb", "What could “already” suggest? You are late? Others acted first?"]], "frameHint": "Bandwagon frame: Marsh states how many people ___ to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: pressured, left out, eager to join. Why?", "m_ev": "Marsh claims that “Thousands of residents have already signed a petition to ban them.”", "m_tech": "Here, Marsh uses the bandwagon technique through the word “Thousands,” which means a very large number of people.", "m_dev": "Marsh states how many people have signed the petition to suggest that the whole city agrees with him. Marsh highlights that the crowd is still growing, as “more join every day.”", "m_reader": "The reader is pressured because thousands of neighbors seem to have chosen a side already. The reader realizes that the writer gives a crowd as a reason instead of clear evidence.", "m_relate": "Therefore, the bandwagon technique shows Marsh’s bias towards rental scooters.", "unverified": false, "ctx": ["The companies say that scooters reduce traffic. Perhaps. But it now takes a miracle to cross Market Square without being hit. Thousands of residents have already signed a petition to ban them, and more join every day."]}, {"id": "s11", "where": "Paragraph 8", "side": "A", "device": "Emotive language", "quote": "reckless machines have brought nothing but chaos and fear", "dAns": "Emotive language: ‘reckless,’ ‘chaos’ and ‘fear’ are strong words full of feeling.", "dWrong": ["Statistics and data: the writer counts how many machines have caused problems in the city.", "Simile: the machines are compared to chaos and fear by using the small word ‘as’.", "Expert opinion: an engineer explains why the machines are built so badly."], "dHint": "Which words here carry strong feelings? Are they positive or negative?", "dWhy": "“Reckless,” “chaos” and “fear” are chosen to make us feel strongly against the scooters. That is emotive language.", "effect": "Strong words like “chaos” and “fear” make scooters sound harmful, so the reader feels angry and afraid of them.", "eWrong": ["Strong words like “chaos” and “fear” make scooters sound thrilling, so the reader feels eager to try one very soon.", "Strong words like “chaos” and “fear” make the writer sound calm and fair, so the reader trusts that both sides are shown.", "Strong words like “chaos” and “fear” make the streets sound peaceful, so the reader feels relaxed and safe."], "eHint": "How do the words “chaos” and “fear” make you feel about scooters?", "words": [["reckless", "adjective", "What could “reckless” suggest? Careless? Not thinking about danger?"], ["chaos", "noun", "What could “chaos” suggest? No order? No control?"]], "frameHint": "Emotive language frame: Marsh uses emotional words (such as “___”) to suggest ___. Marsh highlights ___.", "readerHint": "Feeling words: angry, fearful, upset. Which words cause the feeling?", "m_ev": "Marsh claims that these “reckless machines have brought nothing but chaos and fear.”", "m_tech": "Here, Marsh uses emotive language through the word “reckless,” which means doing dangerous actions without thinking about the results.", "m_dev": "Marsh uses emotional words such as “chaos” and “fear” to suggest that scooters have only harmed the city. Marsh highlights that the scooters have no benefit at all with the phrase “nothing but.”", "m_reader": "The reader is angry because the scooters seem to have ruined streets that were once peaceful. The reader realizes that the writer mentions none of the benefits of scooters.", "m_relate": "Therefore, the emotive language shows Marsh’s bias towards rental scooters.", "unverified": false, "ctx": ["These reckless machines have brought nothing but chaos and fear to streets that used to be peaceful."]}], "question": "How does the writer use biased language to persuade the reader that rental scooters are dangerous?", "author": "Marsh", "authorFull": "Daniel Marsh", "male": true, "pub": "The Riverton Post", "pubDate": "November 2026", "topic": "rental scooters", "point_model": "In the article “Rental Scooters Have Turned Our Sidewalks into Racetracks,” published by The Riverton Post in November 2026, Daniel Marsh presents a biased opinion towards rental scooters, suggesting that they have made the city’s sidewalks dangerous, through the use of {d1} and {d2}.", "sides": {"A": "how fast, careless and dangerous the scooters are", "B": "the people who are hurt and the people who support the writer"}, "hint_p1": "The question asks how Marsh persuades the reader that rental scooters are dangerous. So: “a biased opinion towards rental scooters.”", "hint_p2": "After “suggesting that,” give his claim in your own words: what does he say scooters have done to the sidewalks?", "hint_s": "After “to suggest,” say what Marsh wants the reader to believe about the scooters, the riders or the city."}</script>
+<script>
+(function () {
+  "use strict";
+  var D = JSON.parse(document.getElementById("app-data").textContent);
+  var SPOTS = D.spots, BY = {}; SPOTS.forEach(function (s, i) { s.n = i + 1; BY[s.id] = s; });
+  var KEY = D.key;
+  var SUR = D.author, sur = SUR.toLowerCase(), FULL = D.authorFull;
+  var PRON = D.male ? "he" : "she", WRONG = D.male ? "she" : "he", POSS = D.male ? "his" : "her", WRONGPOSS = D.male ? "her" : "his";
+  var PUBKEY = D.pub.toLowerCase().replace(/^the /, "");
+  var LETTERS = ["A", "B", "C", "D"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var DEVRE = {
+    "Headline": /\bheadline\b/, "Imagery": /\bimagery\b/, "Personification": /\bpersonification\b/,
+    "Metaphor": /\bmetaphor\b/, "Statistics and data": /\bstatistic|\bdata\b/, "Repetition": /\brepetition\b/,
+    "Expert opinion": /\bexpert opinion\b/, "Emotive language": /\bemotive\b/, "Simile": /\bsimile\b/,
+    "Juxtaposition": /\bjuxtaposition\b/, "Rhetorical question": /\brhetorical question\b/, "Fear appeal": /\bfear appeal\b/,
+    "Tone": /\btone\b/, "Selective detail": /\bselective\b/, "Bandwagon": /\bbandwagon\b/, "Hyperbole": /\bhyperbole\b/, "Inclusive language": /\binclusive\b/
+  };
+  var DEVLABEL = {
+    "Headline": "the headline", "Imagery": "imagery", "Personification": "personification", "Metaphor": "a metaphor",
+    "Statistics and data": "statistics", "Repetition": "repetition", "Expert opinion": "expert opinion",
+    "Emotive language": "emotive language", "Simile": "a simile", "Juxtaposition": "juxtaposition",
+    "Rhetorical question": "a rhetorical question", "Fear appeal": "fear appeal",
+    "Tone": "tone", "Selective detail": "selective detail", "Bandwagon": "the bandwagon technique", "Hyperbole": "hyperbole", "Inclusive language": "inclusive language"
+  };
+  var DEVNAME = {
+    "Headline": "headline", "Imagery": "imagery", "Personification": "personification", "Metaphor": "metaphor",
+    "Statistics and data": "statistic", "Repetition": "repetition", "Expert opinion": "expert opinion",
+    "Emotive language": "emotive language", "Simile": "simile", "Juxtaposition": "juxtaposition",
+    "Rhetorical question": "rhetorical question", "Fear appeal": "fear appeal",
+    "Tone": "tone", "Selective detail": "selective detail", "Bandwagon": "bandwagon technique", "Hyperbole": "hyperbole", "Inclusive language": "inclusive language"
+  };
+  /* O. H.'s final Koç 9 structure: device frame, then "(name) highlights ___." */
+  var HIGH = [new RegExp("\\b" + sur + " (also )?highlights\\b"), SUR + " highlights ___"];
+  function fr(text, re, lab) { return { text: SUR + " " + text + " " + SUR + " highlights ___.", checks: [[re, lab], HIGH] }; }
+  var CMP = fr("compares ___ to ___ to suggest ___.", /compares\b.+\bto\b.+\bto suggest\b/, "compares ___ to ___ to suggest ___");
+  var FRAMES = {
+    "Metaphor": CMP, "Simile": CMP,
+    "Repetition": fr("repeats the words “___” more than once to suggest ___.", /repeats the words?\b.+\bmore than once\b.+\bto suggest\b/, "repeats the words “___” more than once to suggest ___"),
+    "Juxtaposition": fr("places ___ next to ___ to suggest ___.", /places\b.+\bnext to\b.+\bto suggest\b/, "places ___ next to ___ to suggest ___"),
+    "Imagery": fr("gives a detailed description of ___ to suggest ___.", /gives a detailed description of\b.+\bto suggest\b/, "gives a detailed description of ___ to suggest ___"),
+    "Expert opinion": fr("refers to ___ who is an expert in ___ to suggest ___.", /refers to\b.+\bwho is an expert in\b.+\bto suggest\b/, "refers to ___ who is an expert in ___ to suggest ___"),
+    "Statistics and data": fr("provides statistics about ___ to suggest ___.", /provides statistics about\b.+\bto suggest\b/, "provides statistics about ___ to suggest ___"),
+    "Emotive language": fr("uses emotional words to suggest ___.", /uses emotional words?\b.*\bto suggest\b/, "uses emotional words to suggest ___"),
+    "Bandwagon": fr("states how many people ___ to suggest ___.", /states how many\b.+\bto suggest\b/, "states how many people ___ to suggest ___"),
+    "Hyperbole": fr("exaggerates the meaning of ___ to suggest ___.", /exaggerates the meaning of\b.+\bto suggest\b/, "exaggerates the meaning of ___ to suggest ___"),
+    "Headline": fr("uses the headline “___” to suggest ___.", /uses the headline\b.+\bto suggest\b/, "uses the headline “___” to suggest ___"),
+    "Personification": fr("gives ___ the human quality of ___ to suggest ___.", /gives\b.+\bthe human quality of\b.+\bto suggest\b/, "gives ___ the human quality of ___ to suggest ___"),
+    "Rhetorical question": fr("asks, “___?” to suggest ___.", /\basks\b.*\?.*\bto suggest\b/, "asks, “___?” to suggest ___"),
+    "Fear appeal": fr("warns that ___ to suggest ___.", /warns that\b.+\bto suggest\b/, "warns that ___ to suggest ___"),
+    "Tone": fr("uses a ___ (mocking / sarcastic / angry) tone when ___ to suggest ___.", /uses an?\b.+\btone\b.+\bto suggest\b/, "uses a ___ tone when ___ to suggest ___"),
+    "Selective detail": fr("mentions ___ only briefly and focuses on ___ to suggest ___.", /mentions\b.+\bonly briefly\b.+\bfocuses on\b.+\bto suggest\b/, "mentions ___ only briefly and focuses on ___ to suggest ___"),
+    "Inclusive language": fr("uses the pronoun “___” to include the reader and to suggest ___.", /uses the pronoun\b.+\bto include the reader\b.+\bto suggest\b/, "uses the pronoun “___” to include the reader and to suggest ___")
+  };
+  var FRAMEALL = Object.keys(FRAMES).map(function (k) { return FRAMES[k].checks[0][0]; });
+  var EVSTART = ["claims that “”", "warns that “”", "states that “”", "describes … as “”", "asks, “”", "refers to “”"];
+  var EVV = "(claims|warns|states|describes|asks|refers|calls|writes|argues|suggests|admits|insists|repeats|explains|says)";
+  var EVVERB = new RegExp("\\b" + EVV + "\\b");
+
+  function $(id) { return document.getElementById(id); }
+  function shuffle(a) { var r = a.slice(); for (var i = r.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = r[i]; r[i] = r[j]; r[j] = t; } return r; }
+  var S = null;
+  function fresh(name) {
+    var st = { name: name, tab: 1, round: 1, spots: {}, cur: null, phase: null, opts: null, answered: null, d1: null, d2: null, boxes: {}, filed: false, ticks: {}, improve: "", report: false, spotted: {}, spotWrong: {}, spotMiss: 0, exam: null };
+    SPOTS.forEach(function (s) { st.spots[s.id] = { status: "open", misses: 0 }; });
+    return st;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() {
+    try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && s.spots && SPOTS.every(function (x) { return s.spots[x.id]; })) { s.spotted = s.spotted || {}; s.spotWrong = s.spotWrong || {}; s.spotMiss = s.spotMiss || 0; if (s.exam === undefined) s.exam = null; return s; } } catch (e) {}
+    return null;
+  }
+  function show(id) { ["s-start", "s-main", "s-report"].forEach(function (x) { $(x).hidden = x !== id; }); }
+  function foundCount() { return SPOTS.filter(function (s) { var t = S.spots[s.id].status; return t === "first" || t === "later"; }).length; }
+  function firstCount() { return SPOTS.filter(function (s) { return S.spots[s.id].status === "first"; }).length; }
+  function spottedCount() { return SPOTS.filter(function (s) { return S.spotted[s.id]; }).length; }
+  function mmss(sec) { sec = Math.max(0, Math.round(sec)); return Math.floor(sec / 60) + ":" + ("0" + (sec % 60)).slice(-2); }
+  var toastT = null;
+  function toast(msg) { var t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { t.hidden = true; }, 3200); }
+
+  /* ---------- text helpers ---------- */
+  function nSentences(t) { return sentences(t).length; }
+  function norm(t) { return " " + String(t || "").toLowerCase().replace(/[‘’ʼ`´]/g, "'").replace(/[“”]/g, '"').replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ").trim() + " "; }
+  function quotes(t) { var out = [], re = /["“”]([^"“”]+)["“”]/g, m; t = String(t || ""); while ((m = re.exec(t))) out.push(m[1]); return out; }
+  function isTitle(q) { return norm(q) === norm(D.art.hed); }
+  function evQuotes(t) { return quotes(t).filter(function (q) { return !isTitle(q); }); }
+  function ctxs(s) { return [s.quote].concat(s.ctx || []).map(function (q) { return norm(q); }); }
+  function inCtx(q, s) { var nq = norm(q); if (nq.trim().length < 2) return false; return ctxs(s).some(function (c) { return c.indexOf(nq) >= 0; }); }
+  function inSpot(q, s) { var nq = norm(q); if (nq.trim().length < 2) return false; return norm(s.quote).indexOf(nq) >= 0; }
+  function nWords(t) { var x = String(t || "").trim(); return x ? x.split(/\s+/).length : 0; }
+  function low(t) { return String(t || "").toLowerCase().replace(/[‘’]/g, "'").replace(/\s+/g, " ").trim(); }
+  function unq(t) { return String(t || "").replace(/“[^”]*”|"[^"]*"/g, " "); }
+  var PVERBS = "emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks|uses|presents|states|writes|shows|describes|creates|claims|warns|refers|provides|argues|mentions|says|wants|believes|thinks";
+  var WRONGRE = "\\b(" + WRONG + ")\\b(?=\\s+(?:also\\s+)?(?:" + PVERBS + ")\\b)|\\b(" + WRONGPOSS + ")\\b(?=\\s+(?:biased|bias|opinion|claim|article|argument)\\b)";
+  /* The wrong pronoun only counts when it is used for the writer (followed by a writer verb), never inside quotation marks */
+  function wrongPronouns(text) { return low(unq(text)).match(new RegExp(WRONGRE, "g")) || []; }
+  var VAGUE = /\b(things?|stuff|something|nice|interesting|a lot|i think|i believe|in my opinion)\b/g;
+  function vagueWords(text) { return low(unq(text)).match(VAGUE) || []; }
+  var BANNED = /\b(to sum up|to conclude|all in all|in conclusion)\b/;
+  var QUOTEWORD = /\bquot(e|es|ed|ing|ation|ations)\b/;
+  /* Sentence splitter that never splits inside quotation marks ("Nobody rings a bell. Nobody slows down." stays whole) */
+  function sentences(text) {
+    var t = String(text || ""), out = [], start = 0, inq = false, i = 0;
+    while (i < t.length) {
+      var ch = t[i];
+      if (ch === "“") inq = true; else if (ch === "”") inq = false; else if (ch === '"') inq = !inq;
+      if (/[.!?]/.test(ch)) {
+        var j = i; while (j + 1 < t.length && /[.!?]/.test(t[j + 1])) j++;
+        var k = j + 1;
+        while (k < t.length && /["”’)]/.test(t[k])) { if (t[k] === "”") inq = false; else if (t[k] === '"') inq = !inq; k++; }
+        if (!inq && (k >= t.length || /\s/.test(t[k]))) { while (k < t.length && /\s/.test(t[k])) k++; out.push(t.slice(start, k)); start = k; }
+        i = k; continue;
+      }
+      i++;
+    }
+    if (start < t.length) out.push(t.slice(start));
+    return out.filter(function (x) { return x.trim(); });
+  }
+
+  /* ---------- START ---------- */
+  function renderStart() {
+    var saved = load();
+    $("resume").hidden = !saved;
+    if (saved) $("resume-text").textContent = (saved.name || "Someone") + ": " + SPOTS.filter(function (s) { var t = saved.spots[s.id].status; return t === "first" || t === "later"; }).length + " of " + SPOTS.length + " devices found.";
+    show("s-start");
+  }
+  $("btn-start").onclick = function () {
+    var n = $("student-name").value.trim();
+    if (!n) { $("student-name").focus(); return; }
+    S = fresh(n); save(); renderMain();
+  };
+  $("student-name").addEventListener("keydown", function (e) { if (e.key === "Enter") $("btn-start").click(); });
+  $("btn-resume").onclick = function () { S = load(); if (S) { if (S.report) renderReport(); else renderMain(); } };
+  $("btn-wipe").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} $("resume").hidden = true; };
+
+  /* ---------- MAIN: four tabs, nothing locked ---------- */
+  function renderMain() {
+    S.report = false;
+    [1, 2, 3, 4].forEach(function (n) { $("tab-" + n).classList.toggle("on", S.tab === n); $("lv-" + n).hidden = S.tab !== n; });
+    $("tab-1-s").textContent = foundCount() + "/" + SPOTS.length + " found";
+    $("tab-2-s").textContent = spottedCount() + "/" + SPOTS.length + " spotted";
+    $("tab-3-s").textContent = S.filed ? "done" : "open";
+    $("tab-4-s").textContent = S.exam && S.exam.done ? S.exam.pts + "/100" : (S.exam && S.exam.started ? "running" : "40 min");
+    if (S.tab === 1) renderL1(); else if (S.tab === 2) renderSpotTab(); else if (S.tab === 3) renderWrite(); else renderExam();
+    show("s-main");
+  }
+  [1, 2, 3, 4].forEach(function (n) { $("tab-" + n).onclick = function () { S.tab = n; save(); renderMain(); }; });
+
+  /* ---------- the article, in four forms ---------- */
+  function buildArticle(box, fillFn, afterFn) {
+    var a = D.art; box.textContent = "";
+    var k = document.createElement("p"); k.className = "kicker"; k.textContent = "OPINION"; box.appendChild(k);
+    var h = document.createElement("h2"); h.className = "hed"; fillFn(h, a.hed, "Headline"); box.appendChild(h);
+    if (afterFn) afterFn("Headline");
+    var dk = document.createElement("p"); dk.className = "dek"; dk.textContent = a.dek; box.appendChild(dk);
+    var by = document.createElement("p"); by.className = "by"; by.textContent = a.by; box.appendChild(by);
+    a.paras.forEach(function (t, i) {
+      var p = document.createElement("p"); p.className = "para";
+      var n = document.createElement("span"); n.className = "pn"; n.textContent = "¶" + (i + 1);
+      var tx = document.createElement("span"); tx.className = "ptx"; fillFn(tx, t, "Paragraph " + (i + 1));
+      p.appendChild(n); p.appendChild(tx); box.appendChild(p);
+      if (afterFn) afterFn("Paragraph " + (i + 1));
+    });
+    var f = document.createElement("p"); f.className = "foot"; f.textContent = a.foot; box.appendChild(f);
+  }
+  function segments(text, where, each) {
+    var ms = SPOTS.filter(function (s) { return s.where === where; }).map(function (s) { return { s: s, at: text.indexOf(s.quote) }; })
+      .filter(function (m) { return m.at >= 0; }).sort(function (x, y) { return x.at - y.at; });
+    var pos = 0, out = [];
+    ms.forEach(function (m) { out.push([text.slice(pos, m.at), null]); out.push([m.s.quote, m.s]); pos = m.at + m.s.quote.length; });
+    out.push([text.slice(pos), null]);
+    out.forEach(function (x) { each(x[0], x[1]); });
+  }
+  function fillPlain(el, text) { el.textContent = text; }
+  function fillMarked(el, text, where) {
+    segments(text, where, function (t, s) {
+      if (!s) { el.appendChild(document.createTextNode(t)); return; }
+      var mk = document.createElement("mark"); mk.appendChild(document.createTextNode(t));
+      var sp = document.createElement("sup"); sp.textContent = s.n; mk.appendChild(sp); el.appendChild(mk);
+    });
+  }
+
+  /* ---------- 1 · FIND ---------- */
+  function spotButton(s) {
+    var st = S.spots[s.id];
+    var b = document.createElement("button"); b.type = "button"; b.className = "spot";
+    var no = document.createElement("span"); no.className = "no"; no.textContent = st.status === "first" ? "★" : s.n;
+    var body = document.createElement("span");
+    var q = document.createElement("span"); q.className = "q"; q.textContent = "“" + s.quote + "”";
+    body.appendChild(q);
+    var tag = document.createElement("span"); tag.className = "tag";
+    if (st.status === "first" || st.status === "later") { b.classList.add(st.status); tag.textContent = s.device; }
+    else if (st.status === "cold") { b.classList.add("cold"); tag.textContent = "Comes back next round"; }
+    if (tag.textContent) body.appendChild(tag);
+    b.setAttribute("aria-label", "Clue " + s.n + ": " + s.quote + (tag.textContent ? ". " + tag.textContent : ""));
+    b.onclick = function () {
+      if (st.status === "cold") return;
+      if (st.status === "first" || st.status === "later") openSheet(s.id, "solved"); else openSheet(s.id, "device");
+    };
+    b.appendChild(no); b.appendChild(body);
+    return b;
+  }
+  function renderL1() {
+    var box = $("spots1"); box.textContent = ""; var last = null;
+    SPOTS.forEach(function (s) {
+      if (s.where !== last) { last = s.where; var h = document.createElement("div"); h.className = "group-h"; h.textContent = s.where; box.appendChild(h); }
+      box.appendChild(spotButton(s));
+    });
+    var n = foundCount();
+    $("found-count").textContent = n + " of " + SPOTS.length + " devices found · ★ " + firstCount();
+    $("meter").style.width = (n / SPOTS.length * 100) + "%";
+    $("round-label").textContent = "Round " + S.round;
+    var open = SPOTS.filter(function (s) { return S.spots[s.id].status === "open"; }).length;
+    var cold = SPOTS.filter(function (s) { return S.spots[s.id].status === "cold"; }).length;
+    $("sweep-card").hidden = !(open === 0 && cold > 0);
+    if (open === 0 && cold > 0) {
+      $("sweep-text").textContent = (cold === 1 ? "1 phrase comes" : cold + " phrases come") + " back in round " + (S.round + 1) + ", with the answers in a new order.";
+      $("btn-sweep").textContent = "Start round " + (S.round + 1);
+    }
+    $("done1-card").hidden = n !== SPOTS.length;
+  }
+  $("btn-sweep").onclick = function () {
+    SPOTS.forEach(function (s) { if (S.spots[s.id].status === "cold") S.spots[s.id].status = "open"; });
+    S.round += 1; save(); renderMain();
+  };
+  $("btn-to-2").onclick = function () { S.tab = 2; save(); renderMain(); window.scrollTo(0, 0); };
+
+  var lastFocus = null;
+  function openSheet(id, phase) {
+    lastFocus = document.activeElement;
+    var s = BY[id];
+    S.cur = id; S.phase = phase; S.answered = null;
+    S.opts = phase === "device" ? shuffle([s.dAns].concat(s.dWrong)) : null;
+    save(); renderSheet(); $("sheet-back").hidden = false; $("sheet-q").focus();
+  }
+  function closeSheet() {
+    if (S.answered) finishSpot();
+    S.cur = null; S.phase = null; S.opts = null; S.answered = null;
+    $("sheet-back").hidden = true; save(); renderMain();
+    if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  $("sheet-x").onclick = closeSheet;
+  $("sheet-back").addEventListener("click", function (e) { if (e.target === $("sheet-back")) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if (!$("spot-back").hidden && e.key === "Escape") { closeSpot(); return; }
+    if ($("sheet-back").hidden) return;
+    if (e.key === "Escape") { closeSheet(); return; }
+    var idx = ["1", "2", "3", "4"].indexOf(e.key); if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(e.key.toLowerCase());
+    if (idx >= 0 && S.opts && idx < S.opts.length && !S.answered) { e.preventDefault(); pick(idx); }
+  });
+  function fillOpt(el, text, labelled) {
+    el.textContent = "";
+    var m = labelled ? /^([^:]{2,32}): (.+)$/.exec(text) : null;
+    if (m) { var b = document.createElement("b"); b.className = "olab"; b.textContent = m[1] + ":"; el.appendChild(b); el.appendChild(document.createTextNode(" " + m[2])); }
+    else el.textContent = text;
+  }
+  function renderSheet() {
+    var s = BY[S.cur], st = S.spots[S.cur];
+    $("sheet-label").textContent = "Clue " + s.n + " · " + s.where;
+    $("sheet-ev").textContent = "“" + s.quote + "”";
+    var steps = $("sheet-steps"); steps.textContent = "";
+    [["device", "1 Name the device"], ["effect", "2 What it does"]].forEach(function (p) {
+      var x = document.createElement("span"); x.className = "st";
+      if (S.phase === p[0]) x.className += " on";
+      if ((p[0] === "device" && S.phase !== "device") || (p[0] === "effect" && S.phase === "solved")) x.className += " done";
+      x.textContent = p[1]; steps.appendChild(x);
+    });
+    $("sheet-retry").hidden = !st.misses || S.phase === "solved";
+    $("sheet-retry").textContent = st.misses === 1 ? "Missed once" : "Missed " + st.misses + " times";
+    var box = $("sheet-opts"); box.textContent = "";
+    $("sheet-fb").hidden = true; $("sheet-next").hidden = true;
+    if (S.phase === "solved") {
+      $("sheet-q").textContent = s.device;
+      var fb = $("sheet-fb"); fb.className = "fb good"; fb.textContent = "";
+      var p1 = document.createElement("p"); p1.textContent = s.dWhy;
+      var p2 = document.createElement("p"); p2.textContent = s.effect;
+      fb.appendChild(p1); fb.appendChild(p2); fb.hidden = false; return;
+    }
+    $("sheet-q").textContent = S.phase === "device" ? "Which device is this? Choose the statement that is true." : "It is " + s.device.toLowerCase() + ". What does it do to the reader?";
+    S.opts.forEach(function (text, i) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "opt";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = LETTERS[i];
+      var t = document.createElement("span"); fillOpt(t, text, S.phase === "device");
+      b.appendChild(k); b.appendChild(t); b.onclick = function () { pick(i); };
+      box.appendChild(b);
+    });
+    if (S.answered) paint(false);
+  }
+  function correct(s) { return S.phase === "device" ? s.dAns : s.effect; }
+  function pick(i) {
+    if (S.answered) return;
+    var s = BY[S.cur], st = S.spots[S.cur];
+    var ok = S.opts[i] === correct(s);
+    S.answered = { pick: i, correct: ok };
+    if (!ok) st.misses += 1;
+    save(); paint(true);
+  }
+  /* A wrong answer always shows the correct answer (standing rule), and the phrase comes back next round */
+  function paint(freshPaint) {
+    var s = BY[S.cur], st = S.spots[S.cur], a = S.answered, ans = correct(s);
+    $("sheet-opts").querySelectorAll(".opt").forEach(function (b, i) {
+      b.disabled = true;
+      if (i === a.pick) b.classList.add(a.correct ? "right" : "wrong");
+      else if (!a.correct && S.opts[i] === ans) b.classList.add("right");
+      else b.classList.add("dim");
+      if (freshPaint && i === a.pick && !a.correct && !reduceMotion) b.classList.add("shake");
+    });
+    var fb = $("sheet-fb"); fb.textContent = ""; fb.className = "fb";
+    var h = document.createElement("div"); h.className = "fb-h";
+    var p = document.createElement("p"); var n = document.createElement("p"); n.className = "fb-note";
+    var btn = $("sheet-next");
+    if (a.correct && S.phase === "device") { fb.classList.add("good"); h.textContent = "Yes! Now the effect."; p.textContent = s.dWhy; btn.textContent = "Next: what it does"; }
+    else if (a.correct) { fb.classList.add("good"); h.textContent = st.misses ? "Found it!" : "★ Gold star!"; p.textContent = s.effect; btn.textContent = "Back to the article"; }
+    else {
+      fb.classList.add("reveal"); h.textContent = "Not this time. The correct answer:";
+      p.textContent = S.phase === "device" ? ans + " " + s.dWhy : ans;
+      n.textContent = "Read it carefully: this phrase comes back in round " + (S.round + 1) + ".";
+      btn.textContent = "Back to the article";
+    }
+    fb.appendChild(h); fb.appendChild(p); if (n.textContent) fb.appendChild(n);
+    fb.hidden = false; btn.hidden = false;
+    if (freshPaint) { btn.focus({ preventScroll: true }); btn.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); }
+  }
+  function finishSpot() {
+    var st = S.spots[S.cur];
+    if (!S.answered) return;
+    if (!S.answered.correct) st.status = "cold";
+    else if (S.phase === "effect") st.status = st.misses ? "later" : "first";
+  }
+  $("sheet-next").onclick = function () {
+    var s = BY[S.cur];
+    if (S.answered && S.answered.correct && S.phase === "device") {
+      S.phase = "effect"; S.answered = null; S.opts = shuffle([s.effect].concat(s.eWrong)); save(); renderSheet(); $("sheet-q").focus(); return;
+    }
+    closeSheet();
+  };
+
+  /* ---------- 2 · SPOT: the article with no highlights ---------- */
+  function renderSpotTab() {
+    buildArticle($("spotart"), function (el, text, where) {
+      segments(text, where, function (t, s) {
+        if (!s) { el.appendChild(document.createTextNode(t)); return; }
+        var sp = document.createElement("span"); sp.className = "hs"; sp.setAttribute("data-id", s.id);
+        if (S.spotted[s.id]) { sp.classList.add(S.spotted[s.id] === "first" ? "got" : "got2"); }
+        sp.appendChild(document.createTextNode(t));
+        if (S.spotted[s.id]) { var su = document.createElement("sup"); su.textContent = s.device; sp.appendChild(su); }
+        el.appendChild(sp);
+      });
+    });
+    var n = spottedCount();
+    $("spot-count").textContent = n + " of " + SPOTS.length + " devices spotted" + (S.spotMiss ? " · " + S.spotMiss + (S.spotMiss === 1 ? " tap" : " taps") + " on words with no device" : "");
+    $("meter2").style.width = (n / SPOTS.length * 100) + "%";
+    $("spot-done").hidden = n < SPOTS.length;
+    $("btn-spot-help").hidden = n >= SPOTS.length;
+  }
+  $("spotart").addEventListener("click", function (e) {
+    var hs = e.target.closest ? e.target.closest(".hs") : null;
+    if (hs) {
+      var s = BY[hs.getAttribute("data-id")];
+      if (S.spotted[s.id]) { toast("Already spotted: " + s.device.toLowerCase() + "."); return; }
+      openSpot(s, false); return;
+    }
+    if (!e.target.closest || !(e.target.closest(".ptx") || e.target.closest(".hed"))) return;
+    S.spotMiss += 1; save(); renderSpotTab();
+    toast("No device marked there. Look for a comparison, a repeated word, a number, an expert, strong feeling words, a crowd, an exaggeration or two opposites side by side.");
+  });
+  $("btn-spot-help").onclick = function () {
+    var s = SPOTS.filter(function (x) { return !S.spotted[x.id]; })[0]; if (!s) return;
+    S.spotWrong[s.id] = (S.spotWrong[s.id] || 0) + 1; save();
+    openSpot(s, true);
+  };
+  function openSpot(s, shown) {
+    $("spot-label").textContent = shown ? "Here is one · " + s.where : s.where;
+    $("spot-ev").textContent = "“" + s.quote + "”";
+    $("spot-q").textContent = shown ? "This phrase has a device. Which one is it?" : "You found a device! Which one is it?";
+    var wrong = []; s.dWrong.forEach(function (w) { var d = w.split(":")[0].trim(); if (DEVRE[d] && d !== s.device && wrong.indexOf(d) < 0) wrong.push(d); });
+    var opts = shuffle([s.device].concat(wrong.slice(0, 3)));
+    var box = $("spot-opts"); box.textContent = "";
+    opts.forEach(function (d) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "devopt"; b.textContent = d;
+      b.onclick = function () {
+        var fb = $("spot-fb"); fb.textContent = "";
+        var h = document.createElement("div"); h.className = "fb-h"; var p = document.createElement("p");
+        box.querySelectorAll(".devopt").forEach(function (x) { x.disabled = true; if (x.textContent === s.device) x.classList.add("right"); });
+        if (d === s.device) {
+          S.spotted[s.id] = S.spotWrong[s.id] ? "later" : "first";
+          fb.className = "fb good"; h.textContent = S.spotted[s.id] === "first" ? "★ Spotted!" : "Got it!"; p.textContent = s.dWhy;
+        } else {
+          b.classList.add("wrong"); S.spotWrong[s.id] = (S.spotWrong[s.id] || 0) + 1; S.spotted[s.id] = "later";
+          fb.className = "fb reveal"; h.textContent = "The correct answer: " + s.device; p.textContent = s.dWhy;
+        }
+        save(); fb.appendChild(h); fb.appendChild(p); fb.hidden = false;
+        $("spot-next").hidden = false; $("spot-next").focus({ preventScroll: true });
+      };
+      box.appendChild(b);
+    });
+    $("spot-fb").hidden = true; $("spot-next").hidden = true;
+    $("spot-back").hidden = false; $("spot-q").focus();
+  }
+  function closeSpot() { $("spot-back").hidden = true; renderMain(); }
+  $("spot-x").onclick = closeSpot; $("spot-next").onclick = closeSpot;
+  $("spot-back").addEventListener("click", function (e) { if (e.target === $("spot-back")) closeSpot(); });
+
+  /* ---------- 3 · WRITE: the article opens around the writing boxes ---------- */
+  function spotIndex(id) { for (var i = 0; i < SPOTS.length; i++) if (SPOTS[i].id === id) return i; return -1; }
+  function pickDevice(id) {
+    if (S.d1 === id) { S.d1 = S.d2; S.d2 = null; }
+    else if (S.d2 === id) S.d2 = null;
+    else if (!S.d1) S.d1 = id;
+    else if (!S.d2) S.d2 = id;
+    else S.d2 = id;
+    /* Device 1 is always the one that comes first in the article, so the boxes follow the text */
+    if (S.d1 && S.d2 && spotIndex(S.d2) < spotIndex(S.d1)) { var t = S.d1; S.d1 = S.d2; S.d2 = t; }
+    S.filed = false; save(); renderWrite();
+    var target = document.querySelector("#art2 .mk[data-id='" + id + "']");
+    if (target) target.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" });
+  }
+  function coach(a, b) {
+    var c = $("coach"), sides = D.sides || {};
+    c.hidden = true;
+    if (!a || !sides.A) return;
+    var other = a.side === "A" ? "B" : "A";
+    if (!b) c.textContent = "Tip for device 2: a strong pair shows two different sides. Device 1 is about " + sides[a.side] + ", so try a device about " + sides[other] + ".";
+    else if (a.side === b.side) c.textContent = "Both of your devices are about " + sides[a.side] + ". That works, but a stronger pair shows two sides: try swapping one for a device about " + sides[other] + ".";
+    else c.textContent = "Strong pair: one device about " + sides[a.side] + " and one about " + sides[b.side] + ". Together they answer the whole question.";
+    c.hidden = false;
+  }
+  function renderWrite() {
+    $("intro").textContent = D.question;
+    var a = S.d1 && BY[S.d1], b = S.d2 && BY[S.d2];
+    $("pick1-t").textContent = a ? a.device + ": “" + a.quote + "”" : "Tap a yellow phrase in the article.";
+    $("pick2-t").textContent = b ? b.device + ": “" + b.quote + "”" : (a ? "Now tap a second phrase." : "Then tap a second phrase.");
+    $("pick-note").textContent = a && b && a.device === b.device ? "Both phrases use " + a.device.toLowerCase() + ". Two different devices usually make a stronger paragraph." : "Your writing boxes open inside the article, right under the phrase you choose. Tap a chosen phrase again to remove it.";
+    coach(a, b);
+    var ready = !!(a && b);
+    renderArt2(ready);
+    $("desk").hidden = !ready;
+    $("filed").hidden = !(ready && S.filed);
+    if (ready) updateFile();
+    if (ready && S.filed) renderFiled();
+  }
+  function renderArt2(ready) {
+    var box = $("art2"), defs = ready ? slotDefs() : [];
+    function panel(g) {
+      var s = BY[g === 1 ? S.d1 : S.d2];
+      var wp = document.createElement("div"); wp.className = "wpanel g" + g;
+      var h = document.createElement("div"); h.className = "wp-h";
+      h.textContent = "✍️ Write here · Device " + g + ": " + s.device;
+      wp.appendChild(h);
+      defs.filter(function (d) { return d.grp === g; }).forEach(function (d) {
+        if (d.sep) { if (/^Device 1/.test(d.sep)) return; var sp = document.createElement("div"); sp.className = "sep"; sp.textContent = "Step 7: start with “Furthermore,” and repeat steps 2–6"; wp.appendChild(sp); return; }
+        wp.appendChild(makeSlot(d));
+      });
+      return wp;
+    }
+    buildArticle(box, function (el, text, where) {
+      segments(text, where, function (t, s) {
+        if (!s) { el.appendChild(document.createTextNode(t)); return; }
+        var b = document.createElement("span"); b.className = "mk"; b.setAttribute("data-id", s.id); b.setAttribute("role", "button"); b.tabIndex = 0;
+        b.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pickDevice(s.id); } });
+        if (S.d1 === s.id) b.classList.add("pick1"); else if (S.d2 === s.id) b.classList.add("pick2");
+        b.appendChild(document.createTextNode(t));
+        var sup = document.createElement("sup"); sup.textContent = s.n + " · " + s.device + (S.d1 === s.id ? " · Device 1" : S.d2 === s.id ? " · Device 2" : "");
+        b.appendChild(sup);
+        b.setAttribute("aria-label", "Clue " + s.n + ", " + s.device + ": " + s.quote + (S.d1 === s.id ? ". Chosen as device 1" : S.d2 === s.id ? ". Chosen as device 2" : ". Tap to write about it"));
+        b.onclick = function () { pickDevice(s.id); };
+        el.appendChild(b);
+      });
+    }, function (where) {
+      if (!ready) return;
+      if (BY[S.d1].where === where) box.appendChild(panel(1));
+      if (BY[S.d2].where === where) box.appendChild(panel(2));
+    });
+    box.querySelectorAll("textarea").forEach(function (ta) { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 4) + "px"; });
+  }
+  function slotDefs() {
+    var a = BY[S.d1], b = BY[S.d2];
+    var defs = [{ key: "p", num: "1", title: "Point", spot: a, frame: "In the article “___,” published by ___ in ___, " + FULL + " presents a biased opinion towards ___, suggesting that ___, through the use of " + DEVLABEL[a.device] + " and " + DEVLABEL[b.device] + "." }];
+    [[a, "1"], [b, "2"]].forEach(function (pair, k) {
+      var s = pair[0], d = pair[1];
+      defs.push({ sep: "Device " + d });
+      defs.push({ key: "e" + d, num: k ? "7" : "2", title: "Evidence", spot: s, dev: d, frame: (k ? "Furthermore" : "First") + ", " + SUR + " claims that “___.”", starters: EVSTART.map(function (v) { return (k ? "Furthermore" : "First") + ", " + SUR + " " + v; }) });
+      defs.push({ key: "m" + d, num: "3", title: "Technique + word meaning (1 sentence)", spot: s, dev: d, frame: "Here, " + SUR + " uses " + DEVLABEL[s.device] + " through the word “___,” which means ___." });
+      defs.push({ key: "s" + d, num: "4", title: "Device frame · " + s.device, spot: s, dev: d, frame: FRAMES[s.device].text });
+      defs.push({ key: "f" + d, num: "5", title: "Effect on the reader", spot: s, dev: d, frame: "The reader is ___ because ___. The reader realizes ___." });
+      defs.push({ key: "r" + d, num: "6", title: "Bias (device " + d + ")", spot: s, dev: d, frame: "Therefore, the " + DEVNAME[s.device] + " shows " + SUR + "’s bias towards ___." });
+    });
+    var g = 1; defs.forEach(function (x) { if (x.sep === "Device 2") g = 2; x.grp = g; });
+    return defs;
+  }
+  function checksFor(def, text) {
+    var t = low(text), s = def.spot, c = [], k = def.key.charAt(0);
+    if (!t) return [];
+    if (def.key === "p") {
+      var a = BY[S.d1], b = BY[S.d2];
+      c.push([/^in the (opinion )?article\b/.test(t), "In the article …"]);
+      c.push([norm(text).indexOf(norm(D.art.hed)) >= 0, "Gives the full title"]);
+      c.push([/published by\b/.test(t) && t.indexOf(PUBKEY) >= 0, "published by " + D.pub + " in …"]);
+      c.push([t.indexOf(sur) >= 0, "Names the writer (" + FULL + ")"]);
+      c.push([/biased opinion towards?\b/.test(t), "presents a biased opinion towards …"]);
+      c.push([/suggesting that\b/.test(t), "suggesting that … (" + POSS + " claim)"]);
+      c.push([/through the use of\b/.test(t) && DEVRE[a.device].test(t) && DEVRE[b.device].test(t), "through the use of (device 1) and (device 2)"]);
+    } else if (k === "e") {
+      c.push([def.dev === "2" ? /^furthermore\b/.test(t) : /^first\b/.test(t), def.dev === "2" ? "Starts “Furthermore,”" : "Starts “First,”"]);
+      c.push([t.indexOf(sur) >= 0 && EVVERB.test(t), SUR + " + a verb (claims that, warns that, states that, describes … as, asks, refers to)"]);
+      var qs = quotes(text);
+      c.push([qs.length > 0, "Words from the article inside quotation marks"]);
+      c.push([qs.length > 0 && qs.every(function (q) { return inCtx(q, s); }), "Words copied exactly from this part of the article"]);
+      c.push([qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }), "Short (15 words or fewer)"]);
+    } else if (k === "m") {
+      var wq = quotes(text);
+      c.push([/^here\b/.test(t) && /\buses\b/.test(t) && DEVRE[s.device].test(t), "Here, " + SUR + " uses " + DEVLABEL[s.device] + " through the word …"]);
+      c.push([wq.some(function (q) { return nWords(q) <= 3 && inSpot(q, s); }), "ONE key word from this phrase, in quotation marks"]);
+      c.push([/\bwhich means\b|\bmeaning\b|\bmeans\b/.test(t), "which means … (its dictionary meaning)"]);
+      c.push([nSentences(text) === 1, "Just 1 sentence"]);
+    } else if (k === "s") {
+      FRAMES[s.device].checks.forEach(function (ch) { c.push([ch[0].test(t), ch[1]]); });
+      c.push([!/to (grab|get|catch) (the reader'?s? )?attention|to make it (more )?interesting/.test(t), "Says exactly what the writer suggests (not “to grab attention”)"]);
+    } else if (k === "f") {
+      c.push([/\bthe reader is\b.+\bbecause\b/.test(t), "The reader is ___ because ___"]);
+      c.push([/\bthe reader reali[sz]es\b/.test(t), "The reader realizes ___"]);
+      c.push([!/\b(is|feels?) (good|bad|sad|happy)\b/.test(t), "A precise feeling word (not just “sad,” “good” or “bad”)"]);
+      c.push([!/read on|keep reading/.test(t), "Goes beyond “wants to keep reading”"]);
+    } else if (k === "r") {
+      c.push([/^therefore\b/.test(t), "Starts “Therefore,”"]);
+      c.push([DEVRE[s.device].test(t), "Names the device (" + DEVNAME[s.device] + ")"]);
+      c.push([t.indexOf(sur) >= 0 && /\bbias towards?\b/.test(t), "shows " + SUR + "’s bias towards ___"]);
+    }
+    c.push([!wrongPronouns(text).length, "Says “" + PRON + "” or “" + SUR + "” (never “" + WRONG + "”)"]);
+    c.push([!QUOTEWORD.test(low(unq(text))), "Does not use the word “quote”"]);
+    c.push([!BANNED.test(t), "No “To sum up / To conclude / All in all”"]);
+    return c;
+  }
+  function hintsFor(def) {
+    var s = def.spot, k = def.key.charAt(0), a = BY[S.d1], b = BY[S.d2];
+    if (def.key === "p") return [D.hint_p1, D.hint_p2, "Publication and date: “published by " + D.pub + " in " + D.pubDate + ".”", "End with both devices: “…through the use of " + DEVLABEL[a.device] + " and " + DEVLABEL[b.device] + ".”"];
+    if (k === "e") return ["Tap a verb button, then copy the words from the article between the quotation marks.", "The words to copy: “" + s.quote + "”", "Keep it short: copy only the words you will explain (15 or fewer). Never write the word “quote.”"];
+    if (k === "m") return ["Try: “Here, " + SUR + " uses " + DEVLABEL[s.device] + " through the word “" + s.words[0][0] + ",” which means …”", "Give the dictionary meaning: what the word means anywhere, not what " + SUR + " thinks. Save that for step 4.", "Keep it to ONE sentence."];
+    if (k === "s") return [s.frameHint].concat(s.unverified ? ["Extra (not required): the source is not named, so you can add “However, … is not named, so the reader cannot check it.”"] : []).concat(s.words.map(function (w) { return w[2]; })).concat([D.hint_s, "Be specific: what is the writer trying to say with these words? Never write “to grab attention.”"]);
+    if (k === "f") return ["First the feeling: “The reader is (alarmed / angry / sympathetic …) because …”", "Then: “The reader realizes …” What does the reader understand now? (Careful readers may also notice the bias!)", s.readerHint];
+    if (k === "r") return ["Start: “Therefore, the " + DEVNAME[s.device] + " shows " + SUR + "’s bias towards …”", "Towards what? The topic " + SUR + " is against (look at your Point)."];
+    return [];
+  }
+  function frameNode(text) {
+    var p = document.createElement("p"); p.className = "frame";
+    String(text).split("___").forEach(function (part, i) {
+      if (i) { var b = document.createElement("span"); b.className = "blank"; b.setAttribute("aria-label", "blank"); p.appendChild(b); }
+      p.appendChild(document.createTextNode(part));
+    });
+    return p;
+  }
+  function slotOk(def) { var c = checksFor(def, S.boxes[def.key]); return c.length > 0 && c.every(function (x) { return x[0]; }); }
+  /* Reminder of the chosen device(s) and words, shown at every writing step */
+  function devStrip(def) {
+    var both = def.key === "p";
+    var list = both ? [[BY[S.d1], 1], [BY[S.d2], 2]] : [[def.spot, def.spot.id === S.d1 ? 1 : 2]];
+    var box = document.createElement("div"); box.className = "devstrip";
+    list.forEach(function (x) {
+      var row = document.createElement("div"); row.className = "ds-row g" + x[1];
+      var tag = document.createElement("span"); tag.className = "ds-tag"; tag.textContent = (both ? "Device " + x[1] + ": " : "") + x[0].device;
+      var q = document.createElement("span"); q.className = "ds-q"; q.textContent = "“" + x[0].quote + "”";
+      row.appendChild(tag); row.appendChild(q); box.appendChild(row);
+    });
+    return box;
+  }
+  var FEEL = ["alarmed", "shocked", "worried", "anxious", "angry", "frustrated", "sympathetic", "protective", "pressured", "convinced", "suspicious", "doubtful", "disturbed", "guilty", "hopeful", "impressed"];
+  function wordBank(ta) {
+    var box = document.createElement("div");
+    var h = document.createElement("div"); h.className = "chips-h"; h.textContent = "Feeling words: tap one to add it";
+    var row = document.createElement("div"); row.className = "chips";
+    FEEL.forEach(function (w) {
+      var c = document.createElement("button"); c.type = "button"; c.className = "chip"; c.textContent = w;
+      c.onclick = function () {
+        var v = ta.value, i = typeof ta.selectionStart === "number" ? ta.selectionStart : v.length, j = typeof ta.selectionEnd === "number" ? ta.selectionEnd : v.length;
+        var ins = w;
+        if (!v.trim()) { ins = "The reader is " + w + " because "; i = 0; j = v.length; }
+        else if (i > 0 && !/\s$/.test(v.slice(0, i))) ins = " " + w;
+        ta.value = v.slice(0, i) + ins + v.slice(j); ta.focus();
+        var p = i + ins.length; try { ta.setSelectionRange(p, p); } catch (e) {}
+        ta.dispatchEvent(new Event("input"));
+      };
+      row.appendChild(c);
+    });
+    box.appendChild(h); box.appendChild(row); return box;
+  }
+  function makeSlot(def) {
+    var slot = document.createElement("div"); slot.className = "slot";
+    var head = document.createElement("div"); head.className = "slot-h";
+    var num = document.createElement("span"); num.className = "num"; num.textContent = def.num;
+    var tt = document.createElement("b"); tt.textContent = def.title;
+    head.appendChild(num); head.appendChild(tt);
+    var ta = document.createElement("textarea"); ta.rows = /^[s]/.test(def.key) ? 4 : 3; ta.value = S.boxes[def.key] || "";
+    ta.setAttribute("aria-label", "Step " + def.num + ": " + def.title); ta.spellcheck = true;
+    var ul = document.createElement("ul"); ul.className = "checks";
+    var hb = document.createElement("button"); hb.type = "button"; hb.className = "hint-btn"; hb.textContent = "💡 Hint";
+    var hl = document.createElement("ul"); hl.className = "hints"; hl.hidden = true;
+    hintsFor(def).forEach(function (h) { var li = document.createElement("li"); li.textContent = h; hl.appendChild(li); });
+    hb.onclick = function () { hl.hidden = !hl.hidden; hb.textContent = hl.hidden ? "💡 Hint" : "💡 Hide hint"; };
+    function paintChecks() {
+      ul.textContent = "";
+      var c = checksFor(def, ta.value);
+      if (!c.length) { var li0 = document.createElement("li"); li0.textContent = "Start writing: each part of the structure is ticked as you write it."; ul.appendChild(li0); }
+      c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : ""; li.textContent = x[1]; ul.appendChild(li); });
+      slot.classList.toggle("ok", c.length > 0 && c.every(function (x) { return x[0]; }));
+    }
+    function grow() { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 4) + "px"; }
+    ta.addEventListener("input", function () { grow(); S.boxes[def.key] = ta.value; S.filed = false; save(); paintChecks(); updateFile(); $("filed").hidden = true; });
+    paintChecks();
+    slot.appendChild(head); slot.appendChild(devStrip(def)); slot.appendChild(frameNode(def.frame));
+    if (def.starters) {
+      var row = document.createElement("div"); row.className = "starter-row";
+      var lab = document.createElement("span"); lab.className = "starter-lab"; lab.textContent = "Tap a verb to start:"; row.appendChild(lab);
+      def.starters.forEach(function (st) {
+        var sb = document.createElement("button"); sb.type = "button"; sb.className = "starter-chip"; sb.textContent = st.replace(new RegExp("^(First|Furthermore), " + SUR + " "), "").replace("“”", "“…”");
+        sb.setAttribute("aria-label", "Start with: " + st.replace("“”", "…"));
+        sb.onclick = function () {
+          ta.value = st; ta.dispatchEvent(new Event("input")); ta.focus();
+          var at = st.lastIndexOf("”"); var dots = st.indexOf("…");
+          try { if (dots >= 0) ta.setSelectionRange(dots, dots + 1); else ta.setSelectionRange(at, at); } catch (e) {}
+        };
+        row.appendChild(sb);
+      });
+      slot.appendChild(row);
+    }
+    if (def.key.charAt(0) === "f") slot.appendChild(wordBank(ta));
+    slot.appendChild(ta); slot.appendChild(ul); slot.appendChild(hb); slot.appendChild(hl);
+    return slot;
+  }
+  function updateFile() {
+    var defs = slotDefs().filter(function (d) { return d.key; });
+    var done = defs.filter(slotOk).length;
+    var empty = defs.filter(function (d) { return !(S.boxes[d.key] || "").trim(); }).length;
+    $("file-note").textContent = done + " of " + defs.length + " boxes have a gold star." + (empty ? " " + empty + (empty === 1 ? " box is" : " boxes are") + " still empty, but you can finish now if time is short." : "");
+  }
+  function paragraph() {
+    if (!S.d1 || !S.d2) return "";
+    return slotDefs().filter(function (d) { return d.key; }).map(function (d) { return (S.boxes[d.key] || "").trim(); }).filter(Boolean).join(" ");
+  }
+  function modelFor(a, b) {
+    var out = [D.point_model.replace("{d1}", DEVLABEL[a.device]).replace("{d2}", DEVLABEL[b.device])];
+    [a, b].forEach(function (s, i) { out.push((i ? "Furthermore, " : "First, ") + s.m_ev); out.push(s.m_tech, s.m_dev, s.m_reader, s.m_relate); });
+    return out.join(" ");
+  }
+  /* Color-coding by PETER */
+  var CC = [["point", "Point"], ["ev", "Evidence"], ["tech", "Technique (device + key word)"], ["reader", "Effect on the reader (underlined)"], ["relate", "Relate (bias)"]];
+  var KEYCAT = { p: "point", e: "ev", m: "tech", s: "tech", f: "reader", r: "relate" };
+  function legendCC(el) {
+    el.textContent = "";
+    CC.forEach(function (c) { var s = document.createElement("span"), i = document.createElement("i"); i.className = "cc-" + c[0]; if (c[0] === "reader") { i.style.borderBottom = "2px dotted #7C7C86"; i.style.height = "8px"; } s.appendChild(i); s.appendChild(document.createTextNode(c[1])); el.appendChild(s); });
+  }
+  function renderCCBoxes(el) {
+    el.textContent = "";
+    slotDefs().filter(function (d) { return d.key; }).forEach(function (d) {
+      var txt = (S.boxes[d.key] || "").trim(), sp = document.createElement("span");
+      if (txt) { sp.className = "c cc-" + KEYCAT[d.key.charAt(0)]; sp.textContent = txt; }
+      else { sp.className = "cc-miss"; sp.textContent = "[missing: step " + d.num + " " + d.title.toLowerCase() + "]"; }
+      el.appendChild(sp); el.appendChild(document.createTextNode(" "));
+    });
+  }
+  var TICKS = ["1 · My Point has the title, publisher, date, writer, the biased opinion, " + POSS + " claim and both devices.", "2 · Device 1 starts “First, " + SUR + " claims that “…”” with exact words in quotation marks.", "3 · “Here, " + SUR + " uses (device) through the word “…,” which means …” in ONE sentence.", "4 · I used the frame for my device, then “" + SUR + " highlights …”.", "5 · “The reader is … because …. The reader realizes ….”", "6 · “Therefore, the (device) shows " + SUR + "’s bias towards ….”", "7 · “Furthermore, …” and steps 2–6 again for device 2.", "I was specific everywhere: I said exactly what the writer is trying to say with these words."];
+  function renderFiled() {
+    renderCCBoxes($("final")); legendCC($("final-legend"));
+    $("model").textContent = modelFor(BY[S.d1], BY[S.d2]);
+    var ul = $("tick"); ul.textContent = "";
+    TICKS.forEach(function (t, i) {
+      var li = document.createElement("li"), lb = document.createElement("label"), cb = document.createElement("input"), sp = document.createElement("span");
+      cb.type = "checkbox"; cb.checked = !!S.ticks[i]; cb.onchange = function () { S.ticks[i] = cb.checked; save(); };
+      sp.textContent = t; lb.appendChild(cb); lb.appendChild(sp); li.appendChild(lb); ul.appendChild(li);
+    });
+    $("improve").value = S.improve || "";
+  }
+  $("btn-file").onclick = function () { S.filed = true; save(); $("filed").hidden = false; renderFiled(); $("tab-3-s").textContent = "done"; $("filed").scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-edit").onclick = function () { var wp = document.querySelector("#art2 .wpanel"); (wp || $("art2")).scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); };
+  $("btn-copy").onclick = function () {
+    var t = paragraph();
+    function done(ok) { $("copy-note").textContent = ok ? "Copied. You can paste it into your notes or send it to your teacher." : "Copying didn't work here. Select the text above and copy it."; }
+    try { navigator.clipboard.writeText(t).then(function () { done(true); }, function () { done(false); }); } catch (e) { done(false); }
+  };
+  $("improve").addEventListener("input", function () { S.improve = $("improve").value; save(); });
+  $("btn-report").onclick = function () { S.report = true; save(); renderReport(); window.scrollTo(0, 0); };
+  $("btn-exam-report").onclick = function () { S.report = true; save(); renderReport(); window.scrollTo(0, 0); };
+
+  /* ---------- 4 · EXAM: 40 minutes, no highlights, no hints, live structure score ---------- */
+  /* The 15 sentence beginnings of the Koç 9 structure, in order */
+  var FV = "(compares|repeats|places|gives|refers|provides|uses|states|exaggerates|asks|warns|mentions)";
+  function starterSlots() {
+    var one = [
+      [new RegExp("^here,? " + sur + " uses\\b"), "Here, " + SUR + " uses (device) through the word “___,” which means …", "tech"],
+      [new RegExp("^" + sur + " " + FV + "\\b"), SUR + " compares / repeats / places / gives … to suggest … (your device frame)", "tech"],
+      [new RegExp("^" + sur + " (also )?highlights\\b"), SUR + " highlights …", "tech"],
+      [/^the reader is\b/, "The reader is ___ because …", "reader"],
+      [/^the reader reali[sz]es\b/, "The reader realizes …", "reader"],
+      [/^therefore\b/, "Therefore, the (device) shows " + SUR + "’s bias towards …", "relate"]];
+    return [[/^in the (opinion )?article\b/, "In the article “___,” published by ___ in ___, " + FULL + " presents a biased opinion towards …", "point"],
+            [new RegExp("^first,? " + sur + ",? " + EVV + "\\b"), "First, " + SUR + " claims that “___.”", "ev"]].concat(one)
+      .concat([[new RegExp("^furthermore,? " + sur + ",? " + EVV + "\\b"), "Furthermore, " + SUR + " claims that “___.”", "ev"]]).concat(one);
+  }
+  function startKey(sent) { return low(String(sent).replace(/[“”]/g, '"')); }
+  /* Align the student's sentences with the 15 beginnings (longest common subsequence), so one missing or extra sentence does not turn everything red */
+  function alignStarts(S_, T) {
+    var m = S_.length, n = T.length, L = [], i, j;
+    var hit = S_.map(function (x) { var k = startKey(x); return T.map(function (t) { return t[0].test(k); }); });
+    for (i = 0; i <= m; i++) { L.push([]); for (j = 0; j <= n; j++) L[i].push(0); }
+    for (i = m - 1; i >= 0; i--) for (j = n - 1; j >= 0; j--) L[i][j] = hit[i][j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+    var pairs = []; i = 0; j = 0;
+    while (i < m && j < n) { if (hit[i][j] && L[i][j] === L[i + 1][j + 1] + 1) { pairs.push([i, j]); i++; j++; } else if (L[i + 1][j] >= L[i][j + 1]) i++; else j++; }
+    return pairs;
+  }
+  function splitStart(sent, nw) {
+    var m = /^(\s*)([\s\S]*)$/.exec(sent), words = m[2].split(/(\s+)/), head = "", c = 0, k = 0;
+    while (k < words.length && c < nw) { head += words[k]; if (words[k].trim()) c++; k++; }
+    return [m[1], head, words.slice(k).join("")];
+  }
+  function catOf(sent) {
+    var t = startKey(sent);
+    if (/^in the (opinion )?article\b/.test(t)) return "point";
+    if (/^(first|furthermore)\b/.test(t)) return "ev";
+    if (/^therefore\b/.test(t)) return "relate";
+    if (/\bthe reader (is|reali[sz]es|feels)\b/.test(t)) return "reader";
+    if (/^here\b/.test(t) || FRAMEALL.some(function (r) { return r.test(t); }) || new RegExp("^" + sur + " (also )?highlights\\b").test(t)) return "tech";
+    return "";
+  }
+  function renderExamCC(el, text) {
+    el.textContent = "";
+    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T), pi = 0, pj = 0, wrongPron = 0;
+    var SPLIT = new RegExp(WRONGRE, "i");
+    function sentNode(str, cat, good, expect) {
+      var sp = document.createElement("span"); if (cat) sp.className = "c cc-" + cat;
+      var parts = splitStart(str, good ? good : 3);
+      var b = document.createElement("b"); b.className = good ? "st-ok" : "st-bad"; b.textContent = parts[1];
+      sp.appendChild(document.createTextNode(parts[0])); sp.appendChild(b);
+      /* wrong pronoun for the writer in red (never inside quotation marks) */
+      parts[2].split(/(“[^”]*”|"[^"]*")/).forEach(function (seg, qi) {
+        if (qi % 2) { sp.appendChild(document.createTextNode(seg)); return; }
+        var rest = seg, m;
+        while ((m = SPLIT.exec(rest))) {
+          sp.appendChild(document.createTextNode(rest.slice(0, m.index)));
+          var r = document.createElement("b"); r.className = "st-bad"; r.textContent = m[0]; sp.appendChild(r); wrongPron++;
+          rest = rest.slice(m.index + m[0].length);
+        }
+        sp.appendChild(document.createTextNode(rest));
+      });
+      el.appendChild(sp);
+      if (!good) { var nt = document.createElement("span"); nt.className = "st-note"; nt.textContent = expect ? "⚠ Start with: " + expect : "⚠ This beginning is not in the structure"; el.appendChild(nt); el.appendChild(document.createTextNode(" ")); }
+    }
+    function missNode(label) { var sp = document.createElement("span"); sp.className = "cc-miss"; sp.textContent = "[missing: " + label + "] "; el.appendChild(sp); }
+    function gap(i1, j1) {
+      while (pi < i1 || pj < j1) {
+        if (pi < i1 && pj < j1) { sentNode(S_[pi], catOf(S_[pi]) || T[pj][2], 0, T[pj][1]); pi++; pj++; }
+        else if (pi < i1) { sentNode(S_[pi], catOf(S_[pi]), 0, ""); pi++; }
+        else { missNode(T[pj][1]); pj++; }
+      }
+    }
+    pairs.forEach(function (p) {
+      gap(p[0], p[1]);
+      var mt = T[p[1]][0].exec(startKey(S_[p[0]]));
+      sentNode(S_[p[0]], T[p[1]][2], mt[0].split(/\s+/).length, "");
+      pi = p[0] + 1; pj = p[1] + 1;
+    });
+    gap(S_.length, T.length);
+    return [pairs.length, T.length, wrongPron];
+  }
+
+  var EXAM_SEC = 40 * 60;
+  function examLeft() { return S.exam && S.exam.started ? EXAM_SEC - (Date.now() - S.exam.started) / 1000 : EXAM_SEC; }
+  function renderExam() {
+    var ex = S.exam;
+    $("exam-start-card").hidden = !!(ex && (ex.started || ex.done));
+    $("exam-live").hidden = !(ex && ex.started && !ex.done);
+    $("exam-result").hidden = !(ex && ex.done);
+    if (ex && ex.started && !ex.done) {
+      if (!ex.fix && examLeft() <= 0) { finishExam(true); return; }
+      $("exam-q").textContent = D.question;
+      if (!$("examart").firstChild) buildArticle($("examart"), fillPlain);
+      if ($("exam-text").value !== (ex.text || "")) $("exam-text").value = ex.text || "";
+      $("exam-wc").textContent = nWords(ex.text) + " words";
+      [0, 1, 2, 3].forEach(function (i) { var v = (ex.plan || [])[i] || ""; if ($("plan-" + i).value !== v) $("plan-" + i).value = v; });
+      tick(); lastPts = null; liveUpdate();
+    }
+    if (ex && ex.done) renderExamResult();
+  }
+  function tick() {
+    if (!S || !S.exam || !S.exam.started || S.exam.done) return;
+    if (S.exam.fix) { $("exam-timer-l").textContent = "Fix-it round"; $("exam-timer").textContent = "no timer"; $("exam-timer").classList.remove("low"); $("exam-nudge").hidden = true; return; }
+    var left = examLeft();
+    $("exam-timer-l").textContent = "Time left";
+    $("exam-timer").textContent = mmss(left);
+    $("exam-timer").classList.toggle("low", left <= 300);
+    var ng = $("exam-nudge"), txt = "";
+    if (left <= 300) txt = "⏰ 5 minutes left: finish your “Therefore” sentence, then check quotation marks, the writer's name and “" + PRON + ".”";
+    else if (left <= 1200 && !/\bfurthermore\b/.test(low(S.exam.text || ""))) txt = "⏰ Half of your time has gone: you should be starting device 2 with “Furthermore,” now.";
+    ng.textContent = txt; ng.hidden = !txt;
+    if (left <= 0 && S.tab === 4) finishExam(true);
+  }
+  setInterval(tick, 1000);
+  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: ["", "", "", ""] }; save(); renderMain(); window.scrollTo(0, 0); };
+  [0, 1, 2, 3].forEach(function (i) { $("plan-" + i).addEventListener("input", function () { if (!S.exam) return; S.exam.plan = S.exam.plan || ["", "", "", ""]; S.exam.plan[i] = $("plan-" + i).value; save(); }); });
+  $("exam-text").addEventListener("input", function () { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; liveSoon(); });
+  ["keyup", "click", "focus"].forEach(function (ev) { $("exam-text").addEventListener(ev, liveSoon); });
+  $("btn-exam-fix").onclick = function () { var ex = S.exam; if (!ex) return; ex.done = false; ex.fix = true; save(); renderMain(); window.scrollTo(0, 0); $("exam-text").focus({ preventScroll: true }); };
+  $("btn-exam-finish").onclick = function () { finishExam(false); };
+  $("btn-exam-again").onclick = function () { S.exam = null; save(); $("exam-text").value = ""; renderMain(); window.scrollTo(0, 0); };
+
+  /* ----- live structure score (100 points; structure only, not an exam grade) ----- */
+  function examFacts(text) {
+    var S_ = sentences(text), keys = S_.map(startKey), t = low(text);
+    var devs = Object.keys(DEVRE).filter(function (k) { return DEVRE[k].test(t); }).length;
+    var mentions = 0; Object.keys(DEVRE).forEach(function (k) { mentions += (t.match(new RegExp(DEVRE[k].source, "g")) || []).length; });
+    var evS = S_.filter(function (x, i) { return /^(first|furthermore)\b/.test(keys[i]) && quotes(x).length > 0; }).length;
+    var eq = evQuotes(text);
+    return {
+      S_: S_, t: t, devs: devs, mentions: mentions, evS: evS, eq: eq,
+      shortQ: eq.length > 0 && eq.every(function (q) { return nWords(q) <= 15; }),
+      word: keys.filter(function (k) { return /^here\b/.test(k) && /\buses\b/.test(k) && /"[^"]+"/.test(k) && /\b(which means|meaning|means)\b/.test(k); }).length,
+      frames: keys.filter(function (k) { return FRAMEALL.some(function (r) { return r.test(k); }); }).length,
+      high: keys.filter(function (k) { return new RegExp("^" + sur + " (also )?highlights\\b").test(k); }).length,
+      rIs: keys.filter(function (k) { return /^the reader is\b.+\bbecause\b/.test(k); }).length,
+      rReal: keys.filter(function (k) { return /^the reader reali[sz]es\b/.test(k); }).length,
+      rel: keys.filter(function (k) { return /^therefore\b/.test(k) && /\bbias towards?\b/.test(k); }).length,
+      point: keys.length > 0 && /^in the (opinion )?article\b/.test(keys[0]) && /biased opinion towards?\b/.test(keys[0]) && /suggesting that\b/.test(keys[0]) && /through the use of\b/.test(keys[0]),
+      pointFull: keys.length > 0 && norm(S_[0]).indexOf(norm(D.art.hed)) >= 0 && keys[0].indexOf(PUBKEY) >= 0,
+      fur: /\bfurthermore\b/.test(t), name: t.indexOf(sur) >= 0,
+      wrongP: wrongPronouns(text), vague: vagueWords(text), banned: BANNED.test(t) || QUOTEWORD.test(low(unq(text)))
+    };
+  }
+  function examPoints(text) {
+    var F = examFacts(text), T = starterSlots(), pairs = alignStarts(F.S_, T), big = nWords(text) >= 30;
+    var beg = pairs.length * 4;
+    var pDev = F.devs >= 2 || F.mentions >= 4 ? 5 : (F.devs === 1 ? 2 : 0), pQ = Math.min(2, F.evS) * 3, pShort = F.evS > 0 && F.shortQ ? 2 : 0;
+    var pWord = Math.min(2, F.word) * 3, pFrame = Math.min(2, F.frames) * 3, pReader = Math.min(2, F.rIs) + Math.min(2, F.rReal);
+    var pPoint = F.point && F.pointFull ? 3 : (F.point ? 2 : 0), pVague = big && !F.vague.length && !F.banned ? 3 : 0, pFur = F.fur ? 2 : 0, pPron = big && F.name && !F.wrongP.length ? 3 : 0;
+    var parts = [["Sentence beginnings (" + pairs.length + " of 15)", beg, 60], ["Evidence: two devices named, short exact words in quotation marks", pDev + pQ + pShort, 13],
+                 ["Analysis: key word + meaning, device frames, reader sentences", pWord + pFrame + pReader, 16], ["Precision and language: full Point, no general words, “Furthermore,” name and pronoun", pPoint + pVague + pFur + pPron, 11]];
+    return { pts: parts.reduce(function (a, p) { return a + p[1]; }, 0), parts: parts, pairs: pairs, T: T, S_: F.S_, F: F };
+  }
+  function levelOf(p) { return p >= 100 ? ["Exam ready", "ready"] : p >= 80 ? ["Gold", "gold"] : p >= 60 ? ["Silver", "silver"] : p >= 40 ? ["Bronze", "bronze"] : ["Start", ""]; }
+  var KINDS = ["point", "ev", "tech", "dev", "high", "reader", "real", "relate", "ev2", "tech", "dev", "high", "reader", "real", "relate"];
+  var TIPS = {
+    point: "💡 Give the title, the publisher and the date. Then be specific: a biased opinion towards WHAT, suggesting that WHAT exactly? Never write a general idea like “it is bad.” End with both devices.",
+    ev: "💡 Copy only the words you will explain: 15 words or fewer, exactly as they are, inside quotation marks. Never write the word “quote.”",
+    ev2: "💡 Device 2: new words from a different part of the article. 15 words or fewer, copied exactly, inside quotation marks.",
+    tech: "💡 Name the device, choose ONE word from your evidence and give its normal dictionary meaning. One sentence only.",
+    dev: "💡 Fill every blank precisely. After “to suggest,” answer: what is the writer trying to say with these words? Never write “to grab attention” or “to make it interesting.”",
+    high: "💡 Add a NEW idea: what else do these words stress? Do not repeat your last sentence in different words.",
+    reader: "💡 Choose a precise feeling (alarmed, sympathetic, pressured…), then “because” + the exact reason from the words you copied. Never just “sad,” “good” or “bad.”",
+    real: "💡 What does the reader understand now? A careful reader may also notice the bias: what is left out, or what cannot be checked?",
+    relate: "💡 Name the device again and say exactly what the bias is towards. No new idea here, and never “To sum up” or “To conclude.”"
+  };
+  var lastPts = null, lastTip = "", liveT = null;
+  function liveSoon() { clearTimeout(liveT); liveT = setTimeout(liveUpdate, 120); }
+  function liveUpdate() {
+    if (!S || !S.exam || !S.exam.started || S.exam.done) return;
+    var ta = $("exam-text"), text = ta.value, R = examPoints(text), T = R.T;
+    var lv = levelOf(R.pts);
+    $("exam-pts").textContent = R.pts; $("exam-meter").style.width = R.pts + "%";
+    $("exam-level").textContent = lv[0]; $("exam-level").className = "eb-level " + lv[1];
+    if (lastPts !== null && R.pts > lastPts) {
+      var pop = $("exam-pop"); pop.textContent = "+" + (R.pts - lastPts); pop.hidden = true; void pop.offsetWidth; pop.hidden = false;
+      if (levelOf(lastPts)[0] !== lv[0]) toast(lv[0] === "Exam ready" ? "100 points: exam ready! Now reread your ideas." : lv[0] + " level reached. Keep going!");
+    }
+    lastPts = R.pts;
+    /* coach line: which sentence is being written? */
+    var pos = typeof ta.selectionStart === "number" && document.activeElement === ta ? ta.selectionStart : text.length;
+    var before = text.slice(0, pos), allS = sentences(before);
+    var boundary = !before.trim() || /[.!?]["”’)]*\s+$/.test(before);
+    var done = boundary ? allS : allS.slice(0, -1), cur = boundary ? "" : allS[allS.length - 1];
+    var pr = alignStarts(done, T), next = pr.length ? pr[pr.length - 1][1] + 1 : 0, tip = "", bad = false;
+    if (boundary) {
+      tip = next >= T.length ? "✅ All 15 sentences are here. Reread: is every idea specific? Check quotation marks, the writer's name and “" + PRON + ".”"
+        : "➡️ Next sentence, start with: " + T[next][1] + (next === 8 ? " (This starts device 2.)" : "");
+    } else {
+      var k = startKey(cur), j = -1, x;
+      if (next < T.length && T[next][0].test(k)) j = next;
+      else { for (x = next; x < T.length && j < 0; x++) if (T[x][0].test(k)) j = x; for (x = 0; x < next && j < 0; x++) if (T[x][0].test(k)) j = x; }
+      if (j >= 0) tip = TIPS[KINDS[j]];
+      else if (nWords(cur) >= 3) { bad = true; tip = "⚠ This beginning is not in your structure." + (next < T.length ? " Start with: " + T[next][1] : ""); }
+      else tip = next < T.length ? "➡️ Start with: " + T[next][1] : "";
+    }
+    var tp = $("exam-tip"); tp.textContent = tip; tp.hidden = !tip; tp.classList.toggle("bad", bad);
+    if (tip !== lastTip) { tp.classList.remove("flash"); void tp.offsetWidth; tp.classList.add("flash"); lastTip = tip; }
+    /* red warnings for the sentence being written */
+    var w = [], vg = vagueWords(cur), wp = wrongPronouns(cur), lc = low(cur);
+    if (vg.length) w.push("⚠ Too general: “" + vg[0] + ".” Be specific: say exactly what you mean.");
+    if (wp.length) w.push("⚠ " + SUR + " is “" + PRON + ",” not “" + WRONG + ".”");
+    if (evQuotes(cur).some(function (q) { return nWords(q) > 15; })) w.push("⚠ Too many words copied. Keep only the words you will explain (15 or fewer).");
+    if (/\bthe reader (is|feels) (sad|happy|good|bad)\b/.test(lc)) w.push("⚠ Choose a more precise feeling than “sad,” “happy,” “good” or “bad.”");
+    if (QUOTEWORD.test(low(unq(cur)))) w.push("⚠ Never write the word “quote.” Write: " + SUR + " claims that “…”");
+    if (BANNED.test(lc)) w.push("⚠ Never write “To sum up,” “To conclude” or “All in all.”");
+    if (/to (grab|get|catch) (the reader'?s? )?attention|to make it (more )?interesting|keep reading|read on/.test(lc)) w.push("⚠ Too general. What exactly is the writer trying to say with these words?");
+    var we = $("exam-warn"); we.textContent = w.join(" "); we.hidden = !w.length;
+  }
+  function examChecks(text) {
+    var F = examFacts(text), c = [];
+    c.push([F.point, "① Point: “In the article “…,” published by … in …, " + FULL + " presents a biased opinion towards …, suggesting that …, through the use of … and ….”"]);
+    c.push([F.devs >= 2 || F.mentions >= 4, "Names the device for each of your two examples"]);
+    c.push([F.evS >= 2, "② Evidence for each device: “First / Furthermore, " + SUR + " claims that “…””"]);
+    c.push([F.evS > 0 && F.shortQ, "Short, exact words (15 or fewer) in quotation marks"]);
+    c.push([F.word >= 2, "③ “Here, " + SUR + " uses (device) through the word “…,” which means …” for each device"]);
+    c.push([F.frames >= 2, "④ The device frame for each device (e.g. “compares ___ to ___ to suggest ___”)"]);
+    c.push([F.high >= 2, "④ “" + SUR + " highlights …” for each device"]);
+    c.push([F.rIs >= 2 && F.rReal >= 2, "⑤ “The reader is ___ because ___. The reader realizes ___” for each device"]);
+    c.push([F.rel >= 2, "⑥ “Therefore, the (device) shows " + SUR + "’s bias towards …” for each device"]);
+    c.push([F.fur, "⑦ Device 2 starts with “Furthermore,”"]);
+    c.push([F.name && !F.wrongP.length, "Uses the writer's name and the right pronoun (“" + PRON + "”)"]);
+    c.push([!F.banned && !F.vague.length, "No general words, no “quote,” no “To sum up / To conclude”"]);
+    return c;
+  }
+  function finishExam(timeUp) {
+    var ex = S.exam; if (!ex || ex.done) return;
+    ex.text = $("exam-text").value || ex.text || "";
+    ex.used = Math.min(EXAM_SEC, (Date.now() - ex.started) / 1000);
+    if (ex.fix) ex.used = ex.usedExam || 0; else ex.usedExam = ex.used;
+    ex.words = nWords(ex.text); ex.timeUp = !ex.fix && !!timeUp; ex.done = true;
+    ex.pts = examPoints(ex.text).pts; if (typeof ex.firstPts !== "number") ex.firstPts = ex.pts;
+    save(); renderMain(); window.scrollTo(0, 0);
+  }
+  function usedSpots(text) {
+    var qs = evQuotes(text).filter(function (q) { return nWords(q) >= 2; });
+    var strict = SPOTS.filter(function (s) { return qs.some(function (q) { return inSpot(q, s) || norm(q).indexOf(norm(s.quote)) >= 0; }); });
+    if (strict.length >= 2) return strict;
+    return SPOTS.filter(function (s) { return strict.indexOf(s) >= 0 || qs.some(function (q) { return inCtx(q, s); }); });
+  }
+  function renderExamResult() {
+    var ex = S.exam, c = examChecks(ex.text);
+    $("exam-sum").textContent = (ex.timeUp ? "Time is up! " : "") + "Time used: " + mmss(ex.used) + " of 40:00 · " + ex.words + " words." + (ex.fix ? " Exam score " + ex.firstPts + " → after fixing " + ex.pts + "." : "");
+    var RP = examPoints(ex.text), lvl = levelOf(RP.pts);
+    $("exam-big").textContent = RP.pts; var sm0 = document.createElement("small"); sm0.textContent = " / 100 · " + lvl[0]; $("exam-big").appendChild(sm0);
+    var up = $("exam-parts"); up.textContent = "";
+    RP.parts.forEach(function (p) { var li = document.createElement("li"); li.className = p[1] === p[2] ? "ok" : "no"; li.textContent = p[0] + ": " + p[1] + " / " + p[2]; up.appendChild(li); });
+    $("btn-exam-fix").hidden = RP.pts >= 100;
+    var ul = $("exam-checks"); ul.textContent = "";
+    c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : "no"; li.textContent = x[1]; ul.appendChild(li); });
+    var full = norm([D.art.hed, D.art.dek].concat(D.art.paras).join(" "));
+    var unknown = evQuotes(ex.text).filter(function (q) { return full.indexOf(norm(q)) < 0; });
+    $("exam-qnote").textContent = unknown.length ? "These words are not copied exactly from the article. Check them: " + unknown.map(function (q) { return "“" + q + "”"; }).join(", ") : "";
+    legendCC($("exam-legend"));
+    var stc = renderExamCC($("exam-cc"), ex.text || "");
+    $("exam-starts").textContent = "Sentence beginnings: " + stc[0] + " of " + stc[1] + " correct. Bold = correct beginning. Red = wrong or missing beginning, with the words you should start with."
+      + (stc[2] ? " Wrong pronoun " + stc[2] + (stc[2] === 1 ? " time" : " times") + " (in red): " + SUR + " is “" + PRON + ".”" : "");
+    var used = usedSpots(ex.text), a, b;
+    if (used.length >= 2) { a = used[0]; b = used[1]; $("exam-model-h").textContent = "Model paragraph for the same two devices"; }
+    else {
+      a = SPOTS.filter(function (s) { return s.side === "A"; })[0] || SPOTS[0];
+      b = SPOTS.filter(function (s) { return s.side === "B"; })[0] || SPOTS[1];
+      if (SPOTS.indexOf(b) < SPOTS.indexOf(a)) { var t = a; a = b; b = t; }
+      $("exam-model-h").textContent = "Model paragraph (a strong pair of devices)";
+    }
+    $("exam-model").textContent = modelFor(a, b);
+  }
+
+  /* ---------- REPORT ---------- */
+  function renderReport() {
+    var f = firstCount();
+    $("r-big").textContent = f; var sm = document.createElement("small"); sm.textContent = " / " + SPOTS.length; $("r-big").appendChild(sm);
+    $("r-stars").textContent = "★".repeat(f);
+    var ex = ["Spot it: " + spottedCount() + " of " + SPOTS.length + " devices spotted without highlights" + (S.spotMiss ? " (" + S.spotMiss + (S.spotMiss === 1 ? " tap" : " taps") + " on words with no device)" : "") + "."];
+    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words.");
+    $("r-extra").textContent = ex.join(" ");
+    var rev = SPOTS.filter(function (s) { return S.spots[s.id].misses || S.spotWrong[s.id]; });
+    $("r-revise-block").hidden = !rev.length;
+    var ul = $("r-revise"); ul.textContent = "";
+    rev.forEach(function (s) { var li = document.createElement("li"); li.textContent = "“" + s.quote + "”: " + s.device; ul.appendChild(li); });
+    $("r-para").textContent = paragraph() || "(not written yet)";
+    $("r-exam-block").hidden = !(S.exam && S.exam.text); $("r-exam").textContent = (S.exam && S.exam.text) || "";
+    $("r-improve-block").hidden = !S.improve; $("r-improve").textContent = S.improve || "";
+    var who = $("r-who"); who.textContent = "";
+    var n = document.createElement("span"); n.textContent = "Name: "; var nb = document.createElement("b"); nb.textContent = S.name; n.appendChild(nb);
+    var d = document.createElement("span"); d.textContent = new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+    who.appendChild(n); who.appendChild(d);
+    show("s-report");
+  }
+  $("btn-back").onclick = function () { S.report = false; save(); renderMain(); };
+  $("btn-again").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} S = null; $("student-name").value = ""; renderStart(); };
+
+  buildArticle($("article"), fillMarked);
+  renderStart();
+})();
+</script>
+</body>
+</html>
