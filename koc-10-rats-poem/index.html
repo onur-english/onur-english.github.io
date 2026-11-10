@@ -248,7 +248,25 @@ button { font: inherit; color: inherit; }
 .legend-cc { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: .8rem; }
 .legend-cc span { display: inline-flex; align-items: center; gap: 5px; }
 .legend-cc i { width: 18px; height: 12px; border-radius: 3px; display: inline-block; }
-.exam-bar { position: sticky; top: 72px; z-index: 4; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; }
+.exam-bar { position: sticky; top: 70px; z-index: 4; display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; border: 2px solid var(--board); }
+.eb-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
+.eb-row > span { display: flex; flex-direction: column; }
+.eb-l { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.eb-score { align-items: flex-end; position: relative; }
+.eb-pts { font-family: var(--f-hand); font-size: 1.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.eb-pts small { font-size: .6em; color: var(--muted); }
+.eb-level { font-size: .74rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; background: var(--lilac); margin-left: 6px; font-family: var(--f-body); }
+.eb-level.gold { background: #FFE28C; } .eb-level.silver { background: #E3E6EA; } .eb-level.bronze { background: #F2D0B0; } .eb-level.ready { background: var(--good); color: #FFFFFF; }
+.eb-pop { position: absolute; right: 100%; top: 16px; margin-right: 8px; white-space: nowrap; font-size: 1.1rem; font-weight: 700; color: var(--good); animation: pop 1.2s forwards; pointer-events: none; }
+@keyframes pop { from { opacity: 1; transform: translateY(6px); } to { opacity: 0; transform: translateY(-14px); } }
+.exam-bar .timer { font-size: 1.6rem; }
+.eb-tip { font-size: .86rem; line-height: 1.35; background: #FFF9E6; border-left: 4px solid var(--star); border-radius: 0 8px 8px 0; padding: 6px 8px; }
+.eb-tip.bad { background: var(--red-soft); border-left-color: var(--red); color: #7A1F17; font-weight: 700; }
+.eb-tip.flash { animation: flash .5s; }
+@keyframes flash { from { transform: scale(1.03); } to { transform: scale(1); } }
+.eb-warn { font-size: .84rem; font-weight: 700; color: #7A1F17; background: var(--red-soft); border-radius: 8px; padding: 4px 8px; }
+.eb-nudge { font-size: .84rem; font-weight: 700; color: var(--board); }
+@media (prefers-reduced-motion: reduce) { .eb-pop, .eb-tip.flash { animation: none; } }
 .timer { font-family: var(--f-hand); font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
 .timer.low { color: var(--red); }
 #exam-text { min-height: 320px; line-height: 1.55; }
@@ -279,7 +297,7 @@ button { font: inherit; color: inherit; }
           <li><span class="n">1</span><span><b>Find the devices.</b> Eight phrases in the poem are highlighted and numbered. Tap each one below: name the device, then choose what it does to the reader. A wrong answer comes back in the next round.</span></li>
           <li><span class="n">2</span><span><b>Spot them yourself.</b> The poem again, with no highlights, like in the exam. Tap the words where you see a device, then name it.</span></li>
           <li><span class="n">3</span><span><b>Write your paragraph.</b> Read the introduction, then tap TWO devices. Writing boxes appear in the exam order, each part is ticked when you write it, and the 💡 hints help you think.</span></li>
-          <li><span class="n">4</span><span><b>Exam practice.</b> 40 minutes, no highlights, no hints, no ticks. Choose your own two devices and write one body paragraph. Then see a color-coded check and a model.</span></li>
+          <li><span class="n">4</span><span><b>Exam practice.</b> 40 minutes and no highlights. Choose your own two devices and write one body paragraph. A live structure score goes up as you write, and a coach line warns you about mistakes. Then see a color-coded check and a model.</span></li>
         </ol>
         <div class="resume" id="resume" hidden>
           <p><b>You have work in progress.</b> <span id="resume-text"></span></p>
@@ -414,12 +432,22 @@ button { font: inherit; color: inherit; }
       <div id="lv-4" class="col" hidden>
         <div class="card" id="exam-start-card">
           <span class="label">Exam practice · 40 minutes</span>
-          <p>Just like the real exam: the poem has no highlights, and there are no hints and no ticks. Read the introduction, choose TWO devices yourself and write ONE body paragraph in your exam structure.</p>
+          <p>Like the real exam, the poem has no highlights. Read the introduction, choose TWO devices yourself and write ONE body paragraph in your exam structure.</p>
+          <p><b>New:</b> your structure score (out of 100) goes up live as you write. The coach line under it tells you what each sentence needs and turns red when something is wrong.</p>
           <p class="small muted">The timer keeps running if you leave the page. When time is up, your paragraph is checked automatically.</p>
           <button class="btn btn-ink" id="btn-exam-start" type="button">Start the 40-minute exam</button>
         </div>
         <div id="exam-live" class="col" hidden>
-          <div class="card exam-bar"><span class="label">Time left</span><span class="timer" id="exam-timer" role="timer" aria-live="off">40:00</span></div>
+          <div class="card exam-bar">
+            <div class="eb-row">
+              <span><span class="eb-l" id="exam-timer-l">Time left</span><span class="timer" id="exam-timer" role="timer" aria-live="off">40:00</span></span>
+              <span class="eb-score"><span class="eb-l">Structure score</span><span class="eb-pts"><span id="exam-pts">0</span><small> / 100</small><span class="eb-level" id="exam-level">Start</span></span><span class="eb-pop" id="exam-pop" hidden></span></span>
+            </div>
+            <div class="meter" aria-hidden="true"><i id="exam-meter"></i></div>
+            <p class="eb-tip" id="exam-tip" role="status" aria-live="polite"></p>
+            <p class="eb-warn" id="exam-warn" role="status" aria-live="polite" hidden></p>
+            <p class="eb-nudge" id="exam-nudge" hidden></p>
+          </div>
           <div class="card"><span class="label">The introduction (given)</span><p class="intro" id="exam-intro"></p></div>
           <details class="card poem-card" open><summary>The poem</summary><div class="poem-img"><img id="exam-img" alt="The full poem without highlights"></div></details>
           <div class="card">
@@ -441,6 +469,10 @@ button { font: inherit; color: inherit; }
           <div class="card">
             <span class="label" style="color:var(--good)">Exam result</span>
             <p id="exam-sum"></p>
+            <div class="big" id="exam-big"></div>
+            <ul class="checks" id="exam-parts"></ul>
+            <p class="small muted">This score checks your structure. Your teacher marks your ideas.</p>
+            <span class="label">Structure checklist</span>
             <ul class="checks" id="exam-checks"></ul>
             <p class="small muted" id="exam-qnote"></p>
           </div>
@@ -454,7 +486,8 @@ button { font: inherit; color: inherit; }
             <span class="label" id="exam-model-h">Model paragraph</span>
             <p class="model" id="exam-model"></p>
           </div>
-          <button class="btn btn-ghost" id="btn-exam-again" type="button">Try the exam again</button>
+          <div class="btn-row"><button class="btn btn-ink" id="btn-exam-fix" type="button">Fix it: improve my paragraph</button>
+          <button class="btn btn-ghost" id="btn-exam-again" type="button">Start a new exam</button></div>
         </div>
       </div>
     </div>
@@ -1218,26 +1251,115 @@ button { font: inherit; color: inherit; }
     $("exam-live").hidden = !(ex && ex.started && !ex.done);
     $("exam-result").hidden = !(ex && ex.done);
     if (ex && ex.started && !ex.done) {
-      if (examLeft() <= 0) { finishExam(true); return; }
+      if (!ex.fix && examLeft() <= 0) { finishExam(true); return; }
       $("exam-intro").textContent = D.intro;
       if (!$("exam-img").src) $("exam-img").src = $("plain-img").src;
       if ($("exam-text").value !== (ex.text || "")) $("exam-text").value = ex.text || "";
       [0, 1, 2, 3].forEach(function (i) { var v = (ex.plan || [])[i] || ""; if ($("plan-" + i).value !== v) $("plan-" + i).value = v; });
-      tick();
+      tick(); lastPts = null; liveUpdate();
     }
     if (ex && ex.done) renderExamResult();
   }
   function tick() {
     if (!S || !S.exam || !S.exam.started || S.exam.done) return;
+    if (S.exam.fix) { $("exam-timer-l").textContent = "Fix-it round"; $("exam-timer").textContent = "no timer"; $("exam-timer").classList.remove("low"); $("exam-nudge").hidden = true; return; }
     var left = examLeft();
+    $("exam-timer-l").textContent = "Time left";
     $("exam-timer").textContent = mmss(left);
     $("exam-timer").classList.toggle("low", left <= 300);
+    var ng = $("exam-nudge"), txt = "";
+    if (left <= 300) txt = "⏰ 5 minutes left: finish your link sentence, then check quotation marks, the poet's name and “" + PRON.toLowerCase() + ".”";
+    else if (left <= 1200 && !/\bfurthermore\b/.test(low(S.exam.text || ""))) txt = "⏰ Half of your time has gone: you should be starting device 2 with “Furthermore,” now.";
+    ng.textContent = txt; ng.hidden = !txt;
     if (left <= 0 && S.tab === 4) finishExam(true);
   }
   setInterval(tick, 1000);
   $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: ["", "", "", ""] }; save(); renderMain(); window.scrollTo(0, 0); $("plan-0").focus({ preventScroll: true }); };
   [0, 1, 2, 3].forEach(function (i) { $("plan-" + i).addEventListener("input", function () { if (!S.exam) return; S.exam.plan = S.exam.plan || ["", "", "", ""]; S.exam.plan[i] = $("plan-" + i).value; save(); }); });
-  $("exam-text").addEventListener("input", function () { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; });
+  $("exam-text").addEventListener("input", function () { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; liveSoon(); });
+  ["keyup", "click", "focus"].forEach(function (ev) { $("exam-text").addEventListener(ev, liveSoon); });
+  $("btn-exam-fix").onclick = function () { var ex = S.exam; if (!ex) return; ex.done = false; ex.fix = true; save(); renderMain(); window.scrollTo(0, 0); $("exam-text").focus({ preventScroll: true }); };
+
+  /* ----- live structure score (100 points; structure only, not an exam grade) ----- */
+  function unq(t) { return String(t || "").replace(/“[^”]*”|"[^"]*"/g, " "); }
+  var VAGUE = /\b(things?|stuff|something|nice|interesting|a lot|i think|i believe|in my opinion)\b/g;
+  function vagueWords(text) { return low(unq(text)).match(VAGUE) || []; }
+  function wrongPronouns(text) { return low(unq(text)).match(new RegExp("\\b" + (PRON === "He" ? "she" : "he") + "\\b", "g")) || []; }
+  function examPoints(text) {
+    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T);
+    var t = low(text), tq = low(String(text).replace(/[“”]/g, '"')), qs = quotes(text), big = nWords(text) >= 30;
+    function n(re) { return (tq.match(re) || []).length; }
+    var devs = Object.keys(DEVRE).filter(function (k) { return DEVRE[k].test(t); }).length;
+    var frames = S_.filter(function (x) { var y = low(x); return FRAMEALL.some(function (r) { return r.test(y); }); }).length;
+    var beg = pairs.length * 4;
+    var mentions = n(/\b(simile|metaphor|imagery|personification|juxtaposition|repetition|hyperbole|rhetorical question)\b/g);
+    var pDev = devs >= 2 || mentions >= 3 ? 5 : (devs === 1 ? 2 : 0), pQ = (qs.length >= 1 ? 3 : 0) + (qs.length >= 2 ? 3 : 0);
+    var pShort = qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }) ? 2 : 0;
+    var pWord = Math.min(2, n(/\bthe (adjective|noun|verb|adverb|pronoun) "[^"]+"\s*,?\s*is\b/g)) * 3;
+    var pFrame = Math.min(2, frames) * 3, pReader = Math.min(2, n(/\bthe reader is\b[^.]*\bbecause\b/g)) * 2;
+    var pFur = /\bfurthermore\b/.test(t) ? 2 : 0;
+    var pPron = big && t.indexOf(SUR.toLowerCase()) >= 0 && !wrongPronouns(text).length ? 3 : 0;
+    var pVague = big && !vagueWords(text).length ? 3 : 0;
+    var pTopic = S_.length && T[0][0].test(startKey(S_[0])) && nWords(S_[0]) >= 12 ? 3 : 0;
+    var parts = [["Sentence beginnings (" + pairs.length + " of 15)", beg, 60], ["Evidence: two devices named, short quotations in quotation marks", pDev + pQ + pShort, 13],
+                 ["Analysis: word class, device frames, reader sentences", pWord + pFrame + pReader, 16], ["Precision and language: specific message, no vague words, “Furthermore,” name and pronoun", pTopic + pVague + pFur + pPron, 11]];
+    var pts = parts.reduce(function (a, p) { return a + p[1]; }, 0);
+    return { pts: pts, parts: parts, pairs: pairs, T: T, S_: S_ };
+  }
+  function levelOf(p) { return p >= 100 ? ["Exam ready", "ready"] : p >= 80 ? ["Gold", "gold"] : p >= 60 ? ["Silver", "silver"] : p >= 40 ? ["Bronze", "bronze"] : ["Start", ""]; }
+  var KINDS = ["topic", "ev", "word", "dev", "dev2", "reader", "also", "link", "ev2", "word", "dev", "dev2", "reader", "also", "link"];
+  var TIPS = {
+    topic: "💡 Say the MESSAGE, not just the topic. Be specific: what exactly does the poem show? Never write a general idea like “life” or “feelings.” End with “through the use of (device 1).”",
+    ev: "💡 Quote only the words you will explain: 15 words or fewer, copied exactly, inside quotation marks.",
+    ev2: "💡 Device 2: a new quotation that shows a different side of the thesis. 15 words or fewer, copied exactly.",
+    word: "💡 Zoom in on ONE word from your quotation. What is the writer trying to say with this word? What does it suggest? One sentence only.",
+    dev: "💡 Fill every blank precisely. After “to suggest,” say exactly what it shows about the thesis. Never write “to make it interesting” or “to grab attention.”",
+    dev2: "💡 Add a NEW idea here. Do not repeat your last sentence in different words.",
+    reader: "💡 Choose a precise feeling (moved, uneasy, inspired…), then “because” + the exact reason from the words you quoted. Never just “sad,” “good” or “bad.”",
+    also: "💡 What does the reader now understand about the big idea in the thesis? Go beyond the poem.",
+    link: "💡 Name the device again and state your message clearly. Do not add a new idea here."
+  };
+  var lastPts = null, lastTip = "", liveT = null;
+  function liveSoon() { clearTimeout(liveT); liveT = setTimeout(liveUpdate, 120); }
+  function liveUpdate() {
+    if (!S || !S.exam || !S.exam.started || S.exam.done) return;
+    var ta = $("exam-text"), text = ta.value, R = examPoints(text), T = R.T;
+    /* score */
+    var lv = levelOf(R.pts);
+    $("exam-pts").textContent = R.pts; $("exam-meter").style.width = R.pts + "%";
+    $("exam-level").textContent = lv[0]; $("exam-level").className = "eb-level " + lv[1];
+    if (lastPts !== null && R.pts > lastPts) {
+      var pop = $("exam-pop"); pop.textContent = "+" + (R.pts - lastPts); pop.hidden = true; void pop.offsetWidth; pop.hidden = false;
+      if (levelOf(lastPts)[0] !== lv[0]) toast(lv[0] === "Exam ready" ? "100 points: exam ready! Now reread your ideas." : lv[0] + " level reached. Keep going!");
+    }
+    lastPts = R.pts;
+    /* coach line: which sentence is being written? */
+    var pos = typeof ta.selectionStart === "number" && document.activeElement === ta ? ta.selectionStart : text.length;
+    var before = text.slice(0, pos), allS = sentences(before);
+    var boundary = !before.trim() || /[.!?]["”’)]*\s+$/.test(before);
+    var done = boundary ? allS : allS.slice(0, -1), cur = boundary ? "" : allS[allS.length - 1];
+    var pr = alignStarts(done, T), next = pr.length ? pr[pr.length - 1][1] + 1 : 0, tip = "", bad = false;
+    if (boundary) {
+      tip = next >= T.length ? "✅ All 15 sentences are here. Reread: is every idea specific? Check quotation marks, the poet's name and “" + PRON.toLowerCase() + ".”"
+        : "➡️ Next sentence, start with: " + T[next][1] + (next === 8 ? " (This starts device 2.)" : "");
+    } else {
+      var k = startKey(cur), j = -1, x;
+      if (next < T.length && T[next][0].test(k)) j = next;
+      else { for (x = next; x < T.length && j < 0; x++) if (T[x][0].test(k)) j = x; for (x = 0; x < next && j < 0; x++) if (T[x][0].test(k)) j = x; }
+      if (j >= 0) tip = TIPS[KINDS[j]];
+      else if (nWords(cur) >= 3) { bad = true; tip = "⚠ This beginning is not in your structure." + (next < T.length ? " Start with: " + T[next][1] : ""); }
+      else tip = next < T.length ? "➡️ Start with: " + T[next][1] : "";
+    }
+    var tp = $("exam-tip"); tp.textContent = tip; tp.hidden = !tip; tp.classList.toggle("bad", bad);
+    if (tip !== lastTip) { tp.classList.remove("flash"); void tp.offsetWidth; tp.classList.add("flash"); lastTip = tip; }
+    /* red warnings for the sentence being written */
+    var w = [], vg = vagueWords(cur), wp = wrongPronouns(cur);
+    if (vg.length) w.push("⚠ Too general: “" + vg[0] + ".” Be specific: say exactly what you mean.");
+    if (wp.length) w.push("⚠ " + SUR + " is “" + PRON.toLowerCase() + ",” not “" + wp[0] + ".”");
+    if (quotes(cur).some(function (q) { return nWords(q) > 15; })) w.push("⚠ Your quotation is too long. Keep only the words you will explain (15 or fewer).");
+    if (/\bthe reader (is|feels) (sad|happy|good|bad)\b/.test(low(cur))) w.push("⚠ Choose a more precise feeling than “sad,” “happy,” “good” or “bad.”");
+    var we = $("exam-warn"); we.textContent = w.join(" "); we.hidden = !w.length;
+  }
   $("btn-exam-finish").onclick = function () { finishExam(false); };
   $("btn-exam-again").onclick = function () { S.exam = null; save(); $("exam-text").value = ""; renderMain(); window.scrollTo(0, 0); };
   function examChecks(text) {
@@ -1246,7 +1368,7 @@ button { font: inherit; color: inherit; }
     var frames = sentences(text).filter(function (x) { var y = low(x); return FRAMEALL.some(function (r) { return r.test(y); }); }).length;
     function n(re) { return (tq.match(re) || []).length; }
     c.push([/^in the poem\b/.test(t) && /\bacevedo presents\b/.test(t) && /through the use of\b/.test(t), "② Topic sentence: “In the poem, Acevedo presents … through the use of …”"]);
-    c.push([devs.length >= 2, "Names two devices"]);
+    c.push([devs.length >= 2 || n(/\b(simile|metaphor|imagery|personification|juxtaposition|repetition|hyperbole|rhetorical question)\b/g) >= 3, "Names the device for each of your two examples"]);
     c.push([qs.length >= 2, "③ A quotation for each device, in quotation marks"]);
     c.push([qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }), "Short quotations (15 words or fewer)"]);
     c.push([n(/\bthe (adjective|noun|verb|adverb|pronoun) "/g) >= 2, "④ “The adjective / noun / verb “___” is …” for each device"]);
@@ -1261,13 +1383,20 @@ button { font: inherit; color: inherit; }
     var ex = S.exam; if (!ex || ex.done) return;
     ex.text = $("exam-text").value || ex.text || "";
     ex.used = Math.min(EXAM_SEC, (Date.now() - ex.started) / 1000);
+    if (ex.fix) ex.used = ex.usedExam || 0; else ex.usedExam = ex.used;
     var c = examChecks(ex.text);
-    ex.score = c.filter(function (x) { return x[0]; }).length; ex.total = c.length; ex.words = nWords(ex.text); ex.timeUp = !!timeUp; ex.done = true;
+    ex.score = c.filter(function (x) { return x[0]; }).length; ex.total = c.length; ex.words = nWords(ex.text); ex.timeUp = !ex.fix && !!timeUp; ex.done = true;
+    ex.pts = examPoints(ex.text).pts; if (typeof ex.firstPts !== "number") ex.firstPts = ex.pts;
     save(); renderMain(); window.scrollTo(0, 0);
   }
   function renderExamResult() {
     var ex = S.exam, c = examChecks(ex.text);
-    $("exam-sum").textContent = (ex.timeUp ? "Time is up! " : "") + "Time used: " + mmss(ex.used) + " of 40:00 · " + ex.words + " words · structure: " + ex.score + " of " + ex.total + " checks.";
+    $("exam-sum").textContent = (ex.timeUp ? "Time is up! " : "") + "Time used: " + mmss(ex.used) + " of 40:00 · " + ex.words + " words." + (ex.fix ? " Exam score " + ex.firstPts + " → after fixing " + ex.pts + "." : "");
+    var RP = examPoints(ex.text), lvl = levelOf(RP.pts);
+    $("exam-big").textContent = RP.pts; var sm0 = document.createElement("small"); sm0.textContent = " / 100 · " + lvl[0]; $("exam-big").appendChild(sm0);
+    var up = $("exam-parts"); up.textContent = "";
+    RP.parts.forEach(function (p) { var li = document.createElement("li"); li.className = p[1] === p[2] ? "ok" : "no"; li.textContent = p[0] + ": " + p[1] + " / " + p[2]; up.appendChild(li); });
+    $("btn-exam-fix").hidden = RP.pts >= 100;
     var ul = $("exam-checks"); ul.textContent = "";
     c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : "no"; li.textContent = x[1]; ul.appendChild(li); });
     var qs = quotes(ex.text), unknown = qs.filter(function (q) { return !SPOTS.some(function (s) { return inPoem(q, s); }); });
@@ -1295,7 +1424,7 @@ button { font: inherit; color: inherit; }
     $("r-stars").textContent = "★".repeat(f);
     var ex = [];
     ex.push("Spot it: " + spottedCount() + " of " + SPOTS.length + " devices spotted without highlights" + (S.spotMiss ? " (" + S.spotMiss + " taps on empty words)" : "") + ".");
-    if (S.exam && S.exam.done) ex.push("Exam practice: " + S.exam.score + " of " + S.exam.total + " structure checks, time used " + mmss(S.exam.used) + ", " + S.exam.words + " words.");
+    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words.");
     $("r-extra").textContent = ex.join(" ");
     var rev = SPOTS.filter(function (s) { return S.spots[s.id].misses; });
     $("r-revise-block").hidden = !rev.length;
