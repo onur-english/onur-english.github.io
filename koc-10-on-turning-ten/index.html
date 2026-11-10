@@ -420,6 +420,14 @@ button { font: inherit; color: inherit; }
           <div class="card"><span class="label">The introduction (given)</span><p class="intro" id="exam-intro"></p></div>
           <details class="card poem-card" open><summary>The poem</summary><div class="poem-img"><img id="exam-img" alt="The full poem without highlights"></div></details>
           <div class="card">
+            <span class="label">Plan first (about 2 minutes)</span>
+            <p class="small muted">Choose your two devices and the words you will quote before you write. The plan is not marked.</p>
+            <div class="field"><label for="plan-0">Device 1</label><input id="plan-0" type="text" maxlength="40" placeholder="e.g. metaphor"></div>
+            <div class="field"><label for="plan-1">Words I will quote for device 1</label><input id="plan-1" type="text" maxlength="120"></div>
+            <div class="field"><label for="plan-2">Device 2</label><input id="plan-2" type="text" maxlength="40" placeholder="e.g. repetition"></div>
+            <div class="field"><label for="plan-3">Words I will quote for device 2</label><input id="plan-3" type="text" maxlength="120"></div>
+          </div>
+          <div class="card">
             <label class="label" for="exam-text">Your body paragraph</label>
             <textarea id="exam-text" spellcheck="true" placeholder="In the poem, …"></textarea>
             <p class="small muted" id="exam-wc">0 words</p>
@@ -1063,12 +1071,22 @@ button { font: inherit; color: inherit; }
   }
   function renderExamCC(el, text) {
     el.textContent = "";
-    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T), ok = pairs.length, pi = 0, pj = 0;
+    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T), ok = pairs.length, pi = 0, pj = 0, wrongPron = 0;
+    var WRONGW = PRON === "He" ? "she" : "he", WRONGP = new RegExp("^" + WRONGW + "\\b", "i");
     function sentNode(str, cat, good, expect) {
       var sp = document.createElement("span"); if (cat) sp.className = "c cc-" + cat;
       var nw = good ? good : 3, parts = splitStart(str, nw);
       var b = document.createElement("b"); b.className = good ? "st-ok" : "st-bad"; b.textContent = parts[1];
-      sp.appendChild(document.createTextNode(parts[0])); sp.appendChild(b); sp.appendChild(document.createTextNode(parts[2]));
+      if (good && WRONGP.test(parts[1])) { b.className = "st-bad"; wrongPron++; }
+      sp.appendChild(document.createTextNode(parts[0])); sp.appendChild(b);
+      /* wrong pronoun for the poet in red (never inside a quotation) */
+      parts[2].split(/(“[^”]*”|"[^"]*")/).forEach(function (seg, qi) {
+        if (qi % 2) { sp.appendChild(document.createTextNode(seg)); return; }
+        seg.split(new RegExp("\\b(" + WRONGW + ")\\b", "i")).forEach(function (w, wi) {
+          if (wi % 2) { var r = document.createElement("b"); r.className = "st-bad"; r.textContent = w; sp.appendChild(r); wrongPron++; }
+          else sp.appendChild(document.createTextNode(w));
+        });
+      });
       el.appendChild(sp);
       if (!good) { var nt = document.createElement("span"); nt.className = "st-note"; nt.textContent = expect ? "⚠ Start with: " + expect : "⚠ This beginning is not in the structure"; el.appendChild(nt); el.appendChild(document.createTextNode(" ")); }
     }
@@ -1087,7 +1105,7 @@ button { font: inherit; color: inherit; }
       pi = p[0] + 1; pj = p[1] + 1;
     });
     gap(S_.length, T.length);
-    return [ok, T.length];
+    return [ok, T.length, wrongPron];
   }
   function catOf(sent) {
     var t = low(sent.replace(/[“”]/g, '"')).replace(/^furthermore,?\s*/, "");
@@ -1201,6 +1219,7 @@ button { font: inherit; color: inherit; }
       $("exam-intro").textContent = D.intro;
       if (!$("exam-img").src) $("exam-img").src = $("plain-img").src;
       if ($("exam-text").value !== (ex.text || "")) $("exam-text").value = ex.text || "";
+      [0, 1, 2, 3].forEach(function (i) { var v = (ex.plan || [])[i] || ""; if ($("plan-" + i).value !== v) $("plan-" + i).value = v; });
       tick();
     }
     if (ex && ex.done) renderExamResult();
@@ -1213,7 +1232,8 @@ button { font: inherit; color: inherit; }
     if (left <= 0 && S.tab === 4) finishExam(true);
   }
   setInterval(tick, 1000);
-  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false }; save(); renderMain(); window.scrollTo(0, 0); $("exam-text").focus({ preventScroll: true }); };
+  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: ["", "", "", ""] }; save(); renderMain(); window.scrollTo(0, 0); $("plan-0").focus({ preventScroll: true }); };
+  [0, 1, 2, 3].forEach(function (i) { $("plan-" + i).addEventListener("input", function () { if (!S.exam) return; S.exam.plan = S.exam.plan || ["", "", "", ""]; S.exam.plan[i] = $("plan-" + i).value; save(); }); });
   $("exam-text").addEventListener("input", function () { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; });
   $("btn-exam-finish").onclick = function () { finishExam(false); };
   $("btn-exam-again").onclick = function () { S.exam = null; save(); $("exam-text").value = ""; renderMain(); window.scrollTo(0, 0); };
@@ -1251,7 +1271,8 @@ button { font: inherit; color: inherit; }
     $("exam-qnote").textContent = unknown.length ? "Check these quotations against the poem yourself (the app only knows the lines with highlighted devices): " + unknown.map(function (q) { return "“" + q + "”"; }).join(", ") : "";
     legendCC($("exam-legend"));
     var stc = renderExamCC($("exam-cc"), ex.text || "");
-    $("exam-starts").textContent = "Sentence beginnings: " + stc[0] + " of " + stc[1] + " correct. Bold = correct beginning. Red = wrong or missing beginning, with the words you should start with.";
+    $("exam-starts").textContent = "Sentence beginnings: " + stc[0] + " of " + stc[1] + " correct. Bold = correct beginning. Red = wrong or missing beginning, with the words you should start with."
+      + (stc[2] ? " Wrong pronoun " + stc[2] + (stc[2] === 1 ? " time" : " times") + " (in red): " + SUR + " is “" + PRON.toLowerCase() + ".”" : "");
     var used = SPOTS.filter(function (s) { return qs.some(function (q) { return inPoem(q, s); }); });
     var a, b;
     if (used.length >= 2) { a = used[0]; b = used[1]; $("exam-model-h").textContent = "Model paragraph for the same two devices"; }
