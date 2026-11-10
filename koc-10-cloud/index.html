@@ -289,8 +289,9 @@ button { font: inherit; color: inherit; }
   background: rgba(255,255,255,.22); color: inherit; font-size: 1.3rem; line-height: 1; display: grid; place-items: center; }
 .big-pop.amber .bp-x, .big-pop.time .bp-x { background: rgba(0,0,0,.12); }
 @media (prefers-reduced-motion: reduce) { .big-pop, .big-pop.out { transition: none; } }
-/* Device picture (O. H., 2026-11-10): an animated drawing of the phrase the student is quoting, with what it means. Stays in the exam bar. */
-.eb-pic { display: flex; gap: 8px; align-items: center; background: #FFFDF6; border: 2px solid var(--board); border-radius: 12px; padding: 5px 30px 5px 5px; position: relative; }
+/* Device picture (O. H., 2026-11-10): an animated drawing of the phrase the student is quoting, with what it means.
+   It floats right under the line being written (above it when the keyboard leaves no room) while the student types. */
+.eb-pic { position: fixed; left: 16px; top: 50%; z-index: 70; width: min(calc(100vw - 32px), 560px); box-shadow: 0 10px 26px rgba(0,0,0,.22); display: flex; gap: 8px; align-items: center; background: #FFFDF6; border: 2px solid var(--board); border-radius: 12px; padding: 5px 30px 5px 5px; }
 .eb-pic svg { width: 116px; height: 72px; flex: none; border-radius: 8px; display: block; }
 .eb-pic .pc { font-size: .76rem; line-height: 1.25; min-width: 0; }
 .eb-pic .pc i { font-style: normal; display: block; margin-top: 1px; }
@@ -331,6 +332,9 @@ button { font: inherit; color: inherit; }
 .pic .ech.shk { animation: ech var(--t, 4s) ease-out var(--d, 0s) infinite, shk .4s linear infinite; }
 .pic .drn { transform-origin: 0% 50%; animation: drn var(--t, 2.6s) ease-in var(--d, 0s) infinite; }
 @media (prefers-reduced-motion: reduce) { .pic * { animation: none !important; opacity: 1 !important; } }
+
+.eb-pic::before { content: ""; position: absolute; left: 26px; top: -9px; border: 9px solid transparent; border-top: 0; border-bottom-color: var(--board); }
+.eb-pic.up::before { top: auto; bottom: -9px; border-bottom: 0; border-top: 9px solid var(--board); }
 .timer { font-family: var(--f-hand); font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
 .timer.low { color: var(--red); }
 #exam-text { min-height: 320px; line-height: 1.55; }
@@ -508,7 +512,6 @@ button { font: inherit; color: inherit; }
               <span class="eb-score"><span class="eb-l">Structure score</span><span class="eb-pts"><span id="exam-pts">0</span><small> / 100</small><span class="eb-level" id="exam-level">Start</span></span><span class="eb-pop" id="exam-pop" hidden></span></span>
             </div>
             <div class="meter" aria-hidden="true"><i id="exam-meter"></i></div>
-            <div class="eb-pic" id="exam-pic" hidden><svg class="pic" viewBox="0 0 160 100" aria-hidden="true"></svg><div class="pc"><span class="eb-pic-lab">Picture it</span><i><b>You see:</b> <span id="pic-see"></span></i><i><b>It means:</b> <span id="pic-mean"></span></i></div><button class="px" type="button" aria-label="Hide the picture">×</button></div>
             <p class="eb-tip" id="exam-tip" role="status" aria-live="polite"></p>
             <p class="eb-warn" id="exam-warn" role="status" aria-live="polite" hidden></p>
             <p class="eb-nudge" id="exam-nudge" hidden></p>
@@ -594,6 +597,7 @@ button { font: inherit; color: inherit; }
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span><button class="bp-x" type="button" aria-label="Close">×</button></div>
+<div class="eb-pic" id="exam-pic" hidden><svg class="pic" viewBox="0 0 160 100" aria-hidden="true"></svg><div class="pc"><span class="eb-pic-lab">Picture it</span><i><b>You see:</b> <span id="pic-see"></span></i><i><b>It means:</b> <span id="pic-mean"></span></i></div><button class="px" type="button" aria-label="Hide the picture">×</button></div>
 <div class="sheet-back" id="sheet-back" hidden>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
     <div class="sheet-head"><span class="label" id="sheet-label"></span><button class="x" id="sheet-x" type="button" aria-label="Close">×</button></div>
@@ -1433,8 +1437,10 @@ button { font: inherit; color: inherit; }
     if (tr.width) {
       p.style.left = Math.max(8, tr.left) + "px"; p.style.width = Math.min(tr.width, window.innerWidth - 16) + "px";
       var c = document.activeElement === ta ? caretBox(ta) : { top: Math.max(tr.top, vTop + 40) + 30, bottom: Math.max(tr.top, vTop + 40) + 56 };
-      top = c.top - h - 12;
-      if (top < vTop + 6) { top = c.bottom + 12; below = true; }
+      var pb = $("exam-pic"), pr = pb && !pb.hidden ? pb.getBoundingClientRect() : null;
+      var aTop = pr && pb.classList.contains("up") ? pr.top : c.top, aBot = pr && !pb.classList.contains("up") ? pr.bottom : c.bottom;
+      top = aTop - h - 12;
+      if (top < vTop + 6) { top = aBot + 12; below = true; }
       if (top + h > vTop + vH - 6) top = Math.max(vTop + 6, vTop + vH - h - 6);
     } else { p.style.left = "16px"; top = vTop + vH * 0.3; }
     p.style.top = Math.round(top) + "px"; p.classList.toggle("below", below);
@@ -1596,7 +1602,7 @@ button { font: inherit; color: inherit; }
   }
   function picUpdate(before, firstLen) {
     var box = $("exam-pic");
-    if (!String(before).trim()) { box.hidden = true; picId = null; popSeen = {}; return; }
+    if (!String(before).trim()) { picId = null; popSeen = {}; placePic(); return; }
     var t = before.slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
     while ((m = re.exec(t))) segs.push(m[1]);
     var s = null; for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
@@ -1605,12 +1611,27 @@ button { font: inherit; color: inherit; }
   function showPic(s) {
     var box = $("exam-pic"); if (picId === s.id) return;
     picId = s.id; window.__picLog.push(s.id);
-    if (picHidden[s.id]) { box.hidden = true; return; }
     var P = PICS[s.id]; box.querySelector("svg").innerHTML = P[0]; $("pic-see").textContent = P[1]; $("pic-mean").textContent = P[2];
-    box.hidden = false; box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
-    if (typeof placeBar === "function") placeBar();
+    placePic(); box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
   }
-  $("exam-pic").querySelector(".px").addEventListener("click", function () { if (picId) picHidden[picId] = 1; $("exam-pic").hidden = true; if (typeof placeBar === "function") placeBar(); });
+  /* the picture floats right under the line being written; above it when the keyboard leaves no room below */
+  function placePic() {
+    var box = $("exam-pic"), ta = $("exam-text");
+    var show = !!(picId && !picHidden[picId] && document.activeElement === ta && S && S.exam && S.exam.started && !S.exam.done);
+    box.hidden = !show; if (!show) return;
+    var vv = window.visualViewport, vTop = vv ? vv.offsetTop : 0, vH = vv ? vv.height : window.innerHeight;
+    var tr = ta.getBoundingClientRect(), c = caretBox(ta), h = box.offsetHeight, top = c.bottom + 10, up = false;
+    box.style.left = Math.max(8, tr.left) + "px"; box.style.width = Math.min(tr.width, window.innerWidth - 16) + "px";
+    if (top + h > vTop + vH - 6) { top = c.top - h - 10; up = true; }
+    if (top < vTop + 6) top = vTop + 6;
+    box.style.top = Math.round(top) + "px"; box.classList.toggle("up", up);
+  }
+  function placeBoth() { placePic(); placePop(); }
+  window.addEventListener("scroll", placeBoth, { passive: true }); window.addEventListener("resize", placeBoth);
+  if (window.visualViewport) { window.visualViewport.addEventListener("scroll", placeBoth); window.visualViewport.addEventListener("resize", placeBoth); }
+  ["focus", "blur", "keyup", "click"].forEach(function (ev) { $("exam-text").addEventListener(ev, function () { setTimeout(placeBoth, 40); }); });
+  $("exam-pic").querySelector(".px").addEventListener("mousedown", function (e) { e.preventDefault(); });
+  $("exam-pic").querySelector(".px").addEventListener("click", function () { if (picId) picHidden[picId] = 1; placeBoth(); });
   /* stuck for a minute? */
   function idleCheck() {
     clearTimeout(idleT);
@@ -1653,8 +1674,9 @@ button { font: inherit; color: inherit; }
     }
     var tp = $("exam-tip"); tp.textContent = tip; tp.hidden = !tip; tp.classList.remove("bad");
     $("exam-warn").hidden = true;
-    placePop();
     picUpdate(before, done.length ? done[0].length : before.length);
+    placePic();
+    placePop();
     var typed = liveTyped; liveTyped = false;
     if (!typed || !cur) return;
     idleCheck();
