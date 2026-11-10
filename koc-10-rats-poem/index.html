@@ -248,21 +248,7 @@ button { font: inherit; color: inherit; }
 .legend-cc { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: .8rem; }
 .legend-cc span { display: inline-flex; align-items: center; gap: 5px; }
 .legend-cc i { width: 18px; height: 12px; border-radius: 3px; display: inline-block; }
-.exam-bar { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); width: min(calc(100% - 20px), 660px); z-index: 6; display: flex; flex-direction: column; gap: 5px; padding: 8px 10px; border: 2px solid var(--board); box-shadow: 0 10px 26px rgba(0,0,0,.28); }
-.exam-bar .timer, .exam-bar .eb-pts { font-size: 1.45rem; }
-.eb-box { border-radius: 10px; padding: 7px 10px; background: #E6E9EE; color: var(--ink); }
-.eb-h { font-family: var(--f-body); font-weight: 700; font-size: .95rem; letter-spacing: .05em; text-transform: uppercase; line-height: 1.2; }
-.eb-box ul { list-style: none; margin: 3px 0 0; padding: 0; display: flex; flex-direction: column; gap: 2px; font-size: .84rem; line-height: 1.3; font-weight: 700; }
-.eb-box li { padding-left: 14px; position: relative; }
-.eb-box li::before { content: "•"; position: absolute; left: 2px; }
-.eb-box.rules, .eb-box.wrong { background: #E60023; color: #FFFFFF; box-shadow: 0 0 0 3px rgba(230,0,35,.25); }
-.eb-box li.hot { background: #FFE600; color: #7A0012; border-radius: 6px; padding: 2px 6px; }
-.eb-box li.hot::before { content: none; }
-.eb-box.broken li.hot { animation: blink 1s 3; }
-@keyframes blink { 50% { background: #FFFFFF; } }
-.eb-box.flash { animation: popin .35s; }
-@keyframes popin { from { transform: scale(.94); opacity: .4; } to { transform: scale(1); opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .eb-box.flash, .eb-box.broken li.hot { animation: none; } }
+.exam-bar { position: sticky; top: 70px; z-index: 4; display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; border: 2px solid var(--board); }
 .eb-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
 .eb-row > span { display: flex; flex-direction: column; }
 .eb-l { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
@@ -281,6 +267,15 @@ button { font: inherit; color: inherit; }
 .eb-warn { font-size: .84rem; font-weight: 700; color: #7A1F17; background: var(--red-soft); border-radius: 8px; padding: 4px 8px; }
 .eb-nudge { font-size: .84rem; font-weight: 700; color: var(--board); }
 @media (prefers-reduced-motion: reduce) { .eb-pop, .eb-tip.flash { animation: none; } }
+/* Big coach pop-up: appears while writing, holds, then fades slowly. Never blocks typing. */
+.big-pop { position: fixed; left: 50%; top: 15%; transform: translateX(-50%) scale(.96); width: min(92vw, 520px); z-index: 80; pointer-events: none; text-align: center;
+  background: var(--board); color: #FFFFFF; border-radius: 20px; padding: 20px 18px 18px; box-shadow: 0 20px 44px rgba(0,0,0,.38); opacity: 0; transition: opacity .25s, transform .25s; }
+.big-pop.on { opacity: .97; transform: translateX(-50%) scale(1); }
+.big-pop.out { opacity: 0; transition: opacity 2.6s ease-in; }
+.big-pop b { display: block; font-family: var(--f-body); font-size: clamp(1.5rem, 6.6vw, 2.05rem); font-weight: 800; line-height: 1.14; letter-spacing: .01em; text-transform: uppercase; }
+.big-pop span { display: block; margin-top: 10px; font-size: 1.1rem; font-weight: 700; line-height: 1.3; }
+.big-pop.red { background: var(--red); }
+.big-pop.time { background: #FFE28C; color: #1B1D21; }
 .timer { font-family: var(--f-hand); font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
 .timer.low { color: var(--red); }
 #exam-text { min-height: 320px; line-height: 1.55; }
@@ -311,7 +306,7 @@ button { font: inherit; color: inherit; }
           <li><span class="n">1</span><span><b>Find the devices.</b> Eight phrases in the poem are highlighted and numbered. Tap each one below: name the device, then choose what it does to the reader. A wrong answer comes back in the next round.</span></li>
           <li><span class="n">2</span><span><b>Spot them yourself.</b> The poem again, with no highlights, like in the exam. Tap the words where you see a device, then name it.</span></li>
           <li><span class="n">3</span><span><b>Write your paragraph.</b> Read the introduction, then tap TWO devices. Writing boxes appear in the exam order, each part is ticked when you write it, and the 💡 hints help you think.</span></li>
-          <li><span class="n">4</span><span><b>Exam practice.</b> 40 minutes and no highlights. Choose your own two devices and write one body paragraph. A live structure score goes up as you write, and a red warning box on screen shows the rules for each sentence. Then see a color-coded check and a model.</span></li>
+          <li><span class="n">4</span><span><b>Exam practice.</b> 40 minutes and no highlights. Choose your own two devices and write one body paragraph. A live structure score goes up as you write, and a coach line warns you about mistakes. Then see a color-coded check and a model.</span></li>
         </ol>
         <div class="resume" id="resume" hidden>
           <p><b>You have work in progress.</b> <span id="resume-text"></span></p>
@@ -447,19 +442,19 @@ button { font: inherit; color: inherit; }
         <div class="card" id="exam-start-card">
           <span class="label">Exam practice · 40 minutes</span>
           <p>Like the real exam, the poem has no highlights. Read the introduction, choose TWO devices yourself and write ONE body paragraph in your exam structure.</p>
-          <p><b>New:</b> your structure score (out of 100) goes up live as you write. A <b>bright red warning box</b> stays on screen while you write: it shows the rules for the sentence you are writing, and a rule flashes when you break it.</p>
+          <p><b>While you write:</b> your structure score (out of 100) goes up live, and big coach messages pop up to push your analysis deeper. Read each one, then keep writing.</p>
           <p class="small muted">The timer keeps running if you leave the page. When time is up, your paragraph is checked automatically.</p>
           <button class="btn btn-ink" id="btn-exam-start" type="button">Start the 40-minute exam</button>
         </div>
         <div id="exam-live" class="col" hidden>
-          <div id="exam-bar-space" aria-hidden="true"></div>
-          <div class="card exam-bar" id="exam-bar">
+          <div class="card exam-bar">
             <div class="eb-row">
               <span><span class="eb-l" id="exam-timer-l">Time left</span><span class="timer" id="exam-timer" role="timer" aria-live="off">40:00</span></span>
               <span class="eb-score"><span class="eb-l">Structure score</span><span class="eb-pts"><span id="exam-pts">0</span><small> / 100</small><span class="eb-level" id="exam-level">Start</span></span><span class="eb-pop" id="exam-pop" hidden></span></span>
             </div>
             <div class="meter" aria-hidden="true"><i id="exam-meter"></i></div>
-            <div class="eb-box" id="exam-box" role="status" aria-live="polite"><div class="eb-h" id="exam-box-h"></div><ul id="exam-box-l"></ul></div>
+            <p class="eb-tip" id="exam-tip" role="status" aria-live="polite"></p>
+            <p class="eb-warn" id="exam-warn" role="status" aria-live="polite" hidden></p>
             <p class="eb-nudge" id="exam-nudge" hidden></p>
           </div>
           <div class="card"><span class="label">The introduction (given)</span><p class="intro" id="exam-intro"></p></div>
@@ -542,6 +537,7 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span></div>
 <div class="sheet-back" id="sheet-back" hidden>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
     <div class="sheet-head"><span class="label" id="sheet-label"></span><button class="x" id="sheet-x" type="button" aria-label="Close">×</button></div>
@@ -1282,8 +1278,8 @@ button { font: inherit; color: inherit; }
     $("exam-timer").textContent = mmss(left);
     $("exam-timer").classList.toggle("low", left <= 300);
     var ng = $("exam-nudge"), txt = "";
-    if (left <= 300) txt = "⏰ 5 minutes left: finish your link sentence, then check quotation marks, the poet's name and “" + PRON.toLowerCase() + ".”";
-    else if (left <= 1200 && !/\bfurthermore\b/.test(low(S.exam.text || ""))) txt = "⏰ Half of your time has gone: you should be starting device 2 with “Furthermore,” now.";
+    if (left <= 300) { txt = "⏰ 5 minutes left: finish your link sentence."; if (!S.exam.n5) { S.exam.n5 = 1; save(); bigPop("5 minutes left", "Finish your link sentence. Is every idea specific?", "time"); } }
+    else if (left <= 1200 && !/\bfurthermore\b/.test(low(S.exam.text || ""))) { txt = "⏰ Half of your time has gone: start device 2 with “Furthermore,” now."; if (!S.exam.n20) { S.exam.n20 = 1; save(); bigPop("Half your time has gone", "Start device 2 now with “Furthermore,”", "time"); } }
     ng.textContent = txt; ng.hidden = !txt;
     if (left <= 0 && S.tab === 4) finishExam(true);
   }
@@ -1323,18 +1319,27 @@ button { font: inherit; color: inherit; }
   function levelOf(p) { return p >= 100 ? ["Exam ready", "ready"] : p >= 80 ? ["Gold", "gold"] : p >= 60 ? ["Silver", "silver"] : p >= 40 ? ["Bronze", "bronze"] : ["Start", ""]; }
   var KINDS = ["topic", "ev", "word", "dev", "dev2", "reader", "also", "link", "ev2", "word", "dev", "dev2", "reader", "also", "link"];
   var TIPS = {
-    topic: "💡 Say the MESSAGE, not just the topic. Be specific: what exactly does the poem show? Never write a general idea like “life” or “feelings.” End with “through the use of (device 1).”",
-    ev: "💡 Quote only the words you will explain: 15 words or fewer, copied exactly, inside quotation marks.",
-    ev2: "💡 Device 2: a new quotation that shows a different side of the thesis. 15 words or fewer, copied exactly.",
-    word: "💡 Zoom in on ONE word from your quotation. What is the writer trying to say with this word? What does it suggest? One sentence only.",
-    dev: "💡 Fill every blank precisely. After “to suggest,” say exactly what it shows about the thesis. Never write “to make it interesting” or “to grab attention.”",
-    dev2: "💡 Add a NEW idea here. Do not repeat your last sentence in different words.",
-    reader: "💡 Choose a precise feeling (moved, uneasy, inspired…), then “because” + the exact reason from the words you quoted. Never just “sad,” “good” or “bad.”",
-    also: "💡 What does the reader now understand about the big idea in the thesis? Go beyond the poem.",
-    link: "💡 Name the device again and state your message clearly. Do not add a new idea here."
+    topic: ["What exactly does the poem show?", "Be specific. Never a general idea like “life” or “feelings.”"],
+    ev: ["Choose words you can analyze", "Which words carry the most meaning?"],
+    ev2: ["Now a new side of the thesis", "Which words show it best?"],
+    word: ["What is the writer trying to say with this word?", "What does it suggest? Think of two ideas."],
+    dev: ["Why this device?", "Say exactly what it shows in THIS poem. Never “to make it interesting.”"],
+    dev2: ["Go deeper", "Add a NEW idea. Do not repeat your last sentence."],
+    reader: ["Which feeling exactly?", "And WHY: which words cause it?"],
+    also: ["What does the reader understand now?", "Link it to the big idea of the poem."],
+    link: ["What is the message?", "State it clearly and specifically. No new idea."]
   };
+  var popT1 = null, popT2 = null, popSeen = {}, liveTyped = false;
+  function bigPop(head, sub, kind) {
+    var p = $("big-pop"); p.firstChild.textContent = head; p.lastChild.textContent = sub || "";
+    p.className = "big-pop" + (kind ? " " + kind : ""); p.hidden = false; void p.offsetWidth; p.classList.add("on");
+    clearTimeout(popT1); clearTimeout(popT2);
+    popT1 = setTimeout(function () { p.classList.add("out"); popT2 = setTimeout(function () { p.hidden = true; p.className = "big-pop"; }, 2700); }, 4200);
+  }
+  function popOnce(key, head, sub, kind) { if (popSeen[key]) return false; popSeen[key] = 1; bigPop(head, sub, kind); return true; }
+  var EMPTY = /\b(make(s)? (it|the poem|the reader)? ?(more )?(interesting|want to read on|keep reading)|grabs? (the reader's |our |the )?attention|paints? a picture|helps? (the reader|us) (to )?(imagine|visuali[sz]e|understand)( better| more)?\s*[.!?]?$|make(s)? (it|the poem) (more )?(effective|powerful|vivid|flow))/;
   var lastPts = null, lastTip = "", liveT = null;
-  function liveSoon() { clearTimeout(liveT); liveT = setTimeout(liveUpdate, 120); }
+  function liveSoon() { liveTyped = true; clearTimeout(liveT); liveT = setTimeout(liveUpdate, 120); }
   function liveUpdate() {
     if (!S || !S.exam || !S.exam.started || S.exam.done) return;
     var ta = $("exam-text"), text = ta.value, R = examPoints(text), T = R.T;
@@ -1354,59 +1359,25 @@ button { font: inherit; color: inherit; }
     var done = boundary ? allS : allS.slice(0, -1), cur = boundary ? "" : allS[allS.length - 1];
     var pr = alignStarts(done, T), next = pr.length ? pr[pr.length - 1][1] + 1 : 0, tip = "", bad = false;
     if (boundary) {
-      tip = next >= T.length ? "✅ All 15 sentences are here. Reread: is every idea specific? Check quotation marks, the poet's name and “" + PRON.toLowerCase() + ".”"
+      tip = next >= T.length ? "✅ All 15 sentences are here. Reread: is every idea specific?"
         : "➡️ Next sentence, start with: " + T[next][1] + (next === 8 ? " (This starts device 2.)" : "");
     } else {
       var k = startKey(cur), j = -1, x;
       if (next < T.length && T[next][0].test(k)) j = next;
       else { for (x = next; x < T.length && j < 0; x++) if (T[x][0].test(k)) j = x; for (x = 0; x < next && j < 0; x++) if (T[x][0].test(k)) j = x; }
-      if (j >= 0) tip = TIPS[KINDS[j]];
-      else if (nWords(cur) >= 3) { bad = true; tip = "⚠ This beginning is not in your structure." + (next < T.length ? " Start with: " + T[next][1] : ""); }
-      else tip = next < T.length ? "➡️ Start with: " + T[next][1] : "";
+      tip = next < T.length ? "➡️ This sentence starts with: " + T[next][1] : "";
     }
-    /* broken rules in the sentence being written */
-    var w = [], vg = vagueWords(cur), wp = wrongPronouns(cur), lc = low(cur);
-    if (vg.length) w.push("Too general: “" + vg[0] + ".” Say exactly what you mean.");
-    else if (/to (grab|get|catch) (the reader'?s? )?attention|to make it (more )?interesting|keep reading|read on/.test(lc) || /to (suggest|emphasi[sz]e) (that )?(it|this|they|he|she) (is|are) (very )?(bad|good|important|wrong|sad|happy)\b/.test(lc)) w.push("Too general. What exactly is the writer trying to say with these words?");
-    if (wp.length) w.push(SUR + " is “" + PRON.toLowerCase() + ",” not “" + wp[0] + ".”");
-    if (quotes(cur).some(function (q) { return nWords(q) > 15; })) w.push("Your quotation is too long. Keep only the words you will explain (15 or fewer).");
-    if (/\bthe reader (is|feels) (sad|happy|good|bad)\b/.test(lc)) w.push("Choose a more precise feeling than “sad,” “happy,” “good” or “bad.”");
-    if (typeof j === "number" && j >= 0 && KINDS[j] === "word" && sentences(cur).length > 1) w.push("Step ④ is ONE sentence only.");
-    /* the red box: the rules for the sentence being written (O. H., 2026-11-10) */
-    var box = $("exam-box"), kind = !boundary && typeof j === "number" && j >= 0 ? KINDS[j] : "", mode = kind ? "rules" : (bad ? "wrong" : "next");
-    var head = kind ? "⚠ " + RULES[kind][0] : (bad ? "⚠ Wrong beginning" : (next >= T.length ? "✅ All 15 sentences written" : "➡️ Next sentence"));
-    var lines = kind ? RULES[kind][1].slice() : [tip.replace(/^(➡️ Next sentence, s|➡️ S)tart with: /, "Start with: ").replace(/^⚠ /, "").replace(/^✅ All 15 sentences are here\. /, "")];
-    $("exam-box-h").textContent = head;
-    var ul = $("exam-box-l"); ul.textContent = "";
-    w.forEach(function (x) { var li = document.createElement("li"); li.className = "hot"; li.textContent = "✗ " + x; ul.appendChild(li); });
-    lines.forEach(function (x) { if (!x) return; var li = document.createElement("li"); li.textContent = x; ul.appendChild(li); });
-    box.className = "eb-box " + mode + (w.length ? " broken" : "");
-    var sig = head + "|" + w.length;
-    if (sig !== lastTip) { box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash"); lastTip = sig; }
-    placeBar();
+    var tp = $("exam-tip"); tp.textContent = tip; tp.hidden = !tip; tp.classList.remove("bad");
+    $("exam-warn").hidden = true;
+    /* big pop-ups: only while typing, only about the quality of the analysis */
+    var typed = liveTyped; liveTyped = false;
+    if (!typed || !cur) return;
+    var sid = done.length + ":", lc = low(unq(cur)), vg = vagueWords(cur), em = lc.match(EMPTY);
+    if (vg.length && popOnce(sid + "v:" + vg[0], "Too general: “" + vg[0] + "”", "Say exactly what you mean.", "red")) return;
+    if (em && popOnce(sid + "e", "That could be about any poem", "What does it show in THIS poem?", "red")) return;
+    if (/\bthe reader (is|feels) (sad|happy|good|bad|nice)\b/.test(lc) && popOnce(sid + "f", "Which feeling exactly?", "Not just “sad” or “happy.” Find the precise word, then say why.", "red")) return;
+    if (j >= 0 && nWords(cur) <= 12) { var tp_ = TIPS[KINDS[j]]; popOnce(sid + "k" + j, tp_[0], tp_[1], ""); }
   }
-  /* The exam bar is fixed on screen: visible wherever the student scrolls, also when the keyboard pans the page */
-  function placeBar() {
-    var bar = $("exam-bar"); if (!bar || bar.getClientRects().length === 0) return;
-    var vv = window.visualViewport, off = vv ? vv.offsetTop : 0;
-    var tb = document.querySelector(".tabs").getBoundingClientRect().bottom;
-    bar.style.top = (Math.max(tb, off) + 4) + "px";
-    $("exam-bar-space").style.height = bar.offsetHeight + "px";
-    document.documentElement.style.scrollPaddingTop = (Math.max(tb, 0) + bar.offsetHeight + 16) + "px";
-  }
-  window.addEventListener("scroll", placeBar, { passive: true }); window.addEventListener("resize", placeBar);
-  if (window.visualViewport) { window.visualViewport.addEventListener("scroll", placeBar); window.visualViewport.addEventListener("resize", placeBar); }
-  var RULES = {
-    topic: ["Step ② · Topic sentence", ["Say the MESSAGE, not just the topic. What exactly does the poem show?", "Never a general idea like “life” or “feelings.”", "End with “through the use of (device 1).”"]],
-    ev: ["Step ③ · Evidence", ["Quote only the words you will explain: 15 or fewer.", "Copied exactly, inside quotation marks."]],
-    ev2: ["Step ⑧ · Furthermore + evidence", ["A new quotation that shows a different side of the thesis.", "15 words or fewer, copied exactly, inside quotation marks."]],
-    word: ["Step ④ · One word", ["Name the word class first: The adjective / noun / verb “___” is …", "What is the writer trying to say with this ONE word?", "ONE sentence only."]],
-    dev: ["Step ⑤ · Analysis (device frame)", ["DON'T WRITE GENERAL. What is the writer trying to say with these words?", "Fill every blank in the frame.", "Never “to make it interesting” or “to grab attention.”"]],
-    dev2: ["Step ⑤ · Analysis (second sentence)", ["Add a NEW idea. Don't repeat your last sentence.", "Be specific: connect it to the thesis."]],
-    reader: ["Step ⑥ · The reader is", ["A precise feeling. Never “sad,” “happy,” “good” or “bad.”", "“because” + the exact reason from the words you quoted."]],
-    also: ["Step ⑥ · They also realize", ["What does the reader now understand about the big idea in the thesis?", "Be specific. Go beyond the poem."]],
-    link: ["Step ⑦ · Link", ["Name the device again.", "State your message clearly and specifically.", "No new idea here."]]
-  };
   $("btn-exam-finish").onclick = function () { finishExam(false); };
   $("btn-exam-again").onclick = function () { S.exam = null; save(); $("exam-text").value = ""; renderMain(); window.scrollTo(0, 0); };
   function examChecks(text) {
