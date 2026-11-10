@@ -1115,7 +1115,7 @@ button { font: inherit; color: inherit; }
       /* wrong pronoun for the poet in red (never inside a quotation) */
       parts[2].split(/(“[^”]*”|"[^"]*")/).forEach(function (seg, qi) {
         if (qi % 2) { sp.appendChild(document.createTextNode(seg)); return; }
-        seg.split(new RegExp("\\b(" + WRONGW + ")\\b", "i")).forEach(function (w, wi) {
+        seg.split(new RegExp("\\b(" + WRONGW + ")\\b(?=\\s+(?:also\\s+)?(?:emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks|uses|presents|states|writes|shows|describes|creates)\\b)", "i")).forEach(function (w, wi) {
           if (wi % 2) { var r = document.createElement("b"); r.className = "st-bad"; r.textContent = w; sp.appendChild(r); wrongPron++; }
           else sp.appendChild(document.createTextNode(w));
         });
@@ -1281,7 +1281,7 @@ button { font: inherit; color: inherit; }
   function unq(t) { return String(t || "").replace(/“[^”]*”|"[^"]*"/g, " "); }
   var VAGUE = /\b(things?|stuff|something|nice|interesting|a lot|i think|i believe|in my opinion)\b/g;
   function vagueWords(text) { return low(unq(text)).match(VAGUE) || []; }
-  function wrongPronouns(text) { return low(unq(text)).match(new RegExp("\\b" + (PRON === "He" ? "she" : "he") + "\\b", "g")) || []; }
+  function wrongPronouns(text) { return low(unq(text)).match(new RegExp("\\b" + (PRON === "He" ? "she" : "he") + "\\b(?=\\s+(?:also\\s+)?(?:emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks|uses|presents|states|writes|shows|describes|creates)\\b)", "g")) || []; }
   function examPoints(text) {
     var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T);
     var t = low(text), tq = low(String(text).replace(/[“”]/g, '"')), qs = quotes(text), big = nWords(text) >= 30;
