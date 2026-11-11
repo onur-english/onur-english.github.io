@@ -375,26 +375,32 @@ button { font: inherit; color: inherit; }
 .eb-nudge { font-size: .84rem; font-weight: 700; color: var(--board); }
 #exam-text { min-height: 340px; line-height: 1.55; }
 @media (prefers-reduced-motion: reduce) { .eb-pop, .eb-tip.flash { animation: none; } }
-/* exam-only: highlight plan */
-#examart .w { cursor: pointer; border-radius: 3px; -webkit-tap-highlight-color: transparent; }
-#examart .w.h1 { background: #FFE680; box-shadow: inset 0 -3px 0 var(--board); }
-#examart .w.h2 { background: #FFD6BF; box-shadow: inset 0 -3px 0 var(--d2); }
-#examart .w.h1.h2 { background: linear-gradient(#FFE680 50%, #FFD6BF 50%); }
-#examart .w.anchor { outline: 3px dashed var(--board); outline-offset: 1px; animation: pul 1s infinite alternate; }
-#examart .w.anchor.a2 { outline-color: var(--d2); }
-.pens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.pen { appearance: none; border: 3px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 10px 8px; font-weight: 700; cursor: pointer; min-height: 52px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.pen small { font-weight: 400; font-size: .78rem; color: var(--muted); }
-.pen.p1.on { border-color: var(--board); background: #FFF6CC; }
-.pen.p2.on { border-color: var(--d2); background: #FFEDE3; }
-.prow { display: flex; flex-direction: column; gap: 4px; border-left: 5px solid var(--board); background: #FAFAF7; border-radius: 0 10px 10px 0; padding: 8px 10px; }
-.prow.g2 { border-left-color: var(--d2); }
+/* exam-only: plan by clicking the device phrases */
+#examart .dv { cursor: pointer; border-radius: 4px; -webkit-tap-highlight-color: rgba(0,0,0,.08); transition: background-color .2s; }
+#examart .dv:active { background: #F0ECE4; }
+#examart .dv.p1 { background: #FFE680; box-shadow: 0 0 0 2px #FFE680, inset 0 -3px 0 var(--board); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+#examart .dv.p2 { background: #FFCDB2; box-shadow: 0 0 0 2px #FFCDB2, inset 0 -3px 0 var(--d2); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+#examart .dv.p1::after, #examart .dv.p2::after { content: attr(data-n); display: inline-grid; place-items: center; width: 1.25em; height: 1.25em; margin-left: 3px; border-radius: 50%; font-family: var(--f-body); font-size: .72em; font-weight: 800; color: #FFFFFF; background: var(--board); vertical-align: .15em; }
+#examart .dv.p2::after { background: var(--d2); }
+#examart .dv.pop { animation: dvpop .45s; }
+@keyframes dvpop { 0% { background: #FFFFFF; } 40% { transform: scale(1.04); } 100% { transform: none; } }
+.prow { display: flex; flex-direction: column; gap: 6px; border-left: 5px solid var(--board); background: #FFFBEA; border-radius: 0 10px 10px 0; padding: 8px 10px; }
+.prow.g2 { border-left-color: var(--d2); background: #FFF3EC; }
 .prow .pq { font-weight: 700; }
 .prow .pq.none { font-weight: 400; color: var(--muted); font-style: italic; }
 .prow .pacts { display: flex; flex-wrap: wrap; gap: 6px; }
+.prow .ppic { display: flex; gap: 8px; align-items: center; }
+.prow .ppic svg { width: 112px; height: 70px; flex: none; border-radius: 8px; display: block; }
+.prow .ppic span { font-size: .8rem; line-height: 1.3; }
+.prow .ppic b { color: var(--board); }
 .pchip { appearance: none; border: 1.5px solid var(--ink); background: #FFFFFF; border-radius: 999px; padding: 3px 11px; font-size: .84rem; font-weight: 700; cursor: pointer; min-height: 32px; }
 .pchip.dev { background: var(--board); border-color: var(--board); color: #FFFFFF; }
 .prow.g2 .pchip.dev { background: var(--d2); border-color: var(--d2); }
+.eb-pic.dock { top: auto !important; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); left: 12px !important; right: 12px; width: auto !important; max-width: 560px; margin: 0 auto; }
+.eb-pic .px { display: none; }
+#exam-live { padding-bottom: 120px; }
+.eb-pic .pc #pic-think { display: block; margin-top: 2px; font-weight: 700; color: var(--ink); }
+.eb-pic .pc #pic-think:empty { display: none; }
 .tray-back { position: fixed; inset: 0; z-index: 60; background: rgba(20,20,24,.35); display: flex; align-items: flex-end; justify-content: center; }
 .tray { width: 100%; max-width: 680px; background: #FFFFFF; border-radius: 18px 18px 0 0; border-top: 6px solid var(--board); padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 10px; box-shadow: 0 -10px 30px rgba(0,0,0,.25); }
 .tray.g2 { border-top-color: var(--d2); }
@@ -591,12 +597,8 @@ button { font: inherit; color: inherit; }
           </div>
           <div class="card"><span class="label">The writing question</span><p class="intro" id="exam-q"></p></div>
           <div class="card" id="plan-card">
-            <span class="label">Plan first: highlight your two devices</span>
-            <p class="small">Choose a pen. In the article below, tap the <b>first</b> word, then the <b>last</b> word of the words you will analyze. Then tap the name of the device. The plan is checked when you finish.</p>
-            <div class="pens">
-              <button class="pen p1" id="pen-0" type="button">✏️ Device 1<small id="pen-0-s"></small></button>
-              <button class="pen p2" id="pen-1" type="button">✏️ Device 2<small id="pen-1-s"></small></button>
-            </div>
+            <span class="label">Plan first: pick your two devices</span>
+            <p class="small">Tap the words of a device in the article below. It lights up: <b style="background:#FFE680;padding:0 4px;border-radius:4px">yellow = Device 1</b>, <b style="background:#FFCDB2;padding:0 4px;border-radius:4px">orange = Device 2</b>. Then tap the name of the device. Tap a device again to remove it. Your plan is checked when you finish.</p>
             <div id="plan-rows" class="col" style="gap:8px"></div>
           </div>
           <details class="card poem-card" open><summary>The article</summary><div class="article" id="examart"></div></details>
@@ -682,7 +684,7 @@ button { font: inherit; color: inherit; }
   <div class="tray-opts" id="tray-opts"></div>
 </div></div>
 <div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span><button class="bp-x" type="button" aria-label="Close">×</button></div>
-<div class="eb-pic" id="exam-pic" hidden><svg class="pic" viewBox="0 0 160 100" aria-hidden="true"></svg><div class="pc"><span class="eb-pic-lab">Picture it</span><i><b>You see:</b> <span id="pic-see"></span></i><i><b>It means:</b> <span id="pic-mean"></span></i></div><button class="px" type="button" aria-label="Hide the picture">×</button></div>
+<div class="eb-pic" id="exam-pic" hidden><svg class="pic" viewBox="0 0 160 100" aria-hidden="true"></svg><div class="pc"><span class="eb-pic-lab">Picture it</span><i><b>You see:</b> <span id="pic-see"></span></i><i><b>It means:</b> <span id="pic-mean"></span></i><span id="pic-think"></span></div><button class="px" type="button" aria-label="Hide the picture">×</button></div>
 <div class="sheet-back" id="sheet-back" hidden>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
     <div class="sheet-head"><span class="label" id="sheet-label"></span><button class="x" id="sheet-x" type="button" aria-label="Close">×</button></div>
@@ -1471,8 +1473,8 @@ button { font: inherit; color: inherit; }
       $("exam-q").textContent = D.question;
       if ($("exam-text").value !== (ex.text || "")) $("exam-text").value = ex.text || "";
       $("exam-wc").textContent = nWords(ex.text) + " words";
-      if (!ex.plan || Array.isArray(ex.plan)) ex.plan = { r: [null, null], d: ["", ""], pen: 0 };
-      if (!$("examart").querySelector(".w")) buildArticle($("examart"), fillWords);
+      if (!ex.plan || !ex.plan.p) ex.plan = { p: [null, null], d: ["", ""] };
+      if (!$("examart").querySelector(".dv")) buildArticle($("examart"), fillDev);
       renderPlan();
       tick(); lastPts = null; liveUpdate();
     }
@@ -1492,102 +1494,82 @@ button { font: inherit; color: inherit; }
     if (left <= 0 && S.tab === 4) finishExam(true);
   }
   setInterval(tick, 1000);
-  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: { r: [null, null], d: ["", ""], pen: 0 } }; save(); renderMain(); window.scrollTo(0, 0); };
-  /* ----- plan by highlighting (O. H., 2026-11-11): no typing of the device or the words ----- */
-  var WORDS = [], PLANDEVS = ["Metaphor", "Simile", "Repetition", "Juxtaposition", "Imagery", "Expert opinion", "Statistics and data", "Emotive language", "Bandwagon", "Hyperbole"];
+  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: { p: [null, null], d: ["", ""] } }; save(); renderMain(); window.scrollTo(0, 0); };
+  /* ----- plan by clicking (O. H., 2026-11-11): every device phrase is one clickable piece; no typing ----- */
+  var PLANDEVS = ["Metaphor", "Simile", "Repetition", "Juxtaposition", "Imagery", "Expert opinion", "Statistics and data", "Emotive language", "Bandwagon", "Hyperbole"];
   SPOTS.forEach(function (s) { if (PLANDEVS.indexOf(s.device) < 0) PLANDEVS.push(s.device); });
-  function fillWords(el, text, where) {
+  function fillDev(el, text, where) {
     segments(text, where, function (t, s) {
-      (t.match(/\s+|\S+\s*/g) || []).forEach(function (tok) {
-        if (!tok) return;
-        if (!tok.trim()) { el.appendChild(document.createTextNode(tok)); return; }
-        var k = WORDS.length; WORDS.push({ b: where, t: tok, s: s ? s.id : "" });
-        var sp = document.createElement("span"); sp.className = "w"; sp.setAttribute("data-k", k); sp.textContent = tok; el.appendChild(sp);
-      });
+      if (!s) { el.appendChild(document.createTextNode(t)); return; }
+      var sp = document.createElement("span"); sp.className = "dv"; sp.setAttribute("data-id", s.id); sp.textContent = t; el.appendChild(sp);
     });
   }
-  function planText(r) { if (!r) return ""; var out = []; for (var k = r[0]; k <= r[1]; k++) out.push(WORDS[k].t); return out.join("").trim(); }
-  function paintPlan() {
-    var P = S.exam.plan;
-    $("examart").querySelectorAll(".w").forEach(function (w) {
-      var k = +w.getAttribute("data-k");
-      [0, 1].forEach(function (i) { var r = P.r[i]; w.classList.toggle("h" + (i + 1), !!(r && k >= r[0] && k <= r[1] && !(r[0] === r[1] && P.open === i))); });
-      var anc = P.open !== undefined && P.open !== null && P.r[P.open] && P.r[P.open][0] === k;
-      w.classList.toggle("anchor", !!anc); w.classList.toggle("a2", !!anc && P.open === 1);
+  function planOf() { var P = S.exam.plan; if (!P || !P.p) P = S.exam.plan = { p: [null, null], d: ["", ""] }; return P; }
+  function svgOf(s) { var NS = "http://www.w3.org/2000/svg", g = document.createElementNS(NS, "svg"); g.setAttribute("viewBox", "0 0 160 100"); g.setAttribute("class", "pic"); g.setAttribute("aria-hidden", "true"); g.innerHTML = (PICS[s.id] || [""])[0]; return g; }
+  function renderPlan(popId) {
+    var P = planOf(), box = $("plan-rows"); box.textContent = "";
+    $("examart").querySelectorAll(".dv").forEach(function (el) {
+      var id = el.getAttribute("data-id"), g = P.p[0] === id ? 1 : (P.p[1] === id ? 2 : 0);
+      el.className = "dv" + (g ? " p" + g : "") + (g && id === popId ? " pop" : ""); el.setAttribute("data-n", g || "");
+      el.setAttribute("role", "button"); el.setAttribute("aria-pressed", g ? "true" : "false");
     });
-  }
-  function renderPlan() {
-    var P = S.exam.plan, box = $("plan-rows"); box.textContent = "";
     [0, 1].forEach(function (i) {
-      $("pen-" + i).classList.toggle("on", P.pen === i);
-      $("pen-" + i + "-s").textContent = P.r[i] && P.open !== i ? (P.d[i] || "name it") : (P.open === i ? "tap the last word" : "not yet");
-      var row = document.createElement("div"); row.className = "prow g" + (i + 1);
-      var h = document.createElement("b"); h.textContent = "Device " + (i + 1) + (P.d[i] ? ": " + P.d[i] : "");
-      var q = document.createElement("span"); q.className = "pq";
-      if (P.r[i] && P.open !== i) q.textContent = "“" + planText(P.r[i]) + "”"; else { q.className += " none"; q.textContent = P.open === i ? "Now tap the LAST word in the article (or the same word again for one word)." : "Choose this pen, then tap the first word in the article."; }
-      var acts = document.createElement("div"); acts.className = "pacts";
-      if (P.r[i] && P.open !== i) {
+      var s = P.p[i] && BY[P.p[i]], row = document.createElement("div"); row.className = "prow g" + (i + 1);
+      var h = document.createElement("b"); h.textContent = "Device " + (i + 1) + (s && P.d[i] ? ": " + P.d[i] : "");
+      var q = document.createElement("span"); q.className = "pq" + (s ? "" : " none");
+      q.textContent = s ? "“" + s.quote + "”" : (i === 0 || P.p[0] ? "Tap a device in the article below." : "Pick device 1 first.");
+      row.appendChild(h); row.appendChild(q);
+      if (s) {
+        if (PICS[s.id]) { var pp = document.createElement("div"); pp.className = "ppic"; pp.appendChild(svgOf(s)); var cap = document.createElement("span"); cap.innerHTML = "<b>Picture it:</b> "; cap.appendChild(document.createTextNode(PICS[s.id][1])); pp.appendChild(cap); row.appendChild(pp); }
+        var acts = document.createElement("div"); acts.className = "pacts";
         var nm = document.createElement("button"); nm.type = "button"; nm.className = "pchip" + (P.d[i] ? " dev" : ""); nm.textContent = P.d[i] ? "Change device" : "Name the device";
         nm.onclick = function () { openTray(i); };
-        var cl = document.createElement("button"); cl.type = "button"; cl.className = "pchip"; cl.textContent = "Clear";
-        cl.onclick = function () { P.r[i] = null; P.d[i] = ""; P.open = null; P.pen = i; save(); renderPlan(); };
-        acts.appendChild(nm); acts.appendChild(cl);
+        var cl = document.createElement("button"); cl.type = "button"; cl.className = "pchip"; cl.textContent = "Remove";
+        cl.onclick = function () { P.p[i] = null; P.d[i] = ""; save(); renderPlan(); picUpdateNow(); };
+        acts.appendChild(nm); acts.appendChild(cl); row.appendChild(acts);
       }
-      row.appendChild(h); row.appendChild(q); if (acts.firstChild) row.appendChild(acts); box.appendChild(row);
+      box.appendChild(row);
     });
-    paintPlan();
   }
-  [0, 1].forEach(function (i) { $("pen-" + i).onclick = function () { var P = S.exam.plan; if (P.open !== null && P.open !== undefined && P.open !== i) { P.r[P.open] = null; P.open = null; } P.pen = i; save(); renderPlan(); toast("Device " + (i + 1) + " pen: tap the first word in the article."); }; });
   $("examart").addEventListener("click", function (e) {
-    var w = e.target.closest ? e.target.closest(".w") : null; if (!w || !S || !S.exam || S.exam.done) return;
-    var P = S.exam.plan, i = P.pen, k = +w.getAttribute("data-k"), r = P.r[i];
-    if (P.open === i && r && WORDS[r[0]].b === WORDS[k].b) {
-      P.r[i] = [Math.min(r[0], k), Math.max(r[0], k)]; P.open = null; save(); renderPlan(); openTray(i); return;
+    if (!S || !S.exam || !S.exam.started || S.exam.done) return;
+    var el = e.target.closest ? e.target.closest(".dv") : null, P = planOf();
+    if (!el) {
+      if (e.target.closest && e.target.closest(".ptx, .hed")) toast("No device in these words. Look for a comparison, a repeated word, a number, an expert, strong feeling words, a crowd, an exaggeration or two opposites side by side.");
+      return;
     }
-    if (P.open === i && r && WORDS[r[0]].b !== WORDS[k].b) toast("Keep both taps in the same paragraph. Starting again here.");
-    P.r[i] = [k, k]; P.open = i; save(); renderPlan();
+    var id = el.getAttribute("data-id"), i = P.p.indexOf(id);
+    if (i >= 0) { P.p[i] = null; P.d[i] = ""; save(); renderPlan(); picUpdateNow(); toast("Device " + (i + 1) + " removed."); return; }
+    i = !P.p[0] ? 0 : (!P.p[1] ? 1 : -1);
+    if (i < 0) { toast("You already picked two devices. Tap one of them again to remove it."); return; }
+    P.p[i] = id; P.d[i] = ""; save(); renderPlan(id); picUpdateNow(); openTray(i);
   });
-  var trayFor = null;
   function openTray(i) {
-    var P = S.exam.plan; trayFor = i;
+    var P = planOf(), s = BY[P.p[i]]; if (!s) return;
     $("tray").className = "tray g" + (i + 1);
     $("tray-h").textContent = "Device " + (i + 1);
-    $("tray-q").textContent = "“" + planText(P.r[i]) + "”";
+    $("tray-q").textContent = "“" + s.quote + "”";
     var box = $("tray-opts"); box.textContent = "";
     PLANDEVS.forEach(function (d) {
       var b = document.createElement("button"); b.type = "button"; b.textContent = d; if (P.d[i] === d) b.className = "on";
-      b.onclick = function () {
-        P.d[i] = d; closeTray();
-        if (i === 0 && !P.r[1]) { P.pen = 1; toast("Now device 2: tap the first word in the article."); }
-        save(); renderPlan();
-      };
+      b.onclick = function () { P.d[i] = d; closeTray(); if (i === 0 && !P.p[1]) toast("Now device 2: tap another device in the article."); save(); renderPlan(); };
       box.appendChild(b);
     });
-    $("tray-back").hidden = false;
+    $("tray-back").hidden = false; placePic();
   }
-  function closeTray() { $("tray-back").hidden = true; trayFor = null; }
+  function closeTray() { $("tray-back").hidden = true; placePic(); }
   $("tray-x").onclick = function () { closeTray(); renderPlan(); };
   $("tray-back").addEventListener("click", function (e) { if (e.target === $("tray-back")) closeTray(); });
-  /* after the exam: was each highlight a real device, and was it named correctly? Always show the right answer. */
+  /* after the exam: was each device named correctly? Always show the right answer. */
   function planCheck() {
     var P = S.exam && S.exam.plan, out = [];
-    if (!P || Array.isArray(P)) return out;
-    if (!WORDS.length) buildArticle($("examart"), fillWords);
+    if (!P || !P.p) return out;
     [0, 1].forEach(function (i) {
-      var r = P.r[i], lab = "Device " + (i + 1);
-      if (!r || P.open === i) { out.push([false, lab + ": not highlighted", "Plan before you write: highlight the words and name the device."]); return; }
-      var txt = planText(r), cnt = {}, best = null;
-      for (var k = r[0]; k <= r[1]; k++) if (WORDS[k].s) cnt[WORDS[k].s] = (cnt[WORDS[k].s] || 0) + 1;
-      Object.keys(cnt).forEach(function (id) { if (!best || cnt[id] > cnt[best]) best = id; });
-      if (!best) {
-        var near = SPOTS.filter(function (s) { return s.where === WORDS[r[0]].b; })[0];
-        out.push([false, lab + ": “" + txt + "”", "No device from the answer key is in these words." + (near ? " In this part of the article, the device is " + near.device.toLowerCase() + ": “" + near.quote + "”." : "")]);
-        return;
-      }
-      var s = BY[best], ok = P.d[i] === s.device, long = (r[1] - r[0] + 1) > Math.max(15, s.quote.split(/\s+/).length + 3);
-      out.push([ok && !long, lab + ": “" + txt + "”",
-        (ok ? "✓ Correct: " + s.device.toLowerCase() + ". " + s.dWhy : (P.d[i] ? "✗ You named it " + P.d[i].toLowerCase() + ". The correct answer: " : "✗ Not named. The correct answer: ") + (ok ? "" : s.device.toLowerCase() + ". " + s.dWhy))
-        + (long ? " Too many words: keep only the words you will explain, e.g. “" + s.quote + "”." : "")]);
+      var s = P.p[i] && BY[P.p[i]], lab = "Device " + (i + 1);
+      if (!s) { out.push([false, lab + ": not picked", "Plan before you write: tap a device in the article and name it."]); return; }
+      var ok = P.d[i] === s.device;
+      out.push([ok, lab + ": “" + s.quote + "”", ok ? "✓ Correct: " + s.device.toLowerCase() + ". " + s.dWhy
+        : (P.d[i] ? "✗ You named it " + P.d[i].toLowerCase() + ". The correct answer: " : "✗ Not named. The correct answer: ") + s.device.toLowerCase() + ". " + s.dWhy]);
     });
     return out;
   }
@@ -1864,27 +1846,43 @@ button { font: inherit; color: inherit; }
   var PICS = (function () { try { return JSON.parse(document.getElementById("pic-data").textContent); } catch (e) { return {}; } })();
   var picId = null, picHidden = {};
   window.__picLog = [];
+  var picSeg = "";
+  /* which device do these words in quotation marks belong to? Single words count too (O. H., 2026-11-11). */
   function picSpotFor(p) {
+    var np = cn(p), pw = cw(p), best = null, P = S && S.exam && S.exam.plan && S.exam.plan.p ? S.exam.plan.p : [];
+    if (!np.trim()) return null;
+    var cands = SPOTS.filter(function (s) { return PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0); });
+    if (cands.length) return cands.filter(function (s) { return P.indexOf(s.id) >= 0; })[0] || cands[0];
     if (nWords(p) < 2) return null;
-    var np = cn(p), pw = cw(p), best = null;
-    SPOTS.forEach(function (s) { if (!best && PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0)) best = s; });
-    if (best) return best;
     SPOTS.forEach(function (s) {
       if (best || !PICS[s.id]) return;
       if ([s.quote].concat(s.ctx || []).map(cn).some(function (c) { return c.indexOf(np) >= 0; }) && overlap(pw, cw(s.quote))) best = s;
     });
     return best;
   }
+  var picLast = { before: "", first: 0 };
+  function picUpdateNow() { picUpdate(picLast.before, picLast.first); }
   function picUpdate(before, firstLen) {
-    var box = $("exam-pic");
-    if (!String(before).trim()) { picId = null; popSeen = {}; placePic(); return; }
-    var t = before.slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
-    while ((m = re.exec(t))) segs.push(m[1]);
-    var s = null; for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
-    if (s) showPic(s);   /* no match: keep the last picture on screen */
+    picLast = { before: before, first: firstLen };
+    if (!String(before).trim()) popSeen = {};
+    var P = S && S.exam && S.exam.plan && S.exam.plan.p ? S.exam.plan.p : [null, null];
+    var t = String(before).slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
+    var fur = /\bfurthermore\b/i.exec(t), part = fur ? t.slice(fur.index) : t;
+    while ((m = re.exec(part))) segs.push(m[1]);
+    var s = null, seg = "";
+    for (var i = segs.length - 1; i >= 0 && !s; i--) { s = picSpotFor(segs[i]); seg = segs[i]; }
+    /* nothing quoted yet for this device: show the planned device (device 2 once "Furthermore" is written) */
+    if (!s) { seg = ""; var pid = fur ? P[1] : P[0]; s = pid && PICS[pid] ? BY[pid] : null; }
+    if (!s && !fur && picId) { placePic(); return; }   /* keep the device 1 picture on screen */
+    if (!s) { if (!String(before).trim()) picId = null; placePic(); return; }
+    picSeg = seg; showPic(s);
   }
   function showPic(s) {
-    var box = $("exam-pic"); if (picId === s.id) return;
+    var box = $("exam-pic"), w1 = cn(picSeg).trim(), hint = "";
+    (s.words || []).forEach(function (w) { if (!hint && w1 && w1.split(" ").length <= 3 && cn(w[0]).trim() === w1.split(" ")[0]) hint = w[2]; });
+    if (!hint && w1 && w1.split(" ").length <= 3 && s.words && s.words.length) hint = "Think: what does “" + picSeg.trim().replace(/[.,!?;:]+$/, "") + "” show about this picture?";
+    $("pic-think").textContent = hint ? "💭 " + hint : "";
+    if (picId === s.id) { placePic(); return; }
     picId = s.id; window.__picLog.push(s.id);
     var P = PICS[s.id]; box.querySelector("svg").innerHTML = P[0]; $("pic-see").textContent = P[1]; $("pic-mean").textContent = P[2];
     placePic(); box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
@@ -1892,8 +1890,10 @@ button { font: inherit; color: inherit; }
   /* the picture floats right under the line being written; above it when the keyboard leaves no room below */
   function placePic() {
     var box = $("exam-pic"), ta = $("exam-text");
-    var show = !!(picId && !picHidden[picId] && document.activeElement === ta && S && S.exam && S.exam.started && !S.exam.done);
+    var show = !!(picId && S && S.exam && S.exam.started && !S.exam.done && S.tab === 4 && !S.report && $("tray-back").hidden);
     box.hidden = !show; if (!show) return;
+    if (document.activeElement !== ta) { box.classList.add("dock"); box.classList.remove("up"); box.style.top = ""; return; }
+    box.classList.remove("dock");
     var vv = window.visualViewport, vTop = vv ? vv.offsetTop : 0, vH = vv ? vv.height : window.innerHeight;
     var tr = ta.getBoundingClientRect(), c = caretBox(ta), h = box.offsetHeight, top = c.bottom + 10, up = false;
     box.style.left = Math.max(8, tr.left) + "px"; box.style.width = Math.min(tr.width, window.innerWidth - 16) + "px";
