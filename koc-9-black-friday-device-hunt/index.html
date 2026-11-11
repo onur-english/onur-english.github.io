@@ -429,6 +429,15 @@ button { font: inherit; color: inherit; }
 .side-pic .sp-empty { color: var(--muted); font-style: italic; }
 .side-pic.flash { animation: picin .5s; }
 @media (min-width: 700px) { .side-pic { font-size: .86rem; } }
+/* pictures only: no captions (O. H., 2026-11-11) */
+.side-pic .sp-lab, .side-pic .sp-see, .side-pic .sp-mean, .side-pic .sp-think { display: none !important; }
+.side-pic { padding: 4px; }
+.eb-pic .pc { display: none !important; }
+.eb-pic { padding: 4px; width: auto !important; max-width: 300px; }
+.eb-pic.dock { left: auto !important; right: 12px !important; width: min(46vw, 260px) !important; margin: 0; }
+.eb-pic svg { width: 100%; height: auto; aspect-ratio: 160 / 100; }
+.prow .ppic span { display: none !important; }
+.prow .ppic svg { width: 150px; height: 94px; }
 </style>
 </head>
 <body>
