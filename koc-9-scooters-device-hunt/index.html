@@ -373,6 +373,39 @@ button { font: inherit; color: inherit; }
 .eb-nudge { font-size: .84rem; font-weight: 700; color: var(--board); }
 #exam-text { min-height: 340px; line-height: 1.55; }
 @media (prefers-reduced-motion: reduce) { .eb-pop, .eb-tip.flash { animation: none; } }
+/* exam-only: highlight plan */
+#examart .w { cursor: pointer; border-radius: 3px; -webkit-tap-highlight-color: transparent; }
+#examart .w.h1 { background: #FFE680; box-shadow: inset 0 -3px 0 var(--board); }
+#examart .w.h2 { background: #FFD6BF; box-shadow: inset 0 -3px 0 var(--d2); }
+#examart .w.h1.h2 { background: linear-gradient(#FFE680 50%, #FFD6BF 50%); }
+#examart .w.anchor { outline: 3px dashed var(--board); outline-offset: 1px; animation: pul 1s infinite alternate; }
+#examart .w.anchor.a2 { outline-color: var(--d2); }
+.pens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.pen { appearance: none; border: 3px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 10px 8px; font-weight: 700; cursor: pointer; min-height: 52px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.pen small { font-weight: 400; font-size: .78rem; color: var(--muted); }
+.pen.p1.on { border-color: var(--board); background: #FFF6CC; }
+.pen.p2.on { border-color: var(--d2); background: #FFEDE3; }
+.prow { display: flex; flex-direction: column; gap: 4px; border-left: 5px solid var(--board); background: #FAFAF7; border-radius: 0 10px 10px 0; padding: 8px 10px; }
+.prow.g2 { border-left-color: var(--d2); }
+.prow .pq { font-weight: 700; }
+.prow .pq.none { font-weight: 400; color: var(--muted); font-style: italic; }
+.prow .pacts { display: flex; flex-wrap: wrap; gap: 6px; }
+.pchip { appearance: none; border: 1.5px solid var(--ink); background: #FFFFFF; border-radius: 999px; padding: 3px 11px; font-size: .84rem; font-weight: 700; cursor: pointer; min-height: 32px; }
+.pchip.dev { background: var(--board); border-color: var(--board); color: #FFFFFF; }
+.prow.g2 .pchip.dev { background: var(--d2); border-color: var(--d2); }
+.tray-back { position: fixed; inset: 0; z-index: 60; background: rgba(20,20,24,.35); display: flex; align-items: flex-end; justify-content: center; }
+.tray { width: 100%; max-width: 680px; background: #FFFFFF; border-radius: 18px 18px 0 0; border-top: 6px solid var(--board); padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 10px; box-shadow: 0 -10px 30px rgba(0,0,0,.25); }
+.tray.g2 { border-top-color: var(--d2); }
+.tray-q { font-weight: 700; background: #FFF6CC; border-radius: 8px; padding: 6px 10px; }
+.tray.g2 .tray-q { background: #FFEDE3; }
+.tray-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.tray-opts button { appearance: none; border: 2px solid var(--rule); background: #FFFFFF; border-radius: 12px; padding: 10px 6px; font-weight: 700; cursor: pointer; min-height: 46px; }
+.tray-opts button.on { border-color: var(--board); background: #FFF6CC; }
+.pcheck { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.pcheck li { border-radius: 12px; padding: 10px 12px; background: var(--good-soft); }
+.pcheck li.no { background: var(--red-soft); }
+.pcheck li b { display: block; }
+.pcheck li .pw { font-size: .9rem; margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -395,12 +428,11 @@ button { font: inherit; color: inherit; }
       </div>
       <div class="card">
         <ol class="steps">
-          <li><span class="n">1</span><span><b>Find the devices.</b> Eleven phrases in the article are marked. Tap each one: name the device, then choose what it does to the reader. If you are wrong, you see the right answer and the phrase comes back in the next round.</span></li>
-          <li><span class="n">2</span><span><b>Spot them yourself.</b> The article again with no highlights, like in the exam. Tap the words where you see a device, then name it.</span></li>
-          <li><span class="n">3</span><span><b>Write your paragraph.</b> Tap TWO devices in the article. Writing boxes open right under each one, in the order of your writing frame (steps 1 to 7), with ticks and 💡 hints.</span></li>
-          \g<1>big coach messages pop up to push your analysis deeper.</span></li>
+          <li><span class="n">1</span><span><b>Read.</b> The writing question and the whole article, with no highlights, like in the real exam.</span></li>
+          <li><span class="n">2</span><span><b>Plan by highlighting.</b> Choose a pen, tap the first and the last word of your device in the article, then tap the device's name. Do it for TWO devices.</span></li>
+          <li><span class="n">3</span><span><b>Write in 40 minutes.</b> ONE paragraph in your exam structure (steps 1 to 7). Your structure score goes up live, and big coach messages and pictures help you analyze deeper.</span></li>
+          <li><span class="n">4</span><span><b>Check.</b> See your plan checked, your paragraph color-coded and a model paragraph. Then improve it in the Fix-it round.</span></li>
         </ol>
-        <p class="small muted">Nothing is locked: you can open any part at any time.</p>
         <div class="resume" id="resume" hidden>
           <p><b>You have work in progress.</b> <span id="resume-text"></span></p>
           <div class="btn-row">
@@ -420,7 +452,7 @@ button { font: inherit; color: inherit; }
   <!-- MAIN -->
   <section id="s-main" hidden>
     <div class="col">
-      <nav class="tabs" aria-label="Levels">
+      <nav class="tabs" aria-label="Levels" hidden>
         <button class="tab" id="tab-1" type="button"><b>1 · Find</b><span id="tab-1-s"></span></button>
         <button class="tab" id="tab-2" type="button"><b>2 · Spot</b><span id="tab-2-s"></span></button>
         <button class="tab" id="tab-3" type="button"><b>3 · Write</b><span id="tab-3-s"></span></button>
@@ -539,7 +571,7 @@ button { font: inherit; color: inherit; }
       <div id="lv-4" class="col" hidden>
         <div class="card" id="exam-start-card">
           <span class="label">Exam practice · 40 minutes</span>
-          <p>Like the real exam, the article has no highlights and there are no hints. Read the question, choose TWO devices yourself and write ONE paragraph in your exam structure (steps 1 to 7).</p>
+          <p>Like the real exam, the article has no highlights and there are no hints. Read the question, highlight TWO devices in the article, and write ONE paragraph in your exam structure (steps 1 to 7).</p>
           <p>Your <b>structure score</b> (out of 100) goes up live as you write, and <b>big coach messages</b> pop up on screen to push your analysis deeper. Read each one, then keep writing.</p>
           <p class="small muted">The timer keeps running if you leave the page. When time is up, your paragraph is checked automatically.</p>
           <button class="btn btn-ink" id="btn-exam-start" type="button">Start the 40-minute exam</button>
@@ -556,15 +588,16 @@ button { font: inherit; color: inherit; }
             <p class="eb-nudge" id="exam-nudge" hidden></p>
           </div>
           <div class="card"><span class="label">The writing question</span><p class="intro" id="exam-q"></p></div>
-          <details class="card poem-card" open><summary>The article</summary><div class="article" id="examart"></div></details>
-          <div class="card">
-            <span class="label">Plan first (about 2 minutes)</span>
-            <p class="small muted">Choose your two devices and the words you will copy before you write. The plan is not marked.</p>
-            <div class="field"><label for="plan-0">Device 1</label><input id="plan-0" type="text" maxlength="40" placeholder="e.g. metaphor"></div>
-            <div class="field"><label for="plan-1">Words I will copy for device 1</label><input id="plan-1" type="text" maxlength="120"></div>
-            <div class="field"><label for="plan-2">Device 2</label><input id="plan-2" type="text" maxlength="40" placeholder="e.g. repetition"></div>
-            <div class="field"><label for="plan-3">Words I will copy for device 2</label><input id="plan-3" type="text" maxlength="120"></div>
+          <div class="card" id="plan-card">
+            <span class="label">Plan first: highlight your two devices</span>
+            <p class="small">Choose a pen. In the article below, tap the <b>first</b> word, then the <b>last</b> word of the words you will analyze. Then tap the name of the device. The plan is checked when you finish.</p>
+            <div class="pens">
+              <button class="pen p1" id="pen-0" type="button">✏️ Device 1<small id="pen-0-s"></small></button>
+              <button class="pen p2" id="pen-1" type="button">✏️ Device 2<small id="pen-1-s"></small></button>
+            </div>
+            <div id="plan-rows" class="col" style="gap:8px"></div>
           </div>
+          <details class="card poem-card" open><summary>The article</summary><div class="article" id="examart"></div></details>
           <div class="card">
             <label class="label" for="exam-text">Your paragraph</label>
             <textarea id="exam-text" spellcheck="true" placeholder="In the article “…,” published by …"></textarea>
@@ -582,6 +615,10 @@ button { font: inherit; color: inherit; }
             <span class="label">Structure checklist</span>
             <ul class="checks" id="exam-checks"></ul>
             <p class="small muted" id="exam-qnote"></p>
+          </div>
+          <div class="card" id="plan-check-card">
+            <span class="label">Your plan, checked</span>
+            <ul class="pcheck" id="plan-check"></ul>
           </div>
           <div class="card">
             <span class="label">Your paragraph, color-coded</span>
@@ -607,19 +644,18 @@ button { font: inherit; color: inherit; }
       <span class="label">Report</span>
       <h2 style="font-family:var(--f-hand);font-weight:600;font-size:2rem">Sidewalk Racetracks</h2>
       <div>
-        <div class="muted">Devices found first try (1 · Find)</div>
+        <div class="muted">Exam structure score</div>
         <div class="big" id="r-big"></div>
         <div class="stars" id="r-stars" aria-hidden="true"></div>
         <div class="small" id="r-extra" style="margin-top:6px"></div>
       </div>
       <div id="r-revise-block"><span class="label">Devices to revise</span><ul id="r-revise" class="small" style="margin:6px 0 0;padding-left:20px"></ul></div>
-      <span class="label">My paragraph (3 · Write)</span>
-      <div class="final" id="r-para"></div>
+      <div class="final" id="r-para" hidden></div>
       <div id="r-exam-block"><span class="label">My exam paragraph</span><div class="final" id="r-exam"></div></div>
       <div id="r-improve-block"><span class="label">I will improve</span><p id="r-improve"></p></div>
       <div class="who" id="r-who"></div>
       <div class="btn-row">
-        <button class="btn btn-ghost" id="btn-back" type="button">Back to my work</button>
+        <button class="btn btn-ghost" id="btn-back" type="button">Back to my exam</button>
         <button class="btn btn-ghost" id="btn-again" type="button">Start again</button>
       </div>
     </div>
@@ -637,6 +673,12 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="tray-back" id="tray-back" hidden><div class="tray" id="tray" role="dialog" aria-modal="true" aria-labelledby="tray-h">
+  <div class="sheet-head"><span class="label" id="tray-h"></span><button class="x" id="tray-x" type="button" aria-label="Close">×</button></div>
+  <p class="tray-q" id="tray-q"></p>
+  <p class="small muted">Which device is this?</p>
+  <div class="tray-opts" id="tray-opts"></div>
+</div></div>
 <div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span><button class="bp-x" type="button" aria-label="Close">×</button></div>
 <div class="eb-pic" id="exam-pic" hidden><svg class="pic" viewBox="0 0 160 100" aria-hidden="true"></svg><div class="pc"><span class="eb-pic-lab">Picture it</span><i><b>You see:</b> <span id="pic-see"></span></i><i><b>It means:</b> <span id="pic-mean"></span></i></div><button class="px" type="button" aria-label="Hide the picture">×</button></div>
 <div class="sheet-back" id="sheet-back" hidden>
@@ -777,7 +819,7 @@ button { font: inherit; color: inherit; }
   function renderStart() {
     var saved = load();
     $("resume").hidden = !saved;
-    if (saved) $("resume-text").textContent = (saved.name || "Someone") + ": " + SPOTS.filter(function (s) { var t = saved.spots[s.id].status; return t === "first" || t === "later"; }).length + " of " + SPOTS.length + " devices found.";
+    if (saved) $("resume-text").textContent = (saved.name || "Someone") + ": " + (saved.exam && saved.exam.done ? "exam finished, " + saved.exam.pts + " / 100." : saved.exam && saved.exam.started ? "exam in progress." : "exam not started.");
     show("s-start");
   }
   $("btn-start").onclick = function () {
@@ -791,13 +833,11 @@ button { font: inherit; color: inherit; }
 
   /* ---------- MAIN: four tabs, nothing locked ---------- */
   function renderMain() {
-    S.report = false;
-    [1, 2, 3, 4].forEach(function (n) { $("tab-" + n).classList.toggle("on", S.tab === n); $("lv-" + n).hidden = S.tab !== n; });
-    $("tab-1-s").textContent = foundCount() + "/" + SPOTS.length + " found";
-    $("tab-2-s").textContent = spottedCount() + "/" + SPOTS.length + " spotted";
-    $("tab-3-s").textContent = S.filed ? "done" : "open";
-    $("tab-4-s").textContent = S.exam && S.exam.done ? S.exam.pts + "/100" : (S.exam && S.exam.started ? "running" : "40 min");
-    if (S.tab === 1) renderL1(); else if (S.tab === 2) renderSpotTab(); else if (S.tab === 3) renderWrite(); else renderExam();
+    /* exam-only app: the Find, Spot and Write parts are not shown */
+    S.report = false; S.tab = 4;
+    [1, 2, 3].forEach(function (n) { $("lv-" + n).hidden = true; });
+    $("lv-4").hidden = false;
+    renderExam();
     show("s-main");
   }
   [1, 2, 3, 4].forEach(function (n) { $("tab-" + n).onclick = function () { S.tab = n; save(); renderMain(); }; });
@@ -1427,10 +1467,11 @@ button { font: inherit; color: inherit; }
     if (ex && ex.started && !ex.done) {
       if (!ex.fix && examLeft() <= 0) { finishExam(true); return; }
       $("exam-q").textContent = D.question;
-      if (!$("examart").firstChild) buildArticle($("examart"), fillPlain);
       if ($("exam-text").value !== (ex.text || "")) $("exam-text").value = ex.text || "";
       $("exam-wc").textContent = nWords(ex.text) + " words";
-      [0, 1, 2, 3].forEach(function (i) { var v = (ex.plan || [])[i] || ""; if ($("plan-" + i).value !== v) $("plan-" + i).value = v; });
+      if (!ex.plan || Array.isArray(ex.plan)) ex.plan = { r: [null, null], d: ["", ""], pen: 0 };
+      if (!$("examart").querySelector(".w")) buildArticle($("examart"), fillWords);
+      renderPlan();
       tick(); lastPts = null; liveUpdate();
     }
     if (ex && ex.done) renderExamResult();
@@ -1449,8 +1490,105 @@ button { font: inherit; color: inherit; }
     if (left <= 0 && S.tab === 4) finishExam(true);
   }
   setInterval(tick, 1000);
-  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: ["", "", "", ""] }; save(); renderMain(); window.scrollTo(0, 0); };
-  [0, 1, 2, 3].forEach(function (i) { $("plan-" + i).addEventListener("input", function () { if (!S.exam) return; S.exam.plan = S.exam.plan || ["", "", "", ""]; S.exam.plan[i] = $("plan-" + i).value; save(); }); });
+  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: { r: [null, null], d: ["", ""], pen: 0 } }; save(); renderMain(); window.scrollTo(0, 0); };
+  /* ----- plan by highlighting (O. H., 2026-11-11): no typing of the device or the words ----- */
+  var WORDS = [], PLANDEVS = ["Metaphor", "Simile", "Repetition", "Juxtaposition", "Imagery", "Expert opinion", "Statistics and data", "Emotive language", "Bandwagon", "Hyperbole"];
+  SPOTS.forEach(function (s) { if (PLANDEVS.indexOf(s.device) < 0) PLANDEVS.push(s.device); });
+  function fillWords(el, text, where) {
+    segments(text, where, function (t, s) {
+      (t.match(/\s+|\S+\s*/g) || []).forEach(function (tok) {
+        if (!tok) return;
+        if (!tok.trim()) { el.appendChild(document.createTextNode(tok)); return; }
+        var k = WORDS.length; WORDS.push({ b: where, t: tok, s: s ? s.id : "" });
+        var sp = document.createElement("span"); sp.className = "w"; sp.setAttribute("data-k", k); sp.textContent = tok; el.appendChild(sp);
+      });
+    });
+  }
+  function planText(r) { if (!r) return ""; var out = []; for (var k = r[0]; k <= r[1]; k++) out.push(WORDS[k].t); return out.join("").trim(); }
+  function paintPlan() {
+    var P = S.exam.plan;
+    $("examart").querySelectorAll(".w").forEach(function (w) {
+      var k = +w.getAttribute("data-k");
+      [0, 1].forEach(function (i) { var r = P.r[i]; w.classList.toggle("h" + (i + 1), !!(r && k >= r[0] && k <= r[1] && !(r[0] === r[1] && P.open === i))); });
+      var anc = P.open !== undefined && P.open !== null && P.r[P.open] && P.r[P.open][0] === k;
+      w.classList.toggle("anchor", !!anc); w.classList.toggle("a2", !!anc && P.open === 1);
+    });
+  }
+  function renderPlan() {
+    var P = S.exam.plan, box = $("plan-rows"); box.textContent = "";
+    [0, 1].forEach(function (i) {
+      $("pen-" + i).classList.toggle("on", P.pen === i);
+      $("pen-" + i + "-s").textContent = P.r[i] && P.open !== i ? (P.d[i] || "name it") : (P.open === i ? "tap the last word" : "not yet");
+      var row = document.createElement("div"); row.className = "prow g" + (i + 1);
+      var h = document.createElement("b"); h.textContent = "Device " + (i + 1) + (P.d[i] ? ": " + P.d[i] : "");
+      var q = document.createElement("span"); q.className = "pq";
+      if (P.r[i] && P.open !== i) q.textContent = "“" + planText(P.r[i]) + "”"; else { q.className += " none"; q.textContent = P.open === i ? "Now tap the LAST word in the article (or the same word again for one word)." : "Choose this pen, then tap the first word in the article."; }
+      var acts = document.createElement("div"); acts.className = "pacts";
+      if (P.r[i] && P.open !== i) {
+        var nm = document.createElement("button"); nm.type = "button"; nm.className = "pchip" + (P.d[i] ? " dev" : ""); nm.textContent = P.d[i] ? "Change device" : "Name the device";
+        nm.onclick = function () { openTray(i); };
+        var cl = document.createElement("button"); cl.type = "button"; cl.className = "pchip"; cl.textContent = "Clear";
+        cl.onclick = function () { P.r[i] = null; P.d[i] = ""; P.open = null; P.pen = i; save(); renderPlan(); };
+        acts.appendChild(nm); acts.appendChild(cl);
+      }
+      row.appendChild(h); row.appendChild(q); if (acts.firstChild) row.appendChild(acts); box.appendChild(row);
+    });
+    paintPlan();
+  }
+  [0, 1].forEach(function (i) { $("pen-" + i).onclick = function () { var P = S.exam.plan; if (P.open !== null && P.open !== undefined && P.open !== i) { P.r[P.open] = null; P.open = null; } P.pen = i; save(); renderPlan(); toast("Device " + (i + 1) + " pen: tap the first word in the article."); }; });
+  $("examart").addEventListener("click", function (e) {
+    var w = e.target.closest ? e.target.closest(".w") : null; if (!w || !S || !S.exam || S.exam.done) return;
+    var P = S.exam.plan, i = P.pen, k = +w.getAttribute("data-k"), r = P.r[i];
+    if (P.open === i && r && WORDS[r[0]].b === WORDS[k].b) {
+      P.r[i] = [Math.min(r[0], k), Math.max(r[0], k)]; P.open = null; save(); renderPlan(); openTray(i); return;
+    }
+    if (P.open === i && r && WORDS[r[0]].b !== WORDS[k].b) toast("Keep both taps in the same paragraph. Starting again here.");
+    P.r[i] = [k, k]; P.open = i; save(); renderPlan();
+  });
+  var trayFor = null;
+  function openTray(i) {
+    var P = S.exam.plan; trayFor = i;
+    $("tray").className = "tray g" + (i + 1);
+    $("tray-h").textContent = "Device " + (i + 1);
+    $("tray-q").textContent = "“" + planText(P.r[i]) + "”";
+    var box = $("tray-opts"); box.textContent = "";
+    PLANDEVS.forEach(function (d) {
+      var b = document.createElement("button"); b.type = "button"; b.textContent = d; if (P.d[i] === d) b.className = "on";
+      b.onclick = function () {
+        P.d[i] = d; closeTray();
+        if (i === 0 && !P.r[1]) { P.pen = 1; toast("Now device 2: tap the first word in the article."); }
+        save(); renderPlan();
+      };
+      box.appendChild(b);
+    });
+    $("tray-back").hidden = false;
+  }
+  function closeTray() { $("tray-back").hidden = true; trayFor = null; }
+  $("tray-x").onclick = function () { closeTray(); renderPlan(); };
+  $("tray-back").addEventListener("click", function (e) { if (e.target === $("tray-back")) closeTray(); });
+  /* after the exam: was each highlight a real device, and was it named correctly? Always show the right answer. */
+  function planCheck() {
+    var P = S.exam && S.exam.plan, out = [];
+    if (!P || Array.isArray(P)) return out;
+    if (!WORDS.length) buildArticle($("examart"), fillWords);
+    [0, 1].forEach(function (i) {
+      var r = P.r[i], lab = "Device " + (i + 1);
+      if (!r || P.open === i) { out.push([false, lab + ": not highlighted", "Plan before you write: highlight the words and name the device."]); return; }
+      var txt = planText(r), cnt = {}, best = null;
+      for (var k = r[0]; k <= r[1]; k++) if (WORDS[k].s) cnt[WORDS[k].s] = (cnt[WORDS[k].s] || 0) + 1;
+      Object.keys(cnt).forEach(function (id) { if (!best || cnt[id] > cnt[best]) best = id; });
+      if (!best) {
+        var near = SPOTS.filter(function (s) { return s.where === WORDS[r[0]].b; })[0];
+        out.push([false, lab + ": “" + txt + "”", "No device from the answer key is in these words." + (near ? " In this part of the article, the device is " + near.device.toLowerCase() + ": “" + near.quote + "”." : "")]);
+        return;
+      }
+      var s = BY[best], ok = P.d[i] === s.device, long = (r[1] - r[0] + 1) > Math.max(15, s.quote.split(/\s+/).length + 3);
+      out.push([ok && !long, lab + ": “" + txt + "”",
+        (ok ? "✓ Correct: " + s.device.toLowerCase() + ". " + s.dWhy : (P.d[i] ? "✗ You named it " + P.d[i].toLowerCase() + ". The correct answer: " : "✗ Not named. The correct answer: ") + (ok ? "" : s.device.toLowerCase() + ". " + s.dWhy))
+        + (long ? " Too many words: keep only the words you will explain, e.g. “" + s.quote + "”." : "")]);
+    });
+    return out;
+  }
   $("exam-text").addEventListener("input", function (e) { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; liveSoon(e); });
   ["keyup", "click", "focus"].forEach(function (ev) { $("exam-text").addEventListener(ev, liveSoon); });
   $("btn-exam-fix").onclick = function () { var ex = S.exam; if (!ex) return; ex.done = false; ex.fix = true; save(); renderMain(); window.scrollTo(0, 0); $("exam-text").focus({ preventScroll: true }); };
@@ -1876,6 +2014,9 @@ button { font: inherit; color: inherit; }
     var full = norm([D.art.hed, D.art.dek].concat(D.art.paras).join(" "));
     var unknown = evQuotes(ex.text).filter(function (q) { return full.indexOf(norm(q)) < 0; });
     $("exam-qnote").textContent = unknown.length ? "These words are not copied exactly from the article. Check them: " + unknown.map(function (q) { return "“" + q + "”"; }).join(", ") : "";
+    var pc = $("plan-check"); pc.textContent = "";
+    planCheck().forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "" : "no"; var b = document.createElement("b"); b.textContent = x[1]; var p = document.createElement("div"); p.className = "pw"; p.textContent = x[2]; li.appendChild(b); li.appendChild(p); pc.appendChild(li); });
+    $("plan-check-card").hidden = !pc.firstChild;
     legendCC($("exam-legend"));
     var stc = renderExamCC($("exam-cc"), ex.text || "");
     $("exam-starts").textContent = "Sentence beginnings: " + stc[0] + " of " + stc[1] + " correct. Bold = correct beginning. Red = wrong or missing beginning, with the words you should start with."
@@ -1893,17 +2034,15 @@ button { font: inherit; color: inherit; }
 
   /* ---------- REPORT ---------- */
   function renderReport() {
-    var f = firstCount();
-    $("r-big").textContent = f; var sm = document.createElement("small"); sm.textContent = " / " + SPOTS.length; $("r-big").appendChild(sm);
-    $("r-stars").textContent = "★".repeat(f);
-    var ex = ["Spot it: " + spottedCount() + " of " + SPOTS.length + " devices spotted without highlights" + (S.spotMiss ? " (" + S.spotMiss + (S.spotMiss === 1 ? " tap" : " taps") + " on words with no device)" : "") + "."];
-    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words.");
-    $("r-extra").textContent = ex.join(" ");
-    var rev = SPOTS.filter(function (s) { return S.spots[s.id].misses || S.spotWrong[s.id]; });
-    $("r-revise-block").hidden = !rev.length;
-    var ul = $("r-revise"); ul.textContent = "";
-    rev.forEach(function (s) { var li = document.createElement("li"); li.textContent = "“" + s.quote + "”: " + s.device; ul.appendChild(li); });
-    $("r-para").textContent = paragraph() || "(not written yet)";
+    var ex = S.exam && S.exam.done ? S.exam : null;
+    $("r-big").textContent = ex ? ex.pts : "–"; var sm = document.createElement("small"); sm.textContent = " / 100"; $("r-big").appendChild(sm);
+    $("r-stars").textContent = ex ? "★".repeat(Math.round(ex.pts / 20)) : "";
+    var info = [];
+    if (ex) info.push((ex.fix ? "First try " + ex.firstPts + " / 100, after fixing " + ex.pts + " / 100. " : "") + "Time used " + mmss(ex.used) + ", " + ex.words + " words.");
+    else info.push("The exam is not finished yet.");
+    var pcs = planCheck(); if (pcs.length) info.push("Plan: " + pcs.map(function (x, i) { return "device " + (i + 1) + (x[0] ? " ✓" : " ✗"); }).join(", ") + ".");
+    $("r-extra").textContent = info.join(" ");
+    $("r-revise-block").hidden = true;
     $("r-exam-block").hidden = !(S.exam && S.exam.text); $("r-exam").textContent = (S.exam && S.exam.text) || "";
     $("r-improve-block").hidden = !S.improve; $("r-improve").textContent = S.improve || "";
     var who = $("r-who"); who.textContent = "";
