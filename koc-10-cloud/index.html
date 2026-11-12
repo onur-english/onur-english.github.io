@@ -340,6 +340,54 @@ button { font: inherit; color: inherit; }
 #exam-text { min-height: 320px; line-height: 1.55; }
 @media (prefers-reduced-motion: reduce) { .tap-dot { animation: none; opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+/* ===== Koç 10 exam, latest standard (O. H., 2026-11-12) ===== */
+:root { --d2: #C2410C; }
+#exam-tip, #exam-warn { display: none !important; }   /* no "start with" suggestions at the top */
+.ex-pick { position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ex-pick img { width: 100%; height: auto; user-select: none; -webkit-user-select: none; display: block; }
+.pk { position: absolute; border-radius: 5px; pointer-events: none; mix-blend-mode: multiply; background: rgba(255,214,60,.62); box-shadow: inset 0 -3px 0 var(--board); }
+.pk.g2 { background: rgba(255,160,110,.62); box-shadow: inset 0 -3px 0 var(--d2); }
+.pk.pop { animation: pkpop .45s; }
+@keyframes pkpop { 0% { opacity: 0; transform: scale(1.12); } 100% { opacity: 1; transform: none; } }
+.pkn { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #FFFFFF; background: var(--board); pointer-events: none; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.pkn.g2 { background: var(--d2); }
+.prow { display: flex; flex-direction: column; gap: 6px; border-left: 5px solid var(--board); background: #FFFBEA; border-radius: 0 10px 10px 0; padding: 8px 10px; }
+.prow.g2 { border-left-color: var(--d2); background: #FFF3EC; }
+.prow .pq { font-weight: 700; }
+.prow .pq.none { font-weight: 400; color: var(--muted); font-style: italic; }
+.prow .pacts { display: flex; flex-wrap: wrap; gap: 6px; }
+.prow .ppic svg { width: 150px; height: 94px; border-radius: 8px; display: block; }
+.pchip { appearance: none; border: 1.5px solid var(--ink); background: #FFFFFF; color: var(--ink); border-radius: 999px; padding: 3px 11px; font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; min-height: 32px; }
+.pchip.dev { background: var(--board); border-color: var(--board); color: #FFFFFF; }
+.prow.g2 .pchip.dev { background: var(--d2); border-color: var(--d2); }
+.tray-back { position: fixed; inset: 0; z-index: 80; background: rgba(20,20,24,.35); display: flex; align-items: flex-end; justify-content: center; }
+.tray-back[hidden] { display: none; }
+.tray { width: 100%; max-width: 680px; background: #FFFFFF; border-radius: 18px 18px 0 0; border-top: 6px solid var(--board); padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 10px; box-shadow: 0 -10px 30px rgba(0,0,0,.25); }
+.tray.g2 { border-top-color: var(--d2); }
+.tray-q { font-weight: 700; background: #FFF6CC; border-radius: 8px; padding: 6px 10px; margin: 0; }
+.tray.g2 .tray-q { background: #FFEDE3; }
+.tray-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.tray-opts button { appearance: none; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); border-radius: 12px; padding: 10px 6px; font: inherit; font-weight: 700; cursor: pointer; min-height: 46px; }
+.tray-opts button.on { border-color: var(--board); background: #FFF6CC; }
+.pcheck { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.pcheck li { border-radius: 12px; padding: 10px 12px; background: var(--good-soft); }
+.pcheck li.no { background: var(--red-soft); }
+.pcheck li b { display: block; }
+.pcheck li .pw { font-size: .9rem; margin-top: 4px; }
+.wr-grid { display: grid; grid-template-columns: minmax(0, 1fr) clamp(118px, 36%, 300px); gap: 10px; align-items: start; }
+.wr-grid #exam-text { min-height: 420px; }
+.side-pic { border: 2px solid var(--board); border-radius: 12px; background: #FFFDF6; padding: 4px; display: flex; flex-direction: column; gap: 4px; font-size: .78rem; line-height: 1.3; }
+.side-pic svg { width: 100%; height: auto; aspect-ratio: 160 / 100; border-radius: 8px; display: block; }
+.side-pic.empty svg { display: none; }
+.side-pic:not(.empty) .sp-empty { display: none; }
+.side-pic .sp-empty { color: var(--muted); font-style: italic; margin: 0; padding: 4px; }
+.side-pic.flash { animation: picin .5s; }
+.eb-pic .pc, .eb-pic .px, .eb-pic::before { display: none !important; }
+.eb-pic { padding: 4px; }
+.eb-pic.dock { pointer-events: none; top: auto !important; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); left: auto !important; right: 12px !important; width: min(46vw, 260px) !important; margin: 0; }
+.eb-pic svg { width: 100%; height: auto; aspect-ratio: 160 / 100; }
+#exam-live { padding-bottom: 120px; }
+.st-close { display: inline-block; color: #3D5A40; font-weight: 700; font-size: .8rem; background: #E6F2E8; border-radius: 6px; padding: 0 6px; margin: 0 2px; }
 </style>
 </head>
 <body>
@@ -500,7 +548,7 @@ button { font: inherit; color: inherit; }
       <div id="lv-4" class="col" hidden>
         <div class="card" id="exam-start-card">
           <span class="label">Exam practice · 40 minutes</span>
-          <p>Like the real exam, the poem has no highlights. Read the introduction, choose TWO devices yourself and write ONE body paragraph in your exam structure.</p>
+          <p>Like the real exam, the poem has no highlights. Read the introduction, tap TWO devices in the poem and name them, then write ONE body paragraph in your exam structure.</p>
           <p><b>While you write:</b> your structure score (out of 100) goes up live, and big coach messages pop up to push your analysis deeper. Read each one, then keep writing.</p>
           <p class="small muted">The timer keeps running if you leave the page. When time is up, your paragraph is checked automatically.</p>
           <button class="btn btn-ink" id="btn-exam-start" type="button">Start the 40-minute exam</button>
@@ -517,18 +565,16 @@ button { font: inherit; color: inherit; }
             <p class="eb-nudge" id="exam-nudge" hidden></p>
           </div>
           <div class="card"><span class="label">The introduction (given)</span><p class="intro" id="exam-intro"></p></div>
-          <details class="card poem-card" open><summary>The poem</summary><div class="poem-img"><img id="exam-img" alt="The full poem without highlights"></div></details>
-          <div class="card">
-            <span class="label">Plan first (about 2 minutes)</span>
-            <p class="small muted">Choose your two devices and the words you will quote before you write. The plan is not marked.</p>
-            <div class="field"><label for="plan-0">Device 1</label><input id="plan-0" type="text" maxlength="40" placeholder="e.g. metaphor"></div>
-            <div class="field"><label for="plan-1">Words I will quote for device 1</label><input id="plan-1" type="text" maxlength="120"></div>
-            <div class="field"><label for="plan-2">Device 2</label><input id="plan-2" type="text" maxlength="40" placeholder="e.g. repetition"></div>
-            <div class="field"><label for="plan-3">Words I will quote for device 2</label><input id="plan-3" type="text" maxlength="120"></div>
+          <div class="card" id="plan-card">
+            <span class="label">Plan first: pick your two devices</span>
+            <p class="small">Tap the words of a device in the poem below. They light up: <b style="background:#FFE680;padding:0 4px;border-radius:4px">yellow = Device 1</b>, <b style="background:#FFCDB2;padding:0 4px;border-radius:4px">orange = Device 2</b>. Then tap the name of the device. Tap a device again to remove it. Your plan is checked when you finish.</p>
+            <div id="plan-rows" class="col" style="gap:8px"></div>
           </div>
+          <details class="card poem-card" open><summary>The poem</summary><div class="poem-img ex-pick" id="exam-poem"><img id="exam-img" alt="The full poem without highlights. Tap the words of a device to plan."></div></details>
           <div class="card">
             <label class="label" for="exam-text">Your body paragraph</label>
-            <textarea id="exam-text" spellcheck="true" placeholder="In the poem, …"></textarea>
+            <div class="wr-grid"><textarea id="exam-text" spellcheck="true" placeholder="In the poem, …"></textarea>
+            <aside class="side-pic empty" id="side-pic" aria-hidden="true"><svg class="pic" viewBox="0 0 160 100"></svg><p class="sp-empty">Pick a device in the plan, or put words from the poem in quotation marks: its picture appears here.</p></aside></div>
             <p class="small muted" id="exam-wc">0 words</p>
             <button class="btn btn-ink" id="btn-exam-finish" type="button">I have finished</button>
           </div>
@@ -543,6 +589,10 @@ button { font: inherit; color: inherit; }
             <span class="label">Structure checklist</span>
             <ul class="checks" id="exam-checks"></ul>
             <p class="small muted" id="exam-qnote"></p>
+          </div>
+          <div class="card" id="plan-check-card">
+            <span class="label">Your plan, checked</span>
+            <ul class="pcheck" id="plan-check"></ul>
           </div>
           <div class="card">
             <span class="label">Your paragraph, color-coded</span>
@@ -596,6 +646,12 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="tray-back" id="tray-back" hidden><div class="tray" id="tray" role="dialog" aria-modal="true" aria-labelledby="tray-h">
+  <div class="sheet-head"><span class="label" id="tray-h"></span><button class="x" id="tray-x" type="button" aria-label="Close">×</button></div>
+  <p class="tray-q" id="tray-q"></p>
+  <p class="small muted" style="margin:0">Which device is this?</p>
+  <div class="tray-opts" id="tray-opts"></div>
+</div></div>
 <div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span><button class="bp-x" type="button" aria-label="Close">×</button></div>
 <div class="eb-pic" id="exam-pic" hidden><svg class="pic" viewBox="0 0 160 100" aria-hidden="true"></svg><div class="pc"><span class="eb-pic-lab">Picture it</span><i><b>You see:</b> <span id="pic-see"></span></i><i><b>It means:</b> <span id="pic-mean"></span></i></div><button class="px" type="button" aria-label="Hide the picture">×</button></div>
 <div class="sheet-back" id="sheet-back" hidden>
@@ -611,7 +667,7 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 
-<script id="pic-data" type="application/json">{"s1": ["<defs><linearGradient id=\"pg17\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#BFE3FF\"/><stop offset=\"1\" stop-color=\"#2E7DB8\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg17)\"/><path d=\"M0 70 Q20 60 40 70 T80 70 T120 70 T160 70 V100 H0Z\" stroke=\"none\" fill=\"#1E5F8C\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"mv\" style=\"--dx:-10px;--dy:0px;--t:2s\"/><text x=\"118\" y=\"30\" font-size=\"26\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">👄<\/text><text x=\"56\" y=\"30\" font-size=\"12\" font-weight=\"800\" fill=\"#0E3B5C\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx fade\">mmm…<\/text>", "A rough, rolling ocean murmuring like a mouth.", "Before it was a cloud, it was a living, speaking ocean: the cloud has a long, alive history."], "s2": ["<rect width=\"160\" height=\"100\" fill=\"#EAF6FF\"/><text x=\"40\" y=\"20\" font-size=\"10\" font-weight=\"800\" fill=\"#1E5F8C\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">You were…<\/text><text x=\"40\" y=\"52\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em ech\" style=\"--d:0s\">🌊<\/text><text x=\"80\" y=\"52\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em ech\" style=\"--d:0.6s\">🌳<\/text><text x=\"120\" y=\"52\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em ech\" style=\"--d:1.2s\">🌧️<\/text><text x=\"60\" y=\"82\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em ech\" style=\"--d:1.8s\">🚲<\/text><text x=\"100\" y=\"82\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em ech\" style=\"--d:2.4s\">☁️<\/text>", "“You were” again and again, each time something new.", "The cloud has been almost everything: part of countless lives and places."], "s3": ["<defs><linearGradient id=\"pg18\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#BFE3FF\"/><stop offset=\"1\" stop-color=\"#EAF6FF\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg18)\"/><path d=\"M10 30H150\" stroke=\"#6B6B6B\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g class=\"sw\" style=\"--o:50% 0%;--d:0.0s\"><rect x=\"18\" y=\"30\" width=\"34\" height=\"44\" rx=\"3\" fill=\"#FFFFFF\"/><\/g><g class=\"sw\" style=\"--o:50% 0%;--d:0.4s\"><rect x=\"64\" y=\"30\" width=\"34\" height=\"44\" rx=\"3\" fill=\"#FFFFFF\"/><\/g><g class=\"sw\" style=\"--o:50% 0%;--d:0.8s\"><rect x=\"110\" y=\"30\" width=\"34\" height=\"44\" rx=\"3\" fill=\"#FFFFFF\"/><\/g><text x=\"140\" y=\"86\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">🌼<\/text>", "White sheets puffing and filling with wind on a washing line.", "Light, airy and happy: the cloud's free, changing life feels joyful."], "s4": ["<rect width=\"160\" height=\"100\" fill=\"#DFF1E4\"/><text x=\"40\" y=\"64\" font-size=\"44\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\">🌳<\/text><text x=\"78\" y=\"44\" font-size=\"18\" font-weight=\"800\" fill=\"#2E8B57\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx fade\">〰<\/text><text x=\"124\" y=\"34\" font-size=\"34\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">☁️<\/text><text x=\"124\" y=\"62\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👂<\/text>", "A cloud listening while the trees talk.", "Trees speak and the cloud listens: everything in nature is alive and connected."], "s5": ["<rect width=\"160\" height=\"100\" fill=\"#E6F2E6\"/><path d=\"M20 40 Q80 10 140 44 Q80 60 20 40Z\" stroke=\"#1F6E46\" fill=\"#2E8B57\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"70\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:0px;--dx:30px;--dy:50px;--t:1.8s\">💧<\/text><text x=\"100\" y=\"34\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:0px;--dx:20px;--dy:50px;--t:2.2s;--d:0.6s\">💧<\/text><text x=\"34\" y=\"76\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌸<\/text>", "Raindrops rolling off shiny, waxy magnolia leaves.", "A quiet, beautiful moment on the cloud's journey through nature."], "s6": ["<defs><linearGradient id=\"pg19\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#DCEFD8\"/><stop offset=\"1\" stop-color=\"#7FAF6A\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg19)\"/><text x=\"14\" y=\"60\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:0.0s\">🌳<\/text><text x=\"36\" y=\"72\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:0.2s\">🌳<\/text><text x=\"58\" y=\"60\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:0.4s\">🌳<\/text><text x=\"80\" y=\"72\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:0.6000000000000001s\">🌳<\/text><text x=\"102\" y=\"60\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:0.8s\">🌳<\/text><text x=\"124\" y=\"72\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:1.0s\">🌳<\/text><text x=\"146\" y=\"60\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:1.2000000000000002s\">🌳<\/text><text x=\"80\" y=\"16\" font-size=\"10\" font-weight=\"800\" fill=\"#244A1C\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">a sea of olive trees<\/text>", "So many olive trees that they move like a sea.", "The world is huge and connected: trees become a sea."], "s7": ["<defs><linearGradient id=\"pg20\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#8C939C\"/><stop offset=\"1\" stop-color=\"#5E656E\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg20)\"/><circle cx=\"12\" cy=\"10\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"32\" cy=\"10\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"52\" cy=\"10\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"72\" cy=\"10\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"92\" cy=\"10\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"112\" cy=\"10\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"132\" cy=\"10\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"152\" cy=\"10\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"12\" cy=\"24\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"32\" cy=\"24\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"52\" cy=\"24\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"72\" cy=\"24\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"92\" cy=\"24\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"112\" cy=\"24\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"132\" cy=\"24\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"152\" cy=\"24\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"12\" cy=\"38\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"32\" cy=\"38\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"52\" cy=\"38\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"72\" cy=\"38\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"92\" cy=\"38\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"112\" cy=\"38\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"132\" cy=\"38\" r=\"2\" fill=\"#3A3F46\"/><circle cx=\"152\" cy=\"38\" r=\"2\" fill=\"#3A3F46\"/><rect x=\"0\" y=\"50\" width=\"160\" height=\"50\" rx=\"0\" fill=\"#6B5E52\"/><rect x=\"30\" y=\"56\" width=\"4\" height=\"44\" rx=\"0\" fill=\"#2B2B2B\"/><rect x=\"52\" y=\"56\" width=\"4\" height=\"44\" rx=\"0\" fill=\"#2B2B2B\"/><rect x=\"74\" y=\"56\" width=\"4\" height=\"44\" rx=\"0\" fill=\"#2B2B2B\"/><rect x=\"96\" y=\"56\" width=\"4\" height=\"44\" rx=\"0\" fill=\"#2B2B2B\"/><rect x=\"118\" y=\"56\" width=\"4\" height=\"44\" rx=\"0\" fill=\"#2B2B2B\"/><text x=\"80\" y=\"44\" font-size=\"9\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">punched-tin sky<\/text>", "A grey metal sky full of holes, like punched tin, above a prison yard.", "The prisoners' sky looks hard and cold: their world is harsh while the cloud floats free."], "s8": ["<rect width=\"160\" height=\"100\" fill=\"#5E656E\"/><rect x=\"80\" y=\"0\" width=\"80\" height=\"100\" rx=\"0\" fill=\"#BFE3FF\"/><rect x=\"12\" y=\"10\" width=\"4\" height=\"80\" rx=\"0\" fill=\"#1B1D21\"/><rect x=\"26\" y=\"10\" width=\"4\" height=\"80\" rx=\"0\" fill=\"#1B1D21\"/><rect x=\"40\" y=\"10\" width=\"4\" height=\"80\" rx=\"0\" fill=\"#1B1D21\"/><rect x=\"54\" y=\"10\" width=\"4\" height=\"80\" rx=\"0\" fill=\"#1B1D21\"/><rect x=\"68\" y=\"10\" width=\"4\" height=\"80\" rx=\"0\" fill=\"#1B1D21\"/><text x=\"40\" y=\"50\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🧍<\/text><text x=\"110\" y=\"46\" font-size=\"32\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em mv\" style=\"--dx:26px;--dy:0px;--t:3s\">☁️<\/text><text x=\"120\" y=\"88\" font-size=\"10\" font-weight=\"800\" fill=\"#1E5F8C\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">free<\/text><path d=\"M80 6V94\" stroke=\"#FFFFFF\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"4 4\"/><circle cx=\"80\" cy=\"50\" r=\"9\" fill=\"#FFFFFF\"/><text x=\"80\" y=\"50\" font-size=\"8\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">vs<\/text>", "Prisoners behind bars, and a white cloud gliding by, free.", "Side by side, freedom looks beautiful: those who lost it can only watch it pass."]}</script>
+<script id="pic-data" type="application/json">{"s1": ["<defs><linearGradient id=\"pga7\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#CFE8FF\"/><stop offset=\"1\" stop-color=\"#2E7DB8\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga7)\"/><path d=\"M0 66 Q20 58 40 66 T80 66 T120 66 T160 66 V100 H0Z\" stroke=\"#1E5F8C\" fill=\"#2E7DB8\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"56\" y=\"72\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em shk\">👄<\/text><text x=\"80\" y=\"66\" font-size=\"12\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.0s\">)<\/text><text x=\"94\" y=\"60\" font-size=\"12\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.4s\">)<\/text><text x=\"108\" y=\"54\" font-size=\"12\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.8s\">)<\/text><text x=\"124\" y=\"22\" font-size=\"26\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">☁️<\/text><g class=\"pul\"><path d=\"M108 58L120 36\" stroke=\"#FFFFFF\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M120.0 42.0L120 36L115.0 39.2\" stroke=\"#FFFFFF\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><rect x=\"6.109999999999999\" y=\"10\" width=\"99.78\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"56\" y=\"18\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">alive, never silent<\/text>", "A rolling ocean with a talking mouth, rising up to become the cloud.", "The cloud's past life was full of movement and voice: nature is alive."], "s2": ["<rect width=\"160\" height=\"100\" fill=\"#EAF4FF\"/><text x=\"80\" y=\"50\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">☁️<\/text><g class=\"ech\" style=\"--d:0.0s\"><text x=\"22\" y=\"18\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌊<\/text><text x=\"22\" y=\"30\" font-size=\"5\" font-weight=\"800\" fill=\"#2F3FB0\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">you were<\/text><\/g><g class=\"ech\" style=\"--d:0.5s\"><text x=\"80\" y=\"14\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"80\" y=\"26\" font-size=\"5\" font-weight=\"800\" fill=\"#2F3FB0\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">you were<\/text><\/g><g class=\"ech\" style=\"--d:1.0s\"><text x=\"138\" y=\"18\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌧️<\/text><text x=\"138\" y=\"30\" font-size=\"5\" font-weight=\"800\" fill=\"#2F3FB0\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">you were<\/text><\/g><g class=\"ech\" style=\"--d:1.5s\"><text x=\"22\" y=\"76\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🫒<\/text><text x=\"22\" y=\"88\" font-size=\"5\" font-weight=\"800\" fill=\"#2F3FB0\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">you were<\/text><\/g><g class=\"ech\" style=\"--d:2.0s\"><text x=\"80\" y=\"84\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌸<\/text><text x=\"80\" y=\"96\" font-size=\"5\" font-weight=\"800\" fill=\"#2F3FB0\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">you were<\/text><\/g><g class=\"ech\" style=\"--d:2.5s\"><text x=\"138\" y=\"76\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">⛓️<\/text><text x=\"138\" y=\"88\" font-size=\"5\" font-weight=\"800\" fill=\"#2F3FB0\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">you were<\/text><\/g><rect x=\"32.419999999999995\" y=\"26\" width=\"95.16000000000001\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"80\" y=\"34\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">part of everything<\/text>", "The cloud in the middle, with an ocean, a tree, rain, olives, a flower and a prison chain appearing around it.", "Repeating “You were” shows that the cloud has been part of countless lives: everything is connected."], "s3": ["<rect width=\"160\" height=\"100\" fill=\"#E8F6FF\"/><path d=\"M10 30H150\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g class=\"sw\" style=\"--o:50% 0%;--t:1.6s\"><path d=\"M18 30 h22 q4 18 -2 34 h-18 q-6 -16 -2 -34Z\" stroke=\"#B9C9D9\" fill=\"#FFFFFF\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><g class=\"sw\" style=\"--o:50% 0%;--t:1.9000000000000001s\"><path d=\"M64 30 h22 q4 18 -2 34 h-18 q-6 -16 -2 -34Z\" stroke=\"#B9C9D9\" fill=\"#FFFFFF\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><g class=\"sw\" style=\"--o:50% 0%;--t:2.2s\"><path d=\"M110 30 h22 q4 18 -2 34 h-18 q-6 -16 -2 -34Z\" stroke=\"#B9C9D9\" fill=\"#FFFFFF\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><text x=\"80\" y=\"82\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">☁️<\/text><text x=\"80\" y=\"82\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">💗<\/text><rect x=\"89.56\" y=\"82\" width=\"67.44\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"123.28\" y=\"90\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">light + free<\/text>", "White sheets puffing in the wind on a washing line, and a cloud with a happy heart.", "The cloud's heart feels as light, soft and free as sheets on a sunny day: everyday joy."], "s4": ["<rect width=\"160\" height=\"100\" fill=\"#EAF6EA\"/><text x=\"30\" y=\"66\" font-size=\"34\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"76\" y=\"70\" font-size=\"28\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><g class=\"bob\"><rect x=\"8\" y=\"12\" width=\"40\" height=\"16\" rx=\"6\" fill=\"#FFFFFF\"/><path d=\"M8 12h40v16h-40Z\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"28.0\" y=\"20.0\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">listen…<\/text><path d=\"M28 28L30 44\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><g class=\"bob\" style=\"--d:0.5s\"><rect x=\"60\" y=\"28\" width=\"36\" height=\"16\" rx=\"6\" fill=\"#FFFFFF\"/><path d=\"M60 28h36v16h-36Z\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"78.0\" y=\"36.0\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">we…<\/text><\/g><text x=\"128\" y=\"24\" font-size=\"26\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">☁️<\/text><text x=\"128\" y=\"40\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">👂<\/text><rect x=\"61.83999999999998\" y=\"82\" width=\"95.16000000000001\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"109.41999999999999\" y=\"90\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">nature has a voice<\/text>", "Trees talking in speech bubbles while the cloud listens closely.", "Nature is alive and full of voices, and the cloud was once close to it."], "s5": ["<rect width=\"160\" height=\"100\" fill=\"#F1FAF1\"/><path d=\"M20 70 Q70 30 130 50 Q80 80 20 70Z\" stroke=\"#2F6B3A\" fill=\"#4E9A5B\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M20 70 Q80 52 130 50\" stroke=\"#2F6B3A\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"60\" y=\"44\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:0px;--dx:30px;--dy:20px;--t:1.6s\">💧<\/text><text x=\"78\" y=\"44\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:0px;--dx:30px;--dy:20px;--t:1.9000000000000001s\">💧<\/text><text x=\"96\" y=\"44\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:0px;--dx:30px;--dy:20px;--t:2.2s\">💧<\/text><text x=\"36\" y=\"40\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em flk\">✨<\/text><text x=\"142\" y=\"80\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🚶<\/text><text x=\"142\" y=\"64\" font-size=\"10\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">?<\/text><rect x=\"36.28\" y=\"84\" width=\"67.44\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"70\" y=\"92\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">quiet beauty<\/text>", "Raindrops gliding off a shiny magnolia leaf, while a passer-by does not even notice.", "A tiny, beautiful moment on the cloud's journey: most people would never see it."], "s6": ["<defs><linearGradient id=\"pga8\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#F2EFD9\"/><stop offset=\"1\" stop-color=\"#C9C38F\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga8)\"/><g class=\"mv\" style=\"--dx:-4px;--dy:0px;--t:1.6s\"><text x=\"10\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"32\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"54\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"76\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"98\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"120\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"142\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"164\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><\/g><g class=\"mv\" style=\"--dx:4px;--dy:0px;--t:1.6s\"><text x=\"10\" y=\"64\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"32\" y=\"64\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"54\" y=\"64\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"76\" y=\"64\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"98\" y=\"64\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"120\" y=\"64\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"142\" y=\"64\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"164\" y=\"64\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><\/g><g class=\"mv\" style=\"--dx:-4px;--dy:0px;--t:1.6s\"><text x=\"10\" y=\"78\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"32\" y=\"78\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"54\" y=\"78\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"76\" y=\"78\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"98\" y=\"78\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"120\" y=\"78\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"142\" y=\"78\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"164\" y=\"78\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><\/g><text x=\"20\" y=\"18\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:0px;--dx:120px;--dy:0px;--t:5s\">☁️<\/text><rect x=\"20.869999999999997\" y=\"14\" width=\"118.26\" height=\"16\" rx=\"5\" fill=\"#FFFFFF\"/><text x=\"80\" y=\"22\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">huge + full of movement<\/text>", "Rows of olive trees moving like waves, with the cloud traveling far across them.", "The land is so big it looks like a sea: the cloud has traveled across a huge, connected world."], "s7": ["<defs><linearGradient id=\"pga9\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#8E959E\"/><stop offset=\"1\" stop-color=\"#6B7280\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga9)\"/><circle cx=\"10\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"24\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"38\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"52\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"66\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"80\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"94\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"108\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"122\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"136\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"150\" cy=\"8\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"10\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"24\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"38\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"52\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"66\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"80\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"94\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"108\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"122\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"136\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"150\" cy=\"18\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"10\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"24\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"38\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"52\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"66\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"80\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"94\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"108\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"122\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"136\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><circle cx=\"150\" cy=\"28\" r=\"1.6\" fill=\"#3A3F4A\"/><rect x=\"0\" y=\"36\" width=\"160\" height=\"4\" rx=\"0\" fill=\"#3A3F4A\"/><rect x=\"10\" y=\"60\" width=\"140\" height=\"40\" rx=\"0\" fill=\"#B9BEC4\"/><rect x=\"14.5\" y=\"44\" width=\"3\" height=\"44\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"30.5\" y=\"44\" width=\"3\" height=\"44\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"46.5\" y=\"44\" width=\"3\" height=\"44\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"62.5\" y=\"44\" width=\"3\" height=\"44\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"78.5\" y=\"44\" width=\"3\" height=\"44\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"94.5\" y=\"44\" width=\"3\" height=\"44\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"110.5\" y=\"44\" width=\"3\" height=\"44\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"126.5\" y=\"44\" width=\"3\" height=\"44\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"142.5\" y=\"44\" width=\"3\" height=\"44\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"14\" y=\"44\" width=\"132\" height=\"3\" rx=\"0\" fill=\"#4A5361\"/><rect x=\"14\" y=\"85\" width=\"132\" height=\"3\" rx=\"0\" fill=\"#4A5361\"/><text x=\"60\" y=\"74\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">😔<\/text><text x=\"100\" y=\"74\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">😔<\/text><rect x=\"23.18\" y=\"14\" width=\"113.64\" height=\"16\" rx=\"5\" fill=\"#D7001F\"/><text x=\"80\" y=\"22\" font-size=\"7\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">even the sky is a cage<\/text>", "A grey metal sky full of holes pressing down like a lid on a prison yard.", "For the prisoners even the sky feels hard and closed: their world is the opposite of the cloud's freedom."], "s8": ["<rect width=\"160\" height=\"100\" fill=\"#DCE9F7\"/><rect x=\"0\" y=\"30\" width=\"70\" height=\"70\" rx=\"0\" fill=\"#B9BEC4\"/><rect x=\"4.5\" y=\"34\" width=\"3\" height=\"60\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"16.1\" y=\"34\" width=\"3\" height=\"60\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"27.7\" y=\"34\" width=\"3\" height=\"60\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"39.3\" y=\"34\" width=\"3\" height=\"60\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"50.9\" y=\"34\" width=\"3\" height=\"60\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"62.5\" y=\"34\" width=\"3\" height=\"60\" rx=\"1\" fill=\"#4A5361\"/><rect x=\"4\" y=\"34\" width=\"62\" height=\"3\" rx=\"0\" fill=\"#4A5361\"/><rect x=\"4\" y=\"91\" width=\"62\" height=\"3\" rx=\"0\" fill=\"#4A5361\"/><text x=\"24\" y=\"66\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">😔<\/text><text x=\"48\" y=\"66\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">😔<\/text><text x=\"84\" y=\"22\" font-size=\"26\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:0px;--dx:60px;--dy:0px;--t:4s\">☁️<\/text><text x=\"40\" y=\"46\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👀<\/text><g class=\"pul\"><path d=\"M56 46L80 30\" stroke=\"#2F3FB0\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M77.2 35.3L80 30L74.0 30.5\" stroke=\"#2F3FB0\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><rect x=\"47.97999999999999\" y=\"80\" width=\"109.02000000000001\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"102.49\" y=\"88\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">freedom: only watched<\/text>", "Prisoners behind bars looking up at a white cloud gliding past, free.", "Side by side, freedom looks precious: those who lost it can only watch it go."]}</script>
 <script id="app-data" type="application/json">{"spots": [{"id": "s1", "where": "Lines 1–9 · Before you became a cloud", "quote": "an ocean, roiled and / murmuring like a mouth", "device": "Simile", "ctx": ["Before you became a cloud, you were an ocean, roiled and / murmuring like a mouth."], "dAns": "Simile: the ocean is compared to a mouth using the word ‘like.’", "dWrong": ["Metaphor: the ocean is called a mouth, without using ‘like’ or ‘as.’", "Hyperbole: the speaker exaggerates how big the ocean is.", "Juxtaposition: the ocean is placed next to a desert to show a contrast."], "dHint": "Find the comparison word. What is the ocean compared to?", "dWhy": "The ocean is compared to a mouth with the word “like.” That is a simile.", "effect": "The reader hears the ocean as if it were talking quietly, so the cloud's past feels alive, restless and full of sound.", "eWrong": ["The reader sees that the ocean is silent and completely still.", "The reader learns that the speaker is afraid of drowning in the sea.", "The reader sees that the ocean is hungry and wants to swallow people."], "eHint": "What sound does a mouth make when it murmurs? How does that make the ocean seem?", "words": [["murmuring", "verb", "What could “murmuring” suggest? A soft, low sound, like someone whispering secrets?"], ["roiled", "verb", "What could “roiled” suggest? Water turning and churning, never resting?"]], "frameHint": "Simile frame: Cisneros compares ___ (the ocean) to ___ (a mouth) to suggest ___. She also emphasizes ___.", "readerHint": "How does this picture make you feel? Calm? Curious? Amazed by the sea?", "message": "the cloud's long, living history before it became a cloud", "m_ev": "Cisneros states, “roiled and / murmuring like a mouth.”", "m_word": "The verb “murmuring” is significant because it suggests a soft, constant sound, as if the ocean is whispering.", "m_dev": "Cisneros compares the ocean to a mouth to suggest that the cloud's past life was full of movement and voice. She also emphasizes that nature is alive and never silent.", "m_reader": "The reader is curious because the ocean seems to be speaking. They also realize that the cloud has a long and lively history.", "side": "A"}, {"id": "s2", "where": "Lines 1–9 · Before you became a cloud", "quote": "You were", "device": "Repetition", "ctx": ["You were the shadow of a cloud", "You were the tears of a", "You were a sky", "You were the wind in the wheels of a red bicycle.", "You were the rain rolling off"], "dAns": "Repetition: the words ‘You were’ begin line after line.", "dWrong": ["Juxtaposition: ‘you’ is placed next to ‘were’ to show a contrast.", "Hyperbole: the speaker exaggerates how old the cloud is.", "Imagery: a detailed description of the speaker's own childhood."], "dHint": "Look at how lines 3, 5, 7, 12, 13 and 15 begin. What do you notice?", "dWhy": "“You were” begins six lines, like a list or a chant. That is repetition.", "effect": "The reader feels the list of the cloud's past lives building up, so it seems the cloud has been almost everything in the world.", "eWrong": ["The reader feels bored because nothing new happens in the poem.", "The reader sees that the speaker is angry with the cloud for changing.", "The reader sees that the cloud has always stayed exactly the same."], "eHint": "What does a long list of “You were …” make you think about the cloud's past?", "words": [["were", "verb", "What could the past tense “were” suggest? Everything the cloud was has now changed?"], ["You", "pronoun", "Why might the speaker talk directly to the cloud as “you”? Does it make the cloud feel like a friend?"]], "frameHint": "Repetition frame: Cisneros repeats the words “You were” ___ times to emphasize ___. She suggests ___.", "readerHint": "How does the long list make you feel? Amazed? Thoughtful? Connected to everything?", "message": "how the cloud has been part of countless lives and places before", "m_ev": "Cisneros states, “You were the wind in the wheels of a red bicycle.”", "m_word": "The verb “were” is in the past tense, which suggests everything the cloud once was has now changed.", "m_dev": "Cisneros repeats the words “You were” at the start of six lines to emphasize how many different lives the cloud has had. She suggests that everything in the world is connected.", "m_reader": "The reader is amazed because the cloud seems to have been part of everything. They also realize that nothing in nature is ever really lost.", "side": "A"}, {"id": "s3", "where": "Lines 1–9 · Before you became a cloud", "quote": "Your heart puffed and flowered like sheets drying on a line", "device": "Simile", "ctx": ["Your heart puffed and flowered like sheets drying on a line."], "dAns": "Simile: the cloud's heart is compared to sheets drying on a line, using ‘like.’", "dWrong": ["Metaphor: the cloud is called a washing machine, without using ‘like’ or ‘as.’", "Repetition: the word ‘sheets’ is repeated in every line of the stanza.", "Juxtaposition: clean sheets are placed next to dirty clothes."], "dHint": "Find the word “like.” What is the cloud's heart compared to?", "dWhy": "The cloud's heart is compared to sheets on a washing line with the word “like.” That is a simile.", "effect": "The reader pictures something soft, white and full of air moving happily in the wind, so the cloud seems light, free and joyful.", "eWrong": ["The reader pictures heavy, wet laundry, so the cloud seems sad and tired.", "The reader learns how to wash and dry sheets at home.", "The reader sees that the cloud is ill and has heart problems."], "eHint": "How do sheets look and move on a washing line on a windy day?", "words": [["puffed", "verb", "What could “puffed” suggest? Swelling with air, light and full?"], ["flowered", "verb", "What could “flowered” suggest? Opening, blooming, growing happy?"]], "frameHint": "Simile frame: Cisneros compares ___ (the cloud's heart) to ___ (sheets drying on a line) to suggest ___. She also emphasizes ___.", "readerHint": "How does this image make you feel? Light? Happy? Free?", "message": "the lightness and joy of the cloud's free, ever-changing life", "m_ev": "Cisneros states, “Your heart puffed and flowered like sheets drying on a line.”", "m_word": "The verb “flowered” is significant because it suggests the cloud's heart opened up happily, like a flower blooming.", "m_dev": "Cisneros compares the cloud's heart to sheets drying on a line to suggest that it feels light, soft and free. She also emphasizes the joy of an ordinary, everyday moment.", "m_reader": "The reader is cheerful because the image is so light and homely. They also realize that beauty can be found in simple, everyday moments.", "side": "B"}, {"id": "s4", "where": "Lines 10–26 · All the things you were", "quote": "you listened to trees and the tree / things trees told you", "device": "Personification", "ctx": ["And when you were a tree, you listened to trees and the tree / things trees told you."], "dAns": "Personification: the trees are given the human ability to talk and tell things.", "dWrong": ["Simile: the trees are compared to people using the word ‘like.’", "Hyperbole: the speaker exaggerates how many trees are in the forest.", "Imagery: a detailed description of the colors of autumn leaves."], "dHint": "Can trees really tell you things? Who usually talks and listens?", "dWhy": "Trees cannot really talk; people do. The trees are given a human ability. That is personification.", "effect": "The reader sees nature as a world full of voices and secrets, where the cloud once belonged and listened.", "eWrong": ["The reader sees that the trees are shouting angrily at the cloud.", "The reader learns facts about how trees grow in a forest.", "The reader sees that the cloud refused to listen to anyone."], "eHint": "If trees can tell things, what kind of world is the cloud part of?", "words": [["listened", "verb", "What could “listened” suggest? Patience? Belonging to a group? Learning?"], ["told", "verb", "What could “told” suggest? Do the trees share secrets or wisdom?"]], "frameHint": "Personification frame: Cisneros gives ___ (the trees) the human quality of ___ (talking) to suggest ___. She demonstrates ___.", "readerHint": "How do you feel about a world where trees talk? Curious? Peaceful? Amazed?", "message": "how everything in nature is alive and connected", "m_ev": "Cisneros states, “you listened to trees and the tree / things trees told you.”", "m_word": "The verb “listened” is significant because it suggests the cloud was patient and close to the trees, like a friend.", "m_dev": "Cisneros gives the trees the human quality of talking to suggest that nature is alive and full of voices. She demonstrates how close the cloud once was to the living world.", "m_reader": "The reader is curious because the trees seem to have secrets to share. They also realize that nature can be seen as one big community.", "side": "A"}, {"id": "s5", "where": "Lines 10–26 · All the things you were", "quote": "the rain rolling off / the waxy leaves of a magnolia tree", "device": "Imagery", "ctx": ["You were the rain rolling off / the waxy leaves of a magnolia tree."], "dAns": "Imagery: a detailed description helps us see and feel rain sliding off shiny leaves.", "dWrong": ["Hyperbole: the speaker exaggerates how much rain fell that day.", "Personification: the leaves are given the human ability to roll.", "Repetition: the word ‘rain’ is repeated in every line of the stanza."], "dHint": "Which senses help you here? What do the leaves look and feel like?", "dWhy": "We can see the drops rolling off the shiny, “waxy” leaves of the tree. That is imagery.", "effect": "The reader pictures a fresh, gentle moment in nature, so the cloud's past seems beautiful and full of life.", "eWrong": ["The reader pictures a terrible storm destroying the magnolia tree.", "The reader pictures dry, dead leaves in a hot desert.", "The reader learns how to look after a magnolia tree in a garden."], "eHint": "Waxy leaves are smooth and shiny. How does rain move on them? Is it gentle or violent?", "words": [["waxy", "adjective", "What could “waxy” suggest? Smooth, shiny, healthy leaves?"], ["rolling", "verb", "What could “rolling” suggest? Gentle, easy movement, like the cloud's life?"]], "frameHint": "Imagery frame: Cisneros gives a detailed description of ___ (what do we see and feel?) to suggest ___. She portrays ___.", "readerHint": "How does this picture make you feel? Calm? Refreshed? Peaceful?", "message": "the quiet beauty of the cloud's journey through nature", "m_ev": "Cisneros states, “the rain rolling off / the waxy leaves of a magnolia tree.”", "m_word": "The adjective “waxy” is significant because it suggests the leaves are smooth, shiny and full of life.", "m_dev": "Cisneros gives a detailed description of rain sliding off magnolia leaves to suggest how gently the cloud moves through nature. She portrays a fresh, beautiful moment that most people would never notice.", "m_reader": "The reader is calm because the scene is fresh and gentle. They also realize that small natural moments are part of a much bigger cycle.", "side": "A"}, {"id": "s6", "where": "Lines 10–26 · All the things you were", "quote": "the sea of olive trees", "device": "Metaphor", "ctx": ["The black nets beneath the sea of olive trees."], "dAns": "Metaphor: a huge group of olive trees is called a sea, without using ‘like’ or ‘as.’", "dWrong": ["Simile: the olive trees are compared to the sea using the word ‘like.’", "Personification: the olive trees are given the human ability to swim.", "Hyperbole: the speaker exaggerates how many olives grow on one tree."], "dHint": "Is there really a sea here? What are the olive trees being compared to?", "dWhy": "There is no real sea: so many olive trees are called a “sea” without “like” or “as.” That is a metaphor.", "effect": "The reader pictures endless rows of olive trees moving like waves, so the land seems huge and alive.", "eWrong": ["The reader pictures olive trees growing under the water.", "The reader sees that the olive trees are dying because of the sea.", "The reader learns how fishermen use nets to catch fish."], "eHint": "When you see thousands of trees moving in the wind from far away, what might they look like?", "words": [["sea", "noun", "What could “sea” suggest? Something huge, endless, moving like waves?"], ["nets", "noun", "What could the “black nets” suggest? People working on the land, collecting the olives?"]], "frameHint": "Metaphor frame: Cisneros compares ___ (the olive trees) to ___ (a sea) to suggest ___. She also emphasizes ___.", "readerHint": "How does this image make you feel? Amazed? Peaceful? Far from home?", "message": "how vast and connected the world is that the cloud has passed through", "m_ev": "Cisneros states, “the sea of olive trees.”", "m_word": "The noun “sea” is significant because it suggests the olive trees stretch out endlessly, moving like waves.", "m_dev": "Cisneros compares the olive trees to a sea to suggest that the land is huge and full of movement. She also emphasizes how far the cloud has traveled across the world.", "m_reader": "The reader is amazed because the image makes the countryside look endless. They also realize that the cloud connects places all over the world.", "side": "A"}, {"id": "s7", "where": "Lines 27–31 · The cloud above the prison", "quote": "punched-tin sky above a prison courtyard", "device": "Metaphor", "ctx": ["And when you opened your wings to wind, across the / punched-tin sky above a prison courtyard,"], "dAns": "Metaphor: the sky is described as punched tin, without using ‘like’ or ‘as.’", "dWrong": ["Simile: the sky is compared to tin using the word ‘like.’", "Hyperbole: the speaker exaggerates how big the prison is.", "Repetition: the word ‘prison’ is repeated in every line."], "dHint": "Is the sky really made of metal? What does a sheet of tin full of holes look like?", "dWhy": "The sky cannot really be made of tin. It is described as “punched-tin” without “like” or “as.” That is a metaphor.", "effect": "The reader sees the sky above the prison as hard, cold metal, so even the sky seems to be part of the prison.", "eWrong": ["The reader sees a soft, warm sky full of singing birds.", "The reader learns how metal is made in a factory.", "The reader sees that the prisoners are building a new roof."], "eHint": "Tin is metal. Punched tin has small holes, like stars. How would the sky look and feel to a prisoner?", "words": [["tin", "noun", "What could “tin” suggest? Something hard, cold and metal, like the bars of a prison?"], ["prison", "noun", "What could “prison” suggest about the people under the cloud?"]], "frameHint": "Metaphor frame: Cisneros compares ___ (the sky) to ___ (punched tin) to suggest ___. She also emphasizes ___.", "readerHint": "How does this image make you feel? Trapped? Sad? Uneasy?", "message": "the harsh world of the prisoners, which the free cloud floats above", "m_ev": "Cisneros states, “punched-tin sky above a prison courtyard.”", "m_word": "The noun “tin” is significant because it suggests a hard, cold metal, like the walls and bars of a prison.", "m_dev": "Cisneros compares the sky to punched tin to suggest that, for the prisoners, even the sky feels hard and closed in. She also emphasizes how different their world is from the cloud's freedom.", "m_reader": "The reader is uneasy because the sky itself seems like part of the prison. They also realize how much the prisoners have lost.", "side": "B"}, {"id": "s8", "where": "Lines 27–31 · The cloud above the prison", "quote": "those condemned to death and those condemned to life … a white cloud glides", "device": "Juxtaposition", "ctx": ["those condemned to death and those condemned to life / watched how smooth and sweet / a white cloud glides."], "dAns": "Juxtaposition: prisoners who cannot move are placed next to a cloud that glides freely.", "dWrong": ["Simile: the prisoners are compared to clouds using the word ‘like.’", "Hyperbole: the speaker exaggerates how long the prisoners have been in prison.", "Personification: the cloud is given the human ability to sing."], "dHint": "Who is trapped in the last stanza, and what moves freely above them?", "dWhy": "Prisoners “condemned to death” and “condemned to life” are placed next to a white cloud that “glides.” Trapped and free side by side: that is juxtaposition.", "effect": "The reader feels how precious freedom is: the cloud's easy, beautiful movement is something the prisoners can only watch.", "eWrong": ["The reader sees that the prisoners are about to escape on the cloud.", "The reader sees that the cloud is trapped inside the prison too.", "The reader sees that the prisoners do not notice the sky at all."], "eHint": "What can the cloud do that the prisoners cannot? How might they feel watching it?", "words": [["condemned", "verb", "What could “condemned” suggest? A punishment that can never be changed?"], ["glides", "verb", "What could “glides” suggest? Smooth, easy, effortless movement, the opposite of a prison?"], ["sweet", "adjective", "What could “sweet” suggest about how the cloud looks to the prisoners?"]], "frameHint": "Juxtaposition frame: Cisneros places ___ (the prisoners) next to ___ (the gliding cloud) to suggest ___. She emphasizes ___.", "readerHint": "How does the ending make you feel? Sad? Moved? Grateful for your own freedom?", "message": "the beauty of freedom, which those who have lost it can only watch", "m_ev": "Cisneros states, “those condemned to death and those condemned to life” and “a white cloud glides.”", "m_word": "The verb “glides” is significant because it suggests smooth, easy movement that the prisoners can never have.", "m_dev": "Cisneros places the prisoners next to the gliding cloud to suggest how precious freedom is. She emphasizes the gap between people who are trapped and a cloud that can go anywhere.", "m_reader": "The reader is moved because the prisoners can only watch the cloud from below. They also realize that freedom is a gift many people take for granted.", "side": "B"}], "intro": "Sandra Cisneros's poem “Cloud” appeared in her 1994 collection Loose Woman. The speaker talks directly to a cloud and lists the many things it has been before: an ocean, a tree, the rain on a magnolia leaf, even the tears of a man crying into a handkerchief. Cisneros uses vivid images in “Cloud” to show that everything in the world is connected and always changing, and that the cloud's freedom is something precious that not everyone can share.", "sides": {"A": "how everything in the world is connected and always changing", "B": "the cloud's freedom, which not everyone can share"}, "hot": {"s1": [[0.8171, 0.0128, 0.0646, 0.0215], [0.1216, 0.0366, 0.344, 0.0215], [0.0931, 0.0603, 0.4539, 0.0215]], "s2": [[0.0931, 0.084, 0.1854, 0.0215], [0.0914, 0.1315, 0.188, 0.0215], [0.0923, 0.179, 0.1871, 0.0214], [0.0931, 0.3592, 0.1863, 0.0215], [0.0923, 0.4067, 0.1862, 0.0215], [0.0923, 0.4779, 0.1871, 0.0215]], "s3": [[0.0923, 0.2264, 0.8087, 0.0215], [0.1208, 0.2502, 0.3062, 0.0214]], "s4": [[0.6065, 0.288, 0.2937, 0.0215], [0.1225, 0.3117, 0.3507, 0.0215], [0.0914, 0.3355, 0.3918, 0.0215]], "s5": [[0.2819, 0.4779, 0.3347, 0.0215], [0.0914, 0.5016, 0.6653, 0.0215]], "s6": [[0.5445, 0.644, 0.3037, 0.0215], [0.1216, 0.6677, 0.1242, 0.0215]], "s7": [[0.0931, 0.8717, 0.7962, 0.0215]], "s8": [[0.0914, 0.8954, 0.7198, 0.0215], [0.1208, 0.9192, 0.3532, 0.0215], [0.094, 0.9666, 0.3909, 0.0215]]}}</script>
 <script>
 (function () {
@@ -621,7 +677,7 @@ button { font: inherit; color: inherit; }
   var KEY = "onur-koc10-cisneros-cloud-hunt-v2";
   var LETTERS = ["A", "B", "C", "D"];
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var DEVRE = { Simile: /\bsimile\b/, Metaphor: /\bmetaphor\b/, Imagery: /\bimagery\b/, Personification: /\bpersonification\b/, Juxtaposition: /\bjuxtaposition\b|\bcontrast\b/, Repetition: /\brepetition\b/, Hyperbole: /\bhyperbole\b|\bexaggerat/, "Rhetorical question": /\brhetorical questions?\b/ };
+  var DEVRE = { Simile: /\bsimiles?\b/, Metaphor: /\bmetaphors?\b|\bmetaphorical/, Imagery: /\bimagery\b|\bvivid (images?|description)\b/, Personification: /\bpersonif/, Juxtaposition: /\bjuxtapos|\bcontrast/, Repetition: /\brepetition\b|\brepeat(s|ed|ing)?\b/, Hyperbole: /\bhyperbole\b|\bexaggerat/, "Rhetorical question": /\brhetorical questions?\b/ };
   var DEVLABEL = { Simile: "a simile", Metaphor: "a metaphor", Imagery: "imagery", Personification: "personification", Juxtaposition: "juxtaposition", Repetition: "repetition", Hyperbole: "hyperbole", "Rhetorical question": "a rhetorical question" };
   var FRAMES = {
     Simile: { text: "Cisneros compares ___ to ___ to suggest ___. She also emphasizes ___.", checks: [[/compares\b.+\bto\b.+\bto suggest\b/, "compares ___ to ___ to suggest ___"], [/also emphasi[sz]es\b/, "She also emphasizes ___"]] },
@@ -913,12 +969,12 @@ button { font: inherit; color: inherit; }
   function noHe(t) { return !/\bhe (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks)\b/.test(low(t)); }
 
   function checksFor(def, text) {
-    var t = low(text), s = def.spot, c = [];
+    var t = canonText(text), s = def.spot, c = [];
     if (!t) return [];
     if (def.key === "t") {
       c.push([/^in the poem/.test(t), "Starts “In the poem,”"]);
       c.push([/\bcisneros\b/.test(t) && /\bpresents\b/.test(t), "Cisneros presents …"]);
-      c.push([/through the use of\b/.test(t), "through the use of …"]);
+      c.push([/\b(through the use of|through|by using|using|with the use of|by means of|by the use of)\b/.test(t), "through the use of …"]);
       c.push([DEVRE[s.device].test(t), "Names device 1 (" + s.device.toLowerCase() + ")"]);
       c.push([nWords(text) >= 12, "Says the message, not just the device"]);
     } else if (def.key[0] === "e") {
@@ -944,8 +1000,8 @@ button { font: inherit; color: inherit; }
       c.push([/\bcisneros\b/.test(t), "Uses Cisneros's name"]);
       c.push([noHe(text), "Says “she” or “Cisneros” (not “he”)"]);
     } else if (def.key[0] === "r") {
-      c.push([/\bthe reader is\b.+\bbecause\b/.test(t), "The reader is ___ because ___"]);
-      c.push([/\bthey also (realize|realise|notice|understand)\b/.test(t), "They also realize / notice / understand ___"]);
+      c.push([/\bthe reader is\b.+\b(because|as|since|due to|when|after|by|while)\b/.test(t), "The reader is ___ because ___"]);
+      c.push([/\bthey also realize\b/.test(t), "They also realize / notice / understand ___"]);
       c.push([!/\bfeels? (good|bad)\b|\bis (good|bad)\b/.test(t), "A clear feeling word (not just “good” or “bad”)"]);
     } else if (def.key[0] === "l") {
       c.push([/^through the use of\b/.test(t), "Starts “Through the use of”"]);
@@ -1147,7 +1203,7 @@ button { font: inherit; color: inherit; }
   }
   /* The 15 sentence beginnings of the exam structure, in order */
   var SUR = "Cisneros", PRON = /He also/.test(FRAMES.Simile.text) ? "He" : "She";
-  function starterSlots() {
+  function strictSlots() {
     var n = SUR.toLowerCase(), say = "(states|writes|says|describes)";
     var one = [
       [/^the (adjective|noun|verb|adverb|pronoun)\b/, "The adjective / noun / verb “___” is …", "an"],
@@ -1160,7 +1216,80 @@ button { font: inherit; color: inherit; }
             [new RegExp("^" + n + ",? " + say + "\\b"), SUR + " states “___.”", "ev"]].concat(one)
       .concat([[new RegExp("^furthermore,? " + n + ",? " + say + "\\b"), "Furthermore, " + SUR + " states “___.”", "ev"]]).concat(one);
   }
-  function startKey(sent) { return low(String(sent).replace(/[“”]/g, '"')); }
+  /* ----- lenient matching (O. H., 2026-11-11): close to the structure = full marks ----- */
+  var SURL = SUR.toLowerCase();
+  var FULL = (function () { var m = new RegExp("(?:[A-Z][a-z.]+ )+" + SUR).exec(D.intro || ""); return m ? m[0] : SUR; })();
+  var KW = [SURL, "furthermore", "presents", "states", "writes", "describes", "adjective", "noun", "verb", "adverb", "pronoun", "emphasizes", "suggests",
+    "portrays", "demonstrates", "highlights", "reader", "readers", "realize", "realizes", "notice", "notices", "understand", "understands", "through", "because",
+    "compares", "repeats", "places", "exaggerates", "detailed", "description", "human", "quality", "simile", "metaphor", "imagery", "personification",
+    "juxtaposition", "repetition", "hyperbole", "rhetorical", "question", "poem", "moreover", "additionally", "firstly", "suggest", "emphasize"];
+  var KWSET = {}; KW.forEach(function (k) { KWSET[k] = 1; });
+  var NOFIX = { given: 1, gave: 1, place: 1, plays: 1, state: 1, stated: 1, stars: 1, stares: 1, words: 1, worse: 1, verse: 1, nouns: 1, verbs: 1, voice: 1, reads: 1,
+    ready: 1, reach: 1, readily: 1, poems: 1, poet: 1, poets: 1, these: 1, those: 1, there: 1, their: 1, where: 1, which: 1, while: 1, front: 1, frosty: 1, comes: 1,
+    compare: 1, simple: 1, simply: 1, smile: 1, smiles: 1, image: 1, images: 1, imagine: 1, quantity: 1, humane: 1, highlight: 1, notes: 1, nose: 1, poe: 1, other: 1, thomas: 0 };
+  function lev(a, b) {
+    var m = a.length, n = b.length, d = [], i, j; for (i = 0; i <= m; i++) d.push([i]); for (j = 1; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  function fixWord(w) {
+    if (w.length < 4 || KWSET[w] || NOFIX[w]) return w;
+    var lim = w.length >= 8 ? 2 : 1, best = null;
+    for (var q = 0; q < KW.length; q++) if (KW[q] !== SURL && (KW[q].indexOf(w) === 0 || w.indexOf(KW[q]) === 0)) return w;   /* an inflection, not a typo */
+    for (var i = 0; i < KW.length && !best; i++) { var k = KW[i]; if (k.charAt(0) === w.charAt(0) && Math.abs(k.length - w.length) <= lim && lev(w, k) <= lim) best = k; }
+    return best || w;
+  }
+  function fixTypos(t) { return t.split(/("[^"]*")/).map(function (seg, i) { return i % 2 ? seg : seg.replace(/[a-z']{4,}/g, fixWord); }).join(""); }
+  function esc(x) { return x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  var EVV = "(writes|says|describes|mentions|notes|declares|explains|claims|tells|adds|exclaims|wrote|stated|said|cries|calls|uses the (?:words?|phrase|lines?|quote|quotation)|includes the (?:words?|phrase|lines?))";
+  var FV = "(compares|repeats|gives|places|exaggerates|asks|uses|contrasts|juxtaposes|puts|positions|creates|personifies|employs|likens|questions|overstates|lists|describes|builds)";
+  var AV = "(emphasi[sz]es|suggests|portrays|demonstrates|highlights|shows|stresses|underlines|implies|reveals|conveys|indicates|illustrates|points out|depicts|explores|expresses|makes clear|focuses on|draws attention to|presents)";
+  function canon(t) {
+    var n = SURL;
+    t = fixTypos(t);
+    t = t.replace(new RegExp("\\b" + esc(low(FULL)) + "\\b", "g"), n).replace(/\bthe (poet|writer|author|poetess)\b/g, n);
+    t = t.replace(/^(firstly|first of all|first|to begin with|to start with|initially|for example|for instance|in this (?:quote|quotation|line|stanza)|in (?:the )?(?:first|second|third|fourth|last|final|opening|next) (?:line|lines|stanza)|in (?:line|stanza) \w+)\b,?\s*/, "")
+         .replace(/^(moreover|in addition|additionally|secondly|second|besides|also|on top of (?:this|that)|what is more|another device is)\b,?\s*/, "furthermore, ")
+         .replace(/^(thus|hence|therefore|consequently|as a result|overall|in conclusion|to conclude|to sum up|so|in this way)\b,?\s*/, "");
+    t = t.replace(/^in (?:this|her|his|that|the) poem\b,?\s*(?:"[^"]*",?\s*)?/, "in the poem, ")
+         .replace(new RegExp("^in (?!the poem\\b)[^,]{1,60},?\\s+(?=" + n + "\\b)"), "in the poem, ");
+    t = t.replace(new RegExp("^((?:furthermore,? |in the poem,? )?)(he|she)\\b"), function (m, a) { return a + n; });
+    t = t.replace(new RegExp("^(in the poem,? " + n + " )(shows|portrays|explores|conveys|depicts|demonstrates|illustrates|reveals|expresses|describes|highlights|emphasi[sz]es|suggests|presented)\\b"), "$1presents");
+    t = t.replace(new RegExp("^((?:furthermore,? )?" + n + ",? )" + EVV + "\\b"), "$1states");
+    t = t.replace(/^the (key |important |main )?(word|phrase|term)\b/, "the word");
+    t = t.replace(/^(?:the )?(?:readers?|audience|people reading)(?: also)? (?:is|are|feels?|may feel|might feel|would feel|will feel|can feel|could feel|becomes?|gets?|is left|starts to feel|begins to feel|ends up)\b/, "the reader is")
+         .replace(/^(?:this|it|these words?|that|the (?:word|line|quote|quotation|phrase|device)) (?:makes?|leaves?|causes?) (?:the )?(?:readers?|audience|us)(?: to)?(?: feel| become| be)?\b/, "the reader is")
+         .replace(/^(?:we|as readers,? we|as a reader,? i) (?:feel|are|become)\b/, "the reader is");
+    t = t.replace(/^(?:they|the readers?|readers|the audience|we|he or she|people)(?: also)? (?:reali[sz]es?|understands?|notices?|sees?|learns?|recogni[sz]es?|can see|can tell|becomes? aware|starts? to realize|begins? to understand|discovers?|knows?|thinks?|feels? that)\b/, "they also realize");
+    t = t.replace(/^(?:through the use of|through using|through|by using|by the use of|with the use of|by means of|by employing|using)\b/, "through the use of");
+    t = t.replace(new RegExp("^(through the use of [^,]{1,60},? )(he|she)\\b"), "$1" + n)
+         .replace(new RegExp("^(through the use of [^,]{1,60},? " + n + " )(shows|portrays|explores|conveys|depicts|demonstrates|illustrates|reveals|expresses|highlights|emphasi[sz]es|suggests)\\b"), "$1presents");
+    return t;
+  }
+  function startKey(sent) { return canon(low(String(sent).replace(/[“”]/g, '"'))); }
+  function strictKey(sent) { return low(String(sent).replace(/[“”]/g, '"')); }
+  function canonText(text) { return sentences(String(text || "")).map(startKey).join(" "); }
+  window.__canon = canonText;
+  /* The 15 sentence beginnings, matched on the canonical form (the exact wording is kept in strictSlots for the "close enough" note) */
+  function starterSlots() {
+    var T = strictSlots(), n = SURL;
+    var one = [
+      [/^the (adjective|noun|verb|adverb|pronoun|word)\b/, T[2][1], "an"],
+      [new RegExp("^" + n + " (also )?" + FV + "\\b"), T[3][1], "choice"],
+      [new RegExp("^" + n + " (also )?" + AV + "\\b"), T[4][1], "choice"],
+      [/^the reader is\b/, T[5][1], "reader"],
+      [/^they also realize\b/, T[6][1], "reader"],
+      [/^through the use of\b/, T[7][1], "idea"]];
+    return [[new RegExp("^in the poem,? " + n + " presents\\b"), T[0][1], "idea"],
+            [new RegExp("^" + n + ",? (states|writes|says|describes)\\b"), T[1][1], "ev"]].concat(one)
+      .concat([[new RegExp("^furthermore,? " + n + ",? (states|writes|says|describes)\\b"), T[8][1], "ev"]]).concat(one);
+  }
+  var STRICTT = null;
+  function strictOk(j, raw) { STRICTT = STRICTT || strictSlots(); return !STRICTT[j] || STRICTT[j][0].test(strictKey(raw)); }
+  var TOSUG = /\bto (suggest|show|imply|emphasi[sz]e|highlight|present|indicate|reveal|portray|convey|express|demonstrate|illustrate|make|create)\b|\b(suggesting|showing|implying|emphasi[sz]ing|highlighting|conveying|which suggests|which shows)\b/;
+  function frameOk(k) { return FRAMEALL.some(function (r) { return r.test(k); }) || (new RegExp("^" + SURL + " (also )?" + FV + "\\b").test(k) && TOSUG.test(k)); }
+  function wordSent(k) { return /^the (adjective|noun|verb|adverb|pronoun|word) "[^"]+"/.test(k); }
+  function readerSent(k) { return /^the reader is\b.+\b(because|as|since|due to|when|after|by|while)\b/.test(k); }
   /* Align the student's sentences with the 15 beginnings (longest common subsequence), so one missing or extra sentence does not turn everything red */
   function alignStarts(S_, T) {
     var m = S_.length, n = T.length, L = [], i, j;
@@ -1207,20 +1336,21 @@ button { font: inherit; color: inherit; }
     }
     pairs.forEach(function (p) {
       gap(p[0], p[1]);
-      var mt = T[p[1]][0].exec(startKey(S_[p[0]]));
-      sentNode(S_[p[0]], T[p[1]][2], mt[0].split(/\s+/).length, "");
+      var mt = T[p[1]][0].exec(startKey(S_[p[0]])), exact = strictOk(p[1], S_[p[0]]);
+      sentNode(S_[p[0]], T[p[1]][2], exact ? mt[0].split(/\s+/).length : 2, "");
+      if (!exact) { var cl = document.createElement("span"); cl.className = "st-close"; cl.textContent = "≈ close enough, full marks · exam wording: " + T[p[1]][1]; el.appendChild(cl); el.appendChild(document.createTextNode(" ")); }
       pi = p[0] + 1; pj = p[1] + 1;
     });
     gap(S_.length, T.length);
     return [ok, T.length, wrongPron];
   }
   function catOf(sent) {
-    var t = low(sent.replace(/[“”]/g, '"')).replace(/^furthermore,?\s*/, "");
+    var t = startKey(sent).replace(/^furthermore,?\s*/, "");
     if (/^(in the poem|through the use of)\b/.test(t)) return "idea";
-    if (/^the (adjective|noun|verb|adverb|pronoun)\b/.test(t)) return "an";
-    if (/\bthe reader is\b|^they also\b/.test(t)) return "reader";
+    if (/^the (adjective|noun|verb|adverb|pronoun|word)\b/.test(t)) return "an";
+    if (/\bthe reader is\b|^they also realize\b/.test(t)) return "reader";
     if (/"/.test(t) && /\b(states|writes|says|describes)\b/.test(t) && !FRAMEALL.some(function (r) { return r.test(t); })) return "ev";
-    if (FRAMEALL.some(function (r) { return r.test(t); }) || /^(s?he) (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights)\b/.test(t)) return "choice";
+    if (frameOk(t) || new RegExp("^" + SURL + " (also )?" + AV + "\\b").test(t)) return "choice";
     return "";
   }
   function renderCCText(el, text) {
@@ -1326,7 +1456,8 @@ button { font: inherit; color: inherit; }
       $("exam-intro").textContent = D.intro;
       if (!$("exam-img").src) $("exam-img").src = $("plain-img").src;
       if ($("exam-text").value !== (ex.text || "")) $("exam-text").value = ex.text || "";
-      [0, 1, 2, 3].forEach(function (i) { var v = (ex.plan || [])[i] || ""; if ($("plan-" + i).value !== v) $("plan-" + i).value = v; });
+      if (!ex.plan || !ex.plan.p) ex.plan = { p: [null, null], d: ["", ""] };
+      renderPlan();
       tick(); lastPts = null; liveUpdate();
     }
     if (ex && ex.done) renderExamResult();
@@ -1340,13 +1471,85 @@ button { font: inherit; color: inherit; }
     $("exam-timer").classList.toggle("low", left <= 300);
     var ng = $("exam-nudge"), txt = "";
     if (left <= 300) { txt = "⏰ 5 minutes left: finish your link sentence."; if (!S.exam.n5) { S.exam.n5 = 1; save(); bigPop("5 minutes left", "Finish your link sentence. Is every idea specific?", "time"); } }
-    else if (left <= 1200 && !/\bfurthermore\b/.test(low(S.exam.text || ""))) { txt = "⏰ Half of your time has gone: start device 2 with “Furthermore,” now."; if (!S.exam.n20) { S.exam.n20 = 1; save(); bigPop("Half your time has gone", "Start device 2 now with “Furthermore,”", "time"); } }
+    else if (left <= 1200 && !DEV2.test(S.exam.text || "")) { txt = "⏰ Half of your time has gone: start device 2 with “Furthermore,” now."; if (!S.exam.n20) { S.exam.n20 = 1; save(); bigPop("Half your time has gone", "Start device 2 now with “Furthermore,”", "time"); } }
     ng.textContent = txt; ng.hidden = !txt;
     if (left <= 0 && S.tab === 4) finishExam(true);
   }
   setInterval(tick, 1000);
-  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: ["", "", "", ""] }; save(); renderMain(); window.scrollTo(0, 0); $("plan-0").focus({ preventScroll: true }); };
-  [0, 1, 2, 3].forEach(function (i) { $("plan-" + i).addEventListener("input", function () { if (!S.exam) return; S.exam.plan = S.exam.plan || ["", "", "", ""]; S.exam.plan[i] = $("plan-" + i).value; save(); }); });
+  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: { p: [null, null], d: ["", ""] } }; picId = null; save(); renderMain(); window.scrollTo(0, 0); };
+  /* ----- plan by tapping the device phrases on the poem (O. H., 2026-11-11): no typing ----- */
+  function planOf() { var P = S.exam.plan; if (!P || !P.p) P = S.exam.plan = { p: [null, null], d: ["", ""] }; return P; }
+  function svgOf(s) { var NS = "http://www.w3.org/2000/svg", g = document.createElementNS(NS, "svg"); g.setAttribute("viewBox", "0 0 160 100"); g.setAttribute("class", "pic"); g.setAttribute("aria-hidden", "true"); g.innerHTML = (PICS[s.id] || [""])[0]; return g; }
+  function renderPlan(popId) {
+    var P = planOf(), box = $("plan-rows"), poem = $("exam-poem"); box.textContent = "";
+    poem.querySelectorAll(".pk,.pkn").forEach(function (x) { x.remove(); });
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]]; if (!s) return;
+      rectsOf(s).forEach(function (r, ri) {
+        var m = document.createElement("div"); m.className = "pk" + (i ? " g2" : "") + (s.id === popId ? " pop" : "");
+        m.style.left = (r[0] * 100) + "%"; m.style.top = (r[1] * 100) + "%"; m.style.width = (r[2] * 100) + "%"; m.style.height = (r[3] * 100) + "%"; poem.appendChild(m);
+        if (!ri) { var b = document.createElement("div"); b.className = "pkn" + (i ? " g2" : ""); b.textContent = i + 1; b.style.left = (r[0] * 100) + "%"; b.style.top = (r[1] * 100) + "%"; poem.appendChild(b); }
+      });
+    });
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]], row = document.createElement("div"); row.className = "prow g" + (i + 1);
+      var h = document.createElement("b"); h.textContent = "Device " + (i + 1) + (s && P.d[i] ? ": " + P.d[i] : "");
+      var q = document.createElement("span"); q.className = "pq" + (s ? "" : " none");
+      q.textContent = s ? "“" + s.quote + "”" : (i === 0 || P.p[0] ? "Tap a device in the poem below." : "Pick device 1 first.");
+      row.appendChild(h); row.appendChild(q);
+      if (s) {
+        if (PICS[s.id]) { var pp = document.createElement("div"); pp.className = "ppic"; pp.appendChild(svgOf(s)); row.appendChild(pp); }
+        var acts = document.createElement("div"); acts.className = "pacts";
+        var nm = document.createElement("button"); nm.type = "button"; nm.className = "pchip" + (P.d[i] ? " dev" : ""); nm.textContent = P.d[i] ? "Change device" : "Name the device";
+        nm.onclick = function () { openTray(i); };
+        var cl = document.createElement("button"); cl.type = "button"; cl.className = "pchip"; cl.textContent = "Remove";
+        cl.onclick = function () { P.p[i] = null; P.d[i] = ""; save(); renderPlan(); picUpdateNow(); };
+        acts.appendChild(nm); acts.appendChild(cl); row.appendChild(acts);
+      }
+      box.appendChild(row);
+    });
+  }
+  $("exam-poem").addEventListener("click", function (e) {
+    if (!S || !S.exam || !S.exam.started || S.exam.done) return;
+    var img = $("exam-img"), r = img.getBoundingClientRect(); if (!r.width) return;
+    var fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height, padx = 0.012, pady = 0.004, hit = null, P = planOf();
+    SPOTS.forEach(function (s) { rectsOf(s).forEach(function (q) { if (!hit && fx >= q[0] - padx && fx <= q[0] + q[2] + padx && fy >= q[1] - pady && fy <= q[1] + q[3] + pady) hit = s; }); });
+    if (!hit) { toast("No device there. Look for a comparison, a repeated word, a vivid picture, a human quality, an exaggeration or two opposites side by side."); return; }
+    var i = P.p.indexOf(hit.id);
+    if (i >= 0) { P.p[i] = null; P.d[i] = ""; save(); renderPlan(); picUpdateNow(); toast("Device " + (i + 1) + " removed."); return; }
+    i = !P.p[0] ? 0 : (!P.p[1] ? 1 : -1);
+    if (i < 0) { toast("You already picked two devices. Tap one of them again to remove it."); return; }
+    P.p[i] = hit.id; P.d[i] = ""; save(); renderPlan(hit.id); picUpdateNow(); openTray(i);
+  });
+  function openTray(i) {
+    var P = planOf(), s = BY[P.p[i]]; if (!s) return;
+    $("tray").className = "tray g" + (i + 1);
+    $("tray-h").textContent = "Device " + (i + 1);
+    $("tray-q").textContent = "“" + s.quote + "”";
+    var box = $("tray-opts"); box.textContent = "";
+    Object.keys(DEVRE).forEach(function (d) {
+      var b = document.createElement("button"); b.type = "button"; b.textContent = d; if (P.d[i] === d) b.className = "on";
+      b.onclick = function () { P.d[i] = d; closeTray(); if (i === 0 && !P.p[1]) toast("Now device 2: tap another device in the poem."); save(); renderPlan(); };
+      box.appendChild(b);
+    });
+    $("tray-back").hidden = false; placePic();
+  }
+  function closeTray() { $("tray-back").hidden = true; placePic(); }
+  $("tray-x").onclick = function () { closeTray(); renderPlan(); };
+  $("tray-back").addEventListener("click", function (e) { if (e.target === $("tray-back")) closeTray(); });
+  /* after the exam: was each device named correctly? Always show the right answer. */
+  function planCheck() {
+    var P = S.exam && S.exam.plan, out = [];
+    if (!P || !P.p) return out;
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]], lab = "Device " + (i + 1);
+      if (!s) { out.push([false, lab + ": not picked", "Plan before you write: tap a device in the poem and name it."]); return; }
+      var ok = P.d[i] === s.device;
+      out.push([ok, lab + ": “" + s.quote + "”", ok ? "✓ Correct: " + s.device.toLowerCase() + ". " + s.dWhy
+        : (P.d[i] ? "✗ You named it " + P.d[i].toLowerCase() + ". The correct answer: " : "✗ Not named. The correct answer: ") + s.device.toLowerCase() + ". " + s.dWhy]);
+    });
+    return out;
+  }
   $("exam-text").addEventListener("input", function (e) { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; liveSoon(e); });
   ["keyup", "click", "focus"].forEach(function (ev) { $("exam-text").addEventListener(ev, liveSoon); });
   $("btn-exam-fix").onclick = function () { var ex = S.exam; if (!ex) return; ex.done = false; ex.fix = true; save(); renderMain(); window.scrollTo(0, 0); $("exam-text").focus({ preventScroll: true }); };
@@ -1357,21 +1560,21 @@ button { font: inherit; color: inherit; }
   function vagueWords(text) { return low(unq(text)).match(VAGUE) || []; }
   function wrongPronouns(text) { return low(unq(text)).match(new RegExp("\\b" + (PRON === "He" ? "she" : "he") + "\\b(?=\\s+(?:also\\s+)?(?:emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks|uses|presents|states|writes|shows|describes|creates)\\b)", "g")) || []; }
   function examPoints(text) {
-    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T);
-    var t = low(text), tq = low(String(text).replace(/[“”]/g, '"')), qs = quotes(text), big = nWords(text) >= 30;
+    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T), keys = S_.map(startKey);
+    var t = keys.join(" "), tq = t, qs = quotes(text), big = nWords(text) >= 30;
     function n(re) { return (tq.match(re) || []).length; }
     var devs = Object.keys(DEVRE).filter(function (k) { return DEVRE[k].test(t); }).length;
-    var frames = S_.filter(function (x) { var y = low(x); return FRAMEALL.some(function (r) { return r.test(y); }); }).length;
+    var frames = keys.filter(frameOk).length;
     var beg = pairs.length * 4;
-    var mentions = n(/\b(simile|metaphor|imagery|personification|juxtaposition|repetition|hyperbole|rhetorical question)\b/g);
+    var mentions = n(/\b(similes?|metaphors?|imagery|personification|juxtaposition|repetition|hyperbole|exaggeration|contrast|rhetorical question)\b/g);
     var pDev = devs >= 2 || mentions >= 3 ? 5 : (devs === 1 ? 2 : 0), pQ = (qs.length >= 1 ? 3 : 0) + (qs.length >= 2 ? 3 : 0);
     var pShort = qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }) ? 2 : 0;
-    var pWord = Math.min(2, n(/\bthe (adjective|noun|verb|adverb|pronoun) "[^"]+"\s*,?\s*is\b/g)) * 3;
-    var pFrame = Math.min(2, frames) * 3, pReader = Math.min(2, n(/\bthe reader is\b[^.]*\bbecause\b/g)) * 2;
-    var pFur = /\bfurthermore\b/.test(t) ? 2 : 0;
+    var pWord = Math.min(2, keys.filter(wordSent).length) * 3;
+    var pFrame = Math.min(2, frames) * 3, pReader = Math.min(2, keys.filter(readerSent).length) * 2;
+    var pFur = keys.some(function (k) { return /^furthermore\b/.test(k); }) ? 2 : 0;
     var pPron = big && t.indexOf(SUR.toLowerCase()) >= 0 && !wrongPronouns(text).length ? 3 : 0;
     var pVague = big && !vagueWords(text).length ? 3 : 0;
-    var pTopic = S_.length && T[0][0].test(startKey(S_[0])) && nWords(S_[0]) >= 12 ? 3 : 0;
+    var pTopic = S_.length && T[0][0].test(keys[0]) && nWords(S_[0]) >= 12 ? 3 : 0;
     var parts = [["Sentence beginnings (" + pairs.length + " of 15)", beg, 60], ["Evidence: two devices named, short quotations in quotation marks", pDev + pQ + pShort, 13],
                  ["Analysis: word class, device frames, reader sentences", pWord + pFrame + pReader, 16], ["Precision and language: specific message, no vague words, “Furthermore,” name and pronoun", pTopic + pVague + pFur + pPron, 11]];
     var pts = parts.reduce(function (a, p) { return a + p[1]; }, 0);
@@ -1589,42 +1792,57 @@ button { font: inherit; color: inherit; }
   var PICS = (function () { try { return JSON.parse(document.getElementById("pic-data").textContent); } catch (e) { return {}; } })();
   var picId = null, picHidden = {};
   window.__picLog = [];
+  var DEV2 = /\b(furthermore|moreover|in addition|additionally|secondly)\b/i;
+  /* which device do these words in quotation marks belong to? Single words count too. */
   function picSpotFor(p) {
+    var np = cn(p), pw = cw(p), best = null, P = S && S.exam && S.exam.plan && S.exam.plan.p ? S.exam.plan.p : [];
+    if (!np.trim()) return null;
+    var cands = SPOTS.filter(function (s) { return PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0); });
+    if (cands.length) return cands.filter(function (s) { return P.indexOf(s.id) >= 0; })[0] || cands[0];
     if (nWords(p) < 2) return null;
-    var np = cn(p), pw = cw(p), best = null;
-    SPOTS.forEach(function (s) { if (!best && PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0)) best = s; });
-    if (best) return best;
     SPOTS.forEach(function (s) {
       if (best || !PICS[s.id]) return;
       if ([s.quote].concat(s.ctx || []).map(cn).some(function (c) { return c.indexOf(np) >= 0; }) && overlap(pw, cw(s.quote))) best = s;
     });
     return best;
   }
+  var picLast = { before: "", first: 0 };
+  function picUpdateNow() { picUpdate(picLast.before, picLast.first); }
   function picUpdate(before, firstLen) {
-    var box = $("exam-pic");
-    if (!String(before).trim()) { picId = null; popSeen = {}; placePic(); return; }
-    var t = before.slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
-    while ((m = re.exec(t))) segs.push(m[1]);
-    var s = null; for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
-    if (s) showPic(s);   /* no match: keep the last picture on screen */
+    picLast = { before: before, first: firstLen };
+    if (!String(before).trim()) popSeen = {};
+    var P = S && S.exam && S.exam.plan && S.exam.plan.p ? S.exam.plan.p : [null, null];
+    var t = String(before).slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
+    var fur = DEV2.exec(t), part = fur ? t.slice(fur.index) : t;
+    while ((m = re.exec(part))) segs.push(m[1]);
+    var s = null;
+    for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
+    /* nothing quoted yet for this device: show the planned device (device 2 once "Furthermore" is written) */
+    if (!s) { var pid = fur ? P[1] : P[0]; s = pid && PICS[pid] ? BY[pid] : null; }
+    if (!s && !fur && picId) { placePic(); return; }   /* the device 1 picture stays until device 2 starts */
+    if (!s) { if (!String(before).trim()) picId = null; placePic(); return; }
+    showPic(s);
   }
   function showPic(s) {
-    var box = $("exam-pic"); if (picId === s.id) return;
+    if (picId === s.id) { placePic(); return; }
     picId = s.id; window.__picLog.push(s.id);
-    var P = PICS[s.id]; box.querySelector("svg").innerHTML = P[0]; $("pic-see").textContent = P[1]; $("pic-mean").textContent = P[2];
+    var P = PICS[s.id], box = $("exam-pic"); box.querySelector("svg").innerHTML = P[0];
+    var sp = $("side-pic"); sp.querySelector("svg").innerHTML = P[0];
+    sp.classList.remove("empty", "flash"); void sp.offsetWidth; sp.classList.add("flash");
     placePic(); box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
   }
-  /* the picture floats right under the line being written; above it when the keyboard leaves no room below */
+  /* the picture sits on the right of the writing box; if the box is out of view, it docks at the bottom of the screen */
   function placePic() {
-    var box = $("exam-pic"), ta = $("exam-text");
-    var show = !!(picId && !picHidden[picId] && document.activeElement === ta && S && S.exam && S.exam.started && !S.exam.done);
+    var box = $("exam-pic"), ta = $("exam-text"), sp = $("side-pic");
+    var live = !!(S && S.exam && S.exam.started && !S.exam.done && S.tab === 4 && !S.report);
+    if (!picId || !live) sp.classList.add("empty");
+    var show = !!(picId && live && $("tray-back").hidden && String(S.exam.text || "").trim());   /* docks only once writing has started */
+    if (show) {
+      var r = ta.getBoundingClientRect(), vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      show = !(r.bottom > 80 && r.top < vh - 60);
+    }
     box.hidden = !show; if (!show) return;
-    var vv = window.visualViewport, vTop = vv ? vv.offsetTop : 0, vH = vv ? vv.height : window.innerHeight;
-    var tr = ta.getBoundingClientRect(), c = caretBox(ta), h = box.offsetHeight, top = c.bottom + 10, up = false;
-    box.style.left = Math.max(8, tr.left) + "px"; box.style.width = Math.min(tr.width, window.innerWidth - 16) + "px";
-    if (top + h > vTop + vH - 6) { top = c.top - h - 10; up = true; }
-    if (top < vTop + 6) top = vTop + 6;
-    box.style.top = Math.round(top) + "px"; box.classList.toggle("up", up);
+    box.classList.add("dock"); box.classList.remove("up"); box.style.top = ""; box.style.width = "";
   }
   function placeBoth() { placePic(); placePop(); }
   window.addEventListener("scroll", placeBoth, { passive: true }); window.addEventListener("resize", placeBoth);
@@ -1685,24 +1903,26 @@ button { font: inherit; color: inherit; }
   $("btn-exam-finish").onclick = function () { finishExam(false); };
   $("btn-exam-again").onclick = function () { S.exam = null; save(); $("exam-text").value = ""; renderMain(); window.scrollTo(0, 0); };
   function examChecks(text) {
-    var t = low(text), tq = low(String(text).replace(/[“”]/g, '"')), qs = quotes(text), c = [];
+    var keys = sentences(text).map(startKey), t = keys.join(" "), qs = quotes(text), c = [], T = starterSlots();
     var devs = Object.keys(DEVRE).filter(function (k) { return DEVRE[k].test(t); });
-    var frames = sentences(text).filter(function (x) { var y = low(x); return FRAMEALL.some(function (r) { return r.test(y); }); }).length;
-    function n(re) { return (tq.match(re) || []).length; }
-    c.push([/^in the poem\b/.test(t) && /\bcisneros presents\b/.test(t) && /through the use of\b/.test(t), "② Topic sentence: “In the poem, Cisneros presents … through the use of …”"]);
-    c.push([devs.length >= 2 || n(/\b(simile|metaphor|imagery|personification|juxtaposition|repetition|hyperbole|rhetorical question)\b/g) >= 3, "Names the device for each of your two examples"]);
+    var frames = keys.filter(frameOk).length;
+    function n(re) { return (t.match(re) || []).length; }
+    var USEOF = /\b(through the use of|through|by using|using|with the use of|by means of|by the use of)\b/;
+    c.push([keys.length > 0 && T[0][0].test(keys[0]) && USEOF.test(keys[0]), "② Topic sentence: “In the poem, " + SUR + " presents … through the use of …”"]);
+    c.push([devs.length >= 2 || n(/\b(similes?|metaphors?|imagery|personification|juxtaposition|repetition|hyperbole|exaggeration|contrast|rhetorical question)\b/g) >= 3, "Names the device for each of your two examples"]);
     c.push([qs.length >= 2, "③ A quotation for each device, in quotation marks"]);
     c.push([qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }), "Short quotations (15 words or fewer)"]);
-    c.push([n(/\bthe (adjective|noun|verb|adverb|pronoun) "/g) >= 2, "④ “The adjective / noun / verb “___” is …” for each device"]);
+    c.push([keys.filter(wordSent).length >= 2, "④ “The adjective / noun / verb “___” is …” for each device"]);
     c.push([frames >= 2, "⑤ The device frame for each device (e.g. “compares ___ to ___ to suggest ___”)"]);
-    c.push([n(/\bthe reader is\b[^.]*\bbecause\b/g) >= 2 && n(/\bthey also (realize|realise|notice|understand)\b/g) >= 2, "⑥ “The reader is ___ because ___. They also realize ___” for each device"]);
-    c.push([n(/\bthrough the use of\b/g) >= 3, "⑦ A link sentence for each device: “Through the use of …, Cisneros presents …”"]);
-    c.push([/\bfurthermore\b/.test(t), "⑧ Device 2 starts with “Furthermore,”"]);
-    c.push([noHe(text) && /\bcisneros\b/.test(t), "Uses the poet's name and the right pronoun"]);
+    c.push([keys.filter(readerSent).length >= 2 && keys.filter(function (k) { return /^they also realize\b/.test(k); }).length >= 2, "⑥ “The reader is ___ because ___. They also realize ___” for each device"]);
+    c.push([keys.filter(function (k) { return /^through the use of\b/.test(k); }).length + (keys.length && USEOF.test(keys[0]) ? 1 : 0) >= 3, "⑦ A link sentence for each device: “Through the use of …, " + SUR + " presents …”"]);
+    c.push([keys.some(function (k) { return /^furthermore\b/.test(k); }), "⑧ Device 2 starts with “Furthermore,”"]);
+    c.push([noHe(text) && t.indexOf(SURL) >= 0, "Uses the poet's name and the right pronoun"]);
     return c;
   }
   function finishExam(timeUp) {
     var ex = S.exam; if (!ex || ex.done) return;
+    clearTimeout(popT1); clearTimeout(popT2); $("big-pop").hidden = true; $("exam-pic").hidden = true; $("tray-back").hidden = true;
     ex.text = $("exam-text").value || ex.text || "";
     ex.used = Math.min(EXAM_SEC, (Date.now() - ex.started) / 1000);
     if (ex.fix) ex.used = ex.usedExam || 0; else ex.usedExam = ex.used;
@@ -1723,6 +1943,9 @@ button { font: inherit; color: inherit; }
     c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : "no"; li.textContent = x[1]; ul.appendChild(li); });
     var qs = quotes(ex.text), unknown = qs.filter(function (q) { return !SPOTS.some(function (s) { return inPoem(q, s); }); });
     $("exam-qnote").textContent = unknown.length ? "Check these quotations against the poem yourself (the app only knows the lines with highlighted devices): " + unknown.map(function (q) { return "“" + q + "”"; }).join(", ") : "";
+    var pc = $("plan-check"); pc.textContent = "";
+    planCheck().forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "" : "no"; var b = document.createElement("b"); b.textContent = x[1]; var p = document.createElement("div"); p.className = "pw"; p.textContent = x[2]; li.appendChild(b); li.appendChild(p); pc.appendChild(li); });
+    $("plan-check-card").hidden = !pc.firstChild;
     legendCC($("exam-legend"));
     var stc = renderExamCC($("exam-cc"), ex.text || "");
     $("exam-starts").textContent = "Sentence beginnings: " + stc[0] + " of " + stc[1] + " correct. Bold = correct beginning. Red = wrong or missing beginning, with the words you should start with."
@@ -1746,7 +1969,7 @@ button { font: inherit; color: inherit; }
     $("r-stars").textContent = "★".repeat(f);
     var ex = [];
     ex.push("Spot it: " + spottedCount() + " of " + SPOTS.length + " devices spotted without highlights" + (S.spotMiss ? " (" + S.spotMiss + " taps on empty words)" : "") + ".");
-    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words.");
+    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words." + (function () { var pcs = planCheck(); return pcs.length ? " Plan: " + pcs.map(function (x, i) { return "device " + (i + 1) + (x[0] ? " ✓" : " ✗"); }).join(", ") + "." : ""; })());
     $("r-extra").textContent = ex.join(" ");
     var rev = SPOTS.filter(function (s) { return S.spots[s.id].misses; });
     $("r-revise-block").hidden = !rev.length;

@@ -332,6 +332,54 @@ button { font: inherit; color: inherit; }
 #exam-text { min-height: 320px; line-height: 1.55; }
 @media (prefers-reduced-motion: reduce) { .tap-dot { animation: none; opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+/* ===== Koç 10 exam, latest standard (O. H., 2026-11-12) ===== */
+:root { --d2: #C2410C; }
+#exam-tip, #exam-warn { display: none !important; }   /* no "start with" suggestions at the top */
+.ex-pick { position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ex-pick img { width: 100%; height: auto; user-select: none; -webkit-user-select: none; display: block; }
+.pk { position: absolute; border-radius: 5px; pointer-events: none; mix-blend-mode: multiply; background: rgba(255,214,60,.62); box-shadow: inset 0 -3px 0 var(--board); }
+.pk.g2 { background: rgba(255,160,110,.62); box-shadow: inset 0 -3px 0 var(--d2); }
+.pk.pop { animation: pkpop .45s; }
+@keyframes pkpop { 0% { opacity: 0; transform: scale(1.12); } 100% { opacity: 1; transform: none; } }
+.pkn { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #FFFFFF; background: var(--board); pointer-events: none; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.pkn.g2 { background: var(--d2); }
+.prow { display: flex; flex-direction: column; gap: 6px; border-left: 5px solid var(--board); background: #FFFBEA; border-radius: 0 10px 10px 0; padding: 8px 10px; }
+.prow.g2 { border-left-color: var(--d2); background: #FFF3EC; }
+.prow .pq { font-weight: 700; }
+.prow .pq.none { font-weight: 400; color: var(--muted); font-style: italic; }
+.prow .pacts { display: flex; flex-wrap: wrap; gap: 6px; }
+.prow .ppic svg { width: 150px; height: 94px; border-radius: 8px; display: block; }
+.pchip { appearance: none; border: 1.5px solid var(--ink); background: #FFFFFF; color: var(--ink); border-radius: 999px; padding: 3px 11px; font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; min-height: 32px; }
+.pchip.dev { background: var(--board); border-color: var(--board); color: #FFFFFF; }
+.prow.g2 .pchip.dev { background: var(--d2); border-color: var(--d2); }
+.tray-back { position: fixed; inset: 0; z-index: 80; background: rgba(20,20,24,.35); display: flex; align-items: flex-end; justify-content: center; }
+.tray-back[hidden] { display: none; }
+.tray { width: 100%; max-width: 680px; background: #FFFFFF; border-radius: 18px 18px 0 0; border-top: 6px solid var(--board); padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 10px; box-shadow: 0 -10px 30px rgba(0,0,0,.25); }
+.tray.g2 { border-top-color: var(--d2); }
+.tray-q { font-weight: 700; background: #FFF6CC; border-radius: 8px; padding: 6px 10px; margin: 0; }
+.tray.g2 .tray-q { background: #FFEDE3; }
+.tray-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.tray-opts button { appearance: none; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); border-radius: 12px; padding: 10px 6px; font: inherit; font-weight: 700; cursor: pointer; min-height: 46px; }
+.tray-opts button.on { border-color: var(--board); background: #FFF6CC; }
+.pcheck { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.pcheck li { border-radius: 12px; padding: 10px 12px; background: var(--good-soft); }
+.pcheck li.no { background: var(--red-soft); }
+.pcheck li b { display: block; }
+.pcheck li .pw { font-size: .9rem; margin-top: 4px; }
+.wr-grid { display: grid; grid-template-columns: minmax(0, 1fr) clamp(118px, 36%, 300px); gap: 10px; align-items: start; }
+.wr-grid #exam-text { min-height: 420px; }
+.side-pic { border: 2px solid var(--board); border-radius: 12px; background: #FFFDF6; padding: 4px; display: flex; flex-direction: column; gap: 4px; font-size: .78rem; line-height: 1.3; }
+.side-pic svg { width: 100%; height: auto; aspect-ratio: 160 / 100; border-radius: 8px; display: block; }
+.side-pic.empty svg { display: none; }
+.side-pic:not(.empty) .sp-empty { display: none; }
+.side-pic .sp-empty { color: var(--muted); font-style: italic; margin: 0; padding: 4px; }
+.side-pic.flash { animation: picin .5s; }
+.eb-pic .pc, .eb-pic .px, .eb-pic::before { display: none !important; }
+.eb-pic { padding: 4px; }
+.eb-pic.dock { pointer-events: none; top: auto !important; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); left: auto !important; right: 12px !important; width: min(46vw, 260px) !important; margin: 0; }
+.eb-pic svg { width: 100%; height: auto; aspect-ratio: 160 / 100; }
+#exam-live { padding-bottom: 120px; }
+.st-close { display: inline-block; color: #3D5A40; font-weight: 700; font-size: .8rem; background: #E6F2E8; border-radius: 6px; padding: 0 6px; margin: 0 2px; }
 </style>
 </head>
 <body>
@@ -492,7 +540,7 @@ button { font: inherit; color: inherit; }
       <div id="lv-4" class="col" hidden>
         <div class="card" id="exam-start-card">
           <span class="label">Exam practice · 40 minutes</span>
-          <p>Like the real exam, the poem has no highlights. Read the introduction, choose TWO devices yourself and write ONE body paragraph in your exam structure.</p>
+          <p>Like the real exam, the poem has no highlights. Read the introduction, tap TWO devices in the poem and name them, then write ONE body paragraph in your exam structure.</p>
           <p><b>While you write:</b> your structure score (out of 100) goes up live, and big coach messages pop up to push your analysis deeper. Read each one, then keep writing.</p>
           <p class="small muted">The timer keeps running if you leave the page. When time is up, your paragraph is checked automatically.</p>
           <button class="btn btn-ink" id="btn-exam-start" type="button">Start the 40-minute exam</button>
@@ -509,18 +557,16 @@ button { font: inherit; color: inherit; }
             <p class="eb-nudge" id="exam-nudge" hidden></p>
           </div>
           <div class="card"><span class="label">The introduction (given)</span><p class="intro" id="exam-intro"></p></div>
-          <details class="card poem-card" open><summary>The poem</summary><div class="poem-img"><img id="exam-img" alt="The full poem without highlights"></div></details>
-          <div class="card">
-            <span class="label">Plan first (about 2 minutes)</span>
-            <p class="small muted">Choose your two devices and the words you will quote before you write. The plan is not marked.</p>
-            <div class="field"><label for="plan-0">Device 1</label><input id="plan-0" type="text" maxlength="40" placeholder="e.g. metaphor"></div>
-            <div class="field"><label for="plan-1">Words I will quote for device 1</label><input id="plan-1" type="text" maxlength="120"></div>
-            <div class="field"><label for="plan-2">Device 2</label><input id="plan-2" type="text" maxlength="40" placeholder="e.g. repetition"></div>
-            <div class="field"><label for="plan-3">Words I will quote for device 2</label><input id="plan-3" type="text" maxlength="120"></div>
+          <div class="card" id="plan-card">
+            <span class="label">Plan first: pick your two devices</span>
+            <p class="small">Tap the words of a device in the poem below. They light up: <b style="background:#FFE680;padding:0 4px;border-radius:4px">yellow = Device 1</b>, <b style="background:#FFCDB2;padding:0 4px;border-radius:4px">orange = Device 2</b>. Then tap the name of the device. Tap a device again to remove it. Your plan is checked when you finish.</p>
+            <div id="plan-rows" class="col" style="gap:8px"></div>
           </div>
+          <details class="card poem-card" open><summary>The poem</summary><div class="poem-img ex-pick" id="exam-poem"><img id="exam-img" alt="The full poem without highlights. Tap the words of a device to plan."></div></details>
           <div class="card">
             <label class="label" for="exam-text">Your body paragraph</label>
-            <textarea id="exam-text" spellcheck="true" placeholder="In the poem, …"></textarea>
+            <div class="wr-grid"><textarea id="exam-text" spellcheck="true" placeholder="In the poem, …"></textarea>
+            <aside class="side-pic empty" id="side-pic" aria-hidden="true"><svg class="pic" viewBox="0 0 160 100"></svg><p class="sp-empty">Pick a device in the plan, or put words from the poem in quotation marks: its picture appears here.</p></aside></div>
             <p class="small muted" id="exam-wc">0 words</p>
             <button class="btn btn-ink" id="btn-exam-finish" type="button">I have finished</button>
           </div>
@@ -535,6 +581,10 @@ button { font: inherit; color: inherit; }
             <span class="label">Structure checklist</span>
             <ul class="checks" id="exam-checks"></ul>
             <p class="small muted" id="exam-qnote"></p>
+          </div>
+          <div class="card" id="plan-check-card">
+            <span class="label">Your plan, checked</span>
+            <ul class="pcheck" id="plan-check"></ul>
           </div>
           <div class="card">
             <span class="label">Your paragraph, color-coded</span>
@@ -588,6 +638,12 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="tray-back" id="tray-back" hidden><div class="tray" id="tray" role="dialog" aria-modal="true" aria-labelledby="tray-h">
+  <div class="sheet-head"><span class="label" id="tray-h"></span><button class="x" id="tray-x" type="button" aria-label="Close">×</button></div>
+  <p class="tray-q" id="tray-q"></p>
+  <p class="small muted" style="margin:0">Which device is this?</p>
+  <div class="tray-opts" id="tray-opts"></div>
+</div></div>
 <div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span><button class="bp-x" type="button" aria-label="Close">×</button></div>
 <div class="eb-pic" id="exam-pic" hidden><svg class="pic" viewBox="0 0 160 100" aria-hidden="true"></svg><div class="pc"><span class="eb-pic-lab">Picture it</span><i><b>You see:</b> <span id="pic-see"></span></i><i><b>It means:</b> <span id="pic-mean"></span></i></div><button class="px" type="button" aria-label="Hide the picture">×</button></div>
 <div class="sheet-back" id="sheet-back" hidden>
@@ -603,7 +659,7 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 
-<script id="pic-data" type="application/json">{"s1": ["<defs><linearGradient id=\"pg22\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#BFD3F0\"/><stop offset=\"1\" stop-color=\"#1E2A4A\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg22)\"/><text x=\"46\" y=\"50\" font-size=\"40\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🏰<\/text><path d=\"M0 78 Q20 70 40 78 T80 78 T120 78 T160 78 V100 H0Z\" stroke=\"none\" fill=\"#33456E\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"mv\" style=\"--dx:-10px;--dy:0px;--t:2s\"/><text x=\"116\" y=\"24\" font-size=\"8\" font-weight=\"800\" fill=\"#1E2A4A\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0s\">kingdom by the sea<\/text><text x=\"116\" y=\"44\" font-size=\"8\" font-weight=\"800\" fill=\"#1E2A4A\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.8s\">kingdom by the sea<\/text>", "A castle kingdom by the sea, named again and again.", "The magical place keeps returning like a song: the speaker cannot leave the past."], "s2": ["<rect width=\"160\" height=\"100\" fill=\"#FCE4EC\"/><text x=\"80\" y=\"50\" font-size=\"40\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul2\">❤️<\/text><text x=\"28\" y=\"20\" font-size=\"10\" font-weight=\"800\" fill=\"#9C2E3B\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">love<\/text><text x=\"132\" y=\"20\" font-size=\"10\" font-weight=\"800\" fill=\"#9C2E3B\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">love<\/text><text x=\"80\" y=\"92\" font-size=\"10\" font-weight=\"800\" fill=\"#9C2E3B\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">more than love<\/text>", "A heart growing bigger than “love” itself.", "Exaggeration: their love was greater than any normal love."], "s3": ["<defs><linearGradient id=\"pg23\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#C8D2E0\"/><stop offset=\"1\" stop-color=\"#8E9BB0\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg23)\"/><text x=\"30\" y=\"24\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">☁️<\/text><path d=\"M44 34 Q70 40 90 36 M44 44 Q70 52 92 48\" stroke=\"#FFFFFF\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"mv\" style=\"--dx:10px;--dy:4px;--t:1.2s\"/><text x=\"118\" y=\"62\" font-size=\"34\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👧<\/text><text x=\"138\" y=\"40\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em spin\" style=\"--t:4s\">❄️<\/text>", "A cold wind blowing out of a cloud onto Annabel Lee.", "Death comes suddenly from the sky: cold, cruel and unexpected."], "s4": ["<defs><linearGradient id=\"pg24\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#FFF6D8\"/><stop offset=\"1\" stop-color=\"#1E2A4A\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg24)\"/><text x=\"80\" y=\"16\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">👼<\/text><text x=\"80\" y=\"86\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">😈<\/text><text x=\"68\" y=\"50\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">🤍<\/text><text x=\"92\" y=\"50\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">🤍<\/text><text x=\"130\" y=\"16\" font-size=\"8\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">above<\/text><text x=\"130\" y=\"88\" font-size=\"8\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">below<\/text>", "Angels in heaven above, demons under the sea, and two souls held together between.", "Opposite powers, good and evil, still cannot separate the lovers' souls."], "s5": ["<defs><linearGradient id=\"pg25\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#0E1630\"/><stop offset=\"1\" stop-color=\"#2B3A6B\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg25)\"/><text x=\"28\" y=\"22\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">🌙<\/text><path d=\"M36 30 L90 64\" stroke=\"#F4E3A1\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"3 4\" class=\"fade\"/><text x=\"100\" y=\"74\" font-size=\"26\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">😴<\/text><text x=\"132\" y=\"44\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">💭<\/text><text x=\"132\" y=\"42\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">👧<\/text>", "The moon shining down and bringing dreams of her.", "Every night nature reminds him of her: his grief never ends."], "s6": ["<defs><linearGradient id=\"pg26\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#0E1630\"/><stop offset=\"1\" stop-color=\"#2B3A6B\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg26)\"/><text x=\"52\" y=\"40\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em fade\">⭐<\/text><text x=\"108\" y=\"40\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em fade\">⭐<\/text><text x=\"80\" y=\"40\" font-size=\"26\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em fade\" style=\"--d:1.2s\">👀<\/text><text x=\"80\" y=\"80\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🧍<\/text>", "Stars rising that turn into her bright eyes.", "He feels her watching from the sky: she is everywhere, even after death."], "s7": ["<rect width=\"160\" height=\"100\" fill=\"#2A1E2E\"/><text x=\"80\" y=\"30\" font-size=\"14\" font-weight=\"800\" fill=\"#F4B6C2\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech shk\" style=\"--d:0s\">my darling —<\/text><text x=\"80\" y=\"58\" font-size=\"14\" font-weight=\"800\" fill=\"#F4B6C2\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech shk\" style=\"--d:0.8s\">my darling —<\/text><text x=\"80\" y=\"86\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">💔<\/text>", "“My darling” cried out twice, the voice breaking.", "The repeated words sound like crying: overwhelming grief and devotion."], "s8": ["<defs><linearGradient id=\"pg27\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#9AA4B4\"/><stop offset=\"1\" stop-color=\"#33456E\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg27)\"/><rect x=\"30\" y=\"44\" width=\"44\" height=\"36\" rx=\"6\" fill=\"#C9CFD8\"/><text x=\"52\" y=\"62\" font-size=\"14\" font-weight=\"800\" fill=\"#4C566A\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">✝<\/text><path d=\"M0 84 Q20 76 40 84 T80 84 T120 84 T160 84 V100 H0Z\" stroke=\"none\" fill=\"#1E2A4A\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"mv\" style=\"--dx:-10px;--dy:0px;--t:2s\"/><text x=\"112\" y=\"50\" font-size=\"16\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx fade\">)))<\/text>", "A tomb beside a sea whose waves never stop sounding.", "Endless waves = endless grief: the poem ends in lonely sorrow."]}</script>
+<script id="pic-data" type="application/json">{"s1": ["<defs><linearGradient id=\"pga1\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#E6EEF8\"/><stop offset=\"1\" stop-color=\"#9FC3E6\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga1)\"/><path d=\"M0 80 Q20 72 40 80 T80 80 T120 80 T160 80 V100 H0Z\" stroke=\"#2E7DB8\" fill=\"#5DA9E0\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"80\" y=\"52\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🏰<\/text><text x=\"80\" y=\"18\" font-size=\"9\" font-weight=\"800\" fill=\"#2F3FB0\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.0s\">by the sea<\/text><path d=\"M40 64 A40 26 0 1 1 120 64\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"5 4\" class=\"spin\" style=\"--o:80px 64px;--t:6s\"/><text x=\"26\" y=\"64\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🧍<\/text><g class=\"pul\"><path d=\"M34 56L48 46\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M45.4 51.4L48 46L42.0 46.7\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><rect x=\"16.25\" y=\"84\" width=\"127.5\" height=\"16\" rx=\"5\" fill=\"#D7001F\"/><text x=\"80\" y=\"92\" font-size=\"7\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">his mind keeps going back<\/text>", "A fairy-tale castle by the sea, with a loop that keeps pulling the speaker back to it.", "The repeated place shows an obsession: his memory keeps returning to a lost, fairy-tale love."], "s2": ["<rect width=\"160\" height=\"100\" fill=\"#FFF0F3\"/><text x=\"30\" y=\"16\" font-size=\"7\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">ordinary love<\/text><text x=\"30\" y=\"38\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">❤️<\/text><text x=\"104\" y=\"52\" font-size=\"54\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\" style=\"--t:1.4s\">❤️<\/text><text x=\"92\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👦<\/text><text x=\"116\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👧<\/text><g><path d=\"M42 40L66 48\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M60.1 49.1L66 48L61.9 43.6\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><path d=\"M58 8H156V96H58Z\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"4 3\"/><rect x=\"67.35\" y=\"84\" width=\"81.3\" height=\"16\" rx=\"5\" fill=\"#D7001F\"/><text x=\"108\" y=\"92\" font-size=\"7\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">MORE than love!<\/text>", "A small ordinary heart beside a heart so big it bursts out of its frame, holding the two children.", "Exaggeration: their love feels greater than any normal love, impossible to measure."], "s3": ["<defs><linearGradient id=\"pga2\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#C9D3E0\"/><stop offset=\"1\" stop-color=\"#7D8DA6\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga2)\"/><text x=\"32\" y=\"22\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">☁️<\/text><text x=\"48\" y=\"30\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">😠<\/text><path d=\"M40 40 q12 -6 24 0 t24 0\" stroke=\"#FFFFFF\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lin\" style=\"--fx:-10px;--fy:0px;--dx:40px;--dy:10px;--t:1.2s\"/><path d=\"M40 48 q12 -6 24 0 t24 0\" stroke=\"#FFFFFF\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lin\" style=\"--fx:-10px;--fy:0px;--dx:40px;--dy:10px;--t:1.4s\"/><path d=\"M40 56 q12 -6 24 0 t24 0\" stroke=\"#FFFFFF\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lin\" style=\"--fx:-10px;--fy:0px;--dx:40px;--dy:10px;--t:1.6s\"/><g class=\"shk\"><g><circle cx=\"124\" cy=\"65\" r=\"4\" fill=\"#F2F2F2\"/><rect x=\"120\" y=\"70\" width=\"8\" height=\"13\" rx=\"3\" fill=\"#F2F2F2\"/><\/g><text x=\"124\" y=\"58\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🥶<\/text><\/g><text x=\"140\" y=\"46\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em flk\">❄️<\/text><text x=\"108\" y=\"50\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em flk\" style=\"--d:0.4s\">❄️<\/text><rect x=\"9.319999999999993\" y=\"84\" width=\"141.36\" height=\"16\" rx=\"5\" fill=\"#1B1D21\"/><text x=\"80\" y=\"92\" font-size=\"7\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">death came suddenly, cruelly<\/text>", "An angry cloud sending a freezing wind straight at the girl, who shivers.", "The cold wind is death striking suddenly and cruelly, as if the sky itself attacked her."], "s4": ["<defs><linearGradient id=\"pga3\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#FFF7DA\"/><stop offset=\"1\" stop-color=\"#20476E\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga3)\"/><text x=\"40\" y=\"14\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">👼<\/text><text x=\"120\" y=\"14\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\" style=\"--d:0.5s\">👼<\/text><path d=\"M0 66 Q20 58 40 66 T80 66 T120 66 T160 66 V100 H0Z\" stroke=\"#0E2C4A\" fill=\"#173E66\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"40\" y=\"86\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">👹<\/text><text x=\"120\" y=\"86\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\" style=\"--d:0.5s\">👹<\/text><g><path d=\"M48 22L70 40\" stroke=\"#E0A000\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M64.1 38.9L70 40L67.7 34.4\" stroke=\"#E0A000\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><g><path d=\"M112 22L90 40\" stroke=\"#E0A000\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M92.3 34.4L90 40L95.9 38.9\" stroke=\"#E0A000\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><g><path d=\"M48 80L70 60\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M68.0 65.7L70 60L64.2 61.4\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><g><path d=\"M112 80L90 60\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M95.8 61.4L90 60L92.0 65.7\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><text x=\"80\" y=\"50\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">💞<\/text><text x=\"80\" y=\"70\" font-size=\"7\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">can't be split<\/text>", "Angels above and demons under the sea all pulling at one joined heart that never breaks.", "Placing heaven next to the deep sea shows that no power anywhere can separate the lovers."], "s5": ["<defs><linearGradient id=\"pga4\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#14213D\"/><stop offset=\"1\" stop-color=\"#2B3A67\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga4)\"/><text x=\"30\" y=\"22\" font-size=\"24\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">🌝<\/text><text x=\"50\" y=\"30\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em ech\" style=\"--d:0.0s\">💭<\/text><text x=\"68\" y=\"38\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em ech\" style=\"--d:0.5s\">💭<\/text><text x=\"86\" y=\"46\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em ech\" style=\"--d:1.0s\">💭<\/text><g><rect x=\"96\" y=\"24\" width=\"40\" height=\"26\" rx=\"6\" fill=\"#FFFFFF\"/><path d=\"M96 24h40v26h-40Z\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"116.0\" y=\"37.0\" font-size=\"8\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\"><\/text><\/g><text x=\"116\" y=\"37\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👧<\/text><rect x=\"70\" y=\"74\" width=\"70\" height=\"10\" rx=\"3\" fill=\"#8A6F4E\"/><text x=\"104\" y=\"70\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">😢<\/text><rect x=\"18.559999999999995\" y=\"85\" width=\"122.88000000000001\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"80\" y=\"93\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">no escape, even at night<\/text>", "A moon with a face sending dreams of Annabel Lee to the speaker, who cries in bed.", "Nature keeps reminding him of her: his grief never stops, even while he sleeps."], "s6": ["<defs><linearGradient id=\"pga5\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#0B1430\"/><stop offset=\"1\" stop-color=\"#1B2A55\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga5)\"/><text x=\"20\" y=\"18\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em flk\" style=\"--d:0.0s\">👁️<\/text><text x=\"50\" y=\"34\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em flk\" style=\"--d:0.3s\">👁️<\/text><text x=\"80\" y=\"18\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em flk\" style=\"--d:0.6s\">👁️<\/text><text x=\"110\" y=\"34\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em flk\" style=\"--d:0.8999999999999999s\">👁️<\/text><text x=\"140\" y=\"18\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em flk\" style=\"--d:1.2s\">👁️<\/text><circle cx=\"14\" cy=\"60\" r=\"1.2\" fill=\"#FFFFFF\"/><circle cx=\"37\" cy=\"65\" r=\"1.2\" fill=\"#FFFFFF\"/><circle cx=\"60\" cy=\"70\" r=\"1.2\" fill=\"#FFFFFF\"/><circle cx=\"83\" cy=\"60\" r=\"1.2\" fill=\"#FFFFFF\"/><circle cx=\"106\" cy=\"65\" r=\"1.2\" fill=\"#FFFFFF\"/><circle cx=\"129\" cy=\"70\" r=\"1.2\" fill=\"#FFFFFF\"/><circle cx=\"152\" cy=\"60\" r=\"1.2\" fill=\"#FFFFFF\"/><g><circle cx=\"80\" cy=\"79\" r=\"4\" fill=\"#C9D3E0\"/><rect x=\"76\" y=\"84\" width=\"8\" height=\"13\" rx=\"3\" fill=\"#C9D3E0\"/><\/g><text x=\"80\" y=\"72\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🥺<\/text><rect x=\"34.73\" y=\"48\" width=\"90.54\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"80\" y=\"56\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">she is everywhere<\/text>", "Every star in the night sky is one of her bright eyes, watching the speaker below.", "He still feels her presence: she fills his whole world, even the sky."], "s7": ["<rect width=\"160\" height=\"100\" fill=\"#F4EEF6\"/><g><circle cx=\"30\" cy=\"65\" r=\"4\" fill=\"#5B4A6E\"/><rect x=\"26\" y=\"70\" width=\"8\" height=\"13\" rx=\"3\" fill=\"#5B4A6E\"/><\/g><text x=\"30\" y=\"58\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">😭<\/text><g class=\"ech\" style=\"--d:0s\"><rect x=\"46\" y=\"18\" width=\"54\" height=\"18\" rx=\"6\" fill=\"#FFFFFF\"/><path d=\"M46 18h54v18h-54Z\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"73.0\" y=\"27.0\" font-size=\"8\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">my darling—<\/text><path d=\"M50 36L38 52\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><g class=\"ech\" style=\"--d:0.9s\"><rect x=\"92\" y=\"42\" width=\"60\" height=\"18\" rx=\"6\" fill=\"#FFFFFF\"/><path d=\"M92 42h60v18h-60Z\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"122.0\" y=\"51.0\" font-size=\"8\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">my darling…<\/text><\/g><text x=\"122\" y=\"80\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em shk\">💔<\/text><rect x=\"37.04\" y=\"85\" width=\"85.92\" height=\"16\" rx=\"5\" fill=\"#D7001F\"/><text x=\"80\" y=\"93\" font-size=\"7\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">his voice breaks<\/text>", "A crying man saying “my darling” twice, the second time weaker, beside a breaking heart.", "The repeated words show grief so strong that his voice breaks as he speaks."], "s8": ["<defs><linearGradient id=\"pga6\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#3A4152\"/><stop offset=\"1\" stop-color=\"#596277\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga6)\"/><path d=\"M0 74 Q20 66 40 74 T80 74 T120 74 T160 74 V100 H0Z\" stroke=\"#1E2D44\" fill=\"#2C3E5C\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"70\" y=\"46\" width=\"36\" height=\"28\" rx=\"4\" fill=\"#9AA3AD\"/><text x=\"88\" y=\"60\" font-size=\"12\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">✝<\/text><g><circle cx=\"118\" cy=\"61\" r=\"4\" fill=\"#C9D3E0\"/><rect x=\"114\" y=\"66\" width=\"8\" height=\"13\" rx=\"3\" fill=\"#C9D3E0\"/><\/g><text x=\"30\" y=\"66\" font-size=\"14\" font-weight=\"800\" fill=\"#BFD3EA\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.0s\">~<\/text><text x=\"44\" y=\"66\" font-size=\"14\" font-weight=\"800\" fill=\"#BFD3EA\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.4s\">~<\/text><text x=\"58\" y=\"66\" font-size=\"14\" font-weight=\"800\" fill=\"#BFD3EA\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.8s\">~<\/text><text x=\"140\" y=\"24\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌙<\/text><rect x=\"25.489999999999995\" y=\"84\" width=\"109.02000000000001\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"80\" y=\"92\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">grief that never ends<\/text>", "A lonely tomb beside a loud, endless sea, with the speaker lying next to it at night.", "The sound of the sea never stops, like his grief: he will stay beside her forever."]}</script>
 <script id="app-data" type="application/json">{"spots": [{"id": "s1", "where": "Lines 1–20 · The love and the loss", "quote": "In this kingdom by the sea", "ctx": ["In a kingdom by the sea,", "In this kingdom by the sea,"], "device": "Repetition", "dAns": "Repetition: the words ‘kingdom by the sea’ come back again and again.", "dWrong": ["Hyperbole: the speaker exaggerates the size of the kingdom.", "Metaphor: the sea is called a king, without using ‘like’ or ‘as.’", "Personification: the sea is given the human power to rule a kingdom."], "dHint": "Read lines 2, 8, 14, 20 and 24. What do you notice?", "dWhy": "“Kingdom by the sea” comes back five times in the first four stanzas, like a chorus in a song. That is repetition.", "effect": "The reader hears the phrase again and again like a song or a fairy tale, so the lost, magical place stays fixed in the speaker's memory.", "eWrong": ["The reader feels bored, because the poet could not think of any other places.", "The reader learns the exact location of a real country on a map.", "The reader sees that the speaker is planning a holiday by the sea."], "eHint": "Where do we usually hear about kingdoms? Why might the speaker keep returning to this place?", "words": [["kingdom", "noun", "What could the noun “kingdom” suggest? A fairy tale? A perfect, magical world?"], ["sea", "noun", "What could the noun “sea” suggest? Something huge and beautiful, but also dangerous and endless?"]], "frameHint": "Repetition frame: Poe repeats the words “kingdom by the sea” ___ times to emphasize ___. He suggests ___.", "readerHint": "How does the repeated phrase make you feel? Dreamy? Sad? Haunted?", "message": "the speaker's obsession with a perfect love and the place where he lost it", "m_ev": "Poe states, “In this kingdom by the sea.”", "m_word": "The noun “kingdom” is significant because it suggests a magical, fairy-tale world that belonged only to the two lovers.", "m_dev": "Poe repeats the words “kingdom by the sea” five times to emphasize how the speaker's memory keeps returning to this place. He suggests that his love feels like a fairy tale that has been lost.", "m_reader": "The reader is haunted because the phrase returns again and again like a song. They also realize that the speaker cannot stop thinking about the past.", "side": "B"}, {"id": "s2", "where": "Lines 1–20 · The love and the loss", "quote": "we loved with a love that was more than love", "ctx": ["But we loved with a love that was more than love— / I and my Annabel Lee;"], "device": "Hyperbole", "dAns": "Hyperbole: the speaker exaggerates, saying their love was bigger than love itself.", "dWrong": ["Simile: their love is compared to the sea using the word ‘like.’", "Imagery: a detailed description of the couple's wedding day.", "Juxtaposition: love is placed next to hate to show a contrast."], "dHint": "Can something really be “more than love”? What is the speaker doing?", "dWhy": "Nothing can really be “more than love.” The speaker exaggerates to show how strong their love was (the word “love” is also repeated). That is hyperbole.", "effect": "The reader sees that the speaker believes their love was greater than any normal love, almost impossible to put into words.", "eWrong": ["The reader sees that the two children did not really love each other.", "The reader sees that the speaker is joking about a silly childhood crush.", "The reader learns that the couple argued all the time."], "eHint": "How strong does the speaker think their love was? Stronger than normal love?", "words": [["loved", "verb", "What could the verb “loved” suggest? How deep were their feelings, even as children?"], ["love", "noun", "The word “love” appears three times in this line. What could that suggest about the speaker's feelings?"]], "frameHint": "Hyperbole frame: Poe exaggerates the meaning of ___ (their love) to suggest ___. He highlights ___.", "readerHint": "How do you feel about such strong love? Moved? Touched? A little worried?", "message": "the extraordinary, almost impossible strength of the young lovers' love", "m_ev": "Poe states, “we loved with a love that was more than love.”", "m_word": "The noun “love” is significant because it suggests a feeling so strong that the speaker uses the word three times in one line.", "m_dev": "Poe exaggerates the meaning of their love to suggest that it was greater than any ordinary love. He highlights how special the relationship was to the speaker.", "m_reader": "The reader is moved because the love sounds so pure and powerful. They also realize how painful its loss must be.", "side": "A"}, {"id": "s3", "where": "Lines 1–20 · The love and the loss", "quote": "A wind blew out of a cloud, chilling / My beautiful Annabel Lee", "ctx": ["A wind blew out of a cloud, chilling / My beautiful Annabel Lee;"], "device": "Imagery", "dAns": "Imagery: a detailed description helps us see and feel the cold wind that makes her ill.", "dWrong": ["Hyperbole: the speaker exaggerates how big the cloud is.", "Repetition: the word ‘wind’ is repeated in every line of the stanza.", "Simile: the wind is compared to a cloud using the word ‘like.’"], "dHint": "Which senses help you here? Can you see the cloud? Can you feel the cold?", "dWhy": "We can see the wind coming out of a cloud and almost feel its cold. That is imagery.", "effect": "The reader feels the sudden cold coming from the sky, so Annabel Lee's illness and death seem sudden and cruel.", "eWrong": ["The reader feels a cool, pleasant breeze on a hot summer day.", "The reader sees that Annabel Lee goes sailing because the wind is strong.", "The reader learns the weather forecast for the kingdom by the sea."], "eHint": "What does “chilling” do to a person? Is this wind gentle or deadly?", "words": [["chilling", "verb", "What could “chilling” suggest? Cold that enters the body? Illness? Fear?"], ["cloud", "noun", "What could “cloud” suggest? Something dark coming from above? A threat from heaven?"]], "frameHint": "Imagery frame: Poe gives a detailed description of ___ (what do we see and feel?) to suggest ___. He portrays ___.", "readerHint": "How do you feel when the cold wind arrives? Shocked? Sad? Afraid for her?", "message": "how suddenly and cruelly death took Annabel Lee", "m_ev": "Poe states, “A wind blew out of a cloud, chilling / My beautiful Annabel Lee.”", "m_word": "The verb “chilling” is significant because it suggests a deadly cold entering her body.", "m_dev": "Poe gives a detailed description of a cold wind coming from a cloud to suggest that Annabel Lee's death was sudden and cruel. He portrays the sky itself as the cause of her illness.", "m_reader": "The reader is shocked because an ordinary wind takes Annabel Lee's life. They also realize that the speaker blames heaven for his loss.", "side": "B"}, {"id": "s4", "where": "Lines 21–41 · Love stronger than death", "quote": "the angels in heaven above … the demons down under the sea", "ctx": ["And neither the angels in heaven above, / Nor the demons down under the sea / Can ever dissever my soul from the soul"], "device": "Juxtaposition", "dAns": "Juxtaposition: angels in heaven are placed next to demons under the sea.", "dWrong": ["Simile: the angels are compared to demons using the word ‘like.’", "Repetition: the word ‘angels’ is repeated in every line of the poem.", "Imagery: a detailed description of a beach on a sunny day."], "dHint": "Who lives “above” and who lives “down under”? Are they similar or opposite?", "dWhy": "Good angels “above” are placed next to evil demons “down under the sea.” Two opposites side by side: that is juxtaposition.", "effect": "The reader sees that no power anywhere, good or evil, in heaven or below, can separate the speaker's soul from Annabel Lee.", "eWrong": ["The reader sees that the angels and demons are working together to help the lovers.", "The reader sees that the speaker is afraid of the sea and will never swim again.", "The reader sees that the speaker has started to forget Annabel Lee."], "eHint": "Heaven and the bottom of the sea are as far apart as possible. What does that say about how strong his love is?", "words": [["angels", "noun", "What could “angels” suggest? Goodness? Heaven? Are these angels kind to the lovers?"], ["demons", "noun", "What could “demons” suggest? Evil? Darkness? The deepest, scariest places?"], ["dissever", "verb", "Look at the next line: what could “dissever” (cut apart) suggest?"]], "frameHint": "Juxtaposition frame: Poe places ___ (the angels above) next to ___ (the demons below) to suggest ___. He emphasizes ___.", "readerHint": "How do you feel about the speaker's promise? Moved? Impressed? Worried that he cannot let go?", "message": "a love so strong that no power in heaven or below can end it, not even death", "m_ev": "Poe states, “the angels in heaven above” and “the demons down under the sea.”", "m_word": "The noun “demons” is significant because it suggests the darkest, most evil powers in the world.", "m_dev": "Poe places the angels in heaven next to the demons under the sea to suggest that no power anywhere can separate the lovers. He emphasizes that their love is stronger than death.", "m_reader": "The reader is moved because the speaker's love still challenges heaven and hell. They also realize that the speaker refuses to accept Annabel Lee's death.", "side": "A"}, {"id": "s5", "where": "Lines 21–41 · Love stronger than death", "quote": "the moon never beams, without bringing me dreams", "ctx": ["For the moon never beams, without bringing me dreams / Of the beautiful Annabel Lee;"], "device": "Personification", "dAns": "Personification: the moon is given the human ability to bring the speaker dreams.", "dWrong": ["Simile: the moon is compared to a dream using the word ‘like.’", "Hyperbole: the speaker exaggerates how big the moon is.", "Juxtaposition: the moon is placed next to the sun to show night and day."], "dHint": "Can the moon really bring someone a gift like dreams? Who usually brings things?", "dWhy": "The moon cannot really bring anything; people do. The moon is given a human action. That is personification.", "effect": "The reader sees that even nature reminds the speaker of Annabel Lee every night, so he can never escape his memories.", "eWrong": ["The reader sees that the speaker sleeps well and has happy dreams about the moon.", "The reader learns that the speaker studies the moon as a scientist.", "The reader sees that the moon is angry with the speaker."], "eHint": "Every night the moon appears. What does it bring the speaker every single time?", "words": [["beams", "verb", "What could the verb “beams” suggest? Gentle light? Something that shines on him every night?"], ["dreams", "noun", "What could “dreams” suggest? Is she alive only in his dreams now?"], ["never", "adverb", "What could “never … without” suggest? Is there a single night when he does not think of her?"]], "frameHint": "Personification frame: Poe gives ___ (the moon) the human quality of ___ (bringing dreams) to suggest ___. He demonstrates ___.", "readerHint": "How do you feel about the speaker here? Sympathetic? Sad? Worried for him?", "message": "the speaker's endless grief, as everything in nature reminds him of Annabel Lee", "m_ev": "Poe states, “the moon never beams, without bringing me dreams.”", "m_word": "The noun “dreams” is significant because it suggests Annabel Lee now lives only in the speaker's sleep and imagination.", "m_dev": "Poe gives the moon the human quality of bringing dreams to suggest that nature itself keeps reminding the speaker of his lost love. He demonstrates that he cannot escape his grief, even at night.", "m_reader": "The reader is sympathetic because the speaker thinks of her every single night. They also realize that his grief will never end.", "side": "B"}, {"id": "s6", "where": "Lines 21–41 · Love stronger than death", "quote": "the stars never rise, but I feel the bright eyes", "ctx": ["And the stars never rise, but I feel the bright eyes / Of the beautiful Annabel Lee;"], "device": "Metaphor", "dAns": "Metaphor: the stars are described as Annabel Lee's bright eyes, without using ‘like’ or ‘as.’", "dWrong": ["Simile: the stars are compared to eyes using the word ‘like.’", "Hyperbole: the speaker exaggerates how many stars are in the sky.", "Repetition: the word ‘stars’ is repeated three times in this line."], "dHint": "When the stars come out, what does the speaker feel he is seeing? Is there a “like” or “as”?", "dWhy": "The speaker feels her “bright eyes” in the stars, as if the stars are her eyes, without “like” or “as.” That is a metaphor.", "effect": "The reader sees that the speaker feels Annabel Lee watching him from the sky, so she seems to be everywhere around him.", "eWrong": ["The reader sees that the speaker is studying the stars for a science project.", "The reader sees that the speaker is afraid of the dark night sky.", "The reader sees that the stars are too bright, so the speaker cannot sleep."], "eHint": "Whose eyes does he feel in the stars? What does that suggest about how close she still feels?", "words": [["eyes", "noun", "What could “eyes” suggest? Is she still watching him? Is she still with him?"], ["bright", "adjective", "What could “bright” suggest? Life? Beauty? Love?"], ["feel", "verb", "What could the verb “feel” suggest? Does he only see the stars, or does he feel her presence?"]], "frameHint": "Metaphor frame: Poe compares ___ (the stars) to ___ (Annabel Lee's eyes) to suggest ___. He also emphasizes ___.", "readerHint": "How does this image make you feel? Touched? Sad? A little uneasy?", "message": "how the speaker still feels Annabel Lee's presence everywhere after her death", "m_ev": "Poe states, “the stars never rise, but I feel the bright eyes.”", "m_word": "The noun “eyes” is significant because it suggests Annabel Lee is still watching over the speaker.", "m_dev": "Poe compares the stars to Annabel Lee's eyes to suggest that the speaker still feels her presence in the night sky. He also emphasizes how completely she fills his world.", "m_reader": "The reader is touched because the speaker sees his love in the stars. They also realize that he lives more with the dead than with the living.", "side": "A"}, {"id": "s7", "where": "Lines 21–41 · Love stronger than death", "quote": "my darling—my darling", "ctx": ["Of my darling—my darling—my life and my bride,"], "device": "Repetition", "dAns": "Repetition: the words ‘my darling’ are said twice, one right after the other.", "dWrong": ["Juxtaposition: ‘darling’ is placed next to ‘bride’ to show a strong contrast.", "Metaphor: the speaker calls himself a bride, without using ‘like’ or ‘as.’", "Hyperbole: the speaker exaggerates how long the night is."], "dHint": "Read the line aloud. Which words come twice, one right after the other?", "dWhy": "“My darling” is said twice in a row, broken by dashes. That is repetition.", "effect": "The reader hears the speaker's voice breaking with emotion, as if he is crying out to her in grief.", "eWrong": ["The reader sees that the speaker has forgotten her name, so he uses a nickname.", "The reader sees that the speaker is calmly writing a letter to a friend.", "The reader sees that the speaker is talking to two different people."], "eHint": "When people are very emotional, how do they speak? Do they repeat themselves?", "words": [["darling", "noun", "What could “darling” suggest? How tender and close was their love?"], ["bride", "noun", "What could “bride” suggest? Were they married? Or does he still think of her as his bride?"]], "frameHint": "Repetition frame: Poe repeats the words “my darling” ___ times to emphasize ___. He suggests ___.", "readerHint": "How do you feel when you hear him repeat “my darling”? Heartbroken? Moved? Uncomfortable?", "message": "the speaker's overwhelming grief and devotion to Annabel Lee", "m_ev": "Poe states, “my darling—my darling.”", "m_word": "The noun “darling” is significant because it suggests tender, loving closeness between the speaker and Annabel Lee.", "m_dev": "Poe repeats the words “my darling” two times to emphasize how overwhelmed the speaker is by grief. He suggests that his voice is breaking as he speaks.", "m_reader": "The reader is heartbroken because the speaker still calls out to her. They also realize that his love has not ended with her death.", "side": "B"}, {"id": "s8", "where": "Lines 21–41 · Love stronger than death", "quote": "In her tomb by the sounding sea", "ctx": ["In her sepulchre there by the sea, / In her tomb by the sounding sea."], "device": "Imagery", "dAns": "Imagery: a detailed description helps us hear the sea and picture the tomb beside it.", "dWrong": ["Personification: the tomb is given the human ability to sing.", "Simile: the tomb is compared to the sea using the word ‘like.’", "Hyperbole: the speaker exaggerates how deep the sea is."], "dHint": "Which senses does the last line use? What can you hear?", "dWhy": "We can picture the tomb and hear the waves of the “sounding sea.” Sight and sound together: that is imagery.", "effect": "The reader is left with the endless sound of the sea beside the tomb, so the poem ends in deep, lonely grief.", "eWrong": ["The reader pictures a happy beach holiday with music playing.", "The reader sees that Annabel Lee is alive and living happily by the sea.", "The reader hears a loud storm destroying the whole kingdom."], "eHint": "The sea never stops making sound. What might that suggest about the speaker's grief?", "words": [["tomb", "noun", "What could the noun “tomb” suggest? Death? Something closed forever?"], ["sounding", "adjective", "What could “sounding” suggest? Waves that never stop? Grief that never stops?"]], "frameHint": "Imagery frame: Poe gives a detailed description of ___ (what do we see and hear?) to suggest ___. He portrays ___.", "readerHint": "How does the ending make you feel? Lonely? Sad? Haunted?", "message": "the endless, lonely grief of the speaker beside Annabel Lee's grave", "m_ev": "Poe states, “In her tomb by the sounding sea.”", "m_word": "The adjective “sounding” is significant because it suggests the waves never stop, just like the speaker's grief.", "m_dev": "Poe gives a detailed description of the tomb beside the noisy sea to suggest that the speaker's grief will last forever. He portrays a lonely man lying beside the grave of his love.", "m_reader": "The reader is saddened because the poem ends at a grave. They also realize that the speaker cannot move on with his life.", "side": "B"}], "intro": "Edgar Allan Poe's poem “Annabel Lee” was first published in 1849, the year Poe died. The speaker remembers the girl he loved when they were both children in a “kingdom by the sea,” and how a cold wind brought her death. Poe uses musical repetition and haunting imagery in “Annabel Lee” to show that true love is stronger than death, but that grief can also trap a person in the past.", "sides": {"A": "a love that is stronger than death", "B": "the loss and grief that trap the speaker in the past"}, "hot": {"s1": [[0.0751, 0.0306, 0.4156, 0.0173], [0.0751, 0.1689, 0.4581, 0.0173], [0.0751, 0.3282, 0.4581, 0.0173], [0.0751, 0.4541, 0.4581, 0.0174], [0.0751, 0.5504, 0.4581, 0.0174]], "s2": [[0.1471, 0.1899, 0.6952, 0.0173], [0.1176, 0.2109, 0.0816, 0.0173]], "s3": [[0.0751, 0.3492, 0.6222, 0.0173], [0.0751, 0.3702, 0.4557, 0.0173]], "s4": [[0.2875, 0.6887, 0.4662, 0.0174], [0.1518, 0.7097, 0.543, 0.0174]], "s5": [[0.1447, 0.785, 0.7603, 0.0174], [0.1176, 0.806, 0.1312, 0.0174]], "s6": [[0.1589, 0.848, 0.7612, 0.0174]], "s7": [[0.1305, 0.911, 0.4216, 0.0173]], "s8": [[0.0751, 0.974, 0.5537, 0.0173]]}}</script>
 <script>
 (function () {
@@ -613,7 +669,7 @@ button { font: inherit; color: inherit; }
   var KEY = "onur-koc10-poe-hunt-v2";
   var LETTERS = ["A", "B", "C", "D"];
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var DEVRE = { Simile: /\bsimile\b/, Metaphor: /\bmetaphor\b/, Imagery: /\bimagery\b/, Personification: /\bpersonification\b/, Juxtaposition: /\bjuxtaposition\b|\bcontrast\b/, Repetition: /\brepetition\b/, Hyperbole: /\bhyperbole\b|\bexaggerat/, "Rhetorical question": /\brhetorical questions?\b/ };
+  var DEVRE = { Simile: /\bsimiles?\b/, Metaphor: /\bmetaphors?\b|\bmetaphorical/, Imagery: /\bimagery\b|\bvivid (images?|description)\b/, Personification: /\bpersonif/, Juxtaposition: /\bjuxtapos|\bcontrast/, Repetition: /\brepetition\b|\brepeat(s|ed|ing)?\b/, Hyperbole: /\bhyperbole\b|\bexaggerat/, "Rhetorical question": /\brhetorical questions?\b/ };
   var DEVLABEL = { Simile: "a simile", Metaphor: "a metaphor", Imagery: "imagery", Personification: "personification", Juxtaposition: "juxtaposition", Repetition: "repetition", Hyperbole: "hyperbole", "Rhetorical question": "a rhetorical question" };
   var FRAMES = {
     Simile: { text: "Poe compares ___ to ___ to suggest ___. He also emphasizes ___.", checks: [[/compares\b.+\bto\b.+\bto suggest\b/, "compares ___ to ___ to suggest ___"], [/also emphasi[sz]es\b/, "He also emphasizes ___"]] },
@@ -905,12 +961,12 @@ button { font: inherit; color: inherit; }
   function noHe(t) { return !/\bshe (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks)\b/.test(low(t)); }
 
   function checksFor(def, text) {
-    var t = low(text), s = def.spot, c = [];
+    var t = canonText(text), s = def.spot, c = [];
     if (!t) return [];
     if (def.key === "t") {
       c.push([/^in the poem/.test(t), "Starts “In the poem,”"]);
       c.push([/\bpoe\b/.test(t) && /\bpresents\b/.test(t), "Poe presents …"]);
-      c.push([/through the use of\b/.test(t), "through the use of …"]);
+      c.push([/\b(through the use of|through|by using|using|with the use of|by means of|by the use of)\b/.test(t), "through the use of …"]);
       c.push([DEVRE[s.device].test(t), "Names device 1 (" + s.device.toLowerCase() + ")"]);
       c.push([nWords(text) >= 12, "Says the message, not just the device"]);
     } else if (def.key[0] === "e") {
@@ -936,8 +992,8 @@ button { font: inherit; color: inherit; }
       c.push([/\bpoe\b/.test(t), "Uses Poe's name"]);
       c.push([noHe(text), "Says “he” or “Poe” (not “she”)"]);
     } else if (def.key[0] === "r") {
-      c.push([/\bthe reader is\b.+\bbecause\b/.test(t), "The reader is ___ because ___"]);
-      c.push([/\bthey also (realize|realise|notice|understand)\b/.test(t), "They also realize / notice / understand ___"]);
+      c.push([/\bthe reader is\b.+\b(because|as|since|due to|when|after|by|while)\b/.test(t), "The reader is ___ because ___"]);
+      c.push([/\bthey also realize\b/.test(t), "They also realize / notice / understand ___"]);
       c.push([!/\bfeels? (good|bad)\b|\bis (good|bad)\b/.test(t), "A clear feeling word (not just “good” or “bad”)"]);
     } else if (def.key[0] === "l") {
       c.push([/^through the use of\b/.test(t), "Starts “Through the use of”"]);
@@ -1139,7 +1195,7 @@ button { font: inherit; color: inherit; }
   }
   /* The 15 sentence beginnings of the exam structure, in order */
   var SUR = "Poe", PRON = /He also/.test(FRAMES.Simile.text) ? "He" : "She";
-  function starterSlots() {
+  function strictSlots() {
     var n = SUR.toLowerCase(), say = "(states|writes|says|describes)";
     var one = [
       [/^the (adjective|noun|verb|adverb|pronoun)\b/, "The adjective / noun / verb “___” is …", "an"],
@@ -1152,7 +1208,80 @@ button { font: inherit; color: inherit; }
             [new RegExp("^" + n + ",? " + say + "\\b"), SUR + " states “___.”", "ev"]].concat(one)
       .concat([[new RegExp("^furthermore,? " + n + ",? " + say + "\\b"), "Furthermore, " + SUR + " states “___.”", "ev"]]).concat(one);
   }
-  function startKey(sent) { return low(String(sent).replace(/[“”]/g, '"')); }
+  /* ----- lenient matching (O. H., 2026-11-11): close to the structure = full marks ----- */
+  var SURL = SUR.toLowerCase();
+  var FULL = (function () { var m = new RegExp("(?:[A-Z][a-z.]+ )+" + SUR).exec(D.intro || ""); return m ? m[0] : SUR; })();
+  var KW = [SURL, "furthermore", "presents", "states", "writes", "describes", "adjective", "noun", "verb", "adverb", "pronoun", "emphasizes", "suggests",
+    "portrays", "demonstrates", "highlights", "reader", "readers", "realize", "realizes", "notice", "notices", "understand", "understands", "through", "because",
+    "compares", "repeats", "places", "exaggerates", "detailed", "description", "human", "quality", "simile", "metaphor", "imagery", "personification",
+    "juxtaposition", "repetition", "hyperbole", "rhetorical", "question", "poem", "moreover", "additionally", "firstly", "suggest", "emphasize"];
+  var KWSET = {}; KW.forEach(function (k) { KWSET[k] = 1; });
+  var NOFIX = { given: 1, gave: 1, place: 1, plays: 1, state: 1, stated: 1, stars: 1, stares: 1, words: 1, worse: 1, verse: 1, nouns: 1, verbs: 1, voice: 1, reads: 1,
+    ready: 1, reach: 1, readily: 1, poems: 1, poet: 1, poets: 1, these: 1, those: 1, there: 1, their: 1, where: 1, which: 1, while: 1, front: 1, frosty: 1, comes: 1,
+    compare: 1, simple: 1, simply: 1, smile: 1, smiles: 1, image: 1, images: 1, imagine: 1, quantity: 1, humane: 1, highlight: 1, notes: 1, nose: 1, poe: 1, other: 1, thomas: 0 };
+  function lev(a, b) {
+    var m = a.length, n = b.length, d = [], i, j; for (i = 0; i <= m; i++) d.push([i]); for (j = 1; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  function fixWord(w) {
+    if (w.length < 4 || KWSET[w] || NOFIX[w]) return w;
+    var lim = w.length >= 8 ? 2 : 1, best = null;
+    for (var q = 0; q < KW.length; q++) if (KW[q] !== SURL && (KW[q].indexOf(w) === 0 || w.indexOf(KW[q]) === 0)) return w;   /* an inflection, not a typo */
+    for (var i = 0; i < KW.length && !best; i++) { var k = KW[i]; if (k.charAt(0) === w.charAt(0) && Math.abs(k.length - w.length) <= lim && lev(w, k) <= lim) best = k; }
+    return best || w;
+  }
+  function fixTypos(t) { return t.split(/("[^"]*")/).map(function (seg, i) { return i % 2 ? seg : seg.replace(/[a-z']{4,}/g, fixWord); }).join(""); }
+  function esc(x) { return x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  var EVV = "(writes|says|describes|mentions|notes|declares|explains|claims|tells|adds|exclaims|wrote|stated|said|cries|calls|uses the (?:words?|phrase|lines?|quote|quotation)|includes the (?:words?|phrase|lines?))";
+  var FV = "(compares|repeats|gives|places|exaggerates|asks|uses|contrasts|juxtaposes|puts|positions|creates|personifies|employs|likens|questions|overstates|lists|describes|builds)";
+  var AV = "(emphasi[sz]es|suggests|portrays|demonstrates|highlights|shows|stresses|underlines|implies|reveals|conveys|indicates|illustrates|points out|depicts|explores|expresses|makes clear|focuses on|draws attention to|presents)";
+  function canon(t) {
+    var n = SURL;
+    t = fixTypos(t);
+    t = t.replace(new RegExp("\\b" + esc(low(FULL)) + "\\b", "g"), n).replace(/\bthe (poet|writer|author|poetess)\b/g, n);
+    t = t.replace(/^(firstly|first of all|first|to begin with|to start with|initially|for example|for instance|in this (?:quote|quotation|line|stanza)|in (?:the )?(?:first|second|third|fourth|last|final|opening|next) (?:line|lines|stanza)|in (?:line|stanza) \w+)\b,?\s*/, "")
+         .replace(/^(moreover|in addition|additionally|secondly|second|besides|also|on top of (?:this|that)|what is more|another device is)\b,?\s*/, "furthermore, ")
+         .replace(/^(thus|hence|therefore|consequently|as a result|overall|in conclusion|to conclude|to sum up|so|in this way)\b,?\s*/, "");
+    t = t.replace(/^in (?:this|her|his|that|the) poem\b,?\s*(?:"[^"]*",?\s*)?/, "in the poem, ")
+         .replace(new RegExp("^in (?!the poem\\b)[^,]{1,60},?\\s+(?=" + n + "\\b)"), "in the poem, ");
+    t = t.replace(new RegExp("^((?:furthermore,? |in the poem,? )?)(he|she)\\b"), function (m, a) { return a + n; });
+    t = t.replace(new RegExp("^(in the poem,? " + n + " )(shows|portrays|explores|conveys|depicts|demonstrates|illustrates|reveals|expresses|describes|highlights|emphasi[sz]es|suggests|presented)\\b"), "$1presents");
+    t = t.replace(new RegExp("^((?:furthermore,? )?" + n + ",? )" + EVV + "\\b"), "$1states");
+    t = t.replace(/^the (key |important |main )?(word|phrase|term)\b/, "the word");
+    t = t.replace(/^(?:the )?(?:readers?|audience|people reading)(?: also)? (?:is|are|feels?|may feel|might feel|would feel|will feel|can feel|could feel|becomes?|gets?|is left|starts to feel|begins to feel|ends up)\b/, "the reader is")
+         .replace(/^(?:this|it|these words?|that|the (?:word|line|quote|quotation|phrase|device)) (?:makes?|leaves?|causes?) (?:the )?(?:readers?|audience|us)(?: to)?(?: feel| become| be)?\b/, "the reader is")
+         .replace(/^(?:we|as readers,? we|as a reader,? i) (?:feel|are|become)\b/, "the reader is");
+    t = t.replace(/^(?:they|the readers?|readers|the audience|we|he or she|people)(?: also)? (?:reali[sz]es?|understands?|notices?|sees?|learns?|recogni[sz]es?|can see|can tell|becomes? aware|starts? to realize|begins? to understand|discovers?|knows?|thinks?|feels? that)\b/, "they also realize");
+    t = t.replace(/^(?:through the use of|through using|through|by using|by the use of|with the use of|by means of|by employing|using)\b/, "through the use of");
+    t = t.replace(new RegExp("^(through the use of [^,]{1,60},? )(he|she)\\b"), "$1" + n)
+         .replace(new RegExp("^(through the use of [^,]{1,60},? " + n + " )(shows|portrays|explores|conveys|depicts|demonstrates|illustrates|reveals|expresses|highlights|emphasi[sz]es|suggests)\\b"), "$1presents");
+    return t;
+  }
+  function startKey(sent) { return canon(low(String(sent).replace(/[“”]/g, '"'))); }
+  function strictKey(sent) { return low(String(sent).replace(/[“”]/g, '"')); }
+  function canonText(text) { return sentences(String(text || "")).map(startKey).join(" "); }
+  window.__canon = canonText;
+  /* The 15 sentence beginnings, matched on the canonical form (the exact wording is kept in strictSlots for the "close enough" note) */
+  function starterSlots() {
+    var T = strictSlots(), n = SURL;
+    var one = [
+      [/^the (adjective|noun|verb|adverb|pronoun|word)\b/, T[2][1], "an"],
+      [new RegExp("^" + n + " (also )?" + FV + "\\b"), T[3][1], "choice"],
+      [new RegExp("^" + n + " (also )?" + AV + "\\b"), T[4][1], "choice"],
+      [/^the reader is\b/, T[5][1], "reader"],
+      [/^they also realize\b/, T[6][1], "reader"],
+      [/^through the use of\b/, T[7][1], "idea"]];
+    return [[new RegExp("^in the poem,? " + n + " presents\\b"), T[0][1], "idea"],
+            [new RegExp("^" + n + ",? (states|writes|says|describes)\\b"), T[1][1], "ev"]].concat(one)
+      .concat([[new RegExp("^furthermore,? " + n + ",? (states|writes|says|describes)\\b"), T[8][1], "ev"]]).concat(one);
+  }
+  var STRICTT = null;
+  function strictOk(j, raw) { STRICTT = STRICTT || strictSlots(); return !STRICTT[j] || STRICTT[j][0].test(strictKey(raw)); }
+  var TOSUG = /\bto (suggest|show|imply|emphasi[sz]e|highlight|present|indicate|reveal|portray|convey|express|demonstrate|illustrate|make|create)\b|\b(suggesting|showing|implying|emphasi[sz]ing|highlighting|conveying|which suggests|which shows)\b/;
+  function frameOk(k) { return FRAMEALL.some(function (r) { return r.test(k); }) || (new RegExp("^" + SURL + " (also )?" + FV + "\\b").test(k) && TOSUG.test(k)); }
+  function wordSent(k) { return /^the (adjective|noun|verb|adverb|pronoun|word) "[^"]+"/.test(k); }
+  function readerSent(k) { return /^the reader is\b.+\b(because|as|since|due to|when|after|by|while)\b/.test(k); }
   /* Align the student's sentences with the 15 beginnings (longest common subsequence), so one missing or extra sentence does not turn everything red */
   function alignStarts(S_, T) {
     var m = S_.length, n = T.length, L = [], i, j;
@@ -1199,20 +1328,21 @@ button { font: inherit; color: inherit; }
     }
     pairs.forEach(function (p) {
       gap(p[0], p[1]);
-      var mt = T[p[1]][0].exec(startKey(S_[p[0]]));
-      sentNode(S_[p[0]], T[p[1]][2], mt[0].split(/\s+/).length, "");
+      var mt = T[p[1]][0].exec(startKey(S_[p[0]])), exact = strictOk(p[1], S_[p[0]]);
+      sentNode(S_[p[0]], T[p[1]][2], exact ? mt[0].split(/\s+/).length : 2, "");
+      if (!exact) { var cl = document.createElement("span"); cl.className = "st-close"; cl.textContent = "≈ close enough, full marks · exam wording: " + T[p[1]][1]; el.appendChild(cl); el.appendChild(document.createTextNode(" ")); }
       pi = p[0] + 1; pj = p[1] + 1;
     });
     gap(S_.length, T.length);
     return [ok, T.length, wrongPron];
   }
   function catOf(sent) {
-    var t = low(sent.replace(/[“”]/g, '"')).replace(/^furthermore,?\s*/, "");
+    var t = startKey(sent).replace(/^furthermore,?\s*/, "");
     if (/^(in the poem|through the use of)\b/.test(t)) return "idea";
-    if (/^the (adjective|noun|verb|adverb|pronoun)\b/.test(t)) return "an";
-    if (/\bthe reader is\b|^they also\b/.test(t)) return "reader";
+    if (/^the (adjective|noun|verb|adverb|pronoun|word)\b/.test(t)) return "an";
+    if (/\bthe reader is\b|^they also realize\b/.test(t)) return "reader";
     if (/"/.test(t) && /\b(states|writes|says|describes)\b/.test(t) && !FRAMEALL.some(function (r) { return r.test(t); })) return "ev";
-    if (FRAMEALL.some(function (r) { return r.test(t); }) || /^(s?he) (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights)\b/.test(t)) return "choice";
+    if (frameOk(t) || new RegExp("^" + SURL + " (also )?" + AV + "\\b").test(t)) return "choice";
     return "";
   }
   function renderCCText(el, text) {
@@ -1318,7 +1448,8 @@ button { font: inherit; color: inherit; }
       $("exam-intro").textContent = D.intro;
       if (!$("exam-img").src) $("exam-img").src = $("plain-img").src;
       if ($("exam-text").value !== (ex.text || "")) $("exam-text").value = ex.text || "";
-      [0, 1, 2, 3].forEach(function (i) { var v = (ex.plan || [])[i] || ""; if ($("plan-" + i).value !== v) $("plan-" + i).value = v; });
+      if (!ex.plan || !ex.plan.p) ex.plan = { p: [null, null], d: ["", ""] };
+      renderPlan();
       tick(); lastPts = null; liveUpdate();
     }
     if (ex && ex.done) renderExamResult();
@@ -1332,13 +1463,85 @@ button { font: inherit; color: inherit; }
     $("exam-timer").classList.toggle("low", left <= 300);
     var ng = $("exam-nudge"), txt = "";
     if (left <= 300) { txt = "⏰ 5 minutes left: finish your link sentence."; if (!S.exam.n5) { S.exam.n5 = 1; save(); bigPop("5 minutes left", "Finish your link sentence. Is every idea specific?", "time"); } }
-    else if (left <= 1200 && !/\bfurthermore\b/.test(low(S.exam.text || ""))) { txt = "⏰ Half of your time has gone: start device 2 with “Furthermore,” now."; if (!S.exam.n20) { S.exam.n20 = 1; save(); bigPop("Half your time has gone", "Start device 2 now with “Furthermore,”", "time"); } }
+    else if (left <= 1200 && !DEV2.test(S.exam.text || "")) { txt = "⏰ Half of your time has gone: start device 2 with “Furthermore,” now."; if (!S.exam.n20) { S.exam.n20 = 1; save(); bigPop("Half your time has gone", "Start device 2 now with “Furthermore,”", "time"); } }
     ng.textContent = txt; ng.hidden = !txt;
     if (left <= 0 && S.tab === 4) finishExam(true);
   }
   setInterval(tick, 1000);
-  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: ["", "", "", ""] }; save(); renderMain(); window.scrollTo(0, 0); $("plan-0").focus({ preventScroll: true }); };
-  [0, 1, 2, 3].forEach(function (i) { $("plan-" + i).addEventListener("input", function () { if (!S.exam) return; S.exam.plan = S.exam.plan || ["", "", "", ""]; S.exam.plan[i] = $("plan-" + i).value; save(); }); });
+  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: { p: [null, null], d: ["", ""] } }; picId = null; save(); renderMain(); window.scrollTo(0, 0); };
+  /* ----- plan by tapping the device phrases on the poem (O. H., 2026-11-11): no typing ----- */
+  function planOf() { var P = S.exam.plan; if (!P || !P.p) P = S.exam.plan = { p: [null, null], d: ["", ""] }; return P; }
+  function svgOf(s) { var NS = "http://www.w3.org/2000/svg", g = document.createElementNS(NS, "svg"); g.setAttribute("viewBox", "0 0 160 100"); g.setAttribute("class", "pic"); g.setAttribute("aria-hidden", "true"); g.innerHTML = (PICS[s.id] || [""])[0]; return g; }
+  function renderPlan(popId) {
+    var P = planOf(), box = $("plan-rows"), poem = $("exam-poem"); box.textContent = "";
+    poem.querySelectorAll(".pk,.pkn").forEach(function (x) { x.remove(); });
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]]; if (!s) return;
+      rectsOf(s).forEach(function (r, ri) {
+        var m = document.createElement("div"); m.className = "pk" + (i ? " g2" : "") + (s.id === popId ? " pop" : "");
+        m.style.left = (r[0] * 100) + "%"; m.style.top = (r[1] * 100) + "%"; m.style.width = (r[2] * 100) + "%"; m.style.height = (r[3] * 100) + "%"; poem.appendChild(m);
+        if (!ri) { var b = document.createElement("div"); b.className = "pkn" + (i ? " g2" : ""); b.textContent = i + 1; b.style.left = (r[0] * 100) + "%"; b.style.top = (r[1] * 100) + "%"; poem.appendChild(b); }
+      });
+    });
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]], row = document.createElement("div"); row.className = "prow g" + (i + 1);
+      var h = document.createElement("b"); h.textContent = "Device " + (i + 1) + (s && P.d[i] ? ": " + P.d[i] : "");
+      var q = document.createElement("span"); q.className = "pq" + (s ? "" : " none");
+      q.textContent = s ? "“" + s.quote + "”" : (i === 0 || P.p[0] ? "Tap a device in the poem below." : "Pick device 1 first.");
+      row.appendChild(h); row.appendChild(q);
+      if (s) {
+        if (PICS[s.id]) { var pp = document.createElement("div"); pp.className = "ppic"; pp.appendChild(svgOf(s)); row.appendChild(pp); }
+        var acts = document.createElement("div"); acts.className = "pacts";
+        var nm = document.createElement("button"); nm.type = "button"; nm.className = "pchip" + (P.d[i] ? " dev" : ""); nm.textContent = P.d[i] ? "Change device" : "Name the device";
+        nm.onclick = function () { openTray(i); };
+        var cl = document.createElement("button"); cl.type = "button"; cl.className = "pchip"; cl.textContent = "Remove";
+        cl.onclick = function () { P.p[i] = null; P.d[i] = ""; save(); renderPlan(); picUpdateNow(); };
+        acts.appendChild(nm); acts.appendChild(cl); row.appendChild(acts);
+      }
+      box.appendChild(row);
+    });
+  }
+  $("exam-poem").addEventListener("click", function (e) {
+    if (!S || !S.exam || !S.exam.started || S.exam.done) return;
+    var img = $("exam-img"), r = img.getBoundingClientRect(); if (!r.width) return;
+    var fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height, padx = 0.012, pady = 0.004, hit = null, P = planOf();
+    SPOTS.forEach(function (s) { rectsOf(s).forEach(function (q) { if (!hit && fx >= q[0] - padx && fx <= q[0] + q[2] + padx && fy >= q[1] - pady && fy <= q[1] + q[3] + pady) hit = s; }); });
+    if (!hit) { toast("No device there. Look for a comparison, a repeated word, a vivid picture, a human quality, an exaggeration or two opposites side by side."); return; }
+    var i = P.p.indexOf(hit.id);
+    if (i >= 0) { P.p[i] = null; P.d[i] = ""; save(); renderPlan(); picUpdateNow(); toast("Device " + (i + 1) + " removed."); return; }
+    i = !P.p[0] ? 0 : (!P.p[1] ? 1 : -1);
+    if (i < 0) { toast("You already picked two devices. Tap one of them again to remove it."); return; }
+    P.p[i] = hit.id; P.d[i] = ""; save(); renderPlan(hit.id); picUpdateNow(); openTray(i);
+  });
+  function openTray(i) {
+    var P = planOf(), s = BY[P.p[i]]; if (!s) return;
+    $("tray").className = "tray g" + (i + 1);
+    $("tray-h").textContent = "Device " + (i + 1);
+    $("tray-q").textContent = "“" + s.quote + "”";
+    var box = $("tray-opts"); box.textContent = "";
+    Object.keys(DEVRE).forEach(function (d) {
+      var b = document.createElement("button"); b.type = "button"; b.textContent = d; if (P.d[i] === d) b.className = "on";
+      b.onclick = function () { P.d[i] = d; closeTray(); if (i === 0 && !P.p[1]) toast("Now device 2: tap another device in the poem."); save(); renderPlan(); };
+      box.appendChild(b);
+    });
+    $("tray-back").hidden = false; placePic();
+  }
+  function closeTray() { $("tray-back").hidden = true; placePic(); }
+  $("tray-x").onclick = function () { closeTray(); renderPlan(); };
+  $("tray-back").addEventListener("click", function (e) { if (e.target === $("tray-back")) closeTray(); });
+  /* after the exam: was each device named correctly? Always show the right answer. */
+  function planCheck() {
+    var P = S.exam && S.exam.plan, out = [];
+    if (!P || !P.p) return out;
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]], lab = "Device " + (i + 1);
+      if (!s) { out.push([false, lab + ": not picked", "Plan before you write: tap a device in the poem and name it."]); return; }
+      var ok = P.d[i] === s.device;
+      out.push([ok, lab + ": “" + s.quote + "”", ok ? "✓ Correct: " + s.device.toLowerCase() + ". " + s.dWhy
+        : (P.d[i] ? "✗ You named it " + P.d[i].toLowerCase() + ". The correct answer: " : "✗ Not named. The correct answer: ") + s.device.toLowerCase() + ". " + s.dWhy]);
+    });
+    return out;
+  }
   $("exam-text").addEventListener("input", function (e) { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; liveSoon(e); });
   ["keyup", "click", "focus"].forEach(function (ev) { $("exam-text").addEventListener(ev, liveSoon); });
   $("btn-exam-fix").onclick = function () { var ex = S.exam; if (!ex) return; ex.done = false; ex.fix = true; save(); renderMain(); window.scrollTo(0, 0); $("exam-text").focus({ preventScroll: true }); };
@@ -1349,21 +1552,21 @@ button { font: inherit; color: inherit; }
   function vagueWords(text) { return low(unq(text)).match(VAGUE) || []; }
   function wrongPronouns(text) { return low(unq(text)).match(new RegExp("\\b" + (PRON === "He" ? "she" : "he") + "\\b(?=\\s+(?:also\\s+)?(?:emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks|uses|presents|states|writes|shows|describes|creates)\\b)", "g")) || []; }
   function examPoints(text) {
-    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T);
-    var t = low(text), tq = low(String(text).replace(/[“”]/g, '"')), qs = quotes(text), big = nWords(text) >= 30;
+    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T), keys = S_.map(startKey);
+    var t = keys.join(" "), tq = t, qs = quotes(text), big = nWords(text) >= 30;
     function n(re) { return (tq.match(re) || []).length; }
     var devs = Object.keys(DEVRE).filter(function (k) { return DEVRE[k].test(t); }).length;
-    var frames = S_.filter(function (x) { var y = low(x); return FRAMEALL.some(function (r) { return r.test(y); }); }).length;
+    var frames = keys.filter(frameOk).length;
     var beg = pairs.length * 4;
-    var mentions = n(/\b(simile|metaphor|imagery|personification|juxtaposition|repetition|hyperbole|rhetorical question)\b/g);
+    var mentions = n(/\b(similes?|metaphors?|imagery|personification|juxtaposition|repetition|hyperbole|exaggeration|contrast|rhetorical question)\b/g);
     var pDev = devs >= 2 || mentions >= 3 ? 5 : (devs === 1 ? 2 : 0), pQ = (qs.length >= 1 ? 3 : 0) + (qs.length >= 2 ? 3 : 0);
     var pShort = qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }) ? 2 : 0;
-    var pWord = Math.min(2, n(/\bthe (adjective|noun|verb|adverb|pronoun) "[^"]+"\s*,?\s*is\b/g)) * 3;
-    var pFrame = Math.min(2, frames) * 3, pReader = Math.min(2, n(/\bthe reader is\b[^.]*\bbecause\b/g)) * 2;
-    var pFur = /\bfurthermore\b/.test(t) ? 2 : 0;
+    var pWord = Math.min(2, keys.filter(wordSent).length) * 3;
+    var pFrame = Math.min(2, frames) * 3, pReader = Math.min(2, keys.filter(readerSent).length) * 2;
+    var pFur = keys.some(function (k) { return /^furthermore\b/.test(k); }) ? 2 : 0;
     var pPron = big && t.indexOf(SUR.toLowerCase()) >= 0 && !wrongPronouns(text).length ? 3 : 0;
     var pVague = big && !vagueWords(text).length ? 3 : 0;
-    var pTopic = S_.length && T[0][0].test(startKey(S_[0])) && nWords(S_[0]) >= 12 ? 3 : 0;
+    var pTopic = S_.length && T[0][0].test(keys[0]) && nWords(S_[0]) >= 12 ? 3 : 0;
     var parts = [["Sentence beginnings (" + pairs.length + " of 15)", beg, 60], ["Evidence: two devices named, short quotations in quotation marks", pDev + pQ + pShort, 13],
                  ["Analysis: word class, device frames, reader sentences", pWord + pFrame + pReader, 16], ["Precision and language: specific message, no vague words, “Furthermore,” name and pronoun", pTopic + pVague + pFur + pPron, 11]];
     var pts = parts.reduce(function (a, p) { return a + p[1]; }, 0);
@@ -1581,42 +1784,57 @@ button { font: inherit; color: inherit; }
   var PICS = (function () { try { return JSON.parse(document.getElementById("pic-data").textContent); } catch (e) { return {}; } })();
   var picId = null, picHidden = {};
   window.__picLog = [];
+  var DEV2 = /\b(furthermore|moreover|in addition|additionally|secondly)\b/i;
+  /* which device do these words in quotation marks belong to? Single words count too. */
   function picSpotFor(p) {
+    var np = cn(p), pw = cw(p), best = null, P = S && S.exam && S.exam.plan && S.exam.plan.p ? S.exam.plan.p : [];
+    if (!np.trim()) return null;
+    var cands = SPOTS.filter(function (s) { return PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0); });
+    if (cands.length) return cands.filter(function (s) { return P.indexOf(s.id) >= 0; })[0] || cands[0];
     if (nWords(p) < 2) return null;
-    var np = cn(p), pw = cw(p), best = null;
-    SPOTS.forEach(function (s) { if (!best && PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0)) best = s; });
-    if (best) return best;
     SPOTS.forEach(function (s) {
       if (best || !PICS[s.id]) return;
       if ([s.quote].concat(s.ctx || []).map(cn).some(function (c) { return c.indexOf(np) >= 0; }) && overlap(pw, cw(s.quote))) best = s;
     });
     return best;
   }
+  var picLast = { before: "", first: 0 };
+  function picUpdateNow() { picUpdate(picLast.before, picLast.first); }
   function picUpdate(before, firstLen) {
-    var box = $("exam-pic");
-    if (!String(before).trim()) { picId = null; popSeen = {}; placePic(); return; }
-    var t = before.slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
-    while ((m = re.exec(t))) segs.push(m[1]);
-    var s = null; for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
-    if (s) showPic(s);   /* no match: keep the last picture on screen */
+    picLast = { before: before, first: firstLen };
+    if (!String(before).trim()) popSeen = {};
+    var P = S && S.exam && S.exam.plan && S.exam.plan.p ? S.exam.plan.p : [null, null];
+    var t = String(before).slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
+    var fur = DEV2.exec(t), part = fur ? t.slice(fur.index) : t;
+    while ((m = re.exec(part))) segs.push(m[1]);
+    var s = null;
+    for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
+    /* nothing quoted yet for this device: show the planned device (device 2 once "Furthermore" is written) */
+    if (!s) { var pid = fur ? P[1] : P[0]; s = pid && PICS[pid] ? BY[pid] : null; }
+    if (!s && !fur && picId) { placePic(); return; }   /* the device 1 picture stays until device 2 starts */
+    if (!s) { if (!String(before).trim()) picId = null; placePic(); return; }
+    showPic(s);
   }
   function showPic(s) {
-    var box = $("exam-pic"); if (picId === s.id) return;
+    if (picId === s.id) { placePic(); return; }
     picId = s.id; window.__picLog.push(s.id);
-    var P = PICS[s.id]; box.querySelector("svg").innerHTML = P[0]; $("pic-see").textContent = P[1]; $("pic-mean").textContent = P[2];
+    var P = PICS[s.id], box = $("exam-pic"); box.querySelector("svg").innerHTML = P[0];
+    var sp = $("side-pic"); sp.querySelector("svg").innerHTML = P[0];
+    sp.classList.remove("empty", "flash"); void sp.offsetWidth; sp.classList.add("flash");
     placePic(); box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
   }
-  /* the picture floats right under the line being written; above it when the keyboard leaves no room below */
+  /* the picture sits on the right of the writing box; if the box is out of view, it docks at the bottom of the screen */
   function placePic() {
-    var box = $("exam-pic"), ta = $("exam-text");
-    var show = !!(picId && !picHidden[picId] && document.activeElement === ta && S && S.exam && S.exam.started && !S.exam.done);
+    var box = $("exam-pic"), ta = $("exam-text"), sp = $("side-pic");
+    var live = !!(S && S.exam && S.exam.started && !S.exam.done && S.tab === 4 && !S.report);
+    if (!picId || !live) sp.classList.add("empty");
+    var show = !!(picId && live && $("tray-back").hidden && String(S.exam.text || "").trim());   /* docks only once writing has started */
+    if (show) {
+      var r = ta.getBoundingClientRect(), vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      show = !(r.bottom > 80 && r.top < vh - 60);
+    }
     box.hidden = !show; if (!show) return;
-    var vv = window.visualViewport, vTop = vv ? vv.offsetTop : 0, vH = vv ? vv.height : window.innerHeight;
-    var tr = ta.getBoundingClientRect(), c = caretBox(ta), h = box.offsetHeight, top = c.bottom + 10, up = false;
-    box.style.left = Math.max(8, tr.left) + "px"; box.style.width = Math.min(tr.width, window.innerWidth - 16) + "px";
-    if (top + h > vTop + vH - 6) { top = c.top - h - 10; up = true; }
-    if (top < vTop + 6) top = vTop + 6;
-    box.style.top = Math.round(top) + "px"; box.classList.toggle("up", up);
+    box.classList.add("dock"); box.classList.remove("up"); box.style.top = ""; box.style.width = "";
   }
   function placeBoth() { placePic(); placePop(); }
   window.addEventListener("scroll", placeBoth, { passive: true }); window.addEventListener("resize", placeBoth);
@@ -1677,24 +1895,26 @@ button { font: inherit; color: inherit; }
   $("btn-exam-finish").onclick = function () { finishExam(false); };
   $("btn-exam-again").onclick = function () { S.exam = null; save(); $("exam-text").value = ""; renderMain(); window.scrollTo(0, 0); };
   function examChecks(text) {
-    var t = low(text), tq = low(String(text).replace(/[“”]/g, '"')), qs = quotes(text), c = [];
+    var keys = sentences(text).map(startKey), t = keys.join(" "), qs = quotes(text), c = [], T = starterSlots();
     var devs = Object.keys(DEVRE).filter(function (k) { return DEVRE[k].test(t); });
-    var frames = sentences(text).filter(function (x) { var y = low(x); return FRAMEALL.some(function (r) { return r.test(y); }); }).length;
-    function n(re) { return (tq.match(re) || []).length; }
-    c.push([/^in the poem\b/.test(t) && /\bpoe presents\b/.test(t) && /through the use of\b/.test(t), "② Topic sentence: “In the poem, Poe presents … through the use of …”"]);
-    c.push([devs.length >= 2 || n(/\b(simile|metaphor|imagery|personification|juxtaposition|repetition|hyperbole|rhetorical question)\b/g) >= 3, "Names the device for each of your two examples"]);
+    var frames = keys.filter(frameOk).length;
+    function n(re) { return (t.match(re) || []).length; }
+    var USEOF = /\b(through the use of|through|by using|using|with the use of|by means of|by the use of)\b/;
+    c.push([keys.length > 0 && T[0][0].test(keys[0]) && USEOF.test(keys[0]), "② Topic sentence: “In the poem, " + SUR + " presents … through the use of …”"]);
+    c.push([devs.length >= 2 || n(/\b(similes?|metaphors?|imagery|personification|juxtaposition|repetition|hyperbole|exaggeration|contrast|rhetorical question)\b/g) >= 3, "Names the device for each of your two examples"]);
     c.push([qs.length >= 2, "③ A quotation for each device, in quotation marks"]);
     c.push([qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }), "Short quotations (15 words or fewer)"]);
-    c.push([n(/\bthe (adjective|noun|verb|adverb|pronoun) "/g) >= 2, "④ “The adjective / noun / verb “___” is …” for each device"]);
+    c.push([keys.filter(wordSent).length >= 2, "④ “The adjective / noun / verb “___” is …” for each device"]);
     c.push([frames >= 2, "⑤ The device frame for each device (e.g. “compares ___ to ___ to suggest ___”)"]);
-    c.push([n(/\bthe reader is\b[^.]*\bbecause\b/g) >= 2 && n(/\bthey also (realize|realise|notice|understand)\b/g) >= 2, "⑥ “The reader is ___ because ___. They also realize ___” for each device"]);
-    c.push([n(/\bthrough the use of\b/g) >= 3, "⑦ A link sentence for each device: “Through the use of …, Poe presents …”"]);
-    c.push([/\bfurthermore\b/.test(t), "⑧ Device 2 starts with “Furthermore,”"]);
-    c.push([noHe(text) && /\bpoe\b/.test(t), "Uses the poet's name and the right pronoun"]);
+    c.push([keys.filter(readerSent).length >= 2 && keys.filter(function (k) { return /^they also realize\b/.test(k); }).length >= 2, "⑥ “The reader is ___ because ___. They also realize ___” for each device"]);
+    c.push([keys.filter(function (k) { return /^through the use of\b/.test(k); }).length + (keys.length && USEOF.test(keys[0]) ? 1 : 0) >= 3, "⑦ A link sentence for each device: “Through the use of …, " + SUR + " presents …”"]);
+    c.push([keys.some(function (k) { return /^furthermore\b/.test(k); }), "⑧ Device 2 starts with “Furthermore,”"]);
+    c.push([noHe(text) && t.indexOf(SURL) >= 0, "Uses the poet's name and the right pronoun"]);
     return c;
   }
   function finishExam(timeUp) {
     var ex = S.exam; if (!ex || ex.done) return;
+    clearTimeout(popT1); clearTimeout(popT2); $("big-pop").hidden = true; $("exam-pic").hidden = true; $("tray-back").hidden = true;
     ex.text = $("exam-text").value || ex.text || "";
     ex.used = Math.min(EXAM_SEC, (Date.now() - ex.started) / 1000);
     if (ex.fix) ex.used = ex.usedExam || 0; else ex.usedExam = ex.used;
@@ -1715,6 +1935,9 @@ button { font: inherit; color: inherit; }
     c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : "no"; li.textContent = x[1]; ul.appendChild(li); });
     var qs = quotes(ex.text), unknown = qs.filter(function (q) { return !SPOTS.some(function (s) { return inPoem(q, s); }); });
     $("exam-qnote").textContent = unknown.length ? "Check these quotations against the poem yourself (the app only knows the lines with highlighted devices): " + unknown.map(function (q) { return "“" + q + "”"; }).join(", ") : "";
+    var pc = $("plan-check"); pc.textContent = "";
+    planCheck().forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "" : "no"; var b = document.createElement("b"); b.textContent = x[1]; var p = document.createElement("div"); p.className = "pw"; p.textContent = x[2]; li.appendChild(b); li.appendChild(p); pc.appendChild(li); });
+    $("plan-check-card").hidden = !pc.firstChild;
     legendCC($("exam-legend"));
     var stc = renderExamCC($("exam-cc"), ex.text || "");
     $("exam-starts").textContent = "Sentence beginnings: " + stc[0] + " of " + stc[1] + " correct. Bold = correct beginning. Red = wrong or missing beginning, with the words you should start with."
@@ -1738,7 +1961,7 @@ button { font: inherit; color: inherit; }
     $("r-stars").textContent = "★".repeat(f);
     var ex = [];
     ex.push("Spot it: " + spottedCount() + " of " + SPOTS.length + " devices spotted without highlights" + (S.spotMiss ? " (" + S.spotMiss + " taps on empty words)" : "") + ".");
-    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words.");
+    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words." + (function () { var pcs = planCheck(); return pcs.length ? " Plan: " + pcs.map(function (x, i) { return "device " + (i + 1) + (x[0] ? " ✓" : " ✗"); }).join(", ") + "." : ""; })());
     $("r-extra").textContent = ex.join(" ");
     var rev = SPOTS.filter(function (s) { return S.spots[s.id].misses; });
     $("r-revise-block").hidden = !rev.length;

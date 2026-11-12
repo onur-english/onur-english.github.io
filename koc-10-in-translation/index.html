@@ -332,6 +332,54 @@ button { font: inherit; color: inherit; }
 #exam-text { min-height: 320px; line-height: 1.55; }
 @media (prefers-reduced-motion: reduce) { .tap-dot { animation: none; opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+/* ===== Koç 10 exam, latest standard (O. H., 2026-11-12) ===== */
+:root { --d2: #C2410C; }
+#exam-tip, #exam-warn { display: none !important; }   /* no "start with" suggestions at the top */
+.ex-pick { position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ex-pick img { width: 100%; height: auto; user-select: none; -webkit-user-select: none; display: block; }
+.pk { position: absolute; border-radius: 5px; pointer-events: none; mix-blend-mode: multiply; background: rgba(255,214,60,.62); box-shadow: inset 0 -3px 0 var(--board); }
+.pk.g2 { background: rgba(255,160,110,.62); box-shadow: inset 0 -3px 0 var(--d2); }
+.pk.pop { animation: pkpop .45s; }
+@keyframes pkpop { 0% { opacity: 0; transform: scale(1.12); } 100% { opacity: 1; transform: none; } }
+.pkn { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #FFFFFF; background: var(--board); pointer-events: none; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.pkn.g2 { background: var(--d2); }
+.prow { display: flex; flex-direction: column; gap: 6px; border-left: 5px solid var(--board); background: #FFFBEA; border-radius: 0 10px 10px 0; padding: 8px 10px; }
+.prow.g2 { border-left-color: var(--d2); background: #FFF3EC; }
+.prow .pq { font-weight: 700; }
+.prow .pq.none { font-weight: 400; color: var(--muted); font-style: italic; }
+.prow .pacts { display: flex; flex-wrap: wrap; gap: 6px; }
+.prow .ppic svg { width: 150px; height: 94px; border-radius: 8px; display: block; }
+.pchip { appearance: none; border: 1.5px solid var(--ink); background: #FFFFFF; color: var(--ink); border-radius: 999px; padding: 3px 11px; font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; min-height: 32px; }
+.pchip.dev { background: var(--board); border-color: var(--board); color: #FFFFFF; }
+.prow.g2 .pchip.dev { background: var(--d2); border-color: var(--d2); }
+.tray-back { position: fixed; inset: 0; z-index: 80; background: rgba(20,20,24,.35); display: flex; align-items: flex-end; justify-content: center; }
+.tray-back[hidden] { display: none; }
+.tray { width: 100%; max-width: 680px; background: #FFFFFF; border-radius: 18px 18px 0 0; border-top: 6px solid var(--board); padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 10px; box-shadow: 0 -10px 30px rgba(0,0,0,.25); }
+.tray.g2 { border-top-color: var(--d2); }
+.tray-q { font-weight: 700; background: #FFF6CC; border-radius: 8px; padding: 6px 10px; margin: 0; }
+.tray.g2 .tray-q { background: #FFEDE3; }
+.tray-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.tray-opts button { appearance: none; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); border-radius: 12px; padding: 10px 6px; font: inherit; font-weight: 700; cursor: pointer; min-height: 46px; }
+.tray-opts button.on { border-color: var(--board); background: #FFF6CC; }
+.pcheck { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.pcheck li { border-radius: 12px; padding: 10px 12px; background: var(--good-soft); }
+.pcheck li.no { background: var(--red-soft); }
+.pcheck li b { display: block; }
+.pcheck li .pw { font-size: .9rem; margin-top: 4px; }
+.wr-grid { display: grid; grid-template-columns: minmax(0, 1fr) clamp(118px, 36%, 300px); gap: 10px; align-items: start; }
+.wr-grid #exam-text { min-height: 420px; }
+.side-pic { border: 2px solid var(--board); border-radius: 12px; background: #FFFDF6; padding: 4px; display: flex; flex-direction: column; gap: 4px; font-size: .78rem; line-height: 1.3; }
+.side-pic svg { width: 100%; height: auto; aspect-ratio: 160 / 100; border-radius: 8px; display: block; }
+.side-pic.empty svg { display: none; }
+.side-pic:not(.empty) .sp-empty { display: none; }
+.side-pic .sp-empty { color: var(--muted); font-style: italic; margin: 0; padding: 4px; }
+.side-pic.flash { animation: picin .5s; }
+.eb-pic .pc, .eb-pic .px, .eb-pic::before { display: none !important; }
+.eb-pic { padding: 4px; }
+.eb-pic.dock { pointer-events: none; top: auto !important; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); left: auto !important; right: 12px !important; width: min(46vw, 260px) !important; margin: 0; }
+.eb-pic svg { width: 100%; height: auto; aspect-ratio: 160 / 100; }
+#exam-live { padding-bottom: 120px; }
+.st-close { display: inline-block; color: #3D5A40; font-weight: 700; font-size: .8rem; background: #E6F2E8; border-radius: 6px; padding: 0 6px; margin: 0 2px; }
 </style>
 </head>
 <body>
@@ -492,7 +540,7 @@ button { font: inherit; color: inherit; }
       <div id="lv-4" class="col" hidden>
         <div class="card" id="exam-start-card">
           <span class="label">Exam practice · 40 minutes</span>
-          <p>Like the real exam, the poem has no highlights. Read the introduction, choose TWO devices yourself and write ONE body paragraph in your exam structure.</p>
+          <p>Like the real exam, the poem has no highlights. Read the introduction, tap TWO devices in the poem and name them, then write ONE body paragraph in your exam structure.</p>
           <p><b>While you write:</b> your structure score (out of 100) goes up live, and big coach messages pop up to push your analysis deeper. Read each one, then keep writing.</p>
           <p class="small muted">The timer keeps running if you leave the page. When time is up, your paragraph is checked automatically.</p>
           <button class="btn btn-ink" id="btn-exam-start" type="button">Start the 40-minute exam</button>
@@ -509,18 +557,16 @@ button { font: inherit; color: inherit; }
             <p class="eb-nudge" id="exam-nudge" hidden></p>
           </div>
           <div class="card"><span class="label">The introduction (given)</span><p class="intro" id="exam-intro"></p></div>
-          <details class="card poem-card" open><summary>The poem</summary><div class="poem-img"><img id="exam-img" alt="The full poem without highlights"></div></details>
-          <div class="card">
-            <span class="label">Plan first (about 2 minutes)</span>
-            <p class="small muted">Choose your two devices and the words you will quote before you write. The plan is not marked.</p>
-            <div class="field"><label for="plan-0">Device 1</label><input id="plan-0" type="text" maxlength="40" placeholder="e.g. metaphor"></div>
-            <div class="field"><label for="plan-1">Words I will quote for device 1</label><input id="plan-1" type="text" maxlength="120"></div>
-            <div class="field"><label for="plan-2">Device 2</label><input id="plan-2" type="text" maxlength="40" placeholder="e.g. repetition"></div>
-            <div class="field"><label for="plan-3">Words I will quote for device 2</label><input id="plan-3" type="text" maxlength="120"></div>
+          <div class="card" id="plan-card">
+            <span class="label">Plan first: pick your two devices</span>
+            <p class="small">Tap the words of a device in the poem below. They light up: <b style="background:#FFE680;padding:0 4px;border-radius:4px">yellow = Device 1</b>, <b style="background:#FFCDB2;padding:0 4px;border-radius:4px">orange = Device 2</b>. Then tap the name of the device. Tap a device again to remove it. Your plan is checked when you finish.</p>
+            <div id="plan-rows" class="col" style="gap:8px"></div>
           </div>
+          <details class="card poem-card" open><summary>The poem</summary><div class="poem-img ex-pick" id="exam-poem"><img id="exam-img" alt="The full poem without highlights. Tap the words of a device to plan."></div></details>
           <div class="card">
             <label class="label" for="exam-text">Your body paragraph</label>
-            <textarea id="exam-text" spellcheck="true" placeholder="In the poem, …"></textarea>
+            <div class="wr-grid"><textarea id="exam-text" spellcheck="true" placeholder="In the poem, …"></textarea>
+            <aside class="side-pic empty" id="side-pic" aria-hidden="true"><svg class="pic" viewBox="0 0 160 100"></svg><p class="sp-empty">Pick a device in the plan, or put words from the poem in quotation marks: its picture appears here.</p></aside></div>
             <p class="small muted" id="exam-wc">0 words</p>
             <button class="btn btn-ink" id="btn-exam-finish" type="button">I have finished</button>
           </div>
@@ -535,6 +581,10 @@ button { font: inherit; color: inherit; }
             <span class="label">Structure checklist</span>
             <ul class="checks" id="exam-checks"></ul>
             <p class="small muted" id="exam-qnote"></p>
+          </div>
+          <div class="card" id="plan-check-card">
+            <span class="label">Your plan, checked</span>
+            <ul class="pcheck" id="plan-check"></ul>
           </div>
           <div class="card">
             <span class="label">Your paragraph, color-coded</span>
@@ -588,6 +638,12 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="tray-back" id="tray-back" hidden><div class="tray" id="tray" role="dialog" aria-modal="true" aria-labelledby="tray-h">
+  <div class="sheet-head"><span class="label" id="tray-h"></span><button class="x" id="tray-x" type="button" aria-label="Close">×</button></div>
+  <p class="tray-q" id="tray-q"></p>
+  <p class="small muted" style="margin:0">Which device is this?</p>
+  <div class="tray-opts" id="tray-opts"></div>
+</div></div>
 <div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span><button class="bp-x" type="button" aria-label="Close">×</button></div>
 <div class="eb-pic" id="exam-pic" hidden><svg class="pic" viewBox="0 0 160 100" aria-hidden="true"></svg><div class="pc"><span class="eb-pic-lab">Picture it</span><i><b>You see:</b> <span id="pic-see"></span></i><i><b>It means:</b> <span id="pic-mean"></span></i></div><button class="px" type="button" aria-label="Hide the picture">×</button></div>
 <div class="sheet-back" id="sheet-back" hidden>
@@ -603,7 +659,7 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 
-<script id="pic-data" type="application/json">{"s1": ["<rect width=\"160\" height=\"100\" fill=\"#E8EEF5\"/><path d=\"M60 90V18\" stroke=\"#5A4632\" fill=\"none\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g class=\"sw\" style=\"--o:0% 50%\"><path d=\"M61 20 Q85 12 108 22 Q90 30 108 44 Q85 36 61 44Z\" stroke=\"#9AA4B4\" fill=\"#FFFFFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><path d=\"M68 18L100 50M100 18L68 50\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"28\" y=\"70\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👄<\/text><text x=\"118\" y=\"84\" font-size=\"9\" font-weight=\"800\" fill=\"#B3261E\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">no surrender<\/text>", "A white flag, the sign of surrender, crossed out.", "White flag = surrender. Saying sorry would mean giving up the fight, and the speaker refuses."], "s2": ["<rect width=\"160\" height=\"100\" fill=\"#F4EFF7\"/><text x=\"30\" y=\"50\" font-size=\"36\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">🤐<\/text><text x=\"104\" y=\"34\" font-size=\"12\" font-weight=\"800\" fill=\"#2E2748\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0s\">My mouth cannot<\/text><text x=\"104\" y=\"64\" font-size=\"12\" font-weight=\"800\" fill=\"#2E2748\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.9s\">My mouth cannot<\/text>", "“My mouth cannot” said twice, like a door shutting.", "The repeated refusal sounds firm and final: no apology is coming."], "s3": ["<rect width=\"160\" height=\"100\" fill=\"#ECECEC\"/><rect x=\"80\" y=\"0\" width=\"80\" height=\"100\" rx=\"0\" fill=\"#FBE1DE\"/><text x=\"40\" y=\"48\" font-size=\"36\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">😶<\/text><text x=\"40\" y=\"86\" font-size=\"9\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">hungry, silent<\/text><text x=\"120\" y=\"48\" font-size=\"36\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em shk\">🗣️<\/text><text x=\"120\" y=\"86\" font-size=\"9\" font-weight=\"800\" fill=\"#B3261E\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">your mouth?<\/text><path d=\"M80 6V94\" stroke=\"#FFFFFF\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"4 4\"/><circle cx=\"80\" cy=\"50\" r=\"9\" fill=\"#FFFFFF\"/><text x=\"80\" y=\"50\" font-size=\"8\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">vs<\/text>", "A silent, hungry mouth next to a loud, attacking mouth.", "Side by side, the blame looks unfair: the speaker's mouth did no harm; the other one did."], "s4": ["<rect width=\"160\" height=\"100\" fill=\"#F7F2EA\"/><text x=\"26\" y=\"50\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👄<\/text><path d=\"M0 0H8V8M0 0V8\" stroke=\"#5F6670\" fill=\"none\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lin\" style=\"--fx:44px;--fy:40px;--dx:120px;--dy:44px;--t:1.2s;--d:0.0s\"/><path d=\"M0 0H8V8M0 0V8\" stroke=\"#5F6670\" fill=\"none\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lin\" style=\"--fx:44px;--fy:48px;--dx:120px;--dy:50px;--t:1.2s;--d:0.3s\"/><path d=\"M0 0H8V8M0 0V8\" stroke=\"#5F6670\" fill=\"none\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lin\" style=\"--fx:44px;--fy:56px;--dx:120px;--dy:56px;--t:1.2s;--d:0.6s\"/><text x=\"132\" y=\"50\" font-size=\"28\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">💔<\/text><text x=\"80\" y=\"90\" font-size=\"8\" font-weight=\"800\" fill=\"#B3261E\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">pierce me quick and hard<\/text>", "Lips that are metal staples, shooting quick and hard into the speaker.", "Every word is sharp metal: the other person's words pierce and hurt the speaker."], "s5": ["<rect width=\"160\" height=\"100\" fill=\"#E9E6F3\"/><text x=\"124\" y=\"50\" font-size=\"56\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🚪<\/text><text x=\"40\" y=\"50\" font-size=\"12\" font-weight=\"800\" fill=\"#2E2748\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx mv\" style=\"--dx:50px;--dy:0px;--t:1.1s\">words<\/text><text x=\"80\" y=\"90\" font-size=\"8\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">slammed against the door<\/text>", "Words flying at a closed door and bouncing back.", "A back turned like a shut door: the other person will not listen, so the words never get in."], "s6": ["<defs><linearGradient id=\"pg15\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#1F1B2A\"/><stop offset=\"1\" stop-color=\"#2E2748\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg15)\"/><path d=\"M30 90V48L80 18L130 48V90Z\" stroke=\"#8A80A8\" fill=\"#2A2440\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"60\" y=\"62\" font-size=\"18\" font-weight=\"800\" fill=\"#9C93B8\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0s\">…<\/text><text x=\"80\" y=\"76\" font-size=\"18\" font-weight=\"800\" fill=\"#9C93B8\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:0.7s\">…<\/text><text x=\"100\" y=\"62\" font-size=\"18\" font-weight=\"800\" fill=\"#9C93B8\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:1.4s\">…<\/text><text x=\"80\" y=\"40\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🤫<\/text>", "A dark house whose rooms fill with silence instead of furniture.", "Silence fills every room: refusing to talk makes the home cold and lonely."], "s7": ["<defs><linearGradient id=\"pg16\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#0E0B1A\"/><stop offset=\"1\" stop-color=\"#2A2142\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg16)\"/><circle cx=\"128\" cy=\"34\" r=\"22\" fill=\"#FFD27A\" class=\"pul\"/><text x=\"128\" y=\"34\" font-size=\"26\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">💡<\/text><g transform=\"translate(36 76)\"><g class=\"mv\" style=\"--dx:78px;--dy:-36px;--t:2.8s;--o:50% 50%\"><path d=\"M0 0 Q-9 -10 -14 -2 Q-8 4 0 0 Q9 -10 14 -2 Q8 4 0 0Z\" stroke=\"#CFC8BA\" fill=\"#E8E1D3\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><\/g><text x=\"60\" y=\"92\" font-size=\"8\" font-weight=\"800\" fill=\"#FFD27A\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">even at the risk of burning<\/text>", "A moth flying toward a burning light.", "The moth risks burning but still goes: the speaker keeps reaching for love and understanding."]}</script>
+<script id="pic-data" type="application/json">{"s1": ["<rect width=\"160\" height=\"100\" fill=\"#F4F1EA\"/><path d=\"M40 20V86\" stroke=\"#6B5E52\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g class=\"sw\" style=\"--o:0% 50%\"><path d=\"M40 20 h40 v26 h-40Z\" stroke=\"#1B1D21\" fill=\"#FFFFFF\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><text x=\"60\" y=\"33\" font-size=\"8\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">sorry<\/text><path d=\"M38 18L82 62M82 18L38 62\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g class=\"bob\"><g><circle cx=\"122\" cy=\"67\" r=\"4\" fill=\"#D7001F\"/><rect x=\"118\" y=\"72\" width=\"8\" height=\"13\" rx=\"3\" fill=\"#D7001F\"/><\/g><text x=\"122\" y=\"56\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">✊<\/text><\/g><rect x=\"34.12\" y=\"84\" width=\"122.88000000000001\" height=\"16\" rx=\"5\" fill=\"#D7001F\"/><text x=\"95.56\" y=\"92\" font-size=\"7\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">sorry = surrender? never<\/text>", "A white flag with ‘sorry’ written on it, crossed out, and the speaker standing firm with a raised fist.", "Saying sorry would mean losing the fight, and the speaker refuses to give up."], "s2": ["<rect width=\"160\" height=\"100\" fill=\"#FFF1F1\"/><text x=\"80\" y=\"50\" font-size=\"34\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👄<\/text><text x=\"80\" y=\"50\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🔒<\/text><g class=\"mv\" style=\"--dx:6px;--dy:0px;--t:0.6s\"><path d=\"M14 50L52 50\" stroke=\"#9AA3AD\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M46.7 52.9L52 50L46.7 47.1\" stroke=\"#9AA3AD\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><g class=\"mv\" style=\"--dx:-6px;--dy:0px;--t:0.6s\"><path d=\"M146 50L108 50\" stroke=\"#9AA3AD\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M113.3 47.1L108 50L113.3 52.9\" stroke=\"#9AA3AD\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><text x=\"80\" y=\"18\" font-size=\"10\" font-weight=\"800\" fill=\"#D7001F\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\">CANNOT<\/text><text x=\"80\" y=\"82\" font-size=\"12\" font-weight=\"800\" fill=\"#D7001F\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx ech\" style=\"--d:1s\">CANNOT<\/text><rect x=\"13.939999999999998\" y=\"86\" width=\"132.12\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"80\" y=\"94\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">no pressure will change it<\/text>", "A locked mouth with pressure pushing in from both sides and ‘CANNOT’ said twice.", "Repeating the refusal makes it final: no pressure will make the speaker apologize."], "s3": ["<rect width=\"160\" height=\"100\" fill=\"#EEF2F8\"/><path d=\"M80 22V80\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M30 30H130\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M20 30 l10 22 l10 -22M120 30 l10 22 l10 -22\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"30\" y=\"58\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🤐<\/text><text x=\"130\" y=\"58\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em shk\">🗯️<\/text><text x=\"30\" y=\"12\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em mv\" style=\"--dx:-4px;--dy:0px;--t:0.8s\">👉<\/text><text x=\"130\" y=\"14\" font-size=\"14\" font-weight=\"800\" fill=\"#D7001F\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx pul\">?<\/text><rect x=\"64\" y=\"80\" width=\"32\" height=\"8\" rx=\"2\" fill=\"#1B1D21\"/><rect x=\"34.73\" y=\"86\" width=\"90.54\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"80\" y=\"94\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">judge BOTH mouths<\/text>", "A scale with the speaker's quiet mouth blamed on one side and the other person's shouting mouth ignored on the other.", "Placing the two mouths side by side shows the blame is unfair: the other person's words count too."], "s4": ["<rect width=\"160\" height=\"100\" fill=\"#FFF4F4\"/><text x=\"30\" y=\"50\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👄<\/text><path d=\"M52 44 h10 v-4 M62 44 v-4\" stroke=\"#7A8696\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lin\" style=\"--fx:0px;--fy:0px;--dx:60px;--dy:0px;--t:0.9s\"/><path d=\"M52 50 h10 v-4 M62 50 v-4\" stroke=\"#7A8696\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lin\" style=\"--fx:0px;--fy:0px;--dx:60px;--dy:0px;--t:1.1s\"/><path d=\"M52 56 h10 v-4 M62 56 v-4\" stroke=\"#7A8696\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lin\" style=\"--fx:0px;--fy:0px;--dx:60px;--dy:0px;--t:1.3s\"/><text x=\"128\" y=\"50\" font-size=\"28\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em shk\">💔<\/text><rect x=\"37.04\" y=\"82\" width=\"85.92\" height=\"16\" rx=\"5\" fill=\"#D7001F\"/><text x=\"80\" y=\"90\" font-size=\"7\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">every word stabs<\/text>", "Lips firing sharp staples into a heart, which shakes and breaks.", "The other person's words are sharp and fast: they wound the speaker quickly and deeply."], "s5": ["<rect width=\"160\" height=\"100\" fill=\"#F2EDE6\"/><rect x=\"92\" y=\"14\" width=\"44\" height=\"74\" rx=\"3\" fill=\"#8A6F4E\"/><circle cx=\"128\" cy=\"52\" r=\"2.5\" fill=\"#E0A000\"/><text x=\"114\" y=\"8\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🙍<\/text><text x=\"114\" y=\"50\" font-size=\"12\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">🔒<\/text><g class=\"mv\" style=\"--dx:46px;--dy:0px;--t:1.0s\"><text x=\"30\" y=\"30\" font-size=\"8\" font-weight=\"800\" fill=\"#2F3FB0\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">words<\/text><\/g><g class=\"mv\" style=\"--dx:46px;--dy:0px;--t:1.2s\"><text x=\"30\" y=\"46\" font-size=\"8\" font-weight=\"800\" fill=\"#2F3FB0\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">words<\/text><\/g><g class=\"mv\" style=\"--dx:46px;--dy:0px;--t:1.4s\"><text x=\"30\" y=\"62\" font-size=\"8\" font-weight=\"800\" fill=\"#2F3FB0\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">words<\/text><\/g><rect x=\"3.0\" y=\"84\" width=\"132.12\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"69.06\" y=\"92\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">turned away, not listening<\/text>", "Words flying at a closed, locked door that is the other person's back, bouncing off.", "The other person has turned away: nothing the speaker says can get through."], "s6": ["<rect width=\"160\" height=\"100\" fill=\"#2A2A33\"/><path d=\"M30 40 L80 12 L130 40Z\" stroke=\"#14141A\" fill=\"#3A3A46\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"34\" y=\"40\" width=\"92\" height=\"54\" rx=\"0\" fill=\"#3A3A46\"/><g class=\"ech\" style=\"--d:0.0s\"><text x=\"50\" y=\"56\" font-size=\"14\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">…<\/text><\/g><g class=\"ech\" style=\"--d:0.4s\"><text x=\"80\" y=\"56\" font-size=\"14\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">…<\/text><\/g><g class=\"ech\" style=\"--d:0.8s\"><text x=\"110\" y=\"56\" font-size=\"14\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">…<\/text><\/g><g class=\"ech\" style=\"--d:1.2000000000000002s\"><text x=\"50\" y=\"76\" font-size=\"14\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">…<\/text><\/g><g class=\"ech\" style=\"--d:1.6s\"><text x=\"80\" y=\"76\" font-size=\"14\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">…<\/text><\/g><g class=\"ech\" style=\"--d:2.0s\"><text x=\"110\" y=\"76\" font-size=\"14\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">…<\/text><\/g><text x=\"80\" y=\"74\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em fade\">🪑<\/text><rect x=\"18.559999999999995\" y=\"0\" width=\"122.88000000000001\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"80\" y=\"8\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">silence fills every room<\/text>", "A dark house slowly filling with silence, room after room.", "Silence feels cold and lonely: refusing to talk can hurt as much as cruel words."], "s7": ["<defs><linearGradient id=\"pga15\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#1A1626\"/><stop offset=\"1\" stop-color=\"#2E2640\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga15)\"/><circle cx=\"120\" cy=\"44\" r=\"18\" fill=\"#FFE45C\" class=\"pul\"/><text x=\"120\" y=\"44\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">💡<\/text><text x=\"120\" y=\"74\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em flk\">🔥<\/text><text x=\"34\" y=\"60\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:-10px;--fy:10px;--dx:60px;--dy:-12px;--t:2.4s;filter:grayscale(1) brightness(1.3)\">🦋<\/text><rect x=\"-2.8400000000000034\" y=\"84\" width=\"159.84\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"77.08\" y=\"92\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">keeps reaching, even if it hurts<\/text>", "A small moth flying toward a bright light, even though there is fire below it.", "The speaker keeps reaching for love and understanding, even at the risk of getting hurt."]}</script>
 <script id="app-data" type="application/json">{"spots": [{"id": "s1", "where": "Lines 1–4 · No apology", "side": "A", "quote": "write you a white flag", "device": "Metaphor", "ctx": ["My mouth cannot write you a white flag."], "dAns": "Metaphor: an apology is described as a white flag, without using ‘like’ or ‘as.’", "dWrong": ["Simile: the mouth is compared to a flag using the word ‘like.’", "Imagery: a detailed description of a battlefield.", "Hyperbole: the speaker exaggerates how big the flag is."], "dHint": "Is there a real flag here? What do soldiers mean when they wave a white flag?", "dWhy": "There is no real flag. Saying sorry is described as a white flag, the sign of surrender, without “like” or “as.” That is a metaphor.", "effect": "The reader sees that, for the speaker, saying sorry would mean giving up and losing the fight.", "eWrong": ["The reader sees that the speaker has already surrendered.", "The reader learns how flags are made.", "The reader sees that the speaker wants to end the argument quickly."], "eHint": "A white flag means “I give up.” Why does the speaker refuse to give one?", "words": [["white", "adjective", "What could a “white” flag suggest? Surrender? Giving up? Losing?"], ["cannot", "verb", "Why “cannot” and not “will not”? What does it suggest about the speaker?"]], "frameHint": "Metaphor frame: Acevedo compares ___ (an apology) to ___ (a white flag) to suggest ___. She also emphasizes ___.", "readerHint": "How does this opening make you feel? Curious? Impressed? Tense?", "message": "the speaker's refusal to surrender and apologize", "m_ev": "Acevedo states, “My mouth cannot write you a white flag.”", "m_word": "The adjective “white” is significant because it suggests the white flag of surrender that soldiers wave when they give up.", "m_dev": "Acevedo compares an apology to a white flag to suggest that saying sorry would mean losing a fight. She also emphasizes that the speaker refuses to give up.", "m_reader": "The reader is curious because the poem opens in the middle of a fight. They also realize that the speaker will not surrender to the other person."}, {"id": "s2", "where": "Lines 1–4 · No apology", "side": "A", "quote": "My mouth cannot", "device": "Repetition", "ctx": ["My mouth cannot write you a white flag.", "My mouth cannot be shaped into the apology"], "dAns": "Repetition: the words ‘My mouth cannot’ begin both line 1 and line 3.", "dWrong": ["Simile: the mouth is compared to an apology using the word ‘like.’", "Hyperbole: the speaker exaggerates how big the mouth is.", "Juxtaposition: a mouth is placed next to a flag to show a contrast."], "dHint": "Look at how lines 1 and 3 begin. What do you notice?", "dWhy": "“My mouth cannot” begins line 1 and line 3. Using the same words again is repetition.", "effect": "The reader hears the refusal twice, so it sounds firm and final: the speaker is not going to apologize.", "eWrong": ["The reader feels bored because the poet repeats herself for no reason.", "The reader sees that the speaker is about to change her mind.", "The reader learns that the speaker has a problem with her mouth."], "eHint": "When someone says the same refusal twice, how sure do they sound?", "words": [["cannot", "verb", "What could “cannot” suggest? Is apologizing impossible for the speaker, not only unwanted?"], ["apology", "noun", "Look at line 3. Who says this “apology” is deserved?"]], "frameHint": "Repetition frame: Acevedo repeats the words “My mouth cannot” ___ times to emphasize ___. She suggests ___.", "readerHint": "How does the repeated refusal make you feel? Impressed? Tense? Curious?", "message": "how firmly the speaker refuses to say sorry", "m_ev": "Acevedo states, “My mouth cannot be shaped into the apology.”", "m_word": "The verb “cannot” is significant because it suggests that an apology is impossible for the speaker, not only unwanted.", "m_dev": "Acevedo repeats the words “My mouth cannot” two times to emphasize how strongly the speaker refuses. She suggests that no pressure will change the speaker's answer.", "m_reader": "The reader is impressed because the refusal sounds firm and brave. They also realize that the other person has demanded this apology."}, {"id": "s3", "where": "Lines 5–10 · Your mouth", "side": "B", "quote": "Because it was hungry, / and silent, but what about your mouth", "device": "Juxtaposition", "ctx": ["it's my mouth's entire fault. / Because it was hungry, / and silent, but what about your mouth:"], "dAns": "Juxtaposition: the speaker's ‘hungry’ and ‘silent’ mouth is placed next to the other person's mouth.", "dWrong": ["Simile: the two mouths are compared using the word ‘like.’", "Hyperbole: the speaker exaggerates how hungry she is.", "Repetition: the word ‘hungry’ is repeated in every line."], "dHint": "Whose mouth is described first? Whose mouth comes straight after the word “but”?", "dWhy": "“My mouth” and “your mouth” are set side by side, with “but” between them. Two contrasting ideas side by side: that is juxtaposition.", "effect": "The reader sees that the blame is unfair: the speaker's mouth was only hungry and silent, so the other person's mouth should be judged too.", "eWrong": ["The reader sees that the speaker accepts all of the blame.", "The reader learns what the speaker likes to eat.", "The reader sees that the two people agree with each other."], "eHint": "The other person blames only the speaker. What does “but what about your mouth” do to that blame?", "words": [["hungry", "adjective", "What could a “hungry” mouth suggest? Wanting love? Wanting to be heard?"], ["silent", "adjective", "What could “silent” suggest? Did the speaker's mouth really do any harm?"]], "frameHint": "Juxtaposition frame: Acevedo places ___ (the speaker's mouth) next to ___ (the other person's mouth) to suggest ___. She emphasizes ___.", "readerHint": "How do you feel about the blame? Sympathetic? Angry? Thoughtful?", "message": "how unfair it is to blame only the speaker", "m_ev": "Acevedo states, “Because it was hungry, / and silent, but what about your mouth.”", "m_word": "The adjective “silent” is significant because it suggests that the speaker's mouth did no harm at all.", "m_dev": "Acevedo places the speaker's hungry, silent mouth next to the other person's mouth to suggest that the blame is unfair. She emphasizes that the other person's words must be judged too.", "m_reader": "The reader is sympathetic because the speaker is blamed for everything. They also realize that the other person shares the responsibility."}, {"id": "s4", "where": "Lines 5–10 · Your mouth", "side": "B", "quote": "your lips are staples / that pierce me quick and hard", "device": "Metaphor", "ctx": ["how your lips are staples / that pierce me quick and hard."], "dAns": "Metaphor: the other person's lips are described as staples, without using ‘like’ or ‘as.’", "dWrong": ["Simile: the lips are compared to staples using the word ‘like.’", "Personification: the staples are given the human ability to speak.", "Repetition: the word ‘lips’ is repeated in every line."], "dHint": "Are lips really made of metal? Is the word “like” or “as” used?", "dWhy": "Lips are not staples. The poem says they “are” staples, without “like” or “as.” That is a metaphor.", "effect": "The reader almost feels the sharp pain, and sees that the other person's words hurt the speaker like metal going through skin.", "eWrong": ["The reader sees that the other person speaks softly and kindly.", "The reader learns how to use a stapler.", "The reader sees that the speaker enjoys the conversation."], "eHint": "What does a staple do to paper? What does that suggest about this person's words?", "words": [["staples", "noun", "What could “staples” suggest? Sharp metal? Being pinned down or forced shut?"], ["pierce", "verb", "What could “pierce” suggest? A sharp, sudden pain?"], ["hard", "adverb", "What could “hard” suggest about how these words land?"]], "frameHint": "Metaphor frame: Acevedo compares ___ (the other person's lips) to ___ (staples) to suggest ___. She also emphasizes ___.", "readerHint": "How does this image make you feel? Shocked? Uncomfortable? Sympathetic?", "message": "how deeply the other person's words hurt the speaker", "m_ev": "Acevedo states, “your lips are staples / that pierce me quick and hard.”", "m_word": "The verb “pierce” is significant because it suggests a sharp, sudden pain that goes deep.", "m_dev": "Acevedo compares the other person's lips to staples to suggest that every word is sharp and painful. She also emphasizes how quickly these words wound the speaker.", "m_reader": "The reader is shocked because speaking is described as stabbing. They also realize that the other person's mouth has done real harm."}, {"id": "s5", "where": "Lines 11–17 · Silence and light", "side": "B", "quote": "slammed / against the closed door of your back", "device": "Metaphor", "ctx": ["since they would only have slammed / against the closed door of your back."], "dAns": "Metaphor: the other person's back is described as a closed door, without using ‘like’ or ‘as.’", "dWrong": ["Simile: the back is compared to a door using the word ‘like.’", "Personification: the door is given the human ability to listen.", "Hyperbole: the speaker exaggerates how big the door is."], "dHint": "Is there a real door here? What is the other person doing if we only see their back?", "dWhy": "A back is not a door. It is described as a “closed door” without “like” or “as.” That is a metaphor.", "effect": "The reader pictures the other person turned away and shut like a door, so the speaker's words could never get in.", "eWrong": ["The reader sees that the other person is listening carefully.", "The reader learns that the speaker is locked outside a house.", "The reader sees that the speaker has said everything out loud."], "eHint": "What happens when you speak to a closed door? Why does the speaker keep the words on the tongue?", "words": [["closed", "adjective", "What could “closed” suggest? Shut out? Refusing to listen?"], ["slammed", "verb", "What could “slammed” suggest? Force? Words that hit and bounce back?"]], "frameHint": "Metaphor frame: Acevedo compares ___ (the other person's back) to ___ (a closed door) to suggest ___. She also emphasizes ___.", "readerHint": "How does this image make you feel? Frustrated? Sad for the speaker? Lonely?", "message": "how the other person refuses to listen to the speaker", "m_ev": "Acevedo states, “slammed / against the closed door of your back.”", "m_word": "The adjective “closed” is significant because it suggests that the other person has shut the speaker out completely.", "m_dev": "Acevedo compares the other person's back to a closed door to suggest that the speaker's words could never get through. She also emphasizes that the other person has turned away.", "m_reader": "The reader is frustrated because the speaker has nobody to talk to. They also realize why the speaker stays silent."}, {"id": "s6", "where": "Lines 11–17 · Silence and light", "side": "B", "quote": "Your silence furnishes a dark house", "device": "Personification", "ctx": ["Your silence furnishes a dark house."], "dAns": "Personification: silence is given the human ability to furnish a house.", "dWrong": ["Simile: silence is compared to a house using the word ‘like.’", "Hyperbole: the speaker exaggerates how big the house is.", "Repetition: the word ‘silence’ is repeated in every line."], "dHint": "Who usually furnishes a house? Can silence carry in chairs and tables?", "dWhy": "Only people can furnish a house. Here silence does it. A human action given to an idea: that is personification.", "effect": "The reader pictures a dark, cold home filled only with silence, and feels how lonely the speaker is when the other person will not talk.", "eWrong": ["The reader sees that the house is bright, warm and full of talk.", "The reader learns how to choose furniture.", "The reader sees that the speaker enjoys the peace and quiet."], "eHint": "Imagine living in a house where everything is made of silence and darkness. How does it feel?", "words": [["dark", "adjective", "What could “dark” suggest? Cold? Lonely? Without hope?"], ["furnishes", "verb", "What could “furnishes” suggest? Silence filling every room, as if it lives there?"]], "frameHint": "Personification frame: Acevedo gives ___ (the other person's silence) the human quality of ___ (furnishing a house) to suggest ___. She demonstrates ___.", "readerHint": "How does this image make you feel? Lonely? Sad for the speaker? Uneasy?", "message": "how cold and lonely the other person's silence feels", "m_ev": "Acevedo states, “Your silence furnishes a dark house.”", "m_word": "The adjective “dark” is significant because it suggests a cold, lonely home without any warmth.", "m_dev": "Acevedo gives the other person's silence the human quality of furnishing a house to suggest that silence fills every room. She demonstrates that refusing to talk can hurt as much as cruel words.", "m_reader": "The reader is uneasy because the home sounds cold and empty. They also realize that silence is a way of punishing the speaker."}, {"id": "s7", "where": "Lines 11–17 · Silence and light", "side": "A", "quote": "even at the risk of burning / the moth always seeks the light", "device": "Metaphor", "ctx": ["But even at the risk of burning / the moth always seeks the light."], "dAns": "Metaphor: the speaker is described as a moth flying toward the light, without using ‘like’ or ‘as.’", "dWrong": ["Simile: the speaker is compared to a moth using the word ‘like.’", "Hyperbole: the speaker exaggerates how bright the light is.", "Juxtaposition: a moth is placed next to a butterfly to show a contrast."], "dHint": "Is the poem suddenly about insects? Who in the poem keeps moving toward what could hurt them?", "dWhy": "There is no real moth. The speaker is described as a moth, without “like” or “as.” That is a metaphor.", "effect": "The reader sees that the speaker keeps reaching out, for love, understanding or the truth, even though it could cause pain.", "eWrong": ["The reader sees that the speaker has given up and walked away.", "The reader learns facts about how moths fly.", "The reader sees that the speaker is afraid of the dark."], "eHint": "After the “dark house,” what could “the light” be? Why go toward it if it burns?", "words": [["always", "adverb", "What could “always” suggest? That the speaker cannot stop? That it is natural?"], ["seeks", "verb", "What could “seeks” suggest? Searching? Wanting? Not giving up?"], ["burning", "noun", "What could “burning” suggest about the danger?"]], "frameHint": "Metaphor frame: Acevedo compares ___ (the speaker) to ___ (a moth) to suggest ___. She also emphasizes ___.", "readerHint": "How does the ending make you feel? Hopeful? Worried? Moved?", "message": "how the speaker keeps reaching for understanding even when it is dangerous", "m_ev": "Acevedo states, “even at the risk of burning / the moth always seeks the light.”", "m_word": "The adverb “always” is significant because it suggests that reaching for the light is natural and impossible to stop.", "m_dev": "Acevedo compares the speaker to a moth to suggest that the speaker keeps moving toward love and understanding. She also emphasizes that this choice could cause pain.", "m_reader": "The reader is moved because the speaker stays hopeful in a dark home. They also realize that refusing to apologize does not mean the speaker has stopped caring."}], "intro": "Elizabeth Acevedo, a poet born and raised in New York City by Dominican parents, published “In Translation” with the poetry organization Split This Rock. The speaker talks directly to a person, “you,” who demands an apology. Acevedo uses strong metaphors in the poem to show that the speaker refuses to apologize to a person whose words and silence hurt, yet still reaches for understanding.", "sides": {"A": "the speaker's own voice and choices", "B": "how the other person treats the speaker"}, "hot": {"s1": [[0.4089, 0.0178, 0.4349, 0.0428]], "s2": [[0.054, 0.1193, 0.3481, 0.0428], [0.054, 0.0178, 0.3481, 0.0428]], "s3": [[0.054, 0.35, 0.4426, 0.0427], [0.054, 0.4007, 0.757, 0.0428]], "s4": [[0.1485, 0.4791, 0.3915, 0.0427], [0.054, 0.5298, 0.595, 0.0428]], "s5": [[0.5882, 0.7097, 0.1784, 0.0427], [0.054, 0.7605, 0.703, 0.0427]], "s6": [[0.054, 0.8388, 0.6982, 0.0428]], "s7": [[0.054, 0.8896, 0.5931, 0.0427], [0.054, 0.9403, 0.6123, 0.0428]]}}</script>
 <script>
 (function () {
@@ -613,7 +669,7 @@ button { font: inherit; color: inherit; }
   var KEY = "onur-koc10-translation-hunt-v1";
   var LETTERS = ["A", "B", "C", "D"];
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var DEVRE = { Simile: /\bsimile\b/, Metaphor: /\bmetaphor\b/, Imagery: /\bimagery\b/, Personification: /\bpersonification\b/, Juxtaposition: /\bjuxtaposition\b|\bcontrast\b/, Repetition: /\brepetition\b/, Hyperbole: /\bhyperbole\b|\bexaggerat/, "Rhetorical question": /\brhetorical questions?\b/ };
+  var DEVRE = { Simile: /\bsimiles?\b/, Metaphor: /\bmetaphors?\b|\bmetaphorical/, Imagery: /\bimagery\b|\bvivid (images?|description)\b/, Personification: /\bpersonif/, Juxtaposition: /\bjuxtapos|\bcontrast/, Repetition: /\brepetition\b|\brepeat(s|ed|ing)?\b/, Hyperbole: /\bhyperbole\b|\bexaggerat/, "Rhetorical question": /\brhetorical questions?\b/ };
   var DEVLABEL = { Simile: "a simile", Metaphor: "a metaphor", Imagery: "imagery", Personification: "personification", Juxtaposition: "juxtaposition", Repetition: "repetition", Hyperbole: "hyperbole", "Rhetorical question": "a rhetorical question" };
   var FRAMES = {
     Simile: { text: "Acevedo compares ___ to ___ to suggest ___. She also emphasizes ___.", checks: [[/compares\b.+\bto\b.+\bto suggest\b/, "compares ___ to ___ to suggest ___"], [/also emphasi[sz]es\b/, "She also emphasizes ___"]] },
@@ -905,12 +961,12 @@ button { font: inherit; color: inherit; }
   function noHe(t) { return !/\bhe (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks)\b/.test(low(t)); }
 
   function checksFor(def, text) {
-    var t = low(text), s = def.spot, c = [];
+    var t = canonText(text), s = def.spot, c = [];
     if (!t) return [];
     if (def.key === "t") {
       c.push([/^in the poem/.test(t), "Starts “In the poem,”"]);
       c.push([/\bacevedo\b/.test(t) && /\bpresents\b/.test(t), "Acevedo presents …"]);
-      c.push([/through the use of\b/.test(t), "through the use of …"]);
+      c.push([/\b(through the use of|through|by using|using|with the use of|by means of|by the use of)\b/.test(t), "through the use of …"]);
       c.push([DEVRE[s.device].test(t), "Names device 1 (" + s.device.toLowerCase() + ")"]);
       c.push([nWords(text) >= 12, "Says the message, not just the device"]);
     } else if (def.key[0] === "e") {
@@ -936,8 +992,8 @@ button { font: inherit; color: inherit; }
       c.push([/\bacevedo\b/.test(t), "Uses Acevedo's name"]);
       c.push([noHe(text), "Says “she” or “Acevedo” (not “he”)"]);
     } else if (def.key[0] === "r") {
-      c.push([/\bthe reader is\b.+\bbecause\b/.test(t), "The reader is ___ because ___"]);
-      c.push([/\bthey also (realize|realise|notice|understand)\b/.test(t), "They also realize / notice / understand ___"]);
+      c.push([/\bthe reader is\b.+\b(because|as|since|due to|when|after|by|while)\b/.test(t), "The reader is ___ because ___"]);
+      c.push([/\bthey also realize\b/.test(t), "They also realize / notice / understand ___"]);
       c.push([!/\bfeels? (good|bad)\b|\bis (good|bad)\b/.test(t), "A clear feeling word (not just “good” or “bad”)"]);
     } else if (def.key[0] === "l") {
       c.push([/^through the use of\b/.test(t), "Starts “Through the use of”"]);
@@ -1139,7 +1195,7 @@ button { font: inherit; color: inherit; }
   }
   /* The 15 sentence beginnings of the exam structure, in order */
   var SUR = "Acevedo", PRON = /He also/.test(FRAMES.Simile.text) ? "He" : "She";
-  function starterSlots() {
+  function strictSlots() {
     var n = SUR.toLowerCase(), say = "(states|writes|says|describes)";
     var one = [
       [/^the (adjective|noun|verb|adverb|pronoun)\b/, "The adjective / noun / verb “___” is …", "an"],
@@ -1152,7 +1208,80 @@ button { font: inherit; color: inherit; }
             [new RegExp("^" + n + ",? " + say + "\\b"), SUR + " states “___.”", "ev"]].concat(one)
       .concat([[new RegExp("^furthermore,? " + n + ",? " + say + "\\b"), "Furthermore, " + SUR + " states “___.”", "ev"]]).concat(one);
   }
-  function startKey(sent) { return low(String(sent).replace(/[“”]/g, '"')); }
+  /* ----- lenient matching (O. H., 2026-11-11): close to the structure = full marks ----- */
+  var SURL = SUR.toLowerCase();
+  var FULL = (function () { var m = new RegExp("(?:[A-Z][a-z.]+ )+" + SUR).exec(D.intro || ""); return m ? m[0] : SUR; })();
+  var KW = [SURL, "furthermore", "presents", "states", "writes", "describes", "adjective", "noun", "verb", "adverb", "pronoun", "emphasizes", "suggests",
+    "portrays", "demonstrates", "highlights", "reader", "readers", "realize", "realizes", "notice", "notices", "understand", "understands", "through", "because",
+    "compares", "repeats", "places", "exaggerates", "detailed", "description", "human", "quality", "simile", "metaphor", "imagery", "personification",
+    "juxtaposition", "repetition", "hyperbole", "rhetorical", "question", "poem", "moreover", "additionally", "firstly", "suggest", "emphasize"];
+  var KWSET = {}; KW.forEach(function (k) { KWSET[k] = 1; });
+  var NOFIX = { given: 1, gave: 1, place: 1, plays: 1, state: 1, stated: 1, stars: 1, stares: 1, words: 1, worse: 1, verse: 1, nouns: 1, verbs: 1, voice: 1, reads: 1,
+    ready: 1, reach: 1, readily: 1, poems: 1, poet: 1, poets: 1, these: 1, those: 1, there: 1, their: 1, where: 1, which: 1, while: 1, front: 1, frosty: 1, comes: 1,
+    compare: 1, simple: 1, simply: 1, smile: 1, smiles: 1, image: 1, images: 1, imagine: 1, quantity: 1, humane: 1, highlight: 1, notes: 1, nose: 1, poe: 1, other: 1, thomas: 0 };
+  function lev(a, b) {
+    var m = a.length, n = b.length, d = [], i, j; for (i = 0; i <= m; i++) d.push([i]); for (j = 1; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  function fixWord(w) {
+    if (w.length < 4 || KWSET[w] || NOFIX[w]) return w;
+    var lim = w.length >= 8 ? 2 : 1, best = null;
+    for (var q = 0; q < KW.length; q++) if (KW[q] !== SURL && (KW[q].indexOf(w) === 0 || w.indexOf(KW[q]) === 0)) return w;   /* an inflection, not a typo */
+    for (var i = 0; i < KW.length && !best; i++) { var k = KW[i]; if (k.charAt(0) === w.charAt(0) && Math.abs(k.length - w.length) <= lim && lev(w, k) <= lim) best = k; }
+    return best || w;
+  }
+  function fixTypos(t) { return t.split(/("[^"]*")/).map(function (seg, i) { return i % 2 ? seg : seg.replace(/[a-z']{4,}/g, fixWord); }).join(""); }
+  function esc(x) { return x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  var EVV = "(writes|says|describes|mentions|notes|declares|explains|claims|tells|adds|exclaims|wrote|stated|said|cries|calls|uses the (?:words?|phrase|lines?|quote|quotation)|includes the (?:words?|phrase|lines?))";
+  var FV = "(compares|repeats|gives|places|exaggerates|asks|uses|contrasts|juxtaposes|puts|positions|creates|personifies|employs|likens|questions|overstates|lists|describes|builds)";
+  var AV = "(emphasi[sz]es|suggests|portrays|demonstrates|highlights|shows|stresses|underlines|implies|reveals|conveys|indicates|illustrates|points out|depicts|explores|expresses|makes clear|focuses on|draws attention to|presents)";
+  function canon(t) {
+    var n = SURL;
+    t = fixTypos(t);
+    t = t.replace(new RegExp("\\b" + esc(low(FULL)) + "\\b", "g"), n).replace(/\bthe (poet|writer|author|poetess)\b/g, n);
+    t = t.replace(/^(firstly|first of all|first|to begin with|to start with|initially|for example|for instance|in this (?:quote|quotation|line|stanza)|in (?:the )?(?:first|second|third|fourth|last|final|opening|next) (?:line|lines|stanza)|in (?:line|stanza) \w+)\b,?\s*/, "")
+         .replace(/^(moreover|in addition|additionally|secondly|second|besides|also|on top of (?:this|that)|what is more|another device is)\b,?\s*/, "furthermore, ")
+         .replace(/^(thus|hence|therefore|consequently|as a result|overall|in conclusion|to conclude|to sum up|so|in this way)\b,?\s*/, "");
+    t = t.replace(/^in (?:this|her|his|that|the) poem\b,?\s*(?:"[^"]*",?\s*)?/, "in the poem, ")
+         .replace(new RegExp("^in (?!the poem\\b)[^,]{1,60},?\\s+(?=" + n + "\\b)"), "in the poem, ");
+    t = t.replace(new RegExp("^((?:furthermore,? |in the poem,? )?)(he|she)\\b"), function (m, a) { return a + n; });
+    t = t.replace(new RegExp("^(in the poem,? " + n + " )(shows|portrays|explores|conveys|depicts|demonstrates|illustrates|reveals|expresses|describes|highlights|emphasi[sz]es|suggests|presented)\\b"), "$1presents");
+    t = t.replace(new RegExp("^((?:furthermore,? )?" + n + ",? )" + EVV + "\\b"), "$1states");
+    t = t.replace(/^the (key |important |main )?(word|phrase|term)\b/, "the word");
+    t = t.replace(/^(?:the )?(?:readers?|audience|people reading)(?: also)? (?:is|are|feels?|may feel|might feel|would feel|will feel|can feel|could feel|becomes?|gets?|is left|starts to feel|begins to feel|ends up)\b/, "the reader is")
+         .replace(/^(?:this|it|these words?|that|the (?:word|line|quote|quotation|phrase|device)) (?:makes?|leaves?|causes?) (?:the )?(?:readers?|audience|us)(?: to)?(?: feel| become| be)?\b/, "the reader is")
+         .replace(/^(?:we|as readers,? we|as a reader,? i) (?:feel|are|become)\b/, "the reader is");
+    t = t.replace(/^(?:they|the readers?|readers|the audience|we|he or she|people)(?: also)? (?:reali[sz]es?|understands?|notices?|sees?|learns?|recogni[sz]es?|can see|can tell|becomes? aware|starts? to realize|begins? to understand|discovers?|knows?|thinks?|feels? that)\b/, "they also realize");
+    t = t.replace(/^(?:through the use of|through using|through|by using|by the use of|with the use of|by means of|by employing|using)\b/, "through the use of");
+    t = t.replace(new RegExp("^(through the use of [^,]{1,60},? )(he|she)\\b"), "$1" + n)
+         .replace(new RegExp("^(through the use of [^,]{1,60},? " + n + " )(shows|portrays|explores|conveys|depicts|demonstrates|illustrates|reveals|expresses|highlights|emphasi[sz]es|suggests)\\b"), "$1presents");
+    return t;
+  }
+  function startKey(sent) { return canon(low(String(sent).replace(/[“”]/g, '"'))); }
+  function strictKey(sent) { return low(String(sent).replace(/[“”]/g, '"')); }
+  function canonText(text) { return sentences(String(text || "")).map(startKey).join(" "); }
+  window.__canon = canonText;
+  /* The 15 sentence beginnings, matched on the canonical form (the exact wording is kept in strictSlots for the "close enough" note) */
+  function starterSlots() {
+    var T = strictSlots(), n = SURL;
+    var one = [
+      [/^the (adjective|noun|verb|adverb|pronoun|word)\b/, T[2][1], "an"],
+      [new RegExp("^" + n + " (also )?" + FV + "\\b"), T[3][1], "choice"],
+      [new RegExp("^" + n + " (also )?" + AV + "\\b"), T[4][1], "choice"],
+      [/^the reader is\b/, T[5][1], "reader"],
+      [/^they also realize\b/, T[6][1], "reader"],
+      [/^through the use of\b/, T[7][1], "idea"]];
+    return [[new RegExp("^in the poem,? " + n + " presents\\b"), T[0][1], "idea"],
+            [new RegExp("^" + n + ",? (states|writes|says|describes)\\b"), T[1][1], "ev"]].concat(one)
+      .concat([[new RegExp("^furthermore,? " + n + ",? (states|writes|says|describes)\\b"), T[8][1], "ev"]]).concat(one);
+  }
+  var STRICTT = null;
+  function strictOk(j, raw) { STRICTT = STRICTT || strictSlots(); return !STRICTT[j] || STRICTT[j][0].test(strictKey(raw)); }
+  var TOSUG = /\bto (suggest|show|imply|emphasi[sz]e|highlight|present|indicate|reveal|portray|convey|express|demonstrate|illustrate|make|create)\b|\b(suggesting|showing|implying|emphasi[sz]ing|highlighting|conveying|which suggests|which shows)\b/;
+  function frameOk(k) { return FRAMEALL.some(function (r) { return r.test(k); }) || (new RegExp("^" + SURL + " (also )?" + FV + "\\b").test(k) && TOSUG.test(k)); }
+  function wordSent(k) { return /^the (adjective|noun|verb|adverb|pronoun|word) "[^"]+"/.test(k); }
+  function readerSent(k) { return /^the reader is\b.+\b(because|as|since|due to|when|after|by|while)\b/.test(k); }
   /* Align the student's sentences with the 15 beginnings (longest common subsequence), so one missing or extra sentence does not turn everything red */
   function alignStarts(S_, T) {
     var m = S_.length, n = T.length, L = [], i, j;
@@ -1199,20 +1328,21 @@ button { font: inherit; color: inherit; }
     }
     pairs.forEach(function (p) {
       gap(p[0], p[1]);
-      var mt = T[p[1]][0].exec(startKey(S_[p[0]]));
-      sentNode(S_[p[0]], T[p[1]][2], mt[0].split(/\s+/).length, "");
+      var mt = T[p[1]][0].exec(startKey(S_[p[0]])), exact = strictOk(p[1], S_[p[0]]);
+      sentNode(S_[p[0]], T[p[1]][2], exact ? mt[0].split(/\s+/).length : 2, "");
+      if (!exact) { var cl = document.createElement("span"); cl.className = "st-close"; cl.textContent = "≈ close enough, full marks · exam wording: " + T[p[1]][1]; el.appendChild(cl); el.appendChild(document.createTextNode(" ")); }
       pi = p[0] + 1; pj = p[1] + 1;
     });
     gap(S_.length, T.length);
     return [ok, T.length, wrongPron];
   }
   function catOf(sent) {
-    var t = low(sent.replace(/[“”]/g, '"')).replace(/^furthermore,?\s*/, "");
+    var t = startKey(sent).replace(/^furthermore,?\s*/, "");
     if (/^(in the poem|through the use of)\b/.test(t)) return "idea";
-    if (/^the (adjective|noun|verb|adverb|pronoun)\b/.test(t)) return "an";
-    if (/\bthe reader is\b|^they also\b/.test(t)) return "reader";
+    if (/^the (adjective|noun|verb|adverb|pronoun|word)\b/.test(t)) return "an";
+    if (/\bthe reader is\b|^they also realize\b/.test(t)) return "reader";
     if (/"/.test(t) && /\b(states|writes|says|describes)\b/.test(t) && !FRAMEALL.some(function (r) { return r.test(t); })) return "ev";
-    if (FRAMEALL.some(function (r) { return r.test(t); }) || /^(s?he) (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights)\b/.test(t)) return "choice";
+    if (frameOk(t) || new RegExp("^" + SURL + " (also )?" + AV + "\\b").test(t)) return "choice";
     return "";
   }
   function renderCCText(el, text) {
@@ -1318,7 +1448,8 @@ button { font: inherit; color: inherit; }
       $("exam-intro").textContent = D.intro;
       if (!$("exam-img").src) $("exam-img").src = $("plain-img").src;
       if ($("exam-text").value !== (ex.text || "")) $("exam-text").value = ex.text || "";
-      [0, 1, 2, 3].forEach(function (i) { var v = (ex.plan || [])[i] || ""; if ($("plan-" + i).value !== v) $("plan-" + i).value = v; });
+      if (!ex.plan || !ex.plan.p) ex.plan = { p: [null, null], d: ["", ""] };
+      renderPlan();
       tick(); lastPts = null; liveUpdate();
     }
     if (ex && ex.done) renderExamResult();
@@ -1332,13 +1463,85 @@ button { font: inherit; color: inherit; }
     $("exam-timer").classList.toggle("low", left <= 300);
     var ng = $("exam-nudge"), txt = "";
     if (left <= 300) { txt = "⏰ 5 minutes left: finish your link sentence."; if (!S.exam.n5) { S.exam.n5 = 1; save(); bigPop("5 minutes left", "Finish your link sentence. Is every idea specific?", "time"); } }
-    else if (left <= 1200 && !/\bfurthermore\b/.test(low(S.exam.text || ""))) { txt = "⏰ Half of your time has gone: start device 2 with “Furthermore,” now."; if (!S.exam.n20) { S.exam.n20 = 1; save(); bigPop("Half your time has gone", "Start device 2 now with “Furthermore,”", "time"); } }
+    else if (left <= 1200 && !DEV2.test(S.exam.text || "")) { txt = "⏰ Half of your time has gone: start device 2 with “Furthermore,” now."; if (!S.exam.n20) { S.exam.n20 = 1; save(); bigPop("Half your time has gone", "Start device 2 now with “Furthermore,”", "time"); } }
     ng.textContent = txt; ng.hidden = !txt;
     if (left <= 0 && S.tab === 4) finishExam(true);
   }
   setInterval(tick, 1000);
-  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: ["", "", "", ""] }; save(); renderMain(); window.scrollTo(0, 0); $("plan-0").focus({ preventScroll: true }); };
-  [0, 1, 2, 3].forEach(function (i) { $("plan-" + i).addEventListener("input", function () { if (!S.exam) return; S.exam.plan = S.exam.plan || ["", "", "", ""]; S.exam.plan[i] = $("plan-" + i).value; save(); }); });
+  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: { p: [null, null], d: ["", ""] } }; picId = null; save(); renderMain(); window.scrollTo(0, 0); };
+  /* ----- plan by tapping the device phrases on the poem (O. H., 2026-11-11): no typing ----- */
+  function planOf() { var P = S.exam.plan; if (!P || !P.p) P = S.exam.plan = { p: [null, null], d: ["", ""] }; return P; }
+  function svgOf(s) { var NS = "http://www.w3.org/2000/svg", g = document.createElementNS(NS, "svg"); g.setAttribute("viewBox", "0 0 160 100"); g.setAttribute("class", "pic"); g.setAttribute("aria-hidden", "true"); g.innerHTML = (PICS[s.id] || [""])[0]; return g; }
+  function renderPlan(popId) {
+    var P = planOf(), box = $("plan-rows"), poem = $("exam-poem"); box.textContent = "";
+    poem.querySelectorAll(".pk,.pkn").forEach(function (x) { x.remove(); });
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]]; if (!s) return;
+      rectsOf(s).forEach(function (r, ri) {
+        var m = document.createElement("div"); m.className = "pk" + (i ? " g2" : "") + (s.id === popId ? " pop" : "");
+        m.style.left = (r[0] * 100) + "%"; m.style.top = (r[1] * 100) + "%"; m.style.width = (r[2] * 100) + "%"; m.style.height = (r[3] * 100) + "%"; poem.appendChild(m);
+        if (!ri) { var b = document.createElement("div"); b.className = "pkn" + (i ? " g2" : ""); b.textContent = i + 1; b.style.left = (r[0] * 100) + "%"; b.style.top = (r[1] * 100) + "%"; poem.appendChild(b); }
+      });
+    });
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]], row = document.createElement("div"); row.className = "prow g" + (i + 1);
+      var h = document.createElement("b"); h.textContent = "Device " + (i + 1) + (s && P.d[i] ? ": " + P.d[i] : "");
+      var q = document.createElement("span"); q.className = "pq" + (s ? "" : " none");
+      q.textContent = s ? "“" + s.quote + "”" : (i === 0 || P.p[0] ? "Tap a device in the poem below." : "Pick device 1 first.");
+      row.appendChild(h); row.appendChild(q);
+      if (s) {
+        if (PICS[s.id]) { var pp = document.createElement("div"); pp.className = "ppic"; pp.appendChild(svgOf(s)); row.appendChild(pp); }
+        var acts = document.createElement("div"); acts.className = "pacts";
+        var nm = document.createElement("button"); nm.type = "button"; nm.className = "pchip" + (P.d[i] ? " dev" : ""); nm.textContent = P.d[i] ? "Change device" : "Name the device";
+        nm.onclick = function () { openTray(i); };
+        var cl = document.createElement("button"); cl.type = "button"; cl.className = "pchip"; cl.textContent = "Remove";
+        cl.onclick = function () { P.p[i] = null; P.d[i] = ""; save(); renderPlan(); picUpdateNow(); };
+        acts.appendChild(nm); acts.appendChild(cl); row.appendChild(acts);
+      }
+      box.appendChild(row);
+    });
+  }
+  $("exam-poem").addEventListener("click", function (e) {
+    if (!S || !S.exam || !S.exam.started || S.exam.done) return;
+    var img = $("exam-img"), r = img.getBoundingClientRect(); if (!r.width) return;
+    var fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height, padx = 0.012, pady = 0.004, hit = null, P = planOf();
+    SPOTS.forEach(function (s) { rectsOf(s).forEach(function (q) { if (!hit && fx >= q[0] - padx && fx <= q[0] + q[2] + padx && fy >= q[1] - pady && fy <= q[1] + q[3] + pady) hit = s; }); });
+    if (!hit) { toast("No device there. Look for a comparison, a repeated word, a vivid picture, a human quality, an exaggeration or two opposites side by side."); return; }
+    var i = P.p.indexOf(hit.id);
+    if (i >= 0) { P.p[i] = null; P.d[i] = ""; save(); renderPlan(); picUpdateNow(); toast("Device " + (i + 1) + " removed."); return; }
+    i = !P.p[0] ? 0 : (!P.p[1] ? 1 : -1);
+    if (i < 0) { toast("You already picked two devices. Tap one of them again to remove it."); return; }
+    P.p[i] = hit.id; P.d[i] = ""; save(); renderPlan(hit.id); picUpdateNow(); openTray(i);
+  });
+  function openTray(i) {
+    var P = planOf(), s = BY[P.p[i]]; if (!s) return;
+    $("tray").className = "tray g" + (i + 1);
+    $("tray-h").textContent = "Device " + (i + 1);
+    $("tray-q").textContent = "“" + s.quote + "”";
+    var box = $("tray-opts"); box.textContent = "";
+    Object.keys(DEVRE).forEach(function (d) {
+      var b = document.createElement("button"); b.type = "button"; b.textContent = d; if (P.d[i] === d) b.className = "on";
+      b.onclick = function () { P.d[i] = d; closeTray(); if (i === 0 && !P.p[1]) toast("Now device 2: tap another device in the poem."); save(); renderPlan(); };
+      box.appendChild(b);
+    });
+    $("tray-back").hidden = false; placePic();
+  }
+  function closeTray() { $("tray-back").hidden = true; placePic(); }
+  $("tray-x").onclick = function () { closeTray(); renderPlan(); };
+  $("tray-back").addEventListener("click", function (e) { if (e.target === $("tray-back")) closeTray(); });
+  /* after the exam: was each device named correctly? Always show the right answer. */
+  function planCheck() {
+    var P = S.exam && S.exam.plan, out = [];
+    if (!P || !P.p) return out;
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]], lab = "Device " + (i + 1);
+      if (!s) { out.push([false, lab + ": not picked", "Plan before you write: tap a device in the poem and name it."]); return; }
+      var ok = P.d[i] === s.device;
+      out.push([ok, lab + ": “" + s.quote + "”", ok ? "✓ Correct: " + s.device.toLowerCase() + ". " + s.dWhy
+        : (P.d[i] ? "✗ You named it " + P.d[i].toLowerCase() + ". The correct answer: " : "✗ Not named. The correct answer: ") + s.device.toLowerCase() + ". " + s.dWhy]);
+    });
+    return out;
+  }
   $("exam-text").addEventListener("input", function (e) { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; liveSoon(e); });
   ["keyup", "click", "focus"].forEach(function (ev) { $("exam-text").addEventListener(ev, liveSoon); });
   $("btn-exam-fix").onclick = function () { var ex = S.exam; if (!ex) return; ex.done = false; ex.fix = true; save(); renderMain(); window.scrollTo(0, 0); $("exam-text").focus({ preventScroll: true }); };
@@ -1349,21 +1552,21 @@ button { font: inherit; color: inherit; }
   function vagueWords(text) { return low(unq(text)).match(VAGUE) || []; }
   function wrongPronouns(text) { return low(unq(text)).match(new RegExp("\\b" + (PRON === "He" ? "she" : "he") + "\\b(?=\\s+(?:also\\s+)?(?:emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks|uses|presents|states|writes|shows|describes|creates)\\b)", "g")) || []; }
   function examPoints(text) {
-    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T);
-    var t = low(text), tq = low(String(text).replace(/[“”]/g, '"')), qs = quotes(text), big = nWords(text) >= 30;
+    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T), keys = S_.map(startKey);
+    var t = keys.join(" "), tq = t, qs = quotes(text), big = nWords(text) >= 30;
     function n(re) { return (tq.match(re) || []).length; }
     var devs = Object.keys(DEVRE).filter(function (k) { return DEVRE[k].test(t); }).length;
-    var frames = S_.filter(function (x) { var y = low(x); return FRAMEALL.some(function (r) { return r.test(y); }); }).length;
+    var frames = keys.filter(frameOk).length;
     var beg = pairs.length * 4;
-    var mentions = n(/\b(simile|metaphor|imagery|personification|juxtaposition|repetition|hyperbole|rhetorical question)\b/g);
+    var mentions = n(/\b(similes?|metaphors?|imagery|personification|juxtaposition|repetition|hyperbole|exaggeration|contrast|rhetorical question)\b/g);
     var pDev = devs >= 2 || mentions >= 3 ? 5 : (devs === 1 ? 2 : 0), pQ = (qs.length >= 1 ? 3 : 0) + (qs.length >= 2 ? 3 : 0);
     var pShort = qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }) ? 2 : 0;
-    var pWord = Math.min(2, n(/\bthe (adjective|noun|verb|adverb|pronoun) "[^"]+"\s*,?\s*is\b/g)) * 3;
-    var pFrame = Math.min(2, frames) * 3, pReader = Math.min(2, n(/\bthe reader is\b[^.]*\bbecause\b/g)) * 2;
-    var pFur = /\bfurthermore\b/.test(t) ? 2 : 0;
+    var pWord = Math.min(2, keys.filter(wordSent).length) * 3;
+    var pFrame = Math.min(2, frames) * 3, pReader = Math.min(2, keys.filter(readerSent).length) * 2;
+    var pFur = keys.some(function (k) { return /^furthermore\b/.test(k); }) ? 2 : 0;
     var pPron = big && t.indexOf(SUR.toLowerCase()) >= 0 && !wrongPronouns(text).length ? 3 : 0;
     var pVague = big && !vagueWords(text).length ? 3 : 0;
-    var pTopic = S_.length && T[0][0].test(startKey(S_[0])) && nWords(S_[0]) >= 12 ? 3 : 0;
+    var pTopic = S_.length && T[0][0].test(keys[0]) && nWords(S_[0]) >= 12 ? 3 : 0;
     var parts = [["Sentence beginnings (" + pairs.length + " of 15)", beg, 60], ["Evidence: two devices named, short quotations in quotation marks", pDev + pQ + pShort, 13],
                  ["Analysis: word class, device frames, reader sentences", pWord + pFrame + pReader, 16], ["Precision and language: specific message, no vague words, “Furthermore,” name and pronoun", pTopic + pVague + pFur + pPron, 11]];
     var pts = parts.reduce(function (a, p) { return a + p[1]; }, 0);
@@ -1581,42 +1784,57 @@ button { font: inherit; color: inherit; }
   var PICS = (function () { try { return JSON.parse(document.getElementById("pic-data").textContent); } catch (e) { return {}; } })();
   var picId = null, picHidden = {};
   window.__picLog = [];
+  var DEV2 = /\b(furthermore|moreover|in addition|additionally|secondly)\b/i;
+  /* which device do these words in quotation marks belong to? Single words count too. */
   function picSpotFor(p) {
+    var np = cn(p), pw = cw(p), best = null, P = S && S.exam && S.exam.plan && S.exam.plan.p ? S.exam.plan.p : [];
+    if (!np.trim()) return null;
+    var cands = SPOTS.filter(function (s) { return PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0); });
+    if (cands.length) return cands.filter(function (s) { return P.indexOf(s.id) >= 0; })[0] || cands[0];
     if (nWords(p) < 2) return null;
-    var np = cn(p), pw = cw(p), best = null;
-    SPOTS.forEach(function (s) { if (!best && PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0)) best = s; });
-    if (best) return best;
     SPOTS.forEach(function (s) {
       if (best || !PICS[s.id]) return;
       if ([s.quote].concat(s.ctx || []).map(cn).some(function (c) { return c.indexOf(np) >= 0; }) && overlap(pw, cw(s.quote))) best = s;
     });
     return best;
   }
+  var picLast = { before: "", first: 0 };
+  function picUpdateNow() { picUpdate(picLast.before, picLast.first); }
   function picUpdate(before, firstLen) {
-    var box = $("exam-pic");
-    if (!String(before).trim()) { picId = null; popSeen = {}; placePic(); return; }
-    var t = before.slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
-    while ((m = re.exec(t))) segs.push(m[1]);
-    var s = null; for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
-    if (s) showPic(s);   /* no match: keep the last picture on screen */
+    picLast = { before: before, first: firstLen };
+    if (!String(before).trim()) popSeen = {};
+    var P = S && S.exam && S.exam.plan && S.exam.plan.p ? S.exam.plan.p : [null, null];
+    var t = String(before).slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
+    var fur = DEV2.exec(t), part = fur ? t.slice(fur.index) : t;
+    while ((m = re.exec(part))) segs.push(m[1]);
+    var s = null;
+    for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
+    /* nothing quoted yet for this device: show the planned device (device 2 once "Furthermore" is written) */
+    if (!s) { var pid = fur ? P[1] : P[0]; s = pid && PICS[pid] ? BY[pid] : null; }
+    if (!s && !fur && picId) { placePic(); return; }   /* the device 1 picture stays until device 2 starts */
+    if (!s) { if (!String(before).trim()) picId = null; placePic(); return; }
+    showPic(s);
   }
   function showPic(s) {
-    var box = $("exam-pic"); if (picId === s.id) return;
+    if (picId === s.id) { placePic(); return; }
     picId = s.id; window.__picLog.push(s.id);
-    var P = PICS[s.id]; box.querySelector("svg").innerHTML = P[0]; $("pic-see").textContent = P[1]; $("pic-mean").textContent = P[2];
+    var P = PICS[s.id], box = $("exam-pic"); box.querySelector("svg").innerHTML = P[0];
+    var sp = $("side-pic"); sp.querySelector("svg").innerHTML = P[0];
+    sp.classList.remove("empty", "flash"); void sp.offsetWidth; sp.classList.add("flash");
     placePic(); box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
   }
-  /* the picture floats right under the line being written; above it when the keyboard leaves no room below */
+  /* the picture sits on the right of the writing box; if the box is out of view, it docks at the bottom of the screen */
   function placePic() {
-    var box = $("exam-pic"), ta = $("exam-text");
-    var show = !!(picId && !picHidden[picId] && document.activeElement === ta && S && S.exam && S.exam.started && !S.exam.done);
+    var box = $("exam-pic"), ta = $("exam-text"), sp = $("side-pic");
+    var live = !!(S && S.exam && S.exam.started && !S.exam.done && S.tab === 4 && !S.report);
+    if (!picId || !live) sp.classList.add("empty");
+    var show = !!(picId && live && $("tray-back").hidden && String(S.exam.text || "").trim());   /* docks only once writing has started */
+    if (show) {
+      var r = ta.getBoundingClientRect(), vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      show = !(r.bottom > 80 && r.top < vh - 60);
+    }
     box.hidden = !show; if (!show) return;
-    var vv = window.visualViewport, vTop = vv ? vv.offsetTop : 0, vH = vv ? vv.height : window.innerHeight;
-    var tr = ta.getBoundingClientRect(), c = caretBox(ta), h = box.offsetHeight, top = c.bottom + 10, up = false;
-    box.style.left = Math.max(8, tr.left) + "px"; box.style.width = Math.min(tr.width, window.innerWidth - 16) + "px";
-    if (top + h > vTop + vH - 6) { top = c.top - h - 10; up = true; }
-    if (top < vTop + 6) top = vTop + 6;
-    box.style.top = Math.round(top) + "px"; box.classList.toggle("up", up);
+    box.classList.add("dock"); box.classList.remove("up"); box.style.top = ""; box.style.width = "";
   }
   function placeBoth() { placePic(); placePop(); }
   window.addEventListener("scroll", placeBoth, { passive: true }); window.addEventListener("resize", placeBoth);
@@ -1677,24 +1895,26 @@ button { font: inherit; color: inherit; }
   $("btn-exam-finish").onclick = function () { finishExam(false); };
   $("btn-exam-again").onclick = function () { S.exam = null; save(); $("exam-text").value = ""; renderMain(); window.scrollTo(0, 0); };
   function examChecks(text) {
-    var t = low(text), tq = low(String(text).replace(/[“”]/g, '"')), qs = quotes(text), c = [];
+    var keys = sentences(text).map(startKey), t = keys.join(" "), qs = quotes(text), c = [], T = starterSlots();
     var devs = Object.keys(DEVRE).filter(function (k) { return DEVRE[k].test(t); });
-    var frames = sentences(text).filter(function (x) { var y = low(x); return FRAMEALL.some(function (r) { return r.test(y); }); }).length;
-    function n(re) { return (tq.match(re) || []).length; }
-    c.push([/^in the poem\b/.test(t) && /\bacevedo presents\b/.test(t) && /through the use of\b/.test(t), "② Topic sentence: “In the poem, Acevedo presents … through the use of …”"]);
-    c.push([devs.length >= 2 || n(/\b(simile|metaphor|imagery|personification|juxtaposition|repetition|hyperbole|rhetorical question)\b/g) >= 3, "Names the device for each of your two examples"]);
+    var frames = keys.filter(frameOk).length;
+    function n(re) { return (t.match(re) || []).length; }
+    var USEOF = /\b(through the use of|through|by using|using|with the use of|by means of|by the use of)\b/;
+    c.push([keys.length > 0 && T[0][0].test(keys[0]) && USEOF.test(keys[0]), "② Topic sentence: “In the poem, " + SUR + " presents … through the use of …”"]);
+    c.push([devs.length >= 2 || n(/\b(similes?|metaphors?|imagery|personification|juxtaposition|repetition|hyperbole|exaggeration|contrast|rhetorical question)\b/g) >= 3, "Names the device for each of your two examples"]);
     c.push([qs.length >= 2, "③ A quotation for each device, in quotation marks"]);
     c.push([qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }), "Short quotations (15 words or fewer)"]);
-    c.push([n(/\bthe (adjective|noun|verb|adverb|pronoun) "/g) >= 2, "④ “The adjective / noun / verb “___” is …” for each device"]);
+    c.push([keys.filter(wordSent).length >= 2, "④ “The adjective / noun / verb “___” is …” for each device"]);
     c.push([frames >= 2, "⑤ The device frame for each device (e.g. “compares ___ to ___ to suggest ___”)"]);
-    c.push([n(/\bthe reader is\b[^.]*\bbecause\b/g) >= 2 && n(/\bthey also (realize|realise|notice|understand)\b/g) >= 2, "⑥ “The reader is ___ because ___. They also realize ___” for each device"]);
-    c.push([n(/\bthrough the use of\b/g) >= 3, "⑦ A link sentence for each device: “Through the use of …, Acevedo presents …”"]);
-    c.push([/\bfurthermore\b/.test(t), "⑧ Device 2 starts with “Furthermore,”"]);
-    c.push([noHe(text) && /\bacevedo\b/.test(t), "Uses the poet's name and the right pronoun"]);
+    c.push([keys.filter(readerSent).length >= 2 && keys.filter(function (k) { return /^they also realize\b/.test(k); }).length >= 2, "⑥ “The reader is ___ because ___. They also realize ___” for each device"]);
+    c.push([keys.filter(function (k) { return /^through the use of\b/.test(k); }).length + (keys.length && USEOF.test(keys[0]) ? 1 : 0) >= 3, "⑦ A link sentence for each device: “Through the use of …, " + SUR + " presents …”"]);
+    c.push([keys.some(function (k) { return /^furthermore\b/.test(k); }), "⑧ Device 2 starts with “Furthermore,”"]);
+    c.push([noHe(text) && t.indexOf(SURL) >= 0, "Uses the poet's name and the right pronoun"]);
     return c;
   }
   function finishExam(timeUp) {
     var ex = S.exam; if (!ex || ex.done) return;
+    clearTimeout(popT1); clearTimeout(popT2); $("big-pop").hidden = true; $("exam-pic").hidden = true; $("tray-back").hidden = true;
     ex.text = $("exam-text").value || ex.text || "";
     ex.used = Math.min(EXAM_SEC, (Date.now() - ex.started) / 1000);
     if (ex.fix) ex.used = ex.usedExam || 0; else ex.usedExam = ex.used;
@@ -1715,6 +1935,9 @@ button { font: inherit; color: inherit; }
     c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : "no"; li.textContent = x[1]; ul.appendChild(li); });
     var qs = quotes(ex.text), unknown = qs.filter(function (q) { return !SPOTS.some(function (s) { return inPoem(q, s); }); });
     $("exam-qnote").textContent = unknown.length ? "Check these quotations against the poem yourself (the app only knows the lines with highlighted devices): " + unknown.map(function (q) { return "“" + q + "”"; }).join(", ") : "";
+    var pc = $("plan-check"); pc.textContent = "";
+    planCheck().forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "" : "no"; var b = document.createElement("b"); b.textContent = x[1]; var p = document.createElement("div"); p.className = "pw"; p.textContent = x[2]; li.appendChild(b); li.appendChild(p); pc.appendChild(li); });
+    $("plan-check-card").hidden = !pc.firstChild;
     legendCC($("exam-legend"));
     var stc = renderExamCC($("exam-cc"), ex.text || "");
     $("exam-starts").textContent = "Sentence beginnings: " + stc[0] + " of " + stc[1] + " correct. Bold = correct beginning. Red = wrong or missing beginning, with the words you should start with."
@@ -1738,7 +1961,7 @@ button { font: inherit; color: inherit; }
     $("r-stars").textContent = "★".repeat(f);
     var ex = [];
     ex.push("Spot it: " + spottedCount() + " of " + SPOTS.length + " devices spotted without highlights" + (S.spotMiss ? " (" + S.spotMiss + " taps on empty words)" : "") + ".");
-    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words.");
+    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words." + (function () { var pcs = planCheck(); return pcs.length ? " Plan: " + pcs.map(function (x, i) { return "device " + (i + 1) + (x[0] ? " ✓" : " ✗"); }).join(", ") + "." : ""; })());
     $("r-extra").textContent = ex.join(" ");
     var rev = SPOTS.filter(function (s) { return S.spots[s.id].misses; });
     $("r-revise-block").hidden = !rev.length;

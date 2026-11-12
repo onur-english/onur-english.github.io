@@ -333,6 +333,54 @@ button { font: inherit; color: inherit; }
 #exam-text { min-height: 320px; line-height: 1.55; }
 @media (prefers-reduced-motion: reduce) { .tap-dot { animation: none; opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .opt.shake { animation: none; } .meter i { transition: none; } }
+/* ===== Koç 10 exam, latest standard (O. H., 2026-11-12) ===== */
+:root { --d2: #C2410C; }
+#exam-tip, #exam-warn { display: none !important; }   /* no "start with" suggestions at the top */
+.ex-pick { position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ex-pick img { width: 100%; height: auto; user-select: none; -webkit-user-select: none; display: block; }
+.pk { position: absolute; border-radius: 5px; pointer-events: none; mix-blend-mode: multiply; background: rgba(255,214,60,.62); box-shadow: inset 0 -3px 0 var(--board); }
+.pk.g2 { background: rgba(255,160,110,.62); box-shadow: inset 0 -3px 0 var(--d2); }
+.pk.pop { animation: pkpop .45s; }
+@keyframes pkpop { 0% { opacity: 0; transform: scale(1.12); } 100% { opacity: 1; transform: none; } }
+.pkn { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #FFFFFF; background: var(--board); pointer-events: none; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.pkn.g2 { background: var(--d2); }
+.prow { display: flex; flex-direction: column; gap: 6px; border-left: 5px solid var(--board); background: #FFFBEA; border-radius: 0 10px 10px 0; padding: 8px 10px; }
+.prow.g2 { border-left-color: var(--d2); background: #FFF3EC; }
+.prow .pq { font-weight: 700; }
+.prow .pq.none { font-weight: 400; color: var(--muted); font-style: italic; }
+.prow .pacts { display: flex; flex-wrap: wrap; gap: 6px; }
+.prow .ppic svg { width: 150px; height: 94px; border-radius: 8px; display: block; }
+.pchip { appearance: none; border: 1.5px solid var(--ink); background: #FFFFFF; color: var(--ink); border-radius: 999px; padding: 3px 11px; font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; min-height: 32px; }
+.pchip.dev { background: var(--board); border-color: var(--board); color: #FFFFFF; }
+.prow.g2 .pchip.dev { background: var(--d2); border-color: var(--d2); }
+.tray-back { position: fixed; inset: 0; z-index: 80; background: rgba(20,20,24,.35); display: flex; align-items: flex-end; justify-content: center; }
+.tray-back[hidden] { display: none; }
+.tray { width: 100%; max-width: 680px; background: #FFFFFF; border-radius: 18px 18px 0 0; border-top: 6px solid var(--board); padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 10px; box-shadow: 0 -10px 30px rgba(0,0,0,.25); }
+.tray.g2 { border-top-color: var(--d2); }
+.tray-q { font-weight: 700; background: #FFF6CC; border-radius: 8px; padding: 6px 10px; margin: 0; }
+.tray.g2 .tray-q { background: #FFEDE3; }
+.tray-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.tray-opts button { appearance: none; border: 2px solid var(--rule); background: #FFFFFF; color: var(--ink); border-radius: 12px; padding: 10px 6px; font: inherit; font-weight: 700; cursor: pointer; min-height: 46px; }
+.tray-opts button.on { border-color: var(--board); background: #FFF6CC; }
+.pcheck { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.pcheck li { border-radius: 12px; padding: 10px 12px; background: var(--good-soft); }
+.pcheck li.no { background: var(--red-soft); }
+.pcheck li b { display: block; }
+.pcheck li .pw { font-size: .9rem; margin-top: 4px; }
+.wr-grid { display: grid; grid-template-columns: minmax(0, 1fr) clamp(118px, 36%, 300px); gap: 10px; align-items: start; }
+.wr-grid #exam-text { min-height: 420px; }
+.side-pic { border: 2px solid var(--board); border-radius: 12px; background: #FFFDF6; padding: 4px; display: flex; flex-direction: column; gap: 4px; font-size: .78rem; line-height: 1.3; }
+.side-pic svg { width: 100%; height: auto; aspect-ratio: 160 / 100; border-radius: 8px; display: block; }
+.side-pic.empty svg { display: none; }
+.side-pic:not(.empty) .sp-empty { display: none; }
+.side-pic .sp-empty { color: var(--muted); font-style: italic; margin: 0; padding: 4px; }
+.side-pic.flash { animation: picin .5s; }
+.eb-pic .pc, .eb-pic .px, .eb-pic::before { display: none !important; }
+.eb-pic { padding: 4px; }
+.eb-pic.dock { pointer-events: none; top: auto !important; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); left: auto !important; right: 12px !important; width: min(46vw, 260px) !important; margin: 0; }
+.eb-pic svg { width: 100%; height: auto; aspect-ratio: 160 / 100; }
+#exam-live { padding-bottom: 120px; }
+.st-close { display: inline-block; color: #3D5A40; font-weight: 700; font-size: .8rem; background: #E6F2E8; border-radius: 6px; padding: 0 6px; margin: 0 2px; }
 </style>
 </head>
 <body>
@@ -493,7 +541,7 @@ button { font: inherit; color: inherit; }
       <div id="lv-4" class="col" hidden>
         <div class="card" id="exam-start-card">
           <span class="label">Exam practice · 40 minutes</span>
-          <p>Like the real exam, the poem has no highlights. Read the introduction, choose TWO devices yourself and write ONE body paragraph in your exam structure.</p>
+          <p>Like the real exam, the poem has no highlights. Read the introduction, tap TWO devices in the poem and name them, then write ONE body paragraph in your exam structure.</p>
           <p><b>While you write:</b> your structure score (out of 100) goes up live, and big coach messages pop up to push your analysis deeper. Read each one, then keep writing.</p>
           <p class="small muted">The timer keeps running if you leave the page. When time is up, your paragraph is checked automatically.</p>
           <button class="btn btn-ink" id="btn-exam-start" type="button">Start the 40-minute exam</button>
@@ -510,18 +558,16 @@ button { font: inherit; color: inherit; }
             <p class="eb-nudge" id="exam-nudge" hidden></p>
           </div>
           <div class="card"><span class="label">The introduction (given)</span><p class="intro" id="exam-intro"></p></div>
-          <details class="card poem-card" open><summary>The poem</summary><div class="poem-img"><img id="exam-img" alt="The full poem without highlights"></div></details>
-          <div class="card">
-            <span class="label">Plan first (about 2 minutes)</span>
-            <p class="small muted">Choose your two devices and the words you will quote before you write. The plan is not marked.</p>
-            <div class="field"><label for="plan-0">Device 1</label><input id="plan-0" type="text" maxlength="40" placeholder="e.g. metaphor"></div>
-            <div class="field"><label for="plan-1">Words I will quote for device 1</label><input id="plan-1" type="text" maxlength="120"></div>
-            <div class="field"><label for="plan-2">Device 2</label><input id="plan-2" type="text" maxlength="40" placeholder="e.g. repetition"></div>
-            <div class="field"><label for="plan-3">Words I will quote for device 2</label><input id="plan-3" type="text" maxlength="120"></div>
+          <div class="card" id="plan-card">
+            <span class="label">Plan first: pick your two devices</span>
+            <p class="small">Tap the words of a device in the poem below. They light up: <b style="background:#FFE680;padding:0 4px;border-radius:4px">yellow = Device 1</b>, <b style="background:#FFCDB2;padding:0 4px;border-radius:4px">orange = Device 2</b>. Then tap the name of the device. Tap a device again to remove it. Your plan is checked when you finish.</p>
+            <div id="plan-rows" class="col" style="gap:8px"></div>
           </div>
+          <details class="card poem-card" open><summary>The poem</summary><div class="poem-img ex-pick" id="exam-poem"><img id="exam-img" alt="The full poem without highlights. Tap the words of a device to plan."></div></details>
           <div class="card">
             <label class="label" for="exam-text">Your body paragraph</label>
-            <textarea id="exam-text" spellcheck="true" placeholder="In the poem, …"></textarea>
+            <div class="wr-grid"><textarea id="exam-text" spellcheck="true" placeholder="In the poem, …"></textarea>
+            <aside class="side-pic empty" id="side-pic" aria-hidden="true"><svg class="pic" viewBox="0 0 160 100"></svg><p class="sp-empty">Pick a device in the plan, or put words from the poem in quotation marks: its picture appears here.</p></aside></div>
             <p class="small muted" id="exam-wc">0 words</p>
             <button class="btn btn-ink" id="btn-exam-finish" type="button">I have finished</button>
           </div>
@@ -536,6 +582,10 @@ button { font: inherit; color: inherit; }
             <span class="label">Structure checklist</span>
             <ul class="checks" id="exam-checks"></ul>
             <p class="small muted" id="exam-qnote"></p>
+          </div>
+          <div class="card" id="plan-check-card">
+            <span class="label">Your plan, checked</span>
+            <ul class="pcheck" id="plan-check"></ul>
           </div>
           <div class="card">
             <span class="label">Your paragraph, color-coded</span>
@@ -589,6 +639,12 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="tray-back" id="tray-back" hidden><div class="tray" id="tray" role="dialog" aria-modal="true" aria-labelledby="tray-h">
+  <div class="sheet-head"><span class="label" id="tray-h"></span><button class="x" id="tray-x" type="button" aria-label="Close">×</button></div>
+  <p class="tray-q" id="tray-q"></p>
+  <p class="small muted" style="margin:0">Which device is this?</p>
+  <div class="tray-opts" id="tray-opts"></div>
+</div></div>
 <div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span><button class="bp-x" type="button" aria-label="Close">×</button></div>
 <div class="eb-pic" id="exam-pic" hidden><svg class="pic" viewBox="0 0 160 100" aria-hidden="true"></svg><div class="pc"><span class="eb-pic-lab">Picture it</span><i><b>You see:</b> <span id="pic-see"></span></i><i><b>It means:</b> <span id="pic-mean"></span></i></div><button class="px" type="button" aria-label="Hide the picture">×</button></div>
 <div class="sheet-back" id="sheet-back" hidden>
@@ -604,7 +660,7 @@ button { font: inherit; color: inherit; }
   </div>
 </div>
 
-<script id="pic-data" type="application/json">{"s1": ["<defs><linearGradient id=\"pg21\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#FFF4CC\"/><stop offset=\"1\" stop-color=\"#F2D16B\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pg21)\"/><path d=\"M80 100 L80 62 L30 10 M80 62 L130 10\" stroke=\"#A0743C\" fill=\"none\" stroke-width=\"10\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"14\" y=\"30\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"146\" y=\"30\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"80\" y=\"84\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\">🚶<\/text>", "One road splitting into two in an autumn wood.", "Two roads = two life choices: picking one is hard."], "s2": ["<rect width=\"160\" height=\"100\" fill=\"#F4EBC8\"/><path d=\"M30 100 Q40 60 100 46\" stroke=\"#A0743C\" fill=\"none\" stroke-width=\"9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"112\" y=\"44\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌿<\/text><text x=\"128\" y=\"50\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"30\" y=\"80\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">👀<\/text><text x=\"118\" y=\"84\" font-size=\"20\" font-weight=\"800\" fill=\"#5A3E1B\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx fade\">?<\/text>", "A path bending away into bushes, so you can't see where it goes.", "You cannot see where a choice leads: the future is uncertain."], "s3": ["<rect width=\"160\" height=\"100\" fill=\"#F1F7E6\"/><path d=\"M30 100 L70 10 M90 10 L130 100\" stroke=\"#A0743C\" fill=\"none\" stroke-width=\"10\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"96\" y=\"30\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:0.0s\">🌱<\/text><text x=\"103\" y=\"44\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:0.2s\">🌱<\/text><text x=\"110\" y=\"58\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:0.4s\">🌱<\/text><text x=\"117\" y=\"72\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:0.6000000000000001s\">🌱<\/text><text x=\"124\" y=\"86\" font-size=\"10\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em sw\" style=\"--d:0.8s\">🌱<\/text><text x=\"124\" y=\"18\" font-size=\"9\" font-weight=\"800\" fill=\"#2E8B57\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx pul\">walk me!<\/text>", "A grassy road that seems to WANT someone to walk on it.", "The road “wanted” wear: people invent reasons to explain their choices."], "s4": ["<rect width=\"160\" height=\"100\" fill=\"#FFF4CC\"/><path d=\"M80 100 L80 62 L30 10 M80 62 L130 10\" stroke=\"#C9A25B\" fill=\"none\" stroke-width=\"10\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"20\" y=\"0\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:-5px;--dx:8px;--dy:95px;--t:3s;--d:0.0s\">🍂<\/text><text x=\"44\" y=\"0\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:-5px;--dx:8px;--dy:95px;--t:3s;--d:0.5s\">🍂<\/text><text x=\"68\" y=\"0\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:-5px;--dx:8px;--dy:95px;--t:3s;--d:1.0s\">🍂<\/text><text x=\"92\" y=\"0\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:-5px;--dx:8px;--dy:95px;--t:3s;--d:1.5s\">🍂<\/text><text x=\"116\" y=\"0\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:-5px;--dx:8px;--dy:95px;--t:3s;--d:2.0s\">🍂<\/text><text x=\"140\" y=\"0\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:-5px;--dx:8px;--dy:95px;--t:3s;--d:2.5s\">🍂<\/text><text x=\"80\" y=\"92\" font-size=\"9\" font-weight=\"800\" fill=\"#5A3E1B\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">no footprints<\/text>", "Both paths covered in fresh leaves, with no footprints on either.", "Neither road was used more: at the moment of choosing, the choices were really equal."], "s5": ["<rect width=\"160\" height=\"100\" fill=\"#F4EBC8\"/><path d=\"M10 90 L50 70\" stroke=\"#A0743C\" fill=\"none\" stroke-width=\"8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"ech\" style=\"--d:0s\"/><path d=\"M50 70 L90 74 L120 50\" stroke=\"#A0743C\" fill=\"none\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"ech\" style=\"--d:0.6s\"/><path d=\"M120 50 L140 30 L150 14\" stroke=\"#A0743C\" fill=\"none\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"ech\" style=\"--d:1.2s\"/><text x=\"60\" y=\"20\" font-size=\"10\" font-weight=\"800\" fill=\"#5A3E1B\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">way → way → way<\/text>", "One road leading to another, and another.", "Each choice leads to the next, so you can never go back."], "s6": ["<rect width=\"160\" height=\"100\" fill=\"#EFE6D2\"/><text x=\"44\" y=\"54\" font-size=\"40\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👴<\/text><text x=\"116\" y=\"50\" font-size=\"34\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em spin\" style=\"--t:3s\">⏳<\/text><text x=\"80\" y=\"90\" font-size=\"9\" font-weight=\"800\" fill=\"#5A3E1B\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">ages and ages hence<\/text>", "An old man, many years later, still telling the story.", "Exaggeration: one choice stays with a person for the rest of their life."], "s7": ["<rect width=\"160\" height=\"100\" fill=\"#F4EBC8\"/><rect x=\"80\" y=\"0\" width=\"80\" height=\"100\" rx=\"0\" fill=\"#FFF8E0\"/><path d=\"M20 90 L40 20 M60 90 L44 20\" stroke=\"#A0743C\" fill=\"none\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"40\" y=\"54\" font-size=\"18\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">=<\/text><text x=\"40\" y=\"96\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">really the same<\/text><path d=\"M120 90 L120 20\" stroke=\"#A0743C\" fill=\"none\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"140\" y=\"30\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em pul\">✨<\/text><text x=\"124\" y=\"96\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">“less traveled”<\/text><path d=\"M80 6V94\" stroke=\"#FFFFFF\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"4 4\"/><circle cx=\"80\" cy=\"50\" r=\"9\" fill=\"#FFFFFF\"/><text x=\"80\" y=\"50\" font-size=\"8\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">vs<\/text>", "Two paths that were really the same, next to the story that makes one special.", "The contrast shows how people later make their choices sound more important than they were."]}</script>
+<script id="pic-data" type="application/json">{"s1": ["<defs><linearGradient id=\"pga18\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#FCE9B8\"/><stop offset=\"1\" stop-color=\"#E8B54A\"/><\/linearGradient><\/defs><rect width=\"160\" height=\"100\" fill=\"url(#pga18)\"/><path d=\"M80 100 L80 62 L30 14\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g class=\"fade\" style=\"--t:3s\"><path d=\"M80 62 L130 14\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><g><circle cx=\"80\" cy=\"61\" r=\"4\" fill=\"#2F3FB0\"/><rect x=\"76\" y=\"66\" width=\"8\" height=\"13\" rx=\"3\" fill=\"#2F3FB0\"/><\/g><text x=\"66\" y=\"52\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🤔<\/text><rect x=\"47.97999999999999\" y=\"72\" width=\"109.02000000000001\" height=\"16\" rx=\"5\" fill=\"#D7001F\"/><text x=\"102.49\" y=\"80\" font-size=\"7\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">choose one = lose one<\/text>", "A man at a fork in an autumn wood; as he chooses one road, the other fades away.", "Every choice sends you one way, and the other path is lost."], "s2": ["<rect width=\"160\" height=\"100\" fill=\"#EAF2E3\"/><path d=\"M30 100 Q60 60 100 40\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"112\" y=\"36\" font-size=\"30\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌳<\/text><text x=\"132\" y=\"46\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌿<\/text><text x=\"130\" y=\"18\" font-size=\"14\" font-weight=\"800\" fill=\"#D7001F\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx pul\">?<\/text><text x=\"146\" y=\"30\" font-size=\"10\" font-weight=\"800\" fill=\"#D7001F\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx pul\" style=\"--d:0.4s\">?<\/text><g><circle cx=\"28\" cy=\"77\" r=\"4\" fill=\"#2F3FB0\"/><rect x=\"24\" y=\"82\" width=\"8\" height=\"13\" rx=\"3\" fill=\"#2F3FB0\"/><\/g><text x=\"40\" y=\"72\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🔭<\/text><rect x=\"17.799999999999997\" y=\"10\" width=\"104.4\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"70\" y=\"18\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">the future is hidden<\/text>", "A path bending away into thick bushes with question marks, and a traveler straining to see.", "Nobody can see where a choice leads: the future is uncertain."], "s3": ["<rect width=\"160\" height=\"100\" fill=\"#EEF6E6\"/><path d=\"M100 100 L100 40\" stroke=\"#7BA05B\" fill=\"none\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"100\" y=\"64\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">🌱<\/text><g class=\"bob\"><rect x=\"110\" y=\"20\" width=\"44\" height=\"16\" rx=\"6\" fill=\"#FFFFFF\"/><path d=\"M110 20h44v16h-44Z\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"132.0\" y=\"28.0\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">pick me!<\/text><\/g><g><circle cx=\"40\" cy=\"71\" r=\"4\" fill=\"#2F3FB0\"/><rect x=\"36\" y=\"76\" width=\"8\" height=\"13\" rx=\"3\" fill=\"#2F3FB0\"/><\/g><g><rect x=\"10\" y=\"28\" width=\"54\" height=\"16\" rx=\"6\" fill=\"#FFFFFF\"/><path d=\"M10 28h54v16h-54Z\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"37.0\" y=\"36.0\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">it's the one…<\/text><path d=\"M36 44L40 64\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><rect x=\"24.729999999999997\" y=\"86\" width=\"90.54\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"70\" y=\"94\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">we invent reasons<\/text>", "A grassy road that seems to say ‘pick me!’, and a traveler inventing a reason to choose it.", "People look for reasons to explain their choices, even giving the road feelings."], "s4": ["<rect width=\"160\" height=\"100\" fill=\"#FFF1D6\"/><path d=\"M80 100 L80 64 L36 20\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M80 64 L124 20\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"52\" y=\"38\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\" style=\"--d:0.4s\">🍂<\/text><text x=\"60\" y=\"46\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\" style=\"--d:0.0s\">🍂<\/text><text x=\"44\" y=\"30\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\" style=\"--d:0.8s\">🍂<\/text><text x=\"108\" y=\"38\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\" style=\"--d:0.6000000000000001s\">🍂<\/text><text x=\"100\" y=\"46\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\" style=\"--d:0.0s\">🍂<\/text><text x=\"116\" y=\"30\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em bob\" style=\"--d:0.2s\">🍂<\/text><text x=\"80\" y=\"34\" font-size=\"20\" font-weight=\"800\" fill=\"#D7001F\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx pul\">=<\/text><rect x=\"46.28\" y=\"84\" width=\"67.44\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"80\" y=\"92\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">really equal<\/text>", "Two paths covered with the same untouched leaves, with an equals sign between them.", "At the moment of choosing, both choices were really the same."], "s5": ["<rect width=\"160\" height=\"100\" fill=\"#F1EDE2\"/><path d=\"M10 80 H40 L60 60 M40 80 L60 92\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g class=\"ech\" style=\"--d:0.4s\"><path d=\"M60 60 H86 L104 44 M86 60 L104 70\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><g class=\"ech\" style=\"--d:0.9s\"><path d=\"M104 44 H124 L140 32 M124 44 L140 54\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><text x=\"26\" y=\"70\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em lin\" style=\"--fx:0px;--fy:0px;--dx:96px;--dy:-34px;--t:3s\">🚶<\/text><g><path d=\"M60 22L20 22\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M25.3 19.1L20 22L25.3 24.9\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><path d=\"M32 14L48 30M48 14L32 30\" stroke=\"#D7001F\" fill=\"none\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"78.59\" y=\"82\" width=\"62.82\" height=\"16\" rx=\"5\" fill=\"#D7001F\"/><text x=\"110\" y=\"90\" font-size=\"7\" font-weight=\"800\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">no way back<\/text>", "One path splitting again and again, with the way back crossed out.", "Each choice leads to another, so the speaker can never return to the start."], "s6": ["<rect width=\"160\" height=\"100\" fill=\"#F3EEE6\"/><text x=\"40\" y=\"62\" font-size=\"32\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👴<\/text><g><rect x=\"66\" y=\"12\" width=\"60\" height=\"34\" rx=\"6\" fill=\"#FFFFFF\"/><path d=\"M66 12h60v34h-60Z\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"96.0\" y=\"29.0\" font-size=\"8\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\"><\/text><\/g><path d=\"M96 42 L96 30 L82 18 M96 30 L110 18\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"20\" y=\"92\" font-size=\"6\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx lin\" style=\"--fx:0px;--fy:0px;--dx:0px;--dy:-14px;--t:1.6s\">1 yr<\/text><text x=\"38\" y=\"92\" font-size=\"6\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx lin\" style=\"--fx:0px;--fy:0px;--dx:0px;--dy:-14px;--t:1.8s\">10<\/text><text x=\"56\" y=\"92\" font-size=\"6\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx lin\" style=\"--fx:0px;--fy:0px;--dx:0px;--dy:-14px;--t:2.0s\">20<\/text><text x=\"74\" y=\"92\" font-size=\"6\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx lin\" style=\"--fx:0px;--fy:0px;--dx:0px;--dy:-14px;--t:2.2s\">40<\/text><text x=\"92\" y=\"92\" font-size=\"6\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx lin\" style=\"--fx:0px;--fy:0px;--dx:0px;--dy:-14px;--t:2.4000000000000004s\">60<\/text><rect x=\"34.12\" y=\"62\" width=\"122.88000000000001\" height=\"16\" rx=\"5\" fill=\"#FFE45C\"/><text x=\"95.56\" y=\"70\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">one choice, a whole life<\/text>", "An old man, many years later, still thinking about the fork in the road.", "Exaggeration: one decision stays with a person for the rest of their life."], "s7": ["<rect width=\"160\" height=\"100\" fill=\"#FFF6E6\"/><path d=\"M40 92 L40 66 L14 40 M40 66 L66 40\" stroke=\"#8A6F4E\" fill=\"none\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"40\" y=\"30\" font-size=\"8\" font-weight=\"800\" fill=\"#9AA3AD\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">= same<\/text><g><path d=\"M70 66L90 66\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M84.7 68.9L90 66L84.7 63.1\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><\/g><text x=\"108\" y=\"70\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em\">👴<\/text><path d=\"M120 92 L136 46\" stroke=\"#E0A000\" fill=\"none\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"pul\"/><text x=\"140\" y=\"40\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"em flk\">✨<\/text><g><rect x=\"96\" y=\"16\" width=\"58\" height=\"16\" rx=\"6\" fill=\"#FFFFFF\"/><path d=\"M96 16h58v16h-58Z\" stroke=\"#1B1D21\" fill=\"none\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><text x=\"125.0\" y=\"24.0\" font-size=\"7\" font-weight=\"800\" fill=\"#1B1D21\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"tx\">less traveled!<\/text><\/g>", "Two roads that were really the same, next to an old man telling a story that makes one road special.", "Later, the speaker changes his story: people make their choices sound more special than they were."]}</script>
 <script id="app-data" type="application/json">{"spots": [{"id": "s1", "where": "Lines 1–10 · The choice", "quote": "Two roads diverged in a yellow wood", "ctx": ["Two roads diverged in a yellow wood,"], "device": "Metaphor", "dAns": "Metaphor: the two roads stand for a choice in life, without using ‘like’ or ‘as.’", "dWrong": ["Simile: the roads are compared to a yellow wood using the word ‘like.’", "Personification: the roads are given the human ability to argue with each other.", "Hyperbole: the speaker exaggerates how many roads there are in the forest."], "dHint": "Is the poem only about a walk in the woods? What could two roads splitting apart stand for in a person's life?", "dWhy": "The two roads are not only real paths: they stand for a big decision in life. Comparing a choice to roads without “like” or “as” is a metaphor.", "effect": "The reader sees the speaker facing an important life decision, where choosing one path means giving up the other.", "eWrong": ["The reader learns how to find the way out of a forest, like reading a map.", "The reader sees that the speaker is lost and frightened in a dark forest.", "The reader sees that the speaker is happy because both roads lead to the same place."], "eHint": "When people say “I am at a crossroads,” what do they mean?", "words": [["diverged", "verb", "What could the verb “diverged” suggest? Two paths moving apart and never meeting again?"], ["yellow", "adjective", "What could the adjective “yellow” suggest? Think of autumn leaves. Is something ending or changing?"]], "frameHint": "Metaphor frame: Frost compares ___ (a choice in life) to ___ (two roads) to suggest ___. He also emphasizes ___.", "readerHint": "How do you feel when you have to make a big choice? Nervous? Curious? Thoughtful?", "message": "the difficulty of making an important choice in life", "m_ev": "Frost states, “Two roads diverged in a yellow wood.”", "m_word": "The verb “diverged” is significant because it suggests the two paths move apart and will never meet again.", "m_dev": "Frost compares a choice in life to two roads to suggest that every decision sends a person in a new direction. He also emphasizes that choosing one path means losing the other.", "m_reader": "The reader is thoughtful because everyone has faced a choice like this. They also realize that some decisions cannot be undone.", "side": "A"}, {"id": "s2", "where": "Lines 1–10 · The choice", "quote": "To where it bent in the undergrowth", "ctx": ["And looked down one as far as I could / To where it bent in the undergrowth;"], "device": "Imagery", "dAns": "Imagery: a detailed description helps us picture the road disappearing into the bushes.", "dWrong": ["Repetition: the word ‘undergrowth’ is repeated at the end of every stanza.", "Simile: the road is compared to a river using the word ‘like.’", "Hyperbole: the speaker exaggerates how tall the trees are."], "dHint": "Close your eyes. Where does the road go? Can the speaker see the end of it?", "dWhy": "We can picture the path curving away and vanishing into the plants. That is imagery.", "effect": "The reader pictures a road that disappears from view, so the future after a choice seems hidden and uncertain.", "eWrong": ["The reader pictures a straight, clear road, so the speaker knows exactly where it goes.", "The reader pictures a garden being cleaned, so the poem feels like a gardening guide.", "The reader pictures a busy city street full of cars and noise."], "eHint": "If you can't see where a road goes, what does that say about the future?", "words": [["bent", "verb", "What could “bent” suggest? The road turns out of sight. Can we ever see the whole future?"], ["undergrowth", "noun", "What could “undergrowth” suggest? Something wild, thick and hard to see through?"]], "frameHint": "Imagery frame: Frost gives a detailed description of ___ (what do we see?) to suggest ___. He portrays ___.", "readerHint": "How does it feel not to know where a path leads? Curious? Uncertain? Nervous?", "message": "the uncertainty of the future when we make a choice", "m_ev": "Frost states, “To where it bent in the undergrowth.”", "m_word": "The verb “bent” is significant because it suggests the road turns out of sight, so the speaker cannot see where it leads.", "m_dev": "Frost gives a detailed description of the road disappearing into the bushes to suggest that nobody can see the future when they make a choice. He portrays the speaker trying hard to see what lies ahead.", "m_reader": "The reader is curious because the end of the road is hidden. They also realize that every choice is made without knowing the future.", "side": "A"}, {"id": "s3", "where": "Lines 1–10 · The choice", "quote": "Because it was grassy and wanted wear", "ctx": ["And having perhaps the better claim, / Because it was grassy and wanted wear;"], "device": "Personification", "dAns": "Personification: the road is given the human feeling of wanting to be walked on.", "dWrong": ["Simile: the road is compared to grass using the word ‘like.’", "Metaphor: the grass is called a carpet, without using ‘like’ or ‘as.’", "Juxtaposition: green grass is placed next to gray stones to show a contrast."], "dHint": "Can a road really “want” something? Who usually wants things?", "dWhy": "A road cannot want anything; people do. The road is given a human wish. That is personification.", "effect": "The reader sees the road almost inviting the speaker, so the choice feels personal, as if the path is asking to be chosen.", "eWrong": ["The reader sees that the road is dangerous and wants to hurt the traveler.", "The reader sees that the road is broken and needs to be repaired.", "The reader sees that the speaker wants to cut the grass on the road."], "eHint": "“Wanted wear” means it needed people to walk on it. How does that make the road seem?", "words": [["wanted", "verb", "What could the verb “wanted” suggest? Is the road lonely? Is it calling the speaker?"], ["grassy", "adjective", "What could “grassy” suggest? Fewer people have walked here. Is it new? Less popular?"]], "frameHint": "Personification frame: Frost gives ___ (the road) the human quality of ___ (wanting) to suggest ___. He demonstrates ___.", "readerHint": "How do you feel about the speaker's reason for choosing? Curious? Convinced? Unsure?", "message": "how people look for reasons to explain their choices", "m_ev": "Frost states, “Because it was grassy and wanted wear.”", "m_word": "The verb “wanted” is significant because it suggests the road is almost asking to be chosen.", "m_dev": "Frost gives the road the human quality of wanting to suggest that the speaker feels personally drawn to it. He demonstrates how people look for reasons to explain their choices.", "m_reader": "The reader is curious because the road seems to be inviting the speaker. They also realize that the reason for the choice is a feeling, not a fact.", "side": "B"}, {"id": "s4", "where": "Lines 11–20 · Looking back", "quote": "In leaves no step had trodden black", "ctx": ["And both that morning equally lay / In leaves no step had trodden black."], "device": "Imagery", "dAns": "Imagery: a detailed description helps us picture fresh leaves that nobody has walked on yet.", "dWrong": ["Hyperbole: the speaker exaggerates how many leaves fell that morning.", "Personification: the leaves are given the human ability to walk.", "Repetition: the word ‘black’ is repeated three times in the stanza."], "dHint": "Picture the ground that morning. What do the leaves look like? Has anyone walked there?", "dWhy": "We can see clean leaves that no footsteps have turned dark. That is imagery.", "effect": "The reader pictures fresh, untouched leaves on both roads, so both paths look new and equally possible.", "eWrong": ["The reader pictures a burned forest, so the woods seem dangerous and dead.", "The reader pictures crowds of people walking on both roads.", "The reader pictures black leaves at night, so the poem feels like a horror story."], "eHint": "If no step has turned the leaves black, how many people have walked there? What does that say about both roads?", "words": [["trodden", "verb", "What could “trodden” suggest? Feet walking and walking until the leaves turn dark?"], ["black", "adjective", "What could “black” suggest here? Old, crushed leaves, unlike these fresh ones?"]], "frameHint": "Imagery frame: Frost gives a detailed description of ___ (what do we see?) to suggest ___. He portrays ___.", "readerHint": "How does this picture make you feel? Calm? Hopeful? Unsure which road is better?", "message": "that both choices were really equal at the moment the speaker chose", "m_ev": "Frost states, “In leaves no step had trodden black.”", "m_word": "The verb “trodden” is significant because it suggests feet crushing the leaves, which nobody had done yet that morning.", "m_dev": "Frost gives a detailed description of fresh leaves on both roads to suggest that neither path had been walked that morning. He portrays two choices that look exactly the same.", "m_reader": "The reader is surprised because the roads seem equal after all. They also realize that the speaker's choice was not as clear as it seemed.", "side": "A"}, {"id": "s5", "where": "Lines 11–20 · Looking back", "quote": "way leads on to way", "ctx": ["Yet knowing how way leads on to way, / I doubted if I should ever come back."], "device": "Repetition", "dAns": "Repetition: the word ‘way’ is repeated in the same short phrase.", "dWrong": ["Juxtaposition: one way is placed next to a different, opposite way.", "Simile: one way is compared to another using the word ‘like.’", "Hyperbole: the speaker exaggerates how long the road is."], "dHint": "Which word appears twice in this short phrase?", "dWhy": "The word “way” is repeated: one way leads on to another way. That is repetition.", "effect": "The reader feels how one choice leads to the next, and the next, so it becomes impossible to go back.", "eWrong": ["The reader sees that the speaker plans to come back tomorrow and try the other road.", "The reader sees that all roads lead back to the same starting point.", "The reader sees that the speaker is reading road signs in the forest."], "eHint": "Once you take one path, more choices follow. Can you return to the beginning?", "words": [["leads", "verb", "What could the verb “leads” suggest? One choice pulling you on to the next?"], ["doubted", "verb", "Look at the next line: what could “doubted” suggest about ever coming back?"]], "frameHint": "Repetition frame: Frost repeats the word “way” ___ times to emphasize ___. He suggests ___.", "readerHint": "How does it feel to know you can't go back? Regretful? Thoughtful? Accepting?", "message": "how one choice leads to another, so we can never go back", "m_ev": "Frost states, “way leads on to way.”", "m_word": "The verb “leads” is significant because it suggests one choice pulls the traveler on to the next.", "m_dev": "Frost repeats the word “way” two times to emphasize that one choice always leads to another. He suggests that the speaker can never return to the start.", "m_reader": "The reader is thoughtful because life really does move forward like this. They also realize that some chances only come once.", "side": "A"}, {"id": "s6", "where": "Lines 11–20 · Looking back", "quote": "Somewhere ages and ages hence", "ctx": ["I shall be telling this with a sigh / Somewhere ages and ages hence:"], "device": "Hyperbole", "dAns": "Hyperbole: the speaker exaggerates how far in the future he will tell this story.", "dWrong": ["Imagery: a detailed description of the speaker's old house.", "Metaphor: the speaker is called an old book, without using ‘like’ or ‘as.’", "Juxtaposition: the morning is placed next to the evening."], "dHint": "Will the speaker really live for “ages and ages”? What is he doing with time here?", "dWhy": "Nobody lives for “ages and ages.” The speaker exaggerates how far away the future is (repeating “ages” makes it feel even longer). That is hyperbole.", "effect": "The reader feels how long-lasting this choice is: the speaker will still be thinking about it at the very end of his life.", "eWrong": ["The reader sees that the speaker will forget this day very soon.", "The reader learns the exact date when the speaker will tell the story.", "The reader sees that the speaker is a historian studying ancient times."], "eHint": "How long will the speaker remember this moment? What does that show about the choice?", "words": [["ages", "noun", "What could “ages” suggest? A very long time? A whole lifetime?"], ["sigh", "noun", "Look at the line before: what could “sigh” suggest? Regret? Relief? Is it happy or sad?"]], "frameHint": "Hyperbole frame: Frost exaggerates the meaning of ___ (time) to suggest ___. He highlights ___.", "readerHint": "How do you feel about the speaker as an old man telling this story? Moved? Curious? A little sad?", "message": "how a single choice can stay with a person for the rest of their life", "m_ev": "Frost states, “Somewhere ages and ages hence.”", "m_word": "The noun “ages” is significant because it suggests an extremely long time, almost a whole lifetime.", "m_dev": "Frost exaggerates the meaning of time to suggest that the speaker will remember this choice for the rest of his life. He highlights how important one decision can become.", "m_reader": "The reader is moved because the speaker imagines himself as an old man. They also realize that small choices can shape a whole life.", "side": "B"}, {"id": "s7", "where": "Lines 11–20 · Looking back", "quote": "Had worn them really about the same … I took the one less traveled by", "ctx": ["Though as for that the passing there / Had worn them really about the same,", "Two roads diverged in a wood, and I— / I took the one less traveled by,"], "device": "Juxtaposition", "dAns": "Juxtaposition: roads that were “really about the same” are set against the claim that one was “less traveled.”", "dWrong": ["Simile: the two roads are compared using the word ‘like.’", "Hyperbole: the speaker exaggerates how tired he is after the walk.", "Personification: the roads are given the human ability to travel."], "dHint": "In line 10, were the roads different? In line 19, what does the speaker say about the road he took?", "dWhy": "Line 10 says the roads were worn “about the same,” but line 19 says he took the one “less traveled.” Two opposite ideas set against each other: that is juxtaposition.", "effect": "The reader notices that the speaker changes the story later, making his ordinary choice sound more special than it really was.", "eWrong": ["The reader sees that the speaker always tells the truth exactly as it happened.", "The reader sees that the second road was dangerous and full of wild animals.", "The reader sees that the speaker regrets walking in the forest at all."], "eHint": "Was one road really less traveled? Why might people tell their life stories differently later?", "words": [["same", "adjective", "What could “same” suggest? Were the roads really different at all?"], ["really", "adverb", "What could “really” suggest? The speaker admits the truth here. Why is that important?"], ["traveled", "verb", "What could “less traveled” suggest? Being different from everyone else? Is that what really happened?"]], "frameHint": "Juxtaposition frame: Frost places ___ (roads that were about the same) next to ___ (the one “less traveled”) to suggest ___. He emphasizes ___.", "readerHint": "How do you feel when you notice the speaker changing his story? Surprised? Amused? Thoughtful?", "message": "how people later describe their choices as more important than they really were", "m_ev": "Frost states, “Had worn them really about the same” and “I took the one less traveled by.”", "m_word": "The adjective “same” is significant because it suggests the two roads were not really different at all.", "m_dev": "Frost places roads that were worn “about the same” next to “the one less traveled by” to suggest that the speaker later changes his story. He emphasizes how people make their choices sound more special than they were.", "m_reader": "The reader is surprised because the speaker's final claim does not match what he said earlier. They also realize that we often retell our past to make sense of it.", "side": "B"}], "intro": "Robert Frost's poem “The Road Not Taken” appeared in his 1916 collection Mountain Interval. A traveler comes to a place in a yellow autumn wood where the road splits in two, chooses one path, and imagines telling the story many years later. Frost uses the image of a journey in “The Road Not Taken” to show that every choice in life means giving something up, and that people later give their choices a meaning they did not have at the time.", "sides": {"A": "how hard and uncertain a choice is", "B": "the meaning people give their choices later"}, "hot": {"s1": [[0.0888, 0.0203, 0.7676, 0.0368]], "s2": [[0.0888, 0.1985, 0.7313, 0.0367]], "s3": [[0.2687, 0.3582, 0.6226, 0.0368]], "s4": [[0.0888, 0.5624, 0.7189, 0.0368]], "s5": [[0.4564, 0.6515, 0.4203, 0.0368]], "s6": [[0.3386, 0.8112, 0.4159, 0.0368]], "s7": [[0.0888, 0.4472, 0.7635, 0.0368], [0.0888, 0.9003, 0.6128, 0.0368]]}}</script>
 <script>
 (function () {
@@ -614,7 +670,7 @@ button { font: inherit; color: inherit; }
   var KEY = "onur-koc10-frost-hunt-v2";
   var LETTERS = ["A", "B", "C", "D"];
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var DEVRE = { Simile: /\bsimile\b/, Metaphor: /\bmetaphor\b/, Imagery: /\bimagery\b/, Personification: /\bpersonification\b/, Juxtaposition: /\bjuxtaposition\b|\bcontrast\b/, Repetition: /\brepetition\b/, Hyperbole: /\bhyperbole\b|\bexaggerat/, "Rhetorical question": /\brhetorical questions?\b/ };
+  var DEVRE = { Simile: /\bsimiles?\b/, Metaphor: /\bmetaphors?\b|\bmetaphorical/, Imagery: /\bimagery\b|\bvivid (images?|description)\b/, Personification: /\bpersonif/, Juxtaposition: /\bjuxtapos|\bcontrast/, Repetition: /\brepetition\b|\brepeat(s|ed|ing)?\b/, Hyperbole: /\bhyperbole\b|\bexaggerat/, "Rhetorical question": /\brhetorical questions?\b/ };
   var DEVLABEL = { Simile: "a simile", Metaphor: "a metaphor", Imagery: "imagery", Personification: "personification", Juxtaposition: "juxtaposition", Repetition: "repetition", Hyperbole: "hyperbole", "Rhetorical question": "a rhetorical question" };
   var FRAMES = {
     Simile: { text: "Frost compares ___ to ___ to suggest ___. He also emphasizes ___.", checks: [[/compares\b.+\bto\b.+\bto suggest\b/, "compares ___ to ___ to suggest ___"], [/also emphasi[sz]es\b/, "He also emphasizes ___"]] },
@@ -906,12 +962,12 @@ button { font: inherit; color: inherit; }
   function noHe(t) { return !/\bshe (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks)\b/.test(low(t)); }
 
   function checksFor(def, text) {
-    var t = low(text), s = def.spot, c = [];
+    var t = canonText(text), s = def.spot, c = [];
     if (!t) return [];
     if (def.key === "t") {
       c.push([/^in the poem/.test(t), "Starts “In the poem,”"]);
       c.push([/\bfrost\b/.test(t) && /\bpresents\b/.test(t), "Frost presents …"]);
-      c.push([/through the use of\b/.test(t), "through the use of …"]);
+      c.push([/\b(through the use of|through|by using|using|with the use of|by means of|by the use of)\b/.test(t), "through the use of …"]);
       c.push([DEVRE[s.device].test(t), "Names device 1 (" + s.device.toLowerCase() + ")"]);
       c.push([nWords(text) >= 12, "Says the message, not just the device"]);
     } else if (def.key[0] === "e") {
@@ -937,8 +993,8 @@ button { font: inherit; color: inherit; }
       c.push([/\bfrost\b/.test(t), "Uses Frost's name"]);
       c.push([noHe(text), "Says “he” or “Frost” (not “she”)"]);
     } else if (def.key[0] === "r") {
-      c.push([/\bthe reader is\b.+\bbecause\b/.test(t), "The reader is ___ because ___"]);
-      c.push([/\bthey also (realize|realise|notice|understand)\b/.test(t), "They also realize / notice / understand ___"]);
+      c.push([/\bthe reader is\b.+\b(because|as|since|due to|when|after|by|while)\b/.test(t), "The reader is ___ because ___"]);
+      c.push([/\bthey also realize\b/.test(t), "They also realize / notice / understand ___"]);
       c.push([!/\bfeels? (good|bad)\b|\bis (good|bad)\b/.test(t), "A clear feeling word (not just “good” or “bad”)"]);
     } else if (def.key[0] === "l") {
       c.push([/^through the use of\b/.test(t), "Starts “Through the use of”"]);
@@ -1140,7 +1196,7 @@ button { font: inherit; color: inherit; }
   }
   /* The 15 sentence beginnings of the exam structure, in order */
   var SUR = "Frost", PRON = /He also/.test(FRAMES.Simile.text) ? "He" : "She";
-  function starterSlots() {
+  function strictSlots() {
     var n = SUR.toLowerCase(), say = "(states|writes|says|describes)";
     var one = [
       [/^the (adjective|noun|verb|adverb|pronoun)\b/, "The adjective / noun / verb “___” is …", "an"],
@@ -1153,7 +1209,80 @@ button { font: inherit; color: inherit; }
             [new RegExp("^" + n + ",? " + say + "\\b"), SUR + " states “___.”", "ev"]].concat(one)
       .concat([[new RegExp("^furthermore,? " + n + ",? " + say + "\\b"), "Furthermore, " + SUR + " states “___.”", "ev"]]).concat(one);
   }
-  function startKey(sent) { return low(String(sent).replace(/[“”]/g, '"')); }
+  /* ----- lenient matching (O. H., 2026-11-11): close to the structure = full marks ----- */
+  var SURL = SUR.toLowerCase();
+  var FULL = (function () { var m = new RegExp("(?:[A-Z][a-z.]+ )+" + SUR).exec(D.intro || ""); return m ? m[0] : SUR; })();
+  var KW = [SURL, "furthermore", "presents", "states", "writes", "describes", "adjective", "noun", "verb", "adverb", "pronoun", "emphasizes", "suggests",
+    "portrays", "demonstrates", "highlights", "reader", "readers", "realize", "realizes", "notice", "notices", "understand", "understands", "through", "because",
+    "compares", "repeats", "places", "exaggerates", "detailed", "description", "human", "quality", "simile", "metaphor", "imagery", "personification",
+    "juxtaposition", "repetition", "hyperbole", "rhetorical", "question", "poem", "moreover", "additionally", "firstly", "suggest", "emphasize"];
+  var KWSET = {}; KW.forEach(function (k) { KWSET[k] = 1; });
+  var NOFIX = { given: 1, gave: 1, place: 1, plays: 1, state: 1, stated: 1, stars: 1, stares: 1, words: 1, worse: 1, verse: 1, nouns: 1, verbs: 1, voice: 1, reads: 1,
+    ready: 1, reach: 1, readily: 1, poems: 1, poet: 1, poets: 1, these: 1, those: 1, there: 1, their: 1, where: 1, which: 1, while: 1, front: 1, frosty: 1, comes: 1,
+    compare: 1, simple: 1, simply: 1, smile: 1, smiles: 1, image: 1, images: 1, imagine: 1, quantity: 1, humane: 1, highlight: 1, notes: 1, nose: 1, poe: 1, other: 1, thomas: 0 };
+  function lev(a, b) {
+    var m = a.length, n = b.length, d = [], i, j; for (i = 0; i <= m; i++) d.push([i]); for (j = 1; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  function fixWord(w) {
+    if (w.length < 4 || KWSET[w] || NOFIX[w]) return w;
+    var lim = w.length >= 8 ? 2 : 1, best = null;
+    for (var q = 0; q < KW.length; q++) if (KW[q] !== SURL && (KW[q].indexOf(w) === 0 || w.indexOf(KW[q]) === 0)) return w;   /* an inflection, not a typo */
+    for (var i = 0; i < KW.length && !best; i++) { var k = KW[i]; if (k.charAt(0) === w.charAt(0) && Math.abs(k.length - w.length) <= lim && lev(w, k) <= lim) best = k; }
+    return best || w;
+  }
+  function fixTypos(t) { return t.split(/("[^"]*")/).map(function (seg, i) { return i % 2 ? seg : seg.replace(/[a-z']{4,}/g, fixWord); }).join(""); }
+  function esc(x) { return x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  var EVV = "(writes|says|describes|mentions|notes|declares|explains|claims|tells|adds|exclaims|wrote|stated|said|cries|calls|uses the (?:words?|phrase|lines?|quote|quotation)|includes the (?:words?|phrase|lines?))";
+  var FV = "(compares|repeats|gives|places|exaggerates|asks|uses|contrasts|juxtaposes|puts|positions|creates|personifies|employs|likens|questions|overstates|lists|describes|builds)";
+  var AV = "(emphasi[sz]es|suggests|portrays|demonstrates|highlights|shows|stresses|underlines|implies|reveals|conveys|indicates|illustrates|points out|depicts|explores|expresses|makes clear|focuses on|draws attention to|presents)";
+  function canon(t) {
+    var n = SURL;
+    t = fixTypos(t);
+    t = t.replace(new RegExp("\\b" + esc(low(FULL)) + "\\b", "g"), n).replace(/\bthe (poet|writer|author|poetess)\b/g, n);
+    t = t.replace(/^(firstly|first of all|first|to begin with|to start with|initially|for example|for instance|in this (?:quote|quotation|line|stanza)|in (?:the )?(?:first|second|third|fourth|last|final|opening|next) (?:line|lines|stanza)|in (?:line|stanza) \w+)\b,?\s*/, "")
+         .replace(/^(moreover|in addition|additionally|secondly|second|besides|also|on top of (?:this|that)|what is more|another device is)\b,?\s*/, "furthermore, ")
+         .replace(/^(thus|hence|therefore|consequently|as a result|overall|in conclusion|to conclude|to sum up|so|in this way)\b,?\s*/, "");
+    t = t.replace(/^in (?:this|her|his|that|the) poem\b,?\s*(?:"[^"]*",?\s*)?/, "in the poem, ")
+         .replace(new RegExp("^in (?!the poem\\b)[^,]{1,60},?\\s+(?=" + n + "\\b)"), "in the poem, ");
+    t = t.replace(new RegExp("^((?:furthermore,? |in the poem,? )?)(he|she)\\b"), function (m, a) { return a + n; });
+    t = t.replace(new RegExp("^(in the poem,? " + n + " )(shows|portrays|explores|conveys|depicts|demonstrates|illustrates|reveals|expresses|describes|highlights|emphasi[sz]es|suggests|presented)\\b"), "$1presents");
+    t = t.replace(new RegExp("^((?:furthermore,? )?" + n + ",? )" + EVV + "\\b"), "$1states");
+    t = t.replace(/^the (key |important |main )?(word|phrase|term)\b/, "the word");
+    t = t.replace(/^(?:the )?(?:readers?|audience|people reading)(?: also)? (?:is|are|feels?|may feel|might feel|would feel|will feel|can feel|could feel|becomes?|gets?|is left|starts to feel|begins to feel|ends up)\b/, "the reader is")
+         .replace(/^(?:this|it|these words?|that|the (?:word|line|quote|quotation|phrase|device)) (?:makes?|leaves?|causes?) (?:the )?(?:readers?|audience|us)(?: to)?(?: feel| become| be)?\b/, "the reader is")
+         .replace(/^(?:we|as readers,? we|as a reader,? i) (?:feel|are|become)\b/, "the reader is");
+    t = t.replace(/^(?:they|the readers?|readers|the audience|we|he or she|people)(?: also)? (?:reali[sz]es?|understands?|notices?|sees?|learns?|recogni[sz]es?|can see|can tell|becomes? aware|starts? to realize|begins? to understand|discovers?|knows?|thinks?|feels? that)\b/, "they also realize");
+    t = t.replace(/^(?:through the use of|through using|through|by using|by the use of|with the use of|by means of|by employing|using)\b/, "through the use of");
+    t = t.replace(new RegExp("^(through the use of [^,]{1,60},? )(he|she)\\b"), "$1" + n)
+         .replace(new RegExp("^(through the use of [^,]{1,60},? " + n + " )(shows|portrays|explores|conveys|depicts|demonstrates|illustrates|reveals|expresses|highlights|emphasi[sz]es|suggests)\\b"), "$1presents");
+    return t;
+  }
+  function startKey(sent) { return canon(low(String(sent).replace(/[“”]/g, '"'))); }
+  function strictKey(sent) { return low(String(sent).replace(/[“”]/g, '"')); }
+  function canonText(text) { return sentences(String(text || "")).map(startKey).join(" "); }
+  window.__canon = canonText;
+  /* The 15 sentence beginnings, matched on the canonical form (the exact wording is kept in strictSlots for the "close enough" note) */
+  function starterSlots() {
+    var T = strictSlots(), n = SURL;
+    var one = [
+      [/^the (adjective|noun|verb|adverb|pronoun|word)\b/, T[2][1], "an"],
+      [new RegExp("^" + n + " (also )?" + FV + "\\b"), T[3][1], "choice"],
+      [new RegExp("^" + n + " (also )?" + AV + "\\b"), T[4][1], "choice"],
+      [/^the reader is\b/, T[5][1], "reader"],
+      [/^they also realize\b/, T[6][1], "reader"],
+      [/^through the use of\b/, T[7][1], "idea"]];
+    return [[new RegExp("^in the poem,? " + n + " presents\\b"), T[0][1], "idea"],
+            [new RegExp("^" + n + ",? (states|writes|says|describes)\\b"), T[1][1], "ev"]].concat(one)
+      .concat([[new RegExp("^furthermore,? " + n + ",? (states|writes|says|describes)\\b"), T[8][1], "ev"]]).concat(one);
+  }
+  var STRICTT = null;
+  function strictOk(j, raw) { STRICTT = STRICTT || strictSlots(); return !STRICTT[j] || STRICTT[j][0].test(strictKey(raw)); }
+  var TOSUG = /\bto (suggest|show|imply|emphasi[sz]e|highlight|present|indicate|reveal|portray|convey|express|demonstrate|illustrate|make|create)\b|\b(suggesting|showing|implying|emphasi[sz]ing|highlighting|conveying|which suggests|which shows)\b/;
+  function frameOk(k) { return FRAMEALL.some(function (r) { return r.test(k); }) || (new RegExp("^" + SURL + " (also )?" + FV + "\\b").test(k) && TOSUG.test(k)); }
+  function wordSent(k) { return /^the (adjective|noun|verb|adverb|pronoun|word) "[^"]+"/.test(k); }
+  function readerSent(k) { return /^the reader is\b.+\b(because|as|since|due to|when|after|by|while)\b/.test(k); }
   /* Align the student's sentences with the 15 beginnings (longest common subsequence), so one missing or extra sentence does not turn everything red */
   function alignStarts(S_, T) {
     var m = S_.length, n = T.length, L = [], i, j;
@@ -1200,20 +1329,21 @@ button { font: inherit; color: inherit; }
     }
     pairs.forEach(function (p) {
       gap(p[0], p[1]);
-      var mt = T[p[1]][0].exec(startKey(S_[p[0]]));
-      sentNode(S_[p[0]], T[p[1]][2], mt[0].split(/\s+/).length, "");
+      var mt = T[p[1]][0].exec(startKey(S_[p[0]])), exact = strictOk(p[1], S_[p[0]]);
+      sentNode(S_[p[0]], T[p[1]][2], exact ? mt[0].split(/\s+/).length : 2, "");
+      if (!exact) { var cl = document.createElement("span"); cl.className = "st-close"; cl.textContent = "≈ close enough, full marks · exam wording: " + T[p[1]][1]; el.appendChild(cl); el.appendChild(document.createTextNode(" ")); }
       pi = p[0] + 1; pj = p[1] + 1;
     });
     gap(S_.length, T.length);
     return [ok, T.length, wrongPron];
   }
   function catOf(sent) {
-    var t = low(sent.replace(/[“”]/g, '"')).replace(/^furthermore,?\s*/, "");
+    var t = startKey(sent).replace(/^furthermore,?\s*/, "");
     if (/^(in the poem|through the use of)\b/.test(t)) return "idea";
-    if (/^the (adjective|noun|verb|adverb|pronoun)\b/.test(t)) return "an";
-    if (/\bthe reader is\b|^they also\b/.test(t)) return "reader";
+    if (/^the (adjective|noun|verb|adverb|pronoun|word)\b/.test(t)) return "an";
+    if (/\bthe reader is\b|^they also realize\b/.test(t)) return "reader";
     if (/"/.test(t) && /\b(states|writes|says|describes)\b/.test(t) && !FRAMEALL.some(function (r) { return r.test(t); })) return "ev";
-    if (FRAMEALL.some(function (r) { return r.test(t); }) || /^(s?he) (also )?(emphasi[sz]es|suggests|portrays|demonstrates|highlights)\b/.test(t)) return "choice";
+    if (frameOk(t) || new RegExp("^" + SURL + " (also )?" + AV + "\\b").test(t)) return "choice";
     return "";
   }
   function renderCCText(el, text) {
@@ -1319,7 +1449,8 @@ button { font: inherit; color: inherit; }
       $("exam-intro").textContent = D.intro;
       if (!$("exam-img").src) $("exam-img").src = $("plain-img").src;
       if ($("exam-text").value !== (ex.text || "")) $("exam-text").value = ex.text || "";
-      [0, 1, 2, 3].forEach(function (i) { var v = (ex.plan || [])[i] || ""; if ($("plan-" + i).value !== v) $("plan-" + i).value = v; });
+      if (!ex.plan || !ex.plan.p) ex.plan = { p: [null, null], d: ["", ""] };
+      renderPlan();
       tick(); lastPts = null; liveUpdate();
     }
     if (ex && ex.done) renderExamResult();
@@ -1333,13 +1464,85 @@ button { font: inherit; color: inherit; }
     $("exam-timer").classList.toggle("low", left <= 300);
     var ng = $("exam-nudge"), txt = "";
     if (left <= 300) { txt = "⏰ 5 minutes left: finish your link sentence."; if (!S.exam.n5) { S.exam.n5 = 1; save(); bigPop("5 minutes left", "Finish your link sentence. Is every idea specific?", "time"); } }
-    else if (left <= 1200 && !/\bfurthermore\b/.test(low(S.exam.text || ""))) { txt = "⏰ Half of your time has gone: start device 2 with “Furthermore,” now."; if (!S.exam.n20) { S.exam.n20 = 1; save(); bigPop("Half your time has gone", "Start device 2 now with “Furthermore,”", "time"); } }
+    else if (left <= 1200 && !DEV2.test(S.exam.text || "")) { txt = "⏰ Half of your time has gone: start device 2 with “Furthermore,” now."; if (!S.exam.n20) { S.exam.n20 = 1; save(); bigPop("Half your time has gone", "Start device 2 now with “Furthermore,”", "time"); } }
     ng.textContent = txt; ng.hidden = !txt;
     if (left <= 0 && S.tab === 4) finishExam(true);
   }
   setInterval(tick, 1000);
-  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: ["", "", "", ""] }; save(); renderMain(); window.scrollTo(0, 0); $("plan-0").focus({ preventScroll: true }); };
-  [0, 1, 2, 3].forEach(function (i) { $("plan-" + i).addEventListener("input", function () { if (!S.exam) return; S.exam.plan = S.exam.plan || ["", "", "", ""]; S.exam.plan[i] = $("plan-" + i).value; save(); }); });
+  $("btn-exam-start").onclick = function () { S.exam = { started: Date.now(), text: "", done: false, plan: { p: [null, null], d: ["", ""] } }; picId = null; save(); renderMain(); window.scrollTo(0, 0); };
+  /* ----- plan by tapping the device phrases on the poem (O. H., 2026-11-11): no typing ----- */
+  function planOf() { var P = S.exam.plan; if (!P || !P.p) P = S.exam.plan = { p: [null, null], d: ["", ""] }; return P; }
+  function svgOf(s) { var NS = "http://www.w3.org/2000/svg", g = document.createElementNS(NS, "svg"); g.setAttribute("viewBox", "0 0 160 100"); g.setAttribute("class", "pic"); g.setAttribute("aria-hidden", "true"); g.innerHTML = (PICS[s.id] || [""])[0]; return g; }
+  function renderPlan(popId) {
+    var P = planOf(), box = $("plan-rows"), poem = $("exam-poem"); box.textContent = "";
+    poem.querySelectorAll(".pk,.pkn").forEach(function (x) { x.remove(); });
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]]; if (!s) return;
+      rectsOf(s).forEach(function (r, ri) {
+        var m = document.createElement("div"); m.className = "pk" + (i ? " g2" : "") + (s.id === popId ? " pop" : "");
+        m.style.left = (r[0] * 100) + "%"; m.style.top = (r[1] * 100) + "%"; m.style.width = (r[2] * 100) + "%"; m.style.height = (r[3] * 100) + "%"; poem.appendChild(m);
+        if (!ri) { var b = document.createElement("div"); b.className = "pkn" + (i ? " g2" : ""); b.textContent = i + 1; b.style.left = (r[0] * 100) + "%"; b.style.top = (r[1] * 100) + "%"; poem.appendChild(b); }
+      });
+    });
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]], row = document.createElement("div"); row.className = "prow g" + (i + 1);
+      var h = document.createElement("b"); h.textContent = "Device " + (i + 1) + (s && P.d[i] ? ": " + P.d[i] : "");
+      var q = document.createElement("span"); q.className = "pq" + (s ? "" : " none");
+      q.textContent = s ? "“" + s.quote + "”" : (i === 0 || P.p[0] ? "Tap a device in the poem below." : "Pick device 1 first.");
+      row.appendChild(h); row.appendChild(q);
+      if (s) {
+        if (PICS[s.id]) { var pp = document.createElement("div"); pp.className = "ppic"; pp.appendChild(svgOf(s)); row.appendChild(pp); }
+        var acts = document.createElement("div"); acts.className = "pacts";
+        var nm = document.createElement("button"); nm.type = "button"; nm.className = "pchip" + (P.d[i] ? " dev" : ""); nm.textContent = P.d[i] ? "Change device" : "Name the device";
+        nm.onclick = function () { openTray(i); };
+        var cl = document.createElement("button"); cl.type = "button"; cl.className = "pchip"; cl.textContent = "Remove";
+        cl.onclick = function () { P.p[i] = null; P.d[i] = ""; save(); renderPlan(); picUpdateNow(); };
+        acts.appendChild(nm); acts.appendChild(cl); row.appendChild(acts);
+      }
+      box.appendChild(row);
+    });
+  }
+  $("exam-poem").addEventListener("click", function (e) {
+    if (!S || !S.exam || !S.exam.started || S.exam.done) return;
+    var img = $("exam-img"), r = img.getBoundingClientRect(); if (!r.width) return;
+    var fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height, padx = 0.012, pady = 0.004, hit = null, P = planOf();
+    SPOTS.forEach(function (s) { rectsOf(s).forEach(function (q) { if (!hit && fx >= q[0] - padx && fx <= q[0] + q[2] + padx && fy >= q[1] - pady && fy <= q[1] + q[3] + pady) hit = s; }); });
+    if (!hit) { toast("No device there. Look for a comparison, a repeated word, a vivid picture, a human quality, an exaggeration or two opposites side by side."); return; }
+    var i = P.p.indexOf(hit.id);
+    if (i >= 0) { P.p[i] = null; P.d[i] = ""; save(); renderPlan(); picUpdateNow(); toast("Device " + (i + 1) + " removed."); return; }
+    i = !P.p[0] ? 0 : (!P.p[1] ? 1 : -1);
+    if (i < 0) { toast("You already picked two devices. Tap one of them again to remove it."); return; }
+    P.p[i] = hit.id; P.d[i] = ""; save(); renderPlan(hit.id); picUpdateNow(); openTray(i);
+  });
+  function openTray(i) {
+    var P = planOf(), s = BY[P.p[i]]; if (!s) return;
+    $("tray").className = "tray g" + (i + 1);
+    $("tray-h").textContent = "Device " + (i + 1);
+    $("tray-q").textContent = "“" + s.quote + "”";
+    var box = $("tray-opts"); box.textContent = "";
+    Object.keys(DEVRE).forEach(function (d) {
+      var b = document.createElement("button"); b.type = "button"; b.textContent = d; if (P.d[i] === d) b.className = "on";
+      b.onclick = function () { P.d[i] = d; closeTray(); if (i === 0 && !P.p[1]) toast("Now device 2: tap another device in the poem."); save(); renderPlan(); };
+      box.appendChild(b);
+    });
+    $("tray-back").hidden = false; placePic();
+  }
+  function closeTray() { $("tray-back").hidden = true; placePic(); }
+  $("tray-x").onclick = function () { closeTray(); renderPlan(); };
+  $("tray-back").addEventListener("click", function (e) { if (e.target === $("tray-back")) closeTray(); });
+  /* after the exam: was each device named correctly? Always show the right answer. */
+  function planCheck() {
+    var P = S.exam && S.exam.plan, out = [];
+    if (!P || !P.p) return out;
+    [0, 1].forEach(function (i) {
+      var s = P.p[i] && BY[P.p[i]], lab = "Device " + (i + 1);
+      if (!s) { out.push([false, lab + ": not picked", "Plan before you write: tap a device in the poem and name it."]); return; }
+      var ok = P.d[i] === s.device;
+      out.push([ok, lab + ": “" + s.quote + "”", ok ? "✓ Correct: " + s.device.toLowerCase() + ". " + s.dWhy
+        : (P.d[i] ? "✗ You named it " + P.d[i].toLowerCase() + ". The correct answer: " : "✗ Not named. The correct answer: ") + s.device.toLowerCase() + ". " + s.dWhy]);
+    });
+    return out;
+  }
   $("exam-text").addEventListener("input", function (e) { if (!S.exam) return; S.exam.text = $("exam-text").value; save(); $("exam-wc").textContent = nWords(S.exam.text) + " words"; liveSoon(e); });
   ["keyup", "click", "focus"].forEach(function (ev) { $("exam-text").addEventListener(ev, liveSoon); });
   $("btn-exam-fix").onclick = function () { var ex = S.exam; if (!ex) return; ex.done = false; ex.fix = true; save(); renderMain(); window.scrollTo(0, 0); $("exam-text").focus({ preventScroll: true }); };
@@ -1350,21 +1553,21 @@ button { font: inherit; color: inherit; }
   function vagueWords(text) { return low(unq(text)).match(VAGUE) || []; }
   function wrongPronouns(text) { return low(unq(text)).match(new RegExp("\\b" + (PRON === "He" ? "she" : "he") + "\\b(?=\\s+(?:also\\s+)?(?:emphasi[sz]es|suggests|portrays|demonstrates|highlights|compares|repeats|gives|places|exaggerates|asks|uses|presents|states|writes|shows|describes|creates)\\b)", "g")) || []; }
   function examPoints(text) {
-    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T);
-    var t = low(text), tq = low(String(text).replace(/[“”]/g, '"')), qs = quotes(text), big = nWords(text) >= 30;
+    var S_ = sentences(text), T = starterSlots(), pairs = alignStarts(S_, T), keys = S_.map(startKey);
+    var t = keys.join(" "), tq = t, qs = quotes(text), big = nWords(text) >= 30;
     function n(re) { return (tq.match(re) || []).length; }
     var devs = Object.keys(DEVRE).filter(function (k) { return DEVRE[k].test(t); }).length;
-    var frames = S_.filter(function (x) { var y = low(x); return FRAMEALL.some(function (r) { return r.test(y); }); }).length;
+    var frames = keys.filter(frameOk).length;
     var beg = pairs.length * 4;
-    var mentions = n(/\b(simile|metaphor|imagery|personification|juxtaposition|repetition|hyperbole|rhetorical question)\b/g);
+    var mentions = n(/\b(similes?|metaphors?|imagery|personification|juxtaposition|repetition|hyperbole|exaggeration|contrast|rhetorical question)\b/g);
     var pDev = devs >= 2 || mentions >= 3 ? 5 : (devs === 1 ? 2 : 0), pQ = (qs.length >= 1 ? 3 : 0) + (qs.length >= 2 ? 3 : 0);
     var pShort = qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }) ? 2 : 0;
-    var pWord = Math.min(2, n(/\bthe (adjective|noun|verb|adverb|pronoun) "[^"]+"\s*,?\s*is\b/g)) * 3;
-    var pFrame = Math.min(2, frames) * 3, pReader = Math.min(2, n(/\bthe reader is\b[^.]*\bbecause\b/g)) * 2;
-    var pFur = /\bfurthermore\b/.test(t) ? 2 : 0;
+    var pWord = Math.min(2, keys.filter(wordSent).length) * 3;
+    var pFrame = Math.min(2, frames) * 3, pReader = Math.min(2, keys.filter(readerSent).length) * 2;
+    var pFur = keys.some(function (k) { return /^furthermore\b/.test(k); }) ? 2 : 0;
     var pPron = big && t.indexOf(SUR.toLowerCase()) >= 0 && !wrongPronouns(text).length ? 3 : 0;
     var pVague = big && !vagueWords(text).length ? 3 : 0;
-    var pTopic = S_.length && T[0][0].test(startKey(S_[0])) && nWords(S_[0]) >= 12 ? 3 : 0;
+    var pTopic = S_.length && T[0][0].test(keys[0]) && nWords(S_[0]) >= 12 ? 3 : 0;
     var parts = [["Sentence beginnings (" + pairs.length + " of 15)", beg, 60], ["Evidence: two devices named, short quotations in quotation marks", pDev + pQ + pShort, 13],
                  ["Analysis: word class, device frames, reader sentences", pWord + pFrame + pReader, 16], ["Precision and language: specific message, no vague words, “Furthermore,” name and pronoun", pTopic + pVague + pFur + pPron, 11]];
     var pts = parts.reduce(function (a, p) { return a + p[1]; }, 0);
@@ -1582,42 +1785,57 @@ button { font: inherit; color: inherit; }
   var PICS = (function () { try { return JSON.parse(document.getElementById("pic-data").textContent); } catch (e) { return {}; } })();
   var picId = null, picHidden = {};
   window.__picLog = [];
+  var DEV2 = /\b(furthermore|moreover|in addition|additionally|secondly)\b/i;
+  /* which device do these words in quotation marks belong to? Single words count too. */
   function picSpotFor(p) {
+    var np = cn(p), pw = cw(p), best = null, P = S && S.exam && S.exam.plan && S.exam.plan.p ? S.exam.plan.p : [];
+    if (!np.trim()) return null;
+    var cands = SPOTS.filter(function (s) { return PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0); });
+    if (cands.length) return cands.filter(function (s) { return P.indexOf(s.id) >= 0; })[0] || cands[0];
     if (nWords(p) < 2) return null;
-    var np = cn(p), pw = cw(p), best = null;
-    SPOTS.forEach(function (s) { if (!best && PICS[s.id] && (cn(s.quote).indexOf(np) >= 0 || np.indexOf(cn(s.quote)) >= 0)) best = s; });
-    if (best) return best;
     SPOTS.forEach(function (s) {
       if (best || !PICS[s.id]) return;
       if ([s.quote].concat(s.ctx || []).map(cn).some(function (c) { return c.indexOf(np) >= 0; }) && overlap(pw, cw(s.quote))) best = s;
     });
     return best;
   }
+  var picLast = { before: "", first: 0 };
+  function picUpdateNow() { picUpdate(picLast.before, picLast.first); }
   function picUpdate(before, firstLen) {
-    var box = $("exam-pic");
-    if (!String(before).trim()) { picId = null; popSeen = {}; placePic(); return; }
-    var t = before.slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
-    while ((m = re.exec(t))) segs.push(m[1]);
-    var s = null; for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
-    if (s) showPic(s);   /* no match: keep the last picture on screen */
+    picLast = { before: before, first: firstLen };
+    if (!String(before).trim()) popSeen = {};
+    var P = S && S.exam && S.exam.plan && S.exam.plan.p ? S.exam.plan.p : [null, null];
+    var t = String(before).slice(firstLen), segs = [], re = /[“"]([^”"]*)(?:[”"]|$)/g, m;
+    var fur = DEV2.exec(t), part = fur ? t.slice(fur.index) : t;
+    while ((m = re.exec(part))) segs.push(m[1]);
+    var s = null;
+    for (var i = segs.length - 1; i >= 0 && !s; i--) s = picSpotFor(segs[i]);
+    /* nothing quoted yet for this device: show the planned device (device 2 once "Furthermore" is written) */
+    if (!s) { var pid = fur ? P[1] : P[0]; s = pid && PICS[pid] ? BY[pid] : null; }
+    if (!s && !fur && picId) { placePic(); return; }   /* the device 1 picture stays until device 2 starts */
+    if (!s) { if (!String(before).trim()) picId = null; placePic(); return; }
+    showPic(s);
   }
   function showPic(s) {
-    var box = $("exam-pic"); if (picId === s.id) return;
+    if (picId === s.id) { placePic(); return; }
     picId = s.id; window.__picLog.push(s.id);
-    var P = PICS[s.id]; box.querySelector("svg").innerHTML = P[0]; $("pic-see").textContent = P[1]; $("pic-mean").textContent = P[2];
+    var P = PICS[s.id], box = $("exam-pic"); box.querySelector("svg").innerHTML = P[0];
+    var sp = $("side-pic"); sp.querySelector("svg").innerHTML = P[0];
+    sp.classList.remove("empty", "flash"); void sp.offsetWidth; sp.classList.add("flash");
     placePic(); box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
   }
-  /* the picture floats right under the line being written; above it when the keyboard leaves no room below */
+  /* the picture sits on the right of the writing box; if the box is out of view, it docks at the bottom of the screen */
   function placePic() {
-    var box = $("exam-pic"), ta = $("exam-text");
-    var show = !!(picId && !picHidden[picId] && document.activeElement === ta && S && S.exam && S.exam.started && !S.exam.done);
+    var box = $("exam-pic"), ta = $("exam-text"), sp = $("side-pic");
+    var live = !!(S && S.exam && S.exam.started && !S.exam.done && S.tab === 4 && !S.report);
+    if (!picId || !live) sp.classList.add("empty");
+    var show = !!(picId && live && $("tray-back").hidden && String(S.exam.text || "").trim());   /* docks only once writing has started */
+    if (show) {
+      var r = ta.getBoundingClientRect(), vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      show = !(r.bottom > 80 && r.top < vh - 60);
+    }
     box.hidden = !show; if (!show) return;
-    var vv = window.visualViewport, vTop = vv ? vv.offsetTop : 0, vH = vv ? vv.height : window.innerHeight;
-    var tr = ta.getBoundingClientRect(), c = caretBox(ta), h = box.offsetHeight, top = c.bottom + 10, up = false;
-    box.style.left = Math.max(8, tr.left) + "px"; box.style.width = Math.min(tr.width, window.innerWidth - 16) + "px";
-    if (top + h > vTop + vH - 6) { top = c.top - h - 10; up = true; }
-    if (top < vTop + 6) top = vTop + 6;
-    box.style.top = Math.round(top) + "px"; box.classList.toggle("up", up);
+    box.classList.add("dock"); box.classList.remove("up"); box.style.top = ""; box.style.width = "";
   }
   function placeBoth() { placePic(); placePop(); }
   window.addEventListener("scroll", placeBoth, { passive: true }); window.addEventListener("resize", placeBoth);
@@ -1678,24 +1896,26 @@ button { font: inherit; color: inherit; }
   $("btn-exam-finish").onclick = function () { finishExam(false); };
   $("btn-exam-again").onclick = function () { S.exam = null; save(); $("exam-text").value = ""; renderMain(); window.scrollTo(0, 0); };
   function examChecks(text) {
-    var t = low(text), tq = low(String(text).replace(/[“”]/g, '"')), qs = quotes(text), c = [];
+    var keys = sentences(text).map(startKey), t = keys.join(" "), qs = quotes(text), c = [], T = starterSlots();
     var devs = Object.keys(DEVRE).filter(function (k) { return DEVRE[k].test(t); });
-    var frames = sentences(text).filter(function (x) { var y = low(x); return FRAMEALL.some(function (r) { return r.test(y); }); }).length;
-    function n(re) { return (tq.match(re) || []).length; }
-    c.push([/^in the poem\b/.test(t) && /\bfrost presents\b/.test(t) && /through the use of\b/.test(t), "② Topic sentence: “In the poem, Frost presents … through the use of …”"]);
-    c.push([devs.length >= 2 || n(/\b(simile|metaphor|imagery|personification|juxtaposition|repetition|hyperbole|rhetorical question)\b/g) >= 3, "Names the device for each of your two examples"]);
+    var frames = keys.filter(frameOk).length;
+    function n(re) { return (t.match(re) || []).length; }
+    var USEOF = /\b(through the use of|through|by using|using|with the use of|by means of|by the use of)\b/;
+    c.push([keys.length > 0 && T[0][0].test(keys[0]) && USEOF.test(keys[0]), "② Topic sentence: “In the poem, " + SUR + " presents … through the use of …”"]);
+    c.push([devs.length >= 2 || n(/\b(similes?|metaphors?|imagery|personification|juxtaposition|repetition|hyperbole|exaggeration|contrast|rhetorical question)\b/g) >= 3, "Names the device for each of your two examples"]);
     c.push([qs.length >= 2, "③ A quotation for each device, in quotation marks"]);
     c.push([qs.length > 0 && qs.every(function (q) { return nWords(q) <= 15; }), "Short quotations (15 words or fewer)"]);
-    c.push([n(/\bthe (adjective|noun|verb|adverb|pronoun) "/g) >= 2, "④ “The adjective / noun / verb “___” is …” for each device"]);
+    c.push([keys.filter(wordSent).length >= 2, "④ “The adjective / noun / verb “___” is …” for each device"]);
     c.push([frames >= 2, "⑤ The device frame for each device (e.g. “compares ___ to ___ to suggest ___”)"]);
-    c.push([n(/\bthe reader is\b[^.]*\bbecause\b/g) >= 2 && n(/\bthey also (realize|realise|notice|understand)\b/g) >= 2, "⑥ “The reader is ___ because ___. They also realize ___” for each device"]);
-    c.push([n(/\bthrough the use of\b/g) >= 3, "⑦ A link sentence for each device: “Through the use of …, Frost presents …”"]);
-    c.push([/\bfurthermore\b/.test(t), "⑧ Device 2 starts with “Furthermore,”"]);
-    c.push([noHe(text) && /\bfrost\b/.test(t), "Uses the poet's name and the right pronoun"]);
+    c.push([keys.filter(readerSent).length >= 2 && keys.filter(function (k) { return /^they also realize\b/.test(k); }).length >= 2, "⑥ “The reader is ___ because ___. They also realize ___” for each device"]);
+    c.push([keys.filter(function (k) { return /^through the use of\b/.test(k); }).length + (keys.length && USEOF.test(keys[0]) ? 1 : 0) >= 3, "⑦ A link sentence for each device: “Through the use of …, " + SUR + " presents …”"]);
+    c.push([keys.some(function (k) { return /^furthermore\b/.test(k); }), "⑧ Device 2 starts with “Furthermore,”"]);
+    c.push([noHe(text) && t.indexOf(SURL) >= 0, "Uses the poet's name and the right pronoun"]);
     return c;
   }
   function finishExam(timeUp) {
     var ex = S.exam; if (!ex || ex.done) return;
+    clearTimeout(popT1); clearTimeout(popT2); $("big-pop").hidden = true; $("exam-pic").hidden = true; $("tray-back").hidden = true;
     ex.text = $("exam-text").value || ex.text || "";
     ex.used = Math.min(EXAM_SEC, (Date.now() - ex.started) / 1000);
     if (ex.fix) ex.used = ex.usedExam || 0; else ex.usedExam = ex.used;
@@ -1716,6 +1936,9 @@ button { font: inherit; color: inherit; }
     c.forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "ok" : "no"; li.textContent = x[1]; ul.appendChild(li); });
     var qs = quotes(ex.text), unknown = qs.filter(function (q) { return !SPOTS.some(function (s) { return inPoem(q, s); }); });
     $("exam-qnote").textContent = unknown.length ? "Check these quotations against the poem yourself (the app only knows the lines with highlighted devices): " + unknown.map(function (q) { return "“" + q + "”"; }).join(", ") : "";
+    var pc = $("plan-check"); pc.textContent = "";
+    planCheck().forEach(function (x) { var li = document.createElement("li"); li.className = x[0] ? "" : "no"; var b = document.createElement("b"); b.textContent = x[1]; var p = document.createElement("div"); p.className = "pw"; p.textContent = x[2]; li.appendChild(b); li.appendChild(p); pc.appendChild(li); });
+    $("plan-check-card").hidden = !pc.firstChild;
     legendCC($("exam-legend"));
     var stc = renderExamCC($("exam-cc"), ex.text || "");
     $("exam-starts").textContent = "Sentence beginnings: " + stc[0] + " of " + stc[1] + " correct. Bold = correct beginning. Red = wrong or missing beginning, with the words you should start with."
@@ -1739,7 +1962,7 @@ button { font: inherit; color: inherit; }
     $("r-stars").textContent = "★".repeat(f);
     var ex = [];
     ex.push("Spot it: " + spottedCount() + " of " + SPOTS.length + " devices spotted without highlights" + (S.spotMiss ? " (" + S.spotMiss + " taps on empty words)" : "") + ".");
-    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words.");
+    if (S.exam && S.exam.done) ex.push("Exam practice: structure score " + S.exam.pts + " / 100" + (S.exam.fix ? " (first try " + S.exam.firstPts + ")" : "") + ", time used " + mmss(S.exam.used) + ", " + S.exam.words + " words." + (function () { var pcs = planCheck(); return pcs.length ? " Plan: " + pcs.map(function (x, i) { return "device " + (i + 1) + (x[0] ? " ✓" : " ✗"); }).join(", ") + "." : ""; })());
     $("r-extra").textContent = ex.join(" ");
     var rev = SPOTS.filter(function (s) { return S.spots[s.id].misses; });
     $("r-revise-block").hidden = !rev.length;
