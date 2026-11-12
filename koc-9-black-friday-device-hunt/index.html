@@ -564,6 +564,42 @@ button { font: inherit; color: inherit; }
 @keyframes caJolt { 0% { transform: none; } 40% { transform: rotate(5deg); } 100% { transform: none; } }
 @keyframes caFall { 0% { transform: none; } 100% { transform: translate(-4px, 0) rotate(-82deg); } }
 
+
+/* ===== animation dock in the top bar (2026-11-12) ===== */
+.ca-dock { grid-column: 1 / -1; min-width: 0; }
+.ca-dock:empty { display: none; }
+.ca-dock .ca-panel { margin: 4px 0 0; padding: 6px 8px; display: grid; grid-template-columns: 216px minmax(0, 1fr); grid-template-areas: "stage head" "stage cap" "stage note"; grid-template-rows: auto 1fr auto; gap: 2px 12px; align-items: start; box-shadow: none; }
+.ca-dock .ca-panel[hidden] { display: none; }
+.ca-dock .ca-stage { grid-area: stage; width: 216px; margin: 0; }
+.ca-dock .ca-stage svg { display: block; width: 100%; height: auto; }
+.ca-dock .ca-head { grid-area: head; margin: 0; }
+.ca-dock .ca-cap { grid-area: cap; margin: 2px 0 0; text-align: left; }
+.ca-dock .ca-note { grid-area: note; margin: 0; }
+.ca-dock .ca-note:empty { display: none; }
+@media (max-width: 520px) {
+  .ca-dock .ca-panel { grid-template-columns: 150px minmax(0, 1fr); gap: 2px 8px; padding: 5px 6px; }
+  .ca-dock .ca-stage { width: 150px; }
+  .ca-dock .ca-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .ca-dock .ca-lab { font-size: .78rem; }
+  .ca-dock .ca-btn { font-size: .76rem; padding: 3px 8px; min-height: 30px; }
+  .ca-dock .ca-cap { font-size: .8rem; line-height: 1.25; }
+}
+/* pop-ups open below the bar while it shows a picture, so the picture stays visible and nothing is covered */
+.ca-docked .sheet-back, .ca-docked .tray-back { top: var(--dock-h, 0px); }
+.ca-docked .sheet-back .sheet, .ca-docked .tray-back .tray { max-height: calc(100vh - var(--dock-h, 0px) - 8px); max-height: calc(100dvh - var(--dock-h, 0px) - 8px); }
+
+/* Koç 9: the exam bar is fixed; the picture sits under the timer row inside it */
+.exam-bar .ca-dock .ca-panel { margin-top: 2px; }
+
+/* send to my teacher: copy first, then WhatsApp */
+.send-step { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.send-n { font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #11753A; min-width: 52px; }
+.btn-copy-big { font-size: 1.08rem; padding: 12px 18px; flex: 1 1 220px; }
+.send-step .btn-wa { flex: 1 1 220px; }
+.send-ok { font-weight: 800; color: #11753A; background: #DFF5E6; border-radius: 999px; padding: 4px 12px; }
+.send-step.locked .btn-wa, .btn-wa:disabled { background: #B9C2BC; box-shadow: none; color: #FFFFFF; cursor: not-allowed; }
+.send-howto { margin: 0; font-weight: 700; }
+#send-preview { width: 100%; box-sizing: border-box; font: .82rem/1.4 var(--f-body); background: #FFFFFF; border: 1px solid var(--rule, #ccc); border-radius: 8px; padding: 8px; margin-top: 6px; resize: vertical; }
 </style>
 </head>
 <body>
@@ -586,7 +622,7 @@ button { font: inherit; color: inherit; }
       </div>
       <div class="card">
         <ol class="steps">
-          <li><span class="n">1</span><span><b>Warm up.</b> 1 · Find the devices with highlights, 2 · Spot them with no highlights, 3 · Write about two of them with the structure boxes. When you highlight a device or put its words in quotation marks, a short animation shows what it means.</span></li>
+          <li><span class="n">1</span><span><b>Warm up.</b> 1 · Find the devices with highlights, 2 · Spot them with no highlights, 3 · Write about two of them with the structure boxes. When you highlight a device or put its words in quotation marks, a short animation shows what it means in the bar at the top of the screen.</span></li>
           <li><span class="n">2</span><span><b>Plan by highlighting.</b> In the exam, tap the first and the last word of a device in the article (or highlight the words), then choose the device's name. Do it for TWO devices.</span></li>
           <li><span class="n">3</span><span><b>Write in 40 minutes.</b> ONE paragraph in your exam structure (steps 1 to 7). Your paragraph score goes up live, and coach messages in the bar at the top help you analyze deeper.</span></li>
           <li><span class="n">4</span><span><b>Check and send.</b> See your plan checked, your paragraph color-coded and a model paragraph, improve it in the Fix-it round, then send your report to your teacher on WhatsApp.</span></li>
@@ -610,11 +646,12 @@ button { font: inherit; color: inherit; }
   <!-- MAIN -->
   <section id="s-main" hidden>
     <div class="col">
-      <nav class="tabs" aria-label="Levels">
+      <nav class="tabs" aria-label="Levels" data-ca-bar>
         <button class="tab" id="tab-1" type="button"><b>1 · Find</b><span id="tab-1-s"></span></button>
         <button class="tab" id="tab-2" type="button"><b>2 · Spot</b><span id="tab-2-s"></span></button>
         <button class="tab" id="tab-3" type="button"><b>3 · Write</b><span id="tab-3-s"></span></button>
         <button class="tab" id="tab-4" type="button"><b>4 · Exam</b><span id="tab-4-s"></span></button>
+        <div class="ca-dock" data-ca-dock></div>
       </nav>
 
       <!-- 1 · FIND -->
@@ -738,7 +775,7 @@ button { font: inherit; color: inherit; }
         </div>
         <div id="exam-live" class="col" hidden>
           <div id="exam-bar-space" aria-hidden="true"></div>
-          <div class="card exam-bar" id="exam-bar">
+          <div class="card exam-bar" id="exam-bar" data-ca-bar>
             <div class="eb-row">
               <span><span class="eb-l" id="exam-timer-l">Time left</span><span class="timer" id="exam-timer" role="timer" aria-live="off">40:00</span></span>
               <span class="eb-score"><span class="eb-l">Paragraph score</span><span class="eb-pts"><span id="exam-pts">0</span><small> / 100</small><span class="eb-level" id="exam-level">Start</span></span><span class="eb-pop" id="exam-pop" hidden></span></span>
@@ -747,6 +784,7 @@ button { font: inherit; color: inherit; }
             <div class="eb-box" id="exam-box" role="status" aria-live="polite"><div class="eb-h" id="exam-box-h"></div><ul id="exam-box-l"></ul></div>
             <p class="eb-nudge" id="exam-nudge" hidden></p>
             <div class="big-pop" id="big-pop" role="status" aria-live="polite" hidden><b></b><span></span><button class="bp-x" type="button" aria-label="Close">×</button></div>
+            <div class="ca-dock" data-ca-dock></div>
           </div>
           <div class="card"><span class="label">The writing question</span><p class="intro" id="exam-q"></p></div>
           <div class="card" id="plan-card">
@@ -817,9 +855,11 @@ button { font: inherit; color: inherit; }
       <div class="who" id="r-who"></div>
       <div class="send-card" id="send-card"><span class="label">Send to my teacher</span>
         <div class="field"><label for="send-name">Your name</label><input id="send-name" type="text" autocomplete="name" maxlength="40" placeholder="Type your name"></div>
-        <div class="btn-row"><button class="btn btn-wa" id="btn-send-wa" type="button">Send on WhatsApp</button><button class="btn btn-ghost" id="btn-send-copy" type="button">Copy report</button></div>
-        <p class="small muted" id="send-note" role="status"></p>
-        <details><summary class="small">See the report text</summary><pre id="send-preview"></pre></details></div>
+        <div class="send-step" id="send-step1"><span class="send-n">Step 1</span><button class="btn btn-ink btn-copy-big" id="btn-send-copy" type="button">📋 Copy my report</button><span class="send-ok" id="send-ok" role="status" hidden>Copied ✓</span></div>
+        <div class="send-step locked" id="send-step2"><span class="send-n">Step 2</span><button class="btn btn-wa" id="btn-send-wa" type="button" disabled aria-disabled="true">Open WhatsApp to send</button></div>
+        <p class="send-howto">Paste your report into the chat and press Send.</p>
+        <p class="small muted" id="send-note" role="status" aria-live="polite"></p>
+        <details id="send-details"><summary class="small">See the report text</summary><textarea id="send-preview" readonly rows="10" aria-label="Your full report"></textarea></details></div>
       <div class="btn-row">
         <button class="btn btn-ghost" id="btn-back" type="button">Back to my exam</button>
         <button class="btn btn-ghost" id="btn-again" type="button">Start again</button>
@@ -1027,6 +1067,8 @@ var TEACHER_WHATSAPP = "905053613335";
     var ex = S.exam, live = !!(ex && ex.started && !ex.done && !ex.fix);
     if (live) S.tab = 4;
     document.querySelector(".tabs").hidden = live;
+    if (window.__ca && window.__ca.hide && (renderMain.lastTab !== S.tab || renderMain.lastLive !== live)) window.__ca.hide();
+    renderMain.lastTab = S.tab; renderMain.lastLive = live;
     [1, 2, 3, 4].forEach(function (n) {
       $("lv-" + n).hidden = S.tab !== n;
       $("tab-" + n).classList.toggle("on", S.tab === n);
@@ -2318,7 +2360,7 @@ var TEACHER_WHATSAPP = "905053613335";
     $("exam-bar-space").style.height = bar.offsetHeight + "px";
     document.documentElement.style.scrollPaddingTop = (Math.max(tb, 0) + bar.offsetHeight + 16) + "px";
   }
-  window.addEventListener("scroll", placeBar, { passive: true }); window.addEventListener("resize", placeBar);
+  window.addEventListener("scroll", placeBar, { passive: true }); window.addEventListener("resize", placeBar); window.addEventListener("ca-dock", function () { placeBar(); keepCaretVisible(); });
   if (window.visualViewport) { window.visualViewport.addEventListener("scroll", placeBar); window.visualViewport.addEventListener("resize", placeBar); }
   function examChecks(text) {
     var F = examFacts(text), c = [];
@@ -2413,7 +2455,6 @@ var TEACHER_WHATSAPP = "905053613335";
   $("btn-again").onclick = function () { try { localStorage.removeItem(KEY); } catch (e) {} S = null; $("student-name").value = ""; renderStart(); };
 
   /* ---------- Send to my teacher (WhatsApp) ---------- */
-  var WA_MAX = 1990;   /* keep the whole wa.me link under 2,000 characters (safe for phone browsers) */
   function reportDate() {
     var t = S.exam && (S.exam.finishedAt || S.exam.started) || Date.now();
     return new Date(t).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
@@ -2437,38 +2478,50 @@ var TEACHER_WHATSAPP = "905053613335";
     L.push(para || "(empty)");
     return L.join("\n");
   }
-  /* curly quotes become straight ones in the link: each curly quote costs 9 characters once encoded */
-  function waUrl(text) { return "https://wa.me/" + String(TEACHER_WHATSAPP).replace(/\D/g, "") + "?text=" + encodeURIComponent(String(text).replace(/[“”]/g, '"').replace(/[‘’]/g, "'")); }
-  /* the paragraph is shortened sentence by sentence until the link fits */
-  function fitReport(name) {
-    var para = (S.exam && S.exam.text || "").trim(), txt = reportText(name, para), cut = false;
-    if (waUrl(txt).length > WA_MAX) {
-      var ss = sentences(para);
-      while (ss.length && waUrl(reportText(name, ss.join(" ") + " […]\n(Shortened for WhatsApp. Use “Copy report” for the full paragraph.)")).length > WA_MAX) ss.pop();
-      txt = reportText(name, ss.join(" ") + " […]\n(Shortened for WhatsApp. Use “Copy report” for the full paragraph.)"); cut = true;
-    }
-    return { text: txt, url: waUrl(txt), cut: cut, full: reportText(name, para) };
-  }
-  window.__report = function (name) { return fitReport(name || S.name); };
+  /* Step 2 opens WhatsApp with one short line only; the full report is pasted from the clipboard (it never fits in a link) */
+  function shortLine(name) { return "Report from " + (name || "a student") + " – " + APP_TITLE + " (pasting below)"; }
+  function waUrl(name) { return "https://wa.me/" + String(TEACHER_WHATSAPP).replace(/\D/g, "") + "?text=" + encodeURIComponent(shortLine(name)); }
+  function fullReport(name) { return reportText(name, (S.exam && S.exam.text || "").trim()); }
+  window.__report = function (name) { var n = name || S.name; return { text: fullReport(n), url: waUrl(n) }; };
+  var sendCopied = null;   /* the exact report text that was copied; Step 2 unlocks only for it */
+  function sendName() { return $("send-name").value.trim(); }
+  function setStep2(on) { $("btn-send-wa").disabled = !on; $("send-step2").classList.toggle("locked", !on); $("btn-send-wa").setAttribute("aria-disabled", on ? "false" : "true"); }
   function renderSend() {
-    if (!$("send-name").value || $("send-name").dataset.for !== KEY) { $("send-name").value = S.sendName || S.name || ""; $("send-name").dataset.for = KEY; }
-    var r = fitReport($("send-name").value.trim());
-    $("send-preview").textContent = r.text;
-    $("send-note").textContent = r.cut ? "Your paragraph is long, so WhatsApp gets a shortened copy. Tap “Copy report” to paste the full report." : "";
+    if ($("send-name").dataset.for !== KEY) { $("send-name").value = S.sendName || S.name || ""; $("send-name").dataset.for = KEY; }
+    var t = fullReport(sendName());
+    $("send-preview").value = t;
+    var ok = sendCopied !== null && sendCopied === t;
+    setStep2(ok); $("send-ok").hidden = !ok;
   }
-  $("send-name").addEventListener("input", function () { S.sendName = $("send-name").value; save(); renderSend(); });
-  $("btn-send-wa").onclick = function () {
-    var n = $("send-name").value.trim(); if (!n) { $("send-name").focus(); $("send-note").textContent = "Type your name first."; return; }
-    var r = fitReport(n), w = null;
-    try { w = window.open(r.url, "_blank", "noopener"); } catch (e) {}
-    if (!w) location.href = r.url;
-    $("send-note").textContent = "WhatsApp opens with your report. Check it, then press send." + (r.cut ? " (Shortened: use “Copy report” for the full text.)" : "");
-  };
+  function copiedOk(t) {
+    sendCopied = t; $("send-ok").hidden = false; setStep2(true);
+    $("send-note").textContent = "Your full report is copied. Now tap “Open WhatsApp to send”.";
+  }
+  $("send-name").addEventListener("input", function () { S.sendName = $("send-name").value; save(); sendCopied = null; $("send-note").textContent = ""; renderSend(); });
+  /* a student who copies the report text by hand (fallback) also unlocks Step 2 */
+  $("send-preview").addEventListener("copy", function () { var ta = $("send-preview"); if (ta.selectionEnd - ta.selectionStart >= ta.value.length - 2) setTimeout(function () { copiedOk(ta.value); }, 0); });
   $("btn-send-copy").onclick = function () {
-    var r = fitReport($("send-name").value.trim()), t = r.full;
-    function done(ok) { $("send-note").textContent = ok ? "Report copied. Paste it into WhatsApp or an email to your teacher." : "Copying didn't work here. Open “See the report text” and copy it by hand."; }
-    function legacy() { try { var ta = document.createElement("textarea"); ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); var ok = document.execCommand("copy"); ta.remove(); done(ok); } catch (e) { done(false); } }
-    try { if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(function () { done(true); }, legacy); else legacy(); } catch (e) { legacy(); }
+    var n = sendName(); if (!n) { $("send-name").focus(); $("send-note").textContent = "Type your name first."; return; }
+    renderSend();
+    var t = $("send-preview").value;
+    function manual() {
+      $("send-details").open = true; var ta = $("send-preview"); ta.focus(); ta.select(); try { ta.setSelectionRange(0, ta.value.length); } catch (e) {}
+      $("send-note").textContent = "Copying didn't work here. Your report is selected below: copy it (Ctrl+C, or long-press and choose Copy). Then Step 2 opens.";
+    }
+    function legacy() {
+      var ok = false, ta = $("send-preview"), wasOpen = $("send-details").open;
+      try { $("send-details").open = true; ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length); ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      $("send-details").open = wasOpen;
+      if (ok) copiedOk(t); else manual();
+    }
+    try { if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(function () { copiedOk(t); }, legacy); else legacy(); } catch (e) { legacy(); }
+  };
+  $("btn-send-wa").onclick = function () {
+    if ($("btn-send-wa").disabled) return;
+    var u = waUrl(sendName()), w = null;
+    try { w = window.open(u, "_blank", "noopener"); } catch (e) {}
+    if (!w) location.href = u;
+    $("send-note").textContent = "WhatsApp is opening. Paste your report into the chat and press Send.";
   };
   $("btn-exam-send").onclick = function () { S.report = true; save(); renderReport(); var c = $("send-card"); if (c) c.scrollIntoView({ block: "start" }); };
 
@@ -2948,6 +3001,45 @@ var TEACHER_WHATSAPP = "905053613335";
     return out;
   }
 
+
+  /* ---------- the dock: ONE picture, inside the sticky top bar (exam timer bar, or the level bar in practice) ---------- */
+  var DP = null;
+  function dockHost() {
+    var hs = document.querySelectorAll("[data-ca-dock]");
+    for (var i = 0; i < hs.length; i++) if (hs[i].parentNode && hs[i].parentNode.getClientRects().length) return hs[i];
+    return null;
+  }
+  function dockBar(h) { return h.closest("[data-ca-bar]") || h.parentNode; }
+  function dockSize() {
+    var h = DP && DP.el.parentNode, b = 0;
+    if (h && !DP.el.hidden && h.getClientRects().length) b = Math.max(0, Math.round(dockBar(h).getBoundingClientRect().bottom));
+    document.documentElement.style.setProperty("--dock-h", b + "px");
+    document.documentElement.classList.toggle("ca-docked", b > 0);
+    try { window.dispatchEvent(new Event("ca-dock")); } catch (e) {}
+  }
+  window.addEventListener("scroll", function () { if (DP && !DP.el.hidden) dockSize(); }, { passive: true });
+  window.addEventListener("resize", dockSize);
+  /* the bar grew: if it now covers the caret of the box being typed in, move the page so the caret sits just under the bar */
+  function caretUnderBar() {
+    var ta = document.activeElement; if (!ta || ta.tagName !== "TEXTAREA" || !DP || DP.el.hidden) return;
+    var bb = dockBar(DP.el.parentNode).getBoundingClientRect().bottom, r = ta.getBoundingClientRect();
+    var vv = window.visualViewport, vH = vv ? vv.height : window.innerHeight;
+    /* a box that fits under the bar is shown whole; a long one keeps at least the line being written in view */
+    var cb = caretBottom(ta), lh = parseFloat(getComputedStyle(ta).lineHeight) || 26;
+    var top = r.height <= vH - bb - 16 ? r.top : Math.max(r.top, cb - lh);
+    if (top < bb + 6) window.scrollBy(0, top - bb - 10);
+  }
+  function dockShow(c, src) {
+    var h = dockHost(); if (!h) return null;
+    if (!DP) { DP = makePanel("dock"); DP.el.querySelector(".ca-x").addEventListener("click", function () { setTimeout(dockSize, 0); }); }
+    if (DP.el.parentNode !== h) h.appendChild(DP.el);
+    DP.src = src || null;
+    show(DP, c); dockSize(); caretUnderBar();
+    [60, 200, 450].forEach(function (t) { setTimeout(function () { dockSize(); caretUnderBar(); }, t); });
+    return DP;
+  }
+  function dockHide(src) { if (DP && (!src || DP.src === src)) { clearTimeout(DP.loopT); DP.el.hidden = true; DP.cur = null; dockSize(); } }
+
   /* ---------- Trigger B: writing. Closing the quotation marks plays it ABOVE the writing box ---------- */
   var seen = new WeakMap();
   function writePanelFor(ta) {
@@ -2964,6 +3056,7 @@ var TEACHER_WHATSAPP = "905053613335";
     Object.keys(h).forEach(function (k) { if (!old[k]) fresh = h[k]; });
     seen.set(ta, h);
     if (!fresh) return;
+    if (dockShow(fresh, ta)) return;
     var p = writePanelFor(ta), before = ta.getBoundingClientRect().top, wasHidden = p.el.hidden;
     show(p, fresh);
     if (wasHidden) keepCaret(ta, p, before);
@@ -3029,6 +3122,7 @@ var TEACHER_WHATSAPP = "905053613335";
     if (!h) { selHit = null; return; }
     if (selHit && selHit.c === h.c && selHit.blk === h.blk) return;
     selHit = h;
+    if (dockShow(h.c, h.art)) return;
     var p = readP.get(h.art); if (!p) { p = makePanel("read"); readP.set(h.art, p); }
     placeAfter(p, h.blk); show(p, h.c);
   }
@@ -3044,12 +3138,14 @@ var TEACHER_WHATSAPP = "905053613335";
   window.__ca = {
     show: function (id, anchor, mode) {
       var c = BYID[id]; if (!c || !anchor) return false;
+      if (dockShow(c, mode === "in" ? anchor : anchor.parentNode)) return true;
       var host = mode === "in" ? anchor : anchor.parentNode, p = anchorP.get(host);
       if (!p) { p = makePanel(mode === "in" ? "inline" : "read"); anchorP.set(host, p); }
       if (mode === "in") { if (p.el.parentNode !== anchor) anchor.appendChild(p.el); } else placeAfter(p, anchor);
       show(p, c); return true;
     },
-    hideIn: function (host) { var p = anchorP.get(host); if (p) { clearTimeout(p.loopT); p.el.hidden = true; p.cur = null; } },
+    hide: function () { dockHide(); },
+    hideIn: function (host) { dockHide(host); var p = anchorP.get(host); if (p) { clearTimeout(p.loopT); p.el.hidden = true; p.cur = null; } },
     has: function (id) { return !!BYID[id]; },
     prime: primeSeen
   };
