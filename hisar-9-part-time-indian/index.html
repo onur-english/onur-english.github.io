@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Absolutely True Diary of a Part-Time Indian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Kalam:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* === THEME === */
+:root{
+  --paper:#fbf8ef;
+  --rule:#d6e4f2;
+  --margin:#eaa7a1;
+  --ink:#1d2a44;
+  --muted:#5d6679;
+  --ball:#e0702a;
+  --ball-dark:#b8561b;
+  --teal:#1f7f86;
+  --teal-soft:#e2f2f2;
+  --card:#ffffff;
+  --good:#2b8a57;
+  --good-bg:#e4f4ea;
+  --bad:#c0392b;
+  --bad-bg:#fbe8e5;
+  --tape:rgba(224,112,42,.28);
+  --shadow:0 6px 18px rgba(29,42,68,.12);
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Nunito",system-ui,sans-serif;
+  color:var(--ink);
+  background:
+    repeating-linear-gradient(to bottom, var(--paper) 0 31px, var(--rule) 31px 32px);
+  min-height:100vh;
+  line-height:1.5;
+}
+body::before{ /* red margin line of a diary page */
+  content:"";position:fixed;top:0;bottom:0;left:22px;width:2px;
+  background:var(--margin);opacity:.7;pointer-events:none;z-index:0;
+}
+.wrap{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:0 16px 60px 34px}
+
+/* === HEADER === */
+.cover{
+  background:var(--ink);color:#fff;
+  border-radius:0 0 var(--radius) var(--radius);
+  padding:22px 22px 18px;margin:0 -16px 0 -34px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.cover::after{ /* basketball seam lines, CSS only */
+  content:"";position:absolute;right:-60px;top:-60px;width:190px;height:190px;border-radius:50%;
+  background:var(--ball);
+  box-shadow:inset 0 0 0 3px var(--ball-dark);
+  opacity:.9;
+}
+.cover::before{
+  content:"";position:absolute;right:-60px;top:-60px;width:190px;height:190px;border-radius:50%;
+  background:
+    linear-gradient(90deg,transparent 48.5%,var(--ink) 48.5% 51.5%,transparent 51.5%),
+    linear-gradient(0deg,transparent 48.5%,var(--ink) 48.5% 51.5%,transparent 51.5%);
+  z-index:1;opacity:.85;
+}
+.cover h1{
+  font-family:"Permanent Marker",cursive;font-weight:400;
+  font-size:clamp(1.35rem,4.6vw,2.1rem);line-height:1.15;margin:0 0 6px;
+  max-width:78%;position:relative;z-index:2;
+}
+.brand{display:inline-block;background:#fff;border-radius:10px;padding:4px 6px;margin-bottom:10px;position:relative;z-index:2}
+.brand img{width:68px;height:auto;display:block}
+.cover p{margin:0;font-family:"Kalam",cursive;font-size:1.05rem;opacity:.9;position:relative;z-index:2;max-width:78%}
+.name-row{display:flex;gap:8px;align-items:center;margin-top:14px;position:relative;z-index:2;flex-wrap:wrap}
+.name-row label{font-weight:700;font-size:.95rem}
+.name-row input{
+  flex:1;min-width:160px;max-width:320px;padding:9px 12px;border-radius:10px;border:2px solid transparent;
+  font:inherit;color:var(--ink);background:#fff;
+}
+.name-row input:focus{outline:none;border-color:var(--ball)}
+
+/* === TABS === */
+.tabs{
+  position:sticky;top:0;z-index:5;display:flex;gap:6px;
+  padding:12px 0 10px;background:linear-gradient(var(--paper) 80%,rgba(251,248,239,0));
+}
+.tab{
+  flex:1;border:2px solid var(--ink);background:#fff;color:var(--ink);
+  font:700 .92rem "Nunito",sans-serif;padding:9px 6px;border-radius:999px;cursor:pointer;
+}
+.tab[aria-selected="true"]{background:var(--ink);color:#fff}
+.tab small{display:block;font-weight:600;font-size:.72rem;opacity:.8}
+
+/* === CARDS === */
+.card{
+  background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:20px 18px;margin:14px 0;position:relative;
+}
+.card.taped::before{
+  content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-2deg);
+  width:96px;height:22px;background:var(--tape);border-radius:3px;
+}
+.hand{font-family:"Kalam",cursive}
+.part-label{
+  display:inline-block;font-family:"Kalam",cursive;font-weight:700;color:var(--teal);
+  background:var(--teal-soft);border-radius:999px;padding:2px 12px;font-size:.92rem;
+}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.counter{font-size:.88rem;color:var(--muted);font-weight:700}
+.progress{height:10px;border-radius:999px;background:#eef0f4;overflow:hidden;margin:8px 0 14px}
+.progress span{display:block;height:100%;background:var(--ball);border-radius:999px;transition:width .35s ease}
+.question{font-size:1.15rem;font-weight:800;margin:6px 0 14px}
+
+/* === OPTIONS === */
+.options{display:grid;gap:10px}
+.opt{
+  display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;
+  background:#fff;border:2px solid #d9dde6;border-radius:12px;padding:12px 14px;
+  font:600 1rem "Nunito",sans-serif;color:var(--ink);cursor:pointer;
+}
+.opt:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.opt .letter{
+  flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  background:#eef0f4;font-weight:800;font-size:.9rem;
+}
+.opt.correct{border-color:var(--good);background:var(--good-bg)}
+.opt.correct .letter{background:var(--good);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt.wrong .letter{background:var(--bad);color:#fff}
+.opt:disabled{cursor:default}
+
+.feedback{margin-top:14px;border-radius:12px;padding:12px 14px;font-weight:600}
+.feedback.good{background:var(--good-bg);border-left:6px solid var(--good)}
+.feedback.bad{background:var(--bad-bg);border-left:6px solid var(--bad)}
+.feedback strong{display:block;margin-bottom:4px}
+.feedback .why{font-weight:500;margin-top:6px}
+
+/* === BUTTONS === */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  border:none;border-radius:999px;padding:11px 20px;font:800 1rem "Nunito",sans-serif;
+  cursor:pointer;background:var(--ball);color:#fff;box-shadow:0 3px 0 var(--ball-dark);
+}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ball-dark)}
+.btn.secondary{background:#fff;color:var(--ink);border:2px solid var(--ink);box-shadow:none}
+.btn.teal{background:var(--teal);box-shadow:0 3px 0 #155a5f}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+/* === ROUND / FINISH SCREENS === */
+.big{font-family:"Permanent Marker",cursive;font-size:1.6rem;font-weight:400;margin:0 0 6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0}
+.stat{background:var(--teal-soft);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:1.4rem}
+
+/* === WRITING === */
+.tip-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px}
+.tip-steps div{background:var(--teal-soft);border-radius:10px;padding:8px 10px;font-weight:700;font-size:.92rem}
+.tip-steps div span{display:block;font-family:"Kalam",cursive;color:var(--teal);font-size:1rem}
+.wq-num{
+  font-family:"Permanent Marker",cursive;color:var(--ball);font-size:1.25rem;margin-right:6px;
+}
+.wq-prompt{font-size:1.08rem;font-weight:800;margin:4px 0 10px}
+textarea{
+  width:100%;min-height:170px;resize:vertical;border:2px solid #d9dde6;border-radius:12px;
+  padding:12px;font:500 1rem/1.6 "Nunito",sans-serif;color:var(--ink);
+  background:repeating-linear-gradient(to bottom,#fff 0 25px,#eef3f9 25px 26px);
+  background-attachment:local;
+}
+textarea:focus{outline:none;border-color:var(--teal)}
+.wc{font-size:.85rem;color:var(--muted);font-weight:700;margin-top:4px}
+.checks{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px}
+.checks li{border-radius:10px;padding:8px 12px;font-weight:700}
+.checks li.ok{background:var(--good-bg)}
+.checks li.miss{background:var(--bad-bg)}
+.checks li small{display:block;font-weight:500}
+.model{
+  margin-top:14px;border:2px dashed var(--teal);border-radius:12px;padding:12px 14px;background:#f7fbfb;
+}
+.model h4{margin:0 0 6px;font-family:"Kalam",cursive;color:var(--teal);font-size:1.1rem}
+.model p{margin:0 0 10px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cols h5{margin:0 0 4px;font-size:.92rem}
+.cols ul{margin:0;padding-left:18px;font-size:.93rem}
+@media (max-width:560px){ .cols{grid-template-columns:1fr} }
+
+/* === REPORT === */
+.report-box{
+  white-space:pre-wrap;font:500 .9rem/1.5 ui-monospace,Menlo,Consolas,monospace;
+  background:#f6f7fa;border-radius:12px;padding:12px;max-height:340px;overflow:auto;border:1px solid #e1e4ea;
+}
+.note{font-size:.92rem;color:var(--muted)}
+.hidden{display:none !important}
+
+/* === PRINT === */
+@media print{
+  body{background:#fff}
+  body::before,.tabs,.btn,.btn-row,.name-row input{display:none !important}
+  .cover{background:#fff;color:#000;box-shadow:none}
+  .cover::before,.cover::after{display:none}
+  .card{box-shadow:none;border:1px solid #ccc;break-inside:avoid}
+  .panel{display:block !important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="cover">
+    <div class="brand"><img alt="Onur English" src="data:image/jpeg;base64,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"></div>
+    <h1 id="appTitle"></h1>
+    <p id="appSub"></p>
+    <div class="name-row">
+      <label for="studentName">My name:</label>
+      <input id="studentName" type="text" autocomplete="name" placeholder="Type your full name">
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-mcq" aria-controls="panel-mcq" aria-selected="true">Reading<small>40 questions</small></button>
+    <button class="tab" role="tab" id="tab-write" aria-controls="panel-write" aria-selected="false">Writing<small>10 questions</small></button>
+    <button class="tab" role="tab" id="tab-report" aria-controls="panel-report" aria-selected="false">Send<small>to my teacher</small></button>
+  </nav>
+
+  <main>
+    <section class="panel" id="panel-mcq" role="tabpanel" aria-labelledby="tab-mcq"></section>
+    <section class="panel hidden" id="panel-write" role="tabpanel" aria-labelledby="tab-write"></section>
+    <section class="panel hidden" id="panel-report" role="tabpanel" aria-labelledby="tab-report"></section>
+  </main>
+</div>
+
+<script>
+/* === CONSTANTS === */
+const TEACHER_WHATSAPP = "905053613335";
+const EXAM_MINUTES = 0;            // this app has no timed exam mode
+const STORAGE_KEY = "part-time-indian-app-v1";
+
+/* === DATA === */
+const APP = {
+  title: "The Absolutely True Diary of a Part-Time Indian",
+  subtitle: "Sherman Alexie · Reading check and writing practice",
+  school: "Hisar",
+  grade: "9",
+  folder: "hisar-9-part-time-indian",
+
+  /* 40 multiple-choice comprehension questions, in story order.
+     answer = index of the correct option (options are shuffled on screen). */
+  questions: [
+    /* --- Part 1: Life on the reservation --- */
+    { id:"q01", part:"Life on the reservation",
+      q:"What medical problem was Junior born with?",
+      options:["Too much fluid inside his skull","A weak heart that needed surgery","Damaged lungs that made breathing hard","A twisted spine that made walking hard"],
+      answer:0,
+      why:"Junior says he was born with \"water on the brain\" and had surgery as a baby. It left him with seizures, a stutter and a lisp." },
+
+    { id:"q02", part:"Life on the reservation",
+      q:"Why did Junior have ten teeth pulled in a single day?",
+      options:["His family wanted the whole job done before school started","The only dentist near the reservation was about to move away","The Indian Health Service paid for big dental work only once a year","His father could take only one day off work to drive him there"],
+      answer:2,
+      why:"He had 42 teeth, ten more than usual, and the Indian Health Service funded major dental work only once a year, so all ten came out at once." },
+
+    { id:"q03", part:"Life on the reservation",
+      q:"What did Junior's white dentist believe about Indian patients?",
+      options:["That they needed twice the usual amount of medicine","That they felt only half as much pain as white patients","That they healed much faster than white patients","That they should never have extra teeth removed"],
+      answer:1,
+      why:"Because of this racist belief, the dentist gave Junior only half the normal amount of Novocain." },
+
+    { id:"q04", part:"Life on the reservation",
+      q:"Why does Junior draw cartoons?",
+      options:["His teachers give him extra marks for every drawing","He sells them to tourists who visit the reservation","His father is an artist who makes him practice daily","He hopes art will make him famous and help him leave"],
+      answer:3,
+      why:"Drawing helps Junior understand his world, and he sees it as his one real chance to become rich and famous and escape the reservation." },
+
+    { id:"q05", part:"Life on the reservation",
+      q:"What happens to Oscar, Junior's dog?",
+      options:["His father shoots him because they can't afford a vet","He runs away one night and is never seen again","He is hit by a truck on the road through the reservation","He is given away to a family that lives in Spokane"],
+      answer:0,
+      why:"Oscar is very sick and the family has no money for a vet. The scene shows how poverty forces terrible choices." },
+
+    { id:"q06", part:"Life on the reservation",
+      q:"Who is Rowdy?",
+      options:["Junior's cousin, who plays in a band in Spokane","Junior's best friend, a tough boy whose father beats him","Junior's older brother, who left to join the army","A Reardan student who bullies Junior at first"],
+      answer:1,
+      why:"Rowdy was born on the same day as Junior. He is angry and tough, partly because of his violent, drunk father, but he protects Junior." },
+
+    { id:"q07", part:"Life on the reservation",
+      q:"After the Andruss brothers beat Junior at the powwow, how does Rowdy get revenge?",
+      options:["He lets the air out of their tires and hides their keys","He beats all three of them in a game of basketball","He shaves their eyebrows and cuts their braids as they sleep","He reports them to the tribal police and they are arrested"],
+      answer:2,
+      why:"Rowdy waits until the drunk triplets pass out, then shaves their eyebrows and cuts off their braids." },
+
+    { id:"q08", part:"Life on the reservation",
+      q:"Why does Junior throw his geometry book?",
+      options:["Mr. P mocks his wrong answer in front of the class","Rowdy dares him to throw it at the teacher","He fails his very first geometry test","His mother's name is inside, so the book is decades old"],
+      answer:3,
+      why:"The book once belonged to his mother. Junior is furious that his school is so poor it still uses books that old." },
+
+    { id:"q09", part:"Life on the reservation",
+      q:"What happens after the book hits Mr. P?",
+      options:["Junior is suspended, and Mr. P visits him at home","Junior is expelled and sent to a school in Spokane","Mr. P quits teaching and leaves the reservation","Junior's father has to pay Mr. P's hospital bill"],
+      answer:0,
+      why:"Instead of punishing Junior further, Mr. P comes to his house to talk to him honestly." },
+
+    { id:"q10", part:"Life on the reservation",
+      q:"During his visit, what does Mr. P admit about the way he used to teach?",
+      options:["He gave Indian students easier tests than white students got","He hit students and was trained to make them give up their culture","He never wanted to teach on the reservation and asked to leave","He had no training in math and had only ever studied art at college"],
+      answer:1,
+      why:"Mr. P says teachers were trained to \"kill the Indian to save the child\": to make students give up their language, songs and stories. He apologizes." },
+
+    { id:"q11", part:"Life on the reservation",
+      q:"What advice does Mr. P give Junior?",
+      options:["Stay and become a teacher at the reservation school","Join the army so the government will pay for college","Leave the reservation and look for hope somewhere else","Stop drawing cartoons and focus only on math"],
+      answer:2,
+      why:"Mr. P tells Junior he is too smart and too hopeful to stay where people have given up." },
+
+    { id:"q12", part:"Life on the reservation",
+      q:"Mr. P says Junior is one of the smartest students he has taught. Who does he compare him to?",
+      options:["His best friend, Rowdy","His mother, Agnes","His father, Arnold Sr.","His sister, Mary"],
+      answer:3,
+      why:"Mr. P says Mary was a brilliant student who once dreamed of writing books, but she gave up and now hides in the family basement." },
+
+    /* --- Part 2: Starting at Reardan --- */
+    { id:"q13", part:"Starting at Reardan",
+      q:"How do Junior's parents react to his plan to change schools?",
+      options:["They agree to help him, even though it will be hard","They refuse until Mr. P comes to beg them","They say he is betraying the whole tribe","They send him to live with relatives in Spokane"],
+      answer:0,
+      why:"His father worries about how Junior will get there and his mother warns that people will be angry, but both support him." },
+
+    { id:"q14", part:"Starting at Reardan",
+      q:"How does Rowdy react when Junior asks him to come to Reardan too?",
+      options:["He agrees, but his father won't let him go","He refuses, then punches Junior in the face","He laughs and promises to join next year","He secretly applies to Reardan but is rejected"],
+      answer:1,
+      why:"Rowdy feels betrayed. He shouts at Junior, punches him, and stops being his friend for most of the year." },
+
+    { id:"q15", part:"Starting at Reardan",
+      q:"What does Junior notice about Reardan's school mascot?",
+      options:["It is a cartoon basketball wearing a cowboy hat","It is a wolf, just like the mascot at his old school","It is an Indian, so he is the only other Indian in town","It is a farmer, because Reardan is a farming town"],
+      answer:2,
+      why:"Junior jokes that the mascot is the only other Indian in Reardan, which shows how alone he feels." },
+
+    { id:"q16", part:"Starting at Reardan",
+      q:"What does Penelope do when she learns Junior's name on his first day?",
+      options:["She says it is the coolest name she has heard","She helps him find his next classroom","She asks him to sit with her at lunch","She laughs and shares the joke with her friends"],
+      answer:3,
+      why:"Penelope and her friends laugh at him. Junior feels like an outsider from the very first day." },
+
+    { id:"q17", part:"Starting at Reardan",
+      q:"What does Roger do that makes Junior punch him?",
+      options:["He tells a racist joke about Indians","He knocks Junior's books out of his hands","He steals Junior's lunch money in the hall","He laughs at Junior's old, worn-out shoes"],
+      answer:0,
+      why:"Junior follows a reservation rule: when someone insults you, you fight back." },
+
+    { id:"q18", part:"Starting at Reardan",
+      q:"How does Roger treat Junior after the punch?",
+      options:["He gets his friends to beat Junior up after school","He starts to respect Junior and treats him better","He reports Junior and gets him suspended again","He ignores Junior for the rest of the year"],
+      answer:1,
+      why:"Roger walks away instead of fighting. Junior's grandmother says this means Roger now respects him, and she is right." },
+
+    { id:"q19", part:"Starting at Reardan",
+      q:"On Halloween, Junior and Penelope wear the same costume. What is it?",
+      options:["Basketball players","Superheroes","Homeless people","Old-time cowboys"],
+      answer:2,
+      why:"Penelope's costume is a political statement. Junior jokes that his costume is easy because his clothes are already worn out." },
+
+    { id:"q20", part:"Starting at Reardan",
+      q:"What happens to the money Junior collects on Halloween?",
+      options:["He hands it to his father, who spends it that night","He drops it somewhere on the long walk back home","Penelope keeps it and forgets to give it to charity","Masked boys on the reservation beat him and steal it"],
+      answer:3,
+      why:"Junior collects spare change on the reservation, but is beaten and robbed. Penelope kindly puts both their names on her donation." },
+
+    { id:"q21", part:"Starting at Reardan",
+      q:"What happens in Mr. Dodge's geology class?",
+      options:["Junior corrects him about petrified wood, and Gordy backs Junior up","Junior fails a test on rocks, and Gordy offers to tutor him","Mr. Dodge praises Junior's science project in front of the class","Junior and Gordy are sent out of the room for talking in class"],
+      answer:0,
+      why:"Mr. Dodge is angry and the class laughs at Junior until Gordy, the class genius, confirms Junior's answer." },
+
+    { id:"q22", part:"Starting at Reardan",
+      q:"What does Gordy teach Junior about reading?",
+      options:["You should only read books that have pictures","You need to read a book three times to really know it","Reading is useless unless it helps you on tests","You should read every book in the library once, quickly"],
+      answer:1,
+      why:"Gordy takes reading very seriously and believes in Junior, which helps Junior see learning as exciting." },
+
+    { id:"q23", part:"Starting at Reardan",
+      q:"Gordy says life is a constant struggle between two things. What are they?",
+      options:["Being rich and being poor in a small farming town","Being smart and being popular with other students","Being an individual and being a member of the community","Being honest and being kind to the people you love"],
+      answer:2,
+      why:"This idea explains Junior's problem: following his own dream means stepping away from his community." },
+
+    /* --- Part 3: Winter --- */
+    { id:"q24", part:"Winter",
+      q:"What does Junior's sister Mary do after he starts at Reardan?",
+      options:["She starts college in Seattle to study creative writing","She moves to Spokane to work as a cook in a restaurant","She signs up at Reardan to finish her senior year there","She marries a man she met at a casino and moves to Montana"],
+      answer:3,
+      why:"Mary leaves the basement where she had hidden for years. Junior believes his brave choice inspired her." },
+
+    { id:"q25", part:"Winter",
+      q:"At Thanksgiving, Junior takes a cartoon to Rowdy's house. What does it show?",
+      options:["Junior and Rowdy as superheroes","Rowdy scoring the winning basket","Rowdy's father as a scary monster","Junior waving goodbye to the reservation"],
+      answer:0,
+      why:"Junior misses Rowdy and wants to make peace. Rowdy's father makes fun of the drawing." },
+
+    { id:"q26", part:"Winter",
+      q:"How does Junior describe being Indian when he travels between Reardan and Wellpinit?",
+      options:["A long holiday that never seems to end","A part-time job that doesn't pay well","A team where he always sits on the bench","A secret he must hide from everyone"],
+      answer:1,
+      why:"He feels half Indian in one place and half white in the other. This idea gives the novel its title." },
+
+    { id:"q27", part:"Winter",
+      q:"Why is Junior nervous about taking Penelope to the Winter Formal?",
+      options:["He can't dance and is scared of looking silly","Penelope's father has banned him from the dance","He has very little money and is hiding how poor he is","The dance is on the same night as a big game"],
+      answer:2,
+      why:"Junior has only a few dollars. He meets Penelope at the dance because he has no car and no gas money." },
+
+    { id:"q28", part:"Winter",
+      q:"What does Junior wear to the Winter Formal?",
+      options:["A tuxedo borrowed from Roger's brother","A powwow outfit from his grandmother","His Reardan basketball uniform","His father's old suit, which everyone likes"],
+      answer:3,
+      why:"Junior is embarrassed by the old suit, but Penelope and his classmates think it looks cool and retro." },
+
+    { id:"q29", part:"Winter",
+      q:"What does Roger do at the diner after the dance?",
+      options:["He lends Junior forty dollars to pay the bill","He tells the whole table Junior has no money","He leaves early and makes Junior walk home","He orders food for Junior but refuses to pay"],
+      answer:0,
+      why:"Junior pretends he forgot his wallet. Roger quietly helps, and later Penelope learns the truth and Junior admits he is poor." },
+
+    { id:"q30", part:"Winter",
+      q:"What do the Wellpinit fans do when Junior walks into their gym for the first game?",
+      options:["They cheer loudly and welcome him home","They turn their backs on him","They walk out and leave the gym empty","They throw his old jersey onto the court"],
+      answer:1,
+      why:"The fans see Junior as a traitor. Someone also throws a coin that cuts his head." },
+
+    { id:"q31", part:"Winter",
+      q:"How does the first Reardan–Wellpinit game end for Junior?",
+      options:["He scores the winning basket in the last second","He is sent off for fighting with Rowdy","Rowdy elbows him in the head and knocks him out","He refuses to play and sits on the bench"],
+      answer:2,
+      why:"Junior wakes up in the hospital with a concussion. His coach is impressed by how tough he is." },
+
+    { id:"q32", part:"Winter",
+      q:"What does Junior's father do over Christmas?",
+      options:["He drives the whole family to Montana to visit Mary","He works extra hours to buy Junior new basketball shoes","He stays home and cooks a big Christmas dinner for all","He disappears on a drinking binge with the family's money"],
+      answer:3,
+      why:"He comes back days later with only a five-dollar bill for Junior. The chapter shows how alcoholism hurts the family." },
+
+    /* --- Part 4: Losses and the ending --- */
+    { id:"q33", part:"Losses and the ending",
+      q:"How does Grandmother Spirit die?",
+      options:["She is hit by a drunk driver","She dies after a long illness in the hospital","She dies in a fire at a family party","She falls on an icy road near her house"],
+      answer:0,
+      why:"She never drank alcohol, yet alcohol kills her. Even as she dies, she asks her family to forgive the driver." },
+
+    { id:"q34", part:"Losses and the ending",
+      q:"What happens when Ted, a rich white collector, comes to the grandmother's funeral?",
+      options:["He offers to pay for the funeral, and the family refuses","He returns a dance outfit that wasn't hers, and everyone laughs","He gives a speech on Indian history, and people walk out","He buys the family a new house in her memory"],
+      answer:1,
+      why:"Ted thinks the outfit belonged to Grandmother Spirit. Junior's mother tells him it didn't, and the mourners burst out laughing." },
+
+    { id:"q35", part:"Losses and the ending",
+      q:"How does Eugene, Junior's father's best friend, die?",
+      options:["He crashes his motorcycle on the way to Reardan","He has a heart attack during a basketball game","He is shot by a friend during a drunken argument","He is hit by a car while walking home at night"],
+      answer:2,
+      why:"His friend Bobby shoots him in a fight over the last drink of wine. Another death caused by alcohol." },
+
+    { id:"q36", part:"Losses and the ending",
+      q:"When a teacher criticizes Junior for missing school while he is grieving, what do his classmates do?",
+      options:["They laugh along with the teacher and stay quiet","They ask the principal to move Junior to another class","They say nothing in class but send him cards later","Gordy and the others walk out of class to support him"],
+      answer:3,
+      why:"This shows Junior that Reardan has become a real community for him." },
+
+    { id:"q37", part:"Losses and the ending",
+      q:"How does Junior feel after Reardan beats Wellpinit in the second game?",
+      options:["Ashamed, thinking of the Wellpinit players' hard lives","Proud and happy that he finally got revenge on Rowdy","Bored, because the game was far too easy to enjoy","Angry, because the coach kept him on the bench all game"],
+      answer:0,
+      why:"Junior thinks about how hard the Wellpinit players' lives are and how few of them will go to college. He cries in the locker room." },
+
+    { id:"q38", part:"Losses and the ending",
+      q:"How does Mary die?",
+      options:["In a car crash on the road to Montana","In a fire in her trailer after a party","From a sudden illness in a Montana hospital","In a flood near her new home"],
+      answer:1,
+      why:"Mary was too drunk to wake up when the trailer caught fire. Junior's mother makes him promise never to drink." },
+
+    { id:"q39", part:"Losses and the ending",
+      q:"Who does Junior find secretly watching Mary's funeral from the trees?",
+      options:["Gordy","Roger","Rowdy","Mr. P"],
+      answer:2,
+      why:"Rowdy blames Junior for Mary leaving the reservation, but the fact that he came shows he still cares." },
+
+    { id:"q40", part:"Losses and the ending",
+      q:"At the end of the novel, what does Rowdy say about Junior?",
+      options:["That he is a traitor who can never come home again","That he should come back to Wellpinit next school year","That he has become the better basketball player of the two","That he is like the old-time nomads, the only one left"],
+      answer:3,
+      why:"Rowdy has read that Indians were once nomads. He accepts Junior's choice, and they play one-on-one without keeping score." }
+  ],
+
+  /* 10 advantages-and-disadvantages writing questions */
+  writing: [
+    { id:"w01",
+      prompt:"What are the advantages and disadvantages of Junior leaving Wellpinit to go to school in Reardan?",
+      keywords:["reardan","wellpinit","rowdy","mr. p","gordy","traitor","school"],
+      advantages:["Better teachers and more hope, as Mr. P advised","Gordy helps him study; he ends the year with mostly As","He makes the varsity basketball team and new friends"],
+      disadvantages:["Rowdy punches him and stops being his friend","Many people on the reservation call him a traitor","He feels like an outsider and struggles to get to school"],
+      model:"Junior's decision to leave Wellpinit and go to Reardan has clear advantages and disadvantages. The biggest advantage is hope. As Mr. P told him, Junior needed to go somewhere people believed in the future. At Reardan, Gordy helps him study, and he finishes the year with mostly As. He also makes the varsity basketball team and makes new friends like Penelope and Roger. However, the move costs him a lot. Rowdy punches him and refuses to be his friend for most of the year, and many people on the reservation call him a traitor. At the first basketball game, the Wellpinit fans even turn their backs on him. Overall, I think the advantages are greater, because by the end of the novel Rowdy accepts his choice and Junior has a future that his old school could not give him." },
+
+    { id:"w02",
+      prompt:"What are the advantages and disadvantages of Junior hiding his poverty from his Reardan classmates?",
+      keywords:["poor","poverty","money","penelope","roger","winter formal","diner","dollars","secret","suit"],
+      advantages:["He can fit in and is not pitied","The Reardan students assume he has money","He protects his pride in a new school"],
+      disadvantages:["He is stressed all the time, e.g. at the Winter Formal","At the diner he feels sick because he can't pay","He has to lie, and nobody can help him"],
+      model:"Hiding his poverty helps Junior at first, but it also causes problems. One advantage is that he can fit in. The Reardan students assume he has money, so they do not pity him or treat him as different. This protects his pride while he is still new. On the other hand, keeping the secret makes him anxious. Before the Winter Formal he has only a few dollars, and at the diner he feels sick and lies that he forgot his wallet. When he finally admits that he is poor, Penelope and Roger help him: Roger lends him money and later drives him home. In my opinion, the disadvantages are greater, because the novel shows that being honest brought Junior real friends, while the secret only made him lonely." },
+
+    { id:"w03",
+      prompt:"What are the advantages and disadvantages of having a best friend like Rowdy?",
+      keywords:["rowdy","andruss","revenge","punch","elbow","basketball","nomad","friend","dawn"],
+      advantages:["He protects Junior from bullies","He takes revenge on the Andruss brothers","He is loyal and keeps Junior's secrets"],
+      disadvantages:["He solves problems with violence","He punches Junior when Junior leaves","He knocks Junior out in the first game"],
+      model:"Having Rowdy as a best friend brings Junior both safety and pain. The main advantage is protection. Junior is bullied all the time, but Rowdy stands up for him, and after the Andruss brothers beat Junior at the powwow, Rowdy gets revenge by shaving their eyebrows and cutting off their braids. Rowdy is also loyal: he keeps Junior's secret about crying over Dawn. However, Rowdy's anger can turn against Junior. When Junior decides to go to Reardan, Rowdy punches him in the face, and in the first basketball game he elbows Junior so hard that Junior ends up in the hospital. Overall, I believe the advantages outweigh the disadvantages, because their friendship survives: at the end Rowdy calls Junior a nomad and they play basketball together again." },
+
+    { id:"w04",
+      prompt:"What are the advantages and disadvantages of growing up in a close community like the Spokane reservation?",
+      keywords:["reservation","rez","spokane","grandmother","funeral","ted","alcohol","poverty","oscar","tribe","community"],
+      advantages:["People share a strong sense of belonging","About 2,000 people come to the grandmother's wake","Old values like the grandmother's tolerance"],
+      disadvantages:["Deep poverty (e.g. no money for Oscar's vet)","Alcohol causes the deaths of loved ones","People turn against anyone who leaves"],
+      model:"Growing up on the Spokane reservation gives Junior a strong community, but also many dangers. An advantage is the sense of belonging. When Grandmother Spirit dies, about two thousand people come to her wake, and the whole crowd laughs together when Ted brings an outfit that was never hers. The grandmother also shows old values like tolerance and forgiveness. On the other hand, life on the reservation is full of poverty and alcohol. The family cannot afford a vet for Oscar, and Junior loses his grandmother, Eugene and Mary because of drinking. The community can also be harsh to people who leave, and many call Junior a traitor. In conclusion, I think the community gives Junior an identity he values, but poverty and alcohol make it very hard to build a future there." },
+
+    { id:"w05",
+      prompt:"What are the advantages and disadvantages of Junior telling his story through cartoons as well as words?",
+      keywords:["cartoon","cartoons","draw","drawing","drawings","superheroes","pictures","rowdy","diary"],
+      advantages:["Drawing helps Junior understand his world","Cartoons make hard events easier to follow","They show feelings, e.g. the superhero cartoon for Rowdy"],
+      disadvantages:["Jokes in cartoons may make serious issues seem lighter","Simple drawings can turn people into types","Some readers may focus on pictures, not ideas"],
+      model:"Junior's cartoons have advantages and disadvantages as a way of telling his story. One advantage is that drawing helps Junior make sense of a confusing world, and it makes his story easier for readers to follow. The cartoons also show his feelings clearly. For example, at Thanksgiving he draws himself and Rowdy as superheroes, which shows how much he wants their friendship back. However, cartoons can also be a disadvantage. Because many of them are funny, they might make serious problems such as poverty and alcoholism seem lighter than they really are. Simple drawings can also reduce real people to types. All in all, I think the cartoons are a strength, because they let Junior show both his humor and his pain, and they help readers care about him." },
+
+    { id:"w06",
+      prompt:"What are the advantages and disadvantages of Junior playing basketball for Reardan?",
+      keywords:["basketball","varsity","coach","wellpinit","rowdy","game","team","fans","concussion"],
+      advantages:["He gains confidence and respect at Reardan","He bonds with his coach and teammates","He helps Reardan win the second game"],
+      disadvantages:["He must play against his old friends","Wellpinit fans turn their backs on him","Rowdy knocks him out; after winning he feels ashamed"],
+      model:"Playing basketball for Reardan helps Junior in many ways, but it also hurts him. The biggest advantage is confidence. He makes the varsity team as a freshman, his coach believes in him, and in the second game against Wellpinit he guards Rowdy and helps Reardan win. Basketball makes him feel like a real part of his new school. However, basketball also forces him to fight against his own people. In the first game, the Wellpinit fans turn their backs on him and Rowdy knocks him unconscious. Even after the victory, Junior feels ashamed when he thinks about the hard lives of the Wellpinit players, and he cries. Overall, I think basketball was good for Junior, but it showed him that winning in one world can mean losing in the other." },
+
+    { id:"w07",
+      prompt:"What are the advantages and disadvantages of Mary leaving the reservation to start a new life in Montana?",
+      keywords:["mary","montana","basement","casino","trailer","email","emails","letter","fire"],
+      advantages:["She finally leaves the basement where she was stuck","Her emails show she is happy and excited","She starts writing her life story"],
+      disadvantages:["She can't find a job without experience","She lives in a trailer far from her family","She dies in a trailer fire after a party"],
+      model:"Mary's decision to leave the reservation has both advantages and disadvantages. The main advantage is freedom. For years she hid in the family basement, but after Junior goes to Reardan, she marries a man she met at a casino and moves to Montana. Her emails show that she is happy and excited, and she even starts writing her life story. However, her new life is not easy. Restaurants will not hire her without experience, and she and her husband live in a trailer far from her family. In the end, she dies in a fire in that trailer after a party. In my opinion, leaving was not the problem: Mary was brave to chase her dream, but alcohol still followed her and destroyed that new life." },
+
+    { id:"w08",
+      prompt:"What are the advantages and disadvantages of Mr. P being completely honest with Junior?",
+      keywords:["mr. p","mr p","teacher","geometry","hope","culture","apologize","apology","leave"],
+      advantages:["He admits his past mistakes and apologizes","He is the first adult to say Junior deserves better","His advice pushes Junior to change schools"],
+      disadvantages:["The truth is painful and makes Junior angry","An apology can't undo harm to other students","His advice puts Junior under huge pressure"],
+      model:"Mr. P's honesty helps Junior, but it is also hard to hear. One advantage is that Mr. P admits his past mistakes. He says teachers were trained to \"kill the Indian to save the child\" and that he used to hit students, and he apologizes. He is also the first adult who tells Junior that he deserves more than the reservation can offer, and this advice gives Junior the courage to go to Reardan. On the other hand, the truth is painful. Junior is shocked and angry, and an apology cannot undo the harm done to other children. Mr. P's advice also puts Junior under enormous pressure to leave his family and friends. Overall, I believe the honesty was worth it, because without it Junior might never have found hope." },
+
+    { id:"w09",
+      prompt:"What are the advantages and disadvantages of being a \"part-time Indian\" who lives between two worlds?",
+      keywords:["part-time","reardan","wellpinit","tribe","tribes","white","indian","stranger","two worlds","belong"],
+      advantages:["He learns from both worlds","He has friends in both places by the end","He sees he belongs to many \"tribes\""],
+      disadvantages:["He feels like a stranger in both places","He hides parts of himself (e.g. his poverty)","Some people on each side do not accept him"],
+      model:"Living between Reardan and Wellpinit gives Junior both opportunities and problems. An advantage is that he can learn from two worlds. At Reardan he gains education, Gordy's friendship and success in basketball, while the reservation gives him his family and his identity. After his losses, he realizes he belongs to many groups at once, such as cartoonists, basketball players and his Spokane tribe. However, being a \"part-time Indian\" is lonely. Junior feels like a stranger in both places: Reardan students do not know he is poor, and many people on the reservation see him as a traitor. He says being Indian feels like a part-time job that doesn't pay well. In conclusion, I think the advantages win, because by the end Junior is stronger and can belong to more than one world." },
+
+    { id:"w10",
+      prompt:"What are the advantages and disadvantages of Junior using humor to deal with difficult events?",
+      keywords:["humor","humour","joke","jokes","funny","laugh","laughing","ted","funeral","mary","dentist"],
+      advantages:["Jokes help Junior survive pain and bullying","Laughter at the funeral brings people together","Humor makes the book easier to read"],
+      disadvantages:["Humor can hide real pain","He laughs uncontrollably when he hears of Mary's death","Jokes can hurt others, like Roger's racist joke"],
+      model:"Humor is one of Junior's main ways of coping, and it has advantages and disadvantages. One advantage is that jokes help him survive hard experiences. He jokes about his big head, his extra teeth and the dentist, which shows he refuses to be defeated. Humor can also bring people together: at his grandmother's funeral, the whole crowd laughs when Ted tries to return an outfit that was never hers. On the other hand, humor can hide pain instead of healing it. When Junior hears that Mary has died, he cannot stop laughing, and even his father's words make him laugh harder. Jokes can also hurt people, as Roger's racist joke shows. Overall, I think humor helps Junior more than it harms him, because it keeps him going when life is at its worst." }
+  ]
+};
+
+/* Words that show the student used a detail from the novel (lenient check). */
+const NOVEL_WORDS = ["junior","arnold","rowdy","reardan","wellpinit","penelope","gordy","roger","mr. p","mr p",
+  "mary","eugene","grandmother","oscar","coach","basketball","reservation","rez","powwow","ted","dodge",
+  "montana","cartoon","spokane","mother","father","dad","mom"];
+
+/* === STATE === */
+let state = freshState();
+
+function freshState(){
+  return {
+    name: "",
+    tab: "mcq",
+    mcq: freshMcq(),
+    writing: {}          // id -> { text, checked:boolean }
+  };
+}
+function freshMcq(){
+  return {
+    round: 1,
+    queue: APP.questions.map(q => q.id),
+    idx: 0,
+    firstTry: {},        // id -> true/false (result of first attempt)
+    solved: {},          // id -> true
+    missedThisRound: [],
+    current: null,       // { id, order:[optionIndexes], picked:null|index }
+    roundSummary: null,  // shown between rounds
+    finished: false
+  };
+}
+
+function save(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+function load(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      if (s && s.mcq && s.writing) state = s;
+    }
+  } catch(e) {}
+}
+
+/* === HELPERS === */
+const $ = sel => document.querySelector(sel);
+function esc(t){ return String(t).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c])); }
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function qById(id){ return APP.questions.find(q => q.id === id); }
+function wById(id){ return APP.writing.find(w => w.id === id); }
+function wordCount(t){ return (t || "").trim().split(/\s+/).filter(Boolean).length; }
+const LETTERS = ["A","B","C","D"];
+
+/* === TABS === */
+function showTab(name){
+  state.tab = name;
+  ["mcq","write","report"].forEach(t => {
+    $("#tab-" + t).setAttribute("aria-selected", String(t === name));
+    $("#panel-" + t).classList.toggle("hidden", t !== name);
+  });
+  if (name === "report") renderReport();
+  save();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* === MULTIPLE CHOICE (mastery loop) === */
+function renderMCQ(){
+  const m = state.mcq;
+  const panel = $("#panel-mcq");
+  const total = APP.questions.length;
+  const solvedCount = Object.keys(m.solved).length;
+  const pct = Math.round(solvedCount / total * 100);
+
+  if (m.finished) {
+    const first = Object.values(m.firstTry).filter(Boolean).length;
+    panel.innerHTML = `
+      <div class="card taped">
+        <h2 class="big">All ${total} questions solved!</h2>
+        <p>You worked through every question until you got it right.</p>
+        <div class="stats">
+          <div class="stat"><b>${first}/${total}</b>right the first time</div>
+          <div class="stat"><b>${m.round}</b>round${m.round > 1 ? "s" : ""} needed</div>
+        </div>
+        <div class="btn-row">
+          <button class="btn" onclick="showTab('write')">Go to the writing questions</button>
+          <button class="btn secondary" onclick="restartMCQ()">Practice the 40 again</button>
+        </div>
+      </div>`;
+    return;
+  }
+
+  if (m.roundSummary) {
+    const r = m.roundSummary;
+    panel.innerHTML = `
+      <div class="card taped">
+        <h2 class="big">Round ${r.round} done</h2>
+        <p>You got <strong>${r.right}</strong> of ${r.asked} right in this round.</p>
+        <p>Now practice the <strong>${r.missed}</strong> question${r.missed > 1 ? "s" : ""} you missed. They will keep coming back until you get them right.</p>
+        <div class="btn-row"><button class="btn" onclick="startNextRound()">Start round ${r.round + 1}</button></div>
+      </div>`;
+    return;
+  }
+
+  // set up the current question if needed
+  const id = m.queue[m.idx];
+  if (!m.current || m.current.id !== id) {
+    m.current = { id, order: shuffle([0,1,2,3]), picked: null };
+    save();
+  }
+  const q = qById(id);
+  const cur = m.current;
+  const answered = cur.picked !== null;
+
+  const optsHtml = cur.order.map((optIndex, pos) => {
+    let cls = "opt";
+    if (answered) {
+      if (optIndex === q.answer) cls += " correct";
+      else if (optIndex === cur.picked) cls += " wrong";
+    }
+    return `<button class="${cls}" ${answered ? "disabled" : ""} onclick="pickOption(${optIndex})">
+              <span class="letter">${LETTERS[pos]}</span><span>${esc(q.options[optIndex])}</span>
+            </button>`;
+  }).join("");
+
+  let fb = "";
+  if (answered) {
+    const right = cur.picked === q.answer;
+    fb = right
+      ? `<div class="feedback good" role="status"><strong>Correct!</strong><div class="why">${esc(q.why)}</div></div>`
+      : `<div class="feedback bad" role="status"><strong>Not quite. The correct answer is:</strong>${esc(q.options[q.answer])}<div class="why">${esc(q.why)}</div></div>`;
+  }
+
+  panel.innerHTML = `
+    <div class="card taped">
+      <div class="meta">
+        <span class="part-label">${esc(q.part)}</span>
+        <span class="counter">Round ${m.round} · ${m.idx + 1} of ${m.queue.length}</span>
+      </div>
+      <div class="counter">Solved: ${solvedCount}/${total}</div>
+      <div class="progress" aria-hidden="true"><span style="width:${pct}%"></span></div>
+      <p class="question">${esc(q.q)}</p>
+      <div class="options">${optsHtml}</div>
+      ${fb}
+      ${answered ? `<div class="btn-row"><button class="btn" id="nextBtn" onclick="nextQuestion()">Next</button></div>` : ""}
+    </div>`;
+  if (answered) { const n = $("#nextBtn"); if (n) n.focus({ preventScroll: true }); }
+}
+
+function pickOption(optIndex){
+  const m = state.mcq;
+  const cur = m.current;
+  if (!cur || cur.picked !== null) return;
+  cur.picked = optIndex;
+  const q = qById(cur.id);
+  const right = optIndex === q.answer;
+  if (!(cur.id in m.firstTry)) m.firstTry[cur.id] = right;
+  if (right) m.solved[cur.id] = true;
+  else m.missedThisRound.push(cur.id);
+  save();
+  renderMCQ();
+}
+
+function nextQuestion(){
+  const m = state.mcq;
+  m.idx++;
+  m.current = null;
+  if (m.idx >= m.queue.length) {
+    if (m.missedThisRound.length) {
+      m.roundSummary = {
+        round: m.round,
+        asked: m.queue.length,
+        right: m.queue.length - m.missedThisRound.length,
+        missed: m.missedThisRound.length
+      };
+    } else {
+      m.finished = true;
+    }
+  }
+  save();
+  renderMCQ();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function startNextRound(){
+  const m = state.mcq;
+  m.round++;
+  m.queue = shuffle(m.missedThisRound);
+  m.missedThisRound = [];
+  m.idx = 0;
+  m.current = null;
+  m.roundSummary = null;
+  save();
+  renderMCQ();
+}
+
+function restartMCQ(){
+  if (!confirm("Start the 40 questions again? Your reading results will be cleared. Your writing stays.")) return;
+  state.mcq = freshMcq();
+  save();
+  renderMCQ();
+}
+
+/* === WRITING === */
+const CHECKS = [
+  { key:"adv", label:"An advantage",
+    re:/\b(advantages?|benefits?|positive|good|helps?|helped|helpful|gains?|opportunit\w*|better|strength)\b/i,
+    tip:"Name at least one advantage: something good that comes from it." },
+  { key:"dis", label:"A disadvantage",
+    re:/\b(disadvantages?|drawbacks?|downside|negative|problems?|costs?|lose|loses|lost|hurts?|difficult|hard|harder|worse|risks?|however|on the other hand)\b/i,
+    tip:"Name at least one disadvantage: something bad or difficult that comes from it." },
+  { key:"ex", label:"An example from the novel",
+    tip:"Add a detail from the book: a character, a place or something that happens." },
+  { key:"judge", label:"Your final judgment",
+    re:/\b(overall|in conclusion|i think|i believe|in my opinion|outweighs?|to sum up|all in all|in the end|therefore)\b/i,
+    tip:"Finish by saying which side is stronger and why." }
+];
+
+function runChecks(w, text){
+  const lower = (text || "").toLowerCase();
+  return CHECKS.map(c => {
+    let ok;
+    if (c.key === "ex") ok = w.keywords.concat(NOVEL_WORDS).some(k => lower.includes(k));
+    else ok = c.re.test(text);
+    return { label: c.label, ok, tip: c.tip };
+  });
+}
+
+function renderWriting(){
+  const panel = $("#panel-write");
+  const intro = `
+    <div class="card taped">
+      <h2 class="big">Advantages &amp; disadvantages</h2>
+      <p>Answer each question in one paragraph. Write about 100–150 words. A strong paragraph has four parts:</p>
+      <div class="tip-steps">
+        <div><span>1</span>An advantage + an example</div>
+        <div><span>2</span>A disadvantage + an example</div>
+        <div><span>3</span>Details from the novel</div>
+        <div><span>4</span>Your final judgment</div>
+      </div>
+      <p class="note">Press "Check my answer" to see what you included and a model answer. You can keep editing after checking.</p>
+    </div>`;
+
+  const cards = APP.writing.map((w, i) => {
+    const saved = state.writing[w.id] || { text: "", checked: false };
+    return `
+      <div class="card" id="card-${w.id}">
+        <p class="wq-prompt"><span class="wq-num">${i + 1}</span>${esc(w.prompt)}</p>
+        <textarea id="ta-${w.id}" aria-label="Your answer to writing question ${i + 1}" placeholder="Write your paragraph here..."
+          oninput="onWriteInput('${w.id}')">${esc(saved.text)}</textarea>
+        <div class="wc" id="wc-${w.id}">${wordCount(saved.text)} words</div>
+        <div class="btn-row"><button class="btn teal" onclick="checkWriting('${w.id}')">Check my answer</button></div>
+        <div id="fb-${w.id}">${saved.checked ? writingFeedbackHtml(w, saved.text) : ""}</div>
+      </div>`;
+  }).join("");
+
+  panel.innerHTML = intro + cards;
+}
+
+function onWriteInput(id){
+  const ta = $("#ta-" + id);
+  const entry = state.writing[id] || { text: "", checked: false };
+  entry.text = ta.value;
+  state.writing[id] = entry;
+  $("#wc-" + id).textContent = wordCount(ta.value) + " words";
+  save();
+}
+
+function checkWriting(id){
+  const w = wById(id);
+  const ta = $("#ta-" + id);
+  const entry = state.writing[id] || { text: "", checked: false };
+  entry.text = ta.value;
+  entry.checked = true;
+  state.writing[id] = entry;
+  save();
+  $("#fb-" + id).innerHTML = writingFeedbackHtml(w, entry.text);
+}
+
+function writingFeedbackHtml(w, text){
+  const words = wordCount(text);
+  const results = runChecks(w, text);
+  const list = results.map(r => `
+      <li class="${r.ok ? "ok" : "miss"}">${r.ok ? "✓" : "✗"} ${esc(r.label)}${r.ok ? "" : `<small>${esc(r.tip)}</small>`}</li>`).join("");
+  const lengthNote = words < 60
+    ? `<li class="miss">✗ Length (${words} words)<small>Your paragraph is short. Aim for about 100–150 words so you can explain both sides.</small></li>`
+    : `<li class="ok">✓ Length (${words} words)</li>`;
+  return `
+    <ul class="checks">${list}${lengthNote}</ul>
+    <div class="model">
+      <h4>Model answer</h4>
+      <p>${esc(w.model)}</p>
+      <div class="cols">
+        <div><h5>Advantages you could use</h5><ul>${w.advantages.map(a => `<li>${esc(a)}</li>`).join("")}</ul></div>
+        <div><h5>Disadvantages you could use</h5><ul>${w.disadvantages.map(d => `<li>${esc(d)}</li>`).join("")}</ul></div>
+      </div>
+    </div>`;
+}
+
+/* === REPORT === */
+let copied = false;
+
+function buildReport(){
+  const m = state.mcq;
+  const total = APP.questions.length;
+  const first = Object.values(m.firstTry).filter(Boolean).length;
+  const attempted = Object.keys(m.firstTry).length;
+  const solved = Object.keys(m.solved).length;
+  const missedFirst = APP.questions.filter(q => m.firstTry[q.id] === false);
+  const date = new Date().toLocaleString();
+
+  let r = "";
+  r += `Name: ${state.name || "(no name)"}\n`;
+  r += `App: ${APP.title}\n`;
+  r += `Date: ${date}\n\n`;
+  r += `READING (multiple choice)\n`;
+  r += `Right the first time: ${first}/${total}\n`;
+  r += `Answered at least once: ${attempted}/${total}\n`;
+  r += `Solved (after practice rounds): ${solved}/${total}\n`;
+  r += `Rounds: ${m.round}${m.finished ? " (finished)" : " (not finished)"}\n`;
+  if (missedFirst.length) {
+    r += `Missed the first time:\n`;
+    missedFirst.forEach((q, i) => { r += `  ${q.id.replace("q","Q")}: ${q.q}\n`; });
+  }
+  r += `\nWRITING (advantages and disadvantages)\n`;
+  APP.writing.forEach((w, i) => {
+    const entry = state.writing[w.id];
+    const text = entry && entry.text.trim() ? entry.text.trim() : "";
+    r += `\n${i + 1}. ${w.prompt}\n`;
+    if (!text) { r += `(not answered)\n`; return; }
+    const res = runChecks(w, text);
+    r += `Checks: ${res.map(x => (x.ok ? "✓ " : "✗ ") + x.label).join(" | ")} | ${wordCount(text)} words\n`;
+    r += `${text}\n`;
+  });
+  return r;
+}
+
+function renderReport(){
+  copied = false;
+  const panel = $("#panel-report");
+  panel.innerHTML = `
+    <div class="card taped">
+      <h2 class="big">Send to my teacher</h2>
+      <p><strong>Step 1:</strong> Copy your report. <strong>Step 2:</strong> Open WhatsApp and paste it.</p>
+      ${state.name ? "" : `<p class="feedback bad" style="margin-top:0">Please type your name at the top first.</p>`}
+      <div class="btn-row">
+        <button class="btn" id="copyBtn" onclick="copyReport()">Copy my report</button>
+        <button class="btn teal" id="waBtn" onclick="openWhatsApp()" disabled>Open WhatsApp</button>
+      </div>
+      <h3 class="hand" style="margin:18px 0 6px">Your report</h3>
+      <div class="report-box" id="reportBox">${esc(buildReport())}</div>
+    </div>
+    <div class="card">
+      <p class="note">Want to start everything again? This clears your reading results and all your writing.</p>
+      <button class="btn secondary" onclick="resetAll()">Start again</button>
+    </div>`;
+}
+
+function copyReport(){
+  const text = buildReport();
+  const done = () => {
+    copied = true;
+    $("#copyBtn").textContent = "Copied ✓";
+    $("#waBtn").disabled = false;
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  } else {
+    fallbackCopy(text, done);
+  }
+}
+function fallbackCopy(text, done){
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.setAttribute("readonly", "");
+  ta.style.position = "fixed"; ta.style.top = "-1000px";
+  document.body.appendChild(ta);
+  ta.select();
+  ta.setSelectionRange(0, text.length);
+  let ok = false;
+  try { ok = document.execCommand("copy"); } catch(e) {}
+  document.body.removeChild(ta);
+  if (ok) done();
+  else alert("Copying didn't work on this device. Please select the report text, copy it, and then open WhatsApp.");
+  if (!ok) { copied = true; $("#waBtn").disabled = false; }
+}
+function openWhatsApp(){
+  if (!copied) return;
+  const line = `Hi! Here is my report for ${APP.title}${state.name ? " - " + state.name : ""}. (pasted below)`;
+  window.open(`https://wa.me/${TEACHER_WHATSAPP}?text=${encodeURIComponent(line)}`, "_blank");
+}
+
+function resetAll(){
+  if (!confirm("Are you sure? This deletes your reading results AND all your writing.")) return;
+  const name = state.name;
+  state = freshState();
+  state.name = name;
+  state.tab = "report";
+  save();
+  renderMCQ();
+  renderWriting();
+  renderReport();
+}
+
+/* === START === */
+function init(){
+  load();
+  $("#appTitle").textContent = APP.title;
+  $("#appSub").textContent = APP.subtitle;
+  const nameInput = $("#studentName");
+  nameInput.value = state.name || "";
+  nameInput.addEventListener("input", () => {
+    state.name = nameInput.value.trim();
+    save();
+    if (state.tab === "report") renderReport();
+  });
+  $("#tab-mcq").addEventListener("click", () => showTab("mcq"));
+  $("#tab-write").addEventListener("click", () => showTab("write"));
+  $("#tab-report").addEventListener("click", () => showTab("report"));
+  renderMCQ();
+  renderWriting();
+  showTab(state.tab || "mcq");
+}
+init();
+</script>
+</body>
+</html>
