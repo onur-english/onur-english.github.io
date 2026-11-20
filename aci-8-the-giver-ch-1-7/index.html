@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Giver · Chapters 1–7 Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,700;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+/* === THEME ===
+   A grey, "Sameness" world. The accent color starts grey and slowly turns
+   apple-red as the student masters more questions. */
+:root {
+  --paper: #ecebe7;
+  --card: #fbfaf8;
+  --ink: #1e1e1e;
+  --muted: #66645f;
+  --line: #d6d3cc;
+  --soft: #f3f2ef;
+  --accent: hsl(4, 0%, 38%);        /* updated by JS as mastery grows */
+  --accent-soft: hsl(4, 0%, 92%);   /* updated by JS */
+  --good: #2b7a4b;
+  --good-bg: #e3f2e8;
+  --bad: #b4352b;
+  --bad-bg: #f8e2df;
+  --radius: 16px;
+  --shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.06);
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image:
+    repeating-linear-gradient(90deg, rgba(0,0,0,.025) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.025) 0 1px, transparent 1px 56px);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
+
+/* === HEADER === */
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 4px;
+}
+
+.title {
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 40px;
+  line-height: 1.05;
+  font-weight: 700;
+  margin: 0;
+}
+
+.title .dot { color: var(--accent); transition: color .6s ease; }
+
+.subtitle {
+  font-family: "Newsreader", Georgia, serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--muted);
+  margin: 4px 0 0;
+}
+
+.btn-ghost {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* === CARDS & BUTTONS === */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px 20px;
+}
+
+.btn {
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 20px;
+  cursor: pointer;
+  background: var(--ink);
+  color: #fff;
+  width: 100%;
+}
+
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.btn-secondary {
+  background: var(--soft);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.btn + .btn { margin-top: 10px; }
+
+.hidden { display: none !important; }
+
+/* === START SCREEN === */
+.lead {
+  font-size: 16px;
+  margin: 0 0 18px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.chip {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.count-note {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+
+/* === QUIZ SCREEN === */
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.pill {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  color: var(--ink);
+}
+
+.mastery {
+  margin-bottom: 16px;
+}
+
+.mastery-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.mastery-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width .5s ease, background-color .6s ease;
+}
+
+.mastery-label {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.chapter-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 6px;
+  padding: 3px 8px;
+  margin-bottom: 12px;
+  transition: color .6s ease, background-color .6s ease;
+}
+
+.question {
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 23px;
+  line-height: 1.3;
+  font-weight: 500;
+  margin: 0 0 18px;
+}
+
+.options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.option {
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.option:focus-visible { outline: 3px solid #8a8a8a; outline-offset: 2px; }
+
+.option .letter {
+  flex: 0 0 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--soft);
+  border: 1px solid var(--line);
+}
+
+.option .text { padding-top: 2px; }
+
+.option.is-locked { cursor: default; }
+
+.option.is-correct {
+  border-color: var(--good);
+  background: var(--good-bg);
+}
+
+.option.is-correct .letter {
+  background: var(--good);
+  border-color: var(--good);
+  color: #fff;
+}
+
+.option.is-wrong {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+}
+
+.option.is-wrong .letter {
+  background: var(--bad);
+  border-color: var(--bad);
+  color: #fff;
+}
+
+.option.is-faded { opacity: .5; }
+
+.tag {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.is-correct .tag { color: var(--good); }
+.is-wrong .tag { color: var(--bad); }
+
+.feedback {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.feedback.good { background: var(--good-bg); color: var(--good); }
+.feedback.bad { background: var(--bad-bg); color: var(--bad); }
+
+.next-wrap { margin-top: 14px; }
+
+/* === ROUND & FINISH SCREENS === */
+.big {
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 30px;
+  line-height: 1.15;
+  margin: 0 0 8px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 18px 0 20px;
+}
+
+.stat {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+}
+
+.stat b {
+  display: block;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.stat span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.field {
+  display: block;
+  width: 100%;
+  font: inherit;
+  font-size: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: #fff;
+  margin-bottom: 12px;
+}
+
+.send-note {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+.copied {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--good);
+  margin: 8px 0 0;
+  min-height: 20px;
+}
+
+.foot {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 26px;
+}
+
+/* === PHONE === */
+@media (max-width: 420px) {
+  .title { font-size: 34px; }
+  .question { font-size: 21px; }
+  .card { padding: 18px 16px; }
+  .big { font-size: 26px; }
+  .stat b { font-size: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div>
+      <p class="kicker">ACI · Grade 8 · Exam 2</p>
+      <h1 class="title">The Giver<span class="dot">.</span></h1>
+      <p class="subtitle">Chapters 1–7 · Comprehension</p>
+    </div>
+    <button class="btn-ghost hidden" id="menuBtn" type="button">Menu</button>
+  </header>
+
+  <!-- === START === -->
+  <section id="startScreen" class="card">
+    <p class="lead">Answer every question. Any question you miss comes back in the next round until you get it right.</p>
+    <p class="label">Chapters</p>
+    <div class="chips" id="chapterChips"></div>
+    <p class="count-note" id="countNote"></p>
+    <button class="btn" id="startBtn" type="button">Start</button>
+  </section>
+
+  <!-- === QUIZ === -->
+  <section id="quizScreen" class="hidden">
+    <div class="status">
+      <span class="pill" id="roundPill">Round 1</span>
+      <span id="qCounter">Question 1 of 50</span>
+    </div>
+    <div class="mastery">
+      <div class="mastery-track"><div class="mastery-fill" id="masteryFill"></div></div>
+      <div class="mastery-label" id="masteryLabel">Mastered 0 of 50</div>
+    </div>
+    <div class="card">
+      <span class="chapter-tag" id="chapterTag">Chapter 1</span>
+      <h2 class="question" id="questionText"></h2>
+      <ul class="options" id="options"></ul>
+      <div id="feedback" aria-live="polite"></div>
+      <div class="next-wrap hidden" id="nextWrap">
+        <button class="btn" id="nextBtn" type="button">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- === ROUND COMPLETE === -->
+  <section id="roundScreen" class="card hidden">
+    <h2 class="big" id="roundTitle">Round 1 complete</h2>
+    <p class="lead" id="roundText"></p>
+    <div class="stats">
+      <div class="stat"><b id="rsRight">0</b><span>right this round</span></div>
+      <div class="stat"><b id="rsLeft">0</b><span>to practice again</span></div>
+      <div class="stat"><b id="rsMastered">0</b><span>mastered</span></div>
+    </div>
+    <button class="btn" id="nextRoundBtn" type="button">Start the next round</button>
+  </section>
+
+  <!-- === FINISH / REPORT === -->
+  <section id="finishScreen" class="card hidden">
+    <h2 class="big" id="finishTitle">All questions mastered</h2>
+    <p class="lead" id="finishText"></p>
+    <div class="stats">
+      <div class="stat"><b id="fsFirst">0</b><span>right first time</span></div>
+      <div class="stat"><b id="fsRounds">0</b><span>rounds</span></div>
+      <div class="stat"><b id="fsTotal">0</b><span>questions</span></div>
+    </div>
+
+    <p class="label">Send to my teacher</p>
+    <p class="send-note">Type your name, copy your report, then open WhatsApp and paste it.</p>
+    <input class="field" id="studentName" type="text" placeholder="Your full name" autocomplete="name">
+    <button class="btn" id="copyBtn" type="button">Copy my report</button>
+    <button class="btn btn-secondary" id="waBtn" type="button" disabled>Open WhatsApp</button>
+    <p class="copied" id="copiedMsg" aria-live="polite"></p>
+
+    <button class="btn btn-secondary" id="againBtn" type="button" style="margin-top:14px">Start again</button>
+  </section>
+
+  <p class="foot">Based on <i>The Giver</i> by Lois Lowry</p>
+</div>
+
+<script>
+/* === CONSTANTS === */
+const TEACHER_WHATSAPP = "905053613335";
+const EXAM_MINUTES = 0; // no timer in this quiz
+
+/* === DATA ===
+   All content lives here. Each question: { id, chapter, question, answer, wrong: [3] }.
+   The correct answer's position is balanced across A–D every round. */
+const APP = {
+  title: "The Giver — Chapters 1–7 Comprehension Quiz",
+  school: "ACI",
+  grade: 8,
+  folder: "aci-8-the-giver-ch-1-7",
+  book: "The Giver by Lois Lowry",
+  chapters: [1, 2, 3, 4, 5, 6, 7],
+  questions: [
+    /* --- Chapter 1 --- */
+    { id: "q01", chapter: 1,
+      question: "As December gets closer, which word does Jonas finally decide describes his feeling best?",
+      answer: "Apprehensive",
+      wrong: ["Frightened", "Distraught", "Excited"] },
+    { id: "q02", chapter: 1,
+      question: "What was the one time Jonas remembers feeling truly frightened?",
+      answer: "When an unknown aircraft flew over the community",
+      wrong: ["When the river flooded near the Nurturing Center", "When the Speaker called his name over the loudspeakers", "When his bicycle broke down far from his dwelling"] },
+    { id: "q03", chapter: 1,
+      question: "What did the Speaker say would happen to the Pilot-in-Training who flew over the community by mistake?",
+      answer: "He would be released",
+      wrong: ["He would become a Laborer", "He would be given a new job", "He would stop flying for good"] },
+    { id: "q04", chapter: 1,
+      question: "What does Jonas's family share with each other every evening after dinner?",
+      answer: "Their feelings from that day",
+      wrong: ["Their dreams from the night before", "Their volunteer hours for the week", "Their mistakes from school lessons"] },
+    { id: "q05", chapter: 1,
+      question: "Why was Lily angry at the play area?",
+      answer: "A visiting Seven broke the play area rules",
+      wrong: ["An older Nine took away her comfort object", "Her group leader blamed her for being late", "A friend laughed at the ribbons in her hair"] },
+    { id: "q06", chapter: 1,
+      question: "What is Jonas's father worried about?",
+      answer: "A newchild who is not growing or sleeping well",
+      wrong: ["A Nurturer who keeps arriving late for work", "Being moved from the Nurturing Center to a new job", "A group of Twos who broke the play area rules"] },
+    { id: "q07", chapter: 1,
+      question: "Where does Jonas's mother work?",
+      answer: "The Department of Justice",
+      wrong: ["The Nurturing Center", "The House of the Old", "The Hall of Open Records"] },
+    { id: "q08", chapter: 1,
+      question: "When Asher arrives late to class, what language lesson does the Instructor take from his excuse?",
+      answer: "“Distraught” was too strong a word for how he felt",
+      wrong: ["“Distracted” was too weak a word for how he felt", "“Sorry” should never begin a formal apology", "“Excited” was the wrong word for how he felt"] },
+
+    /* --- Chapter 2 --- */
+    { id: "q09", chapter: 2,
+      question: "What happens to the newchildren at the Ceremony of One?",
+      answer: "They receive names and are given to family units",
+      wrong: ["They receive jackets that button down the front", "They are tested so the Elders can plan their jobs", "They move from their dwellings into the Nurturing Center"] },
+    { id: "q10", chapter: 2,
+      question: "How many newchildren are born in the community each year?",
+      answer: "Fifty",
+      wrong: ["Twelve", "Twenty-five", "One hundred"] },
+    { id: "q11", chapter: 2,
+      question: "Which rule does Jonas's father admit that he bent?",
+      answer: "He looked at the list to learn a newchild's name early",
+      wrong: ["He told his family about a private Committee meeting", "He skipped the evening telling of feelings for a week", "He took a newchild outside the Nurturing Center alone"] },
+    { id: "q12", chapter: 2,
+      question: "Why did Jonas's father expect to become a Nurturer when he was an Eleven?",
+      answer: "He loved newchildren and volunteered with them",
+      wrong: ["The Chief Elder told him a whole year early", "He asked the Committee to give him that job", "He scored highest on the Nurturing test"] },
+    { id: "q13", chapter: 2,
+      question: "How does the Committee of Elders decide each Eleven's Assignment?",
+      answer: "By watching each Eleven closely all year",
+      wrong: ["By giving each Eleven a long written test", "By letting each family unit choose the job", "By drawing the jobs by chance at the Ceremony"] },
+    { id: "q14", chapter: 2,
+      question: "Why is Jonas worried about Asher's Assignment?",
+      answer: "Asher does not seem to have any serious interests",
+      wrong: ["Asher has not finished his volunteer hours", "Asher wants a job the Elders always refuse", "Asher has told Jonas he does not want a job"] },
+    { id: "q15", chapter: 2,
+      question: "What is Lily's comfort object?",
+      answer: "A stuffed elephant",
+      wrong: ["A stuffed bear", "A soft blanket", "A wooden toy bicycle"] },
+
+    /* --- Chapter 3 --- */
+    { id: "q16", chapter: 3,
+      question: "What does Jonas notice about the newchild Gabriel when he comes home?",
+      answer: "He has pale eyes like Jonas's own eyes",
+      wrong: ["He has the same smile as Jonas's father", "He is bigger than most newchildren his age", "He sleeps more calmly than other newchildren"] },
+    { id: "q17", chapter: 3,
+      question: "Why is Lily's comment about Gabe's eyes seen as rude?",
+      answer: "It points out how someone is different",
+      wrong: ["It questions a decision made by the Elders", "It was said during the morning dream-telling", "It uses words that are not precise enough"] },
+    { id: "q18", chapter: 3,
+      question: "Why does Lily say she would like to be a Birthmother?",
+      answer: "She thinks they eat well and do little work",
+      wrong: ["She thinks it is the most honored job of all", "She wants to work beside her father every day", "She wants to live in the House of the Old early"] },
+    { id: "q19", chapter: 3,
+      question: "According to Jonas's mother, what does a Birthmother become after three births?",
+      answer: "A Laborer",
+      wrong: ["A Nurturer", "A Caretaker of the Old", "A member of the Committee"] },
+    { id: "q20", chapter: 3,
+      question: "What strange thing happens while Jonas and Asher are tossing an apple?",
+      answer: "The apple seems to change for a moment",
+      wrong: ["The apple splits into two even pieces", "The apple rolls into the river and is lost", "The apple hits a Laborer who is passing by"] },
+    { id: "q21", chapter: 3,
+      question: "Why does the Speaker make an announcement to the male Elevens about snacks?",
+      answer: "Jonas had taken an apple home with him",
+      wrong: ["Asher had thrown food at the play area", "An Eleven had eaten another child's snack", "Fiona had shared her snacks with the Old"] },
+    { id: "q22", chapter: 3,
+      question: "What does Jonas do after he hears the announcement?",
+      answer: "He apologizes and returns the apple",
+      wrong: ["He hides the apple in his dwelling", "He says the apple belonged to Asher", "He eats the apple to get rid of it"] },
+
+    /* --- Chapter 4 --- */
+    { id: "q23", chapter: 4,
+      question: "Where does Jonas find Asher's and Fiona's bicycles?",
+      answer: "At the House of the Old",
+      wrong: ["At the Nurturing Center", "At the Fish Hatchery", "At the Rehabilitation Center"] },
+    { id: "q24", chapter: 4,
+      question: "Why does Jonas have little idea what his Assignment will be?",
+      answer: "He has volunteered in many different places",
+      wrong: ["He has never finished his volunteer hours", "He has always volunteered in one place only", "His parents refuse to talk about Assignments"] },
+    { id: "q25", chapter: 4,
+      question: "Whom does Jonas help to bathe at the House of the Old?",
+      answer: "Larissa",
+      wrong: ["Edna", "Inger", "Madeline"] },
+    { id: "q26", chapter: 4,
+      question: "Who are the only people who may be seen without their clothes?",
+      answer: "Newchildren and the Old",
+      wrong: ["Family members inside their dwelling", "Children under the age of Nine", "Nurturers and Caretakers at work"] },
+    { id: "q27", chapter: 4,
+      question: "How does Larissa describe Roberto's release?",
+      answer: "A celebration where his whole life was told",
+      wrong: ["A sad day when many of the Old cried", "A punishment for breaking too many rules", "A short private meeting with the Elders"] },
+    { id: "q28", chapter: 4,
+      question: "When Jonas asks what happens after release, what does Larissa say?",
+      answer: "No one knows except the Committee",
+      wrong: ["Released people come back after a year", "Only the Twelves are allowed to know", "Released people go to work in Food Production"] },
+    { id: "q29", chapter: 4,
+      question: "Why did Edna's life telling seem less interesting than Roberto's?",
+      answer: "She had been a Birthmother and never had a family",
+      wrong: ["She had broken many rules during her life", "She was released when she was still young", "She refused to give a goodbye speech"] },
+
+    /* --- Chapter 5 --- */
+    { id: "q30", chapter: 5,
+      question: "What does Jonas's family share with each other every morning?",
+      answer: "Their dreams from the night",
+      wrong: ["Their feelings from the day before", "Their plans for volunteer hours", "Their thanks to the Committee"] },
+    { id: "q31", chapter: 5,
+      question: "In Jonas's dream, what does he want Fiona to do?",
+      answer: "Get into the tub so he can bathe her",
+      wrong: ["Help him look for Asher's bicycle", "Tell him what her Assignment will be", "Volunteer with him at the Hatchery"] },
+    { id: "q32", chapter: 5,
+      question: "What does Jonas's mother call the feeling he had in his dream?",
+      answer: "Stirrings",
+      wrong: ["Apprehension", "Distraction", "Longings"] },
+    { id: "q33", chapter: 5,
+      question: "What must Jonas do every day from now on?",
+      answer: "Take a pill",
+      wrong: ["Write a report", "Visit Fiona", "Read the Rules"] },
+    { id: "q34", chapter: 5,
+      question: "How does Jonas feel as he rides to school after taking his first pill?",
+      answer: "Proud, but he misses the dream's feeling",
+      wrong: ["Afraid that he has broken an important rule", "Glad that the feeling is gone forever", "Too tired and sick to pay attention"] },
+
+    /* --- Chapter 6 --- */
+    { id: "q35", chapter: 6,
+      question: "Why is Gabe not named at this year's Ceremony of One?",
+      answer: "He was given an extra year of nurturing",
+      wrong: ["He was too sick to be carried on stage", "He had already been given to a family", "His name was given to a different newchild"] },
+    { id: "q36", chapter: 6,
+      question: "What does Jonas's family promise about Gabe?",
+      answer: "Not to become attached to him",
+      wrong: ["To keep him as their own child", "To name him if he gains weight", "To bring him to every Ceremony"] },
+    { id: "q37", chapter: 6,
+      question: "Why is the new Caleb called a replacement child?",
+      answer: "The first Caleb, a Four, drowned in the river",
+      wrong: ["The first Caleb was released for breaking rules", "The first Caleb moved to another community", "The first Caleb was given to a different family"] },
+    { id: "q38", chapter: 6,
+      question: "During the Murmur-of-Replacement Ceremony, how does the community say Caleb's name?",
+      answer: "Softly at first, then louder and louder",
+      wrong: ["Loudly at first, then softer until silent", "Only once, spoken by the Chief Elder", "Only by the members of his new family"] },
+    { id: "q39", chapter: 6,
+      question: "Why is no special ceremony held when a newchild is named Roberto?",
+      answer: "The first Roberto was released, not lost",
+      wrong: ["The first Roberto is still living", "His family chose the name themselves", "Roberto is a very common name"] },
+    { id: "q40", chapter: 6,
+      question: "Why are the jackets the Sevens receive so important?",
+      answer: "They button in front, so children can dress alone",
+      wrong: ["They have pockets for their own small things", "They have each child's name sewn on the back", "They are a different color from younger ones"] },
+    { id: "q41", chapter: 6,
+      question: "What does Lily look forward to about becoming a Nine?",
+      answer: "No more hair ribbons, and her own bicycle",
+      wrong: ["Her first volunteer hours and a new jacket", "A shorter haircut and a new set of clothes", "Sitting at the front of the Auditorium"] },
+    { id: "q42", chapter: 6,
+      question: "Fritz knocks his new bicycle into the podium. Why does this make people uncomfortable?",
+      answer: "His clumsiness reflects badly on his parents",
+      wrong: ["He had refused to learn how to ride", "He is younger than the other Nines", "He had already broken his first bicycle"] },
+
+    /* --- Chapter 7 --- */
+    { id: "q43", chapter: 7,
+      question: "What is Jonas's birth number?",
+      answer: "Nineteen",
+      wrong: ["Eighteen", "Twenty", "Four"] },
+    { id: "q44", chapter: 7,
+      question: "In her speech, what does the Chief Elder say this ceremony honors?",
+      answer: "The children's differences",
+      wrong: ["The children's obedience", "The children's parents", "The children's Instructors"] },
+    { id: "q45", chapter: 7,
+      question: "Which Assignment does Inger, Number Two, receive?",
+      answer: "Birthmother",
+      wrong: ["Nurturer", "Instructor", "Caretaker"] },
+    { id: "q46", chapter: 7,
+      question: "What happened when Asher, as a Three, asked for a “smack” instead of a “snack”?",
+      answer: "He was punished with the discipline wand",
+      wrong: ["He was sent home from school early", "He had to apologize to the whole group", "He was given no snack for a whole week"] },
+    { id: "q47", chapter: 7,
+      question: "What Assignment does Asher receive?",
+      answer: "Assistant Director of Recreation",
+      wrong: ["Instructor of Threes", "Fish Hatchery Attendant", "Assistant to the Speaker"] },
+    { id: "q48", chapter: 7,
+      question: "What Assignment does Fiona receive?",
+      answer: "Caretaker of the Old",
+      wrong: ["Nurturer", "Birthmother", "Instructor of Sixes"] },
+    { id: "q49", chapter: 7,
+      question: "What does the Chief Elder say to each Twelve after giving an Assignment?",
+      answer: "She thanks them for their childhood",
+      wrong: ["She welcomes them into the Committee", "She wishes them luck with training", "She asks if they accept the job"] },
+    { id: "q50", chapter: 7,
+      question: "What happens when it should be Jonas's turn?",
+      answer: "The Chief Elder skips him and calls Twenty",
+      wrong: ["The Chief Elder gives him Fiona's job", "The Chief Elder calls him up first of all", "The Chief Elder asks him to leave the stage"] }
+  ]
+};
+
+/* === STATE === */
+const state = {
+  selected: new Set(APP.chapters), // chapters chosen on the start screen
+  pool: [],          // questions in this run
+  round: 0,
+  queue: [],         // questions in the current round (with built options)
+  index: 0,
+  answered: false,
+  roundRight: 0,
+  mastered: new Set(),
+  firstTry: {},      // id -> true/false (result the first time it was seen)
+  missedEver: new Set(),
+  copied: false
+};
+
+/* === HELPERS === */
+const $ = (id) => document.getElementById(id);
+const LETTERS = ["A", "B", "C", "D"];
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function show(screenId) {
+  ["startScreen", "quizScreen", "roundScreen", "finishScreen"].forEach((id) => {
+    $(id).classList.toggle("hidden", id !== screenId);
+  });
+  $("menuBtn").classList.toggle("hidden", screenId === "startScreen");
+  window.scrollTo({ top: 0 });
+}
+
+function chapterRangeText() {
+  const list = APP.chapters.filter((c) => state.selected.has(c));
+  if (list.length === APP.chapters.length) return "1–7";
+  return list.join(", ");
+}
+
+/* === THEME: color returns as questions are mastered === */
+function updateAccent() {
+  const total = state.pool.length || 1;
+  const f = state.mastered.size / total;
+  const sat = Math.round(72 * f);
+  const light = Math.round(38 + 6 * f);
+  document.documentElement.style.setProperty("--accent", `hsl(4, ${sat}%, ${light}%)`);
+  document.documentElement.style.setProperty("--accent-soft", `hsl(4, ${Math.round(60 * f)}%, 93%)`);
+}
+
+/* === START SCREEN === */
+function buildChips() {
+  const wrap = $("chapterChips");
+  wrap.innerHTML = "";
+
+  const all = document.createElement("button");
+  all.type = "button";
+  all.className = "chip";
+  all.textContent = "All chapters";
+  all.setAttribute("aria-pressed", String(state.selected.size === APP.chapters.length));
+  all.addEventListener("click", () => {
+    state.selected = new Set(APP.chapters);
+    buildChips();
+  });
+  wrap.appendChild(all);
+
+  APP.chapters.forEach((c) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.textContent = "Ch " + c;
+    b.setAttribute("aria-pressed", String(state.selected.has(c)));
+    b.addEventListener("click", () => {
+      if (state.selected.size === APP.chapters.length) {
+        state.selected = new Set([c]);          // from "all", tap one = just that chapter
+      } else if (state.selected.has(c)) {
+        state.selected.delete(c);
+      } else {
+        state.selected.add(c);
+      }
+      buildChips();
+    });
+    wrap.appendChild(b);
+  });
+
+  const n = APP.questions.filter((q) => state.selected.has(q.chapter)).length;
+  $("countNote").textContent = n === 1 ? "1 question selected" : n + " questions selected";
+  $("startBtn").disabled = n === 0;
+}
+
+function startQuiz() {
+  state.pool = APP.questions.filter((q) => state.selected.has(q.chapter));
+  if (!state.pool.length) return;
+  state.round = 0;
+  state.mastered = new Set();
+  state.firstTry = {};
+  state.missedEver = new Set();
+  state.copied = false;
+  updateAccent();
+  startRound(state.pool);
+}
+
+/* === ROUNDS (mastery loop) === */
+function startRound(questions) {
+  state.round += 1;
+  state.index = 0;
+  state.roundRight = 0;
+
+  // Balanced correct-answer positions: spread evenly across A–D, then shuffled.
+  const ordered = shuffle(questions);
+  const positions = shuffle(ordered.map((_, i) => i % 4));
+
+  state.queue = ordered.map((q, i) => {
+    const opts = shuffle(q.wrong);
+    opts.splice(positions[i], 0, q.answer);
+    return { q, options: opts, correctIndex: positions[i] };
+  });
+
+  show("quizScreen");
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const item = state.queue[state.index];
+  state.answered = false;
+
+  $("roundPill").textContent = state.round === 1 ? "Round 1" : "Round " + state.round + " · Practice";
+  $("qCounter").textContent = "Question " + (state.index + 1) + " of " + state.queue.length;
+  $("chapterTag").textContent = "Chapter " + item.q.chapter;
+  $("questionText").textContent = item.q.question;
+  updateMastery();
+
+  const list = $("options");
+  list.innerHTML = "";
+  item.options.forEach((text, i) => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "option";
+    b.innerHTML = '<span class="letter">' + LETTERS[i] + '</span><span class="text"></span>';
+    b.querySelector(".text").textContent = text;
+    b.addEventListener("click", () => choose(i));
+    li.appendChild(b);
+    list.appendChild(li);
+  });
+
+  $("feedback").innerHTML = "";
+  $("nextWrap").classList.add("hidden");
+}
+
+function choose(i) {
+  if (state.answered) return;
+  state.answered = true;
+
+  const item = state.queue[state.index];
+  const id = item.q.id;
+  const correct = i === item.correctIndex;
+  const buttons = $("options").querySelectorAll(".option");
+
+  buttons.forEach((b, k) => {
+    b.classList.add("is-locked");
+    b.setAttribute("aria-disabled", "true");
+    if (k === item.correctIndex) {
+      b.classList.add("is-correct");
+      if (!correct) addTag(b, "Correct answer");
+    } else if (k === i) {
+      b.classList.add("is-wrong");
+      addTag(b, "Your answer");
+    } else {
+      b.classList.add("is-faded");
+    }
+  });
+
+  if (!(id in state.firstTry)) state.firstTry[id] = correct;
+
+  const fb = $("feedback");
+  if (correct) {
+    state.mastered.add(id);
+    state.roundRight += 1;
+    fb.innerHTML = '<div class="feedback good">Correct!</div>';
+  } else {
+    state.missedEver.add(id);
+    const d = document.createElement("div");
+    d.className = "feedback bad";
+    d.textContent = "Not quite. The correct answer is " + LETTERS[item.correctIndex] + ": " + item.options[item.correctIndex];
+    fb.innerHTML = "";
+    fb.appendChild(d);
+  }
+
+  updateMastery();
+  updateAccent();
+  $("nextBtn").textContent = state.index === state.queue.length - 1 ? "Finish round" : "Next";
+  $("nextWrap").classList.remove("hidden");
+  $("nextBtn").focus({ preventScroll: true });
+  $("nextWrap").scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function addTag(btn, text) {
+  const t = document.createElement("span");
+  t.className = "tag";
+  t.textContent = text;
+  btn.querySelector(".text").appendChild(t);
+}
+
+function next() {
+  if (!state.answered) return;
+  if (state.index < state.queue.length - 1) {
+    state.index += 1;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    endRound();
+  }
+}
+
+function updateMastery() {
+  const total = state.pool.length;
+  const m = state.mastered.size;
+  $("masteryFill").style.width = (total ? (m / total) * 100 : 0) + "%";
+  $("masteryLabel").textContent = "Mastered " + m + " of " + total;
+}
+
+function endRound() {
+  const left = state.pool.filter((q) => !state.mastered.has(q.id));
+  if (!left.length) {
+    finish();
+    return;
+  }
+  $("roundTitle").textContent = "Round " + state.round + " complete";
+  $("roundText").textContent = left.length === 1
+    ? "One question needs another try. Here it comes again."
+    : left.length + " questions need another try. They come back in a new order.";
+  $("rsRight").textContent = state.roundRight;
+  $("rsLeft").textContent = left.length;
+  $("rsMastered").textContent = state.mastered.size + "/" + state.pool.length;
+  $("nextRoundBtn").textContent = left.length === 1 ? "Practice 1 question" : "Practice " + left.length + " questions";
+  show("roundScreen");
+}
+
+function nextRound() {
+  const left = state.pool.filter((q) => !state.mastered.has(q.id));
+  startRound(left);
+}
+
+/* === REPORT === */
+function finish() {
+  const total = state.pool.length;
+  const first = state.pool.filter((q) => state.firstTry[q.id]).length;
+  $("finishTitle").textContent = "All " + total + " questions mastered";
+  $("finishText").textContent = state.round === 1
+    ? "You answered every question correctly in one round."
+    : "You kept going until every question was right.";
+  $("fsFirst").textContent = first + "/" + total;
+  $("fsRounds").textContent = state.round;
+  $("fsTotal").textContent = total;
+  state.copied = false;
+  $("waBtn").disabled = true;
+  $("copiedMsg").textContent = "";
+  $("copyBtn").textContent = "Copy my report";
+  show("finishScreen");
+}
+
+function buildReport() {
+  const name = $("studentName").value.trim();
+  const total = state.pool.length;
+  const first = state.pool.filter((q) => state.firstTry[q.id]).length;
+  const date = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const missed = state.pool.filter((q) => state.missedEver.has(q.id));
+
+  const lines = [
+    APP.title,
+    "Name: " + name,
+    "School: " + APP.school + " · Grade " + APP.grade,
+    "Date: " + date,
+    "Chapters: " + chapterRangeText(),
+    "Questions: " + total,
+    "Right on the first try: " + first + "/" + total,
+    "Rounds needed: " + state.round,
+    "Result: all questions mastered",
+    ""
+  ];
+  if (missed.length) {
+    lines.push("Questions I missed at least once (" + missed.length + "):");
+    missed.forEach((q) => {
+      lines.push("- Ch " + q.chapter + " · " + q.question);
+    });
+  } else {
+    lines.push("Questions I missed: none");
+  }
+  return lines.join("\n");
+}
+
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text);
+  }
+  return new Promise((resolve, reject) => {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy") ? resolve() : reject();
+    } catch (e) {
+      reject(e);
+    }
+    document.body.removeChild(ta);
+  });
+}
+
+function copyReport() {
+  if (!$("studentName").value.trim()) {
+    $("copiedMsg").textContent = "Please type your name first.";
+    $("studentName").focus();
+    return;
+  }
+  copyText(buildReport()).then(() => {
+    state.copied = true;
+    $("copyBtn").textContent = "Copied ✓";
+    $("copiedMsg").textContent = "Copied ✓ Now open WhatsApp and paste your report.";
+    $("waBtn").disabled = false;
+  }).catch(() => {
+    $("copiedMsg").textContent = "Copying did not work. Please try again.";
+  });
+}
+
+function openWhatsApp() {
+  if (!state.copied) return;
+  const msg = "Hi! I finished The Giver Chapters 1–7 quiz. My report is below.";
+  window.open("https://wa.me/" + TEACHER_WHATSAPP + "?text=" + encodeURIComponent(msg), "_blank");
+}
+
+/* === NAVIGATION === */
+function goMenu() {
+  const inProgress = !$("quizScreen").classList.contains("hidden") || !$("roundScreen").classList.contains("hidden");
+  if (inProgress && !confirm("Go back to the menu? Your progress in this quiz will be lost.")) return;
+  buildChips();
+  show("startScreen");
+}
+
+/* === EVENTS === */
+$("startBtn").addEventListener("click", startQuiz);
+$("nextBtn").addEventListener("click", next);
+$("nextRoundBtn").addEventListener("click", nextRound);
+$("copyBtn").addEventListener("click", copyReport);
+$("waBtn").addEventListener("click", openWhatsApp);
+$("againBtn").addEventListener("click", () => { buildChips(); show("startScreen"); });
+$("menuBtn").addEventListener("click", goMenu);
+$("studentName").addEventListener("input", () => {
+  state.copied = false;
+  $("waBtn").disabled = true;
+  $("copyBtn").textContent = "Copy my report";
+  $("copiedMsg").textContent = "";
+});
+
+document.addEventListener("keydown", (e) => {
+  if ($("quizScreen").classList.contains("hidden")) return;
+  if (e.target && e.target.tagName === "INPUT") return;
+  const k = e.key.toUpperCase();
+  const map = { "1": 0, "2": 1, "3": 2, "4": 3, A: 0, B: 1, C: 2, D: 3 };
+  if (!state.answered && k in map) {
+    e.preventDefault();
+    choose(map[k]);
+  } else if (state.answered && e.key === "Enter" && document.activeElement !== $("nextBtn")) {
+    e.preventDefault();
+    next();
+  }
+});
+
+/* === INIT === */
+buildChips();
+updateAccent();
+</script>
+</body>
+</html>
