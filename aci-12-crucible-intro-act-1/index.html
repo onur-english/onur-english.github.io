@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Crucible · Introduction & Act One Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* === THEME ===
+   Salem, 1692: dark timber, candlelit parchment. A crucible is a vessel
+   heated in fire, so the accent starts as cold ash and heats up to a glowing
+   ember as the student masters more questions. */
+:root {
+  --night: #191512;
+  --wood: #261f19;
+  --on-dark: #efe6d6;
+  --on-dark-muted: #b7a991;
+  --card: #fbf6ec;
+  --ink: #2a2019;
+  --muted: #6c5f50;
+  --line: #ddd0b9;
+  --soft: #f2e9d8;
+  --accent: hsl(22, 0%, 46%);        /* updated by JS as mastery grows */
+  --accent-soft: hsl(22, 0%, 92%);   /* updated by JS */
+  --glow: 0.06;                      /* ember glow behind the page, updated by JS */
+  --good: #2e6a3e;
+  --good-bg: #e1eedf;
+  --bad: #a3321f;
+  --bad-bg: #f7e1d9;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(0,0,0,.25), 0 14px 34px rgba(0,0,0,.28);
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background-color: var(--night);
+  background-image:
+    radial-gradient(120% 55% at 50% 112%, rgba(232, 112, 40, var(--glow)), transparent 70%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.018) 0 2px, transparent 2px 9px, rgba(0,0,0,.05) 9px 10px, transparent 10px 23px),
+    linear-gradient(180deg, var(--wood), var(--night));
+  background-attachment: fixed;
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 22px 16px 48px;
+}
+
+/* === HEADER === */
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  color: var(--on-dark);
+}
+
+.kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--on-dark-muted);
+  margin: 0 0 6px;
+}
+
+.title {
+  font-family: "IM Fell English", Georgia, serif;
+  font-size: 44px;
+  line-height: 1.02;
+  font-weight: 400;
+  margin: 0;
+}
+
+.title .dot { color: var(--accent); transition: color .6s ease; }
+
+.subtitle {
+  font-family: "IM Fell English", Georgia, serif;
+  font-style: italic;
+  font-size: 19px;
+  color: var(--on-dark-muted);
+  margin: 6px 0 0;
+}
+
+.btn-ghost {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid rgba(239,230,214,.35);
+  color: var(--on-dark);
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* === CARDS & BUTTONS === */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px 20px;
+}
+
+.btn {
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 20px;
+  cursor: pointer;
+  background: var(--ink);
+  color: #fff;
+  width: 100%;
+}
+
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.btn-secondary {
+  background: var(--soft);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.btn + .btn { margin-top: 10px; }
+
+.hidden { display: none !important; }
+
+/* === START SCREEN === */
+.lead {
+  font-size: 16px;
+  margin: 0 0 18px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.chip {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+  color: var(--muted);
+  cursor: pointer;
+  text-align: left;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.count-note {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+
+/* === QUIZ SCREEN === */
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--on-dark-muted);
+  margin-bottom: 10px;
+}
+
+.pill {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: rgba(239,230,214,.08);
+  border: 1px solid rgba(239,230,214,.3);
+  border-radius: 999px;
+  padding: 4px 10px;
+  color: var(--on-dark);
+}
+
+.mastery { margin-bottom: 16px; }
+
+.mastery-track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(239,230,214,.16);
+  overflow: hidden;
+}
+
+.mastery-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #8a7f74, var(--accent));
+  border-radius: 999px;
+  transition: width .5s ease;
+}
+
+.mastery-label {
+  font-size: 13px;
+  color: var(--on-dark-muted);
+  margin-top: 6px;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 6px;
+  padding: 3px 8px;
+  margin-bottom: 12px;
+  transition: color .6s ease, background-color .6s ease;
+}
+
+.question {
+  font-family: "IM Fell English", Georgia, serif;
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 400;
+  margin: 0 0 18px;
+}
+
+.options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.option {
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.option:focus-visible { outline: 3px solid #9b8a74; outline-offset: 2px; }
+
+.option .letter {
+  flex: 0 0 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--soft);
+  border: 1px solid var(--line);
+}
+
+.option .text { padding-top: 2px; }
+
+.option.is-locked { cursor: default; }
+
+.option.is-correct { border-color: var(--good); background: var(--good-bg); }
+.option.is-correct .letter { background: var(--good); border-color: var(--good); color: #fff; }
+
+.option.is-wrong { border-color: var(--bad); background: var(--bad-bg); }
+.option.is-wrong .letter { background: var(--bad); border-color: var(--bad); color: #fff; }
+
+.option.is-faded { opacity: .5; }
+
+.tag {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.is-correct .tag { color: var(--good); }
+.is-wrong .tag { color: var(--bad); }
+
+.feedback {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.feedback.good { background: var(--good-bg); color: var(--good); }
+.feedback.bad { background: var(--bad-bg); color: var(--bad); }
+
+.next-wrap { margin-top: 14px; }
+
+/* === ROUND & FINISH SCREENS === */
+.big {
+  font-family: "IM Fell English", Georgia, serif;
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: 400;
+  margin: 0 0 8px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 18px 0 20px;
+}
+
+.stat {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+}
+
+.stat b { display: block; font-size: 24px; line-height: 1.1; }
+.stat span { font-size: 12px; color: var(--muted); }
+
+.field {
+  display: block;
+  width: 100%;
+  font: inherit;
+  font-size: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: #fff;
+  margin-bottom: 12px;
+}
+
+.send-note { font-size: 14px; color: var(--muted); margin: 0 0 12px; }
+
+.copied {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--good);
+  margin: 8px 0 0;
+  min-height: 20px;
+}
+
+.foot {
+  text-align: center;
+  font-size: 12px;
+  color: var(--on-dark-muted);
+  margin-top: 26px;
+}
+
+/* === PHONE === */
+@media (max-width: 420px) {
+  .title { font-size: 36px; }
+  .question { font-size: 21px; }
+  .card { padding: 18px 16px; }
+  .big { font-size: 27px; }
+  .stat b { font-size: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div>
+      <p class="kicker">ACI · Grade 12 · Exam 2</p>
+      <h1 class="title">The Crucible<span class="dot">.</span></h1>
+      <p class="subtitle">Introduction &amp; Act One · Comprehension</p>
+    </div>
+    <button class="btn-ghost hidden" id="menuBtn" type="button">Menu</button>
+  </header>
+
+  <!-- === START === -->
+  <section id="startScreen" class="card">
+    <p class="lead">Answer every question. Any question you miss comes back in the next round until you get it right.</p>
+    <p class="label">Sections</p>
+    <div class="chips" id="sectionChips"></div>
+    <p class="count-note" id="countNote"></p>
+    <button class="btn" id="startBtn" type="button">Start</button>
+  </section>
+
+  <!-- === QUIZ === -->
+  <section id="quizScreen" class="hidden">
+    <div class="status">
+      <span class="pill" id="roundPill">Round 1</span>
+      <span id="qCounter">Question 1 of 1</span>
+    </div>
+    <div class="mastery">
+      <div class="mastery-track"><div class="mastery-fill" id="masteryFill"></div></div>
+      <div class="mastery-label" id="masteryLabel">Mastered 0 of 0</div>
+    </div>
+    <div class="card">
+      <span class="section-tag" id="sectionTag">Introduction</span>
+      <h2 class="question" id="questionText"></h2>
+      <ul class="options" id="options"></ul>
+      <div id="feedback" aria-live="polite"></div>
+      <div class="next-wrap hidden" id="nextWrap">
+        <button class="btn" id="nextBtn" type="button">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- === ROUND COMPLETE === -->
+  <section id="roundScreen" class="card hidden">
+    <h2 class="big" id="roundTitle">Round 1 complete</h2>
+    <p class="lead" id="roundText"></p>
+    <div class="stats">
+      <div class="stat"><b id="rsRight">0</b><span>right this round</span></div>
+      <div class="stat"><b id="rsLeft">0</b><span>to practice again</span></div>
+      <div class="stat"><b id="rsMastered">0</b><span>mastered</span></div>
+    </div>
+    <button class="btn" id="nextRoundBtn" type="button">Start the next round</button>
+  </section>
+
+  <!-- === FINISH / REPORT === -->
+  <section id="finishScreen" class="card hidden">
+    <h2 class="big" id="finishTitle">All questions mastered</h2>
+    <p class="lead" id="finishText"></p>
+    <div class="stats">
+      <div class="stat"><b id="fsFirst">0</b><span>right first time</span></div>
+      <div class="stat"><b id="fsRounds">0</b><span>rounds</span></div>
+      <div class="stat"><b id="fsTotal">0</b><span>questions</span></div>
+    </div>
+
+    <p class="label">Send to my teacher</p>
+    <p class="send-note">Type your name, copy your report, then open WhatsApp and paste it.</p>
+    <input class="field" id="studentName" type="text" placeholder="Your full name" autocomplete="name">
+    <button class="btn" id="copyBtn" type="button">Copy my report</button>
+    <button class="btn btn-secondary" id="waBtn" type="button" disabled>Open WhatsApp</button>
+    <p class="copied" id="copiedMsg" aria-live="polite"></p>
+
+    <button class="btn btn-secondary" id="againBtn" type="button" style="margin-top:14px">Start again</button>
+  </section>
+
+  <p class="foot">Based on <i>The Crucible</i> by Arthur Miller</p>
+</div>
+
+<script>
+/* === CONSTANTS === */
+const TEACHER_WHATSAPP = "905053613335";
+const EXAM_MINUTES = 0; // no timer in this quiz
+
+/* === DATA ===
+   All content lives here. Each question: { id, section, question, answer, wrong: [3] }.
+   Sections: "intro" = Miller's Note on Historical Accuracy and his opening
+   commentary on Salem; "p1"–"p4" = Act One in four parts (Miller's notes on
+   each character are included where the character enters).
+   The correct answer's position is balanced across A–D every round. */
+const APP = {
+  title: "The Crucible — Introduction & Act One Comprehension Quiz",
+  school: "ACI",
+  grade: 12,
+  folder: "aci-12-crucible-intro-act-1",
+  book: "The Crucible by Arthur Miller",
+  sections: [
+    { id: "intro", label: "Introduction", chip: "Introduction" },
+    { id: "p1", label: "Act One · Parris & the Putnams", chip: "Parris & the Putnams" },
+    { id: "p2", label: "Act One · The girls & Proctor", chip: "The girls & Proctor" },
+    { id: "p3", label: "Act One · Rebecca, Giles & the quarrel", chip: "Rebecca, Giles & the quarrel" },
+    { id: "p4", label: "Act One · Hale & the confessions", chip: "Hale & the confessions" }
+  ],
+  questions: [
+    /* --- Introduction: the Note on Historical Accuracy --- */
+    { id: "q01", section: "intro",
+      question: "In his note before the play, what does Miller say about The Crucible and history?",
+      answer: "It is not history in the way an academic historian writes it",
+      wrong: ["It follows the court records of 1692 almost word for word", "It is based mainly on interviews with the victims' families", "It invents every character and event to make a new story"] },
+    { id: "q02", section: "intro",
+      question: "Which change to Abigail does Miller admit to in his note?",
+      answer: "He raised her age",
+      wrong: ["He changed her name", "He made her Parris's daughter", "He moved her to Beverly"] },
+    { id: "q03", section: "intro",
+      question: "What does Miller say about the fate of each character in the play?",
+      answer: "It is exactly the same as the fate of the real person",
+      wrong: ["It was changed to give the play a more hopeful ending", "It is unknown, so Miller had to invent all of them", "It matches history for the judges but not the accused"] },
+
+    /* --- Introduction: Miller's opening commentary on Salem --- */
+    { id: "q04", section: "intro",
+      question: "What had Parris been before he became a minister?",
+      answer: "A merchant in Barbados",
+      wrong: ["A farmer in Beverly", "A judge in Boston", "A soldier in the Indian wars"] },
+    { id: "q05", section: "intro",
+      question: "How did the people of Salem see the forest around their village?",
+      answer: "As the Devil's last stronghold",
+      wrong: ["As a gift of good land from God", "As a safe place for children to play", "As shared land owned by all families"] },
+    { id: "q06", section: "intro",
+      question: "According to Miller, what was Salem's theocracy originally created to do?",
+      answer: "Keep the community united and prevent division",
+      wrong: ["Collect money for the King of England's army", "Give every man an equal vote in the church", "Help the settlers trade peacefully with Boston"] },
+    { id: "q07", section: "intro",
+      question: "Besides being a repression, what else does Miller say the witch-hunt was?",
+      answer: "A chance for people to express their own guilt and sins by accusing others",
+      wrong: ["A chance for the poor to win land from the church through the courts", "A chance for ministers to prove they could heal the sick through prayer", "A chance for young people to choose their own husbands and wives freely"] },
+    { id: "q08", section: "intro",
+      question: "According to Miller, how did old land disputes connect to the accusations?",
+      answer: "People could accuse a neighbor of witchcraft and feel morally justified",
+      wrong: ["Courts gave every accused person's land to the church automatically", "Only people who owned no land at all could be accused of witchcraft", "Land disputes stopped completely once the witch-hunt had begun"] },
+
+    /* --- Act One · Parris & the Putnams --- */
+    { id: "q09", section: "p1",
+      question: "What is wrong with Betty Parris at the start of the play?",
+      answer: "She lies in bed and will not wake or respond",
+      wrong: ["She has a high fever and talks in her sleep", "She has hurt her leg running in the forest", "She runs through the house screaming names"] },
+    { id: "q10", section: "p1",
+      question: "What message does Susanna Walcott bring from Doctor Griggs?",
+      answer: "He can find no medicine for Betty and suspects unnatural causes",
+      wrong: ["He has found a fever medicine and will bring it by the evening", "He believes Betty is only pretending and needs a firm punishment", "He is too busy with Ruth Putnam to come to see Betty today"] },
+    { id: "q11", section: "p1",
+      question: "Whom has Parris sent for?",
+      answer: "Reverend Hale of Beverly",
+      wrong: ["Judge Hathorne of Salem", "Deputy Governor Danforth", "A doctor from Boston"] },
+    { id: "q12", section: "p1",
+      question: "What did Parris see in the forest the night before?",
+      answer: "Tituba waving her arms over a fire, and someone running naked",
+      wrong: ["Abigail reading a strange book aloud beside a small fire", "Mary Warren and Mercy Lewis fighting over a dead bird", "The girls burying a doll under a tree near the river"] },
+    { id: "q13", section: "p1",
+      question: "What does Abigail admit to Parris?",
+      answer: "The girls danced, but there was no witchcraft",
+      wrong: ["Tituba forced them to sign the Devil's book", "Betty fell ill because she drank from a kettle", "Ruth Putnam led the girls into the forest"] },
+    { id: "q14", section: "p1",
+      question: "Why is Parris so worried about what happened in the forest?",
+      answer: "His enemies could use it to drive him out of his ministry",
+      wrong: ["He fears that Betty will be hanged as a witch at once", "He fears that Tituba will run away back to Barbados", "He fears the court will take away his house and land"] },
+    { id: "q15", section: "p1",
+      question: "Why does Abigail say Elizabeth Proctor dismissed her?",
+      answer: "Elizabeth hated her because she would not be her slave",
+      wrong: ["Elizabeth needed less help after her baby was born", "Elizabeth caught her stealing food from the kitchen", "Elizabeth sent her away to look after Betty Parris"] },
+    { id: "q16", section: "p1",
+      question: "Why did Ann Putnam send Ruth to Tituba?",
+      answer: "To contact her dead babies and learn who killed them",
+      wrong: ["To learn a charm that would cure Ruth's sickness", "To find out whom Ruth would marry in the future", "To ask Tituba to curse Rebecca Nurse's family"] },
+    { id: "q17", section: "p1",
+      question: "What does Thomas Putnam urge Parris to do?",
+      answer: "Announce the witchcraft himself before his enemies do",
+      wrong: ["Hide the truth about the dancing from the whole town", "Send Abigail away to live with relatives in Boston", "Ask Doctor Griggs to examine every girl in the village"] },
+
+    /* --- Act One · The girls & Proctor --- */
+    { id: "q18", section: "p2",
+      question: "Why does Mary Warren want the girls to tell the truth?",
+      answer: "Witchcraft is punished by hanging, but dancing only by whipping",
+      wrong: ["She believes Reverend Hale will forgive anyone who confesses", "She knows that Betty has already told Parris everything", "She wants to protect Tituba from being blamed for it all"] },
+    { id: "q19", section: "p2",
+      question: "What secret does Betty reveal about Abigail?",
+      answer: "She drank blood as a charm to kill Elizabeth Proctor",
+      wrong: ["She stole money from Parris to pay Tituba for a spell", "She wrote John Proctor's name in the Devil's book", "She threw Ruth Putnam's doll into the forest fire"] },
+    { id: "q20", section: "p2",
+      question: "How does Abigail react to what Betty says?",
+      answer: "She hits Betty across the face",
+      wrong: ["She begins to cry and confesses", "She runs to tell Parris at once", "She laughs and calls Betty a liar"] },
+    { id: "q21", section: "p2",
+      question: "How does Abigail threaten the other girls?",
+      answer: "She will come to them at night and take terrible revenge",
+      wrong: ["She will tell Parris they were the ones who drank blood", "She will make sure they lose their places as servants", "She will accuse them of witchcraft in front of Hale"] },
+    { id: "q22", section: "p2",
+      question: "Why is Proctor angry with Mary Warren when he arrives?",
+      answer: "She left his house although he had forbidden it",
+      wrong: ["She told the village about his affair with Abigail", "She forgot to feed the animals on his farm that day", "She brought Betty to his house without asking him"] },
+    { id: "q23", section: "p2",
+      question: "How does Proctor answer Abigail?",
+      answer: "He admits some feeling, but says their affair is over",
+      wrong: ["He says he never felt anything for her at all", "He promises to leave Elizabeth for her soon", "He says they can meet again once Betty is well"] },
+    { id: "q24", section: "p2",
+      question: "What makes Proctor threaten to whip Abigail?",
+      answer: "She insults his wife, Elizabeth",
+      wrong: ["She mentions witchcraft to him", "She calls Parris a weak minister", "She says she will tell the village"] },
+
+    /* --- Act One · Rebecca, Giles & the quarrel --- */
+    { id: "q25", section: "p3",
+      question: "What makes Betty start screaming while Proctor and Abigail are talking?",
+      answer: "Hearing the people downstairs singing a psalm",
+      wrong: ["Hearing Abigail and Proctor arguing loudly", "Seeing Tituba walk past the bedroom door", "Seeing Reverend Hale arrive at the house"] },
+    { id: "q26", section: "p3",
+      question: "How does Rebecca explain the girls' behavior?",
+      answer: "Children go through silly seasons, and this will pass",
+      wrong: ["The girls are clearly bewitched by someone in Salem", "The girls are sick from eating spoiled forest berries", "The girls are being punished by God for their pride"] },
+    { id: "q27", section: "p3",
+      question: "Why does Ann Putnam speak bitterly to Rebecca?",
+      answer: "Rebecca has never lost a child, while Ann has buried all but one",
+      wrong: ["Rebecca once refused to help Ann when she was sick with fever", "Rebecca's husband had Ann's family removed from the church", "Rebecca told the village that Ann had visited Tituba"] },
+    { id: "q28", section: "p3",
+      question: "According to Miller, why was there bad feeling between the Nurses and the Putnams?",
+      answer: "A land feud, and the Nurses had opposed Putnam's candidate for minister",
+      wrong: ["A marriage feud, after a Nurse son refused to marry a Putnam daughter", "A church feud, after Rebecca accused Ann Putnam of skipping services", "A trade feud, after Francis Nurse sold bad timber to Thomas Putnam"] },
+    { id: "q29", section: "p3",
+      question: "Why has Proctor stopped going to church so often?",
+      answer: "Parris preaches hellfire and damnation and hardly mentions God",
+      wrong: ["Proctor lives too far away to travel there in the winter", "Proctor has been too busy planting his fields all spring", "Proctor was told by Elizabeth not to sit near Abigail"] },
+    { id: "q30", section: "p3",
+      question: "What has Parris asked for that no Salem minister asked for before?",
+      answer: "The deed to the house he lives in",
+      wrong: ["A seat on the village court", "A servant paid by the village", "A second church in Salem town"] },
+    { id: "q31", section: "p3",
+      question: "Why do Proctor and Putnam argue about timber?",
+      answer: "Putnam claims the land is his; Proctor says he bought it from Francis Nurse",
+      wrong: ["Proctor claims the land is his; Putnam says he bought it from Giles Corey", "Putnam says Proctor sold him rotten wood for the new church roof", "Proctor says Putnam cut down trees on the church's land without asking"] },
+
+    /* --- Act One · Hale & the confessions --- */
+    { id: "q32", section: "p4",
+      question: "What does Reverend Hale bring with him to Parris's house?",
+      answer: "A stack of heavy books",
+      wrong: ["A doctor from Beverly", "A letter from the court", "A box of medicines"] },
+    { id: "q33", section: "p4",
+      question: "What condition does Hale set before he examines Betty?",
+      answer: "If he finds no sign of the Devil, they must accept it",
+      wrong: ["If he finds a witch, the village must pay for his visit", "If Betty wakes, nobody may ask her what she saw", "If anyone confesses, they must be sent to Boston"] },
+    { id: "q34", section: "p4",
+      question: "What does Giles ask Hale about his wife, Martha?",
+      answer: "Why she reads strange books and hides them",
+      wrong: ["Why she refuses to go to church on the Sabbath", "Why she talks in her sleep about the forest", "Why she gives food away to Sarah Good"] },
+    { id: "q35", section: "p4",
+      question: "How does Abigail first explain the kettle?",
+      answer: "It held only soup, and a frog jumped in",
+      wrong: ["It held only water for washing their feet", "It belonged to Ruth, and Abigail never saw it", "It held herbs that Tituba used for Betty"] },
+    { id: "q36", section: "p4",
+      question: "When Tituba is brought in, what does Abigail accuse her of?",
+      answer: "Making her drink blood",
+      wrong: ["Hiding the Devil's book", "Stealing from Parris", "Poisoning Ruth Putnam"] },
+    { id: "q37", section: "p4",
+      question: "How do Parris and Putnam pressure Tituba to confess?",
+      answer: "Parris threatens to whip her to death, and Putnam says she must hang",
+      wrong: ["Parris promises to free her, and Putnam offers her a place to live", "Parris locks her in the cellar, and Putnam threatens to sell her", "Parris sends her to the court, and Putnam tells her to leave Salem"] },
+    { id: "q38", section: "p4",
+      question: "According to Tituba, what did the Devil order her to do?",
+      answer: "Kill Parris by cutting his throat",
+      wrong: ["Burn down the Salem meeting house", "Poison the Putnams' well water", "Steal Betty away into the forest"] },
+    { id: "q39", section: "p4",
+      question: "After Sarah Good and Goody Osburn, which name does Abigail cry out next?",
+      answer: "Bridget Bishop",
+      wrong: ["Rebecca Nurse", "Martha Corey", "Elizabeth Proctor"] },
+    { id: "q40", section: "p4",
+      question: "How does Act One end?",
+      answer: "The girls cry out names as Hale calls for the marshal to bring irons",
+      wrong: ["Proctor returns and orders everyone to stop the questioning at once", "Hale decides there is no witchcraft and leaves Salem for Beverly", "Tituba runs into the forest and the men set off to search for her"] }
+  ]
+};
+
+/* === STATE === */
+const state = {
+  selected: new Set(APP.sections.map((s) => s.id)), // sections chosen on the start screen
+  pool: [],          // questions in this run
+  round: 0,
+  queue: [],         // questions in the current round (with built options)
+  index: 0,
+  answered: false,
+  roundRight: 0,
+  mastered: new Set(),
+  firstTry: {},      // id -> true/false (result the first time it was seen)
+  missedEver: new Set(),
+  copied: false
+};
+
+/* === HELPERS === */
+const $ = (id) => document.getElementById(id);
+const LETTERS = ["A", "B", "C", "D"];
+const SECTION_BY_ID = Object.fromEntries(APP.sections.map((s) => [s.id, s]));
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function show(screenId) {
+  ["startScreen", "quizScreen", "roundScreen", "finishScreen"].forEach((id) => {
+    $(id).classList.toggle("hidden", id !== screenId);
+  });
+  $("menuBtn").classList.toggle("hidden", screenId === "startScreen");
+  window.scrollTo({ top: 0 });
+}
+
+function sectionListText() {
+  if (state.selected.size === APP.sections.length) return "All sections";
+  return APP.sections.filter((s) => state.selected.has(s.id)).map((s) => s.chip).join(", ");
+}
+
+/* === THEME: the crucible heats up as questions are mastered === */
+function updateAccent() {
+  const total = state.pool.length || 1;
+  const f = state.mastered.size / total;
+  const root = document.documentElement.style;
+  root.setProperty("--accent", `hsl(22, ${Math.round(85 * f)}%, ${Math.round(46 + 4 * f)}%)`);
+  root.setProperty("--accent-soft", `hsl(28, ${Math.round(70 * f)}%, 92%)`);
+  root.setProperty("--glow", (0.06 + 0.4 * f).toFixed(3));
+}
+
+/* === START SCREEN === */
+function buildChips() {
+  const wrap = $("sectionChips");
+  wrap.innerHTML = "";
+  const allIds = APP.sections.map((s) => s.id);
+
+  const all = document.createElement("button");
+  all.type = "button";
+  all.className = "chip";
+  all.textContent = "All sections";
+  all.setAttribute("aria-pressed", String(state.selected.size === allIds.length));
+  all.addEventListener("click", () => {
+    state.selected = new Set(allIds);
+    buildChips();
+  });
+  wrap.appendChild(all);
+
+  APP.sections.forEach((s) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.textContent = s.chip;
+    b.setAttribute("aria-pressed", String(state.selected.has(s.id)));
+    b.addEventListener("click", () => {
+      if (state.selected.size === allIds.length) {
+        state.selected = new Set([s.id]);        // from "all", tap one = just that section
+      } else if (state.selected.has(s.id)) {
+        state.selected.delete(s.id);
+      } else {
+        state.selected.add(s.id);
+      }
+      buildChips();
+    });
+    wrap.appendChild(b);
+  });
+
+  const n = APP.questions.filter((q) => state.selected.has(q.section)).length;
+  $("countNote").textContent = n === 1 ? "1 question selected" : n + " questions selected";
+  $("startBtn").disabled = n === 0;
+}
+
+function startQuiz() {
+  state.pool = APP.questions.filter((q) => state.selected.has(q.section));
+  if (!state.pool.length) return;
+  state.round = 0;
+  state.mastered = new Set();
+  state.firstTry = {};
+  state.missedEver = new Set();
+  state.copied = false;
+  updateAccent();
+  startRound(state.pool);
+}
+
+/* === ROUNDS (mastery loop) === */
+function startRound(questions) {
+  state.round += 1;
+  state.index = 0;
+  state.roundRight = 0;
+
+  // Balanced correct-answer positions: spread evenly across A–D, then shuffled.
+  const ordered = shuffle(questions);
+  const positions = shuffle(ordered.map((_, i) => i % 4));
+
+  state.queue = ordered.map((q, i) => {
+    const opts = shuffle(q.wrong);
+    opts.splice(positions[i], 0, q.answer);
+    return { q, options: opts, correctIndex: positions[i] };
+  });
+
+  show("quizScreen");
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const item = state.queue[state.index];
+  state.answered = false;
+
+  $("roundPill").textContent = state.round === 1 ? "Round 1" : "Round " + state.round + " · Practice";
+  $("qCounter").textContent = "Question " + (state.index + 1) + " of " + state.queue.length;
+  $("sectionTag").textContent = SECTION_BY_ID[item.q.section].label;
+  $("questionText").textContent = item.q.question;
+  updateMastery();
+
+  const list = $("options");
+  list.innerHTML = "";
+  item.options.forEach((text, i) => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "option";
+    b.innerHTML = '<span class="letter">' + LETTERS[i] + '</span><span class="text"></span>';
+    b.querySelector(".text").textContent = text;
+    b.addEventListener("click", () => choose(i));
+    li.appendChild(b);
+    list.appendChild(li);
+  });
+
+  $("feedback").innerHTML = "";
+  $("nextWrap").classList.add("hidden");
+}
+
+function choose(i) {
+  if (state.answered) return;
+  state.answered = true;
+
+  const item = state.queue[state.index];
+  const id = item.q.id;
+  const correct = i === item.correctIndex;
+  const buttons = $("options").querySelectorAll(".option");
+
+  buttons.forEach((b, k) => {
+    b.classList.add("is-locked");
+    b.setAttribute("aria-disabled", "true");
+    if (k === item.correctIndex) {
+      b.classList.add("is-correct");
+      if (!correct) addTag(b, "Correct answer");
+    } else if (k === i) {
+      b.classList.add("is-wrong");
+      addTag(b, "Your answer");
+    } else {
+      b.classList.add("is-faded");
+    }
+  });
+
+  if (!(id in state.firstTry)) state.firstTry[id] = correct;
+
+  const fb = $("feedback");
+  if (correct) {
+    state.mastered.add(id);
+    state.roundRight += 1;
+    fb.innerHTML = '<div class="feedback good">Correct!</div>';
+  } else {
+    state.missedEver.add(id);
+    const d = document.createElement("div");
+    d.className = "feedback bad";
+    d.textContent = "Not quite. The correct answer is " + LETTERS[item.correctIndex] + ": " + item.options[item.correctIndex];
+    fb.innerHTML = "";
+    fb.appendChild(d);
+  }
+
+  updateMastery();
+  updateAccent();
+  $("nextBtn").textContent = state.index === state.queue.length - 1 ? "Finish round" : "Next";
+  $("nextWrap").classList.remove("hidden");
+  $("nextBtn").focus({ preventScroll: true });
+  $("nextWrap").scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function addTag(btn, text) {
+  const t = document.createElement("span");
+  t.className = "tag";
+  t.textContent = text;
+  btn.querySelector(".text").appendChild(t);
+}
+
+function next() {
+  if (!state.answered) return;
+  if (state.index < state.queue.length - 1) {
+    state.index += 1;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    endRound();
+  }
+}
+
+function updateMastery() {
+  const total = state.pool.length;
+  const m = state.mastered.size;
+  $("masteryFill").style.width = (total ? (m / total) * 100 : 0) + "%";
+  $("masteryLabel").textContent = "Mastered " + m + " of " + total;
+}
+
+function endRound() {
+  const left = state.pool.filter((q) => !state.mastered.has(q.id));
+  if (!left.length) {
+    finish();
+    return;
+  }
+  $("roundTitle").textContent = "Round " + state.round + " complete";
+  $("roundText").textContent = left.length === 1
+    ? "One question needs another try. Here it comes again."
+    : left.length + " questions need another try. They come back in a new order.";
+  $("rsRight").textContent = state.roundRight;
+  $("rsLeft").textContent = left.length;
+  $("rsMastered").textContent = state.mastered.size + "/" + state.pool.length;
+  $("nextRoundBtn").textContent = left.length === 1 ? "Practice 1 question" : "Practice " + left.length + " questions";
+  show("roundScreen");
+}
+
+function nextRound() {
+  const left = state.pool.filter((q) => !state.mastered.has(q.id));
+  startRound(left);
+}
+
+/* === REPORT === */
+function finish() {
+  const total = state.pool.length;
+  const first = state.pool.filter((q) => state.firstTry[q.id]).length;
+  $("finishTitle").textContent = "All " + total + " questions mastered";
+  $("finishText").textContent = state.round === 1
+    ? "You answered every question correctly in one round."
+    : "You kept going until every question was right.";
+  $("fsFirst").textContent = first + "/" + total;
+  $("fsRounds").textContent = state.round;
+  $("fsTotal").textContent = total;
+  state.copied = false;
+  $("waBtn").disabled = true;
+  $("copiedMsg").textContent = "";
+  $("copyBtn").textContent = "Copy my report";
+  show("finishScreen");
+}
+
+function buildReport() {
+  const name = $("studentName").value.trim();
+  const total = state.pool.length;
+  const first = state.pool.filter((q) => state.firstTry[q.id]).length;
+  const date = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const missed = state.pool.filter((q) => state.missedEver.has(q.id));
+
+  const lines = [
+    APP.title,
+    "Name: " + name,
+    "School: " + APP.school + " · Grade " + APP.grade,
+    "Date: " + date,
+    "Sections: " + sectionListText(),
+    "Questions: " + total,
+    "Right on the first try: " + first + "/" + total,
+    "Rounds needed: " + state.round,
+    "Result: all questions mastered",
+    ""
+  ];
+  if (missed.length) {
+    lines.push("Questions I missed at least once (" + missed.length + "):");
+    missed.forEach((q) => {
+      lines.push("- " + SECTION_BY_ID[q.section].chip + " · " + q.question);
+    });
+  } else {
+    lines.push("Questions I missed: none");
+  }
+  return lines.join("\n");
+}
+
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text);
+  }
+  return new Promise((resolve, reject) => {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy") ? resolve() : reject();
+    } catch (e) {
+      reject(e);
+    }
+    document.body.removeChild(ta);
+  });
+}
+
+function copyReport() {
+  if (!$("studentName").value.trim()) {
+    $("copiedMsg").textContent = "Please type your name first.";
+    $("studentName").focus();
+    return;
+  }
+  copyText(buildReport()).then(() => {
+    state.copied = true;
+    $("copyBtn").textContent = "Copied ✓";
+    $("copiedMsg").textContent = "Copied ✓ Now open WhatsApp and paste your report.";
+    $("waBtn").disabled = false;
+  }).catch(() => {
+    $("copiedMsg").textContent = "Copying did not work. Please try again.";
+  });
+}
+
+function openWhatsApp() {
+  if (!state.copied) return;
+  const msg = "Hi! I finished The Crucible Introduction & Act One quiz. My report is below.";
+  window.open("https://wa.me/" + TEACHER_WHATSAPP + "?text=" + encodeURIComponent(msg), "_blank");
+}
+
+/* === NAVIGATION === */
+function goMenu() {
+  const inProgress = !$("quizScreen").classList.contains("hidden") || !$("roundScreen").classList.contains("hidden");
+  if (inProgress && !confirm("Go back to the menu? Your progress in this quiz will be lost.")) return;
+  buildChips();
+  show("startScreen");
+}
+
+/* === EVENTS === */
+$("startBtn").addEventListener("click", startQuiz);
+$("nextBtn").addEventListener("click", next);
+$("nextRoundBtn").addEventListener("click", nextRound);
+$("copyBtn").addEventListener("click", copyReport);
+$("waBtn").addEventListener("click", openWhatsApp);
+$("againBtn").addEventListener("click", () => { buildChips(); show("startScreen"); });
+$("menuBtn").addEventListener("click", goMenu);
+$("studentName").addEventListener("input", () => {
+  state.copied = false;
+  $("waBtn").disabled = true;
+  $("copyBtn").textContent = "Copy my report";
+  $("copiedMsg").textContent = "";
+});
+
+document.addEventListener("keydown", (e) => {
+  if ($("quizScreen").classList.contains("hidden")) return;
+  if (e.target && e.target.tagName === "INPUT") return;
+  const k = e.key.toUpperCase();
+  const map = { "1": 0, "2": 1, "3": 2, "4": 3, A: 0, B: 1, C: 2, D: 3 };
+  if (!state.answered && k in map) {
+    e.preventDefault();
+    choose(map[k]);
+  } else if (state.answered && e.key === "Enter" && document.activeElement !== $("nextBtn")) {
+    e.preventDefault();
+    next();
+  }
+});
+
+/* === INIT === */
+buildChips();
+updateAccent();
+</script>
+</body>
+</html>
