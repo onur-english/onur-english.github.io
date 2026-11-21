@@ -193,6 +193,20 @@ textarea:focus{outline:none;border-color:var(--teal)}
 .note{font-size:.92rem;color:var(--muted)}
 .hidden{display:none !important}
 
+
+/* === ADDED: 4 TABS, SIDE TOGGLE, PEA LABELS === */
+.tab{font-size:.85rem;padding:8px 4px}
+.tab small{font-size:.68rem}
+.side-toggle{display:flex;gap:8px;margin:4px 0 10px}
+.side-btn{flex:1;border:2px solid var(--teal);background:#fff;color:var(--teal);border-radius:999px;padding:8px 10px;font:800 .95rem "Nunito",sans-serif;cursor:pointer}
+.side-btn[aria-pressed="true"]{background:var(--teal);color:#fff}
+.task{margin:4px 0 10px;font-weight:600}
+.model h5{margin:6px 0 4px;font-size:.92rem}
+.model ul{margin:0;padding-left:18px;font-size:.93rem}
+.pea-line{display:block}
+.pea-line b{display:inline-block;min-width:74px;margin-right:6px;border-radius:6px;padding:0 6px;font-size:.82rem;color:#fff;text-align:center}
+.tag-p{background:var(--ink)} .tag-e{background:var(--ball)} .tag-a{background:var(--teal)}
+
 /* === PRINT === */
 @media print{
   body{background:#fff}
@@ -218,13 +232,15 @@ textarea:focus{outline:none;border-color:var(--teal)}
   </header>
 
   <nav class="tabs" role="tablist">
-    <button class="tab" role="tab" id="tab-mcq" aria-controls="panel-mcq" aria-selected="true">Reading<small>40 questions</small></button>
-    <button class="tab" role="tab" id="tab-write" aria-controls="panel-write" aria-selected="false">Writing<small>10 questions</small></button>
-    <button class="tab" role="tab" id="tab-report" aria-controls="panel-report" aria-selected="false">Send<small>to my teacher</small></button>
+    <button class="tab" role="tab" id="tab-mcq" aria-controls="panel-mcq" aria-selected="true">Quiz<small>40 questions</small></button>
+    <button class="tab" role="tab" id="tab-pea" aria-controls="panel-pea" aria-selected="false">Reading<small>exam answers</small></button>
+    <button class="tab" role="tab" id="tab-write" aria-controls="panel-write" aria-selected="false">Writing<small>10 topics</small></button>
+    <button class="tab" role="tab" id="tab-report" aria-controls="panel-report" aria-selected="false">Send<small>to teacher</small></button>
   </nav>
 
   <main>
     <section class="panel" id="panel-mcq" role="tabpanel" aria-labelledby="tab-mcq"></section>
+    <section class="panel hidden" id="panel-pea" role="tabpanel" aria-labelledby="tab-pea"></section>
     <section class="panel hidden" id="panel-write" role="tabpanel" aria-labelledby="tab-write"></section>
     <section class="panel hidden" id="panel-report" role="tabpanel" aria-labelledby="tab-report"></section>
   </main>
@@ -234,20 +250,19 @@ textarea:focus{outline:none;border-color:var(--teal)}
 /* === CONSTANTS === */
 const TEACHER_WHATSAPP = "905053613335";
 const EXAM_MINUTES = 0;            // this app has no timed exam mode
-const STORAGE_KEY = "part-time-indian-app-v1";
+const STORAGE_KEY = "hisar-9-part-time-indian-v2";
 
 /* === DATA === */
 const APP = {
   title: "The Absolutely True Diary of a Part-Time Indian",
-  subtitle: "Sherman Alexie · Reading check and writing practice",
+  subtitle: "Sherman Alexie · Exam revision: reading and writing",
   school: "Hisar",
   grade: "9",
   folder: "hisar-9-part-time-indian",
 
-  /* 40 multiple-choice comprehension questions, in story order.
+  /* 40 multiple-choice questions in story order (characters, cartoons, Junior's voice, plot).
      answer = index of the correct option (options are shuffled on screen). */
   questions: [
-    /* --- Part 1: Life on the reservation --- */
     { id:"q01", part:"Life on the reservation",
       q:"What medical problem was Junior born with?",
       options:["Too much fluid inside his skull","A weak heart that needed surgery","Damaged lungs that made breathing hard","A twisted spine that made walking hard"],
@@ -265,6 +280,24 @@ const APP = {
       options:["That they needed twice the usual amount of medicine","That they felt only half as much pain as white patients","That they healed much faster than white patients","That they should never have extra teeth removed"],
       answer:1,
       why:"Because of this racist belief, the dentist gave Junior only half the normal amount of Novocain." },
+
+    { id:"q41", part:"Junior's voice and cartoons",
+      q:"Junior says he draws because words are \"too unpredictable\" and \"too limited.\" What does he believe about pictures?",
+      options:["Pictures are easier to sell to tourists than stories","Anyone can understand a picture, whatever language they speak","Pictures let him hide his real feelings from his family","Teachers at his school give higher grades for pictures"],
+      answer:1,
+      why:"Words only reach people who speak the same language, but a drawing can be understood by everyone. Drawing is Junior's way of talking to the whole world." },
+
+    { id:"q42", part:"Junior's voice and cartoons",
+      q:"Junior describes his extra teeth as \"Ten more than usual. Ten more than normal.\" What does this repetition do?",
+      options:["It shows that the dentist kept counting his teeth wrongly","It proves that Junior is confused about how many teeth he has","It makes the whole scene sound frightening instead of funny","It makes a painful fact funny while stressing how different he is"],
+      answer:3,
+      why:"Repeating the idea sounds like a comedy routine. Junior makes the reader laugh, but the joke also shows how strange and painful his body feels to him." },
+
+    { id:"q43", part:"Junior's voice and cartoons",
+      q:"How does Junior usually speak to the reader in his diary?",
+      options:["Directly and honestly, like a friend, with lots of jokes","Formally and carefully, like a teacher giving a lesson","Coldly and calmly, keeping all his feelings hidden","Angrily, blaming the reader for all of his problems"],
+      answer:0,
+      why:"Junior talks straight to the reader, admits embarrassing things and jokes about painful ones. This makes the reader trust him and feel close to him." },
 
     { id:"q04", part:"Life on the reservation",
       q:"Why does Junior draw cartoons?",
@@ -296,12 +329,6 @@ const APP = {
       answer:3,
       why:"The book once belonged to his mother. Junior is furious that his school is so poor it still uses books that old." },
 
-    { id:"q09", part:"Life on the reservation",
-      q:"What happens after the book hits Mr. P?",
-      options:["Junior is suspended, and Mr. P visits him at home","Junior is expelled and sent to a school in Spokane","Mr. P quits teaching and leaves the reservation","Junior's father has to pay Mr. P's hospital bill"],
-      answer:0,
-      why:"Instead of punishing Junior further, Mr. P comes to his house to talk to him honestly." },
-
     { id:"q10", part:"Life on the reservation",
       q:"During his visit, what does Mr. P admit about the way he used to teach?",
       options:["He gave Indian students easier tests than white students got","He hit students and was trained to make them give up their culture","He never wanted to teach on the reservation and asked to leave","He had no training in math and had only ever studied art at college"],
@@ -314,18 +341,11 @@ const APP = {
       answer:2,
       why:"Mr. P tells Junior he is too smart and too hopeful to stay where people have given up." },
 
-    { id:"q12", part:"Life on the reservation",
-      q:"Mr. P says Junior is one of the smartest students he has taught. Who does he compare him to?",
-      options:["His best friend, Rowdy","His mother, Agnes","His father, Arnold Sr.","His sister, Mary"],
-      answer:3,
-      why:"Mr. P says Mary was a brilliant student who once dreamed of writing books, but she gave up and now hides in the family basement." },
-
-    /* --- Part 2: Starting at Reardan --- */
-    { id:"q13", part:"Starting at Reardan",
-      q:"How do Junior's parents react to his plan to change schools?",
-      options:["They agree to help him, even though it will be hard","They refuse until Mr. P comes to beg them","They say he is betraying the whole tribe","They send him to live with relatives in Spokane"],
-      answer:0,
-      why:"His father worries about how Junior will get there and his mother warns that people will be angry, but both support him." },
+    { id:"q44", part:"Junior's voice and cartoons",
+      q:"When Junior thinks about the white world and the reservation, he draws a boy split down the middle. What does the drawing compare?",
+      options:["Junior's face before and after his brain surgery as a baby","A white kid's life and an Indian kid's life, side by side","Rowdy's tough side and the kind side he keeps secret","The Wellpinit basketball team and the Reardan team"],
+      answer:1,
+      why:"Each half of the boy has labels that compare what a white kid has with what an Indian kid has. The cartoon shows how unfair and divided Junior thinks the two worlds are." },
 
     { id:"q14", part:"Starting at Reardan",
       q:"How does Rowdy react when Junior asks him to come to Reardan too?",
@@ -357,12 +377,6 @@ const APP = {
       answer:1,
       why:"Roger walks away instead of fighting. Junior's grandmother says this means Roger now respects him, and she is right." },
 
-    { id:"q19", part:"Starting at Reardan",
-      q:"On Halloween, Junior and Penelope wear the same costume. What is it?",
-      options:["Basketball players","Superheroes","Homeless people","Old-time cowboys"],
-      answer:2,
-      why:"Penelope's costume is a political statement. Junior jokes that his costume is easy because his clothes are already worn out." },
-
     { id:"q20", part:"Starting at Reardan",
       q:"What happens to the money Junior collects on Halloween?",
       options:["He hands it to his father, who spends it that night","He drops it somewhere on the long walk back home","Penelope keeps it and forgets to give it to charity","Masked boys on the reservation beat him and steal it"],
@@ -375,19 +389,12 @@ const APP = {
       answer:0,
       why:"Mr. Dodge is angry and the class laughs at Junior until Gordy, the class genius, confirms Junior's answer." },
 
-    { id:"q22", part:"Starting at Reardan",
-      q:"What does Gordy teach Junior about reading?",
-      options:["You should only read books that have pictures","You need to read a book three times to really know it","Reading is useless unless it helps you on tests","You should read every book in the library once, quickly"],
-      answer:1,
-      why:"Gordy takes reading very seriously and believes in Junior, which helps Junior see learning as exciting." },
-
     { id:"q23", part:"Starting at Reardan",
       q:"Gordy says life is a constant struggle between two things. What are they?",
       options:["Being rich and being poor in a small farming town","Being smart and being popular with other students","Being an individual and being a member of the community","Being honest and being kind to the people you love"],
       answer:2,
       why:"This idea explains Junior's problem: following his own dream means stepping away from his community." },
 
-    /* --- Part 3: Winter --- */
     { id:"q24", part:"Winter",
       q:"What does Junior's sister Mary do after he starts at Reardan?",
       options:["She starts college in Seattle to study creative writing","She moves to Spokane to work as a cook in a restaurant","She signs up at Reardan to finish her senior year there","She marries a man she met at a casino and moves to Montana"],
@@ -411,12 +418,6 @@ const APP = {
       options:["He can't dance and is scared of looking silly","Penelope's father has banned him from the dance","He has very little money and is hiding how poor he is","The dance is on the same night as a big game"],
       answer:2,
       why:"Junior has only a few dollars. He meets Penelope at the dance because he has no car and no gas money." },
-
-    { id:"q28", part:"Winter",
-      q:"What does Junior wear to the Winter Formal?",
-      options:["A tuxedo borrowed from Roger's brother","A powwow outfit from his grandmother","His Reardan basketball uniform","His father's old suit, which everyone likes"],
-      answer:3,
-      why:"Junior is embarrassed by the old suit, but Penelope and his classmates think it looks cool and retro." },
 
     { id:"q29", part:"Winter",
       q:"What does Roger do at the diner after the dance?",
@@ -442,7 +443,6 @@ const APP = {
       answer:3,
       why:"He comes back days later with only a five-dollar bill for Junior. The chapter shows how alcoholism hurts the family." },
 
-    /* --- Part 4: Losses and the ending --- */
     { id:"q33", part:"Losses and the ending",
       q:"How does Grandmother Spirit die?",
       options:["She is hit by a drunk driver","She dies after a long illness in the hospital","She dies in a fire at a family party","She falls on an icy road near her house"],
@@ -477,13 +477,25 @@ const APP = {
       q:"How does Mary die?",
       options:["In a car crash on the road to Montana","In a fire in her trailer after a party","From a sudden illness in a Montana hospital","In a flood near her new home"],
       answer:1,
-      why:"Mary was too drunk to wake up when the trailer caught fire. Junior's mother makes him promise never to drink." },
+      why:"She had passed out drunk after a party when the trailer caught fire. Junior's mother makes him promise never to drink." },
 
     { id:"q39", part:"Losses and the ending",
       q:"Who does Junior find secretly watching Mary's funeral from the trees?",
       options:["Gordy","Roger","Rowdy","Mr. P"],
       answer:2,
       why:"Rowdy blames Junior for Mary leaving the reservation, but the fact that he came shows he still cares." },
+
+    { id:"q45", part:"Losses and the ending",
+      q:"What does the cartoon of Junior's freshman report card show?",
+      options:["Mostly Cs, with an A only in Art and P.E.","All As, except a failing grade in Geometry","Mostly As, with a B+ in Geology and a B- in Woodshop","Mostly Bs, with an A+ in Computer Programming"],
+      answer:2,
+      why:"Even after losing his grandmother, Eugene and Mary, Junior does very well at Reardan. The report card shows how much he has achieved." },
+
+    { id:"q46", part:"Losses and the ending",
+      q:"Near the end, Junior draws himself and Rowdy when they were nine years old. What are they doing?",
+      options:["Shooting hoops on the court behind the school","Reading comic books together in Junior's room","Dancing side by side at the summer powwow","Holding hands and jumping into Turtle Lake"],
+      answer:3,
+      why:"The drawing shows how much Junior misses Rowdy and the friendship they had as children." },
 
     { id:"q40", part:"Losses and the ending",
       q:"At the end of the novel, what does Rowdy say about Junior?",
@@ -492,84 +504,197 @@ const APP = {
       why:"Rowdy has read that Indians were once nomads. He accepts Junior's choice, and they play one-on-one without keeping score." }
   ],
 
-  /* 10 advantages-and-disadvantages writing questions */
+  /* 10 exam reading questions: Point, Evidence, Analysis (characters, cartoons, Junior's voice) */
+  pea: [
+    { id:"p01", focus:"Junior's voice",
+      q:"How does Junior use humor to write about painful experiences?",
+      keywords:["teeth","dentist","novocain","head","joke","jokes","funny","laugh","humor","seizure"],
+      model:{
+        point:"Junior uses humor to talk about painful experiences, which makes his story easy to read but still serious.",
+        evidence:"When he describes his body, he says he had forty-two teeth: \"Ten more than usual. Ten more than normal.\" He then explains that the dentist gave him only half the normal amount of Novocain, because the dentist believed Indians felt only half as much pain.",
+        analysis:"The repetition sounds like a comedy routine, so the reader laughs. However, the joke leads straight into a story about racism and poverty. This shows that humor is Junior's way of surviving pain and of making the reader listen to hard truths."
+      } },
+
+    { id:"p02", focus:"Junior's voice",
+      q:"How does Junior's voice make the reader trust him and care about him?",
+      keywords:["honest","honesty","water on the brain","stutter","lisp","seizures","dawn","cried","confess","admits"],
+      model:{
+        point:"Junior's voice is honest and personal, so the reader feels like his friend.",
+        evidence:"He begins his diary by admitting embarrassing things: he was born with \"water on the brain,\" he has seizures, a stutter and a lisp, and he is beaten up all the time. Later he admits that he cried when Rowdy told him that Dawn did not care about him.",
+        analysis:"By confessing things most teenagers would hide, Junior shows that he is not hiding anything, so he builds trust. The reader believes his story is true and starts to care about what happens to him, which makes his losses later in the novel even more painful."
+      } },
+
+    { id:"p03", focus:"Cartoons",
+      q:"Why are cartoons so important to Junior?",
+      keywords:["draw","drawing","cartoon","cartoons","words","limited","unpredictable","famous","rich","language"],
+      model:{
+        point:"Cartoons are important to Junior because they are his way of understanding the world and his hope of escaping the reservation.",
+        evidence:"He says he draws because words are \"too unpredictable\" and \"too limited,\" while anyone can understand a picture. He also hopes his drawings could make him rich and famous, so that he can leave the reservation one day.",
+        analysis:"This shows that drawing gives Junior power in a life where he often feels powerless. Because pictures work in every language, his cartoons let him speak to the whole world, not only to the people around him."
+      } },
+
+    { id:"p04", focus:"Cartoons",
+      q:"What does the superhero cartoon show about Junior's feelings for Rowdy?",
+      keywords:["superhero","superheroes","thanksgiving","cartoon","rowdy","father","dad","house"],
+      model:{
+        point:"The superhero cartoon shows that Junior still loves Rowdy and wants to repair their friendship.",
+        evidence:"At Thanksgiving, Junior draws himself and Rowdy as superheroes and takes the drawing to Rowdy's house, even though Rowdy punched him and stopped speaking to him. Rowdy's father makes fun of the drawing.",
+        analysis:"Drawing the two boys as heroes side by side shows that Junior sees their friendship as strong and special. Taking it to Rowdy's house is brave, and the father's mockery shows how hard it is for Junior to reach his friend."
+      } },
+
+    { id:"p05", focus:"Cartoons",
+      q:"What does the cartoon of the boy who is half white and half Indian show about how Junior sees the two worlds?",
+      keywords:["half","white","indian","split","labels","cartoon","future","reardan","reservation"],
+      model:{
+        point:"The cartoon of the boy who is half white and half Indian shows that Junior believes white kids have far more chances than Indian kids.",
+        evidence:"Junior draws a boy split down the middle, with labels on each side comparing what a white kid has with what an Indian kid has. Later, traveling between the two towns, he says he feels \"half Indian in one place and half white in the other.\"",
+        analysis:"The cartoon is funny, but its message is sad: Junior thinks his future is limited just because he is Indian. It helps explain why he chooses Reardan, and why he ends up feeling that he does not fully belong in either world."
+      } },
+
+    { id:"p06", focus:"Characters",
+      q:"How does Rowdy show that he is a loyal friend, even though he is violent?",
+      keywords:["andruss","eyebrows","braids","powwow","revenge","dawn","secret","promise","rowdy"],
+      model:{
+        point:"Even though Rowdy is violent, he is a very loyal friend to Junior.",
+        evidence:"When the Andruss brothers beat Junior at the powwow, Rowdy gets revenge by shaving their eyebrows and cutting off their braids while they are passed out. He also promises never to tell anyone that Junior cried about Dawn, and he keeps that promise.",
+        analysis:"This shows that Rowdy protects Junior in the only way he knows: with toughness. His deep loyalty also explains why Junior's move to Reardan hurts him so much. He feels that his best friend has abandoned him."
+      } },
+
+    { id:"p07", focus:"Characters",
+      q:"How does Mr. P change Junior's life?",
+      keywords:["mr. p","mr p","geometry","book","suspended","kill the indian","hope","leave","visit"],
+      model:{
+        point:"Mr. P changes Junior's life by telling him the truth and pushing him to leave the reservation.",
+        evidence:"After Junior is suspended for throwing the geometry book, Mr. P visits him and admits that teachers were trained to \"kill the Indian to save the child\" and that he used to hit students. He then tells Junior that he must leave the reservation to find hope.",
+        analysis:"Mr. P's honesty shows Junior how badly the system has treated his people. Because an adult finally believes in him, Junior finds the courage to change schools, and this decision starts the whole story."
+      } },
+
+    { id:"p08", focus:"Characters",
+      q:"How does Gordy help Junior at Reardan?",
+      keywords:["gordy","petrified wood","dodge","geology","read","three times","book","study","walk out"],
+      model:{
+        point:"Gordy helps Junior feel smart and accepted at Reardan.",
+        evidence:"In geology class, Mr. Dodge and the other students laugh at Junior's answer about petrified wood, until Gordy confirms that Junior is right. Later, Gordy teaches Junior that you need to read a book three times before you really know it.",
+        analysis:"This shows that Gordy values Junior's intelligence, not his background. With Gordy's support, Junior begins to see learning as exciting, and he no longer feels completely alone at his new school."
+      } },
+
+    { id:"p09", focus:"Characters",
+      q:"How is Junior's father presented in the novel?",
+      keywords:["father","dad","warrior","drives","christmas","drinking","alcohol","five dollars","five-dollar","binge"],
+      model:{
+        point:"Junior's father is presented as a loving man who is badly damaged by alcoholism.",
+        evidence:"On the first day, he drives Junior to Reardan and tells him that he is being a warrior. However, at Christmas he disappears on a drinking binge with the family's money and comes back days later with only a five-dollar bill for Junior.",
+        analysis:"These examples show both sides of him. He clearly loves and supports his son, but alcohol makes him let the family down. As a result, Junior's feelings about his father are full of love and disappointment at the same time."
+      } },
+
+    { id:"p10", focus:"Characters",
+      q:"What does Grandmother Spirit represent in the novel?",
+      keywords:["grandmother","tolerance","forgive","forgave","drunk driver","never drank","alcohol","funeral","ted"],
+      model:{
+        point:"Grandmother Spirit represents the best of the old Indian traditions, especially tolerance and forgiveness.",
+        evidence:"Junior says that her greatest gift was her tolerance. She never drank alcohol, yet she is killed by a drunk driver, and with her last words she forgives him.",
+        analysis:"Her forgiveness shows the generous spirit that Junior admires in old-time Indian culture. Her death is especially tragic because alcohol, the reservation's biggest problem, kills the person who stood most strongly against it."
+      } }
+  ],
+
+  /* 10 writing topics. In the exam students write ONE paragraph: an advantage OR a disadvantage. */
   writing: [
-    { id:"w01",
-      prompt:"What are the advantages and disadvantages of Junior leaving Wellpinit to go to school in Reardan?",
-      keywords:["reardan","wellpinit","rowdy","mr. p","gordy","traitor","school"],
-      advantages:["Better teachers and more hope, as Mr. P advised","Gordy helps him study; he ends the year with mostly As","He makes the varsity basketball team and new friends"],
-      disadvantages:["Rowdy punches him and stops being his friend","Many people on the reservation call him a traitor","He feels like an outsider and struggles to get to school"],
-      model:"Junior's decision to leave Wellpinit and go to Reardan has clear advantages and disadvantages. The biggest advantage is hope. As Mr. P told him, Junior needed to go somewhere people believed in the future. At Reardan, Gordy helps him study, and he finishes the year with mostly As. He also makes the varsity basketball team and makes new friends like Penelope and Roger. However, the move costs him a lot. Rowdy punches him and refuses to be his friend for most of the year, and many people on the reservation call him a traitor. At the first basketball game, the Wellpinit fans even turn their backs on him. Overall, I think the advantages are greater, because by the end of the novel Rowdy accepts his choice and Junior has a future that his old school could not give him." },
+    { id:"w01", topic:"Junior leaving Wellpinit to go to school in Reardan",
+      keywords:["reardan","wellpinit","rowdy","mr. p","gordy","traitor","school","basketball","teachers"],
+      adv:{
+        model:"One major advantage of Junior leaving Wellpinit for Reardan is that he gains hope and a real education. First, Mr. P tells Junior that he must leave the reservation to find hope, because too many people there have given up. At Reardan, Junior finds people who push him. For example, Gordy teaches him to read seriously and helps him study, and Junior finishes his freshman year with mostly As. This shows that the new school gives him chances his old school never could. Second, Junior grows in confidence. He makes the varsity basketball team as a freshman, and his coach believes in him. This proves that Junior succeeds when people expect something from him. Overall, leaving the reservation gives Junior a future that he could not have had if he had stayed.",
+        examples:["Mr. P says he must leave to find hope","Gordy helps him study; he ends the year with mostly As","He makes the varsity basketball team as a freshman"] },
+      dis:{
+        model:"A serious disadvantage of Junior leaving Wellpinit is that he loses his place in his own community. First, he loses his best friend. When Junior tells Rowdy about Reardan, Rowdy punches him in the face and stops being his friend for most of the year. This shows how deeply Junior's choice hurts the people closest to him. Second, many people on the reservation treat him as a traitor. At the first basketball game in Wellpinit, the crowd turns their backs on him, and someone throws a coin that cuts his head. This proves that his own people now see him as an outsider. At the same time, the white students at Reardan ignore him at first, so he is lonely there too. Clearly, leaving costs Junior his sense of belonging.",
+        examples:["Rowdy punches him and stops being his friend","The Wellpinit crowd turns their backs on him","He is ignored and lonely at Reardan at first"] } },
 
-    { id:"w02",
-      prompt:"What are the advantages and disadvantages of Junior hiding his poverty from his Reardan classmates?",
-      keywords:["poor","poverty","money","penelope","roger","winter formal","diner","dollars","secret","suit"],
-      advantages:["He can fit in and is not pitied","The Reardan students assume he has money","He protects his pride in a new school"],
-      disadvantages:["He is stressed all the time, e.g. at the Winter Formal","At the diner he feels sick because he can't pay","He has to lie, and nobody can help him"],
-      model:"Hiding his poverty helps Junior at first, but it also causes problems. One advantage is that he can fit in. The Reardan students assume he has money, so they do not pity him or treat him as different. This protects his pride while he is still new. On the other hand, keeping the secret makes him anxious. Before the Winter Formal he has only a few dollars, and at the diner he feels sick and lies that he forgot his wallet. When he finally admits that he is poor, Penelope and Roger help him: Roger lends him money and later drives him home. In my opinion, the disadvantages are greater, because the novel shows that being honest brought Junior real friends, while the secret only made him lonely." },
+    { id:"w02", topic:"Junior hiding his poverty from his Reardan classmates",
+      keywords:["poor","poverty","money","penelope","roger","winter formal","diner","dollars","secret","suit","wallet"],
+      adv:{
+        model:"One advantage of Junior hiding his poverty is that it helps him fit in at his new school. The Reardan students assume that Junior has money, so they do not pity him or treat him as a charity case. This lets him protect his pride while he is still an outsider. For example, at the Winter Formal he wears his father's old suit, and instead of laughing, his classmates think it looks cool and retro. This shows that when Junior acts confidently, people accept him. Keeping the secret also gives him time to build real friendships with Penelope and Roger before he has to trust them with the truth. Therefore, hiding his poverty at first helps Junior survive his difficult early months at Reardan.",
+        examples:["Classmates assume he has money and don't pity him","His father's old suit is seen as cool and retro","He has time to build friendships with Penelope and Roger"] },
+      dis:{
+        model:"A big disadvantage of Junior hiding his poverty is that it makes him anxious and alone. Before the Winter Formal, Junior has only five dollars, so he has to meet Penelope at the dance instead of picking her up. Later, at the diner, he feels sick because he cannot pay, and he lies that he forgot his wallet. This shows how much stress the secret causes him. Roger lends him forty dollars, and afterward Penelope asks if he is poor. When Junior finally admits the truth, things get better, and Roger often drives him home after that. This proves that the secret was hurting him more than the truth ever could. Overall, hiding his poverty only makes Junior's life harder.",
+        examples:["He has only five dollars for the Winter Formal","He feels sick at the diner and lies about his wallet","After he admits the truth, Roger drives him home"] } },
 
-    { id:"w03",
-      prompt:"What are the advantages and disadvantages of having a best friend like Rowdy?",
-      keywords:["rowdy","andruss","revenge","punch","elbow","basketball","nomad","friend","dawn"],
-      advantages:["He protects Junior from bullies","He takes revenge on the Andruss brothers","He is loyal and keeps Junior's secrets"],
-      disadvantages:["He solves problems with violence","He punches Junior when Junior leaves","He knocks Junior out in the first game"],
-      model:"Having Rowdy as a best friend brings Junior both safety and pain. The main advantage is protection. Junior is bullied all the time, but Rowdy stands up for him, and after the Andruss brothers beat Junior at the powwow, Rowdy gets revenge by shaving their eyebrows and cutting off their braids. Rowdy is also loyal: he keeps Junior's secret about crying over Dawn. However, Rowdy's anger can turn against Junior. When Junior decides to go to Reardan, Rowdy punches him in the face, and in the first basketball game he elbows Junior so hard that Junior ends up in the hospital. Overall, I believe the advantages outweigh the disadvantages, because their friendship survives: at the end Rowdy calls Junior a nomad and they play basketball together again." },
+    { id:"w03", topic:"Having a best friend like Rowdy",
+      keywords:["rowdy","andruss","revenge","punch","punches","elbow","basketball","nomad","friend","dawn","funeral"],
+      adv:{
+        model:"One clear advantage of having Rowdy as a best friend is that he protects Junior. Junior is bullied all the time on the reservation, but Rowdy is tough and stands up for him. For example, after the Andruss brothers beat Junior at the powwow, Rowdy gets revenge by shaving their eyebrows and cutting off their braids. This shows that Rowdy will do anything to defend his friend. Rowdy is also loyal: he promises never to tell anyone that Junior cried about Dawn, and he keeps his word. This proves that Junior can trust him completely. Finally, even after their long fight, Rowdy comes back at the end, calls Junior a nomad and plays basketball with him. In the end, Rowdy is the one friend who never really leaves Junior.",
+        examples:["Revenge on the Andruss brothers","He keeps Junior's secret about Dawn","He returns at the end and calls Junior a nomad"] },
+      dis:{
+        model:"A major disadvantage of having Rowdy as a best friend is that his anger can turn against Junior. When Junior decides to go to Reardan, Rowdy punches him in the face and refuses to be his friend. This shows that Rowdy reacts to pain with violence instead of words. In the first Reardan–Wellpinit basketball game, Rowdy elbows Junior in the head so hard that Junior is knocked out and ends up in the hospital with a concussion. This proves that Rowdy is willing to hurt Junior physically. Even at Mary's funeral, Rowdy blames Junior for her leaving the reservation and tries to punch him. Clearly, Rowdy's loyalty comes with a dangerous temper that Junior can never fully escape.",
+        examples:["He punches Junior when Junior leaves","He knocks Junior out in the first game","He blames Junior at Mary's funeral"] } },
 
-    { id:"w04",
-      prompt:"What are the advantages and disadvantages of growing up in a close community like the Spokane reservation?",
-      keywords:["reservation","rez","spokane","grandmother","funeral","ted","alcohol","poverty","oscar","tribe","community"],
-      advantages:["People share a strong sense of belonging","About 2,000 people come to the grandmother's wake","Old values like the grandmother's tolerance"],
-      disadvantages:["Deep poverty (e.g. no money for Oscar's vet)","Alcohol causes the deaths of loved ones","People turn against anyone who leaves"],
-      model:"Growing up on the Spokane reservation gives Junior a strong community, but also many dangers. An advantage is the sense of belonging. When Grandmother Spirit dies, about two thousand people come to her wake, and the whole crowd laughs together when Ted brings an outfit that was never hers. The grandmother also shows old values like tolerance and forgiveness. On the other hand, life on the reservation is full of poverty and alcohol. The family cannot afford a vet for Oscar, and Junior loses his grandmother, Eugene and Mary because of drinking. The community can also be harsh to people who leave, and many call Junior a traitor. In conclusion, I think the community gives Junior an identity he values, but poverty and alcohol make it very hard to build a future there." },
+    { id:"w04", topic:"Growing up in a close community like the Spokane reservation",
+      keywords:["reservation","rez","spokane","grandmother","funeral","wake","ted","alcohol","poverty","oscar","tribe","community"],
+      adv:{
+        model:"One important advantage of growing up on the Spokane reservation is the strong sense of community. When Grandmother Spirit dies, about two thousand people come to her wake, and her coffin has to be moved to a football field. This shows how much the community values its people. Even in grief, the community can share joy: when a rich collector named Ted arrives with a dance outfit that was never hers, the whole crowd bursts out laughing together. This proves that the tribe has its own humor and strength. The grandmother herself also shows the community's best values, such as tolerance and forgiveness. Overall, the reservation gives Junior a powerful identity and a feeling of belonging that he cannot find anywhere else.",
+        examples:["About two thousand people come to the wake","The crowd laughs together when Ted arrives","The grandmother's tolerance and forgiveness"] },
+      dis:{
+        model:"A serious disadvantage of growing up on the reservation is the poverty and alcoholism that surround Junior. First, his family is so poor that they cannot pay a vet for their sick dog, Oscar, so his father has to shoot him. This shows how poverty forces terrible choices. Second, alcohol destroys many lives. Junior loses his grandmother to a drunk driver, his father's best friend Eugene in a drunken shooting, and his sister Mary in a trailer fire after a party. This proves that the reservation's problems are deadly, not just sad. Finally, the community turns against people who try to leave, and many call Junior a traitor. Clearly, the reservation can trap and harm the people who grow up there.",
+        examples:["No money for a vet: Oscar is shot","Alcohol kills the grandmother, Eugene and Mary","People call Junior a traitor for leaving"] } },
 
-    { id:"w05",
-      prompt:"What are the advantages and disadvantages of Junior telling his story through cartoons as well as words?",
-      keywords:["cartoon","cartoons","draw","drawing","drawings","superheroes","pictures","rowdy","diary"],
-      advantages:["Drawing helps Junior understand his world","Cartoons make hard events easier to follow","They show feelings, e.g. the superhero cartoon for Rowdy"],
-      disadvantages:["Jokes in cartoons may make serious issues seem lighter","Simple drawings can turn people into types","Some readers may focus on pictures, not ideas"],
-      model:"Junior's cartoons have advantages and disadvantages as a way of telling his story. One advantage is that drawing helps Junior make sense of a confusing world, and it makes his story easier for readers to follow. The cartoons also show his feelings clearly. For example, at Thanksgiving he draws himself and Rowdy as superheroes, which shows how much he wants their friendship back. However, cartoons can also be a disadvantage. Because many of them are funny, they might make serious problems such as poverty and alcoholism seem lighter than they really are. Simple drawings can also reduce real people to types. All in all, I think the cartoons are a strength, because they let Junior show both his humor and his pain, and they help readers care about him." },
+    { id:"w05", topic:"Junior telling his story through cartoons as well as words",
+      keywords:["cartoon","cartoons","draw","drawing","drawings","superheroes","pictures","words","rowdy","half white"],
+      adv:{
+        model:"One advantage of Junior telling his story through cartoons is that drawing helps him express what words cannot. Junior says he draws because words are \"too unpredictable\" and \"too limited,\" while anyone can understand a picture. This shows that his cartoons can reach every reader, whatever language they speak. His drawings also reveal his feelings clearly. For example, at Thanksgiving he draws himself and Rowdy as superheroes, which shows how much he wants their friendship back. In addition, the cartoon of a boy split into a white half and an Indian half quickly shows how unequal he thinks the two worlds are. Therefore, the cartoons make Junior's story clearer, funnier and more emotional than words alone could.",
+        examples:["Words are \"too unpredictable\" and \"too limited\"","The superhero cartoon of Junior and Rowdy","The boy split into a white half and an Indian half"] },
+      dis:{
+        model:"One disadvantage of Junior telling his story through cartoons is that funny pictures can make serious problems seem lighter. Many of Junior's drawings are jokes, so a reader might laugh at a scene about poverty or racism and miss how painful it really is. Simple drawings can also turn real people into types. For example, the cartoon of a boy split into a white half and an Indian half sorts people into two groups with fixed labels, as if every white kid and every Indian kid were the same. This shows that cartoons can simplify the truth. Sharing his drawings also makes Junior vulnerable: when he takes his superhero cartoon to Rowdy's house, Rowdy's father makes fun of it. Clearly, cartoons have limits as well as strengths.",
+        examples:["Jokes can make poverty and racism seem lighter","The split cartoon sorts people into fixed types","Rowdy's father mocks the superhero cartoon"] } },
 
-    { id:"w06",
-      prompt:"What are the advantages and disadvantages of Junior playing basketball for Reardan?",
-      keywords:["basketball","varsity","coach","wellpinit","rowdy","game","team","fans","concussion"],
-      advantages:["He gains confidence and respect at Reardan","He bonds with his coach and teammates","He helps Reardan win the second game"],
-      disadvantages:["He must play against his old friends","Wellpinit fans turn their backs on him","Rowdy knocks him out; after winning he feels ashamed"],
-      model:"Playing basketball for Reardan helps Junior in many ways, but it also hurts him. The biggest advantage is confidence. He makes the varsity team as a freshman, his coach believes in him, and in the second game against Wellpinit he guards Rowdy and helps Reardan win. Basketball makes him feel like a real part of his new school. However, basketball also forces him to fight against his own people. In the first game, the Wellpinit fans turn their backs on him and Rowdy knocks him unconscious. Even after the victory, Junior feels ashamed when he thinks about the hard lives of the Wellpinit players, and he cries. Overall, I think basketball was good for Junior, but it showed him that winning in one world can mean losing in the other." },
+    { id:"w06", topic:"Junior playing basketball for Reardan",
+      keywords:["basketball","varsity","coach","wellpinit","rowdy","game","team","fans","concussion","locker room"],
+      adv:{
+        model:"One major advantage of Junior playing basketball for Reardan is that it gives him confidence and a place in his new school. Junior makes the varsity team as a freshman, which surprises even him. This shows that he has real talent when he is given a chance. His coach believes in him and is impressed by how tough he is, and the two form a strong bond. In the second game against Wellpinit, the coach gives Junior the job of guarding Rowdy, and Junior helps Reardan win. This proves that he has become an important part of the team. Overall, basketball helps Junior stop feeling like an outsider and start feeling like someone who matters at Reardan.",
+        examples:["He makes varsity as a freshman","He bonds with his coach","He guards Rowdy and helps Reardan win the second game"] },
+      dis:{
+        model:"A painful disadvantage of Junior playing basketball for Reardan is that it forces him to compete against his own people. When he walks into the Wellpinit gym for the first game, the crowd turns their backs on him, and someone throws a coin that cuts his head. This shows that the reservation now sees him as a traitor. During the same game, Rowdy elbows him and knocks him unconscious, and Junior ends up in the hospital with a concussion. Even when Reardan wins the second game, Junior feels ashamed as he thinks about how hard the Wellpinit players' lives are, and he cries in the locker room. This proves that winning in one world can mean losing in the other.",
+        examples:["The Wellpinit crowd turns their backs on him","Rowdy knocks him out: concussion","He feels ashamed and cries after Reardan wins"] } },
 
-    { id:"w07",
-      prompt:"What are the advantages and disadvantages of Mary leaving the reservation to start a new life in Montana?",
-      keywords:["mary","montana","basement","casino","trailer","email","emails","letter","fire"],
-      advantages:["She finally leaves the basement where she was stuck","Her emails show she is happy and excited","She starts writing her life story"],
-      disadvantages:["She can't find a job without experience","She lives in a trailer far from her family","She dies in a trailer fire after a party"],
-      model:"Mary's decision to leave the reservation has both advantages and disadvantages. The main advantage is freedom. For years she hid in the family basement, but after Junior goes to Reardan, she marries a man she met at a casino and moves to Montana. Her emails show that she is happy and excited, and she even starts writing her life story. However, her new life is not easy. Restaurants will not hire her without experience, and she and her husband live in a trailer far from her family. In the end, she dies in a fire in that trailer after a party. In my opinion, leaving was not the problem: Mary was brave to chase her dream, but alcohol still followed her and destroyed that new life." },
+    { id:"w07", topic:"Mary leaving the reservation to start a new life in Montana",
+      keywords:["mary","montana","basement","casino","trailer","email","emails","letter","fire","horse"],
+      adv:{
+        model:"One clear advantage of Mary leaving the reservation is that she finally escapes the life that was trapping her. For years she hid in the family basement, but after Junior goes to Reardan, she marries a man she met at a casino and moves to Montana. This shows that she is brave enough to change her life. Her emails show that she is happy and excited: she rides a horse for the first time and loves her new home. She even starts writing the story of her life, which brings back her old dream of writing. This proves that leaving gives Mary hope again. Overall, Mary's choice shows that leaving can help a person begin to chase their dreams.",
+        examples:["She escapes the basement and moves to Montana","Her happy emails (riding a horse for the first time)","She starts writing her life story"] },
+      dis:{
+        model:"A tragic disadvantage of Mary leaving the reservation is that her new life is lonely and dangerous. In Montana, restaurants will not hire her because she has no experience, and she and her husband live in a trailer far from her family. This shows that life outside the reservation is harder than she hoped. Most terribly, Mary dies in a fire in that trailer after she passes out drunk at a party. This proves that leaving did not protect her from alcohol, the problem that hurts so many people on the reservation. Her death also deepens Rowdy's anger, because he blames Junior for her leaving. Clearly, Mary's escape ends in the greatest loss of Junior's year.",
+        examples:["No job without experience; a trailer far from home","She dies in a trailer fire after a party","Rowdy blames Junior for her leaving"] } },
 
-    { id:"w08",
-      prompt:"What are the advantages and disadvantages of Mr. P being completely honest with Junior?",
-      keywords:["mr. p","mr p","teacher","geometry","hope","culture","apologize","apology","leave"],
-      advantages:["He admits his past mistakes and apologizes","He is the first adult to say Junior deserves better","His advice pushes Junior to change schools"],
-      disadvantages:["The truth is painful and makes Junior angry","An apology can't undo harm to other students","His advice puts Junior under huge pressure"],
-      model:"Mr. P's honesty helps Junior, but it is also hard to hear. One advantage is that Mr. P admits his past mistakes. He says teachers were trained to \"kill the Indian to save the child\" and that he used to hit students, and he apologizes. He is also the first adult who tells Junior that he deserves more than the reservation can offer, and this advice gives Junior the courage to go to Reardan. On the other hand, the truth is painful. Junior is shocked and angry, and an apology cannot undo the harm done to other children. Mr. P's advice also puts Junior under enormous pressure to leave his family and friends. Overall, I believe the honesty was worth it, because without it Junior might never have found hope." },
+    { id:"w08", topic:"Mr. P being completely honest with Junior",
+      keywords:["mr. p","mr p","teacher","geometry","hope","culture","apologize","apology","leave","kill the indian"],
+      adv:{
+        model:"One important advantage of Mr. P's honesty is that it gives Junior the truth he needs to change his life. When Mr. P visits Junior after the suspension, he admits that teachers were trained to \"kill the Indian to save the child\" and that he used to hit students. This shows Junior how the school system has tried to destroy his culture. Mr. P also apologizes, which helps Junior see that adults can admit their mistakes. Most importantly, Mr. P is the first adult who tells Junior that he deserves more and must leave the reservation to find hope. This proves that honest words can change a young person's future. Without Mr. P's honesty, Junior might never have gone to Reardan.",
+        examples:["He admits teachers tried to \"kill the Indian to save the child\"","He apologizes for hitting students","He tells Junior to leave and find hope"] },
+      dis:{
+        model:"One disadvantage of Mr. P's complete honesty is that the truth is extremely painful for Junior. When Mr. P admits that teachers were trained to \"kill the Indian to save the child\" and that he hit students, Junior is shocked and filled with anger. This shows that some truths can hurt as much as they help. Mr. P's apology also cannot undo the harm already done to many other children. In addition, his advice to leave the reservation puts huge pressure on a fourteen-year-old boy. Because Junior follows it, he loses Rowdy's friendship and is called a traitor by his community. This proves that honesty can have heavy costs. Clearly, Mr. P's words help Junior, but they also bring him pain.",
+        examples:["Junior is shocked and angry at the truth","The apology cannot undo past harm","His advice leads to Junior losing Rowdy"] } },
 
-    { id:"w09",
-      prompt:"What are the advantages and disadvantages of being a \"part-time Indian\" who lives between two worlds?",
+    { id:"w09", topic:"Being a \"part-time Indian\" who lives between two worlds",
       keywords:["part-time","reardan","wellpinit","tribe","tribes","white","indian","stranger","two worlds","belong"],
-      advantages:["He learns from both worlds","He has friends in both places by the end","He sees he belongs to many \"tribes\""],
-      disadvantages:["He feels like a stranger in both places","He hides parts of himself (e.g. his poverty)","Some people on each side do not accept him"],
-      model:"Living between Reardan and Wellpinit gives Junior both opportunities and problems. An advantage is that he can learn from two worlds. At Reardan he gains education, Gordy's friendship and success in basketball, while the reservation gives him his family and his identity. After his losses, he realizes he belongs to many groups at once, such as cartoonists, basketball players and his Spokane tribe. However, being a \"part-time Indian\" is lonely. Junior feels like a stranger in both places: Reardan students do not know he is poor, and many people on the reservation see him as a traitor. He says being Indian feels like a part-time job that doesn't pay well. In conclusion, I think the advantages win, because by the end Junior is stronger and can belong to more than one world." },
+      adv:{
+        model:"One advantage of being a \"part-time Indian\" is that Junior can learn from two different worlds. At Reardan he gains a strong education, Gordy's friendship and success on the basketball team, while the reservation gives him his family and his identity as a Spokane Indian. This shows that living in both places gives him more opportunities than either place alone. After his grandmother, Eugene and Mary die, Junior realizes that he belongs to many \"tribes\" at once, such as basketball players, cartoonists and poor people, as well as the Spokane tribe. This proves that his identity has grown bigger, not smaller. Overall, living between two worlds helps Junior understand who he really is.",
+        examples:["Education and friends at Reardan","Family and identity on the reservation","He realizes he belongs to many \"tribes\""] },
+      dis:{
+        model:"A painful disadvantage of being a \"part-time Indian\" is that Junior does not fully belong anywhere. He says that traveling between Reardan and Wellpinit, he feels \"half Indian in one place and half white in the other.\" This shows how divided and lonely he feels. At Reardan, he has to hide his poverty, so his classmates do not really know him. On the reservation, many people call him a traitor, and the crowd at the basketball game turns their backs on him. This proves that neither side accepts him completely. He even compares being Indian to a part-time job that does not pay well. Clearly, living between two worlds leaves Junior feeling like a stranger in both.",
+        examples:["\"half Indian in one place and half white in the other\"","He hides his poverty at Reardan","He is called a traitor on the reservation"] } },
 
-    { id:"w10",
-      prompt:"What are the advantages and disadvantages of Junior using humor to deal with difficult events?",
-      keywords:["humor","humour","joke","jokes","funny","laugh","laughing","ted","funeral","mary","dentist"],
-      advantages:["Jokes help Junior survive pain and bullying","Laughter at the funeral brings people together","Humor makes the book easier to read"],
-      disadvantages:["Humor can hide real pain","He laughs uncontrollably when he hears of Mary's death","Jokes can hurt others, like Roger's racist joke"],
-      model:"Humor is one of Junior's main ways of coping, and it has advantages and disadvantages. One advantage is that jokes help him survive hard experiences. He jokes about his big head, his extra teeth and the dentist, which shows he refuses to be defeated. Humor can also bring people together: at his grandmother's funeral, the whole crowd laughs when Ted tries to return an outfit that was never hers. On the other hand, humor can hide pain instead of healing it. When Junior hears that Mary has died, he cannot stop laughing, and even his father's words make him laugh harder. Jokes can also hurt people, as Roger's racist joke shows. Overall, I think humor helps Junior more than it harms him, because it keeps him going when life is at its worst." }
+    { id:"w10", topic:"Junior using humor to deal with difficult events",
+      keywords:["humor","humour","joke","jokes","funny","laugh","laughing","ted","funeral","mary","dentist","teeth"],
+      adv:{
+        model:"One clear advantage of Junior's humor is that it helps him survive pain. When he describes his extra teeth, he jokes that he had \"Ten more than usual. Ten more than normal.\" This shows that he refuses to let his problems defeat him. Humor can also bring people together. At his grandmother's funeral, when a rich collector named Ted tries to return a dance outfit that was never hers, the whole crowd bursts out laughing. This proves that laughter can give a community strength, even in its saddest moments. Finally, Junior's jokes make the book easy and enjoyable to read, so readers keep going through the hard parts. Overall, humor keeps Junior strong when life is at its worst.",
+        examples:["Joking about his extra teeth","The crowd laughs at the grandmother's funeral","Jokes keep readers going through hard parts"] },
+      dis:{
+        model:"One disadvantage of Junior's humor is that it can hide pain instead of healing it. When Junior hears that Mary has died, he cannot stop laughing, and even his father's attempt to comfort him makes him laugh harder. This shows that his laughter is a sign of shock and grief, not happiness. Jokes can also hurt other people. On Junior's first day at Reardan, Roger tells a racist joke about Indians, which shows that humor can be used as a weapon. In addition, because Junior jokes about such serious things, readers might laugh and miss how painful his life really is. This proves that humor has dangers. Clearly, humor helps Junior, but it cannot solve his problems.",
+        examples:["He laughs uncontrollably when Mary dies","Roger's racist joke","Readers might miss the seriousness"] } }
   ]
 };
 
 /* Words that show the student used a detail from the novel (lenient check). */
 const NOVEL_WORDS = ["junior","arnold","rowdy","reardan","wellpinit","penelope","gordy","roger","mr. p","mr p",
   "mary","eugene","grandmother","oscar","coach","basketball","reservation","rez","powwow","ted","dodge",
-  "montana","cartoon","spokane","mother","father","dad","mom"];
+  "montana","cartoon","spokane","mother","father","dad","mom","andruss","dawn","winter formal","thanksgiving"];
 
 /* === STATE === */
 let state = freshState();
@@ -579,7 +704,8 @@ function freshState(){
     name: "",
     tab: "mcq",
     mcq: freshMcq(),
-    writing: {}          // id -> { text, checked:boolean }
+    pea: {},             // id -> { text, checked }
+    writing: {}          // "w01-adv" / "w01-dis" -> { text, checked }
   };
 }
 function freshMcq(){
@@ -587,11 +713,11 @@ function freshMcq(){
     round: 1,
     queue: APP.questions.map(q => q.id),
     idx: 0,
-    firstTry: {},        // id -> true/false (result of first attempt)
-    solved: {},          // id -> true
+    firstTry: {},
+    solved: {},
     missedThisRound: [],
-    current: null,       // { id, order:[optionIndexes], picked:null|index }
-    roundSummary: null,  // shown between rounds
+    current: null,
+    roundSummary: null,
     finished: false
   };
 }
@@ -604,7 +730,7 @@ function load(){
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const s = JSON.parse(raw);
-      if (s && s.mcq && s.writing) state = s;
+      if (s && s.mcq && s.writing && s.pea) state = s;
     }
   } catch(e) {}
 }
@@ -618,14 +744,29 @@ function shuffle(arr){
   return a;
 }
 function qById(id){ return APP.questions.find(q => q.id === id); }
-function wById(id){ return APP.writing.find(w => w.id === id); }
 function wordCount(t){ return (t || "").trim().split(/\s+/).filter(Boolean).length; }
+function hasNovelDetail(text, extra){
+  const lower = (text || "").toLowerCase();
+  return extra.concat(NOVEL_WORDS).some(k => lower.includes(k));
+}
+function countNovelDetails(text, extra){
+  const lower = (text || "").toLowerCase();
+  const all = Array.from(new Set(extra.concat(NOVEL_WORDS)));
+  return all.filter(k => lower.includes(k)).length;
+}
+function firstSentence(text){
+  const t = (text || "").trim().replace(/\b(Mr|Mrs|Ms|Dr)\./g, "$1");
+  const m = t.match(/^[^.!?]*[.!?]?/);
+  return m ? m[0] : t;
+}
 const LETTERS = ["A","B","C","D"];
+const ANALYSIS_RE = /\b(this shows|this suggests|this means|this proves|this reveals|this tells|which shows|which means|which suggests|shows that|suggests that|proves that|reveals that|because|as a result|so that)\b/i;
 
 /* === TABS === */
+const TABS = ["mcq","pea","write","report"];
 function showTab(name){
   state.tab = name;
-  ["mcq","write","report"].forEach(t => {
+  TABS.forEach(t => {
     $("#tab-" + t).setAttribute("aria-selected", String(t === name));
     $("#panel-" + t).classList.toggle("hidden", t !== name);
   });
@@ -653,7 +794,7 @@ function renderMCQ(){
           <div class="stat"><b>${m.round}</b>round${m.round > 1 ? "s" : ""} needed</div>
         </div>
         <div class="btn-row">
-          <button class="btn" onclick="showTab('write')">Go to the writing questions</button>
+          <button class="btn" onclick="showTab('pea')">Go to exam reading answers</button>
           <button class="btn secondary" onclick="restartMCQ()">Practice the 40 again</button>
         </div>
       </div>`;
@@ -672,7 +813,6 @@ function renderMCQ(){
     return;
   }
 
-  // set up the current question if needed
   const id = m.queue[m.idx];
   if (!m.current || m.current.id !== id) {
     m.current = { id, order: shuffle([0,1,2,3]), picked: null };
@@ -765,105 +905,198 @@ function startNextRound(){
 }
 
 function restartMCQ(){
-  if (!confirm("Start the 40 questions again? Your reading results will be cleared. Your writing stays.")) return;
+  if (!confirm("Start the 40 questions again? Your multiple-choice results will be cleared. Your written answers stay.")) return;
   state.mcq = freshMcq();
   save();
   renderMCQ();
 }
 
-/* === WRITING === */
-const CHECKS = [
-  { key:"adv", label:"An advantage",
-    re:/\b(advantages?|benefits?|positive|good|helps?|helped|helpful|gains?|opportunit\w*|better|strength)\b/i,
-    tip:"Name at least one advantage: something good that comes from it." },
-  { key:"dis", label:"A disadvantage",
-    re:/\b(disadvantages?|drawbacks?|downside|negative|problems?|costs?|lose|loses|lost|hurts?|difficult|hard|harder|worse|risks?|however|on the other hand)\b/i,
-    tip:"Name at least one disadvantage: something bad or difficult that comes from it." },
-  { key:"ex", label:"An example from the novel",
-    tip:"Add a detail from the book: a character, a place or something that happens." },
-  { key:"judge", label:"Your final judgment",
-    re:/\b(overall|in conclusion|i think|i believe|in my opinion|outweighs?|to sum up|all in all|in the end|therefore)\b/i,
-    tip:"Finish by saying which side is stronger and why." }
-];
+/* === EXAM READING: POINT, EVIDENCE, ANALYSIS === */
+function peaChecks(item, text){
+  const t = text || "";
+  const hasQuoteOrExample = /["“”]|for example|for instance|when |at the |in the novel|in chapter/i.test(t);
+  return [
+    { label:"Point", ok: wordCount(firstSentence(t)) >= 6,
+      tip:"Start with one clear sentence that answers the question." },
+    { label:"Evidence", ok: hasNovelDetail(t, item.keywords.concat([])) && (hasQuoteOrExample || countNovelDetails(t, item.keywords) >= 2),
+      tip:"Support your point with a specific moment or a short quotation from the novel." },
+    { label:"Analysis", ok: ANALYSIS_RE.test(t),
+      tip:"Explain how your evidence proves your point (e.g. \"This shows that…\")." },
+    { label:"Length", ok: wordCount(t) >= 50,
+      tip:"Aim for at least 50 words so you can explain properly." }
+  ];
+}
 
-function runChecks(w, text){
-  const lower = (text || "").toLowerCase();
-  return CHECKS.map(c => {
-    let ok;
-    if (c.key === "ex") ok = w.keywords.concat(NOVEL_WORDS).some(k => lower.includes(k));
-    else ok = c.re.test(text);
-    return { label: c.label, ok, tip: c.tip };
-  });
+function renderPEA(){
+  const panel = $("#panel-pea");
+  const intro = `
+    <div class="card taped">
+      <h2 class="big">Exam reading answers</h2>
+      <p>In the exam you answer questions about an extract from the novel, without your book. Every answer needs three parts:</p>
+      <div class="tip-steps">
+        <div><span>P</span>Point: answer the question in one clear sentence</div>
+        <div><span>E</span>Evidence: a specific moment or short quotation</div>
+        <div><span>A</span>Analysis: explain how the evidence supports your point</div>
+      </div>
+      <p class="note">Practice with these 10 questions on characters, cartoons and Junior's voice. Press "Check my answer" to see what you included and a model answer.</p>
+    </div>`;
+
+  const cards = APP.pea.map((p, i) => {
+    const saved = state.pea[p.id] || { text: "", checked: false };
+    return `
+      <div class="card" id="card-${p.id}">
+        <span class="part-label">${esc(p.focus)}</span>
+        <p class="wq-prompt"><span class="wq-num">${i + 1}</span>${esc(p.q)}</p>
+        <textarea id="ta-${p.id}" aria-label="Your answer to exam reading question ${i + 1}" placeholder="Point… Evidence… Analysis…"
+          oninput="onPeaInput('${p.id}')">${esc(saved.text)}</textarea>
+        <div class="wc" id="wc-${p.id}">${wordCount(saved.text)} words</div>
+        <div class="btn-row"><button class="btn teal" onclick="checkPea('${p.id}')">Check my answer</button></div>
+        <div id="fb-${p.id}">${saved.checked ? peaFeedbackHtml(p, saved.text) : ""}</div>
+      </div>`;
+  }).join("");
+  panel.innerHTML = intro + cards;
+}
+
+function onPeaInput(id){
+  const ta = $("#ta-" + id);
+  const entry = state.pea[id] || { text: "", checked: false };
+  entry.text = ta.value;
+  state.pea[id] = entry;
+  $("#wc-" + id).textContent = wordCount(ta.value) + " words";
+  save();
+}
+function checkPea(id){
+  const p = APP.pea.find(x => x.id === id);
+  const entry = state.pea[id] || { text: "", checked: false };
+  entry.text = $("#ta-" + id).value;
+  entry.checked = true;
+  state.pea[id] = entry;
+  save();
+  $("#fb-" + id).innerHTML = peaFeedbackHtml(p, entry.text);
+}
+function peaFeedbackHtml(p, text){
+  const list = peaChecks(p, text).map(r =>
+    `<li class="${r.ok ? "ok" : "miss"}">${r.ok ? "✓" : "✗"} ${esc(r.label)}${r.ok ? "" : `<small>${esc(r.tip)}</small>`}</li>`).join("");
+  return `
+    <ul class="checks">${list}</ul>
+    <div class="model">
+      <h4>Model answer</h4>
+      <p class="pea-line"><b class="tag-p">Point</b>${esc(p.model.point)}</p>
+      <p class="pea-line"><b class="tag-e">Evidence</b>${esc(p.model.evidence)}</p>
+      <p class="pea-line"><b class="tag-a">Analysis</b>${esc(p.model.analysis)}</p>
+    </div>`;
+}
+
+/* === WRITING: ONE ADVANTAGE OR DISADVANTAGE PARAGRAPH === */
+const ADV_RE = /\b(advantages?|benefits?|positive|good|helps?|helped|helpful|gains?|opportunit\w*|strength|better)\b/i;
+const DIS_RE = /\b(disadvantages?|drawbacks?|downside|negative|problems?|costs?|loses?|lost|hurts?|harm\w*|difficult|painful|dangerous|worse|risks?)\b/i;
+const CONCLUDE_RE = /\b(overall|in conclusion|to conclude|clearly|therefore|this proves|in the end|all in all|to sum up)\b/i;
+
+function writingChecks(w, side, text){
+  const t = text || "";
+  const sideRe = side === "adv" ? ADV_RE : DIS_RE;
+  const details = countNovelDetails(t, w.keywords);
+  return [
+    { label: side === "adv" ? "Point: you name an advantage" : "Point: you name a disadvantage",
+      ok: sideRe.test(firstSentence(t)),
+      tip: side === "adv"
+        ? "Open with a topic sentence that clearly states one advantage."
+        : "Open with a topic sentence that clearly states one disadvantage." },
+    { label:"Two examples from the novel", ok: details >= 2,
+      tip:"You can't use your book in the exam, so give at least two specific examples you remember (characters, places, events)." },
+    { label:"Explanation of your examples", ok: ANALYSIS_RE.test(t),
+      tip:"After each example, explain what it shows (e.g. \"This shows that…\", \"This proves that…\")." },
+    { label:"Concluding sentence", ok: CONCLUDE_RE.test(t),
+      tip:"End with a sentence that sums up your point (e.g. \"Overall…\", \"Clearly…\")." },
+    { label:`Length (${wordCount(t)} words)`, ok: wordCount(t) >= 100,
+      tip:"This is a 30-mark paragraph. Aim for about 120–180 words so both examples are fully explained." }
+  ];
 }
 
 function renderWriting(){
   const panel = $("#panel-write");
   const intro = `
     <div class="card taped">
-      <h2 class="big">Advantages &amp; disadvantages</h2>
-      <p>Answer each question in one paragraph. Write about 100–150 words. A strong paragraph has four parts:</p>
+      <h2 class="big">Advantage or disadvantage paragraph</h2>
+      <p>In the exam you write <strong>one</strong> paragraph: <strong>either</strong> an advantage <strong>or</strong> a disadvantage, without your book. Each topic below has both, so you can practice either one.</p>
       <div class="tip-steps">
-        <div><span>1</span>An advantage + an example</div>
-        <div><span>2</span>A disadvantage + an example</div>
-        <div><span>3</span>Details from the novel</div>
-        <div><span>4</span>Your final judgment</div>
+        <div><span>1</span>Point: state the advantage or disadvantage</div>
+        <div><span>2</span>Example 1 from the novel + explain it</div>
+        <div><span>3</span>Example 2 from the novel + explain it</div>
+        <div><span>4</span>Concluding sentence</div>
       </div>
-      <p class="note">Press "Check my answer" to see what you included and a model answer. You can keep editing after checking.</p>
+      <p class="note">Press "Check my paragraph" to see what you included and a model paragraph.</p>
     </div>`;
 
   const cards = APP.writing.map((w, i) => {
-    const saved = state.writing[w.id] || { text: "", checked: false };
+    const side = (state.writingSide && state.writingSide[w.id]) || "adv";
     return `
       <div class="card" id="card-${w.id}">
-        <p class="wq-prompt"><span class="wq-num">${i + 1}</span>${esc(w.prompt)}</p>
-        <textarea id="ta-${w.id}" aria-label="Your answer to writing question ${i + 1}" placeholder="Write your paragraph here..."
-          oninput="onWriteInput('${w.id}')">${esc(saved.text)}</textarea>
-        <div class="wc" id="wc-${w.id}">${wordCount(saved.text)} words</div>
-        <div class="btn-row"><button class="btn teal" onclick="checkWriting('${w.id}')">Check my answer</button></div>
-        <div id="fb-${w.id}">${saved.checked ? writingFeedbackHtml(w, saved.text) : ""}</div>
+        <p class="wq-prompt"><span class="wq-num">${i + 1}</span>${esc(w.topic)}</p>
+        <div class="side-toggle" role="group" aria-label="Choose the paragraph type">
+          <button class="side-btn" aria-pressed="${side === "adv"}" onclick="setSide('${w.id}','adv')">Advantage</button>
+          <button class="side-btn" aria-pressed="${side === "dis"}" onclick="setSide('${w.id}','dis')">Disadvantage</button>
+        </div>
+        <div id="side-${w.id}">${sideHtml(w, side)}</div>
       </div>`;
   }).join("");
-
   panel.innerHTML = intro + cards;
 }
 
-function onWriteInput(id){
-  const ta = $("#ta-" + id);
-  const entry = state.writing[id] || { text: "", checked: false };
-  entry.text = ta.value;
-  state.writing[id] = entry;
-  $("#wc-" + id).textContent = wordCount(ta.value) + " words";
-  save();
-}
-
-function checkWriting(id){
-  const w = wById(id);
-  const ta = $("#ta-" + id);
-  const entry = state.writing[id] || { text: "", checked: false };
-  entry.text = ta.value;
-  entry.checked = true;
-  state.writing[id] = entry;
-  save();
-  $("#fb-" + id).innerHTML = writingFeedbackHtml(w, entry.text);
-}
-
-function writingFeedbackHtml(w, text){
-  const words = wordCount(text);
-  const results = runChecks(w, text);
-  const list = results.map(r => `
-      <li class="${r.ok ? "ok" : "miss"}">${r.ok ? "✓" : "✗"} ${esc(r.label)}${r.ok ? "" : `<small>${esc(r.tip)}</small>`}</li>`).join("");
-  const lengthNote = words < 60
-    ? `<li class="miss">✗ Length (${words} words)<small>Your paragraph is short. Aim for about 100–150 words so you can explain both sides.</small></li>`
-    : `<li class="ok">✓ Length (${words} words)</li>`;
+function sideHtml(w, side){
+  const key = w.id + "-" + side;
+  const saved = state.writing[key] || { text: "", checked: false };
+  const topic = /^(Having|Growing|Being)\b/.test(w.topic) ? w.topic.charAt(0).toLowerCase() + w.topic.slice(1) : w.topic;
+  const task = `Write a paragraph about one <strong>${side === "adv" ? "advantage" : "disadvantage"}</strong> of ${esc(topic)}.`;
   return `
-    <ul class="checks">${list}${lengthNote}</ul>
+    <p class="task">${task}</p>
+    <textarea id="ta-${key}" aria-label="Your paragraph" placeholder="Write your paragraph here..."
+      oninput="onWriteInput('${key}')">${esc(saved.text)}</textarea>
+    <div class="wc" id="wc-${key}">${wordCount(saved.text)} words</div>
+    <div class="btn-row"><button class="btn teal" onclick="checkWriting('${w.id}','${side}')">Check my paragraph</button></div>
+    <div id="fb-${key}">${saved.checked ? writingFeedbackHtml(w, side, saved.text) : ""}</div>`;
+}
+
+function setSide(id, side){
+  if (!state.writingSide) state.writingSide = {};
+  state.writingSide[id] = side;
+  save();
+  const card = $("#card-" + id);
+  card.querySelectorAll(".side-btn").forEach((b, i) => b.setAttribute("aria-pressed", String((i === 0) === (side === "adv"))));
+  $("#side-" + id).innerHTML = sideHtml(APP.writing.find(w => w.id === id), side);
+}
+
+function onWriteInput(key){
+  const ta = document.getElementById("ta-" + key);
+  const entry = state.writing[key] || { text: "", checked: false };
+  entry.text = ta.value;
+  state.writing[key] = entry;
+  document.getElementById("wc-" + key).textContent = wordCount(ta.value) + " words";
+  save();
+}
+
+function checkWriting(id, side){
+  const w = APP.writing.find(x => x.id === id);
+  const key = id + "-" + side;
+  const entry = state.writing[key] || { text: "", checked: false };
+  entry.text = document.getElementById("ta-" + key).value;
+  entry.checked = true;
+  state.writing[key] = entry;
+  save();
+  document.getElementById("fb-" + key).innerHTML = writingFeedbackHtml(w, side, entry.text);
+}
+
+function writingFeedbackHtml(w, side, text){
+  const list = writingChecks(w, side, text).map(r =>
+    `<li class="${r.ok ? "ok" : "miss"}">${r.ok ? "✓" : "✗"} ${esc(r.label)}${r.ok ? "" : `<small>${esc(r.tip)}</small>`}</li>`).join("");
+  const s = w[side];
+  return `
+    <ul class="checks">${list}</ul>
     <div class="model">
-      <h4>Model answer</h4>
-      <p>${esc(w.model)}</p>
-      <div class="cols">
-        <div><h5>Advantages you could use</h5><ul>${w.advantages.map(a => `<li>${esc(a)}</li>`).join("")}</ul></div>
-        <div><h5>Disadvantages you could use</h5><ul>${w.disadvantages.map(d => `<li>${esc(d)}</li>`).join("")}</ul></div>
-      </div>
+      <h4>Model ${side === "adv" ? "advantage" : "disadvantage"} paragraph</h4>
+      <p>${esc(s.model)}</p>
+      <h5>Examples you could use</h5>
+      <ul>${s.examples.map(e => `<li>${esc(e)}</li>`).join("")}</ul>
     </div>`;
 }
 
@@ -877,31 +1110,49 @@ function buildReport(){
   const attempted = Object.keys(m.firstTry).length;
   const solved = Object.keys(m.solved).length;
   const missedFirst = APP.questions.filter(q => m.firstTry[q.id] === false);
-  const date = new Date().toLocaleString();
 
   let r = "";
   r += `Name: ${state.name || "(no name)"}\n`;
   r += `App: ${APP.title}\n`;
-  r += `Date: ${date}\n\n`;
-  r += `READING (multiple choice)\n`;
+  r += `Date: ${new Date().toLocaleString()}\n\n`;
+
+  r += `MULTIPLE CHOICE\n`;
   r += `Right the first time: ${first}/${total}\n`;
   r += `Answered at least once: ${attempted}/${total}\n`;
   r += `Solved (after practice rounds): ${solved}/${total}\n`;
   r += `Rounds: ${m.round}${m.finished ? " (finished)" : " (not finished)"}\n`;
   if (missedFirst.length) {
     r += `Missed the first time:\n`;
-    missedFirst.forEach((q, i) => { r += `  ${q.id.replace("q","Q")}: ${q.q}\n`; });
+    missedFirst.forEach(q => { r += `  - ${q.q}\n`; });
   }
-  r += `\nWRITING (advantages and disadvantages)\n`;
-  APP.writing.forEach((w, i) => {
-    const entry = state.writing[w.id];
-    const text = entry && entry.text.trim() ? entry.text.trim() : "";
-    r += `\n${i + 1}. ${w.prompt}\n`;
-    if (!text) { r += `(not answered)\n`; return; }
-    const res = runChecks(w, text);
+
+  r += `\nEXAM READING ANSWERS (Point, Evidence, Analysis)\n`;
+  APP.pea.forEach((p, i) => {
+    const e = state.pea[p.id];
+    const text = e && e.text.trim() ? e.text.trim() : "";
+    if (!text) return;
+    const res = peaChecks(p, text);
+    r += `\n${i + 1}. ${p.q}\n`;
     r += `Checks: ${res.map(x => (x.ok ? "✓ " : "✗ ") + x.label).join(" | ")} | ${wordCount(text)} words\n`;
     r += `${text}\n`;
   });
+  if (!APP.pea.some(p => state.pea[p.id] && state.pea[p.id].text.trim())) r += `(none answered yet)\n`;
+
+  r += `\nWRITING (advantage or disadvantage paragraph)\n`;
+  let any = false;
+  APP.writing.forEach((w, i) => {
+    ["adv","dis"].forEach(side => {
+      const e = state.writing[w.id + "-" + side];
+      const text = e && e.text.trim() ? e.text.trim() : "";
+      if (!text) return;
+      any = true;
+      const res = writingChecks(w, side, text);
+      r += `\n${i + 1}. ${side === "adv" ? "ADVANTAGE" : "DISADVANTAGE"}: ${w.topic}\n`;
+      r += `Checks: ${res.map(x => (x.ok ? "✓ " : "✗ ") + x.label).join(" | ")}\n`;
+      r += `${text}\n`;
+    });
+  });
+  if (!any) r += `(none written yet)\n`;
   return r;
 }
 
@@ -921,7 +1172,7 @@ function renderReport(){
       <div class="report-box" id="reportBox">${esc(buildReport())}</div>
     </div>
     <div class="card">
-      <p class="note">Want to start everything again? This clears your reading results and all your writing.</p>
+      <p class="note">Want to start everything again? This clears your multiple-choice results and all your written answers.</p>
       <button class="btn secondary" onclick="resetAll()">Start again</button>
     </div>`;
 }
@@ -950,9 +1201,10 @@ function fallbackCopy(text, done){
   let ok = false;
   try { ok = document.execCommand("copy"); } catch(e) {}
   document.body.removeChild(ta);
-  if (ok) done();
-  else alert("Copying didn't work on this device. Please select the report text, copy it, and then open WhatsApp.");
-  if (!ok) { copied = true; $("#waBtn").disabled = false; }
+  if (ok) { done(); return; }
+  alert("Copying didn't work on this device. Please select the report text, copy it, and then open WhatsApp.");
+  copied = true;
+  $("#waBtn").disabled = false;
 }
 function openWhatsApp(){
   if (!copied) return;
@@ -961,13 +1213,14 @@ function openWhatsApp(){
 }
 
 function resetAll(){
-  if (!confirm("Are you sure? This deletes your reading results AND all your writing.")) return;
+  if (!confirm("Are you sure? This deletes your multiple-choice results AND all your written answers.")) return;
   const name = state.name;
   state = freshState();
   state.name = name;
   state.tab = "report";
   save();
   renderMCQ();
+  renderPEA();
   renderWriting();
   renderReport();
 }
@@ -984,12 +1237,11 @@ function init(){
     save();
     if (state.tab === "report") renderReport();
   });
-  $("#tab-mcq").addEventListener("click", () => showTab("mcq"));
-  $("#tab-write").addEventListener("click", () => showTab("write"));
-  $("#tab-report").addEventListener("click", () => showTab("report"));
+  TABS.forEach(t => $("#tab-" + t).addEventListener("click", () => showTab(t)));
   renderMCQ();
+  renderPEA();
   renderWriting();
-  showTab(state.tab || "mcq");
+  showTab(TABS.includes(state.tab) ? state.tab : "mcq");
 }
 init();
 </script>
